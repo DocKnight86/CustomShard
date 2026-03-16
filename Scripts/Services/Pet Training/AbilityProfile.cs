@@ -47,11 +47,6 @@ namespace Server.Mobiles
 
         public void OnTame()
         {
-            if (Creature.ControlMaster is PlayerMobile mobile)
-            {
-                Engines.Quests.TamingPetQuest.CheckTame(mobile);
-            }
-
             if (Creature.Map == Map.Tokuno)
             {
                 TokunoTame = true;
@@ -666,25 +661,38 @@ namespace Server.Mobiles
             switch (ability)
             {
                 case MagicalAbility.Piercing:
+                {
                     Creature.Mastery = SkillName.Fencing;
                     break;
+                }
                 case MagicalAbility.Bashing:
+                {
                     Creature.Mastery = SkillName.Macing;
                     break;
+                }
                 case MagicalAbility.Slashing:
+                {
                     Creature.Mastery = SkillName.Swords;
                     break;
+                }
                 case MagicalAbility.BattleDefense:
+                {
                     Creature.Mastery = SkillName.Parry;
                     break;
+                }
                 case MagicalAbility.WrestlingMastery:
+                {
                     Creature.Mastery = SkillName.Wrestling;
                     break;
+                }
                 case MagicalAbility.Poisoning:
+                {
                     if (Creature.Controlled && Creature.AI != AIType.AI_Melee)
                         Creature.AI = AIType.AI_Melee;
                     break;
+                }
                 case MagicalAbility.Bushido:
+                {
                     if (Creature.Controlled && Creature.AI != AIType.AI_Samurai)
                         Creature.AI = AIType.AI_Samurai;
                     if (!HasAbility(WeaponAbility.WhirlwindAttack))
@@ -692,7 +700,9 @@ namespace Server.Mobiles
                         AddAbility(WeaponAbility.WhirlwindAttack, false);
                     }
                     break;
+                }
                 case MagicalAbility.Ninjitsu:
+                {
                     if (Creature.Controlled && Creature.AI != AIType.AI_Ninja)
                         Creature.AI = AIType.AI_Ninja;
                     if (!HasAbility(WeaponAbility.FrenziedWhirlwind))
@@ -700,35 +710,50 @@ namespace Server.Mobiles
                         AddAbility(WeaponAbility.FrenziedWhirlwind, false);
                     }
                     break;
+                }
                 case MagicalAbility.Discordance:
+                {
                     if (Creature.Controlled && Creature.AI != AIType.AI_Melee)
                         Creature.AI = AIType.AI_Melee;
                     break;
+                }
                 case MagicalAbility.Magery:
                 case MagicalAbility.MageryMastery:
+                {
                     if (Creature.Controlled && Creature.AI != AIType.AI_Mage)
                         Creature.AI = AIType.AI_Mage;
                     break;
+                }
                 case MagicalAbility.Mysticism:
+                {
                     if (Creature.Controlled && Creature.AI != AIType.AI_Mystic)
                         Creature.AI = AIType.AI_Mystic;
                     break;
+                }
                 case MagicalAbility.Spellweaving:
+                {
                     if (Creature.Controlled && Creature.AI != AIType.AI_Spellweaving)
                         Creature.AI = AIType.AI_Spellweaving;
                     break;
+                }
                 case MagicalAbility.Chivalry:
+                {
                     if (Creature.Controlled && Creature.AI != AIType.AI_Paladin)
                         Creature.AI = AIType.AI_Paladin;
                     break;
+                }
                 case MagicalAbility.Necromage:
+                {
                     if (Creature.Controlled && Creature.AI != AIType.AI_NecroMage)
                         Creature.AI = AIType.AI_NecroMage;
                     break;
+                }
                 case MagicalAbility.Necromancy:
+                {
                     if (Creature.Controlled && Creature.AI != AIType.AI_Necro)
                         Creature.AI = AIType.AI_Necro;
                     break;
+                }
             }
         }
 
@@ -922,11 +947,15 @@ namespace Server.Mobiles
             switch (version)
             {
                 case 0:
+                {
                     DamageIndex = -1;
                     break;
+                }
                 case 1:
+                {
                     DamageIndex = reader.ReadInt();
                     break;
+                }
             }
 
             MagicalAbility = (MagicalAbility)reader.ReadInt();
@@ -968,11 +997,26 @@ namespace Server.Mobiles
 
                 switch (reader.ReadInt())
                 {
-                    case 1: Advancements.Add((MagicalAbility)reader.ReadInt()); break;
-                    case 2: Advancements.Add(SpecialAbility.Abilities[reader.ReadInt()]); break;
-                    case 3: Advancements.Add(AreaEffect.Effects[reader.ReadInt()]); break;
-                    case 4: Advancements.Add(WeaponAbility.Abilities[reader.ReadInt()]); break;
-                    case 5: Advancements.Add((SkillName)reader.ReadInt()); break;
+                    case 1:
+                    {
+                        Advancements.Add((MagicalAbility)reader.ReadInt()); break;
+                    }
+                    case 2:
+                    {
+                        Advancements.Add(SpecialAbility.Abilities[reader.ReadInt()]); break;
+                    }
+                    case 3:
+                    {
+                        Advancements.Add(AreaEffect.Effects[reader.ReadInt()]); break;
+                    }
+                    case 4:
+                    {
+                        Advancements.Add(WeaponAbility.Abilities[reader.ReadInt()]); break;
+                    }
+                    case 5:
+                    {
+                        Advancements.Add((SkillName)reader.ReadInt()); break;
+                    }
                 }
             }
         }

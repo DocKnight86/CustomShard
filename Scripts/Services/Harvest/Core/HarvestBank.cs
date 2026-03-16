@@ -48,7 +48,9 @@ namespace Server.Engines.Harvest
         public void CheckRespawn()
         {
             if (m_Current == m_Maximum || m_NextRespawn > DateTime.UtcNow)
+            {
                 return;
+            }
 
             m_Current = m_Maximum;
 
@@ -74,7 +76,9 @@ namespace Server.Engines.Harvest
 
                 double minutes = min + (rnd * (max - min));
                 if (m_Definition.RaceBonus && from.Race == Race.Elf)
+                {
                     minutes *= .75;	//25% off the time.  
+                }
 
                 m_NextRespawn = DateTime.UtcNow + TimeSpan.FromMinutes(minutes);
             }
@@ -84,7 +88,9 @@ namespace Server.Engines.Harvest
             }
 
             if (m_Current < 0)
+            {
                 m_Current = 0;
+            }
         }
     }
 }

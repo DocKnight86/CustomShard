@@ -110,7 +110,9 @@ namespace Server.Mobiles
             SetResistance(ResistanceType.Energy, 45, 55);
 
             if (galleon == null)
+            {
                 Timer.DelayCall(TimeSpan.FromSeconds(.5), SpawnShip);
+            }
         }
 
         public void SpawnShip()
@@ -118,11 +120,17 @@ namespace Server.Mobiles
             BaseGalleon gal;
 
             if (this is PirateCaptain)
+            {
                 gal = new OrcishGalleon(Direction.North);
+            }
             else if (Map == Map.Tokuno)
+            {
                 gal = new TokunoGalleon(Direction.North);
+            }
             else
+            {
                 gal = new GargishGalleon(Direction.North);
+            }
 
             Point3D p = Location;
             Map map = Map;
@@ -146,7 +154,9 @@ namespace Server.Mobiles
                     Mobile crew = new PirateCrew();
 
                     if (j == 0 && this is PirateCaptain)
+                    {
                         crew.Title = "the orc captain";
+                    }
 
                     AddToCrew(crew);
                     crew.MoveToWorld(new Point3D(gal.X + Utility.RandomList(-1, 1), gal.Y + Utility.RandomList(-1, 0, 1), gal.ZSurface), map);
@@ -164,21 +174,27 @@ namespace Server.Mobiles
         public void OnShipDelete()
         {
             if (Alive && !Deleted)
+            {
                 Kill();
+            }
 
             for (int i = 0; i < m_Crew.Count; i++)
             {
                 Mobile mob = m_Crew[i];
 
                 if (mob != null && !mob.Deleted)
+                {
                     mob.Kill();
+                }
             }
         }
 
         public override void Delete()
         {
             if (BountyQuestSpawner.Instance != null)
+            {
                 BountyQuestSpawner.Instance.HandleDeath(this);
+            }
 
             if (m_Galleon != null && !m_Galleon.Deleted)
             {
@@ -192,9 +208,13 @@ namespace Server.Mobiles
         public override void OnCombatantChange()
         {
             if (Combatant == null)
+            {
                 CantWalk = true;
+            }
             else
+            {
                 CantWalk = false;
+            }
 
             base.OnCombatantChange();
         }
@@ -204,7 +224,9 @@ namespace Server.Mobiles
             BaseGalleon gal = obj as BaseGalleon;
 
             if (gal == null)
+            {
                 return;
+            }
 
             if (gal.PlayerCount > 0)
             {
@@ -213,13 +235,17 @@ namespace Server.Mobiles
             }
 
             if (!gal.Deleted)
+            {
                 gal.ForceDecay();
+            }
         }
 
         public void AddToCrew(Mobile mob)
         {
             if (!m_Crew.Contains(mob))
+            {
                 m_Crew.Add(mob);
+            }
         }
 
         private DateTime m_StopTime;
@@ -249,14 +275,20 @@ namespace Server.Mobiles
             base.OnThink();
 
             if (m_Galleon == null)
+            {
                 return;
+            }
 
             if (m_Galleon.Deleted)
+            {
                 OnShipDelete();
+            }
 
             // Ship is fucked without his captain!!!
             if (!m_Galleon.Contains(this))
+            {
                 return;
+            }
 
             if (m_NextCrewCheck < DateTime.UtcNow)
             {
@@ -266,7 +298,9 @@ namespace Server.Mobiles
             if (!IsInBattle())
             {
                 if (!m_OnCourse)
+                {
                     ResumeCourse();
+                }
                 else if (m_OnCourse && !m_Galleon.IsMoving && m_ActionTime < DateTime.UtcNow)
                 {
                     ResumeCourseTimed(ResumeTime, true);
@@ -351,7 +385,9 @@ namespace Server.Mobiles
         public BaseGalleon GetFocusBoat(Mobile focusMob)
         {
             if (focusMob == null || focusMob.Deleted || focusMob.Map == null || focusMob.Map == Map.Internal)
+            {
                 return null;
+            }
 
             BaseGalleon g = BaseGalleon.FindGalleonAt(focusMob, focusMob.Map);
 
@@ -361,7 +397,9 @@ namespace Server.Mobiles
         public void MoveBoat(Point3D p)
         {
             if (m_Galleon == null || m_Galleon.Contains(p))
+            {
                 return;
+            }
 
             int x = p.X;
             int y = p.Y;
@@ -371,7 +409,9 @@ namespace Server.Mobiles
             Direction dir = m_Galleon.GetMovementFor(x, y, out speed);
 
             if (!Aggressive)
+            {
                 dir = (Direction)(((int)dir + -4) & 0x7);
+            }
 
             if (dir == Direction.West || dir == Direction.Left || dir == Direction.South)
             {
@@ -432,7 +472,9 @@ namespace Server.Mobiles
         private bool HasTarget(Mobile focus, IShipCannon cannon, bool shootatboat)
         {
             if (cannon == null || cannon.Deleted || cannon.Map == null || cannon.Map == Map.Internal || m_Galleon == null || m_Galleon.Deleted)
+            {
                 return false;
+            }
 
             Direction d = cannon.GetFacing();
             int xOffset = 0; int yOffset = 0;
@@ -465,21 +507,29 @@ namespace Server.Mobiles
                     Point3D newPoint;
 
                     if (xOffset == 0)
+                    {
                         newPoint = new Point3D(pnt.X + xOffset + i, pnt.Y + yOffset * currentRange, pnt.Z);
+                    }
                     else
+                    {
                         newPoint = new Point3D(pnt.X + xOffset * currentRange, pnt.Y + yOffset + i, pnt.Z);
+                    }
 
                     if (shootatboat)
                     {
                         BaseGalleon g = BaseGalleon.FindGalleonAt(newPoint, Map);
 
                         if (g != null && g == m_TargetBoat && g != Galleon)
+                        {
                             return true;
+                        }
                     }
                     else
                     {
                         if (focus == null)
+                        {
                             return false;
+                        }
 
                         if (newPoint.X == focus.X && newPoint.Y == focus.Y)
                         {
@@ -527,7 +577,9 @@ namespace Server.Mobiles
                     Item item = Loot.Construct(type);
 
                     if (item != null)
+                    {
                         HoldItem = item;
+                    }
                 }
             }
         }
@@ -541,19 +593,27 @@ namespace Server.Mobiles
                 Item item = value;
 
                 if (item != null)
+                {
                     AddItemToHold(item);
+                }
             }
         }
 
         public void AddItemToHold(Item item)
         {
             if (item == null)
+            {
                 return;
+            }
 
             if (m_Galleon != null && m_Galleon.GalleonHold != null)
+            {
                 m_Galleon.GalleonHold.DropItem(item);
+            }
             else
+            {
                 item.Delete();
+            }
         }
 
         public void CheckCrew()
@@ -591,7 +651,9 @@ namespace Server.Mobiles
             BaseBoat check = BaseBoat.FindBoatAt(p, Map);
 
             if (check != null)
+            {
                 CheckBlock(check, p);
+            }
         }
 
         public void CheckBlock(IEntity e, Point3D loc)
@@ -690,11 +752,15 @@ namespace Server.Mobiles
             {
                 Mobile mob = reader.ReadMobile();
                 if (mob != null && !mob.Deleted && mob.Alive)
+                {
                     m_Crew.Add(mob);
+                }
             }
 
             if (!m_Blockade)
+            {
                 ResumeCourseTimed(TimeSpan.FromSeconds(15), true);
+            }
 
             if (m_Galleon != null)
             {

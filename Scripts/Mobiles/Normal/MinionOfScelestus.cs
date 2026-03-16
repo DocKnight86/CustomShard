@@ -81,7 +81,9 @@ namespace Server.Mobiles
                     mobile.SetMountBlock(BlockMountType.Dazed, TimeSpan.FromSeconds(10), true);
                 }
                 else if (defender.Mount != null)
+                {
                     defender.Mount.Rider = null;
+                }
 
                 defender.PlaySound(0x140);
                 defender.FixedParticles(0x3728, 10, 15, 9955, EffectLayer.Waist);
@@ -99,7 +101,9 @@ namespace Server.Mobiles
                 Item item = Loot.Construct(m_Types);
 
                 if (item != null)
+                {
                     c.DropItem(item);
+                }
             }
         }
 
@@ -113,7 +117,9 @@ namespace Server.Mobiles
                 foreach (Mobile m in eable)
                 {
                     if (m.NetState != null)
+                    {
                         m.SendMessage("The minion has returned to its home.");
+                    }
                 }
                 eable.Free();
 

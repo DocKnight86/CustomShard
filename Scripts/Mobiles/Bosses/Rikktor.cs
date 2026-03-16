@@ -82,7 +82,9 @@ namespace Server.Mobiles
             base.OnGaveMeleeAttack(defender);
 
             if (0.2 >= Utility.RandomDouble())
+            {
                 Earthquake();
+            }
         }
 
         public void Earthquake()
@@ -90,7 +92,9 @@ namespace Server.Mobiles
             Map map = Map;
 
             if (map == null)
+            {
                 return;
+            }
 
             ArrayList targets = new ArrayList();
 
@@ -99,12 +103,18 @@ namespace Server.Mobiles
             foreach (Mobile m in eable)
             {
                 if (m == this || !CanBeHarmful(m))
+                {
                     continue;
+                }
 
                 if (m is BaseCreature creature && (creature.Controlled || creature.Summoned || creature.Team != Team))
+                {
                     targets.Add(m);
+                }
                 else if (m.Player)
+                {
                     targets.Add(m);
+                }
             }
 
             eable.Free();
@@ -118,16 +128,22 @@ namespace Server.Mobiles
                 double damage = m.Hits * 0.6;
 
                 if (damage < 10.0)
+                {
                     damage = 10.0;
+                }
                 else if (damage > 75.0)
+                {
                     damage = 75.0;
+                }
 
                 DoHarmful(m);
 
                 AOS.Damage(m, this, (int)damage, 100, 0, 0, 0, 0);
 
                 if (m.Alive && m.Body.IsHuman && !m.Mounted)
+                {
                     m.Animate(20, 7, 1, true, false, 0); // take hit
+                }
             }
         }
 

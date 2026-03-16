@@ -76,8 +76,9 @@ namespace Server.Mobiles
 
         public override ChampionSkullType SkullType => ChampionSkullType.None;
 
-        public override Type[] UniqueList => new[] { typeof(BansheesCall), typeof(CastOffZombieSkin), typeof(ChannelersDefender), typeof(LightsRampart) };
-        public override Type[] SharedList => new[] { typeof(TokenOfHolyFavor), typeof(TheMostKnowledgePerson), typeof(LieutenantOfTheBritannianRoyalGuard), typeof(ProtectoroftheBattleMage) };
+        public override Type[] UniqueList => [];
+        public override Type[] SharedList => new[] { typeof(TheMostKnowledgePerson), typeof(LieutenantOfTheBritannianRoyalGuard), typeof(ProtectoroftheBattleMage) };
+
         public override Type[] DecorativeList => new[] { typeof(MummifiedCorpse) };
         public override MonsterStatuetteType[] StatueTypes => Array.Empty<MonsterStatuetteType>();
 
@@ -114,13 +115,17 @@ namespace Server.Mobiles
             base.OnGotMeleeAttack(attacker);
 
             if (0.05 >= Utility.RandomDouble())
+            {
                 SpawnShadowDwellers(attacker);
+            }
         }
 
         public override void AlterDamageScalarFrom(Mobile caster, ref double scalar)
         {
             if (0.05 >= Utility.RandomDouble())
+            {
                 SpawnShadowDwellers(caster);
+            }
         }
 
         public override void OnGaveMeleeAttack(Mobile defender)
@@ -181,16 +186,22 @@ namespace Server.Mobiles
                 if (this != m && GetDistanceToSqrt(m) <= BlastRange && CanBeHarmful(m))
                 {
                     if (m is ShadowDweller)
+                    {
                         continue;
+                    }
 
                     DoHarmful(m);
 
                     double damage = m.Hits * 0.6;
 
                     if (damage < 100.0)
+                    {
                         damage = 100.0;
+                    }
                     else if (damage > 200.0)
+                    {
                         damage = 200.0;
+                    }
 
                     DoHarmful(m);
 
@@ -211,7 +222,9 @@ namespace Server.Mobiles
             foreach (Mobile m in eable)
             {
                 if (m is ShadowDweller)
+                {
                     continue;
+                }
 
                 if (m.IsPlayer() && GetDistanceToSqrt(m) <= BlastRange && CanBeHarmful(m))
                 {
@@ -223,16 +236,22 @@ namespace Server.Mobiles
                     double damage = m.Hits * 0.6;
 
                     if (damage < 100.0)
+                    {
                         damage = 100.0;
+                    }
                     else if (damage > 200.0)
+                    {
                         damage = 200.0;
+                    }
 
                     AOS.Damage(m, this, (int)damage, 0, 0, 0, 0, 100);
 
                     count++;
 
                     if (count >= 6)
+                    {
                         break;
+                    }
                 }
             }
 
@@ -274,10 +293,14 @@ namespace Server.Mobiles
                 Map map = m_Owner.Map;
 
                 if (map == null)
+                {
                     return;
+                }
 
                 if (0.25 < Utility.RandomDouble())
+                {
                     return;
+                }
 
                 Mobile toTeleport = null;
 
@@ -286,7 +309,9 @@ namespace Server.Mobiles
                     if (m != m_Owner && m.IsPlayer() && m_Owner.CanBeHarmful(m) && m_Owner.CanSee(m))
                     {
                         if (m is ShadowDweller)
+                        {
                             continue;
+                        }
 
                         toTeleport = m;
                         break;
@@ -407,11 +432,17 @@ namespace Server.Mobiles
                 object mod = mods[i];
 
                 if (mod is ResistanceMod resistMod)
+                {
                     from.AddResistanceMod(resistMod);
+                }
                 else if (mod is StatMod statMod)
+                {
                     from.AddStatMod(statMod);
+                }
                 else if (mod is SkillMod skillMod)
+                {
                     from.AddSkillMod(skillMod);
+                }
             }
         }
 
@@ -422,11 +453,17 @@ namespace Server.Mobiles
                 object mod = mods[i];
 
                 if (mod is ResistanceMod resistMod)
+                {
                     from.RemoveResistanceMod(resistMod);
+                }
                 else if (mod is StatMod statMod)
+                {
                     from.RemoveStatMod(statMod.Name);
+                }
                 else if (mod is SkillMod skillMod)
+                {
                     from.RemoveSkillMod(skillMod);
+                }
             }
         }
         #endregion
@@ -436,7 +473,9 @@ namespace Server.Mobiles
             Map map = Map;
 
             if (map == null)
+            {
                 return;
+            }
 
             int newShadowDwellers = Utility.RandomMinMax(2, 3);
 
@@ -458,9 +497,13 @@ namespace Server.Mobiles
                     int z = map.GetAverageZ(x, y);
 
                     if (validLocation = map.CanFit(x, y, Z, 16, false, false))
+                    {
                         loc = new Point3D(x, y, Z);
+                    }
                     else if (validLocation = map.CanFit(x, y, z, 16, false, false))
+                    {
                         loc = new Point3D(x, y, z);
+                    }
                 }
 
                 shadowdweller.MoveToWorld(loc, map);

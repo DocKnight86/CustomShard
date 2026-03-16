@@ -64,7 +64,9 @@ namespace Server.Mobiles
             base.OnGaveMeleeAttack(defender);
 
             if (Utility.RandomDouble() < 0.1)
+            {
                 Drain(defender);
+            }
         }
 
         public override void OnGotMeleeAttack(Mobile attacker)
@@ -72,7 +74,9 @@ namespace Server.Mobiles
             base.OnGotMeleeAttack(attacker);
 
             if (Utility.RandomDouble() < 0.1)
+            {
                 Drain(attacker);
+            }
         }
 
         public virtual void Drain(Mobile m)

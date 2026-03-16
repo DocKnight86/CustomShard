@@ -50,8 +50,8 @@ namespace Server.Mobiles
         {
         }
 
-        public override Type[] UniqueSAList => Array.Empty<Type>();
-        public override Type[] SharedSAList => new Type[] { typeof(StormCaller), typeof(TorcOfTheGuardians), typeof(GiantSteps), typeof(CavalrysFolly) };
+        public override Type[] UniqueSAList => [];
+        public override Type[] SharedSAList => [];
 
         public override int GetAngerSound() { return 0x600; }
         public override int GetIdleSound() { return 0x600; }

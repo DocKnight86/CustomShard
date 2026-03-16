@@ -57,7 +57,9 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (0.2 > Utility.RandomDouble())
+            {
                 c.DropItem(new VileTentacles());
+            }
         }
 
         public override int GetIdleSound()

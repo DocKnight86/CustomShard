@@ -420,28 +420,6 @@ namespace Server.Engines.Craft
             #endregion
 
             #region Leather Armor
-
-            index = AddCraft(typeof(SpellWovenBritches), 1015293, 1072929, 92.5, 117.5, typeof(Leather), 1044462, 15, 1044463);
-            AddRes(index, typeof(EyeOfTheTravesty), 1032685, 1, 1044253);
-            AddRes(index, typeof(Putrefaction), 1032678, 10, 1044253);
-            AddRes(index, typeof(Scourge), 1032677, 10, 1044253);
-            AddRecipe(index, (int)CraftRecipes.SpellWovenBritches);
-            ForceNonExceptional(index);
-
-            index = AddCraft(typeof(SongWovenMantle), 1015293, 1072931, 92.5, 117.5, typeof(Leather), 1044462, 15, 1044463);
-            AddRes(index, typeof(EyeOfTheTravesty), 1032685, 1, 1044253);
-            AddRes(index, typeof(Blight), 1032675, 10, 1044253);
-            AddRes(index, typeof(Muculent), 1032680, 10, 1044253);
-            AddRecipe(index, (int)CraftRecipes.SongWovenMantle);
-            ForceNonExceptional(index);
-
-            index = AddCraft(typeof(StitchersMittens), 1015293, 1072932, 92.5, 117.5, typeof(Leather), 1044462, 15, 1044463);
-            AddRes(index, typeof(CapturedEssence), 1032686, 1, 1044253);
-            AddRes(index, typeof(Corruption), 1032676, 10, 1044253);
-            AddRes(index, typeof(Taint), 1032679, 10, 1044253);
-            AddRecipe(index, (int)CraftRecipes.StitchersMittens);
-            ForceNonExceptional(index);
-
             AddCraft(typeof(LeatherGorget), 1015293, 1025063, 53.9, 78.9, typeof(Leather), 1044462, 4, 1044463);
             AddCraft(typeof(LeatherCap), 1015293, 1027609, 6.2, 31.2, typeof(Leather), 1044462, 2, 1044463);
             AddCraft(typeof(LeatherGloves), 1015293, 1025062, 51.8, 76.8, typeof(Leather), 1044462, 3, 1044463);
@@ -473,48 +451,7 @@ namespace Server.Engines.Craft
             AddCraft(typeof(GargishLeatherChest), 1015293, 1095329, 70.5, 95.5, typeof(Leather), 1044462, 8, 1044463);
             AddCraft(typeof(GargishLeatherLegs), 1015293, 1095333, 66.3, 91.3, typeof(Leather), 1044462, 10, 1044463);
             AddCraft(typeof(GargishLeatherKilt), 1015293, 1095331, 58.0, 83.0, typeof(Leather), 1044462, 6, 1044463);
-            AddCraft(typeof(FemaleGargishLeatherArms), 1015293, 1095327, 53.9, 78.9, typeof(Leather), 1044462, 8, 1044463);
-            AddCraft(typeof(FemaleGargishLeatherChest), 1015293, 1095329, 70.5, 95.5, typeof(Leather), 1044462, 8, 1044463);
-            AddCraft(typeof(FemaleGargishLeatherLegs), 1015293, 1095333, 66.3, 91.3, typeof(Leather), 1044462, 10, 1044463);
-            AddCraft(typeof(FemaleGargishLeatherKilt), 1015293, 1095331, 58.0, 83.0, typeof(Leather), 1044462, 6, 1044463);
             AddCraft(typeof(GargishLeatherWingArmor), 1015293, 1096662, 65.0, 90.0, typeof(Leather), 1044462, 12, 1044463);
-
-            index = AddCraft(typeof(TigerPeltChest), 1015293, 1109626, 90.0, 115.0, typeof(Leather), 1044462, 8, 1044463);
-            AddRes(index, typeof(TigerPelt), 1123908, 4, 1044253);
-            AddRecipe(index, (int)CraftRecipes.TigerPeltChest);
-
-            index = AddCraft(typeof(TigerPeltLegs), 1015293, 1109628, 90.0, 115.0, typeof(Leather), 1044462, 8, 1044463);
-            AddRes(index, typeof(TigerPelt), 1123908, 4, 1044253);
-            AddRecipe(index, (int)CraftRecipes.TigerPeltLegs);
-
-            index = AddCraft(typeof(TigerPeltShorts), 1015293, 1109629, 90.0, 115.0, typeof(Leather), 1044462, 4, 1044463);
-            AddRes(index, typeof(TigerPelt), 1123908, 2, 1044253);
-            AddRecipe(index, (int)CraftRecipes.TigerPeltShorts);
-
-            index = AddCraft(typeof(TigerPeltHelm), 1015293, 1109632, 90.0, 115.0, typeof(Leather), 1044462, 2, 1044463);
-            AddRes(index, typeof(TigerPelt), 1123908, 1, 1044253);
-            AddRecipe(index, (int)CraftRecipes.TigerPeltHelm);
-
-            index = AddCraft(typeof(TigerPeltCollar), 1015293, 1109633, 90.0, 115.0, typeof(Leather), 1044462, 2, 1044463);
-            AddRes(index, typeof(TigerPelt), 1123908, 1, 1044253);
-            AddRecipe(index, (int)CraftRecipes.TigerPeltCollar);
-
-            index = AddCraft(typeof(DragonTurtleHideChest), 1015293, 1109634, 101.5, 116.5, typeof(Leather), 1044462, 8, 1044463);
-            AddRes(index, typeof(DragonTurtleScute), 1123910, 2, 1044253);
-            AddRecipe(index, (int)CraftRecipes.DragonTurtleHideChest);
-
-            index = AddCraft(typeof(DragonTurtleHideLegs), 1015293, 1109636, 101.5, 116.5, typeof(Leather), 1044462, 8, 1044463);
-            AddRes(index, typeof(DragonTurtleScute), 1123910, 4, 1044253);
-            AddRecipe(index, (int)CraftRecipes.DragonTurtleHideLegs);
-
-            index = AddCraft(typeof(DragonTurtleHideHelm), 1015293, 1109637, 101.5, 116.5, typeof(Leather), 1044462, 2, 1044463);
-            AddRes(index, typeof(DragonTurtleScute), 1123910, 1, 1044253);
-            AddRecipe(index, (int)CraftRecipes.DragonTurtleHideHelm);
-
-            index = AddCraft(typeof(DragonTurtleHideArms), 1015293, 1109638, 101.5, 116.5, typeof(Leather), 1044462, 4, 1044463);
-            AddRes(index, typeof(DragonTurtleScute), 1123910, 2, 1044253);
-            AddRecipe(index, (int)CraftRecipes.DragonTurtleHideArms);
-
             #endregion
 
             #region Cloth Armor
@@ -573,22 +510,6 @@ namespace Server.Engines.Craft
             AddCraft(typeof(StuddedBustierArms), 1015306, 1027180, 82.9, 107.9, typeof(Leather), 1044462, 8, 1044463);
             AddCraft(typeof(FemaleLeatherChest), 1015306, 1027174, 62.2, 87.2, typeof(Leather), 1044462, 8, 1044463);
             AddCraft(typeof(FemaleStuddedChest), 1015306, 1027170, 87.1, 112.1, typeof(Leather), 1044462, 10, 1044463);
-
-            index = AddCraft(typeof(TigerPeltBustier), 1015306, 1109627, 90.0, 115.0, typeof(Leather), 1044462, 6, 1044463);
-            AddRes(index, typeof(TigerPelt), 1123908, 3, 1044253);
-            AddRecipe(index, (int)CraftRecipes.TigerPeltBustier);
-
-            index = AddCraft(typeof(TigerPeltLongSkirt), 1015306, 1109630, 90.0, 115.0, typeof(Leather), 1044462, 4, 1044463);
-            AddRes(index, typeof(TigerPelt), 1123908, 2, 1044253);
-            AddRecipe(index, (int)CraftRecipes.TigerPeltLongSkirt);
-
-            index = AddCraft(typeof(TigerPeltSkirt), 1015306, 1109631, 90.0, 115.0, typeof(Leather), 1044462, 4, 1044463);
-            AddRes(index, typeof(TigerPelt), 1123908, 2, 1044253);
-            AddRecipe(index, (int)CraftRecipes.TigerPeltSkirt);
-
-            index = AddCraft(typeof(DragonTurtleHideBustier), 1015306, 1109635, 101.5, 116.5, typeof(Leather), 1044462, 6, 1044463);
-            AddRes(index, typeof(DragonTurtleScute), 1123910, 3, 1044253);
-            AddRecipe(index, (int)CraftRecipes.DragonTurtleHideBustier);
             #endregion
 
             #region Bone Armor

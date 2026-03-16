@@ -44,13 +44,25 @@ namespace Server.Items
             switch (itemID)
             {
                 case 5899:
-                case 5900: name = "boots"; break;
+                case 5900:
+                {
+                    name = "boots"; break;
+                }
                 case 5901:
-                case 5902: name = "sandals"; break;
+                case 5902:
+                {
+                    name = "sandals"; break;
+                }
                 case 5903:
-                case 5904: name = "shoes"; break;
+                case 5904:
+                {
+                    name = "shoes"; break;
+                }
                 case 5905:
-                case 5906: name = "thigh boots"; break;
+                case 5906:
+                {
+                    name = "thigh boots"; break;
+                }
             }
             return name;
         }
@@ -84,7 +96,9 @@ namespace Server.Items
                 Item item = from.FindItemOnLayer(Layer.Shoes);
 
                 if (item is StoneFootwear)
+                {
                     e.Blocked = true;
+                }
             }
         }
 
@@ -143,11 +157,26 @@ namespace Server.Items
             switch (Utility.Random(5))
             {
                 default:
-                case 0: item = new GeodeEast(); break;
-                case 1: item = new GeodeSouth(); break;
-                case 2: item = new GeodeShardEast(); break;
-                case 3: item = new GeodeShardSouth(); break;
-                case 4: item = new LavaRock(); break;
+                case 0:
+                {
+                    item = new GeodeEast(); break;
+                }
+                case 1:
+                {
+                    item = new GeodeSouth(); break;
+                }
+                case 2:
+                {
+                    item = new GeodeShardEast(); break;
+                }
+                case 3:
+                {
+                    item = new GeodeShardSouth(); break;
+                }
+                case 4:
+                {
+                    item = new LavaRock(); break;
+                }
             }
 
             from.AddToBackpack(item);
@@ -193,11 +222,26 @@ namespace Server.Items
             switch (Utility.Random(5))
             {
                 default:
-                case 0: item = new GeodeEast(); break;
-                case 1: item = new GeodeSouth(); break;
-                case 2: item = new GeodeShardEast(); break;
-                case 3: item = new GeodeShardSouth(); break;
-                case 4: item = new LavaRock(); break;
+                case 0:
+                {
+                    item = new GeodeEast(); break;
+                }
+                case 1:
+                {
+                    item = new GeodeSouth(); break;
+                }
+                case 2:
+                {
+                    item = new GeodeShardEast(); break;
+                }
+                case 3:
+                {
+                    item = new GeodeShardSouth(); break;
+                }
+                case 4:
+                {
+                    item = new LavaRock(); break;
+                }
             }
 
             from.AddToBackpack(item);
@@ -229,10 +273,22 @@ namespace Server.Items
         {
             switch (Utility.Random(4))
             {
-                case 0: Hue = 2658; break;
-                case 1: Hue = 2659; break;
-                case 2: Hue = 2660; break;
-                case 3: Hue = 2654; break;
+                case 0:
+                {
+                    Hue = 2658; break;
+                }
+                case 1:
+                {
+                    Hue = 2659; break;
+                }
+                case 2:
+                {
+                    Hue = 2660; break;
+                }
+                case 3:
+                {
+                    Hue = 2654; break;
+                }
             }
         }
 
@@ -260,10 +316,22 @@ namespace Server.Items
         {
             switch (Utility.Random(4))
             {
-                case 0: Hue = 2658; break;
-                case 1: Hue = 2659; break;
-                case 2: Hue = 2660; break;
-                case 3: Hue = 2654; break;
+                case 0:
+                {
+                    Hue = 2658; break;
+                }
+                case 1:
+                {
+                    Hue = 2659; break;
+                }
+                case 2:
+                {
+                    Hue = 2660; break;
+                }
+                case 3:
+                {
+                    Hue = 2654; break;
+                }
             }
         }
 
@@ -291,10 +359,22 @@ namespace Server.Items
         {
             switch (Utility.Random(4))
             {
-                case 0: Hue = 2658; break;
-                case 1: Hue = 2659; break;
-                case 2: Hue = 2660; break;
-                case 3: Hue = 2654; break;
+                case 0:
+                {
+                    Hue = 2658; break;
+                }
+                case 1:
+                {
+                    Hue = 2659; break;
+                }
+                case 2:
+                {
+                    Hue = 2660; break;
+                }
+                case 3:
+                {
+                    Hue = 2654; break;
+                }
             }
         }
 
@@ -322,10 +402,22 @@ namespace Server.Items
         {
             switch (Utility.Random(4))
             {
-                case 0: Hue = 2658; break;
-                case 1: Hue = 2659; break;
-                case 2: Hue = 2660; break;
-                case 3: Hue = 2654; break;
+                case 0:
+                {
+                    Hue = 2658; break;
+                }
+                case 1:
+                {
+                    Hue = 2659; break;
+                }
+                case 2:
+                {
+                    Hue = 2660; break;
+                }
+                case 3:
+                {
+                    Hue = 2654; break;
+                }
             }
         }
 

@@ -63,10 +63,14 @@ namespace Server.Engines.Despise
             int discordanceEffect = 0;
 
             if (!CanBeHarmful(m, false) || SkillHandlers.Discordance.GetEffect(m, ref discordanceEffect))
+            {
                 return false;
+            }
 
             if (m is DespiseCreature creature && creature.Alignment != Alignment.Neutral && creature.Alignment != Alignment || m is DespiseBoss)
+            {
                 return true;
+            }
 
             return m is PlayerMobile && !Controlled && (m.Karma < 0 && Alignment == Alignment.Good || m.Karma > 0 && Alignment == Alignment.Evil);
         }
@@ -458,7 +462,9 @@ namespace Server.Engines.Despise
                 foreach (Mobile m in eable)
                 {
                     if (m.Alive && m.Hits <= (int)(m.HitsMax * HealThreshold) && CanDoHeal(m))
+                    {
                         eligables.Add(m);
+                    }
                 }
 
                 if (eligables.Count > 0)
@@ -483,7 +489,9 @@ namespace Server.Engines.Despise
         private bool CanDoHeal(Mobile toHeal)
         {
             if (toHeal is DespiseCreature creature && creature.Alignment == Alignment)
+            {
                 return true;
+            }
 
             return toHeal is PlayerMobile && (toHeal.Karma < 0 && Alignment == Alignment.Evil || toHeal.Karma > 0 && Alignment == Alignment.Good);
         }

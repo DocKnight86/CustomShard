@@ -22,7 +22,9 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (Utility.RandomDouble() < 0.4)
+            {
                 c.DropItem(new SpeckledPoisonSac());
+            }
         }
 
         public override void Serialize(GenericWriter writer)

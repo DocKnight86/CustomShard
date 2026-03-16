@@ -49,7 +49,9 @@ namespace Server.Items
                 m_Locked = value;
 
                 if (m_Locked)
+                {
                     m_Picker = null;
+                }
 
                 InvalidateProperties();
             }
@@ -233,7 +235,9 @@ namespace Server.Items
         public override bool CheckLift(Mobile from, Item item, ref LRReason reject)
         {
             if (!base.CheckLift(from, item, ref reject))
+            {
                 return false;
+            }
 
             if (this is SecretChest)
             {
@@ -241,7 +245,9 @@ namespace Server.Items
             }
 
             if (item != this && from.AccessLevel < AccessLevel.GameMaster && m_Locked)
+            {
                 return false;
+            }
 
             return true;
         }
@@ -249,7 +255,9 @@ namespace Server.Items
         public override bool CheckItemUse(Mobile from, Item item)
         {
             if (!base.CheckItemUse(from, item))
+            {
                 return false;
+            }
 
             if (item != this && from.AccessLevel < AccessLevel.GameMaster && m_Locked)
             {
@@ -301,7 +309,9 @@ namespace Server.Items
         public override void OnDoubleClickSecureTrade(Mobile from)
         {
             if (CheckLocked(from))
+            {
                 return;
+            }
 
             base.OnDoubleClickSecureTrade(from);
         }
@@ -309,7 +319,9 @@ namespace Server.Items
         public override void Open(Mobile from)
         {
             if (CheckLocked(from))
+            {
                 return;
+            }
 
             base.Open(from);
         }
@@ -317,7 +329,9 @@ namespace Server.Items
         public override void OnSnoop(Mobile from)
         {
             if (CheckLocked(from))
+            {
                 return;
+            }
 
             base.OnSnoop(from);
         }
@@ -402,15 +416,23 @@ namespace Server.Items
                 MaxLockLevel = level + 35;
 
                 if (LockLevel == 0)
+                {
                     LockLevel = -1;
+                }
                 else if (LockLevel > 95)
+                {
                     LockLevel = 95;
+                }
 
                 if (RequiredSkill > 95)
+                {
                     RequiredSkill = 95;
+                }
 
                 if (MaxLockLevel > 95)
+                {
                     MaxLockLevel = 95;
+                }
             }
             else
             {

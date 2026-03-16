@@ -89,16 +89,7 @@ namespace Server.Services.TownCryer
         {
             if (Enabled)
             {
-                NewsEntries.Add(new TownCryerNewsEntry(1159346, 1159347, 0x9D3E, null, "https://uo.com/wiki/ultima-online-wiki/combat/jolly-roger/")); // Jolly Roger
-                NewsEntries.Add(new TownCryerNewsEntry(1159262, 1159263, 0x64E, null, "https://uo.com/wiki/ultima-online-wiki/seasonal-events/halloween-treasures-of-the-sea/")); // Forsaken Foes
-                NewsEntries.Add(new TownCryerNewsEntry(1158944, 1158945, 0x9CEA, null, "https://uo.com/wiki/ultima-online-wiki/combat/pvm-player-versus-monster/rising-tide/")); // Rising Tide
                 NewsEntries.Add(new TownCryerNewsEntry(1158552, 1158553, 0x6CE, typeof(GoingGumshoeQuest), null)); // Going Gumshoe
-                NewsEntries.Add(new TownCryerNewsEntry(1158095, 1158097, 0x61E, null, "https://uo.com/")); // Britain Commons
-                NewsEntries.Add(new TownCryerNewsEntry(1158089, 1158091, 0x60F, null, "https://uo.com/wiki/ultima-online-wiki/gameplay/npc-commercial-transactions/clean-up-britannia/")); // Cleanup Britannia
-                NewsEntries.Add(new TownCryerNewsEntry(1158098, 1158100, 0x615, null, "https://uo.com/wiki/ultima-online-wiki/gameplay/crafting/bulk-orders/")); // New Bulk Orders
-                NewsEntries.Add(new TownCryerNewsEntry(1158101, 1158103, 0x616, null, "https://uo.com/wiki/ultima-online-wiki/a-summary-for-returning-players/weapons-armor-and-loot-revamps-2016/")); // 2016 Loot Revamps
-                NewsEntries.Add(new TownCryerNewsEntry(1158116, 1158118, 0x64F, null, "https://uo.com/wiki/ultima-online-wiki/gameplay/the-virtues/")); // Virtues
-                NewsEntries.Add(new TownCryerNewsEntry(1158083, 1158085, 0x617, typeof(TamingPetQuest), "https://uo.com/wiki/ultima-online-wiki/skills/animal-taming/animal-training/")); // Animal Training
                 NewsEntries.Add(new TownCryerNewsEntry(1158086, 1158088, 0x61D, typeof(ExploringTheDeepQuest), null));
                 NewsEntries.Add(new TownCryerNewsEntry(1158092, 1158094, 0x651, typeof(HuntmastersChallengeQuest), "https://uo.com/wiki/ultima-online-wiki/gameplay/huntmasters-challenge/")); // Huntsmaster Challenge 
                 NewsEntries.Add(new TownCryerNewsEntry(1158104, 1158106, 0x61C, typeof(PaladinsOfTrinsic), "https://uo.com/wiki/ultima-online-wiki/world/dungeons/dungeon-shame/")); //  New Shame 

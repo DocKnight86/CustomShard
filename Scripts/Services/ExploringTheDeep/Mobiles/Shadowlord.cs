@@ -21,8 +21,8 @@ namespace Server.Mobiles
 
         private readonly Type[] _ArtifactTypes =
         {
-            typeof(Abhorrence),         typeof(CaptainJohnesBlade),             typeof(Craven),
-            typeof(Equivocation),       typeof(GargishCaptainJohnesBlade),      typeof(GargishEquivocation),
+            typeof(Abhorrence), typeof(Craven),
+            typeof(Equivocation), typeof(GargishEquivocation),
             typeof(GargishPincer),      typeof(Pincer)
         };
 

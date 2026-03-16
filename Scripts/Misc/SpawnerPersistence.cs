@@ -32,7 +32,7 @@ namespace Server
             IceHoundRemoval = 0x00000004,
             PaladinAndKrakin = 0x00000008,
             TrinsicPaladins = 0x00000010,
-            HonestyItems = 0x00000020,
+            UNUSED1 = 0x00000020,
             TramKhaldun = 0x00000040,
             FixAddonDeco = 0x00000080,
             LifeStealers = 0x00000100,
@@ -74,7 +74,9 @@ namespace Server
                 foreach (int i in Enum.GetValues(typeof(SpawnerVersion)))
                 {
                     if (i == 0x00000000)
+                    {
                         continue;
+                    }
 
                     VersionFlag |= (SpawnerVersion)i;
                 }
@@ -88,7 +90,9 @@ namespace Server
                              "Be advised, this process will take several minutes to complete.";
 
                 if (_SpawnsConverted)
+                {
                     str += "<br><br>You have already ran this conversion. Run Again?";
+                }
 
                 e.Mobile.SendGump(new WarningGump(1019005, 30720, str, 0xFFFFFF, 400, 300, (from, ok, state) =>
                 {
@@ -147,7 +151,9 @@ namespace Server
                         _Version = reader.ReadInt();
 
                         if (_Version > 10)
+                        {
                             VersionFlag = (SpawnerVersion)reader.ReadInt();
+                        }
 
                         if (_Version > 2)
                         {
@@ -221,12 +227,6 @@ namespace Server
                         VersionFlag |= SpawnerVersion.TramKhaldun;
                     }
 
-                    if ((VersionFlag & SpawnerVersion.HonestyItems) == 0)
-                    {
-                        ConvertHonestyItems();
-                        VersionFlag |= SpawnerVersion.HonestyItems;
-                    }
-
                     if ((VersionFlag & SpawnerVersion.TrinsicPaladins) == 0)
                     {
                         SpawnTrinsicPaladins();
@@ -253,7 +253,10 @@ namespace Server
                     goto case 10;
                 case 10:
                     if ((VersionFlag & SpawnerVersion.Initial) == 0)
+                    {
                         VersionFlag |= SpawnerVersion.Initial;
+                    }
+
                     break;
                 case 9:
                     LoadFromXmlSpawner("Spawns/twistedweald.xml", Map.Ilshenar, "TwistedWealdTrigger1");
@@ -486,27 +489,6 @@ namespace Server
         }
         #endregion
 
-        #region Honesty Item Conversion
-        public static void ConvertHonestyItems()
-        {
-            int convert = 0;
-
-            foreach (Item item in World.Items.Values)
-            {
-                if (item.HonestyItem)
-                {
-                    if (!item.HasSocket<HonestyItemSocket>())
-                    {
-                        item.AttachSocket(new HonestyItemSocket());
-                        convert++;
-                    }
-                }
-            }
-
-            ToConsole(string.Format("Converted {0} honesty items and attached Honesty Item Socket!", convert));
-        }
-        #endregion
-
         #region Trinny Paladins
         public static void SpawnTrinsicPaladins()
         {
@@ -644,12 +626,16 @@ namespace Server
                 Type t = quester.GetType();
 
                 if (QuestQuesterTypes.ContainsKey(t))
+                {
                     continue;
+                }
 
                 Type[] quests = quester.Quests;
 
                 if (quests != null && quests.Length > 0)
+                {
                     QuestQuesterTypes[t] = quests;
+                }
             }
 
             foreach (BaseQuestItem item in World.Items.Values.OfType<BaseQuestItem>())
@@ -657,12 +643,16 @@ namespace Server
                 Type t = item.GetType();
 
                 if (QuestQuesterTypes.ContainsKey(t))
+                {
                     continue;
+                }
 
                 Type[] quests = item.Quests;
 
                 if (quests != null && quests.Length > 0)
+                {
                     QuestQuesterTypes[t] = quests;
+                }
             }
 
             int count = 0;
@@ -674,7 +664,9 @@ namespace Server
                     foreach (KeyValuePair<Type, Type[]> kvp in QuestQuesterTypes)
                     {
                         if (quest.QuesterType != null)
+                        {
                             break;
+                        }
 
                         foreach (Type type in kvp.Value)
                         {
@@ -706,7 +698,9 @@ namespace Server
             foreach (XmlSpawner spawner in spawners)
             {
                 if (CheckSmartSpawn(spawner, check, subclasses))
+                {
                     count++;
+                }
             }
 
             ColUtility.Free(spawners);
@@ -727,7 +721,9 @@ namespace Server
                         spawner.SmartSpawning = false;
 
                         if (spawner.CurrentCount == 0)
+                        {
                             spawner.DoRespawn = true;
+                        }
 
                         return true;
                     }
@@ -815,7 +811,9 @@ namespace Server
             foreach (ISpawner spawner in World.Items.Values.OfType<ISpawner>().Where(s => s is Item item && item.Name != null && item.Name.ToLower().IndexOf(name.ToLower()) >= 0))
             {
                 if (Replace(spawner, current, replace, check))
+                {
                     count++;
+                }
             }
 
             ToConsole(string.Format("Spawn Replacement: {0} spawners named {1} replaced [{2} replaced with {3}].", count.ToString(), name, current, replace));
@@ -912,7 +910,9 @@ namespace Server
             foreach (XmlSpawner.SpawnObject obj in spawner.SpawnObjects)
             {
                 if (obj == null || obj.TypeName == null)
+                {
                     continue;
+                }
 
                 string typeName = obj.TypeName.ToLower();
                 string lookingFor = toRemove.ToLower();
@@ -981,7 +981,9 @@ namespace Server
                 foreach (ISpawner spawner in list)
                 {
                     if (ActionOnSpawner(spawner, typeCheck, lineCheck, exempt, action, inherits))
+                    {
                         count++;
+                    }
                 }
 
                 ColUtility.Free(list);
@@ -996,12 +998,16 @@ namespace Server
             string[] list = GetSpawnList(spawner);
 
             if (list == null)
+            {
                 return false;
+            }
 
             foreach (string str in list)
             {
                 if (string.IsNullOrEmpty(str))
+                {
                     continue;
+                }
 
                 string spawnObject = str.ToLower();
 
@@ -1010,14 +1016,20 @@ namespace Server
                     Type t;
 
                     if (spawner is Spawner)
+                    {
                         t = ScriptCompiler.FindTypeByName(spawnObject);
+                    }
                     else
+                    {
                         t = ScriptCompiler.FindTypeByName(BaseXmlSpawner.ParseObjectType(spawnObject));
+                    }
 
                     if (t == typeCheck || t != null && inherits && t.IsSubclassOf(typeCheck))
                     {
                         if (action != null)
+                        {
                             action(spawner);
+                        }
 
                         return true;
                     }
@@ -1029,7 +1041,9 @@ namespace Server
                     if ((lookFor == null || spawnObject.IndexOf(lookFor) >= 0) && (exempt == null || spawnObject.IndexOf(exempt.ToLower()) <= 0))
                     {
                         if (action != null)
+                        {
                             action(spawner);
+                        }
 
                         return true;
                     }
@@ -1336,7 +1350,9 @@ namespace Server
         private static bool DeleteSpawner(string id)
         {
             if (id == null)
+            {
                 return false;
+            }
 
             XmlSpawner spawner = World.Items.Values.OfType<XmlSpawner>().FirstOrDefault(s => s.UniqueId == id);
 
@@ -1360,7 +1376,9 @@ namespace Server
                     XmlSpawner.SpawnObject obj = spawner.SpawnObjects[i];
 
                     if (obj == null || obj.TypeName == null)
+                    {
                         continue;
+                    }
 
                     spawns[i] = new SpawnObject(obj.TypeName, obj.MaxCount);
                 }
@@ -1399,7 +1417,9 @@ namespace Server
                     foreach (string s in _SpawnerSymbols)
                     {
                         if (obj.SpawnName.Contains(s))
+                        {
                             return true;
+                        }
                     }
                 }
             }

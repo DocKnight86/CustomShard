@@ -38,7 +38,9 @@ namespace Server.Misc
         public static bool IsValid(string address)
         {
             if (address == null || address.Length > 320)
+            {
                 return false;
+            }
 
             return _pattern.IsMatch(address);
         }
@@ -53,7 +55,9 @@ namespace Server.Misc
                     _Client.Credentials = new System.Net.NetworkCredential(EmailUsername, EmailPassword);
                 }
                 if (EmailSsl)
+                {
                     _Client.EnableSsl = true;
+                }
             }
         }
 
@@ -85,9 +89,13 @@ namespace Server.Misc
             MailMessage message = (MailMessage)state;
 
             if (Send(message))
+            {
                 Console.WriteLine("Sent e-mail '{0}' to '{1}'.", message.Subject, message.To);
+            }
             else
+            {
                 Console.WriteLine("Failure sending e-mail '{0}' to '{1}'.", message.Subject, message.To);
+            }
         }
     }
 }

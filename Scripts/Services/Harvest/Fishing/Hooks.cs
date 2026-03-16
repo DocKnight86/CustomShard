@@ -45,19 +45,29 @@ namespace Server.Items
         public static int GetCondition(int uses)
         {
             if (uses < 10)
+            {
                 return 1149853; //worn
+            }
 
             if (uses < 20)
+            {
                 return 1149852; //fair
+            }
 
             if (uses < 30)
+            {
                 return 1149851; //very good
+            }
 
             if (uses < 40)
+            {
                 return 1149850; //good
+            }
 
             if (uses < 50)
+            {
                 return 1149849; //excellent
+            }
 
             return 1149848; //new
         }
@@ -75,11 +85,17 @@ namespace Server.Items
             switch (type)
             {
                 case HookType.Lava:
+                {
                     return 1150888;
+                }
                 case HookType.Dredging:
+                {
                     return 1150890;
+                }
                 case HookType.JunkProof:
+                {
                     return 1150883;
+                }
             }
             return 0;
         }
@@ -104,14 +120,28 @@ namespace Server.Items
 
                         switch (pole.HookType)
                         {
-                            case HookType.None: break;
-                            case HookType.Lava: hook = new LavaHook(pole.HookUses); break;
-                            case HookType.Dredging: hook = new DredgingHook(pole.HookUses); break;
-                            case HookType.JunkProof: hook = new JunkProofHook(pole.HookUses); break;
+                            case HookType.None:
+                            {
+                                break;
+                            }
+                            case HookType.Lava:
+                            {
+                                hook = new LavaHook(pole.HookUses); break;
+                            }
+                            case HookType.Dredging:
+                            {
+                                hook = new DredgingHook(pole.HookUses); break;
+                            }
+                            case HookType.JunkProof:
+                            {
+                                hook = new JunkProofHook(pole.HookUses); break;
+                            }
                         }
 
                         if (hook != null)
+                        {
                             from.AddToBackpack(hook);
+                        }
                     }
 
                     pole.HookType = m_Hook.HookType;

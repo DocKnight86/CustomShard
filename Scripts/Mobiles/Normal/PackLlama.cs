@@ -47,7 +47,9 @@ namespace Server.Mobiles
             Container pack = Backpack;
 
             if (pack != null)
+            {
                 pack.Delete();
+            }
 
             pack = new StrongBackpack
             {
@@ -76,7 +78,9 @@ namespace Server.Mobiles
         public override bool IsSnoop(Mobile from)
         {
             if (PackAnimal.CheckAccess(this, from))
+            {
                 return false;
+            }
 
             return base.IsSnoop(from);
         }
@@ -84,7 +88,9 @@ namespace Server.Mobiles
         public override bool OnDragDrop(Mobile from, Item item)
         {
             if (CheckFeed(from, item))
+            {
                 return true;
+            }
 
             if (PackAnimal.CheckAccess(this, from))
             {

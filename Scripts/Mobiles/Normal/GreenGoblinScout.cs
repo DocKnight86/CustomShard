@@ -68,7 +68,9 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (Utility.RandomDouble() < 0.01)
+            {
                 c.DropItem(new LuckyCoin());
+            }
         }
 
         public override void OnThink()

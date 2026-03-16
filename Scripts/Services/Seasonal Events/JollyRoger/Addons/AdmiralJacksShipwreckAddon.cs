@@ -572,7 +572,7 @@ namespace Server.Items
         public AdmiralJacksShipwreckAddon()
         {
 
-            for (var i = 0; i < m_AddOnSimpleComponents.Length / 4; i++)
+            for (int i = 0; i < m_AddOnSimpleComponents.Length / 4; i++)
                 AddComponent(new AddonComponent(m_AddOnSimpleComponents[i, 0]), m_AddOnSimpleComponents[i, 1], m_AddOnSimpleComponents[i, 2], m_AddOnSimpleComponents[i, 3]);
 
 

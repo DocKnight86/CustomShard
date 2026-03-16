@@ -114,7 +114,9 @@ namespace Server.Mobiles
         public static Harrower Spawn(Point3D platLoc, Map platMap)
         {
             if (m_Instances.Count > 0)
+            {
                 return null;
+            }
 
             SpawnEntry entry = m_Entries[Utility.Random(m_Entries.Length)];
 
@@ -141,7 +143,9 @@ namespace Server.Mobiles
         public void Morph()
         {
             if (m_TrueForm)
+            {
                 return;
+            }
 
             m_TrueForm = true;
 
@@ -179,16 +183,24 @@ namespace Server.Mobiles
                         z = map.GetAverageZ(x, y);
 
                         if (!(ok = map.CanFit(x, y, Z, 16, false, false)))
+                        {
                             ok = map.CanFit(x, y, z, 16, false, false);
+                        }
 
                         if (dist >= 0)
+                        {
                             dist = -(dist + 1);
+                        }
                         else
+                        {
                             dist = -(dist - 1);
+                        }
                     }
 
                     if (!ok)
+                    {
                         continue;
+                    }
 
                     HarrowerTentacles spawn = new HarrowerTentacles(this)
                     {
@@ -231,7 +243,9 @@ namespace Server.Mobiles
             m_Tentacles = reader.ReadStrongMobileList<HarrowerTentacles>();
 
             if (m_IsSpawned)
+            {
                 m_Instances.Add(this);
+            }
         }
 
         public void GivePowerScrolls()
@@ -244,11 +258,15 @@ namespace Server.Mobiles
                 DamageStore ds = rights[i];
 
                 if (ds.m_HasRight)
+                {
                     toGive.Add(ds.m_Mobile);
+                }
             }
 
             if (toGive.Count == 0)
+            {
                 return;
+            }
 
             // Randomize
             for (int i = 0; i < toGive.Count; ++i)
@@ -265,38 +283,6 @@ namespace Server.Mobiles
 
                 m.SendLocalizedMessage(1049524); // You have received a scroll of power!
                 m.AddToBackpack(new StatCapScroll(m_StatCap + RandomStatScrollLevel()));
-
-                if (m is PlayerMobile pm)
-                {
-                    for (int j = 0; j < pm.JusticeProtectors.Count; ++j)
-                    {
-                        Mobile prot = pm.JusticeProtectors[j];
-
-                        if (prot.Map != pm.Map || prot.Murderer || prot.Criminal || !JusticeVirtue.CheckMapRegion(pm, prot))
-                            continue;
-
-                        int chance = 0;
-
-                        switch (VirtueHelper.GetLevel(prot, VirtueName.Justice))
-                        {
-                            case VirtueLevel.Seeker:
-                                chance = 60;
-                                break;
-                            case VirtueLevel.Follower:
-                                chance = 80;
-                                break;
-                            case VirtueLevel.Knight:
-                                chance = 100;
-                                break;
-                        }
-
-                        if (chance > Utility.Random(100))
-                        {
-                            prot.SendLocalizedMessage(1049368); // You have been rewarded for your dedication to Justice!
-                            prot.AddToBackpack(new StatCapScroll(m_StatCap + RandomStatScrollLevel()));
-                        }
-                    }
-                }
             }
         }
 
@@ -305,13 +291,24 @@ namespace Server.Mobiles
             double random = Utility.RandomDouble();
 
             if (0.1 >= random)
+            {
                 return 25;
+            }
+
             if (0.25 >= random)
+            {
                 return 20;
+            }
+
             if (0.45 >= random)
+            {
                 return 15;
+            }
+
             if (0.70 >= random)
+            {
                 return 10;
+            }
 
             return 5;
         }
@@ -327,7 +324,9 @@ namespace Server.Mobiles
                     DamageStore ds = rights[i];
 
                     if (ds.m_HasRight && ds.m_Mobile is PlayerMobile mobile)
+                    {
                         PlayerMobile.ChampionTitleInfo.AwardHarrowerTitle(mobile);
+                    }
                 }
 
                 if (!NoKillAwards)
@@ -343,7 +342,9 @@ namespace Server.Mobiles
                         Mobile m = m_Tentacles[i];
 
                         if (!m.Deleted)
+                        {
                             m.Kill();
+                        }
 
                         RegisterDamageTo(m);
                     }
@@ -354,7 +355,9 @@ namespace Server.Mobiles
                     AwardArtifact(GetArtifact());
 
                     if (m_GateItem != null)
+                    {
                         m_GateItem.Delete();
+                    }
                 }
 
                 return base.OnBeforeDeath();
@@ -367,7 +370,9 @@ namespace Server.Mobiles
         public virtual void RegisterDamageTo(Mobile m)
         {
             if (m == null)
+            {
                 return;
+            }
 
             foreach (DamageEntry de in m.DamageEntries)
             {
@@ -376,7 +381,9 @@ namespace Server.Mobiles
                 Mobile master = damager.GetDamageMaster(m);
 
                 if (master != null)
+                {
                     damager = master;
+                }
 
                 RegisterDamage(damager, de.DamageGiven);
             }
@@ -385,12 +392,18 @@ namespace Server.Mobiles
         public void RegisterDamage(Mobile from, int amount)
         {
             if (from == null || !from.Player)
+            {
                 return;
+            }
 
             if (m_DamageEntries.ContainsKey(from))
+            {
                 m_DamageEntries[from] += amount;
+            }
             else
+            {
                 m_DamageEntries.Add(from, amount);
+            }
 
             from.SendMessage($"Total Damage: {m_DamageEntries[from]}");
         }
@@ -398,7 +411,9 @@ namespace Server.Mobiles
         public void AwardArtifact(Item artifact)
         {
             if (artifact == null)
+            {
                 return;
+            }
 
             int totalDamage = 0;
 
@@ -434,16 +449,22 @@ namespace Server.Mobiles
         public void GiveArtifact(Mobile to, Item artifact)
         {
             if (to == null || artifact == null)
+            {
                 return;
+            }
 
             to.PlaySound(0x5B4);
 
             Container pack = to.Backpack;
 
             if (pack == null || !pack.TryDropItem(to, artifact, false))
+            {
                 artifact.Delete();
+            }
             else
+            {
                 to.SendLocalizedMessage(1062317); // For your valor in combating the fallen beast, a special artifact has been bestowed on you.
+            }
         }
 
         public bool IsEligible(Mobile m, Item Artifact)
@@ -455,11 +476,19 @@ namespace Server.Mobiles
         {
             double random = Utility.RandomDouble();
             if (0.05 >= random)
+            {
                 return CreateArtifact(UniqueList);
+            }
+
             if (0.15 >= random)
+            {
                 return CreateArtifact(SharedList);
+            }
+
             if (0.30 >= random)
+            {
                 return CreateArtifact(DecorativeList);
+            }
 
             return null;
         }
@@ -467,7 +496,9 @@ namespace Server.Mobiles
         public Item CreateArtifact(Type[] list)
         {
             if (list.Length == 0)
+            {
                 return null;
+            }
 
             int random = Utility.Random(list.Length);
 

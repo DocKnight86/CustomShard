@@ -46,9 +46,15 @@ namespace Server.Engines.CannedEvil
         public static int RankForLevel(int l)
         {
             if (l < 0)
+            {
                 return 0;
+            }
+
             if (l >= m_Rank.Length)
+            {
                 return 3;
+            }
+
             return m_Rank[l];
         }
         public static int MaxKillsForLevel(int l)
@@ -90,13 +96,21 @@ namespace Server.Engines.CannedEvil
             for (int i = 0; i < m_Rank.Length; ++i)
             {
                 if (i < rank2)
+                {
                     m_Rank[i] = 0;
+                }
                 else if (i < rank3)
+                {
                     m_Rank[i] = 1;
+                }
                 else if (i < rank4)
+                {
                     m_Rank[i] = 2;
+                }
                 else
+                {
                     m_Rank[i] = 3;
+                }
             }
 
             m_MaxKill[0] = Config.Get("Champions.Rank1MaxKills", 256);
@@ -217,9 +231,13 @@ namespace Server.Engines.CannedEvil
                     string value = GetAttr(node, "type", null);
 
                     if (value == null)
+                    {
                         spawn.RandomizeType = true;
+                    }
                     else
+                    {
                         spawn.Type = (ChampionSpawnType) Enum.Parse(typeof(ChampionSpawnType), value);
+                    }
 
                     value = GetAttr(node, "spawnMod", "1.0");
                     spawn.SpawnMod = XmlConvert.ToDouble(value);
@@ -370,7 +388,9 @@ namespace Server.Engines.CannedEvil
         private static void OnSlice()
         {
             if (DateTime.UtcNow > m_LastRotate + m_RotateDelay)
+            {
                 Rotate();
+            }
         }
 
         private class InternalTimer : Timer
@@ -483,7 +503,10 @@ namespace Server.Engines.CannedEvil
                 {
                     idx = info.ButtonID - 1;
                     if (idx < 0 || idx >= Spawners.Count)
+                    {
                         return;
+                    }
+
                     spawn = Spawners[idx];
                     sender.Mobile.MoveToWorld(spawn.Location, spawn.Map);
                     sender.Mobile.SendGump(this);
@@ -492,7 +515,10 @@ namespace Server.Engines.CannedEvil
                 {
                     idx = info.ButtonID - 1001;
                     if (idx < 0 || idx > Spawners.Count)
+                    {
                         return;
+                    }
+
                     spawn = Spawners[idx];
                     spawn.SendGump(sender.Mobile);
                 }

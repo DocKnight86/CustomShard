@@ -18,9 +18,13 @@ namespace Server.Mobiles
             Item hat;
 
             if (Utility.RandomBool())
+            {
                 hat = new WideBrimHat();
+            }
             else
+            {
                 hat = new TricorneHat();
+            }
 
             hat.Hue = Utility.RandomNeutralHue();
 

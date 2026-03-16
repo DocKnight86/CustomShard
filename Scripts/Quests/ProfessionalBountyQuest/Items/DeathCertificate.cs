@@ -17,9 +17,13 @@ namespace Server.Items
             if (owner is PirateCaptain capt)
             {
                 if (capt.PirateName > 0)
+                {
                     m_Owner = $"#{capt.Adjective}\t#{capt.Noun}\t#{capt.PirateName}";
+                }
                 else
+                {
                     m_Owner = $"#{capt.Adjective}\t#{capt.Noun}\t{Name}";
+                }
             }
         }
 

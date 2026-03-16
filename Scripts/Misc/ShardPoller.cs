@@ -52,14 +52,18 @@ namespace Server.Misc
             get
             {
                 if (m_StartTime == DateTime.MinValue || !m_Active)
+                {
                     return TimeSpan.Zero;
+                }
 
                 try
                 {
                     TimeSpan ts = m_StartTime + m_Duration - DateTime.UtcNow;
 
                     if (ts < TimeSpan.Zero)
+                    {
                         return TimeSpan.Zero;
+                    }
 
                     return ts;
                 }
@@ -77,7 +81,9 @@ namespace Server.Misc
             set
             {
                 if (m_Active == value)
+                {
                     return;
+                }
 
                 m_Active = value;
 
@@ -100,7 +106,9 @@ namespace Server.Misc
             for (int i = 0; i < m_Options.Length; ++i)
             {
                 if (m_Options[i].HasAlreadyVoted(ns))
+                {
                     return true;
+                }
             }
 
             return false;
@@ -116,7 +124,9 @@ namespace Server.Misc
             int index = Array.IndexOf(m_Options, option);
 
             if (index < 0)
+            {
                 return;
+            }
 
             ShardPollOption[] old = m_Options;
             m_Options = new ShardPollOption[old.Length - 1];
@@ -151,7 +161,9 @@ namespace Server.Misc
         public override void OnDoubleClick(Mobile from)
         {
             if (from.AccessLevel >= AccessLevel.Administrator)
+            {
                 from.SendGump(new ShardPollGump(from, this, true, null));
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -192,7 +204,9 @@ namespace Server.Misc
                             m_Options[i] = new ShardPollOption(reader);
 
                         if (m_Active)
+                        {
                             m_ActivePollers.Add(this);
+                        }
 
                         break;
                     }
@@ -209,7 +223,9 @@ namespace Server.Misc
         public static void OnLogin(Mobile m)
         {
             if (m_ActivePollers.Count == 0)
+            {
                 return;
+            }
 
             Timer.DelayCall(TimeSpan.FromSeconds(1.0), EventSink_Login_Callback, m);
         }
@@ -220,7 +236,9 @@ namespace Server.Misc
             NetState ns = from.NetState;
 
             if (ns == null)
+            {
                 return;
+            }
 
             ShardPollGump spg = null;
 
@@ -229,12 +247,16 @@ namespace Server.Misc
                 ShardPoller poller = m_ActivePollers[i];
 
                 if (poller.Deleted || !poller.Active)
+                {
                     continue;
+                }
 
                 if (poller.TimeRemaining > TimeSpan.Zero)
                 {
                     if (poller.HasAlreadyVoted(ns))
+                    {
                         continue;
+                    }
 
                     if (spg == null)
                     {
@@ -304,14 +326,18 @@ namespace Server.Misc
         public bool HasAlreadyVoted(NetState ns)
         {
             if (ns == null)
+            {
                 return false;
+            }
 
             IPAddress ipAddress = ns.Address;
 
             for (int i = 0; i < m_Voters.Length; ++i)
             {
                 if (Utility.IPMatchClassC(m_Voters[i], ipAddress))
+                {
                     return true;
+                }
             }
 
             return false;
@@ -320,7 +346,9 @@ namespace Server.Misc
         public void AddVote(NetState ns)
         {
             if (ns == null)
+            {
                 return;
+            }
 
             IPAddress[] old = m_Voters;
             m_Voters = new IPAddress[old.Length + 1];
@@ -336,7 +364,9 @@ namespace Server.Misc
             int height = m_LineBreaks * 18;
 
             if (height > 30)
+            {
                 return height;
+            }
 
             return 30;
         }
@@ -344,7 +374,9 @@ namespace Server.Misc
         public int GetBreaks(string title)
         {
             if (title == null)
+            {
                 return 1;
+            }
 
             int count = 0;
             int index = -1;
@@ -404,7 +436,9 @@ namespace Server.Misc
             bool isCompleted = totalVotes > 0 && !poller.Active;
 
             if (editing && !isViewingResults)
+            {
                 totalOptionHeight += 35;
+            }
 
             int height = 115 + totalOptionHeight;
 
@@ -416,9 +450,13 @@ namespace Server.Misc
             string title;
 
             if (editing)
+            {
                 title = (isCompleted ? "Poll Completed" : "Poll Editor");
+            }
             else
+            {
                 title = "Shard Poll";
+            }
 
             AddHtml(22, 22, 294, 20, Color(Center(title), LabelColor32), false, false);
 
@@ -452,9 +490,13 @@ namespace Server.Misc
                 y += optHeight / 2;
 
                 if (isViewingResults)
+                {
                     AddImage(24, y - 15, 0x25FE);
+                }
                 else
+                {
                     AddRadio(24, y - 15, 0x25F9, 0x25FC, false, 1 + i);
+                }
 
                 AddHtml(60, y - (9 * option.LineBreaks), 250, 18 * option.LineBreaks, Color(text, LabelColor32), false, false);
 
@@ -476,7 +518,9 @@ namespace Server.Misc
         public void QueuePoll(ShardPoller poller)
         {
             if (m_Polls == null)
+            {
                 m_Polls = new Queue<ShardPoller>(4);
+            }
 
             m_Polls.Enqueue(poller);
         }
@@ -498,7 +542,9 @@ namespace Server.Misc
                 ShardPoller poller = m_Polls.Dequeue();
 
                 if (poller != null)
+                {
                     Timer.DelayCall(TimeSpan.FromSeconds(1.0), poller.SendQueuedPoll_Callback, new object[] { m_From, m_Polls });
+                }
             }
 
             if (info.ButtonID == 1)
@@ -506,16 +552,22 @@ namespace Server.Misc
                 int[] switches = info.Switches;
 
                 if (switches.Length == 0)
+                {
                     return;
+                }
 
                 int switched = switches[0] - 1;
                 ShardPollOption opt = null;
 
                 if (switched >= 0 && switched < m_Poller.Options.Length)
+                {
                     opt = m_Poller.Options[switched];
+                }
 
                 if (opt == null && !m_Editing)
+                {
                     return;
+                }
 
                 if (m_Editing)
                 {
@@ -533,11 +585,17 @@ namespace Server.Misc
                 else
                 {
                     if (!m_Poller.Active)
+                    {
                         m_From.SendMessage("The poll has been deactivated.");
+                    }
                     else if (m_Poller.HasAlreadyVoted(sender))
+                    {
                         m_From.SendMessage("You have already voted on this poll.");
+                    }
                     else
+                    {
                         m_Poller.AddVote(sender, opt);
+                    }
                 }
             }
             else if (info.ButtonID == 2 && m_Editing)
@@ -562,7 +620,9 @@ namespace Server.Misc
         public static string UrlToHref(string text)
         {
             if (text == null)
+            {
                 return null;
+            }
 
             return m_UrlRegex.Replace(text, UrlRegex_Match);
         }
@@ -581,16 +641,22 @@ namespace Server.Misc
             else if (text == "DEL")
             {
                 if (m_Option != null)
+                {
                     m_Poller.RemoveOption(m_Option);
+                }
             }
             else
             {
                 text = UrlToHref(text);
 
                 if (m_Option == null)
+                {
                     m_Poller.AddOption(new ShardPollOption(text));
+                }
                 else
+                {
                     m_Option.Title = text;
+                }
             }
 
             from.SendGump(new ShardPollGump(from, m_Poller, true, null));
@@ -601,7 +667,9 @@ namespace Server.Misc
             if (m.Groups[1].Success)
             {
                 if (m.Groups[2].Success)
+                {
                     return $"<a href=\"{m.Groups[1].Value}\">{m.Groups[2].Value}</a>";
+                }
             }
             else if (m.Groups[2].Success)
             {

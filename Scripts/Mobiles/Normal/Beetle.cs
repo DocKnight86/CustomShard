@@ -52,7 +52,9 @@ namespace Server.Mobiles
             Container pack = Backpack;
 
             if (pack != null)
+            {
                 pack.Delete();
+            }
 
             pack = new StrongBackpack
             {
@@ -99,13 +101,17 @@ namespace Server.Mobiles
         public override void OnHarmfulSpell(Mobile from)
         {
             if (!Controlled && ControlMaster == null)
+            {
                 CurrentSpeed = BoostedSpeed;
+            }
         }
 
         public override void OnCombatantChange()
         {
             if (Combatant == null && !Controlled && ControlMaster == null)
+            {
                 CurrentSpeed = PassiveSpeed;
+            }
         }
 
         #region Pack Animal Methods
@@ -117,7 +123,9 @@ namespace Server.Mobiles
         public override bool IsSnoop(Mobile from)
         {
             if (PackAnimal.CheckAccess(this, from))
+            {
                 return false;
+            }
 
             return base.IsSnoop(from);
         }
@@ -125,7 +133,9 @@ namespace Server.Mobiles
         public override bool OnDragDrop(Mobile from, Item item)
         {
             if (CheckFeed(from, item))
+            {
                 return true;
+            }
 
             if (PackAnimal.CheckAccess(this, from))
             {

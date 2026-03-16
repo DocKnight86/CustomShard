@@ -247,14 +247,6 @@ namespace Server.Engines.Craft
 
             index = AddCraft(typeof(PlateHaidate), 1111704, 1030200, 65.0, 115.0, typeof(IronIngot), 1044036, 20, 1044037);
 
-            index = AddCraft(typeof(FemaleGargishPlateArms), 1111704, 1095336, 66.3, 116.3, typeof(IronIngot), 1044036, 18, 1044037);
-
-            index = AddCraft(typeof(FemaleGargishPlateChest), 1111704, 1095338, 75.0, 125.0, typeof(IronIngot), 1044036, 25, 1044037);
-
-            index = AddCraft(typeof(FemaleGargishPlateLegs), 1111704, 1095342, 68.8, 118.8, typeof(IronIngot), 1044036, 20, 1044037);
-
-            index = AddCraft(typeof(FemaleGargishPlateKilt), 1111704, 1095340, 58.9, 108.9, typeof(IronIngot), 1044036, 12, 1044037);
-
             index = AddCraft(typeof(GargishPlateArms), 1111704, 1095336, 66.3, 116.3, typeof(IronIngot), 1044036, 18, 1044037);
 
             index = AddCraft(typeof(GargishPlateChest), 1111704, 1095338, 75.0, 125.0, typeof(IronIngot), 1044036, 25, 1044037);
@@ -317,17 +309,6 @@ namespace Server.Engines.Craft
 
             AddCraft(typeof(ChaosShield), 1011080, 1027107, 85.0, 135.0, typeof(IronIngot), 1044036, 25, 1044037);
             AddCraft(typeof(OrderShield), 1011080, 1027108, 85.0, 135.0, typeof(IronIngot), 1044036, 25, 1044037);
-
-            AddCraft(typeof(SmallPlateShield), 1011080, 1095770, -25.0, 25.0, typeof(IronIngot), 1044036, 12, 1044037);
-            AddCraft(typeof(GargishKiteShield), 1011080, 1095774, 4.6, 54.6, typeof(IronIngot), 1044036, 16, 1044037);
-            AddCraft(typeof(LargePlateShield), 1011080, 1095772, 24.3, 74.3, typeof(IronIngot), 1044036, 18, 1044037);
-            AddCraft(typeof(MediumPlateShield), 1011080, 1095771, -10.2, 39.8, typeof(IronIngot), 1044036, 14, 1044037);
-            AddCraft(typeof(GargishChaosShield), 1011080, 1095808, 85.0, 135.0, typeof(IronIngot), 1044036, 25, 1044037);
-            AddCraft(typeof(GargishOrderShield), 1011080, 1095810, 85.0, 135.0, typeof(IronIngot), 1044036, 25, 1044037);
-
-            index = AddCraft(typeof(ShieldOrb), 1011080, 1126890, 75.0, 125.0, typeof(IronIngot), 1044036, 8, 1044037);
-            AddSkill(index, SkillName.Magery, 100.0, 100.0);
-            AddRecipe(index, (int)CraftRecipes.ShieldOrb);
             #endregion
 
             #region Bladed
@@ -407,10 +388,6 @@ namespace Server.Engines.Craft
             AddRes(index, typeof(BlueDiamond), 1032696, 1, 1044240);
             AddRecipe(index, (int)CraftRecipes.TrueSpellblade);
 
-            index = AddCraft(typeof(IcySpellblade), 1011081, 1073514, 75.0, 125.0, typeof(IronIngot), 1044036, 14, 1044037);
-            AddRes(index, typeof(Turquoise), 1032691, 1, 1044240);
-            AddRecipe(index, (int)CraftRecipes.IcySpellblade);
-
             index = AddCraft(typeof(FierySpellblade), 1011081, 1073515, 75.0, 125.0, typeof(IronIngot), 1044036, 14, 1044037);
             AddRes(index, typeof(FireRuby), 1032695, 1, 1044240);
             AddRecipe(index, (int)CraftRecipes.FierySpellblade);
@@ -479,10 +456,6 @@ namespace Server.Engines.Craft
             AddRes(index, typeof(BrilliantAmber), 1032697, 1, 1044240);
             AddRecipe(index, (int)CraftRecipes.MacheteOfDefense);
 
-            index = AddCraft(typeof(DiseasedMachete), 1011081, 1073536, 75.0, 125.0, typeof(IronIngot), 1044036, 14, 1044037);
-            AddRes(index, typeof(Blight), 1072134, 1, 1042081);
-            AddRecipe(index, (int)CraftRecipes.DiseasedMachete);
-
             index = AddCraft(typeof(Runesabre), 1011081, 1073537, 75.0, 125.0, typeof(IronIngot), 1044036, 15, 1044037);
             AddRes(index, typeof(Turquoise), 1032691, 1, 1044240);
             AddRecipe(index, (int)CraftRecipes.Runesabre);
@@ -506,10 +479,6 @@ namespace Server.Engines.Craft
             index = AddCraft(typeof(DarkglowScimitar), 1011081, 1073542, 75.0, 125.0, typeof(IronIngot), 1044036, 15, 1044037);
             AddRes(index, typeof(DarkSapphire), 1032690, 1, 1044240);
             AddRecipe(index, (int)CraftRecipes.DarkglowScimitar);
-
-            index = AddCraft(typeof(IcyScimitar), 1011081, 1073543, 75.0, 125.0, typeof(IronIngot), 1044036, 15, 1044037);
-            AddRes(index, typeof(DarkSapphire), 1032690, 1, 1044240);
-            AddRecipe(index, (int)CraftRecipes.IcyScimitar);
 
             index = AddCraft(typeof(TwinklingScimitar), 1011081, 1073544, 75.0, 125.0, typeof(IronIngot), 1044036, 15, 1044037);
             AddRes(index, typeof(DarkSapphire), 1032690, 1, 1044240);
@@ -692,9 +661,6 @@ namespace Server.Engines.Craft
 
             index = AddCraft(typeof(DragonChest), 1011173, 1029793, 85.0, 135.0, typeof(RedScales), 1060883, 36, 1060884);
             SetUseSubRes2(index, true);
-
-            index = AddCraft(typeof(CrushedGlass), 1011173, 1113351, 110.0, 135.0, typeof(BlueDiamond), 1032696, 1, 1044253);
-            AddRes(index, typeof(GlassSword), 1095371, 5, 1044253);
 
             index = AddCraft(typeof(PowderedIron), 1011173, 1113353, 110.0, 135.0, typeof(WhitePearl), 1026253, 1, 1044253);
             AddRes(index, typeof(IronIngot), 1044036, 20, 1044037);

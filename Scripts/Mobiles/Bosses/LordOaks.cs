@@ -87,7 +87,9 @@ namespace Server.Mobiles
             Map map = Map;
 
             if (map == null)
+            {
                 return;
+            }
 
             Say(1042154); // You shall never defeat me as long as I have my queen!
 
@@ -111,9 +113,13 @@ namespace Server.Mobiles
                     int z = map.GetAverageZ(x, y);
 
                     if (validLocation = map.CanFit(x, y, Z, 16, false, false))
+                    {
                         loc = new Point3D(x, y, Z);
+                    }
                     else if (validLocation = map.CanFit(x, y, z, 16, false, false))
+                    {
                         loc = new Point3D(x, y, z);
+                    }
                 }
 
                 pixie.MoveToWorld(loc, map);
@@ -149,7 +155,9 @@ namespace Server.Mobiles
         public void CheckQueen()
         {
             if (Map == null)
+            {
                 return;
+            }
 
             if (!m_SpawnedQueen)
             {
@@ -178,7 +186,9 @@ namespace Server.Mobiles
                 scalar *= 0.1;
 
                 if (0.1 >= Utility.RandomDouble())
+                {
                     SpawnPixies(caster);
+                }
             }
         }
 
@@ -219,7 +229,9 @@ namespace Server.Mobiles
             CheckQueen();
 
             if (m_Queen != null && 0.1 >= Utility.RandomDouble())
+            {
                 SpawnPixies(attacker);
+            }
 
             /*attacker.Damage(Utility.Random(20, 10), this);
             attacker.Stam -= Utility.Random(20, 10);

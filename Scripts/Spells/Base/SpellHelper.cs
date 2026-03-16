@@ -103,7 +103,9 @@ namespace Server.Spells
             if (target != null)
             {
                 if (RunedSashOfWarding.IsUnderEffects(target, WardingEffect.SpellDamage))
+                {
                     sdiBonus -= 10;
+                }
 
                 sdiBonus -= Block.GetSpellReduction(target);
             }
@@ -123,7 +125,9 @@ namespace Server.Spells
         public static TimeSpan GetDamageDelayForSpell(Spell sp)
         {
             if (!sp.DelayedDamage)
+            {
                 return TimeSpan.Zero;
+            }
 
             return (AosDamageDelay);
         }
@@ -141,7 +145,9 @@ namespace Server.Spells
         public static bool CheckMulti(Point3D p, Map map, bool houses, int housingrange)
         {
             if (map == null || map == Map.Internal)
+            {
                 return false;
+            }
 
             Sector sector = map.GetSector(p.X, p.Y);
 
@@ -152,7 +158,9 @@ namespace Server.Spells
                 if (multi is BaseHouse bh)
                 {
                     if ((houses && bh.IsInside(p, 16)) || (housingrange > 0 && bh.InRange(p, housingrange)))
+                    {
                         return true;
+                    }
                 }
                 else if (multi.Contains(p))
                 {
@@ -169,12 +177,16 @@ namespace Server.Spells
             int d = -1;
 
             if (target == null)
+            {
                 return;
+            }
 
             if (target is Item item)
             {
                 if (item.RootParent != from)
+                {
                     d = (int)from.GetDirectionTo(item.GetWorldLocation());
+                }
             }
             else if (from != target)
             {
@@ -191,7 +203,9 @@ namespace Server.Spells
         public static bool CheckCombat(Mobile m, bool restrict = true)
         {
             if (!restrict)
+            {
                 return false;
+            }
 
             return Aggression.CheckHasAggression(m, true);
         }
@@ -199,7 +213,9 @@ namespace Server.Spells
         public static bool AdjustField(ref Point3D p, Map map, int height, bool mobsBlock)
         {
             if (map == null)
+            {
                 return false;
+            }
 
             for (int offset = 0; offset < 25; ++offset)
             {
@@ -226,7 +242,9 @@ namespace Server.Spells
         public static bool CheckField(Point3D p, Map map)
         {
             if (map == null)
+            {
                 return false;
+            }
 
             IPooledEnumerable eable = map.GetItemsInRange(p, 0);
 
@@ -290,7 +308,9 @@ namespace Server.Spells
                 int z = t.Z;
 
                 if ((t.Flags & TileFlag.Surface) == 0)
+                {
                     z -= TileData.ItemTable[t.ItemID & TileData.MaxItemValue].CalcHeight;
+                }
 
                 p = new Point3D(t.X, t.Y, z);
             }
@@ -304,9 +324,14 @@ namespace Server.Spells
         public static bool AddStatOffset(Mobile m, StatType type, int offset, TimeSpan duration)
         {
             if (offset > 0)
+            {
                 return AddStatBonus(m, m, type, offset, duration);
+            }
+
             if (offset < 0)
+            {
                 return AddStatCurse(m, m, type, -offset, duration);
+            }
 
             return true;
         }
@@ -366,7 +391,9 @@ namespace Server.Spells
             StatMod mod = target.GetStatMod(name);
 
             if (mod != null)
+            {
                 offset = Math.Max(mod.Offset, offset);
+            }
 
             offset *= -1;
 
@@ -379,7 +406,9 @@ namespace Server.Spells
             int span = (((6 * caster.Skills.EvalInt.Fixed) / 50) + 1);
 
             if (caster.Spell is CurseSpell && SkillMasteries.ResilienceSpell.UnderEffects(target))
+            {
                 span /= 2;
+            }
 
             return TimeSpan.FromSeconds(span);
         }
@@ -403,12 +432,16 @@ namespace Server.Spells
                 percent = 8 + (caster.Skills.EvalInt.Fixed / 100) - (resistFixed / 100);
             }
             else
+            {
                 percent = 1 + (caster.Skills.EvalInt.Fixed / 100);
+            }
 
             percent *= 0.01;
 
             if (percent < 0)
+            {
                 percent = 0;
+            }
 
             return percent;
         }
@@ -418,7 +451,9 @@ namespace Server.Spells
             if (!blockSkill)
             {
                 if (curse)
+                {
                     target.CheckSkill(SkillName.MagicResist, 0.0, 120.0);
+                }
             }
 
             double percent = GetOffsetScalar(caster, target, curse);
@@ -445,14 +480,18 @@ namespace Server.Spells
                 m = bc.ControlMaster;
 
                 if (m != null)
+                {
                     g = m.Guild as Guild;
+                }
 
                 if (g == null)
                 {
                     m = bc.SummonMaster;
 
                     if (m != null)
+                    {
                         g = m.Guild as Guild;
+                    }
                 }
             }
 
@@ -647,12 +686,16 @@ namespace Server.Spells
             Map map = caster.Map;
 
             if (map == null)
+            {
                 return;
+            }
 
             double scale = 1.0 + ((caster.Skills[useSkill].Value - 100.0) / 200.0);
 
             if (scaleDuration)
+            {
                 duration = TimeSpan.FromSeconds(duration.TotalSeconds * scale);
+            }
 
             if (scaleStats)
             {
@@ -681,7 +724,9 @@ namespace Server.Spells
         public static bool FindValidSpawnLocation(Map map, ref Point3D p, bool surroundingsOnly)
         {
             if (map == null)	//sanity
+            {
                 return false;
+            }
 
             if (!surroundingsOnly)
             {
@@ -770,11 +815,17 @@ namespace Server.Spells
         public static void SendInvalidMessage(Mobile caster, TravelCheckType type)
         {
             if (type == TravelCheckType.RecallTo || type == TravelCheckType.GateTo)
+            {
                 caster.SendLocalizedMessage(1019004); // You are not allowed to travel there.
+            }
             else if (type == TravelCheckType.TeleportTo)
+            {
                 caster.SendLocalizedMessage(501035); // You cannot teleport from here to the destination.
+            }
             else
+            {
                 caster.SendLocalizedMessage(501802); // Thy spell doth not appear to work...
+            }
         }
 
         public static bool CheckTravel(Mobile caster, TravelCheckType type)
@@ -977,15 +1028,21 @@ namespace Server.Spells
         public static bool IsDoomFerry(Map map, Point3D loc)
         {
             if (map != Map.Malas)
+            {
                 return false;
+            }
 
             int x = loc.X, y = loc.Y;
 
             if (x >= 426 && y >= 314 && x <= 430 && y <= 331)
+            {
                 return true;
+            }
 
             if (x >= 406 && y >= 247 && x <= 410 && y <= 264)
+            {
                 return true;
+            }
 
             return false;
         }
@@ -994,7 +1051,9 @@ namespace Server.Spells
         {
             //The tokuno dungeons are really inside malas
             if (map != Map.Malas)
+            {
                 return false;
+            }
 
             int x = loc.X, y = loc.Y;
 
@@ -1007,7 +1066,9 @@ namespace Server.Spells
         public static bool IsDoomGauntlet(Map map, Point3D loc)
         {
             if (map != Map.Malas)
+            {
                 return false;
+            }
 
             int x = loc.X - 256, y = loc.Y - 304;
 
@@ -1017,7 +1078,9 @@ namespace Server.Spells
         public static bool IsLampRoom(Map map, Point3D loc)
         {
             if (map != Map.Malas)
+            {
                 return false;
+            }
 
             int x = loc.X, y = loc.Y;
 
@@ -1027,7 +1090,9 @@ namespace Server.Spells
         public static bool IsGuardianRoom(Map map, Point3D loc)
         {
             if (map != Map.Malas)
+            {
                 return false;
+            }
 
             int x = loc.X, y = loc.Y;
 
@@ -1064,7 +1129,9 @@ namespace Server.Spells
         public static bool IsSADungeon(Map map, Point3D loc)
         {
             if (map != Map.TerMur)
+            {
                 return false;
+            }
 
             Region region = Region.Find(loc, map);
             return (region.IsPartOf(typeof(DungeonRegion)) && !region.IsPartOf(typeof(TombOfKingsRegion)));
@@ -1073,7 +1140,9 @@ namespace Server.Spells
         public static bool IsEodon(Map map, Point3D loc)
         {
             if (map == Map.Felucca && loc.X >= 6975 && loc.X <= 7042 && loc.Y >= 2048 && loc.Y <= 2115)
+            {
                 return true;
+            }
 
             return map == Map.TerMur && loc.X >= 0 && loc.X <= 1087 && loc.Y >= 1344 && loc.Y <= 2495;
         }
@@ -1086,7 +1155,9 @@ namespace Server.Spells
 
                 // Revamped Dungeons with specific rules
                 if (r.Name == "Void Pool" || r.Name == "Wrong")
+                {
                     return true;
+                }
             }
 
             return false;
@@ -1095,7 +1166,9 @@ namespace Server.Spells
         public static bool IsInvalid(Map map, Point3D loc)
         {
             if (map == null || map == Map.Internal)
+            {
                 return true;
+            }
 
             int x = loc.X, y = loc.Y;
 
@@ -1106,7 +1179,9 @@ namespace Server.Spells
         public static bool IsTown(IPoint3D loc, Mobile caster)
         {
             if (loc is Item item)
+            {
                 loc = item.GetWorldLocation();
+            }
 
             return IsTown(new Point3D(loc), caster);
         }
@@ -1116,7 +1191,9 @@ namespace Server.Spells
             Map map = caster.Map;
 
             if (map == null)
+            {
                 return false;
+            }
 
             GuardedRegion reg = (GuardedRegion)Region.Find(loc, map).GetRegion(typeof(GuardedRegion));
 
@@ -1126,7 +1203,9 @@ namespace Server.Spells
         public static bool CheckTown(IPoint3D loc, Mobile caster)
         {
             if (loc is Item item)
+            {
                 loc = item.GetWorldLocation();
+            }
 
             return CheckTown(new Point3D(loc), caster);
         }
@@ -1151,10 +1230,14 @@ namespace Server.Spells
             bool reflect = CheckReflect(spell, ref c, ref t);
 
             if (c is Mobile casterMobile)
+            {
                 caster = casterMobile;
+            }
 
             if (t is Mobile targetMobile)
+            {
                 target = targetMobile;
+            }
 
             return reflect;
         }
@@ -1166,7 +1249,9 @@ namespace Server.Spells
             bool reflect = CheckReflect(spell, ref caster, ref t);
 
             if (t is Mobile mobile)
+            {
                 caster = mobile;
+            }
 
             return reflect;
         }
@@ -1178,7 +1263,9 @@ namespace Server.Spells
             bool reflect = CheckReflect(spell, ref c, ref target);
 
             if (c is Mobile mobile)
+            {
                 caster = mobile;
+            }
 
             return reflect;
         }
@@ -1190,7 +1277,9 @@ namespace Server.Spells
             bool reflect = CheckReflect(spell, ref c, ref target);
 
             if (c is Mobile mobile)
+            {
                 caster = mobile;
+            }
 
             return reflect;
         }
@@ -1284,10 +1373,14 @@ namespace Server.Spells
             if (delay == TimeSpan.Zero)
             {
                 if (from is BaseCreature fromCreature)
+                {
                     fromCreature.AlterSpellDamageTo(target, ref iDamage);
+                }
 
                 if (target is BaseCreature targetCreature)
+                {
                     targetCreature.AlterSpellDamageFrom(from, ref iDamage);
+                }
 
                 target.Damage(iDamage, from);
             }
@@ -1352,10 +1445,14 @@ namespace Server.Spells
             if (delay == TimeSpan.Zero)
             {
                 if (from is BaseCreature fromCreature && target != null)
+                {
                     fromCreature.AlterSpellDamageTo(target, ref iDamage);
+                }
 
                 if (target is BaseCreature targetCreature)
+                {
                     targetCreature.AlterSpellDamageFrom(from, ref iDamage);
+                }
 
                 DamageType dtype = spell != null ? spell.SpellDamageType : DamageType.Spell;
 
@@ -1367,7 +1464,9 @@ namespace Server.Spells
                 int damageGiven = AOS.Damage(damageable, from, iDamage, phys, fire, cold, pois, nrgy, chaos, direct, dtype);
 
                 if (target != null)
+                {
                     Mysticism.SpellPlagueSpell.OnMobileDamaged(target);
+                }
 
                 if (target != null && target.DFA != DFAlgorithm.Standard)
                 {
@@ -1377,7 +1476,9 @@ namespace Server.Spells
                 NegativeAttributes.OnCombatAction(from);
 
                 if (from != target)
+                {
                     NegativeAttributes.OnCombatAction(target);
+                }
             }
             else
             {
@@ -1407,11 +1508,6 @@ namespace Server.Spells
                     amount /= 2;
                     target.SendLocalizedMessage(1151178); // The cauterized wound resists some of your healing.
                 }
-
-                int realAmount = Math.Min(amount, target.HitsMax - target.Hits);
-
-                if (realAmount > 0 && target != from)
-                    SpiritualityVirtue.OnHeal(from, realAmount);
             }
 
             target.Heal(amount, from, message);
@@ -1435,7 +1531,9 @@ namespace Server.Spells
                 m_Spell = s;
 
                 if (m_Spell != null && m_Spell.DelayedDamage && !m_Spell.DelayedDamageStacking)
+                {
                     m_Spell.StartDelayedDamageContext(target, this);
+                }
             }
 
             protected override void OnTick()
@@ -1490,7 +1588,9 @@ namespace Server.Spells
                 m_Spell = s;
 
                 if (m_Spell != null && m_Spell.DelayedDamage && !m_Spell.DelayedDamageStacking)
+                {
                     m_Spell.StartDelayedDamageContext(target, this);
+                }
             }
 
             protected override void OnTick()
@@ -1498,10 +1598,14 @@ namespace Server.Spells
                 Mobile target = m_Target as Mobile;
 
                 if (m_From is BaseCreature fromCreature && target != null)
+                {
                     fromCreature.AlterSpellDamageTo(target, ref m_Damage);
+                }
 
                 if (m_Target is BaseCreature targetCreature && m_From != null)
+                {
                     targetCreature.AlterSpellDamageFrom(m_From, ref m_Damage);
+                }
 
                 DamageType dtype = m_Spell != null ? m_Spell.SpellDamageType : DamageType.Spell;
 
@@ -1555,7 +1659,9 @@ namespace Server.Spells
             TransformContext context = GetContext(m);
 
             if (context != null)
+            {
                 RemoveContext(m, context, resetGraphics);
+            }
         }
 
         public static void RemoveContext(Mobile m, TransformContext context, bool resetGraphics)
@@ -1644,7 +1750,9 @@ namespace Server.Spells
             ITransformationSpell transformSpell = spell as ITransformationSpell;
 
             if (transformSpell == null)
+            {
                 return false;
+            }
 
             if (!caster.CanBeginAction(typeof(PolymorphSpell)))
             {
@@ -1687,26 +1795,38 @@ namespace Server.Spells
                     List<ResistanceMod> mods = new List<ResistanceMod>();
 
                     if (transformSpell.PhysResistOffset != 0)
+                    {
                         mods.Add(new ResistanceMod(ResistanceType.Physical, transformSpell.PhysResistOffset));
+                    }
 
                     if (transformSpell.FireResistOffset != 0)
+                    {
                         mods.Add(new ResistanceMod(ResistanceType.Fire, transformSpell.FireResistOffset));
+                    }
 
                     if (transformSpell.ColdResistOffset != 0)
+                    {
                         mods.Add(new ResistanceMod(ResistanceType.Cold, transformSpell.ColdResistOffset));
+                    }
 
                     if (transformSpell.PoisResistOffset != 0)
+                    {
                         mods.Add(new ResistanceMod(ResistanceType.Poison, transformSpell.PoisResistOffset));
+                    }
 
                     if (transformSpell.NrgyResistOffset != 0)
+                    {
                         mods.Add(new ResistanceMod(ResistanceType.Energy, transformSpell.NrgyResistOffset));
+                    }
 
                     if (!((Body)transformSpell.Body).IsHuman)
                     {
                         IMount mt = caster.Mount;
 
                         if (mt != null)
+                        {
                             mt.Rider = null;
+                        }
                     }
 
                     caster.BodyMod = transformSpell.Body;

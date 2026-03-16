@@ -215,7 +215,7 @@ namespace Server.SkillHandlers
 
         private static readonly Type[] _SpecialImbuable =
         {
-            typeof(ClockworkLeggings), typeof(GargishClockworkLeggings), typeof(OrcishKinMask), typeof(SavageMask),
+            typeof(ClockworkLeggings), typeof(OrcishKinMask), typeof(SavageMask),
             typeof(VirtuososArmbands), typeof(VirtuososCap), typeof(VirtuososCollar), typeof(VirtuososEarpieces),
             typeof(VirtuososKidGloves), typeof(VirtuososKilt), typeof(VirtuososNecklace), typeof(VirtuososTunic),
             typeof(BestialArms), typeof(BestialEarrings), typeof(BestialGloves), typeof(BestialGorget), typeof(BestialHelm),

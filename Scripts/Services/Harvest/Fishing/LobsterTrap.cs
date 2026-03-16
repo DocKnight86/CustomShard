@@ -58,7 +58,9 @@ namespace Server.Items
         public override void OnAfterDuped(Item newItem)
         {
             if (!(newItem is LobsterTrap trap))
+            {
                 return;
+            }
 
             trap.BaitType = m_BaitType;
             trap.EnhancedBait = m_EnhancedBait;
@@ -97,9 +99,13 @@ namespace Server.Items
                 object label = FishInfo.GetFishLabel(m_BaitType);
 
                 if (label is int i)
+                {
                     list.Add(1116468, $"#{i}"); // baited to attract: ~1_val~
+                }
                 else if (label is string s)
+                {
                     list.Add(1116468, s);
+                }
             }
         }
 
@@ -166,13 +172,17 @@ namespace Server.Items
         public void OnTarget(Mobile from, object targeted)
         {
             if (Deleted)
+            {
                 return;
+            }
 
             IPoint3D pnt = (IPoint3D)targeted;
             Map map = from.Map;
 
             if (map == null || map == Map.Internal)
+            {
                 return;
+            }
 
             if (!from.InLOS(targeted))
             {
@@ -399,7 +409,9 @@ namespace Server.Items
                 Type t = ScriptCompiler.FindTypeByName(reader.ReadString());
 
                 if (t != null)
+                {
                     Caught.Add(t);
+                }
             }
         }
     }
@@ -447,9 +459,13 @@ namespace Server.Items
         public override void AddNameProperty(ObjectPropertyList list)
         {
             if (Owner == null)
+            {
                 list.Add(1096487); // lobster trap
+            }
             else
+            {
                 list.Add(1116390, Owner.Name);
+            }
         }
 
         public override void GetProperties(ObjectPropertyList list)
@@ -461,16 +477,22 @@ namespace Server.Items
                 object label = FishInfo.GetFishLabel(BaitType);
 
                 if (label is int i)
+                {
                     list.Add(1116468, $"#{i}"); // baited to attract: ~1_val~
+                }
                 else if (label is string s)
+                {
                     list.Add(1116468, s);
+                }
             }
         }
 
         public override void OnDoubleClick(Mobile from)
         {
             if (CanUseTrap(from))
+            {
                 EndTimer(from);
+            }
         }
 
         private Timer m_Timer;
@@ -478,7 +500,9 @@ namespace Server.Items
         public void StartTimer()
         {
             if (m_Timer != null)
+            {
                 m_Timer.Stop();
+            }
 
             InUse = true;
 
@@ -511,7 +535,9 @@ namespace Server.Items
             }
 
             if (from.Backpack == null || !from.Backpack.TryDropItem(from, trap, false))
+            {
                 trap.MoveToWorld(from.Location, from.Map);
+            }
 
             Delete();
         }
@@ -556,9 +582,13 @@ namespace Server.Items
                 else
                 {
                     if (Utility.RandomBool())
+                    {
                         type = typeof(Crab);
+                    }
                     else
+                    {
                         type = typeof(Lobster);
+                    }
                 }
             }
 
@@ -581,7 +611,9 @@ namespace Server.Items
         public void OnTrapLost()
         {
             if (m_Timer != null)
+            {
                 m_Timer.Stop();
+            }
 
             Effects.SendPacket(Location, Map, new GraphicalEffect(EffectType.FixedXYZ, Serial.Zero, Serial.Zero, 0x352D, Location, Location, 4, 16, true, true));
 
@@ -590,7 +622,9 @@ namespace Server.Items
             foreach (Mobile mob in eable)
             {
                 if (mob is PlayerMobile && Owner != null)
+                {
                     mob.SendLocalizedMessage(1116385, Owner.Name); //~1_NAME~'s trap bouy is pulled beneath the waves.
+                }
             }
             eable.Free();
 
@@ -600,7 +634,9 @@ namespace Server.Items
         private bool CanUseTrap(Mobile from)
         {
             if (Owner == null || RootParent != null)
+            {
                 return false;
+            }
 
             if (!from.InRange(Location, 6))
             {
@@ -610,11 +646,15 @@ namespace Server.Items
 
             //is owner, or in same guild
             if (Owner == from || from.Guild != null && from.Guild == Owner.Guild)
+            {
                 return true;
+            }
 
             //partied
             if (Party.Get(from) == Party.Get(Owner))
+            {
                 return true;
+            }
 
             //fel rules
             if (from.Map != null && from.Map.Rules == MapRules.FeluccaRules)
@@ -675,11 +715,15 @@ namespace Server.Items
                 Type t = ScriptCompiler.FindTypeByName(reader.ReadString());
 
                 if (t != null)
+                {
                     Caught.Add(t);
+                }
             }
 
             if (InUse)
+            {
                 StartTimer();
+            }
         }
     }
 }

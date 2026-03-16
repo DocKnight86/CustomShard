@@ -14,7 +14,9 @@ namespace Server.Items
             }
 
             if (0.5 < Utility.RandomDouble())
+            {
                 DropItem(SmugglersLiquor.GetRandom());
+            }
 
             DropItem(SmugglersLiquor.GetRandom());
         }

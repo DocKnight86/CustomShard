@@ -52,7 +52,9 @@ namespace Server.Mobiles
 
             Utility.AssignRandomHair(this, true);
             if (!Female)
+            {
                 Utility.AssignRandomFacialHair(this, true);
+            }
 
             Hue = Race.RandomSkinHue();
 
@@ -63,7 +65,9 @@ namespace Server.Mobiles
             AddImmovableItem(new GargishClothKilt(Utility.RandomNeutralHue()));
 
             if (Utility.RandomBool())
+            {
                 AddImmovableItem(new GargishRobe());
+            }
 
             SetDamageType(ResistanceType.Physical, 100);
 
@@ -143,7 +147,9 @@ namespace Server.Mobiles
             base.OnThink();
 
             if (Combatant == null || m_NextSummon > DateTime.UtcNow)
+            {
                 return;
+            }
 
             if (Mana > 40 && Followers + 5 <= FollowersMax)
             {
@@ -152,7 +158,9 @@ namespace Server.Mobiles
                     IDamageable m = Combatant;
 
                     if (m is BaseCreature creature && (creature.Summoned || creature.Controlled))
+                    {
                         m = creature.GetMaster();
+                    }
 
                     FixedParticles(0x3709, 1, 30, 9904, 1108, 6, EffectLayer.RightFoot);
                     BaseCreature vm = new VoidManifestation(m_Type);
@@ -160,7 +168,9 @@ namespace Server.Mobiles
                     vm.PlaySound(vm.GetAngerSound());
 
                     if (m != null)
+                    {
                         vm.Combatant = m;
+                    }
 
                     m_Manifested = true;
                     m_NextSummon = DateTime.UtcNow + TimeSpan.FromMinutes(10);
@@ -180,7 +190,9 @@ namespace Server.Mobiles
             {
                 Mobile m = LastKiller;
                 if (m is BaseCreature creature && (creature.Summoned || creature.Controlled))
+                {
                     m = creature.GetMaster();
+                }
 
                 FixedParticles(0x3709, 1, 30, 9904, 1108, 6, EffectLayer.RightFoot);
                 BaseCreature vm = new VoidManifestation(m_Type);
@@ -188,7 +200,9 @@ namespace Server.Mobiles
                 vm.PlaySound(vm.GetAngerSound());
 
                 if (m != null)
+                {
                     vm.Combatant = m;
+                }
             }
 
             return base.OnBeforeDeath();

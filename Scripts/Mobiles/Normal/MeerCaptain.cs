@@ -139,7 +139,9 @@ namespace Server.Mobiles
                 foreach (Mobile m in eable)
                 {
                     if (m is MeerWarrior && IsFriend(m) && CanBeBeneficial(m) && m.Hits < m.HitsMax && !m.Poisoned && !MortalStrike.IsWounded(m))
+                    {
                         list.Add(m);
+                    }
                 }
                 eable.Free();
 

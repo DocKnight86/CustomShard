@@ -43,7 +43,9 @@ namespace Server.Items
                         m_Harrower = reader.ReadMobile();
 
                         if (m_Harrower == null)
+                        {
                             Delete();
+                        }
 
                         break;
                     }

@@ -50,7 +50,9 @@ namespace Server.Engines.CannedEvil
             foreach (Item item in World.Items.Values)
             {
                 if (item is ChampionSpawn && !item.Deleted)
+                {
                     list.Add(item);
+                }
             }
 
             for (var index = 0; index < list.Count; index++)

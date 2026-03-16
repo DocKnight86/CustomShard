@@ -59,7 +59,7 @@ namespace Server.Mobiles
         }
 
         public override ChampionSkullType SkullType => ChampionSkullType.None;
-        public override Type[] UniqueList => new[] { typeof(TongueOfTheBeast), typeof(DeathsHead), typeof(WallOfHungryMouths), typeof(AbyssalBlade) };
+        public override Type[] UniqueList => [];
         public override Type[] SharedList => new[] { typeof(RoyalGuardInvestigatorsCloak), typeof(DetectiveBoots), typeof(JadeArmband) };
         public override Type[] DecorativeList => new[] { typeof(MagicalDoor) };
         public override MonsterStatuetteType[] StatueTypes => new[] { MonsterStatuetteType.AbyssalInfernal, MonsterStatuetteType.ArchDemon };
@@ -102,7 +102,9 @@ namespace Server.Mobiles
             base.OnThink();
 
             if (Combatant == null)
+            {
                 return;
+            }
 
             if (m_NextAbility < DateTime.UtcNow)
             {
@@ -139,12 +141,18 @@ namespace Server.Mobiles
             foreach (Mobile m in eable)
             {
                 if (m == this || !CanBeHarmful(m))
+                {
                     continue;
+                }
 
                 if (!playersOnly && m is BaseCreature creature && (creature.Controlled || creature.Summoned || creature.Team != Team))
+                {
                     targets.Add(creature);
+                }
                 else if (m.Player)
+                {
                     targets.Add(m);
+                }
             }
             eable.Free();
 
@@ -191,7 +199,7 @@ namespace Server.Mobiles
 
                         List<KeyValuePair<Mobile, Point3D>> list = new List<KeyValuePair<Mobile, Point3D>>();
 
-                        foreach (var pair in m_Table)
+                        foreach (KeyValuePair<Mobile, Point3D> pair in m_Table)
                         {
                             list.Add(pair);
                         }
@@ -210,7 +218,9 @@ namespace Server.Mobiles
         public void DoNuke()
         {
             if (!Alive || Map == null)
+            {
                 return;
+            }
 
             Say(1112362); // You will burn to a pile of ash!
 
@@ -240,7 +250,9 @@ namespace Server.Mobiles
                     foreach (NetState ns in e)
                     {
                         if (ns.Mobile != null)
+                        {
                             ns.Mobile.Send(flash);
+                        }
                     }
 
                     e.Free();
@@ -277,9 +289,13 @@ namespace Server.Mobiles
                 if (mount != null)
                 {
                     if (m is PlayerMobile mobile)
+                    {
                         mobile.SetMountBlock(BlockMountType.Dazed, TimeSpan.FromSeconds(10), true);
+                    }
                     else
+                    {
                         mount.Rider = null;
+                    }
                 }
                 else if (m.Flying)
                 {
@@ -314,13 +330,15 @@ namespace Server.Mobiles
         public int TotalSummons()
         {
             if (SummonedHelpers == null || SummonedHelpers.Count == 0)
+            {
                 return 0;
+            }
 
             int count = 0;
 
-            for (var index = 0; index < SummonedHelpers.Count; index++)
+            for (int index = 0; index < SummonedHelpers.Count; index++)
             {
-                var bc = SummonedHelpers[index];
+                BaseCreature bc = SummonedHelpers[index];
 
                 if (bc != null && bc.Alive)
                 {
@@ -334,14 +352,18 @@ namespace Server.Mobiles
         public virtual void DoSummon()
         {
             if (Map == null || TotalSummons() > 0)
+            {
                 return;
+            }
 
             Type type = SummonTypes[Utility.Random(SummonTypes.Length)];
 
             for (int i = 0; i < 3; i++)
             {
                 if (Combatant == null)
+                {
                     return;
+                }
 
                 Point3D p = Combatant.Location;
 
@@ -366,14 +388,9 @@ namespace Server.Mobiles
 
                     Timer.DelayCall(TimeSpan.FromSeconds(1), o =>
                     {
-                        BaseCreature s = o;
-
-                        if (s != null && s.Combatant != null)
+                        if (o != null && o.Combatant != null && o.Combatant is not PlayerMobile)
                         {
-                            if (!(s.Combatant is PlayerMobile) || !((PlayerMobile)s.Combatant).HonorActive)
-                            {
-                                s.Combatant = Combatant;
-                            }
+                            o.Combatant = Combatant;
                         }
 
                     }, spawn);
@@ -386,10 +403,14 @@ namespace Server.Mobiles
         protected virtual void AddHelper(BaseCreature bc)
         {
             if (SummonedHelpers == null)
+            {
                 SummonedHelpers = new List<BaseCreature>();
+            }
 
             if (!SummonedHelpers.Contains(bc))
+            {
                 SummonedHelpers.Add(bc);
+            }
         }
 
         public override void Delete()
@@ -411,11 +432,13 @@ namespace Server.Mobiles
             writer.Write(SummonedHelpers == null ? 0 : SummonedHelpers.Count);
 
             if (SummonedHelpers != null)
-                for (var index = 0; index < SummonedHelpers.Count; index++)
+            {
+                for (int index = 0; index < SummonedHelpers.Count; index++)
                 {
-                    var m = SummonedHelpers[index];
+                    BaseCreature m = SummonedHelpers[index];
                     writer.Write(m);
                 }
+            }
         }
 
         public override void Deserialize(GenericReader reader)

@@ -35,8 +35,6 @@ namespace Server.Mobiles
             ColorItem(new GargishClothWingArmor()); // Bright Blue
             ColorItem(new GargishLeatherArms()); // Bright Blue
             ColorItem(new GargishLeatherKilt()); // Bright Blue
-
-            AddItem(new SerpentStoneStaff());
         }
 
         private void ColorItem(Item item)

@@ -25,9 +25,14 @@ namespace Server.Items
                 m_Index = value;
 
                 if (value < 0)
+                {
                     m_Index = 0;
+                }
+
                 if (value >= FishInfo.FishInfos.Count)
+                {
                     m_Index = FishInfo.FishInfos.Count - 1;
+                }
 
                 m_BaitType = FishInfo.GetTypeFromIndex(m_Index);
                 Hue = FishInfo.GetFishHue(m_Index);
@@ -70,14 +75,22 @@ namespace Server.Items
             {
                 //~1_token~ ~2_token~ bait
                 if (label is int i)
+                {
                     list.Add(1116464, "#{0}\t#{1}", 1116470, i);
+                }
                 else if (label is string s)
+                {
                     list.Add(1116464, "#{0}\t{1}", 1116470, s);
+                }
             }
             else if (label is int i)
+            {
                 list.Add(1116465, $"#{i}"); // ~1_token~ bait
+            }
             else if (label is string s)
+            {
                 list.Add(1116465, s);
+            }
         }
 
         public override void GetProperties(ObjectPropertyList list)
@@ -100,17 +113,23 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (targeted == m_Bait || m_Bait.UsesRemaining <= 0)
+                {
                     return;
+                }
 
                 if (targeted is FishingPole pole)
                 {
                     if (pole.BaitType != null)
+                    {
                         return;
+                    }
 
                     pole.BaitType = m_Bait.BaitType;
 
                     if (m_Bait.Enhanced)
+                    {
                         pole.EnhancedBait = true;
+                    }
 
                     from.SendLocalizedMessage(1149759); // You bait the hook.
 
@@ -119,7 +138,9 @@ namespace Server.Items
                 else if (targeted is LobsterTrap trap)
                 {
                     if (trap.BaitType != null)
-                        return;                   
+                    {
+                        return;
+                    }
 
                     if (trap.Amount > m_Bait.UsesRemaining)
                     {
@@ -181,9 +202,14 @@ namespace Server.Items
             m_Enhanced = reader.ReadBool();
 
             if (m_Index < 0)
+            {
                 m_Index = 0;
+            }
+
             if (m_Index >= FishInfo.FishInfos.Count)
+            {
                 m_Index = FishInfo.FishInfos.Count - 1;
+            }
 
             m_BaitType = FishInfo.FishInfos[m_Index].Type;
         }

@@ -72,12 +72,6 @@ namespace Server.Spells.Spellweaving
                 return false;
             }
 
-            if (SpiritualityVirtue.IsEmbracee(Caster))
-            {
-                Caster.SendLocalizedMessage(1156040); // You may not cast Attunement whilst a Spirituality Shield is active!
-                return false;
-            }
-
             return base.CheckCast();
         }
 

@@ -24,7 +24,9 @@ namespace Server.Misc
                     case 0x002A: // *i resign from my guild*
                         {
                             if (from.Guild != null)
+                            {
                                 ((Guild)from.Guild).RemoveMember(from);
+                            }
 
                             break;
                         }

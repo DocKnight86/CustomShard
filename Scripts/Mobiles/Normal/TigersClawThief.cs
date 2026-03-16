@@ -92,7 +92,9 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (Utility.RandomDouble() < 0.3)
+            {
                 c.DropItem(new TigerClawSectBadge());
+            }
         }
 
         public override void Serialize(GenericWriter writer)

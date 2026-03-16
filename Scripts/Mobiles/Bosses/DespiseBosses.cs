@@ -33,7 +33,9 @@ namespace Server.Engines.Despise
         public override int Damage(int amount, Mobile from, bool informMount, bool checkDisrupt)
         {
             if (from is DespiseCreature)
+            {
                 return base.Damage(amount, from, informMount, checkDisrupt);
+            }
 
             return 0;
         }
@@ -73,7 +75,9 @@ namespace Server.Engines.Despise
                                 mobile.SendMessage("An artifact has been placed in your bankbox!");
                             }
                             else
+                            {
                                 mobile.SendLocalizedMessage(1153440); // An artifact has been placed in your backpack!
+                            }
                         }
                     }
                 }
@@ -87,7 +91,9 @@ namespace Server.Engines.Despise
             base.AlterMeleeDamageTo(to, ref damage);
 
             if (m_Wisp != null && !m_Wisp.Deleted && m_Wisp.Alive)
+            {
                 damage += (int)(damage * WispScalar);
+            }
         }
 
         public override void AlterMeleeDamageFrom(Mobile from, ref int damage)
@@ -95,7 +101,9 @@ namespace Server.Engines.Despise
             base.AlterMeleeDamageFrom(from, ref damage);
 
             if (m_Wisp != null && !m_Wisp.Deleted && m_Wisp.Alive)
+            {
                 damage -= (int)(damage * WispScalar);
+            }
         }
 
         public override void AlterSpellDamageTo(Mobile to, ref int damage)
@@ -103,7 +111,9 @@ namespace Server.Engines.Despise
             base.AlterSpellDamageTo(to, ref damage);
 
             if (m_Wisp != null && !m_Wisp.Deleted && m_Wisp.Alive)
+            {
                 damage += (int)(damage * WispScalar);
+            }
         }
 
         public override void AlterSpellDamageFrom(Mobile from, ref int damage)
@@ -111,7 +121,9 @@ namespace Server.Engines.Despise
             base.AlterSpellDamageFrom(from, ref damage);
 
             if (m_Wisp != null && !m_Wisp.Deleted && m_Wisp.Alive)
+            {
                 damage -= (int)(damage * WispScalar);
+            }
         }
 
         public override void OnThink()
@@ -136,7 +148,9 @@ namespace Server.Engines.Despise
             base.Delete();
 
             if (m_Wisp != null && m_Wisp.Alive)
+            {
                 m_Wisp.Delete();
+            }
         }
 
         public static Type[] Artifacts => m_Artifacts;

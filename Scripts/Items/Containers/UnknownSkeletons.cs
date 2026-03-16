@@ -71,14 +71,22 @@ namespace Server.Items
             DropItem(new Lockpick(Utility.RandomMinMax(1, 4)));
 
             if (Utility.RandomBool())
+            {
                 DropItem(new Torch());
+            }
             else
+            {
                 DropItem(new Lantern());
+            }
 
             if (0.1 >= Utility.RandomDouble())
+            {
                 DropItem(Loot.RandomRangedWeapon());
+            }
             else
+            {
                 DropItem(Loot.RandomWeapon());
+            }
 
             DropItem(new TreasureMap(Utility.RandomMinMax(3, 5), Map.Felucca));
         }
@@ -119,9 +127,13 @@ namespace Server.Items
             DropItem(Loot.RandomJewelry());
 
             if (Utility.RandomBool())
+            {
                 DropItem(new QuarterStaff());
+            }
             else
+            {
                 DropItem(new GnarledStaff());
+            }
 
             Item item;
 
@@ -135,9 +147,13 @@ namespace Server.Items
             for (int i = 0; i < 3; i++)
             {
                 if (0.25 >= Utility.RandomDouble())
+                {
                     item = Loot.Construct(Loot.NecromancyScrollTypes);
+                }
                 else
+                {
                     item = Loot.Construct(Loot.MageryScrollTypes);
+                }
 
                 item.Amount = Utility.RandomMinMax(1, 2);
                 DropItem(item);

@@ -358,20 +358,6 @@ namespace Server.Mobiles
             return base.GetPowerScroll();
         }
 
-        private int _120GJPowerScrolls = 4;
-
-        public override Item GetJusticePowerScroll()
-        {
-            if (_120GJPowerScrolls > 0)
-            {
-                _120GJPowerScrolls--;
-
-                return PowerScroll.CreateRandomNoCraft(20, 20);
-            }
-
-            return base.GetJusticePowerScroll();
-        }
-
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);

@@ -58,7 +58,9 @@ namespace Server.Mobiles
             }
 
             if (damage < 10)
+            {
                 damage = 10;
+            }
 
             if (dur.HitPoints > 0)
             {

@@ -26,7 +26,9 @@ namespace Server.Misc
                 AckPartyLocations ack = new AckPartyLocations(from, party);
 
                 if (ack.UnderlyingStream.Length > 8)
+                {
                     state.Send(ack);
+                }
             }
         }
 
@@ -59,7 +61,9 @@ namespace Server.Misc
         public static PacketHandler GetHandler(int packetID)
         {
             if (packetID >= 0 && packetID < m_Handlers.Length)
+            {
                 return m_Handlers[packetID];
+            }
 
             return null;
         }
@@ -112,12 +116,16 @@ namespace Server.Misc
                 PartyMemberInfo pmi = party.Members[i];
 
                 if (pmi == null || pmi.Mobile == from)
+                {
                     continue;
+                }
 
                 Mobile mob = pmi.Mobile;
 
                 if (Utility.InUpdateRange(from, mob) && from.CanSee(mob))
+                {
                     continue;
+                }
 
                 m_Stream.Write(mob.Serial);
                 m_Stream.Write((short)mob.X);
@@ -146,10 +154,14 @@ namespace Server.Misc
                 Mobile mob = guild.Members[i];
 
                 if (mob == null || mob == from || mob.NetState == null)
+                {
                     continue;
+                }
 
                 if (locations && Utility.InUpdateRange(from, mob) && from.CanSee(mob))
+                {
                     continue;
+                }
 
                 m_Stream.Write(mob.Serial);
 
@@ -160,9 +172,13 @@ namespace Server.Misc
                     m_Stream.Write((byte)(mob.Map == null ? 0 : mob.Map.MapID));
 
                     if (mob.Alive)
+                    {
                         m_Stream.Write((byte)(mob.Hits / Math.Max(mob.HitsMax, 1.0) * 100));
+                    }
                     else
+                    {
                         m_Stream.Write((byte)0);
+                    }
                 }
             }
 

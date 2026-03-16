@@ -999,6 +999,7 @@ namespace Server.Mobiles
                 {
                     default:
                     case ElementType.Physical:
+                    {
                         if (bc is IElementalCreature physical)
                         {
                             return physical.ElementType == ElementType.Physical ? 100 : 0;
@@ -1007,7 +1008,9 @@ namespace Server.Mobiles
                         {
                             return PhysicalDamage;
                         }
+                    }
                     case ElementType.Fire:
+                    {
                         if (bc is IElementalCreature fire)
                         {
                             return fire.ElementType == ElementType.Fire ? 100 : 0;
@@ -1016,7 +1019,9 @@ namespace Server.Mobiles
                         {
                             return FireDamage;
                         }
+                    }
                     case ElementType.Cold:
+                    {
                         if (bc is IElementalCreature cold)
                         {
                             return cold.ElementType == ElementType.Cold ? 100 : 0;
@@ -1025,7 +1030,9 @@ namespace Server.Mobiles
                         {
                             return ColdDamage;
                         }
+                    }
                     case ElementType.Poison:
+                    {
                         if (bc is IElementalCreature poison)
                         {
                             return poison.ElementType == ElementType.Poison ? 100 : 0;
@@ -1034,7 +1041,9 @@ namespace Server.Mobiles
                         {
                             return PoisonDamage;
                         }
+                    }
                     case ElementType.Energy:
+                    {
                         if (bc is IElementalCreature energy)
                         {
                             return energy.ElementType == ElementType.Energy ? 100 : 0;
@@ -1043,7 +1052,9 @@ namespace Server.Mobiles
                         {
                             return EnergyDamage;
                         }
+                    }
                     case ElementType.Chaos:
+                    {
                         if (bc is IElementalCreature chaos)
                         {
                             return chaos.ElementType == ElementType.Chaos ? 100 : 0;
@@ -1052,7 +1063,9 @@ namespace Server.Mobiles
                         {
                             return ChaosDamage;
                         }
+                    }
                     case ElementType.Direct:
+                    {
                         if (bc is IElementalCreature direct)
                         {
                             return direct.ElementType == ElementType.Direct ? 100 : 0;
@@ -1061,6 +1074,7 @@ namespace Server.Mobiles
                         {
                             return DirectDamage;
                         }
+                    }
                 }
             }
         }

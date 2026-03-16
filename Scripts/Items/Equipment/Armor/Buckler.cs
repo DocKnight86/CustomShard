@@ -2,7 +2,6 @@ using Server.Engines.Craft;
 
 namespace Server.Items
 {
-    [Alterable(typeof(DefBlacksmithy), typeof(SmallPlateShield))]
     public class Buckler : BaseShield
     {
         public override int BasePhysicalResistance => 0;

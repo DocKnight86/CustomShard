@@ -41,23 +41,31 @@ namespace Server.Misc
             Skill skill = from.Skills[skillName];
 
             if (skill == null)
+            {
                 return false;
+            }
 
             double value = skill.Value;
 
             //TODO: Is there any other place this can go?
             if (skillName == SkillName.Fishing && BaseGalleon.FindGalleonAt(from, from.Map) is TokunoGalleon)
+            {
                 value += 1;
+            }
 
             double chance = (value - minSkill) / (maxSkill - minSkill);
 
             CrystalBallOfKnowledge.TellSkillDifficulty(from, skillName, chance);
 
             if (value < minSkill)
+            {
                 return false; // Too difficult
+            }
 
             if (value >= maxSkill)
+            {
                 return true; // No challenge
+            }
 
             return CheckSkill(from, skill, chance);
         }
@@ -67,15 +75,21 @@ namespace Server.Misc
             Skill skill = from.Skills[skillName];
 
             if (skill == null)
+            {
                 return false;
+            }
 
             CrystalBallOfKnowledge.TellSkillDifficulty(from, skillName, chance);
 
             if (chance < 0.0)
+            {
                 return false; // Too difficult
+            }
 
             if (chance >= 1.0)
+            {
                 return true; // No challenge
+            }
 
             return CheckSkill(from, skill, chance);
         }
@@ -93,7 +107,9 @@ namespace Server.Misc
         public static bool CheckSkill(Mobile from, SkillName sk, double minSkill, double maxSkill, int amount)
         {
             if (from.Skills.Cap == 0)
+            {
                 return false;
+            }
 
             Skill skill = from.Skills[sk];
             double value = skill.Value;
@@ -129,7 +145,9 @@ namespace Server.Misc
         public static bool CheckSkill(Mobile from, Skill skill, double chance)
         {
             if (from.Skills.Cap == 0)
+            {
                 return false;
+            }
 
             bool success = Utility.Random(100) <= (int)(chance * 100);
             double gc = GetGainChance(from, skill, chance, success);
@@ -158,14 +176,20 @@ namespace Server.Misc
             gc *= skill.Info.GainFactor;
 
             if (gc < 0.01)
+            {
                 gc = 0.01;
+            }
 
             // Pets get a 100% bonus
             if (from is BaseCreature bc && bc.Controlled)
+            {
                 gc += gc * 1.00;
+            }
 
             if (gc > 1.00)
+            {
                 gc = 1.00;
+            }
 
             return gc;
         }
@@ -180,15 +204,21 @@ namespace Server.Misc
             Skill skill = from.Skills[skillName];
 
             if (skill == null)
+            {
                 return false;
+            }
 
             double value = skill.Value;
 
             if (value < minSkill)
+            {
                 return false; // Too difficult
+            }
 
             if (value >= maxSkill)
+            {
                 return true; // No challenge
+            }
 
             double chance = (value - minSkill) / (maxSkill - minSkill);
 
@@ -202,15 +232,21 @@ namespace Server.Misc
             Skill skill = from.Skills[skillName];
 
             if (skill == null)
+            {
                 return false;
+            }
 
             CrystalBallOfKnowledge.TellSkillDifficulty(from, skillName, chance);
 
             if (chance < 0.0)
+            {
                 return false; // Too difficult
+            }
 
             if (chance >= 1.0)
+            {
                 return true; // No challenge
+            }
 
             return CheckSkill(from, skill, chance);
         }
@@ -218,7 +254,9 @@ namespace Server.Misc
         private static bool AllowGain(Mobile from, Skill skill)
         {
             if (Engines.VvV.ViceVsVirtueSystem.InSkillLoss(from))
+            {
                 return false;
+            }
 
             if (from is PlayerMobile mobile)
             {
@@ -251,13 +289,19 @@ namespace Server.Misc
         public static void Gain(Mobile from, Skill skill, int toGain)
         {
             if (from.Region.IsPartOf<Jail>())
+            {
                 return;
+            }
 
             if (from is BaseCreature creature && creature.IsDeadPet)
+            {
                 return;
+            }
 
             if (skill.SkillName == SkillName.Focus && from is BaseCreature baseCreature && !baseCreature.Controlled)
+            {
                 return;
+            }
 
             if (skill.Base < skill.Cap && skill.Lock == SkillLock.Up)
             {
@@ -413,16 +457,24 @@ namespace Server.Misc
             if (primaryLock == StatLockType.Up && secondaryLock == StatLockType.Up)
             {
                 if (Utility.Random(4) == 0)
+                {
                     GainStat(from, (Stat)info.Secondary);
+                }
                 else
+                {
                     GainStat(from, (Stat)info.Primary);
+                }
             }
             else // Will not do anything if neither are selected to gain
             {
                 if (primaryLock == StatLockType.Up)
+                {
                     GainStat(from, (Stat)info.Primary);
+                }
                 else if (secondaryLock == StatLockType.Up)
+                {
                     GainStat(from, (Stat)info.Secondary);
+                }
             }
         }
 
@@ -503,9 +555,13 @@ namespace Server.Misc
                             if (atTotalCap)
                             {
                                 if (CanLower(from, Stat.Dex) && (from.RawDex < from.RawInt || !CanLower(from, Stat.Int)))
+                                {
                                     --from.RawDex;
+                                }
                                 else if (CanLower(from, Stat.Int))
+                                {
                                     --from.RawInt;
+                                }
                             }
 
                             ++from.RawStr;
@@ -530,9 +586,13 @@ namespace Server.Misc
                             if (atTotalCap)
                             {
                                 if (CanLower(from, Stat.Str) && (from.RawStr < from.RawInt || !CanLower(from, Stat.Int)))
+                                {
                                     --from.RawStr;
+                                }
                                 else if (CanLower(from, Stat.Int))
+                                {
                                     --from.RawInt;
+                                }
                             }
 
                             ++from.RawDex;
@@ -557,9 +617,13 @@ namespace Server.Misc
                             if (atTotalCap)
                             {
                                 if (CanLower(from, Stat.Str) && (from.RawStr < from.RawDex || !CanLower(from, Stat.Dex)))
+                                {
                                     --from.RawStr;
+                                }
                                 else if (CanLower(from, Stat.Dex))
+                                {
                                     --from.RawDex;
+                                }
                             }
 
                             ++from.RawInt;
@@ -583,7 +647,9 @@ namespace Server.Misc
         public static void GainStat(Mobile from, Stat stat)
         {
             if (!CheckStatTimer(from, stat))
+            {
                 return;
+            }
 
             IncreaseStat(from, stat);
         }
@@ -597,10 +663,14 @@ namespace Server.Misc
                         if (from is BaseCreature creature && creature.Controlled)
                         {
                             if (creature.LastStrGain + _PetStatGainDelay >= DateTime.UtcNow)
+                            {
                                 return false;
+                            }
                         }
                         else if (from.LastStrGain + _StatGainDelay >= DateTime.UtcNow)
+                        {
                             return false;
+                        }
 
                         from.LastStrGain = DateTime.UtcNow;
                         break;
@@ -610,10 +680,14 @@ namespace Server.Misc
                         if (from is BaseCreature creature && creature.Controlled)
                         {
                             if (creature.LastDexGain + _PetStatGainDelay >= DateTime.UtcNow)
+                            {
                                 return false;
+                            }
                         }
                         else if (from.LastDexGain + _StatGainDelay >= DateTime.UtcNow)
+                        {
                             return false;
+                        }
 
                         from.LastDexGain = DateTime.UtcNow;
                         break;
@@ -623,10 +697,14 @@ namespace Server.Misc
                         if (from is BaseCreature creature && creature.Controlled)
                         {
                             if (creature.LastIntGain + _PetStatGainDelay >= DateTime.UtcNow)
+                            {
                                 return false;
+                            }
                         }
                         else if (from.LastIntGain + _StatGainDelay >= DateTime.UtcNow)
+                        {
                             return false;
+                        }
 
                         from.LastIntGain = DateTime.UtcNow;
                         break;
@@ -638,7 +716,9 @@ namespace Server.Misc
         private static bool CheckGGS(Mobile from, Skill skill)
         {
             if (!GGSActive)
+            {
                 return false;
+            }
 
             if (from is PlayerMobile && skill.NextGGSGain < DateTime.UtcNow)
             {
@@ -651,7 +731,9 @@ namespace Server.Misc
         public static void UpdateGGS(Mobile from, Skill skill)
         {
             if (!GGSActive)
+            {
                 return;
+            }
 
             int list = (int)Math.Min(GGSTable.Length - 1, skill.Base / 5);
             int column = from.Skills.Total >= 7000 ? 2 : from.Skills.Total >= 3500 ? 1 : 0;

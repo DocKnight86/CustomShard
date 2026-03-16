@@ -33,9 +33,13 @@ namespace Server.Engines.Mahjong
         public static MahjongPieceDim GetDimensions(Point2D position, MahjongPieceDirection direction)
         {
             if (direction == MahjongPieceDirection.Up || direction == MahjongPieceDirection.Down)
+            {
                 return new MahjongPieceDim(position, 40, 20);
+            }
             else
+            {
                 return new MahjongPieceDim(position, 20, 40);
+            }
         }
 
         public void Move(Point2D position, MahjongPieceDirection direction, MahjongWind wind)
@@ -43,7 +47,9 @@ namespace Server.Engines.Mahjong
             MahjongPieceDim dim = GetDimensions(position, direction);
 
             if (!dim.IsValid())
+            {
                 return;
+            }
 
             m_Position = position;
             m_Direction = direction;

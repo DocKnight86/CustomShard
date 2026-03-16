@@ -35,7 +35,9 @@ namespace Server.Misc
             List<Weather> list = GetWeatherList(facet);
 
             if (list != null)
+            {
                 list.Add(this);
+            }
 
             TimerRegistry.Register(m_TimerID, this, interval, TimeSpan.FromSeconds((0.2 + (Utility.RandomDouble() * 0.8)) * interval.TotalSeconds), false, weather => weather.OnTick());
         }
@@ -90,13 +92,17 @@ namespace Server.Misc
         public static List<Weather> GetWeatherList(Map facet)
         {
             if (facet == null)
+            {
                 return null;
+            }
 
             List<Weather> list = null;
             m_WeatherByFacet.TryGetValue(facet, out list);
 
             if (list == null)
+            {
                 m_WeatherByFacet[facet] = list = new List<Weather>();
+            }
 
             return list;
         }
@@ -113,14 +119,20 @@ namespace Server.Misc
                     area = new Rectangle2D(bounds.X + Utility.Random(bounds.Width - width), bounds.Y + Utility.Random(bounds.Height - height), width, height);
 
                     if (!CheckWeatherConflict(m_Facets[i], null, area))
+                    {
                         isValid = true;
+                    }
 
                     if (isValid)
+                    {
                         break;
+                    }
                 }
 
                 if (!isValid)
+                {
                     continue;
+                }
 
                 _ = new Weather(m_Facets[i], new[] { area }, temperature, chanceOfPercipitation, chanceOfExtremeTemperature, TimeSpan.FromSeconds(30.0))
                 {
@@ -141,14 +153,18 @@ namespace Server.Misc
             List<Weather> list = GetWeatherList(facet);
 
             if (list == null)
+            {
                 return false;
+            }
 
             for (int i = 0; i < list.Count; ++i)
             {
                 Weather w = list[i];
 
                 if (w != exclude && w.IntersectsWith(area))
+                {
                     return true;
+                }
             }
 
             return false;
@@ -157,16 +173,24 @@ namespace Server.Misc
         public static bool CheckIntersection(Rectangle2D r1, Rectangle2D r2)
         {
             if (r1.X >= r2.X + r2.Width)
+            {
                 return false;
+            }
 
             if (r2.X >= r1.X + r1.Width)
+            {
                 return false;
+            }
 
             if (r1.Y >= r2.Y + r2.Height)
+            {
                 return false;
+            }
 
             if (r2.Y >= r1.Y + r1.Height)
+            {
                 return false;
+            }
 
             return true;
         }
@@ -174,16 +198,24 @@ namespace Server.Misc
         public static bool CheckContains(Rectangle2D big, Rectangle2D small)
         {
             if (small.X < big.X)
+            {
                 return false;
+            }
 
             if (small.Y < big.Y)
+            {
                 return false;
+            }
 
             if (small.X + small.Width > big.X + big.Width)
+            {
                 return false;
+            }
 
             if (small.Y + small.Height > big.Y + big.Height)
+            {
                 return false;
+            }
 
             return true;
         }
@@ -193,7 +225,9 @@ namespace Server.Misc
             for (int i = 0; i < m_Area.Length; ++i)
             {
                 if (CheckIntersection(area, m_Area[i]))
+                {
                     return true;
+                }
             }
 
             return false;
@@ -202,7 +236,9 @@ namespace Server.Misc
         public virtual void Reposition()
         {
             if (m_Area.Length == 0)
+            {
                 return;
+            }
 
             int width = m_Area[0].Width;
             int height = m_Area[0].Height;
@@ -215,14 +251,20 @@ namespace Server.Misc
                 area = new Rectangle2D(m_Bounds.X + Utility.Random(m_Bounds.Width - width), m_Bounds.Y + Utility.Random(m_Bounds.Height - height), width, height);
 
                 if (!CheckWeatherConflict(m_Facet, this, area))
+                {
                     isValid = true;
+                }
 
                 if (isValid)
+                {
                     break;
+                }
             }
 
             if (!isValid)
+            {
                 return;
+            }
 
             m_Area[0] = area;
         }
@@ -241,7 +283,9 @@ namespace Server.Misc
         public virtual void MoveForward()
         {
             if (m_Area.Length == 0)
+            {
                 return;
+            }
 
             for (int i = 0; i < 5; ++i) // try 5 times to find a valid spot
             {
@@ -278,14 +322,18 @@ namespace Server.Misc
             if (m_Active)
             {
                 if (m_Stage > 0 && m_MoveSpeed > 0)
+                {
                     MoveForward();
+                }
 
                 int type, density, temperature;
 
                 temperature = m_Temperature;
 
                 if (m_ExtremeTemperature)
+                {
                     temperature *= -1;
+                }
 
                 if (m_Stage < 15)
                 {
@@ -296,17 +344,27 @@ namespace Server.Misc
                     density = 150 - (m_Stage * 5);
 
                     if (density < 10)
+                    {
                         density = 10;
+                    }
                     else if (density > 70)
+                    {
                         density = 70;
+                    }
                 }
 
                 if (density == 0)
+                {
                     type = 0xFE;
+                }
                 else if (temperature > 0)
+                {
                     type = 0;
+                }
                 else
+                {
                     type = 2;
+                }
 
                 List<NetState> states = NetState.Instances;
 
@@ -318,7 +376,9 @@ namespace Server.Misc
                     Mobile mob = ns.Mobile;
 
                     if (mob == null || mob.Map != m_Facet)
+                    {
                         continue;
+                    }
 
                     bool contains = (m_Area.Length == 0);
 
@@ -326,10 +386,14 @@ namespace Server.Misc
                         contains = m_Area[j].Contains(mob.Location);
 
                     if (!contains)
+                    {
                         continue;
+                    }
 
                     if (weatherPacket == null)
+                    {
                         weatherPacket = Packet.Acquire(new WeatherPacket(type, density, temperature));
+                    }
 
                     ns.Send(weatherPacket);
                 }
@@ -362,7 +426,9 @@ namespace Server.Misc
             Map facet = from.Map;
 
             if (facet == null)
+            {
                 return;
+            }
 
             List<Weather> list = Weather.GetWeatherList(facet);
 

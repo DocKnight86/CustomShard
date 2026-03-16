@@ -452,25 +452,30 @@ namespace Server.Mobiles
             switch (id)
             {
                 case 0:
+                {
                     User.CloseGump(typeof(PetTrainingOptionsGump));
                     User.CloseGump(typeof(PetTrainingPlanningGump));
                     User.CloseGump(typeof(PetTrainingInfoGump));
                     User.CloseGump(typeof(PetTrainingStyleConfirmGump));
                     User.CloseGump(typeof(PetTrainingConfirmationGump));
                     break;
+                }
                 case 1: // training tracker
+                {
                     User.CloseGump(typeof(PetTrainingProgressGump));
 
                     Timer.DelayCall(TimeSpan.FromSeconds(.5), () =>
-                        {
-                            SendGump(new PetTrainingProgressGump(User, Creature));
-                        });
+                    {
+                        SendGump(new PetTrainingProgressGump(User, Creature));
+                    });
                     break;
+                }
                 case 2: // pet training options
+                {
                     if (User.HasGump(typeof(PetTrainingConfirmationGump)) ||
-                    User.HasGump(typeof(PetTrainingOptionsGump)) ||
-                    User.HasGump(typeof(PetTrainingPlanningGump)) ||
-                    User.HasGump(typeof(PetTrainingStyleConfirmGump)))
+                        User.HasGump(typeof(PetTrainingOptionsGump)) ||
+                        User.HasGump(typeof(PetTrainingPlanningGump)) ||
+                        User.HasGump(typeof(PetTrainingStyleConfirmGump)))
                     {
                         Refresh();
                         break;
@@ -485,44 +490,48 @@ namespace Server.Mobiles
                             trainProfile.HasRecievedControlSlotWarning = true;
 
                             Timer.DelayCall(TimeSpan.FromSeconds(.5), () =>
-                                {
-                                    SendGump(new PetTrainingStyleConfirmGump(User, 1157571, 1157572, () =>
-                                    {
-                                        Refresh();
-                                        User.CloseGump(typeof(PetTrainingOptionsGump));
-                                        SendGump(new PetTrainingOptionsGump(User, Creature));
-                                    }));
-                                });
-                        }
-                        else
-                        {
-                            Timer.DelayCall(TimeSpan.FromSeconds(.5), () =>
+                            {
+                                SendGump(new PetTrainingStyleConfirmGump(User, 1157571, 1157572, () =>
                                 {
                                     Refresh();
                                     User.CloseGump(typeof(PetTrainingOptionsGump));
                                     SendGump(new PetTrainingOptionsGump(User, Creature));
-                                });
+                                }));
+                            });
+                        }
+                        else
+                        {
+                            Timer.DelayCall(TimeSpan.FromSeconds(.5), () =>
+                            {
+                                Refresh();
+                                User.CloseGump(typeof(PetTrainingOptionsGump));
+                                SendGump(new PetTrainingOptionsGump(User, Creature));
+                            });
                         }
                     }
                     break;
+                }
                 case 3: // cancel
+                {
                     SendGump(new PetTrainingStyleConfirmGump(User, 1153093, 1158019, () =>
-                        {
-                            TrainingProfile trainProfile1 = PetTrainingHelper.GetTrainingProfile(Creature, true);
+                    {
+                        TrainingProfile trainProfile1 = PetTrainingHelper.GetTrainingProfile(Creature, true);
 
-                            if (trainProfile1 != null)
-                            {
-                                trainProfile1.EndTraining();
-                            }
-                        }));
+                        if (trainProfile1 != null)
+                        {
+                            trainProfile1.EndTraining();
+                        }
+                    }));
                     break;
+                }
                 case 4: // begin training
+                {
                     TrainingProfile trainProfile2 = PetTrainingHelper.GetTrainingProfile(Creature, true);
                     trainProfile2.BeginTraining();
                     Refresh();
 
-                    Engines.Quests.UsingAnimalLoreQuest.CheckComplete(User);
                     break;
+                }
             }
         }
 
@@ -811,14 +820,38 @@ namespace Server.Mobiles
 
             switch (Category)
             {
-                case 0: BuildStatsPage(); break;
-                case 1: BuildResistsPage(); break;
-                case 2: BuildMagicSkillCapsPage(); break;
-                case 3: BuildCombatSkillCapsPage(); break;
-                case 4: BuildMagicalAbilitiesPage(); break;
-                case 5: BuildSpecialAbilitiesPage(); break;
-                case 6: BuildSpecialMovesPage(); break;
-                case 7: BuildAreaEffectsPage(); break;
+                case 0:
+                {
+                    BuildStatsPage(); break;
+                }
+                case 1:
+                {
+                    BuildResistsPage(); break;
+                }
+                case 2:
+                {
+                    BuildMagicSkillCapsPage(); break;
+                }
+                case 3:
+                {
+                    BuildCombatSkillCapsPage(); break;
+                }
+                case 4:
+                {
+                    BuildMagicalAbilitiesPage(); break;
+                }
+                case 5:
+                {
+                    BuildSpecialAbilitiesPage(); break;
+                }
+                case 6:
+                {
+                    BuildSpecialMovesPage(); break;
+                }
+                case 7:
+                {
+                    BuildAreaEffectsPage(); break;
+                }
             }
         }
 
@@ -1166,35 +1199,48 @@ namespace Server.Mobiles
             switch (Category)
             {
                 case 0: // stats
+                {
                     PetStat stat = (PetStat)id - 100;
                     tp = PetTrainingHelper.GetTrainingPoint(stat);
                     break;
+                }
                 case 1: // resists
+                {
                     ResistanceType r = (ResistanceType)id - 100;
                     tp = PetTrainingHelper.GetTrainingPoint(r);
                     break;
+                }
                 case 2: // mag skill
                 case 3: // combat skill
+                {
                     SkillName sk = (SkillName)id - 100;
                     tp = PetTrainingHelper.GetTrainingPoint(sk);
                     break;
+                }
                 case 4: // mag abil
+                {
                     MagicalAbility mabil = PetTrainingHelper.MagicalAbilities[id - 100];
                     tp = PetTrainingHelper.GetTrainingPoint(mabil);
                     break;
+                }
                 case 5: // spec abil
+                {
                     SpecialAbility sabil = SpecialAbility.Abilities[id - 100];
                     tp = PetTrainingHelper.GetTrainingPoint(sabil);
                     break;
+                }
                 case 6: // spec moves
+                {
                     WeaponAbility wabil = Definition.WeaponAbilities[id - 100];
                     tp = PetTrainingHelper.GetTrainingPoint(wabil);
                     break;
+                }
                 case 7: // area effects
+                {
                     AreaEffect aabil = AreaEffect.Effects[id - 100];
                     tp = PetTrainingHelper.GetTrainingPoint(aabil);
                     break;
-
+                }
             }
 
             if (tp != null)
@@ -1389,10 +1435,22 @@ namespace Server.Mobiles
                 switch (Value)
                 {
                     default:
-                    case 50: cliloc = 1049639; break;
-                    case 100: cliloc = 1049640; break;
-                    case 150: cliloc = 1049641; break;
-                    case 200: cliloc = 1049642; break;
+                    case 50:
+                    {
+                        cliloc = 1049639; break;
+                    }
+                    case 100:
+                    {
+                        cliloc = 1049640; break;
+                    }
+                    case 150:
+                    {
+                        cliloc = 1049641; break;
+                    }
+                    case 200:
+                    {
+                        cliloc = 1049642; break;
+                    }
                 }
 
                 AddHtmlLocalized(45, 225, 225, 60, cliloc, $"#{TrainingPoint.Name.Number}", 0, false, false);
@@ -1491,17 +1549,22 @@ namespace Server.Mobiles
             switch (info.ButtonID)
             {
                 case 0:
+                {
                     break;
+                }
                 case 1:
+                {
                     Timer.DelayCall(TimeSpan.FromSeconds(.5), () =>
+                    {
+                        if (User.HasGump(typeof(NewAnimalLoreGump)))
                         {
-                            if (User.HasGump(typeof(NewAnimalLoreGump)))
-                            {
-                                SendGump(new PetTrainingOptionsGump(User, Creature));
-                            }
-                        });
+                            SendGump(new PetTrainingOptionsGump(User, Creature));
+                        }
+                    });
                     break;
+                }
                 case 2: // <<<
+                {
                     if (TrainingPoint.Start != TrainingPoint.GetMax(Creature))
                     {
                         Value = TrainingPoint.Start;
@@ -1509,7 +1572,9 @@ namespace Server.Mobiles
 
                     Refresh();
                     break;
+                }
                 case 3: // <<
+                {
                     if (TrainingPoint.Start != TrainingPoint.GetMax(Creature))
                     {
                         if (TrainingPoint.TrainPoint is SkillName)
@@ -1523,7 +1588,9 @@ namespace Server.Mobiles
                     }
                     Refresh();
                     break;
+                }
                 case 4: // <
+                {
                     if (TrainingPoint.Start != TrainingPoint.GetMax(Creature))
                     {
                         if (TrainingPoint.TrainPoint is SkillName)
@@ -1544,7 +1611,9 @@ namespace Server.Mobiles
                     }
                     Refresh();
                     break;
+                }
                 case 5: // >
+                {
                     if (TrainingPoint.Start != TrainingPoint.GetMax(Creature))
                     {
                         if (TrainingPoint.TrainPoint is SkillName)
@@ -1565,7 +1634,9 @@ namespace Server.Mobiles
                     }
                     Refresh();
                     break;
+                }
                 case 6: // >>
+                {
                     if (TrainingPoint.Start != TrainingPoint.GetMax(Creature))
                     {
                         if (TrainingPoint.TrainPoint is SkillName)
@@ -1579,7 +1650,9 @@ namespace Server.Mobiles
                     }
                     Refresh();
                     break;
+                }
                 case 7: // >>>
+                {
                     if (TrainingPoint.Start != TrainingPoint.GetMax(Creature))
                     {
                         Value = TrainingPoint.GetMax(Creature);
@@ -1587,7 +1660,9 @@ namespace Server.Mobiles
 
                     Refresh();
                     break;
+                }
                 case 8: // train pet
+                {
                     TrainingProfile profile = PetTrainingHelper.GetTrainingProfile(Creature, true);
                     int cost = PetTrainingHelper.GetTotalCost(TrainingPoint, Creature, Value, StartValue);
 
@@ -1602,7 +1677,7 @@ namespace Server.Mobiles
                         User.SendLocalizedMessage(1153204); // The pet is too far away from you!
                     }
                     else if (Spells.SpellHelper.CheckCombat(User) || Spells.SpellHelper.CheckCombat(Creature) ||
-                        Creature.Aggressed.Count > 0 || Creature.Combatant != null)
+                             Creature.Aggressed.Count > 0 || Creature.Combatant != null)
                     {
                         User.SendLocalizedMessage(1156876); // Since you have been in combat recently you may not use this feature.
                     }
@@ -1653,8 +1728,6 @@ namespace Server.Mobiles
                                     profile.OnTrain(User, cost);
 
                                     ResendGumps(profile.HasBegunTraining);
-
-                                    Engines.Quests.TeachingSomethingNewQuest.CheckComplete(User);
                                 }
                             },
                             () =>
@@ -1667,7 +1740,9 @@ namespace Server.Mobiles
                         User.SendLocalizedMessage(1157550); // You lack the taming skill required to train this creature.
                     }
                     break;
+                }
                 case 9:
+                {
                     if (Value > StartValue)
                     {
                         PetTrainingHelper.GetPlanningProfile(Creature, true).AddToPlan(TrainingPoint.TrainPoint, Value, PetTrainingHelper.GetTotalCost(TrainingPoint, Creature, Value, StartValue));
@@ -1694,6 +1769,7 @@ namespace Server.Mobiles
                         }
                     });
                     break;
+                }
             }
         }
 

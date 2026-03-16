@@ -15,18 +15,11 @@ namespace Server
             typeof(GargishRing), typeof(GargishBracelet)
         };
         public static Type[] SAJewelryTypes => m_SAJewelryTypes;
-		
-		public static readonly Type[] m_SAShieldTypes =
-        {
-            typeof(GargishChaosShield), typeof(GargishKiteShield), typeof(GargishOrderShield), typeof(GargishWoodenShield),
-            typeof(LargeStoneShield)
-        };
-        public static Type[] SAShieldTypes => m_SAShieldTypes;
-		
+        
         private static readonly Type[] m_SAWeaponTypes =
         {
-            typeof(DiscMace), typeof(GargishTalwar), typeof(Shortblade), typeof(DualPointedSpear), typeof(GlassStaff),
-            typeof(StoneWarSword), typeof(DualShortAxes), typeof(GlassSword), typeof(GargishDagger)
+            typeof(DiscMace), typeof(GargishTalwar), typeof(Shortblade), typeof(DualPointedSpear), 
+            typeof(DualShortAxes), typeof(GargishDagger)
         };
         public static Type[] SAWeaponTypes => m_SAWeaponTypes;
 
@@ -451,23 +444,13 @@ namespace Server
             return Construct(m_HatTypes) as BaseHat;
         }
 
-        public static BaseShield RandomShield(bool isStygian = false)
+        public static BaseShield RandomShield()
         {
-            if (isStygian)
-            {
-                return Construct(m_ShieldTypes, m_SAShieldTypes) as BaseShield;
-            }
-
             return Construct(m_ShieldTypes) as BaseShield;
         }
 
-        public static BaseArmor RandomArmorOrShield(bool inTokuno = false, bool isMondain = false, bool isStygian = false)
+        public static BaseArmor RandomArmorOrShield(bool inTokuno = false, bool isMondain = false)
         {
-            if (isStygian)
-            {
-                return Construct(m_SAArmorTypes, m_ArmorTypes, m_ShieldTypes, m_SAShieldTypes) as BaseArmor;
-            }
-
             if (isMondain)
             {
                 return Construct(m_MLArmorTypes, m_ArmorTypes, m_ShieldTypes) as BaseArmor;
@@ -481,13 +464,8 @@ namespace Server
             return Construct(m_ArmorTypes, m_ShieldTypes) as BaseArmor;
         }
 
-        public static Item RandomArmorOrShieldOrJewelry(bool inTokuno = false, bool isMondain = false, bool isStygian = false)
+        public static Item RandomArmorOrShieldOrJewelry(bool inTokuno = false, bool isMondain = false)
         {
-            if (isStygian)
-            {
-                return Construct(m_SAArmorTypes, m_ArmorTypes, m_HatTypes, m_ShieldTypes, m_JewelryTypes, m_SAJewelryTypes, m_SAShieldTypes);
-            }
-
             if (isMondain)
             {
                 return Construct(m_MLArmorTypes, m_ArmorTypes, m_HatTypes, m_ShieldTypes, m_JewelryTypes);
@@ -507,20 +485,8 @@ namespace Server
             return Construct(m_ArmorTypes, m_HatTypes, m_ShieldTypes, m_JewelryTypes);
         }
 
-        public static Item RandomArmorOrShieldOrWeapon(bool inTokuno = false, bool isMondain = false, bool isStygian = false)
+        public static Item RandomArmorOrShieldOrWeapon(bool inTokuno = false, bool isMondain = false)
         {
-            if (isStygian)
-                return Construct(
-                    m_SAWeaponTypes,
-                    m_WeaponTypes,
-                    m_SARangedWeaponTypes,
-                    m_RangedWeaponTypes,
-                    m_SAArmorTypes,
-                    m_ArmorTypes,
-                    m_HatTypes,
-                    m_ShieldTypes,
-                    m_SAShieldTypes);
-
             if (isMondain)
             {
                 return Construct(
@@ -556,25 +522,8 @@ namespace Server
                 m_ShieldTypes);
         }
 
-        public static Item RandomArmorOrShieldOrWeaponOrJewelry(bool inTokuno = false, bool isMondain = false, bool isStygian = false)
+        public static Item RandomArmorOrShieldOrWeaponOrJewelry(bool inTokuno = false, bool isMondain = false)
         {
-            if (isStygian)
-            {
-                return Construct(
-
-                    m_SAWeaponTypes,
-                    m_WeaponTypes,
-                    m_SARangedWeaponTypes,
-                    m_RangedWeaponTypes,
-                    m_SAArmorTypes,
-                    m_ArmorTypes,
-                    m_HatTypes,
-                    m_ShieldTypes,
-                    m_JewelryTypes,
-                    m_SAJewelryTypes,
-                    m_SAShieldTypes);
-            }
-
             if (isMondain)
             {
                 return Construct(

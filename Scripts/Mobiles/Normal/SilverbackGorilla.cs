@@ -58,16 +58,22 @@ namespace Server.Mobiles
             Mobile combatant = Combatant as Mobile;
 
             if (DateTime.UtcNow < _NextBanana || combatant == null || combatant.Deleted || combatant.Map != Map || !InRange(combatant, 12) || !CanBeHarmful(combatant) || !InLOS(combatant))
+            {
                 return;
+            }
 
             ThrowBanana(combatant);
 
             _Thrown++;
 
             if (0.75 >= Utility.RandomDouble() && _Thrown % 2 == 1) // 75% chance to quickly throw another bomb
+            {
                 _NextBanana = DateTime.UtcNow + TimeSpan.FromSeconds(3.0);
+            }
             else
+            {
                 _NextBanana = DateTime.UtcNow + TimeSpan.FromSeconds(5.0 + 10.0 * Utility.RandomDouble()); // 5-15 seconds
+            }
         }
 
         public void ThrowBanana(Mobile m)
@@ -86,7 +92,9 @@ namespace Server.Mobiles
         private Item TryDropBannana(IEntity e)
         {
             if (Region.Find(e.Location, e.Map).IsPartOf("GreatApeLair"))
+            {
                 return new PerfectBanana();
+            }
 
             return null;
         }

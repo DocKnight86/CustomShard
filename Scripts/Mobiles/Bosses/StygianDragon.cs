@@ -60,16 +60,8 @@ namespace Server.Mobiles
         {
         }
 
-        public override Type[] UniqueSAList => new[]
-                {
-                    typeof(BurningAmber), typeof(DraconisWrath), typeof(DragonHideShield), typeof(FallenMysticsSpellbook),
-                    typeof(LifeSyphon), typeof(GargishSignOfOrder), typeof(HumanSignOfOrder), typeof(VampiricEssence)
-                };
-        public override Type[] SharedSAList => new[]
-                {
-                    typeof(AxesOfFury), typeof(SummonersKilt), typeof(GiantSteps),
-                    typeof(TokenOfHolyFavor)
-                };
+        public override Type[] UniqueSAList => [];
+        public override Type[] SharedSAList => [];
 
         public override bool AlwaysMurderer => true;
         public override bool Unprovokable => false;
@@ -94,7 +86,9 @@ namespace Server.Mobiles
             base.OnThink();
 
             if (Combatant == null || !(Combatant is Mobile))
+            {
                 return;
+            }
 
             if (DateTime.UtcNow > m_Delay)
             {
@@ -116,7 +110,9 @@ namespace Server.Mobiles
             c.DropItem(new StygianDragonHead());
 
             if (Paragon.ChestChance > Utility.RandomDouble())
+            {
                 c.DropItem(new ParagonChest(Name, 5));
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -135,7 +131,9 @@ namespace Server.Mobiles
         public static void CrimsonMeteor(Mobile owner, Mobile combatant, int minDamage, int maxDamage)
         {
             if (!combatant.Alive || combatant.Map == null || combatant.Map == Map.Internal)
+            {
                 return;
+            }
 
             new CrimsonMeteorTimer(owner, combatant.Location, minDamage, maxDamage).Start();
         }
@@ -174,7 +172,9 @@ namespace Server.Mobiles
                 foreach (Mobile m in eable)
                 {
                     if (m != from && m_From.CanBeHarmful(m))
+                    {
                         m_ToDamage.Add(m);
+                    }
                 }
 
                 eable.Free();
@@ -225,7 +225,7 @@ namespace Server.Mobiles
                     {
                         int damage;
 
-                        for (var index = 0; index < m_ToDamage.Count; index++)
+                        for (int index = 0; index < m_ToDamage.Count; index++)
                         {
                             Mobile mob = m_ToDamage[index];
 
@@ -243,7 +243,9 @@ namespace Server.Mobiles
                 }
 
                 if (m_Count >= m_MaxCount)
+                {
                     Stop();
+                }
             }
         }
         #endregion
@@ -254,7 +256,9 @@ namespace Server.Mobiles
             Map map = Map;
 
             if (map == null)
+            {
                 return;
+            }
 
             Direction columnDir = Utility.GetDirection(this, Combatant);
 
@@ -264,7 +268,9 @@ namespace Server.Mobiles
             foreach (NetState ns in e)
             {
                 if (ns.Mobile != null)
+                {
                     ns.Mobile.Send(flash);
+                }
             }
 
             e.Free();
@@ -324,7 +330,9 @@ namespace Server.Mobiles
             public override void OnAfterDelete()
             {
                 if (m_Timer != null)
+                {
                     m_Timer.Stop();
+                }
             }
 
             private void OnTick()
@@ -353,7 +361,7 @@ namespace Server.Mobiles
 
                     eable.Free();
 
-                    for (var index = 0; index < list.Count; index++)
+                    for (int index = 0; index < list.Count; index++)
                     {
                         Mobile mob = list[index];
 
@@ -374,7 +382,9 @@ namespace Server.Mobiles
             public void DealDamage(Mobile m)
             {
                 if (m != m_Owner && (m_Owner == null || CanTargetMob(m)))
+                {
                     AOS.Damage(m, m_Owner, Utility.RandomMinMax(2, 4), 0, 100, 0, 0, 0);
+                }
             }
 
             public bool CanTargetMob(Mobile m)
@@ -402,7 +412,9 @@ namespace Server.Mobiles
         public void DoStygianFireball()
         {
             if (!(Combatant is Mobile) || !InRange(Combatant.Location, 10))
+            {
                 return;
+            }
 
             new StygianFireballTimer(this, (Mobile)Combatant);
             PlaySound(0x1F3);

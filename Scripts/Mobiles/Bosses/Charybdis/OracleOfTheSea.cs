@@ -31,10 +31,14 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (m_UsesRemaining <= 0 || !IsChildOf(from.Backpack))
+            {
                 base.OnDoubleClick(from);
+            }
 
             if (CharydbisSpawner.SpawnInstance != null && CharydbisSpawner.SpawnInstance.TrySpawnCharybdis(from))
+            {
                 UsesRemaining--;
+            }
         }
 
         public OracleOfTheSea(Serial serial) : base(serial) { }

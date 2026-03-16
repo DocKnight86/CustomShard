@@ -11,22 +11,17 @@ using System.IO;
 
 namespace Server.Mobiles
 {
-    public enum AIType // Should other types need to be created, use the Unused ones first.
+    public enum AIType
     {
         AI_Use_Default,
         AI_Melee,
-        AI_UNUSED1,
         AI_Archer,
         AI_Healer,
         AI_Vendor,
         AI_Mage,
-        AI_UNUSED2,
-        AI_UNUSED3,
-        AI_UNUSED4,
         AI_NecroMage,
         AI_OrcScout,
         AI_Spellbinder,
-        AI_UNUSED5,
         AI_Samurai,
         AI_Ninja,
         AI_Spellweaving,

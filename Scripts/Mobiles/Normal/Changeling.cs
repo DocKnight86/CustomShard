@@ -87,7 +87,9 @@ namespace Server.Mobiles
             set
             {
                 if (value == this)
+                {
                     value = null;
+                }
 
                 if (m_MorphedInto != value)
                 {
@@ -145,7 +147,9 @@ namespace Server.Mobiles
             bool idle = base.CheckIdle();
 
             if (idle && m_MorphedInto != null && DateTime.UtcNow - m_LastMorph > TimeSpan.FromSeconds(30))
+            {
                 MorphedInto = null;
+            }
 
             return idle;
         }
@@ -157,7 +161,9 @@ namespace Server.Mobiles
                 Item item = Items[i];
 
                 if (item is ClonedItem)
+                {
                     item.Delete();
+                }
             }
 
             if (Backpack != null)
@@ -167,7 +173,9 @@ namespace Server.Mobiles
                     Item item = Backpack.Items[i];
 
                     if (item is ClonedItem)
+                    {
                         item.Delete();
+                    }
                 }
             }
         }
@@ -197,7 +205,9 @@ namespace Server.Mobiles
             reader.ReadInt();
 
             if (reader.ReadBool())
+            {
                 ValidationQueue<Changeling>.Add(this);
+            }
         }
 
         public void Validate()
@@ -224,7 +234,9 @@ namespace Server.Mobiles
             foreach (Item item in m.Items)
             {
                 if (item.Layer != Layer.Backpack && item.Layer != Layer.Mount && item.Layer != Layer.Bank)
+                {
                     AddItem(new ClonedItem(item)); // TODO: Clone weapon/armor attributes
+                }
             }
 
             PlaySound(0x511);

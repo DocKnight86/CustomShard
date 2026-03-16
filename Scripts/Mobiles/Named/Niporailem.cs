@@ -36,13 +36,7 @@ namespace Server.Mobiles
           typeof(GargishLegsOfVirtuousEpiphany)
         };
 
-        public override Type[] SharedSAList => new Type[]
-        {
-            typeof(BladeOfBattle),
-            typeof(DemonBridleRing),
-            typeof(GiantSteps),
-            typeof(SwordOfShatteredHopes)
-        };
+        public override Type[] SharedSAList => [];
 
         private DateTime m_NextAbilityTime;
         private Mobile m_SpectralArmor;

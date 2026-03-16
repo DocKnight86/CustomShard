@@ -241,10 +241,22 @@ namespace Server.Mobiles
 
             switch (ControlSlots)
             {
-                case 1: gains = int.MaxValue; break;
-                case 2: gains = int.MaxValue; break;
-                case 3: gains = (int)(MaxTrainingProgress / toGain / 2.0); break;
-                default: gains = (int)(MaxTrainingProgress / toGain / 4.0); break;
+                case 1:
+                {
+                    gains = int.MaxValue; break;
+                }
+                case 2:
+                {
+                    gains = int.MaxValue; break;
+                }
+                case 3:
+                {
+                    gains = (int)(MaxTrainingProgress / toGain / 2.0); break;
+                }
+                default:
+                {
+                    gains = (int)(MaxTrainingProgress / toGain / 4.0); break;
+                }
             }
 
             if (gains < int.MaxValue)
@@ -312,8 +324,6 @@ namespace Server.Mobiles
                         if (TrainingProgress >= TrainingProgressMax)
                         {
                             Creature.PrivateOverheadMessage(MessageType.Regular, 0x59, 1157543, mobile.NetState); // *The creature surges with battle experience and is ready to train!*
-
-                            Engines.Quests.LeadingIntoBattleQuest.CheckComplete(mobile);
                         }
                     }
                     else
@@ -369,12 +379,16 @@ namespace Server.Mobiles
             switch (version)
             {
                 case 2:
+                {
                     TrainedThisLevel = reader.ReadInt();
                     goto case 1;
+                }
                 case 1:
+                {
                     PowerHourBegin = reader.ReadDateTime();
                     InPowerHour = reader.ReadBool();
                     break;
+                }
             }
 
             Creature = bc;

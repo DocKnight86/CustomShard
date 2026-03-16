@@ -24,34 +24,12 @@ namespace Server.Engines.Harvest
         {
             if (m_System is Mining)
             {
-                if (targeted is StaticTarget target)
-                {
-                    int itemID = target.ItemID;
-
-                    // grave
-                    if (itemID == 0xED3 || itemID == 0xEDF || itemID == 0xEE0 || itemID == 0xEE1 || itemID == 0xEE2 || itemID == 0xEE8)
-                    {
-                        if (from is PlayerMobile player)
-                        {
-                            QuestSystem qs = player.Quest;
-
-                            if (qs is WitchApprenticeQuest)
-                            {
-                                if (qs.FindObjective(typeof(FindIngredientObjective)) is FindIngredientObjective obj && !obj.Completed && obj.Ingredient == Ingredient.Bones)
-                                {
-                                    player.SendLocalizedMessage(1055037); // You finish your grim work, finding some of the specific bones listed in the Hag's recipe.
-                                    obj.Complete();
-
-                                    return;
-                                }
-                            }
-                        }
-                    }
-                }
-                else if (targeted is LandTarget landTarget && landTarget.TileID >= 113 && landTarget.TileID <= 120)
+                if (targeted is LandTarget landTarget && landTarget.TileID >= 113 && landTarget.TileID <= 120)
                 {
                     if (TheGreatVolcanoQuest.OnHarvest(from, m_Tool))
+                    {
                         return;
+                    }
                 }
             }
 
@@ -64,22 +42,38 @@ namespace Server.Engines.Harvest
                 Item item = (Item)obj;
 
                 if (!item.IsChildOf(from.Backpack))
+                {
                     from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.
+                }
                 else if (obj.Axe(from, axe))
+                {
                     from.PlaySound(0x13E);
+                }
             }
             else if (m_System is Lumberjacking && targeted is ICarvable carvable)
+            {
                 carvable.Carve(from, m_Tool);
+            }
             else if (m_System is Lumberjacking && FurnitureAttribute.Check(targeted as Item))
+            {
                 DestroyFurniture(from, (Item)targeted);
+            }
             else if (m_System is Mining && targeted is TreasureMap map)
+            {
                 map.OnBeginDig(from);
+            }
             else if (m_System is Mining && targeted is NiterDeposit niter)
+            {
                 niter.OnMine(from, m_Tool);
+            }
             else if (m_System is Lumberjacking && targeted is CrackedLavaRockEast lavaRockEast)
+            {
                 lavaRockEast.OnCrack(from);
+            }
             else if (m_System is Lumberjacking && targeted is CrackedLavaRockSouth lavaRockSouth)
+            {
                 lavaRockSouth.OnCrack(from);
+            }
             else
             {
                 // If we got here and we're lumberjacking then we didn't target something that can be done from the pack
@@ -112,7 +106,9 @@ namespace Server.Engines.Harvest
             if (item is Container container)
             {
                 if (container is TrapableContainer trapableContainer)
+                {
                     trapableContainer.ExecuteTrap(from);
+                }
 
                 container.Destroy();
             }

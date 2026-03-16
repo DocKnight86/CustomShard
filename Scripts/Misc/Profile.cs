@@ -86,23 +86,33 @@ namespace Server.Misc
             Account a = m.Account as Account;
 
             if (a == null)
+            {
                 return "";
+            }
 
             TimeSpan ts = DateTime.UtcNow - a.Created;
 
             string v;
 
             if (Format(ts.TotalDays, "This account is {0} day{1} old.", out v))
+            {
                 return v;
+            }
 
             if (Format(ts.TotalHours, "This account is {0} hour{1} old.", out v))
+            {
                 return v;
+            }
 
             if (Format(ts.TotalMinutes, "This account is {0} minute{1} old.", out v))
+            {
                 return v;
+            }
 
             if (Format(ts.TotalSeconds, "This account is {0} second{1} old.", out v))
+            {
                 return v;
+            }
 
             return "";
         }

@@ -66,7 +66,9 @@ namespace Server.Mobiles
         public override bool IsEnemy(Mobile m)
         {
             if (m.Player && m.FindItemOnLayer(Layer.Helm) is OrcishKinMask)
+            {
                 return false;
+            }
 
             return base.IsEnemy(m);
         }
@@ -103,7 +105,9 @@ namespace Server.Mobiles
             Map map = target.Map;
 
             if (map == null)
+            {
                 return;
+            }
 
             int orcs = 0;
             IPooledEnumerable eable = GetMobilesInRange(10);
@@ -111,7 +115,9 @@ namespace Server.Mobiles
             foreach (Mobile m in eable)
             {
                 if (m is OrcishLord)
+                {
                     ++orcs;
+                }
             }
 
             eable.Free();
@@ -133,9 +139,13 @@ namespace Server.Mobiles
                     int z = map.GetAverageZ(x, y);
 
                     if (validLocation = map.CanFit(x, y, Z, 16, false, false))
+                    {
                         loc = new Point3D(x, y, Z);
+                    }
                     else if (validLocation = map.CanFit(x, y, z, 16, false, false))
+                    {
                         loc = new Point3D(x, y, z);
+                    }
                 }
 
                 orc.MoveToWorld(loc, map);

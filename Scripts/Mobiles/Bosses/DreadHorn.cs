@@ -79,13 +79,19 @@ namespace Server.Mobiles
             if (Combatant != null)
             {
                 if (m_Change < DateTime.UtcNow && Utility.RandomDouble() < 0.1)
+                {
                     ChangeOpponent();
+                }
 
                 if (m_Stomp < DateTime.UtcNow && Utility.RandomDouble() < 0.1)
+                {
                     HoofStomp();
+                }
 
                 if (m_Teleport < DateTime.UtcNow && Utility.RandomDouble() < 0.1)
+                {
                     Teleport();
+                }
             }
         }
 
@@ -170,7 +176,9 @@ namespace Server.Mobiles
                     agro = Validate(Aggressors[i].Attacker);
 
                     if (agro == null)
+                    {
                         continue;
+                    }
 
                     distance = StrikingRange - GetDistanceToSqrt(agro);
 
@@ -179,7 +187,9 @@ namespace Server.Mobiles
                         distance /= StrikingRange;
 
                         if (random < distance)
+                        {
                             best = agro;
+                        }
                     }
                 }
             }
@@ -193,7 +203,9 @@ namespace Server.Mobiles
                     agro = Validate(DamageEntries[i].Damager);
 
                     if (agro == null)
+                    {
                         continue;
+                    }
 
                     distance = GetDistanceToSqrt(agro);
 
@@ -226,7 +238,9 @@ namespace Server.Mobiles
         public void HoofStomp()
         {
             if (Map == null)
+            {
                 return;
+            }
 
             foreach (IDamageable target in SpellHelper.AcquireIndirectTargets(this, Location, Map, StrikingRange))
             {
@@ -261,12 +275,18 @@ namespace Server.Mobiles
             Mobile agro;
 
             if (m is BaseCreature creature)
+            {
                 agro = creature.ControlMaster;
+            }
             else
+            {
                 agro = m;
+            }
 
             if (!CanBeHarmful(agro, false) || !agro.Player /*|| Combatant == agro*/ )
+            {
                 return null;
+            }
 
             return agro;
         }

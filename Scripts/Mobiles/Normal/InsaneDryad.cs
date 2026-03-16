@@ -208,7 +208,9 @@ namespace Server.Mobiles
             Item item = m.FindItemOnLayer(layer);
 
             if (item != null && item.Movable)
+            {
                 m.PlaceInBackpack(item);
+            }
         }
 
         #endregion
@@ -253,7 +255,9 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (Utility.RandomDouble() < 0.1)
+            {
                 c.DropItem(new ParrotItem());
+            }
         }
 
         public override void Serialize(GenericWriter writer)

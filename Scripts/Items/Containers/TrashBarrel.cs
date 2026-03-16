@@ -50,7 +50,9 @@ namespace Server.Items
         public override bool OnDragDrop(Mobile from, Item dropped)
         {
             if (!base.OnDragDrop(from, dropped))
+            {
                 return false;
+            }
 
             if (dropped is SpellbookStrap)
             {
@@ -69,9 +71,13 @@ namespace Server.Items
                 SendLocalizedMessageTo(from, 1010442); // The item will be deleted in three minutes
 
                 if (m_Timer != null)
+                {
                     m_Timer.Stop();
+                }
                 else
+                {
                     m_Timer = new EmptyTimer(this);
+                }
 
                 m_Timer.Start();
             }
@@ -82,7 +88,9 @@ namespace Server.Items
         public override bool OnDragDropInto(Mobile from, Item item, Point3D p)
         {
             if (!base.OnDragDropInto(from, item, p))
+            {
                 return false;
+            }
 
             if (item is SpellbookStrap)
             {
@@ -101,9 +109,13 @@ namespace Server.Items
                 SendLocalizedMessageTo(from, 1010442); // The item will be deleted in three minutes
 
                 if (m_Timer != null)
+                {
                     m_Timer.Stop();
+                }
                 else
+                {
                     m_Timer = new EmptyTimer(this);
+                }
 
                 m_Timer.Start();
             }
@@ -201,7 +213,9 @@ namespace Server.Items
             }
 
             if (m_Timer != null)
+            {
                 m_Timer.Stop();
+            }
 
             m_Timer = null;
         }

@@ -66,12 +66,16 @@ namespace Server.Engines.Mahjong
             set
             {
                 if (m_ShowScores == value)
+                {
                     return;
+                }
 
                 m_ShowScores = value;
 
                 if (value)
+                {
                     m_Players.SendPlayersPacket(true, true);
+                }
 
                 m_Players.SendGeneralPacket(true, true);
 
@@ -88,12 +92,16 @@ namespace Server.Engines.Mahjong
             set
             {
                 if (m_SpectatorVision == value)
+                {
                     return;
+                }
 
                 m_SpectatorVision = value;
 
                 if (m_Players.IsInGamePlayer(m_Players.DealerPosition))
+                {
                     m_Players.Dealer.Send(new MahjongGeneralInfo(this));
+                }
 
                 m_Players.SendTilesPacket(false, true);
 
@@ -107,9 +115,13 @@ namespace Server.Engines.Mahjong
             base.GetProperties(list);
 
             if (m_SpectatorVision)
+            {
                 list.Add(1062717); // Spectator Vision Enabled
+            }
             else
+            {
                 list.Add(1062718); // Spectator Vision Disabled
+            }
         }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
@@ -119,7 +131,9 @@ namespace Server.Engines.Mahjong
             m_Players.CheckPlayers();
 
             if (from.Alive && IsAccessibleTo(from) && m_Players.GetInGameMobiles(true, false).Count == 0)
+            {
                 list.Add(new ResetGameEntry(this));
+            }
 
             SetSecureLevelEntry.AddTo(from, this, list);
         }
@@ -134,12 +148,16 @@ namespace Server.Engines.Mahjong
         public void ResetGame(Mobile from)
         {
             if (DateTime.UtcNow - m_LastReset < TimeSpan.FromSeconds(5.0))
+            {
                 return;
+            }
 
             m_LastReset = DateTime.UtcNow;
 
             if (from != null)
+            {
                 m_Players.SendLocalizedMessage(1062771, from.Name); // ~1_name~ has reset the game.
+            }
 
             m_Players.SendRelievePacket(true, true);
 
@@ -152,7 +170,9 @@ namespace Server.Engines.Mahjong
         public void ResetWalls(Mobile from)
         {
             if (DateTime.UtcNow - m_LastReset < TimeSpan.FromSeconds(5.0))
+            {
                 return;
+            }
 
             m_LastReset = DateTime.UtcNow;
 
@@ -161,7 +181,9 @@ namespace Server.Engines.Mahjong
             m_Players.SendTilesPacket(true, true);
 
             if (from != null)
+            {
                 m_Players.SendLocalizedMessage(1062696); // The dealer rebuilds the wall.
+            }
         }
 
         public int GetStackLevel(MahjongPieceDim dim)
@@ -170,7 +192,9 @@ namespace Server.Engines.Mahjong
             foreach (MahjongTile tile in m_Tiles)
             {
                 if (tile.StackLevel > level && dim.IsOverlapping(tile.Dimensions))
+                {
                     level = tile.StackLevel;
+                }
             }
             return level;
         }
@@ -217,7 +241,9 @@ namespace Server.Engines.Mahjong
                 case 0:
                     {
                         if (version < 1)
+                        {
                             m_Level = SecureLevel.CoOwners;
+                        }
 
                         int length = reader.ReadInt();
                         m_Tiles = new MahjongTile[length];
@@ -300,7 +326,9 @@ namespace Server.Engines.Mahjong
                 Mobile from = Owner.From;
 
                 if (from.CheckAlive() && !m_Game.Deleted && m_Game.IsAccessibleTo(from) && m_Game.Players.GetInGameMobiles(true, false).Count == 0)
+                {
                     m_Game.ResetGame(from);
+                }
             }
         }
     }

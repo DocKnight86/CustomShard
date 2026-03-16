@@ -80,59 +80,6 @@ namespace Server.Items
             set { _OwnerName = value; InvalidateProperties(); }
         }
 
-        private Mobile m_BlessedBy;
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public Mobile BlessedBy
-        {
-            get
-            {
-                return m_BlessedBy;
-            }
-            set
-            {
-                m_BlessedBy = value;
-                InvalidateProperties();
-            }
-        }
-
-        public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
-        {
-            base.GetContextMenuEntries(from, list);
-
-            if (BlessedFor == from && BlessedBy == from && RootParent == from)
-            {
-                list.Add(new UnBlessEntry(from, this));
-            }
-        }
-
-        private class UnBlessEntry : ContextMenuEntry
-        {
-            private readonly Mobile m_From;
-            private readonly BaseJewel m_Item;
-
-            public UnBlessEntry(Mobile from, BaseJewel item)
-                : base(6208, -1)
-            {
-                m_From = from;
-                m_Item = item;
-            }
-
-            public override void OnClick()
-            {
-                m_Item.BlessedFor = null;
-                m_Item.BlessedBy = null;
-
-                Container pack = m_From.Backpack;
-
-                if (pack != null)
-                {
-                    pack.DropItem(new PersonalBlessDeed(m_From));
-                    m_From.SendLocalizedMessage(1062200); // A personal bless deed has been placed in your backpack.
-                }
-            }
-        }
-
         [CommandProperty(AccessLevel.GameMaster)]
         public int MaxHitPoints
         {
@@ -436,12 +383,6 @@ namespace Server.Items
         #region Stygian Abyss
         public override bool CanEquip(Mobile from)
         {
-            if (BlessedBy != null && BlessedBy != from)
-            {
-                from.SendLocalizedMessage(1075277); // That item is blessed by another player.
-                return false;
-            }
-
             if (from.IsPlayer())
             {
                 if (_Owner != null && _Owner != from)
@@ -878,10 +819,7 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
             writer.Write(12); // version
-
-            // Version 12 - removed VvV Item (handled in VvV System) and BlockRepair (Handled as negative attribute)
 
             writer.Write(m_SetPhysicalBonus);
             writer.Write(m_SetFireBonus);
@@ -896,30 +834,21 @@ namespace Server.Items
             writer.Write(_Owner);
             writer.Write(_OwnerName);
 
-            //Version 7
             writer.Write(m_IsImbued);
 
-            // Version 6
             m_NegativeAttributes.Serialize(writer);
 
-            // Version 5
-            #region Region Reforging
             writer.Write((int)m_ReforgedPrefix);
             writer.Write((int)m_ReforgedSuffix);
             writer.Write((int)m_ItemPower);
-            #endregion
 
-            #region Stygian Abyss
             writer.Write(m_GorgonLenseCharges);
             writer.Write((int)m_GorgonLenseType);
 
-            // Version 4
             writer.WriteEncodedInt(m_TimesImbued);
 
             m_SAAbsorptionAttributes.Serialize(writer);
-            #endregion
 
-            writer.Write(m_BlessedBy);
             writer.Write(m_LastEquipped);
             writer.Write(m_SetEquipped);
             writer.WriteEncodedInt(m_SetHue);
@@ -945,7 +874,6 @@ namespace Server.Items
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-
             int version = reader.ReadInt();
 
             switch (version)
@@ -972,9 +900,6 @@ namespace Server.Items
                     }
                 case 8:
                     {
-                        if (version == 11)
-                            reader.ReadBool();
-
                         _Owner = reader.ReadMobile();
                         _OwnerName = reader.ReadString();
                         goto case 7;
@@ -991,31 +916,21 @@ namespace Server.Items
                     }
                 case 5:
                     {
-                        #region Runic Reforging
                         m_ReforgedPrefix = (ReforgedPrefix)reader.ReadInt();
                         m_ReforgedSuffix = (ReforgedSuffix)reader.ReadInt();
                         m_ItemPower = (ItemPower)reader.ReadInt();
 
-                        if (version < 12 && reader.ReadBool())
-                            m_NegativeAttributes.NoRepair = 1;
-                        #endregion
-
-                        #region Stygian Abyss
                         m_GorgonLenseCharges = reader.ReadInt();
                         m_GorgonLenseType = (LenseType)reader.ReadInt();
-                        #endregion
 
                         goto case 4;
                     }
                 case 4:
                     {
-                        #region Stygian Abyss
                         m_TimesImbued = reader.ReadEncodedInt();
 
                         m_SAAbsorptionAttributes = new SAAbsorptionAttributes(this, reader);
-                        #endregion
-
-                        m_BlessedBy = reader.ReadMobile();
+                       
                         m_LastEquipped = reader.ReadBool();
                         m_SetEquipped = reader.ReadBool();
                         m_SetHue = reader.ReadEncodedInt();

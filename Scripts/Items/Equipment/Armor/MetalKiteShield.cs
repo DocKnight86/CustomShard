@@ -2,7 +2,6 @@ using Server.Engines.Craft;
 
 namespace Server.Items
 {
-    [Alterable(typeof(DefBlacksmithy), typeof(GargishKiteShield))]
     public class MetalKiteShield : BaseShield, IDyable
     {
         [Constructable]

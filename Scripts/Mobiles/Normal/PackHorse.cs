@@ -47,7 +47,9 @@ namespace Server.Mobiles
             Container pack = Backpack;
 
             if (pack != null)
+            {
                 pack.Delete();
+            }
 
             pack = new StrongBackpack
             {
@@ -77,7 +79,9 @@ namespace Server.Mobiles
         public override bool IsSnoop(Mobile from)
         {
             if (PackAnimal.CheckAccess(this, from))
+            {
                 return false;
+            }
 
             return base.IsSnoop(from);
         }
@@ -85,7 +89,9 @@ namespace Server.Mobiles
         public override bool OnDragDrop(Mobile from, Item item)
         {
             if (CheckFeed(from, item))
+            {
                 return true;
+            }
 
             if (PackAnimal.CheckAccess(this, from))
             {
@@ -145,7 +151,9 @@ namespace Server.Mobiles
             m_From = from;
 
             if (animal.IsDeadPet)
+            {
                 Enabled = false;
+            }
         }
 
         public override void OnClick()
@@ -159,16 +167,22 @@ namespace Server.Mobiles
         public static void GetContextMenuEntries(BaseCreature animal, Mobile from, List<ContextMenuEntry> list)
         {
             if (CheckAccess(animal, from))
+            {
                 list.Add(new PackAnimalBackpackEntry(animal, from));
+            }
         }
 
         public static bool CheckAccess(BaseCreature animal, Mobile from)
         {
             if (from == animal || from.AccessLevel >= AccessLevel.GameMaster)
+            {
                 return true;
+            }
 
             if (from.Alive && animal.Controlled && !animal.IsDeadPet && (from == animal.ControlMaster || from == animal.SummonMaster || animal.IsPetFriend(from)))
+            {
                 return true;
+            }
 
             return false;
         }
@@ -176,12 +190,16 @@ namespace Server.Mobiles
         public static void TryPackOpen(BaseCreature animal, Mobile from)
         {
             if (animal.IsDeadPet)
+            {
                 return;
+            }
 
             Container item = animal.Backpack;
 
             if (item != null)
+            {
                 from.Use(item);
+            }
         }
     }
 }

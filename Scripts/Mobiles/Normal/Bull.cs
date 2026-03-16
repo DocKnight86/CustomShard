@@ -12,7 +12,9 @@ namespace Server.Mobiles
             BaseSoundID = 0x64;
 
             if (0.5 >= Utility.RandomDouble())
+            {
                 Hue = 0x901;
+            }
 
             SetStr(77, 111);
             SetDex(56, 75);

@@ -34,18 +34,6 @@ namespace Server.Engines.VoidPool
             };
             PackItem(item);
 
-            item = new Hephaestus
-            {
-                Movable = false
-            };
-            PackItem(item);
-
-            item = new GargishHephaestus
-            {
-                Movable = false
-            };
-            PackItem(item);
-
             item = new BlightOfTheTundra
             {
                 Movable = false

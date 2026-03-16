@@ -2,7 +2,6 @@ using Server.Engines.Craft;
 
 namespace Server.Items
 {
-    [Alterable(typeof(DefBlacksmithy), typeof(GargishOrderShield))]
     public class OrderShield : BaseShield
     {
         [Constructable]
