@@ -17,13 +17,9 @@ namespace Server.Items
             {
 
                 if (value && (ItemID == 0xA0E6 || ItemID == 0xA0E7))
-                {
                     ItemID = ItemID + 2;
-                }
                 else if (ItemID == 0xA0E8 || ItemID == 0xA0E9)
-                {
                     ItemID = ItemID - 2;
-                }
 
                 m_Harvest = value;
             }
@@ -53,9 +49,7 @@ namespace Server.Items
         public void StopTimer()
         {
             if (m_Timer != null)
-            {
                 m_Timer.Stop();
-            }
 
             m_Timer = null;
         }
@@ -63,9 +57,7 @@ namespace Server.Items
         public void StartTimer()
         {
             if (m_Timer != null)
-            {
                 return;
-            }
 
             m_Timer = Timer.DelayCall(TimeSpan.FromHours(1.0), TimeSpan.FromHours(1.0), OnTick);
         }
@@ -88,16 +80,12 @@ namespace Server.Items
         public bool CheckAccessible(Mobile from, Item item)
         {
             if (from.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return true; // Staff can access anything
-            }
 
             BaseHouse house = BaseHouse.FindHouseAt(item);
 
             if (house == null)
-            {
                 return false;
-            }
 
             switch (Level)
             {
@@ -114,13 +102,9 @@ namespace Server.Items
         public void OnFlip(Mobile from)
         {
             if (ItemID == 0xA0E6 || ItemID == 0xA0E8)
-            {
                 ItemID++;
-            }
             else
-            {
                 ItemID--;
-            }
         }
 
         private static readonly int[] RareColor =
@@ -191,9 +175,7 @@ namespace Server.Items
             NextHarvest = reader.ReadDateTime();
 
             if (!Harvest)
-            {
                 StartTimer();
-            }
         }
     }
 

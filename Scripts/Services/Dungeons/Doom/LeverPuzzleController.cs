@@ -99,36 +99,24 @@ namespace Server.Engines.Doom
 
             m_Levers = new List<Item>();	/* codes are 0x1 shifted left x # of bits, easily handled here */
             for (; i < 4; i++)
-            {
                 m_Levers.Add(AddLeverPuzzlePart(TA[i], new LeverPuzzleLever((ushort)(1 << i), this)));
-            }
 
             m_Tiles = new List<LeverPuzzleRegion>();
             for (; i < 9; i++)
-            {
                 m_Tiles.Add(new LeverPuzzleRegion(this, TA[i]));
-            }
 
             m_Teles = new List<Item>();
             for (; i < 15; i++)
-            {
                 m_Teles.Add(AddLeverPuzzlePart(TA[i], new LampRoomTeleporter(TA[++i])));
-            }
 
             m_Statues = new List<Item>();
             for (; i < 19; i++)
-            {
                 m_Statues.Add(AddLeverPuzzlePart(TA[i], new LeverPuzzleStatue(TA[++i], this)));
-            }
 
             if (!installed)
-            {
                 Delete();
-            }
             else
-            {
                 Enabled = true;
-            }
 
             m_Box = (LampRoomBox)AddLeverPuzzlePart(TA[i], new LampRoomBox(this));
             m_LampRoom = new LampRoomRegion(this);
@@ -197,13 +185,9 @@ namespace Server.Engines.Doom
             controller.MoveToWorld(lp_Center, Map.Malas);
 
             if (!installed)
-            {
                 e.Mobile.SendMessage("There was a problem generating the puzzle.");
-            }
             else
-            {
                 e.Mobile.SendMessage("Lamp room puzzle successfully generated.");
-            }
         }
 
         public static Item AddLeverPuzzlePart(int[] Loc, Item newitem)
@@ -287,9 +271,7 @@ namespace Server.Engines.Doom
         public static void PlaySounds(Point3D location, int[] sounds)
         {
             foreach (int soundid in sounds)
-            {
                 Effects.PlaySound(location, Map.Malas, soundid);
-            }
         }
 
         public static void PlayEffect(IEntity from, IEntity to, int itemid, int speed, bool explodes)
@@ -313,9 +295,7 @@ namespace Server.Engines.Doom
             Packet p = new AsciiMessage(from.Serial, from.Body, MessageType.Regular, MsgParams[index][0], MsgParams[index][1], from.Name, Msgs[index]);
             p.Acquire();
             foreach (NetState state in from.Map.GetClientsInRange(from.Location))
-            {
                 state.Send(p);
-            }
 
             Packet.Release(p);
         }
@@ -537,9 +517,7 @@ namespace Server.Engines.Doom
 
             m_Tiles = new List<LeverPuzzleRegion>();
             for (int i = 4; i < 9; i++)
-            {
                 m_Tiles.Add(new LeverPuzzleRegion(this, TA[i]));
-            }
 
             m_LampRoom = new LampRoomRegion(this);
             m_Enabled = true;

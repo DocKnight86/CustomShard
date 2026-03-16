@@ -38,9 +38,7 @@ namespace Server.Items
                 m_Points = value;
 
                 if (m_Points < 0)
-                {
                     m_Points = 0;
-                }
 
                 while (m_Tier > 0 && m_Points < PreviousTier)
                     DecreaseTier();
@@ -62,9 +60,7 @@ namespace Server.Items
                     long tier = m_StartTier * 2;
 
                     for (int i = 0; i < m_Tier - 2; i++)
-                    {
                         tier += (i + 3) * m_NextTier;
-                    }
 
                     return tier;
                 }
@@ -79,9 +75,7 @@ namespace Server.Items
             get
             {
                 if (m_Tier > 1)
-                {
                     return PreviousTier + (m_Tier + 1) * m_NextTier;
-                }
 
                 return m_StartTier + m_StartTier * m_Tier;
             }
@@ -194,9 +188,7 @@ namespace Server.Items
                 writer.Write(m_Tiers[i].Count);
 
                 for (int j = 0; j < m_Tiers[i].Count; j++)
-                {
                     QuestWriter.Object(writer, m_Tiers[i][j]);
-                }
             }
         }
 
@@ -219,9 +211,7 @@ namespace Server.Items
                 List<object> list = new List<object>();
 
                 for (int j = reader.ReadInt(); j > 0; j--)
-                {
                     list.Add(QuestReader.Object(reader));
-                }
 
                 m_Tiers.Add(list);
             }
@@ -250,13 +240,14 @@ namespace Server.Items
             if (item != null && player.AddToBackpack(item))
             {
                 if (hue > 0)
-                {
                     item.Hue = hue;
-                }
 
                 player.AddCollectionPoints(CollectionID, (int)reward.Points * -1);
                 player.SendLocalizedMessage(1073621); // Your reward has been placed in your backpack.
                 player.PlaySound(0x5A7);
+
+                if (reward.QuestItem)
+                    CollectionsObtainObjective.CheckReward(player, item);
 
                 reward.OnGiveReward(player, item, this, hue);
             }
@@ -301,13 +292,9 @@ namespace Server.Items
                 for (int i = 0; i < m_Tiers[m_Tiers.Count - 1].Count; i++)
                 {
                     if (m_Tiers[m_Tiers.Count - 1][i] is Item)
-                    {
                         ((Item)m_Tiers[m_Tiers.Count - 1][i]).Delete();
-                    }
                     else if (m_Tiers[m_Tiers.Count - 1][i] is Mobile)
-                    {
                         ((Mobile)m_Tiers[m_Tiers.Count - 1][i]).Delete();
-                    }
                 }
 
                 m_Tiers.RemoveAt(m_Tiers.Count - 1);
@@ -317,19 +304,13 @@ namespace Server.Items
         public virtual void Init()
         {
             if (m_Donations == null)
-            {
                 m_Donations = new List<CollectionItem>();
-            }
 
             if (m_Rewards == null)
-            {
                 m_Rewards = new List<CollectionItem>();
-            }
 
             if (m_Tiers == null)
-            {
                 m_Tiers = new List<List<object>>();
-            }
 
             // start decay timer
             if (m_DailyDecay > 0)

@@ -106,9 +106,7 @@ namespace Server.Items
             BaseBulletinBoard board = World.FindItem(pvSrc.ReadInt32()) as BaseBulletinBoard;
 
             if (board == null || !board.CheckRange(from))
-            {
                 return;
-            }
 
             switch (packetID)
             {
@@ -132,9 +130,7 @@ namespace Server.Items
             BulletinMessage msg = World.FindItem(pvSrc.ReadInt32()) as BulletinMessage;
 
             if (msg == null || msg.Parent != board)
-            {
                 return;
-            }
 
             from.Send(new BBMessageContent(board, msg));
         }
@@ -144,9 +140,7 @@ namespace Server.Items
             BulletinMessage msg = World.FindItem(pvSrc.ReadInt32()) as BulletinMessage;
 
             if (msg == null || msg.Parent != board)
-            {
                 return;
-            }
 
             from.Send(new BBMessageHeader(board, msg));
         }
@@ -156,9 +150,7 @@ namespace Server.Items
             BulletinMessage thread = World.FindItem(pvSrc.ReadInt32()) as BulletinMessage;
 
             if (thread != null && thread.Parent != board)
-            {
                 thread = null;
-            }
 
             int breakout = 0;
 
@@ -172,13 +164,9 @@ namespace Server.Items
                 if (!CheckTime(lastPostTime, (thread == null ? ThreadCreateTime : ThreadReplyTime)))
                 {
                     if (thread == null)
-                    {
                         from.SendMessage("You must wait {0} before creating a new thread.", FormatTS(ThreadCreateTime));
-                    }
                     else
-                    {
                         from.SendMessage("You must wait {0} before replying to another thread.", FormatTS(ThreadReplyTime));
-                    }
 
                     return;
                 }
@@ -187,16 +175,12 @@ namespace Server.Items
             string subject = pvSrc.ReadUTF8StringSafe(pvSrc.ReadByte());
 
             if (subject.Length == 0)
-            {
                 return;
-            }
 
             string[] lines = new string[pvSrc.ReadByte()];
 
             if (lines.Length == 0)
-            {
                 return;
-            }
 
             for (int i = 0; i < lines.Length; ++i)
                 lines[i] = pvSrc.ReadUTF8StringSafe(pvSrc.ReadByte());
@@ -209,14 +193,10 @@ namespace Server.Items
             BulletinMessage msg = World.FindItem(pvSrc.ReadInt32()) as BulletinMessage;
 
             if (msg == null || msg.Parent != board)
-            {
                 return;
-            }
 
             if (from.AccessLevel < AccessLevel.GameMaster && msg.Poster != from)
-            {
                 return;
-            }
 
             msg.Delete();
         }
@@ -228,16 +208,12 @@ namespace Server.Items
             for (int i = items.Count - 1; i >= 0; --i)
             {
                 if (i >= items.Count)
-                {
                     continue;
-                }
 
                 BulletinMessage msg = items[i] as BulletinMessage;
 
                 if (msg == null)
-                {
                     continue;
-                }
 
                 if (msg.Thread == null && CheckTime(msg.LastPostTime, ThreadDeletionTime))
                 {
@@ -257,14 +233,10 @@ namespace Server.Items
                 BulletinMessage msg = items[i] as BulletinMessage;
 
                 if (msg == null || msg.Poster != poster)
-                {
                     continue;
-                }
 
                 if (onlyCheckRoot && msg.Thread != null)
-                {
                     continue;
-                }
 
                 if (msg.Time > lastPostTime)
                 {
@@ -296,9 +268,7 @@ namespace Server.Items
         public virtual bool CheckRange(Mobile from)
         {
             if (from.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return true;
-            }
 
             return (from.Map == Map && from.InRange(GetWorldLocation(), 2));
         }
@@ -306,9 +276,7 @@ namespace Server.Items
         public void PostMessage(Mobile from, BulletinMessage thread, string subject, string[] lines)
         {
             if (thread != null)
-            {
                 thread.LastPostTime = DateTime.UtcNow;
-            }
 
             AddItem(new BulletinMessage(from, thread, subject, lines));
         }
@@ -346,16 +314,12 @@ namespace Server.Items
             for (int i = items.Count - 1; i >= 0; --i)
             {
                 if (i >= items.Count)
-                {
                     continue;
-                }
 
                 BulletinMessage check = items[i] as BulletinMessage;
 
                 if (check == null)
-                {
                     continue;
-                }
 
                 if (check.Thread == msg)
                 {
@@ -402,9 +366,7 @@ namespace Server.Items
                 Item item = poster.Items[i];
 
                 if (item.Layer >= Layer.OneHanded && item.Layer <= Layer.Mount)
-                {
                     list.Add(new BulletinEquip(item.ItemID, item.Hue));
-                }
             }
 
             m_PostedEquip = list.ToArray();
@@ -509,14 +471,10 @@ namespace Server.Items
                             m_Lines[i] = reader.ReadString();
 
                         if (hasThread && m_Thread == null)
-                        {
                             Delete();
-                        }
 
                         if (version == 0)
-                        {
                             ValidationQueue<BulletinMessage>.Add(this);
-                        }
 
                         break;
                     }
@@ -540,9 +498,7 @@ namespace Server.Items
             string name = board.BoardName;
 
             if (name == null)
-            {
                 name = "";
-            }
 
             EnsureCapacity(38);
 
@@ -583,13 +539,9 @@ namespace Server.Items
             BulletinMessage thread = msg.Thread;
 
             if (thread == null)
-            {
                 m_Stream.Write(0); // Thread serial--root
-            }
             else
-            {
                 m_Stream.Write(thread.Serial); // Thread serial--parent
-            }
 
             WriteString(poster);
             WriteString(subject);
@@ -602,9 +554,7 @@ namespace Server.Items
             int len = buffer.Length + 1;
 
             if (len > 255)
-            {
                 len = 255;
-            }
 
             m_Stream.Write((byte)len);
             m_Stream.Write(buffer, 0, len - 1);
@@ -614,9 +564,7 @@ namespace Server.Items
         public string SafeString(string v)
         {
             if (v == null)
-            {
                 return string.Empty;
-            }
 
             return v;
         }
@@ -647,9 +595,7 @@ namespace Server.Items
             int len = msg.PostedEquip.Length;
 
             if (len > 255)
-            {
                 len = 255;
-            }
 
             m_Stream.Write((byte)len);
 
@@ -664,9 +610,7 @@ namespace Server.Items
             len = msg.Lines.Length;
 
             if (len > 255)
-            {
                 len = 255;
-            }
 
             m_Stream.Write((byte)len);
 
@@ -686,29 +630,21 @@ namespace Server.Items
             int len = buffer.Length + tail;
 
             if (len > 255)
-            {
                 len = 255;
-            }
 
             m_Stream.Write((byte)len);
             m_Stream.Write(buffer, 0, len - tail);
 
             if (padding)
-            {
                 m_Stream.Write((short)0); // padding compensates for a client bug
-            }
             else
-            {
                 m_Stream.Write((byte)0);
-            }
         }
 
         public string SafeString(string v)
         {
             if (v == null)
-            {
                 return string.Empty;
-            }
 
             return v;
         }

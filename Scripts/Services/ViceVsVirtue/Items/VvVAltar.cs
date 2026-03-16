@@ -119,9 +119,7 @@ namespace Server.Engines.VvV
         public bool Contains(IPoint3D p)
         {
             if (p is IEntity entity && entity.Map != Map)
-            {
                 return false;
-            }
 
             return p.X >= X - 2 && p.X <= X + 2 && p.Y >= Y - 2 && p.Y <= Y + 2;
         }
@@ -195,9 +193,7 @@ namespace Server.Engines.VvV
         public static void LaunchFireworks(Point3D p, Map map)
         {
             if (map == null || map == Map.Internal)
-            {
                 return;
-            }
 
             Point3D startLoc = new Point3D(p.X, p.Y, p.Z + 10);
             Point3D endLoc = new Point3D(p.X + Utility.RandomMinMax(-1, 1), p.Y + Utility.RandomMinMax(-1, 1), p.Z + 32);
@@ -210,34 +206,20 @@ namespace Server.Engines.VvV
                     int hue = Utility.Random(40);
 
                     if (hue < 8)
-                    {
                         hue = 0x66D;
-                    }
                     else if (hue < 10)
-                    {
                         hue = 0x482;
-                    }
                     else if (hue < 12)
-                    {
                         hue = 0x47E;
-                    }
                     else if (hue < 16)
-                    {
                         hue = 0x480;
-                    }
                     else if (hue < 20)
-                    {
                         hue = 0x47F;
-                    }
                     else
-                    {
                         hue = 0;
-                    }
 
                     if (Utility.RandomBool())
-                    {
                         hue = Utility.RandomList(0x47E, 0x47F, 0x480, 0x482, 0x66D);
-                    }
 
                     int renderMode = Utility.RandomList(0, 2, 3, 4, 5, 7);
 
@@ -249,9 +231,7 @@ namespace Server.Engines.VvV
         public void CheckOccupy()
         {
             if (!IsActive || Map == null || Map == Map.Internal)
-            {
                 return;
-            }
 
             IPooledEnumerable eable = Map.GetMobilesInBounds(new Rectangle2D(X - 2, Y - 2, 5, 5));
             int count = 0;
@@ -445,9 +425,7 @@ namespace Server.Engines.VvV
             {
                 Item item = reader.ReadItem();
                 if (item != null)
-                {
                     Braziers.Add(item);
-                }
             }
 
             count = reader.ReadInt();
@@ -455,9 +433,7 @@ namespace Server.Engines.VvV
             {
                 Item item = reader.ReadItem();
                 if (item != null)
-                {
                     Torches.Add(item);
-                }
             }
 
             if (IsActive)

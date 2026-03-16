@@ -47,9 +47,7 @@ namespace Server.Engines.TreasuresOfKotlCity
             Link = link;
 
             if (link)
-            {
                 AddStation();
-            }
 
             AddComplexComponent(40157, 0, 0, 36, 0, 1124171);// 19
             AddComplexComponent(40157, 1, 0, 36, 0, 1124171);// 20
@@ -90,14 +88,10 @@ namespace Server.Engines.TreasuresOfKotlCity
         public void AddStation()
         {
             if (Stations == null)
-            {
                 Stations = new List<PowerCoreDockingStation>();
-            }
 
             if (!Stations.Contains(this))
-            {
                 Stations.Add(this);
-            }
         }
 
         public override void OnLocationChange(Point3D oldlocation)
@@ -120,14 +114,10 @@ namespace Server.Engines.TreasuresOfKotlCity
             base.OnMapChange();
 
             if (Chest1 != null)
-            {
                 Chest1.Map = Map;
-            }
 
             if (Chest2 != null)
-            {
                 Chest2.Map = Map;
-            }
         }
 
         public void Activate()
@@ -221,9 +211,7 @@ namespace Server.Engines.TreasuresOfKotlCity
             }
 
             foreach (Item item in delete)
-            {
                 item.Delete();
-            }
 
             _Active = false;
         }
@@ -242,9 +230,7 @@ namespace Server.Engines.TreasuresOfKotlCity
             }
 
             if (hue != 0)
-            {
                 ac.Hue = hue;
-            }
 
             AddComponent(ac, xoffset, yoffset, zoffset);
         }
@@ -296,19 +282,13 @@ namespace Server.Engines.TreasuresOfKotlCity
             Link = reader.ReadBool();
 
             if (Link)
-            {
                 AddStation();
-            }
 
             if (Chest1 != null)
-            {
                 Chest1.Addon = this;
-            }
 
             if (Chest2 != null)
-            {
                 Chest2.Addon = this;
-            }
         }
 
         public class InternalContainer : BaseContainer

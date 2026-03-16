@@ -45,14 +45,10 @@ namespace Server.Items
             ac = new AddonComponent(item);
 
             if (!string.IsNullOrEmpty(name))
-            {
                 ac.Name = name;
-            }
 
             if (hue != 0)
-            {
                 ac.Hue = hue;
-            }
 
             if (amount > 1)
             {
@@ -61,9 +57,7 @@ namespace Server.Items
             }
 
             if (lightsource != -1)
-            {
                 ac.Light = (LightType)lightsource;
-            }
 
             addon.AddComponent(ac, xoffset, yoffset, zoffset);
         }

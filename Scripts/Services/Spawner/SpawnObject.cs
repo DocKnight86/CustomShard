@@ -52,17 +52,11 @@ namespace Server.Mobiles
             {
                 ISpawnable sp = SpawnedObjects[index];
                 if (sp is Item item)
-                {
                     writer.Write(item);
-                }
                 else if (sp is Mobile mobile)
-                {
                     writer.Write(mobile);
-                }
                 else
-                {
                     writer.Write(Serial.MinusOne);
-                }
             }
 
             writer.Write(SpawnName);

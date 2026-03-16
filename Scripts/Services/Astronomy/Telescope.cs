@@ -259,137 +259,86 @@ namespace Server.Items
             {
                 case 60000: // RA 10's Up
                     if (Tele.RA >= 20)
-                    {
                         Tele.RA -= 20;
-                    }
                     else
-                    {
                         Tele.RA += 10;
-                    }
-
                     User.SendSound(0x4A);
                     break;
                 case 60001: // RA 10's Down
                     if (Tele.RA < 10)
-                    {
                         Tele.RA += 20;
-                    }
                     else
-                    {
                         Tele.RA -= 10;
-                    }
-
                     User.SendSound(0x4A);
                     break;
                 case 60002: // RA 1's Up
                     int raOnes = GetPlace(Tele.RA, 1);
 
                     if (raOnes >= 9)
-                    {
                         Tele.RA -= 9;
-                    }
                     else
-                    {
                         Tele.RA++;
-                    }
-
                     User.SendSound(0x4A);
                     break;
                 case 60003: // RA 1's Down
                     int raOnes1 = GetPlace(Tele.RA, 1);
 
                     if (raOnes1 == 0)
-                    {
                         Tele.RA += 9;
-                    }
                     else
-                    {
                         Tele.RA--;
-                    }
-
                     User.SendSound(0x4A);
                     break;
                 case 60004: // DEC 10's Up
                     if (Tele.DEC >= 90)
-                    {
                         Tele.DEC -= 90;
-                    }
                     else
-                    {
                         Tele.DEC += 10;
-                    }
-
                     User.SendSound(0x4A);
                     break;
                 case 60005: // DEC 10's Down
                     if (Tele.DEC < 10)
-                    {
                         Tele.DEC += 90;
-                    }
                     else
-                    {
                         Tele.DEC -= 10;
-                    }
-
                     User.SendSound(0x4A);
                     break;
                 case 60006: // DEC 1's Up
                     int decOnes = GetPlace((int)Math.Truncate(Tele.DEC), 1);
 
                     if (decOnes >= 9)
-                    {
                         Tele.DEC -= 9;
-                    }
                     else
-                    {
                         Tele.DEC++;
-                    }
-
                     User.SendSound(0x4A);
                     break;
                 case 60007: // DEC 1's Down
                     int decOnes1 = GetPlace((int)Math.Truncate(Tele.DEC), 1);
 
                     if (decOnes1 <= 0)
-                    {
                         Tele.DEC += 9;
-                    }
                     else
-                    {
                         Tele.DEC--;
-                    }
-
                     User.SendSound(0x4A);
                     break;
                 case 60008: // DEC .2 Up
                     int dec = GetDecimalPlace(Tele.DEC);
 
                     if (dec >= 8)
-                    {
                         Tele.DEC = Math.Truncate(Tele.DEC);
-                    }
                     else
-                    {
                         Tele.DEC += .2;
-                    }
-
                     User.SendSound(0x4A);
                     break;
                 case 60009: // DEC .2 Down
                     int dec1 = GetDecimalPlace(Tele.DEC);
 
                     if (dec1 < 2)
-                    {
                         Tele.DEC += 0.8;
-                    }
                     else if (dec1 == 2)
-                    {
                         Tele.DEC = Math.Truncate(Tele.DEC);
-                    }
                     else
-                    {
                         Tele.DEC -= 0.2;
-                    }
 
                     User.SendSound(0x4A);
                     break;

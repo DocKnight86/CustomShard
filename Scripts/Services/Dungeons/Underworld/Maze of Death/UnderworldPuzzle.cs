@@ -35,9 +35,7 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!IsChildOf(from.Backpack))
-            {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
-            }
             else
             {
                 from.CloseGump(typeof(UnderworldPuzzleGump));
@@ -48,9 +46,7 @@ namespace Server.Items
         public bool SubmitSolution(Mobile m, UnderworldPuzzleSolution solution)
         {
             if (m == null)
-            {
                 return false;
-            }
 
             if (solution.Matches(Solution))
             {
@@ -59,19 +55,13 @@ namespace Server.Items
                 if (item != null)
                 {
                     if (item is VoidEssence || item is SilverSerpentVenom || item is ToxicVenomSac || item is ScouringToxin)
-                    {
                         item.Amount = 30;
-                    }
 
                     if (item is LuckyCoin)
-                    {
                         item.Amount = Utility.RandomMinMax(2, 6);
-                    }
 
                     if (m.Backpack == null || !m.Backpack.TryDropItem(m, item, false))
-                    {
                         m.BankBox.DropItem(item);
-                    }
                 }
 
                 m.PlaySound(0x3D);
@@ -99,9 +89,7 @@ namespace Server.Items
             base.OnDelete();
 
             if (RootParent is Mobile m)
-            {
                 m.CloseGump(typeof(UnderworldPuzzleGump));
-            }
         }
 
         public UnderworldPuzzleItem(Serial serial)
@@ -191,9 +179,7 @@ namespace Server.Items
             for (int i = 0; i < Rows.Length; i++)
             {
                 if (Rows[i] == check.Rows[i])
-                {
                     matches++;
-                }
             }
 
             return matches;
@@ -441,15 +427,8 @@ namespace Server.Items
         public UnderworldPuzzleGump(Mobile from, UnderworldPuzzleItem item, int row)
             : base(5, 30)
         {
-            if (row > 3)
-            {
-                row = 3;
-            }
-
-            if (row < 0)
-            {
-                row = 0;
-            }
+            if (row > 3) row = 3;
+            if (row < 0) row = 0;
 
             m_From = from;
             m_Item = item;
@@ -564,9 +543,7 @@ namespace Server.Items
         public override void OnResponse(NetState sender, RelayInfo info)
         {
             if (m_Item.Deleted || info.ButtonID == 0 || !m_From.CheckAlive())
-            {
                 return;
-            }
 
             if (m_From.AccessLevel == AccessLevel.Player && !m_Item.IsChildOf(m_From.Backpack))
             {
@@ -584,19 +561,14 @@ namespace Server.Items
                 case 5:
                     {
                         int nextRow = m_Row - 1;
-                        if (nextRow < 0)
-                        {
-                            nextRow = 3;
-                        }
+                        if (nextRow < 0) nextRow = 3;
 
                         PuzzlePiece movingPiece = m_CurrentSolution.Rows[m_Row];
                         PuzzlePiece movingToPiece = m_CurrentSolution.Rows[nextRow];
 
                         //Can't move empty spaces
                         if (movingPiece == PuzzlePiece.None || m_Item.Attempts >= m_Solution.MaxAttempts)
-                        {
                             break;
-                        }
 
                         SplitPiecesUp(ref movingPiece, ref movingToPiece);
 
@@ -613,19 +585,14 @@ namespace Server.Items
                 case 6:
                     {
                         int nextRow = m_Row + 1;
-                        if (nextRow > 3)
-                        {
-                            nextRow = 0;
-                        }
+                        if (nextRow > 3) nextRow = 0;
 
                         PuzzlePiece movingPiece = m_CurrentSolution.Rows[m_Row];
                         PuzzlePiece movingToPiece = m_CurrentSolution.Rows[nextRow];
 
                         //Can't Move Empty Spaces
                         if (movingPiece == PuzzlePiece.None || m_Item.Attempts >= m_Solution.MaxAttempts)
-                        {
                             break;
-                        }
 
                         SplitPiecesDown(ref movingPiece, ref movingToPiece);
 
@@ -643,10 +610,7 @@ namespace Server.Items
                 case 7:
                     {
                         if (m_Item.SubmitSolution(m_From, m_CurrentSolution))
-                        {
                             return;
-                        }
-
                         break;
                     }
                 case 8:
@@ -785,30 +749,18 @@ namespace Server.Items
                 //t = (int)movingToPiece + (movingAmount - moveToAmount);
                 //t -= 1;
                 if (movingAmount == 4 && moveToAmount == 3)
-                {
                     t = (int)movingToPiece - 2;
-                }
                 else if (movingAmount == 4 && moveToAmount == 2)
-                {
                     t = (int)movingToPiece;
-                }
                 else if (movingAmount == 4 && moveToAmount == 1)
-                {
                     t = (int)movingToPiece + 2;
-                }
 
                 else if (movingAmount == 2 && moveToAmount == 1)
-                {
                     t = (int)movingToPiece;
-                }
                 else if (movingAmount == 3 && moveToAmount == 2)
-                {
                     t = (int)movingToPiece - 1;
-                }
                 else if (movingAmount == 3 && moveToAmount == 1)
-                {
                     t = (int)movingToPiece + 1;
-                }
             }
             else
             {

@@ -52,16 +52,12 @@ namespace Server.Items
         public bool CheckAccessible(Mobile from, Item item)
         {
             if (from.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return true; // Staff can access anything
-            }
 
             BaseHouse house = BaseHouse.FindHouseAt(item);
 
             if (house == null)
-            {
                 return false;
-            }
 
             switch (Level)
             {
@@ -102,13 +98,9 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_TurnedOn)
-            {
                 list.Add(502695); // turned on
-            }
             else
-            {
                 list.Add(502696); // turned off
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -139,9 +131,7 @@ namespace Server.Items
             int version = reader.ReadInt();
 
             if (version > 0)
-            {
                 Level = (SecureLevel)reader.ReadInt();
-            }
 
             m_TurnedOn = reader.ReadBool();
         }
@@ -177,9 +167,7 @@ namespace Server.Items
                     m_SingingBall.TurnedOn = newValue;
 
                     if (newValue && !m_SingingBall.IsLockedDown)
-                    {
                         from.SendLocalizedMessage(502693); // Remember, this only works when locked down.
-                    }
                 }
                 else
                 {

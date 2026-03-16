@@ -2,6 +2,7 @@ using Server.Items;
 using Server.Mobiles;
 using Server.Network;
 using System;
+using Server.Engines.Despise;
 
 /*The animal tamer attempts to guide their pet on the path of skill gain, increasing the pet's skill gains based on the tamer's 
   animal taming skill, animal lore skill, and mastery level.  This ability functions similarly to a scroll of alacrity.*/
@@ -45,9 +46,14 @@ namespace Server.Spells.SkillMasteries
 
             int count = 0;
 
-            for (int index = 0; index < ((PlayerMobile) Caster).AllFollowers.Count; index++)
+            for (var index = 0; index < ((PlayerMobile) Caster).AllFollowers.Count; index++)
             {
-                count++;
+                var m = ((PlayerMobile) Caster).AllFollowers[index];
+
+                if (!(m is DespiseCreature))
+                {
+                    count++;
+                }
             }
 
             if ((Caster is PlayerMobile pm && pm.AllFollowers == null || count == 0) && Caster != null)
@@ -72,11 +78,11 @@ namespace Server.Spells.SkillMasteries
             {
                 if (Caster is PlayerMobile)
                 {
-                    for (int index = 0; index < ((PlayerMobile) Caster).AllFollowers.Count; index++)
+                    for (var index = 0; index < ((PlayerMobile) Caster).AllFollowers.Count; index++)
                     {
                         Mobile m = ((PlayerMobile) Caster).AllFollowers[index];
 
-                        if (m.Map == Caster.Map && Caster.InRange(m.Location, PartyRange))
+                        if (m.Map == Caster.Map && Caster.InRange(m.Location, PartyRange) && !(m is DespiseCreature))
                         {
                             Effects.SendLocationParticles(EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration), 0, 0, 0, 0, 0, 5060, 0);
                             Effects.PlaySound(m.Location, m.Map, 0x243);

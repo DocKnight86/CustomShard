@@ -98,9 +98,7 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (Deed == null || Deed.Deleted)
-                {
                     return;
-                }
 
                 Mobile m = sender.Mobile;
 

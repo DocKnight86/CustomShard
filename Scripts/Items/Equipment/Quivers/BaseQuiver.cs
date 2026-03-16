@@ -1,5 +1,7 @@
 using Server.ContextMenus;
 using Server.Engines.Craft;
+using Server.Misc;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,24 +13,24 @@ namespace Server.Items
         void AlterRangedDamage(ref int phys, ref int fire, ref int cold, ref int pois, ref int nrgy, ref int chaos, ref int direct);
     }
 
-    public class BaseQuiver : Container, ICraftable, ISetItem, IVvVItem, IOwnerRestricted, IRangeDamage, IArtifact
+    [Alterable(typeof(DefTailoring), typeof(GargishLeatherWingArmor), true)]
+    public class BaseQuiver : Container, ICraftable, ISetItem, IVvVItem, IOwnerRestricted, IRangeDamage, IArtifact, ICanBeElfOrHuman
     {
         private bool _VvVItem;
         private Mobile _Owner;
         private string _OwnerName;
+        private bool _ElvesOnly;
 
         [CommandProperty(AccessLevel.GameMaster)]
         public bool IsVvVItem { get => _VvVItem; set { _VvVItem = value; InvalidateProperties(); } }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public Mobile Owner { get => _Owner; set { _Owner = value; if (_Owner != null)
-            {
-                _OwnerName = _Owner.Name;
-            }
-
-            InvalidateProperties(); } }
+        public Mobile Owner { get => _Owner; set { _Owner = value; if (_Owner != null) _OwnerName = _Owner.Name; InvalidateProperties(); } }
 
         public virtual string OwnerName { get => _OwnerName; set { _OwnerName = value; InvalidateProperties(); } }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool ElfOnly { get => _ElvesOnly; set => _ElvesOnly = value; }
 
         public override int DefaultGumpID => 0x108;
 
@@ -43,9 +45,7 @@ namespace Server.Items
             get
             {
                 if (IsVvVItem)
-                {
                     return true;
-                }
 
                 return base.DisplayWeight;
             }
@@ -140,6 +140,22 @@ namespace Server.Items
                 quiver.m_SetSkillBonuses = new AosSkillBonuses(newItem, m_SetSkillBonuses);
             }
 
+            if (newItem is GargishLeatherWingArmor wing)
+            {
+                int phys, fire, cold, pois, nrgy, chaos, direct;
+                phys = fire = cold = pois = nrgy = chaos = direct = 0;
+
+                AlterRangedDamage(ref phys, ref fire, ref cold, ref pois, ref nrgy, ref chaos, ref direct);
+
+                wing.AosElementDamages.Physical = phys;
+                wing.AosElementDamages.Fire = fire;
+                wing.AosElementDamages.Cold = cold;
+                wing.AosElementDamages.Poison = pois;
+                wing.AosElementDamages.Energy = nrgy;
+                wing.AosElementDamages.Chaos = chaos;
+                wing.AosElementDamages.Direct = direct;
+            }
+
             base.OnAfterDuped(newItem);
         }
 
@@ -155,9 +171,7 @@ namespace Server.Items
             int total = base.GetTotal(type);
 
             if (type == TotalType.Weight)
-            {
                 total -= total * m_WeightReduction / 100;
-            }
 
             return total;
         }
@@ -175,18 +189,14 @@ namespace Server.Items
             if (ammo != null)
             {
                 if (ammo.GetType() == type)
-                {
                     return true;
-                }
             }
             else
             {
                 for (int i = 0; i < m_Ammo.Length; i++)
                 {
                     if (type == m_Ammo[i])
-                    {
                         return true;
-                    }
                 }
             }
 
@@ -322,9 +332,7 @@ namespace Server.Items
                 m_AosSkillBonuses.Remove();
 
                 if (IsSetItem && m_SetEquipped)
-                {
                     SetHelper.RemoveSetBonus(mob, SetID, this);
-                }
             }
         }
 
@@ -333,9 +341,7 @@ namespace Server.Items
             if (Parent is Mobile && from == Parent)
             {
                 if (IsSetItem && m_SetEquipped)
-                {
                     SetHelper.RemoveSetBonus(from, SetID, this);
-                }
             }
 
             return base.OnDragLift(from);
@@ -343,6 +349,11 @@ namespace Server.Items
 
         public override bool CanEquip(Mobile m)
         {
+            if (!RaceDefinitions.ValidateEquipment(m, this))
+            { 
+                return false;
+            }
+
             if (m.IsPlayer())
             {
                 if (_Owner != null && m != _Owner)
@@ -389,9 +400,7 @@ namespace Server.Items
             base.AddWeightProperty(list);
 
             if (IsVvVItem)
-            {
                 list.Add(1154937); // VvV Item
-            }
         }
 
         public override void AddCraftedProperties(ObjectPropertyList list)
@@ -407,9 +416,7 @@ namespace Server.Items
             }
 
             if (m_Quality == ItemQuality.Exceptional)
-            {
                 list.Add(1063341); // exceptional
-            }
         }
 
         public override void AddNameProperties(ObjectPropertyList list)
@@ -423,18 +430,12 @@ namespace Server.Items
             if (ammo != null)
             {
                 if (ammo is Arrow)
-                {
                     list.Add(1075265, "{0}\t{1}", ammo.Amount, Capacity); // Ammo: ~1_QUANTITY~/~2_CAPACITY~ arrows
-                }
                 else if (ammo is Bolt)
-                {
                     list.Add(1075266, "{0}\t{1}", ammo.Amount, Capacity); // Ammo: ~1_QUANTITY~/~2_CAPACITY~ bolts
-                }
             }
             else
-            {
                 list.Add(1075265, "{0}\t{1}", 0, Capacity); // Ammo: ~1_QUANTITY~/~2_CAPACITY~ arrows
-            }
 
 
             if (ArtifactRarity > 0)
@@ -445,9 +446,7 @@ namespace Server.Items
             int prop;
 
             if ((prop = m_DamageIncrease) != 0)
-            {
                 list.Add(1074762, prop.ToString()); // Damage modifier: ~1_PERCENT~%
-            }
 
             int phys, fire, cold, pois, nrgy, chaos, direct;
             phys = fire = cold = pois = nrgy = chaos = direct = 0;
@@ -455,168 +454,104 @@ namespace Server.Items
             AlterRangedDamage(ref phys, ref fire, ref cold, ref pois, ref nrgy, ref chaos, ref direct);
 
             if (phys != 0)
-            {
                 list.Add(1060403, phys.ToString()); // physical damage ~1_val~%
-            }
 
             if (fire != 0)
-            {
                 list.Add(1060405, fire.ToString()); // fire damage ~1_val~%
-            }
 
             if (cold != 0)
-            {
                 list.Add(1060404, cold.ToString()); // cold damage ~1_val~%
-            }
 
             if (pois != 0)
-            {
                 list.Add(1060406, pois.ToString()); // poison damage ~1_val~%
-            }
 
             if (nrgy != 0)
-            {
                 list.Add(1060407, nrgy.ToString()); // energy damage ~1_val
-            }
 
             if (chaos != 0)
-            {
                 list.Add(1072846, chaos.ToString()); // chaos damage ~1_val~%
-            }
 
             if (direct != 0)
-            {
                 list.Add(1079978, direct.ToString()); // Direct Damage: ~1_PERCENT~%
-            }
 
             if ((prop = m_Attributes.DefendChance) != 0)
-            {
                 list.Add(1060408, prop.ToString()); // defense chance increase ~1_val~%
-            }
 
             if ((prop = m_Attributes.BonusDex) != 0)
-            {
                 list.Add(1060409, prop.ToString()); // dexterity bonus ~1_val~
-            }
 
             if ((prop = m_Attributes.EnhancePotions) != 0)
-            {
                 list.Add(1060411, prop.ToString()); // enhance potions ~1_val~%
-            }
 
             if ((prop = m_Attributes.CastRecovery) != 0)
-            {
                 list.Add(1060412, prop.ToString()); // faster cast recovery ~1_val~
-            }
 
             if ((prop = m_Attributes.CastSpeed) != 0)
-            {
                 list.Add(1060413, prop.ToString()); // faster casting ~1_val~
-            }
 
             if ((prop = m_Attributes.AttackChance) != 0)
-            {
                 list.Add(1060415, prop.ToString()); // hit chance increase ~1_val~%
-            }
 
             if ((prop = m_Attributes.BonusHits) != 0)
-            {
                 list.Add(1060431, prop.ToString()); // hit point increase ~1_val~
-            }
 
             if ((prop = m_Attributes.BonusInt) != 0)
-            {
                 list.Add(1060432, prop.ToString()); // intelligence bonus ~1_val~
-            }
 
             if ((prop = m_Attributes.LowerManaCost) != 0)
-            {
                 list.Add(1060433, prop.ToString()); // lower mana cost ~1_val~%
-            }
 
             if ((prop = m_Attributes.LowerRegCost) != 0)
-            {
                 list.Add(1060434, prop.ToString()); // lower reagent cost ~1_val~%	
-            }
 
             if ((prop = m_Attributes.Luck) != 0)
-            {
                 list.Add(1060436, prop.ToString()); // luck ~1_val~
-            }
 
             if ((prop = m_Attributes.BonusMana) != 0)
-            {
                 list.Add(1060439, prop.ToString()); // mana increase ~1_val~
-            }
 
             if ((prop = m_Attributes.RegenMana) != 0)
-            {
                 list.Add(1060440, prop.ToString()); // mana regeneration ~1_val~
-            }
 
             if ((prop = m_Attributes.NightSight) != 0)
-            {
                 list.Add(1060441); // night sight
-            }
 
             if ((prop = m_Attributes.ReflectPhysical) != 0)
-            {
                 list.Add(1060442, prop.ToString()); // reflect physical damage ~1_val~%
-            }
 
             if ((prop = m_Attributes.RegenStam) != 0)
-            {
                 list.Add(1060443, prop.ToString()); // stamina regeneration ~1_val~
-            }
 
             if ((prop = m_Attributes.RegenHits) != 0)
-            {
                 list.Add(1060444, prop.ToString()); // hit point regeneration ~1_val~
-            }
 
             if ((prop = m_Attributes.SpellDamage) != 0)
-            {
                 list.Add(1060483, prop.ToString()); // spell damage increase ~1_val~%
-            }
 
             if ((prop = m_Attributes.BonusStam) != 0)
-            {
                 list.Add(1060484, prop.ToString()); // stamina increase ~1_val~
-            }
 
             if ((prop = m_Attributes.BonusStr) != 0)
-            {
                 list.Add(1060485, prop.ToString()); // strength bonus ~1_val~
-            }
 
             if ((prop = m_Attributes.WeaponSpeed) != 0)
-            {
                 list.Add(1060486, prop.ToString()); // swing speed increase ~1_val~%
-            }
 
             if ((prop = m_Attributes.WeaponDamage) != 0)
-            {
                 list.Add(1060401, prop.ToString()); // damage increase ~1_val~%
-            }
 
             if ((prop = m_Attributes.LowerAmmoCost) > 0)
-            {
                 list.Add(1075208, prop.ToString()); // Lower Ammo Cost ~1_Percentage~%
-            }
 
             if (IsSetItem)
             {
                 list.Add(1073491, Pieces.ToString()); // Part of a Weapon/Armor Set (~1_val~ pieces)
 
                 if (SetID == SetItem.Bestial)
-                {
                     list.Add(1151541, BestialSetHelper.GetTotalBerserk(this).ToString()); // Berserk ~1_VAL~
-                }
 
                 if (BardMasteryBonus)
-                {
                     list.Add(1151553); // Activate: Bard Mastery Bonus x2<br>(Effect: 1 min. Cooldown: 30 min.)
-                }
 
                 if (m_SetEquipped)
                 {
@@ -630,16 +565,12 @@ namespace Server.Items
             double weight = 0;
 
             if (ammo != null)
-            {
                 weight = ammo.Weight * ammo.Amount;
-            }
 
             list.Add(1072241, "{0}\t{1}\t{2}\t{3}", Items.Count, DefaultMaxItems, (int)weight, DefaultMaxWeight); // Contents: ~1_COUNT~/~2_MAXCOUNT items, ~3_WEIGHT~/~4_MAXWEIGHT~ stones
 
             if ((prop = m_WeightReduction) != 0)
-            {
                 list.Add(1072210, prop.ToString()); // Weight reduction: ~1_PERCENTAGE~%	
-            }
 
             if (IsSetItem && !m_SetEquipped)
             {
@@ -665,9 +596,7 @@ namespace Server.Items
         private static void SetSaveFlag(ref SaveFlag flags, SaveFlag toSet, bool setIf)
         {
             if (setIf)
-            {
                 flags |= toSet;
-            }
         }
 
         private static bool GetSaveFlag(SaveFlag flags, SaveFlag toGet)
@@ -696,7 +625,8 @@ namespace Server.Items
             SetFire = 0x00008000,
             SetCold = 0x00010000,
             SetPoison = 0x00020000,
-            SetEnergy = 0x00040000
+            SetEnergy = 0x00040000,
+            ElvesOnly = 0x00080000
         }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
@@ -743,89 +673,61 @@ namespace Server.Items
             SetSaveFlag(ref flags, SaveFlag.SetCold, m_SetColdBonus != 0);
             SetSaveFlag(ref flags, SaveFlag.SetPoison, m_SetPoisonBonus != 0);
             SetSaveFlag(ref flags, SaveFlag.SetEnergy, m_SetEnergyBonus != 0);
+            SetSaveFlag(ref flags, SaveFlag.ElvesOnly, _ElvesOnly);
             #endregion
 
             writer.WriteEncodedInt((int)flags);
 
             if (GetSaveFlag(flags, SaveFlag.Attributes))
-            {
                 m_Attributes.Serialize(writer);
-            }
 
             if (GetSaveFlag(flags, SaveFlag.WeightReduction))
-            {
                 writer.Write(m_WeightReduction);
-            }
 
             if (GetSaveFlag(flags, SaveFlag.DamageIncrease))
-            {
                 writer.Write(m_DamageIncrease);
-            }
 
             if (GetSaveFlag(flags, SaveFlag.Crafter))
-            {
                 writer.Write(m_Crafter);
-            }
 
             if (GetSaveFlag(flags, SaveFlag.Quality))
-            {
                 writer.Write((int)m_Quality);
-            }
 
             if (GetSaveFlag(flags, SaveFlag.Capacity))
-            {
                 writer.Write(m_Capacity);
-            }
 
             if (GetSaveFlag(flags, SaveFlag.SetPhysical))
-            {
                 writer.WriteEncodedInt(m_SetPhysicalBonus);
-            }
 
             if (GetSaveFlag(flags, SaveFlag.SetFire))
-            {
                 writer.WriteEncodedInt(m_SetFireBonus);
-            }
 
             if (GetSaveFlag(flags, SaveFlag.SetCold))
-            {
                 writer.WriteEncodedInt(m_SetColdBonus);
-            }
 
             if (GetSaveFlag(flags, SaveFlag.SetPoison))
-            {
                 writer.WriteEncodedInt(m_SetPoisonBonus);
-            }
 
             if (GetSaveFlag(flags, SaveFlag.SetEnergy))
-            {
                 writer.WriteEncodedInt(m_SetEnergyBonus);
-            }
 
             if (GetSaveFlag(flags, SaveFlag.SetAttributes))
-            {
                 m_SetAttributes.Serialize(writer);
-            }
 
             if (GetSaveFlag(flags, SaveFlag.SetSkillAttributes))
-            {
                 m_SetSkillBonuses.Serialize(writer);
-            }
 
             if (GetSaveFlag(flags, SaveFlag.SetHue))
-            {
                 writer.Write(m_SetHue);
-            }
 
             if (GetSaveFlag(flags, SaveFlag.LastEquipped))
-            {
                 writer.Write(m_LastEquipped);
-            }
 
             if (GetSaveFlag(flags, SaveFlag.SetEquipped))
-            {
                 writer.Write(m_SetEquipped);
-            }
+
+            if (GetSaveFlag(flags, SaveFlag.ElvesOnly))
+                writer.Write(_ElvesOnly);
         }
 
         public override void Deserialize(GenericReader reader)
@@ -857,97 +759,62 @@ namespace Server.Items
                         SaveFlag flags = (SaveFlag)reader.ReadEncodedInt();
 
                         if (GetSaveFlag(flags, SaveFlag.Attributes))
-                        {
                             m_Attributes = new AosAttributes(this, reader);
-                        }
                         else
-                        {
                             m_Attributes = new AosAttributes(this);
-                        }
 
                         if (GetSaveFlag(flags, SaveFlag.WeightReduction))
-                        {
                             m_WeightReduction = reader.ReadInt();
-                        }
 
                         if (GetSaveFlag(flags, SaveFlag.DamageIncrease))
-                        {
                             m_DamageIncrease = reader.ReadInt();
-                        }
 
                         if (GetSaveFlag(flags, SaveFlag.Crafter))
-                        {
                             m_Crafter = reader.ReadMobile();
-                        }
 
                         if (GetSaveFlag(flags, SaveFlag.Quality))
-                        {
                             m_Quality = (ItemQuality)reader.ReadInt();
-                        }
 
                         if (GetSaveFlag(flags, SaveFlag.Capacity))
-                        {
                             m_Capacity = reader.ReadInt();
-                        }
 
                         #region Mondain's Legacy Sets
                         if (GetSaveFlag(flags, SaveFlag.SetPhysical))
-                        {
                             m_SetPhysicalBonus = reader.ReadEncodedInt();
-                        }
 
                         if (GetSaveFlag(flags, SaveFlag.SetFire))
-                        {
                             m_SetFireBonus = reader.ReadEncodedInt();
-                        }
 
                         if (GetSaveFlag(flags, SaveFlag.SetCold))
-                        {
                             m_SetColdBonus = reader.ReadEncodedInt();
-                        }
 
                         if (GetSaveFlag(flags, SaveFlag.SetPoison))
-                        {
                             m_SetPoisonBonus = reader.ReadEncodedInt();
-                        }
 
                         if (GetSaveFlag(flags, SaveFlag.SetEnergy))
-                        {
                             m_SetEnergyBonus = reader.ReadEncodedInt();
-                        }
 
                         if (GetSaveFlag(flags, SaveFlag.SetAttributes))
-                        {
                             m_SetAttributes = new AosAttributes(this, reader);
-                        }
                         else
-                        {
                             m_SetAttributes = new AosAttributes(this);
-                        }
 
                         if (GetSaveFlag(flags, SaveFlag.SetSkillAttributes))
-                        {
                             m_SetSkillBonuses = new AosSkillBonuses(this, reader);
-                        }
                         else
-                        {
                             m_SetSkillBonuses = new AosSkillBonuses(this);
-                        }
 
                         if (GetSaveFlag(flags, SaveFlag.SetHue))
-                        {
                             m_SetHue = reader.ReadInt();
-                        }
 
                         if (GetSaveFlag(flags, SaveFlag.LastEquipped))
-                        {
                             m_LastEquipped = reader.ReadBool();
-                        }
 
                         if (GetSaveFlag(flags, SaveFlag.SetEquipped))
-                        {
                             m_SetEquipped = reader.ReadBool();
-                        }
+
+                        if (GetSaveFlag(flags, SaveFlag.ElvesOnly))
+                            _ElvesOnly = reader.ReadBool();
                         #endregion
 
                         break;
@@ -965,19 +832,13 @@ namespace Server.Items
                 string modName = Serial.ToString();
 
                 if (strBonus != 0)
-                {
                     m.AddStatMod(new StatMod(StatType.Str, modName + "Str", strBonus, TimeSpan.Zero));
-                }
 
                 if (dexBonus != 0)
-                {
                     m.AddStatMod(new StatMod(StatType.Dex, modName + "Dex", dexBonus, TimeSpan.Zero));
-                }
 
                 if (intBonus != 0)
-                {
                     m.AddStatMod(new StatMod(StatType.Int, modName + "Int", intBonus, TimeSpan.Zero));
-                }
             }
 
             if (Parent is Mobile)
@@ -1023,9 +884,7 @@ namespace Server.Items
             Quality = (ItemQuality)quality;
 
             if (makersMark)
-            {
                 Crafter = from;
-            }
 
             return quality;
         }

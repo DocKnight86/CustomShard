@@ -20,9 +20,7 @@ namespace Server.Items
         public override DeathMoveResult OnInventoryDeath(Mobile parent)
         {
             if (!parent.Player && !parent.IsDeadBondedPet)
-            {
                 return DeathMoveResult.MoveToCorpse;
-            }
 
             return base.OnInventoryDeath(parent);
         }

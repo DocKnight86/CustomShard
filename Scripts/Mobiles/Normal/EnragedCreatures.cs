@@ -204,14 +204,9 @@ namespace Server.Mobiles
             */
 
             if (Str < Hits)
-            {
                 Str = Hits;
-            }
-
             if (Dex < Stam)
-            {
                 Dex = Stam;
-            }
 
             Karma = -1000;
             Tamable = false;

@@ -51,9 +51,7 @@ namespace Server.Guilds
             PlayerMobile pm = sender.Mobile as PlayerMobile;
 
             if (pm == null || !IsMember(pm, guild))
-            {
                 return;
-            }
 
             if (info.ButtonID == 5)
             {

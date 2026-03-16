@@ -151,9 +151,7 @@ namespace Server.Engines.VvV
         private void CheckCooldown()
         {
             if (_Cooldown.Count == 0)
-            {
                 return;
-            }
 
             List<Mobile> mobs = new List<Mobile>(_Cooldown.Keys);
 
@@ -211,21 +209,15 @@ namespace Server.Engines.VvV
                 Clicker = m;
 
                 if (!Deed.IsChildOf(m.Backpack))
-                {
                     Enabled = false;
-                }
             }
 
             public override void OnClick()
             {
                 if (Deed.DeploymentType == DeploymentType.Proximaty)
-                {
                     Deed.DeploymentType = DeploymentType.Tripwire;
-                }
                 else
-                {
                     Deed.DeploymentType = DeploymentType.Proximaty;
-                }
 
                 Deed.InvalidateProperties();
 

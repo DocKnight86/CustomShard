@@ -67,9 +67,7 @@ namespace Server.Spells.SkillMasteries
                 return true;
             }
             else
-            {
                 return false;
-            }
         }
 
         protected override void OnTarget(object o)
@@ -98,13 +96,9 @@ namespace Server.Spells.SkillMasteries
                     damage += Utility.RandomMinMax(0, 5);
 
                     if (m is BaseCreature bc && IsUndead(bc))
-                    {
                         damage *= 1.5;
-                    }
                     else if (m is PlayerMobile)
-                    {
                         damage = Math.Min(35, damage);
-                    }
 
                     Caster.MovingParticles(m, 0x9BB5, 7, 0, false, true, 9502, 4019, 0x160);
                     Caster.PlaySound(0x5CE);
@@ -124,9 +118,7 @@ namespace Server.Spells.SkillMasteries
                     if (target is Mobile mob && !CheckResisted(mob) && mob.NetState != null)
                     {
                         if (!TransformationSpellHelper.UnderTransformation(mob, typeof(AnimalForm)))
-                        {
                             mob.SendSpeedControl(SpeedControlType.WalkSpeed);
-                        }
 
                         Server.Timer.DelayCall(TimeSpan.FromSeconds(skill / 60), () =>
                             {
@@ -151,14 +143,10 @@ namespace Server.Spells.SkillMasteries
             }
 
             if (AosAttributes.GetValue(Caster, AosAttribute.LowerRegCost) > Utility.Random(100))
-            {
                 requiredTithing = 0;
-            }
 
             if (requiredTithing > 0 && Caster is PlayerMobile)
-            {
                 Caster.TithingPoints -= requiredTithing;
-            }
 
             return base.CheckSequence();
         }

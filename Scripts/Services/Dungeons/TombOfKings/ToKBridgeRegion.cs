@@ -30,9 +30,7 @@ namespace Server.Regions
                 foreach (Item item in Map.GetItemsInBounds(r2d))
                 {
                     if (item is Static)
-                    {
                         m_Blocks.Add(item);
-                    }
                 }
             }
 
@@ -65,14 +63,10 @@ namespace Server.Regions
         public void WakeUp()
         {
             if (m_Blocks == null)
-            {
                 Ensure();
-            }
 
             if (m_FadingTimer != null && !m_FadingTimer.Running)
-            {
                 m_FadingTimer.Start();
-            }
         }
 
         public void OnTick()

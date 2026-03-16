@@ -30,9 +30,7 @@ namespace Server.Items
             int hue = Hue & 0x3FFF;
 
             if (hue < 2)
-            {
                 return 0;
-            }
 
             return hue - 1;
         }
@@ -52,9 +50,7 @@ namespace Server.Items
             base.OnMovement(m, oldLocation);
 
             if (m.Location == oldLocation)
-            {
                 return;
-            }
 
             if (CheckRange(m.Location, oldLocation, 0) && DateTime.UtcNow >= m_NextActiveTrigger)
             {

@@ -12,9 +12,7 @@ namespace Server.Mobiles
             Item weapon = FindItemOnLayer(Layer.TwoHanded);
 
             if (weapon == null)
-            {
                 return null;
-            }
 
             if (weapon is BaseWeapon baseWeapon)
             {
@@ -138,9 +136,7 @@ namespace Server.Mobiles
                 Mobile combatant = Combatant as Mobile;
 
                 if (combatant == null || combatant.Deleted || combatant.Map != Map || !InRange(combatant, 12) || !CanBeHarmful(combatant) || !InLOS(combatant))
-                {
                     return;
-                }
 
                 if (DateTime.Now >= m_NextBomb)
                 {
@@ -149,13 +145,9 @@ namespace Server.Mobiles
                     m_Thrown++;
 
                     if (0.75 >= Utility.RandomDouble() && (m_Thrown % 2) == 1) // 75% chance to quickly throw another bomb
-                    {
                         m_NextBomb = DateTime.Now + TimeSpan.FromSeconds(3.0);
-                    }
                     else
-                    {
                         m_NextBomb = DateTime.Now + TimeSpan.FromSeconds(5.0 + (10.0 * Utility.RandomDouble())); // 5-15 seconds
-                    }
                 }
             }
         }

@@ -70,9 +70,7 @@ namespace Server.Items
         public void StartWorking(Mobile from)
         {
             if (IsWorking)
-            {
                 return;
-            }
 
             m_Timer = Timer.DelayCall(TimeSpan.FromSeconds(5.0), FinishWorking_Callback, from);
             UpdateStage();
@@ -81,17 +79,11 @@ namespace Server.Items
         public void UpdateStage()
         {
             if (IsWorking)
-            {
                 UpdateStage(FlourMillStage.Working);
-            }
             else if (HasFlour)
-            {
                 UpdateStage(FlourMillStage.Filled);
-            }
             else
-            {
                 UpdateStage(FlourMillStage.Empty);
-            }
         }
 
         public void UpdateStage(FlourMillStage stage)
@@ -103,33 +95,23 @@ namespace Server.Items
                 AddonComponent component = components[i];
 
                 if (component == null)
-                {
                     continue;
-                }
 
                 int[] itemTable = FindItemTable(component.ItemID);
 
                 if (itemTable != null)
-                {
                     component.ItemID = itemTable[(int)stage];
-                }
             }
         }
 
         public override void OnComponentUsed(AddonComponent c, Mobile from)
         {
             if (!from.InRange(GetWorldLocation(), 4) || !from.InLOS(this))
-            {
                 from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
-            }
             else if (!IsFull)
-            {
                 from.SendLocalizedMessage(500997); // You need more wheat to make a sack of flour.
-            }
             else
-            {
                 StartWorking(from);
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -188,9 +170,7 @@ namespace Server.Items
                 for (int j = 0; j < itemTable.Length; ++j)
                 {
                     if (itemTable[j] == itemID)
-                    {
                         return itemTable;
-                    }
                 }
             }
 

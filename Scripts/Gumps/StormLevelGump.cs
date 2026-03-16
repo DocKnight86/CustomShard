@@ -29,7 +29,7 @@ namespace Server.Gumps
 
         public static void OnLogin(Mobile m)
         {
-            if ((m.Map == Map.Trammel && m.Region.IsPartOf("Blackthorn Castle") || m.Region.IsPartOf("Ver Lor Reg")) && m.Player && m.AccessLevel == AccessLevel.Player && m.CharacterOut)
+            if ((m.Map == Map.Trammel && m.Region.IsPartOf("Blackthorn Castle") || Engines.Fellowship.ForsakenFoesEvent.Instance.Running && m.Region.IsPartOf("BlackthornDungeon") || m.Region.IsPartOf("Ver Lor Reg")) && m.Player && m.AccessLevel == AccessLevel.Player && m.CharacterOut)
             {
                 StormLevelGump menu = new StormLevelGump(m);
                 menu.BeginClose();
@@ -238,9 +238,7 @@ namespace Server.Gumps
         public void StopClose()
         {
             if (m_Timer != null)
-            {
                 m_Timer.Stop();
-            }
 
             m_Mobile.Frozen = false;
         }
@@ -301,21 +299,13 @@ namespace Server.Gumps
         {
             Map destMap;
             if (from.Map == Map.Trammel)
-            {
                 destMap = Map.Trammel;
-            }
             else if (from.Map == Map.Felucca)
-            {
                 destMap = Map.Felucca;
-            }
             else if (from.Map == Map.Internal)
-            {
                 destMap = from.LogoutMap == Map.Felucca ? Map.Felucca : Map.Trammel;
-            }
             else
-            {
                 destMap = from.Kills >= 5 ? Map.Felucca : Map.Trammel;
-            }
 
             Mobiles.BaseCreature.TeleportPets(from, dest, destMap);
             from.MoveToWorld(dest, destMap);

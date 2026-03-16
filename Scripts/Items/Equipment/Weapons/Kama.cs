@@ -1,5 +1,8 @@
+using Server.Engines.Craft;
+
 namespace Server.Items
 {
+    [Alterable(typeof(DefBlacksmithy), typeof(DualPointedSpear))]
     [Flipable(0x27AD, 0x27F8)]
     public class Kama : BaseKnife
     {

@@ -68,9 +68,7 @@ namespace Server.Mobiles
         public override void AlterSpellDamageFrom(Mobile from, ref int damage)
         {
             if (from != null)
-            {
                 from.Damage(damage / 2, from);
-            }
         }
 
         public override void OnDeath(Container c)
@@ -78,9 +76,7 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (Utility.RandomDouble() < 0.3)
-            {
                 c.DropItem(new DragonFlameSectBadge());
-            }
         }
 
         public override void Serialize(GenericWriter writer)

@@ -309,9 +309,7 @@ namespace Server.Items
                             if (m != null && item != null)
                             {
                                 if (Contents == null)
-                                {
                                     Contents = new Dictionary<Item, Mobile>();
-                                }
 
                                 Contents[item] = m;
                             }

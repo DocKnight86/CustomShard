@@ -30,8 +30,8 @@ namespace Server.Mobiles
         public override double TreasureMapChance => .50;
         public override int TreasureMapLevel => 5;
 
-        public override Type[] UniqueList => [typeof(EnchantedCoralBracelet), typeof(LeviathanHideBracers)];
-        public override Type[] SharedList => [typeof(MiniSoulForgeDeed)];
+        public override Type[] UniqueList => new[] { typeof(EnchantedCoralBracelet), typeof(WandOfThunderingGlory), typeof(LeviathanHideBracers), typeof(SmilingMoonBlade) };
+        public override Type[] SharedList => new[] { typeof(MiniSoulForgeDeed) };
         public override Type[] DecorativeList => new[] { typeof(EnchantedBladeDeed), typeof(EnchantedVortexDeed) };
 
         [Constructable]
@@ -91,9 +91,7 @@ namespace Server.Mobiles
         public void AddEel(Mobile eel)
         {
             if (!m_Eels.Contains(eel) && eel is ParasiticEel)
-            {
                 m_Eels.Add(eel);
-            }
         }
 
         public void RemoveEel(Mobile eel)
@@ -112,9 +110,7 @@ namespace Server.Mobiles
             base.OnDamagedBySpell(from);
 
             if (m_NextSpawn < DateTime.UtcNow && m_Eels.Count < SpawnMax && 0.25 > Utility.RandomDouble())
-            {
                 SpawnEel(from);
-            }
         }
 
         public override void OnGotMeleeAttack(Mobile attacker)
@@ -122,9 +118,7 @@ namespace Server.Mobiles
             base.OnGotMeleeAttack(attacker);
 
             if (attacker.Weapon is BaseRanged && m_NextSpawn < DateTime.UtcNow && m_Eels.Count < SpawnMax && 0.25 > Utility.RandomDouble())
-            {
                 SpawnEel(attacker);
-            }
         }
 
         public override void OnThink()
@@ -132,9 +126,7 @@ namespace Server.Mobiles
             base.OnThink();
 
             if (m_NextSpecial < DateTime.UtcNow)
-            {
                 DoAreaExplosion();
-            }
         }
 
         public override void OnActionCombat()
@@ -142,22 +134,16 @@ namespace Server.Mobiles
             Mobile combatant = Combatant as Mobile;
 
             if (combatant == null || combatant.Deleted || combatant.Map != Map || !InRange(combatant, 12) || !CanBeHarmful(combatant) || !InLOS(combatant))
-            {
                 return;
-            }
 
             if (DateTime.UtcNow >= m_NextWaterBall)
             {
                 double damage = combatant.Hits * 0.3;
 
                 if (damage < 10.0)
-                {
                     damage = 10.0;
-                }
                 else if (damage > 40.0)
-                {
                     damage = 40.0;
-                }
 
                 DoHarmful(combatant);
                 MovingParticles(combatant, 0x36D4, 5, 0, false, false, 195, 0, 9502, 3006, 0, 0, 0);
@@ -273,9 +259,7 @@ namespace Server.Mobiles
                 for (int i = 0; i < eels.Count; i++)
                 {
                     if (eels[i] != null)
-                    {
                         eels[i].Kill();
-                    }
                 }
             }
 

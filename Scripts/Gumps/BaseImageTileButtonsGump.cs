@@ -97,13 +97,9 @@ namespace Server.Gumps
             int adjustedID = info.ButtonID - 100;
 
             if (adjustedID >= 0 && adjustedID < Buttons.Length)
-            {
                 HandleButtonResponse(sender, adjustedID, Buttons[adjustedID]);
-            }
             else
-            {
                 HandleCancel(sender);
-            }
         }
 
         public virtual void HandleButtonResponse(NetState sender, int adjustedButton, ImageTileButtonInfo buttonInfo)

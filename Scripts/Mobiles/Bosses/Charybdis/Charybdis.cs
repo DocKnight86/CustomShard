@@ -90,9 +90,7 @@ namespace Server.Mobiles
         public void AddTentacle(Mobile tent)
         {
             if (!m_Tentacles.Contains(tent))
-            {
                 m_Tentacles.Add(tent);
-            }
         }
 
         public void RemoveTentacle(Mobile tent)
@@ -105,14 +103,10 @@ namespace Server.Mobiles
             base.OnThink();
 
             if (m_NextSpawn < DateTime.UtcNow && m_Tentacles.Count < SpawnMax)
-            {
                 SpawnTentacle();
-            }
 
             if (m_NextTeleport < DateTime.UtcNow && Combatant is Mobile m && !InRange(m, RangeFight) && BaseBoat.FindBoatAt(m, Map) != null)
-            {
                 DoTeleport(m.Location);
-            }
         }
 
         private Point3D m_LastLocation;
@@ -163,9 +157,7 @@ namespace Server.Mobiles
             }
 
             if (newLoc == Point3D.Zero || GetDistanceToSqrt(newLoc) > 15)
-            {
                 newLoc = m_LastLocation;
-            }
 
             DoTeleportEffects(newLoc, map);
             Hidden = false;
@@ -215,9 +207,7 @@ namespace Server.Mobiles
                 for (int y = -2; y <= 2; y++)
                 {
                     if (Math.Abs(x) == 2 && Math.Abs(y) == 2)
-                    {
                         continue;
-                    }
 
                     Point3D pnt = new Point3D(p.X + x, p.Y + y, map.GetAverageZ(p.X + x, p.Y + y));
                     Effects.SendLocationEffect(pnt, map, 0x3728, 16, 4);
@@ -234,17 +224,13 @@ namespace Server.Mobiles
         public override void DoDamageBoat(BaseBoat boat)
         {
             if (boat == null)
-            {
                 return;
-            }
 
             m_HasPushed = false;
             IPoint2D pnt = boat;
 
             if (Combatant != null && boat.Contains(Combatant))
-            {
                 pnt = Combatant;
-            }
 
             Direction dir = Utility.GetDirection(this, pnt);
             Point3DList path = new Point3DList();
@@ -327,19 +313,13 @@ namespace Server.Mobiles
                     Point3D ep2 = new Point3D(ep.X + x2, ep.Y + y2, ep.Z);
 
                     if (diag && i >= (2 * path.Count) / 3)
-                    {
                         return;
-                    }
 
                     Point3D p;
                     if (diag && rn < o * 2)
-                    {
                         p = ep2;
-                    }
                     else
-                    {
                         p = ep;
-                    }
 
                     if (Spells.SpellHelper.CheckMulti(p, Map))
                     {
@@ -394,9 +374,7 @@ namespace Server.Mobiles
             public void DoDelete()
             {
                 if (Alive)
-                {
                     Kill();
-                }
             }
 
             public override void OnDelete()
@@ -484,18 +462,12 @@ namespace Server.Mobiles
             foreach (Mobile m in eable)
             {
                 if (m == this || !CanBeHarmful(m))
-                {
                     continue;
-                }
 
                 if (m is BaseCreature bc && (bc.Controlled || bc.Summoned || bc.Team != Team))
-                {
                     list.Add(bc);
-                }
                 else if (m.Player)
-                {
                     list.Add(m);
-                }
             }
             eable.Free();
 
@@ -510,9 +482,7 @@ namespace Server.Mobiles
                     Point3D spawnLoc;
 
                     if (boat != null)
-                    {
                         spawnLoc = GetValidPoint(boat, map, 4);
-                    }
                     else
                     {
                         int y = Utility.RandomMinMax(loc.X - 10, loc.Y + 10);
@@ -523,9 +493,7 @@ namespace Server.Mobiles
                     }
 
                     if (Spells.SpellHelper.CheckMulti(spawnLoc, map))
-                    {
                         continue;
-                    }
 
                     LandTile t = map.Tiles.GetLandTile(spawnLoc.X, spawnLoc.Y);
 
@@ -538,10 +506,7 @@ namespace Server.Mobiles
                         tent.RangeHome = 15;
                         tent.Team = Team;
                         if (spawn != this)
-                        {
                             tent.Combatant = spawn;
-                        }
-
                         break;
                     }
 
@@ -559,14 +524,10 @@ namespace Server.Mobiles
         public override bool OnBeforeDeath()
         {
             if (Map == Map.Internal)
-            {
                 MoveToWorld(m_LastLocation, m_LastMap);
-            }
 
             if (CharydbisSpawner.SpawnInstance != null && CharydbisSpawner.SpawnInstance.Charydbis == this)
-            {
                 CharydbisSpawner.SpawnInstance.OnCharybdisKilled();
-            }
 
             return base.OnBeforeDeath();
         }
@@ -584,9 +545,7 @@ namespace Server.Mobiles
                 Item pie = Loot.Construct(pieType);
 
                 if (pie != null)
-                {
                     c.DropItem(pie);
-                }
             }
 
             drop = Utility.RandomMinMax(2, 5);
@@ -599,9 +558,7 @@ namespace Server.Mobiles
                 steak.Amount = Utility.RandomMinMax(1, 5);
 
                 if (steak != null)
-                {
                     c.DropItem(steak);
-                }
             }
 
 
@@ -625,9 +582,7 @@ namespace Server.Mobiles
                 dropplayer.SendLocalizedMessage(1150879, dropplayer.Name); // ~1_token~ has magically received an item from the charybdis corpse.
 
                 if (dropplayer.Backpack == null || !dropplayer.Backpack.TryDropItem(dropplayer, armor, false))
-                {
                     dropplayer.BankBox.DropItem(armor);
-                }
             }
             else
             {
@@ -645,9 +600,7 @@ namespace Server.Mobiles
                 for (int i = 0; i < tents.Count; i++)
                 {
                     if (tents[i] != null)
-                    {
                         tents[i].Kill();
-                    }
                 }
             }
 
@@ -707,7 +660,19 @@ namespace Server.Mobiles
             typeof(GauntletsOfVillainousRegeneration),
             typeof(GauntletsOfVirtuousRegeneration),
             typeof(LegsOfVillainousRegeneration),
-            typeof(LegsOfVirtuousRegeneration)
+            typeof(LegsOfVirtuousRegeneration),
+            typeof(KiltOfVillainousRegeneration),
+            typeof(KiltOfVirtuousRegeneration),
+            typeof(EarringsOfVillainousRegeneration),
+            typeof(EarringsOfVirtuousRegeneration),
+            typeof(GargishBreastplateOfVillainousRegeneration),
+            typeof(GargishBreastplateOfVirtuousRegeneration),
+            typeof(GargishArmsOfVillainousRegeneration),
+            typeof(GargishArmsOfVirtuousRegeneration),
+            typeof(NecklaceOfVillainousRegeneration),
+            typeof(NecklaceOfVirtuousRegeneration),
+            typeof(GargishLegsOfVillainousRegeneration),
+            typeof(GargishLegsOfVirtuousRegeneration)
         };
 
         public override void GenerateLoot()

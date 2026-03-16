@@ -1,3 +1,4 @@
+using Server.Items;
 using System;
 
 namespace Server.Mobiles
@@ -43,8 +44,8 @@ namespace Server.Mobiles
         {
         }
 
-        public override Type[] UniqueSAList => [];
-        public override Type[] SharedSAList => [];
+        public override Type[] UniqueSAList => new Type[] { typeof(ObsidianEarrings), typeof(TheImpalersPick) };
+        public override Type[] SharedSAList => Array.Empty<Type>();
 
         public override int GetAngerSound() { return 0x600; }
         public override int GetIdleSound() { return 0x600; }

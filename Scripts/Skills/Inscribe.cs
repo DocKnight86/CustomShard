@@ -2,6 +2,7 @@ using Server.Items;
 using Server.Targeting;
 using System;
 using System.Collections;
+using Server.Engines.Khaldun;
 
 namespace Server.SkillHandlers
 {
@@ -35,9 +36,7 @@ namespace Server.SkillHandlers
                 foreach (string line in page.Lines)
                 {
                     if (line.Trim().Length != 0)
-                    {
                         return false;
-                    }
                 }
             }
             return true;
@@ -101,6 +100,10 @@ namespace Server.SkillHandlers
                         SetUser(book, from);
                     }
                 }
+                else if (targeted is MysteriousBook mBook)
+                {
+                    mBook.OnInscribeTarget(from);
+                }
                 else
                 {
                     from.SendLocalizedMessage(1046296); // That is not a book
@@ -110,9 +113,7 @@ namespace Server.SkillHandlers
             protected override void OnTargetCancel(Mobile from, TargetCancelType cancelType)
             {
                 if (cancelType == TargetCancelType.Timeout)
-                {
                     from.SendLocalizedMessage(501619); // You have waited too long to make your inscribe selection, your inscription attempt has timed out.
-                }
             }
         }
 
@@ -128,32 +129,20 @@ namespace Server.SkillHandlers
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_BookSrc.Deleted)
-                {
                     return;
-                }
 
                 BaseBook bookDst = targeted as BaseBook;
 
                 if (bookDst == null)
-                {
                     from.SendLocalizedMessage(1046296); // That is not a book
-                }
                 else if (IsEmpty(m_BookSrc))
-                {
                     from.SendLocalizedMessage(501611); // Can't copy an empty book.
-                }
                 else if (bookDst == m_BookSrc)
-                {
                     from.SendLocalizedMessage(501616); // Cannot copy a book onto itself.
-                }
                 else if (!bookDst.Writable)
-                {
                     from.SendLocalizedMessage(501614); // Cannot write into that book.
-                }
                 else if (GetUser(bookDst) != null)
-                {
                     from.SendLocalizedMessage(501621); // Someone else is inscribing that item.
-                }
                 else
                 {
                     if (from.CheckTargetSkill(SkillName.Inscribe, bookDst, 0, 50))
@@ -173,9 +162,7 @@ namespace Server.SkillHandlers
             protected override void OnTargetCancel(Mobile from, TargetCancelType cancelType)
             {
                 if (cancelType == TargetCancelType.Timeout)
-                {
                     from.SendLocalizedMessage(501619); // You have waited too long to make your inscribe selection, your inscription attempt has timed out.
-                }
             }
 
             protected override void OnTargetFinish(Mobile from)

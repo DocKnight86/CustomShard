@@ -30,9 +30,7 @@ namespace Server.Items
                 m_Charges = value;
 
                 if (!m_Replica && m_Charges != -1)
-                {
                     m_Charges = -1;
-                }
 
                 InvalidateProperties();
             }
@@ -144,9 +142,7 @@ namespace Server.Items
                     BaseCreature pet = list[i];
 
                     if (pet == null || pet.Deleted)
-                    {
                         continue;
-                    }
 
                     AddButton(15, 39 + i * 20, 10006, 10006, i + 1, GumpButtonType.Reply, 0);
                     AddHtml(32, 35 + i * 20, 275, 18, $"<BASEFONT COLOR=#C0C0EE>{pet.Name}</BASEFONT>", false, false);
@@ -178,26 +174,18 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (targeted is BaseCreature creature)
-                {
                     m_Post.EndStable(from, creature);
-                }
                 else if (targeted == from)
-                {
                     from.SendLocalizedMessage(502672); // HA HA HA! Sorry, I am not an inn.
-                }
                 else
-                {
                     from.SendLocalizedMessage(1048053); // You can't stable that!
-                }
             }
         }
 
         public void BeginClaimList(Mobile from)
         {
             if (Deleted || !from.CheckAlive())
-            {
                 return;
-            }
 
             if (UsesRemaining <= 0)
             {
@@ -235,31 +223,23 @@ namespace Server.Items
                 }
 
                 if (list.Count > 0)
-                {
                     from.SendGump(new ClaimListGump(this, from, list));
-                }
                 else
-                {
                     from.SendLocalizedMessage(502671); // But I have no animals stabled with me at the moment!
-                }
             }
         }
 
         public void EndClaimList(Mobile from, BaseCreature pet)
         {
             if (pet == null || pet.Deleted || from.Map != Map || !from.InRange(this, 14) || !from.Stabled.Contains(pet) || !from.CheckAlive())
-            {
                 return;
-            }
 
             if (from.Followers + pet.ControlSlots <= from.FollowersMax)
             {
                 pet.SetControlMaster(from);
 
                 if (pet.Summoned)
-                {
                     pet.SummonMaster = from;
-                }
 
                 pet.FollowTarget = from;
                 pet.ControlOrder = LastOrderType.Follow;
@@ -280,9 +260,7 @@ namespace Server.Items
         public void BeginStable(Mobile from)
         {
             if (Deleted || !from.CheckAlive())
-            {
                 return;
-            }
 
             if (UsesRemaining <= 0)
             {
@@ -314,9 +292,7 @@ namespace Server.Items
         public void EndStable(Mobile from, BaseCreature pet)
         {
             if (Deleted || !from.CheckAlive())
-            {
                 return;
-            }
 
             if (!pet.Controlled || pet.ControlMaster != from)
             {
@@ -400,9 +376,7 @@ namespace Server.Items
             else
             {
                 if (Deleted || !from.CheckAlive())
-                {
                     return;
-                }
 
                 bool claimed = false;
                 int stabled = 0;
@@ -430,9 +404,7 @@ namespace Server.Items
                         pet.SetControlMaster(from);
 
                         if (pet.Summoned)
-                        {
                             pet.SummonMaster = from;
-                        }
 
                         pet.FollowTarget = from;
                         pet.ControlOrder = LastOrderType.Follow;
@@ -460,9 +432,7 @@ namespace Server.Items
                     UsesRemaining -= 1;
                 }
                 else if (stabled == 0)
-                {
                     from.SendLocalizedMessage(502671); // But I have no animals stabled with me at the moment!
-                }
             }
         }
 
@@ -476,16 +446,12 @@ namespace Server.Items
         public bool CheckAccess(Mobile m)
         {
             if (!IsLockedDown || m.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return true;
-            }
 
             BaseHouse house = BaseHouse.FindHouseAt(this);
 
             if (house != null && (house.Public ? house.IsBanned(m) : !house.HasAccess(m)))
-            {
                 return false;
-            }
 
             return house != null && house.HasSecureAccess(m, m_Level);
         }
@@ -506,13 +472,9 @@ namespace Server.Items
                     e.Handled = true;
 
                     if (!Insensitive.Equals(e.Speech, "claim"))
-                    {
                         BeginClaimList(e.Mobile);
-                    }
                     else
-                    {
                         Claim(e.Mobile);
-                    }
                 }
                 else
                 {
@@ -541,9 +503,7 @@ namespace Server.Items
             int version = reader.ReadInt();
 
             if (Weight == 1)
-            {
                 Weight = 10;
-            }
 
             switch (version)
             {
@@ -574,9 +534,7 @@ namespace Server.Items
             }
 
             if (version < 4)
-            {
                 m_Replica = true;
-            }
         }
     }
 }

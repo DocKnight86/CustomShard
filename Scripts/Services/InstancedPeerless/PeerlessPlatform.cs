@@ -263,16 +263,12 @@ namespace Server.Engines.InstancedPeerless
             writer.Write(m_Braziers.Count);
 
             for (int i = 0; i < m_Braziers.Count; i++)
-            {
                 writer.WriteItem(m_Braziers[i]);
-            }
 
             writer.Write(m_Instances.Count);
 
             for (int i = 0; i < m_Instances.Count; i++)
-            {
                 m_Instances[i].Serialize(writer);
-            }
         }
 
         public override void Deserialize(GenericReader reader)
@@ -289,16 +285,12 @@ namespace Server.Engines.InstancedPeerless
                         int braziers = reader.ReadInt();
 
                         for (int i = 0; i < braziers; i++)
-                        {
                             m_Braziers.Add(reader.ReadItem<PeerlessKeyBrazier>());
-                        }
 
                         int instances = reader.ReadInt();
 
                         for (int i = 0; i < instances; i++)
-                        {
                             m_Instances.Add(new PeerlessInstance(reader));
-                        }
 
                         break;
                     }

@@ -86,9 +86,7 @@ namespace Server.Mobiles
             base.OnMovement(m, oldLocation);
 
             if (!_DoingBubbles || _BubbleLocs == null)
-            {
                 return;
-            }
 
             List<Tuple<Point3D, int>> copy = new List<Tuple<Point3D, int>>(_BubbleLocs.Where(tup => tup.Item1 == m.Location));
 
@@ -144,9 +142,7 @@ namespace Server.Mobiles
         public void DoBubble()
         {
             if (!Alive || Map == Map.Internal || Map == null)
-            {
                 return;
-            }
 
             int pathLength = Utility.RandomMinMax(5, 11);
             _DoingBubbles = true;
@@ -166,9 +162,7 @@ namespace Server.Mobiles
                         Map map = Map;
 
                         if (!Alive || map == null || i > 0 && _BubbleLocs[j].Item1 == Point3D.Zero)
-                        {
                             continue;
-                        }
 
                         Direction d = _Directions[j];
 
@@ -179,20 +173,14 @@ namespace Server.Mobiles
                         if (i > 2 && 0.4 > Utility.RandomDouble())
                         {
                             if (d == Direction.Up)
-                            {
                                 d = Direction.North;
-                            }
                             else
-                            {
                                 d += 1;
-                            }
 
                             Movement.Movement.Offset(d, ref x, ref y);
                         }
                         else
-                        {
                             Movement.Movement.Offset(d, ref x, ref y);
-                        }
 
                         IPoint3D p = new Point3D(x, y, Map.GetAverageZ(x, y));
                         Spells.SpellHelper.GetSurfaceTop(ref p);
@@ -238,9 +226,7 @@ namespace Server.Mobiles
         public void DoBubbleAttack()
         {
             if (!Alive || Map == Map.Internal || Map == null)
-            {
                 return;
-            }
 
             List<Mobile> toget = new List<Mobile>();
 
@@ -249,9 +235,7 @@ namespace Server.Mobiles
             foreach (Mobile m in eable)
             {
                 if (m != this && CanBeHarmful(m) && InLOS(m) && (m is PlayerMobile || m is BaseCreature bc && bc.GetMaster() is PlayerMobile))
-                {
                     toget.Add(m);
-                }
             }
 
             eable.Free();
@@ -280,9 +264,7 @@ namespace Server.Mobiles
             ResistanceType type = GetResistanceFromHue(hue);
 
             if (_Affected == null)
-            {
                 _Affected = new Dictionary<Mobile, int>();
-            }
 
             _Affected[m] = hue;
 

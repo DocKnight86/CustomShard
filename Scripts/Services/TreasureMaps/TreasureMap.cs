@@ -329,14 +329,10 @@ namespace Server.Items
             int y1 = ChestLocation.Y - Utility.RandomMinMax(height / 4, height / 4 * 3);
 
             if (x1 < 0)
-            {
                 x1 = 0;
-            }
 
             if (y1 < 0)
-            {
                 y1 = 0;
-            }
 
             int x2;
             int y2;
@@ -405,29 +401,17 @@ namespace Server.Items
             int y = 0;
 
             if (map == Map.Trammel || map == Map.Felucca)
-            {
                 recs = m_FelTramWrap;
-            }
             else if (map == Map.Tokuno)
-            {
                 recs = m_TokunoWrap;
-            }
             else if (map == Map.Malas)
-            {
                 recs = m_MalasWrap;
-            }
             else if (map == Map.Ilshenar)
-            {
                 recs = m_IlshenarWrap;
-            }
             else if (eodon)
-            {
                 recs = m_EodonWrap;
-            }
             else
-            {
                 recs = m_TerMurWrap;
-            }
 
             while (true)
             {
@@ -437,9 +421,7 @@ namespace Server.Items
                 y = Utility.Random(rec.Y, rec.Height);
 
                 if (ValidateLocation(x, y, map))
-                {
                     return new Point2D(x, y);
-                }
             }
         }
 
@@ -549,126 +531,82 @@ namespace Server.Items
             if (map == Map.Trammel || map == Map.Felucca)
             {
                 if (x2 >= 5120)
-                {
                     x2 = 5119;
-                }
 
                 if (y2 >= 4096)
-                {
                     y2 = 4095;
-                }
             }
             else if (map == Map.Ilshenar)
             {
                 if (x2 >= 1890)
-                {
                     x2 = 1889;
-                }
 
                 if (x2 <= 120)
-                {
                     x2 = 121;
-                }
 
                 if (y2 >= 1465)
-                {
                     y2 = 1464;
-                }
 
                 if (y2 <= 105)
-                {
                     y2 = 106;
-                }
             }
             else if (map == Map.Malas)
             {
                 if (x2 >= 2522)
-                {
                     x2 = 2521;
-                }
 
                 if (x2 <= 515)
-                {
                     x2 = 516;
-                }
 
                 if (y2 >= 1990)
-                {
                     y2 = 1989;
-                }
 
                 if (y2 <= 0)
-                {
                     y2 = 1;
-                }
             }
             else if (map == Map.Tokuno)
             {
                 if (x2 >= 1428)
-                {
                     x2 = 1427;
-                }
 
                 if (x2 <= 0)
-                {
                     x2 = 1;
-                }
 
                 if (y2 >= 1420)
-                {
                     y2 = 1419;
-                }
 
                 if (y2 <= 0)
-                {
                     y2 = 1;
-                }
             }
             else if (map == Map.TerMur)
             {
                 if (eodon)
                 {
                     if (x2 <= 62)
-                    {
                         x2 = 63;
-                    }
 
                     if (x2 >= 960)
-                    {
                         x2 = 959;
-                    }
 
                     if (y2 <= 1343)
-                    {
                         y2 = 1344;
-                    }
 
                     if (y2 >= 2240)
-                    {
                         y2 = 2239;
-                    }
                 }
                 else
                 {
                     if (x2 >= 1271)
-                    {
                         x2 = 1270;
-                    }
 
                     if (x2 <= 260)
-                    {
                         x2 = 261;
-                    }
 
                     if (y2 >= 4094)
-                    {
                         y2 = 4083;
-                    }
 
                     if (y2 <= 2760)
-                    {
                         y2 = 2761;
-                    }
                 }
             }
         }
@@ -690,21 +628,13 @@ namespace Server.Items
             Type[][] spawns;
 
             if (map == Map.Trammel || map == Map.Felucca)
-            {
                 spawns = m_SpawnTypes;
-            }
             else if (map == Map.Tokuno)
-            {
                 spawns = m_TokunoSpawnTypes;
-            }
             else if (map == Map.Ilshenar)
-            {
                 spawns = m_IlshenarSpawnTypes;
-            }
             else if (map == Map.Malas)
-            {
                 spawns = m_MalasSpawnTypes;
-            }
             else
             {
                 if (SpellHelper.IsEodon(map, p))
@@ -738,6 +668,11 @@ namespace Server.Items
                 {
                     bc.Title = "(Guardian)";
                     bc.Tamable = false;
+
+                    if (BaseCreature.IsSoulboundEnemies)
+                    {
+                        bc.IsSoulBound = true;
+                    }
                 }
 
                 return bc;
@@ -749,9 +684,7 @@ namespace Server.Items
         public static BaseCreature Spawn(int level, Point3D p, Map map, Mobile target, bool guardian)
         {
             if (map == null)
-            {
                 return null;
-            }
 
             BaseCreature bc = Spawn(level, p, map, guardian);
 
@@ -800,9 +733,7 @@ namespace Server.Items
                     int z = map.GetAverageZ(x, y);
 
                     if (map.CanSpawnMobile(x, y, z))
-                    {
                         return new Point3D(x, y, z);
-                    }
                 }
             }
 
@@ -1009,9 +940,7 @@ namespace Server.Items
             writer.Write(ChestLocation);
 
             if (!Completed && NextReset != DateTime.MinValue && NextReset < DateTime.UtcNow)
-            {
                 Timer.DelayCall(TimeSpan.FromSeconds(30), ResetLocation);
-            }
         }
 
         public override void Deserialize(GenericReader reader)

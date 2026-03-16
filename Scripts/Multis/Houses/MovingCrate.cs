@@ -40,7 +40,7 @@ namespace Server.Multis
         public override void DropItem(Item dropped)
         {
             // 1. Try to stack the item
-            for (int index = 0; index < Items.Count; index++)
+            for (var index = 0; index < Items.Count; index++)
             {
                 Item item = Items[index];
 
@@ -53,15 +53,13 @@ namespace Server.Multis
                         Item subItem = subItems[i];
 
                         if (!(subItem is Container) && subItem.StackWith(null, dropped, false))
-                        {
                             return;
-                        }
                     }
                 }
             }
 
             // 2. Try to drop the item into an existing container
-            for (int index = 0; index < Items.Count; index++)
+            for (var index = 0; index < Items.Count; index++)
             {
                 Item item = Items[index];
 
@@ -120,9 +118,7 @@ namespace Server.Multis
             base.OnItemRemoved(item);
 
             if (TotalItems == 0)
-            {
                 Delete();
-            }
         }
 
         public void RestartTimer()
@@ -149,7 +145,7 @@ namespace Server.Multis
 
             List<Item> toRemove = new List<Item>();
 
-            for (int index = 0; index < Items.Count; index++)
+            for (var index = 0; index < Items.Count; index++)
             {
                 Item item = Items[index];
 
@@ -159,7 +155,7 @@ namespace Server.Multis
                 }
             }
 
-            for (int index = 0; index < toRemove.Count; index++)
+            for (var index = 0; index < toRemove.Count; index++)
             {
                 Item item = toRemove[index];
 
@@ -181,14 +177,10 @@ namespace Server.Multis
             base.OnAfterDelete();
 
             if (House != null && House.MovingCrate == this)
-            {
                 House.MovingCrate = null;
-            }
 
             if (m_InternalizeTimer != null)
-            {
                 m_InternalizeTimer.Stop();
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -221,7 +213,7 @@ namespace Server.Multis
         {
             bool[,] positions = new bool[Rows, Columns];
 
-            for (int index = 0; index < Items.Count; index++)
+            for (var index = 0; index < Items.Count; index++)
             {
                 Item item = Items[index];
 
@@ -315,9 +307,7 @@ namespace Server.Multis
             base.OnItemRemoved(item);
 
             if (item.GetBounce() == null && TotalItems == 0)
-            {
                 Delete();
-            }
         }
 
         public override void OnItemBounceCleared(Item item)
@@ -325,9 +315,7 @@ namespace Server.Multis
             base.OnItemBounceCleared(item);
 
             if (TotalItems == 0)
-            {
                 Delete();
-            }
         }
 
         public override void Serialize(GenericWriter writer)

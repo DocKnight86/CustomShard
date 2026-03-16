@@ -28,9 +28,7 @@ namespace Server.Engines.VendorSearching
             Criteria = VendorSearch.GetContext(pm);
 
             if (Criteria == null)
-            {
                 Criteria = VendorSearch.AddNewContext(pm);
-            }
         }
 
         public override void AddGumpLayout()
@@ -106,13 +104,9 @@ namespace Server.Engines.VendorSearching
                 AddButton(10, 74 + yOffset * 22, 30533, 30533, 0, GumpButtonType.Page, x.PageID);
 
                 if (x.Category == Category.PriceRange)
-                {
                     AddHtmlLocalized(50, 75 + yOffset * 22, 215, 20, x.Cliloc, $"@{Criteria.MinPrice.ToString("N0", CultureInfo.GetCultureInfo("en-US"))}@{Criteria.MaxPrice.ToString("N0", CultureInfo.GetCultureInfo("en-US"))}", LabelColor, false, false);
-                }
                 else
-                {
                     AddHtmlLocalized(50, 75 + yOffset * 22, 215, 20, x.Cliloc, LabelColor, false, false);
-                }
 
                 yOffset++;
             });
@@ -235,18 +229,13 @@ namespace Server.Engines.VendorSearching
                     string text = searchName.Text.Trim();
 
                     if (Criteria.SearchName == null || text.ToLower() != Criteria.SearchName.ToLower())
-                    {
                         Criteria.SearchName = searchName.Text;
-                    }
                 }
             }
 
             switch (info.ButtonID)
             {
-                case 0:
-                {
-                    break;
-                }
+                case 0: break;
                 case 1: // Search
                 {
                     User.CloseGump(typeof(SearchResultsGump));
@@ -284,53 +273,36 @@ namespace Server.Engines.VendorSearching
                         break;
                     }
                 case 4: // Nothing, resend gump                    
-                {
                     Refresh();
                     break;
-                }
                 case 7: // remove item name
-                {
                     Criteria.SearchName = null;
                     Refresh();
                     break;
-                }
                 case 8: // remove price entry
-                {
                     Criteria.EntryPrice = false;
                     Refresh();
                     break;
-                }
                 case 9: // remove auction entry
-                {
                     Refresh();
                     break;
-                }
                 case 236: // Low to High
-                {
                     Criteria.SortBy = SortBy.LowToHigh;
                     Refresh();
                     break;
-                }
                 case 237: // High to Low
-                {
                     Criteria.SortBy = SortBy.HighToLow;
                     Refresh();
                     break;
-                }
                 case 238: // Non Auction Item
-                {
                     Criteria.Auction = false;
                     Refresh();
                     break;
-                }
                 case 239: // Auction Item
-                {
                     Criteria.Auction = true;
                     Refresh();
                     break;
-                }
                 case 1154512: // Set Min/Max price
-                {
                     TextRelay tr1 = info.GetTextEntry(7);
                     TextRelay tr2 = info.GetTextEntry(8);
 
@@ -357,17 +329,13 @@ namespace Server.Engines.VendorSearching
                     Criteria.EntryPrice = true;
                     Refresh();
                     break;
-                }
                 default:
-                {
                     if (info.ButtonID > 1000)
                     {
                         SearchDetail toRemove = Criteria.Details[info.ButtonID - 1001];
 
                         if (toRemove.Category == Category.Equipment)
-                        {
                             Criteria.SearchType = Layer.Invalid;
-                        }
 
                         Criteria.Details.Remove(toRemove);
                         Refresh();
@@ -394,7 +362,6 @@ namespace Server.Engines.VendorSearching
                         Refresh();
                     }
                     break;
-                }
             }
         }
 
@@ -449,15 +416,8 @@ namespace Server.Engines.VendorSearching
             AddHtmlLocalized(274, 70, 61, 18, 1114513, "#1154644", LabelColor, false, false); // Facet
             AddHtmlLocalized(345, 70, 102, 18, 1114513, "#1154642", LabelColor, false, false); // Create Map
 
-            if (Index < 0)
-            {
-                Index = Items.Count - 1;
-            }
-
-            if (Index >= Items.Count)
-            {
-                Index = 0;
-            }
+            if (Index < 0) Index = Items.Count - 1;
+            if (Index >= Items.Count) Index = 0;
 
             int start = Index;
             int index = 0;
@@ -472,26 +432,18 @@ namespace Server.Engines.VendorSearching
                 int y = 101 + index * 75;
 
                 if (map == null && item.RootParentEntity is Mobile mobile)
-                {
                     map = mobile.Map;
-                }
 
                 AddImageTiledButton(50, y, 0x918, 0x918, 0x0, GumpButtonType.Page, 0, item.ItemID, item.Hue, 40 - bounds.Width / 2 - bounds.X, 30 - bounds.Height / 2 - bounds.Y);
                 AddItemProperty(item);
 
                 if (Items[i].IsAuction)
-                {
                     AddHtmlLocalized(162, y, 102, 72, 1159353, 0x6B55, false, false); // Auction Item
-                }
                 else
-                {
                     AddHtmlLocalized(162, y, 102, 72, Items[i].IsChild ? 1154598 : 1154645, $"{(price <= 0 ? "0" : FormatPrice(price))}", TextColor, false, false); // <center>~1_val~</center>
-                }
 
                 if (map != null)
-                {
                     AddHtmlLocalized(274, y, 102, 72, 1114513, $"{map}", TextColor, false, false);
-                }
 
                 AddButton(386, y, 30533, 30533, 100 + i, GumpButtonType.Reply, 0);
 
@@ -520,12 +472,8 @@ namespace Server.Engines.VendorSearching
         {
             switch (info.ButtonID)
             {
-                case 0:
-                {
-                    break;
-                }
+                case 0: break;
                 default: // Buy Map
-                {
                     SearchItem item = Items[info.ButtonID - 100];
 
                     if (item != null && (item.AuctionSafe != null && item.AuctionSafe.CheckAuctionItem(item.Item) || item.Vendor != null && item.Vendor.GetVendorItem(item.Item) != null))
@@ -561,19 +509,14 @@ namespace Server.Engines.VendorSearching
                         User.SendLocalizedMessage(1154643); // That item is no longer for sale.
                     }
                     break;
-                }
                 case 2: // Next Page
-                {
                     Index += PerPage;
                     Refresh();
                     break;
-                }
                 case 3: // Prev Page
-                {
                     Index -= PerPage;
                     Refresh();
                     break;
-                }
             }
         }
 
@@ -614,10 +557,8 @@ namespace Server.Engines.VendorSearching
                 AddHtmlLocalized(27, 47, 380, 80, 1154637, $"@{coord[0]}@{coord[1]}", 0x4E73, false, false); // Please select 'Accept' if you would like to return to ~1_loc~ (~2_facet~).  This map will be deleted after use.
             }
             else
-            {
                 AddHtmlLocalized(27, 47, 380, 80, 1154635, $"@{VendorMap.TeleportCost}@{VendorMap.Name()[0].Split(' ')[0]}@{VendorMap.DeleteDelayMinutes}", 0x4E73, false, false); // Please select 'Accept' if you would like to pay ~1_cost~ gold to teleport to vendor ~2_name~.  For this price you will also be able to teleport back to this location within the next ~3_minutes~ minutes.
-            }
-
+                
             AddButton(7, 167, 0x7747, 0x7747, 0, GumpButtonType.Reply, 0);
             AddHtmlLocalized(47, 167, 100, 40, 1150300, 0x4E73, false, false); // CANCEL
 
@@ -629,10 +570,7 @@ namespace Server.Engines.VendorSearching
         {
             switch (info.ButtonID)
             {
-                default:
-                {
-                    break;
-                }
+                default: break;
                 case 1:
                     {
                         if (Banker.GetBalance(User) < VendorMap.TeleportCost)

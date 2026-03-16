@@ -1,5 +1,8 @@
+using Server.Engines.Craft;
+
 namespace Server.Items
 {
+    [Alterable(typeof(DefBlacksmithy), typeof(GargishPlateLegs))]
     public class PlateHaidate : BaseArmor
     {
         [Constructable]

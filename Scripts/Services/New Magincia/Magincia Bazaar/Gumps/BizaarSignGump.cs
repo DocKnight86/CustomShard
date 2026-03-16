@@ -85,28 +85,18 @@ namespace Server.Engines.NewMagincia
                     break;
                 case 3: // MY STALL LEASE
                     if (m_Plot.IsOwner(from))
-                    {
                         from.SendGump(new MyStallLeaseGump(from, m_Plot));
-                    }
                     else
-                    {
                         from.SendLocalizedMessage(1150685); // You are currently viewing a stall that you are not leasing. In order to set up or modify your stall, please use that stall's sign.
-                    }
-
                     break;
                 case 4: // MY STALL BID
                     from.SendGump(new StallBidGump(from, m_Plot));
                     break;
                 case 5: // MY BID MATCHING
                     if (m_Plot.IsOwner(from))
-                    {
                         from.SendGump(new MatchBidGump(from, m_Plot));
-                    }
                     else
-                    {
                         from.SendLocalizedMessage(1150685); // You are currently viewing a stall that you are not leasing. In order to set up or modify your stall, please use that stall's sign.
-                    }
-
                     break;
             }
         }
@@ -131,24 +121,15 @@ namespace Server.Engines.NewMagincia
             AddHtmlLocalized(210, 160, 150, 18, 1150543, ((int)MaginciaBazaar.GetLongAuctionTime.TotalDays).ToString(), BlueColor16, false, false); // ~1_DAYS~ Days
 
             if (m_Plot.Merchant == null)
-            {
                 AddButton(175, 220, 4005, 4007, 1, GumpButtonType.Reply, 0);
-            }
-
             AddHtmlLocalized(210, 220, 200, 18, 1150686, m_Plot.Merchant == null ? OrangeColor16 : GrayColor16, false, false); // HIRE ANIMAL BROKER
 
             if (m_Plot.Merchant == null)
-            {
                 AddButton(175, 244, 4005, 4007, 2, GumpButtonType.Reply, 0);
-            }
-
             AddHtmlLocalized(210, 244, 200, 18, 1150687, m_Plot.Merchant == null ? OrangeColor16 : GrayColor16, false, false); // HIRE COMMODITY BROKER
 
             if (m_Plot.Merchant != null)
-            {
                 AddButton(175, 268, 4005, 4007, 3, GumpButtonType.Reply, 0);
-            }
-
             AddHtmlLocalized(210, 268, 200, 18, 1150688, m_Plot.Merchant != null ? OrangeColor16 : GrayColor16, false, false); // FIRE BROKER
 
             AddButton(175, 292, 4005, 4007, 4, GumpButtonType.Reply, 0);
@@ -163,9 +144,7 @@ namespace Server.Engines.NewMagincia
             Mobile from = state.Mobile;
 
             if (m_Plot == null || !m_Plot.IsOwner(from))
-            {
                 return;
-            }
 
             switch (info.ButtonID)
             {
@@ -173,42 +152,23 @@ namespace Server.Engines.NewMagincia
                 case 0: break;
                 case 1: // HIRE ANIMAL BROKER
                     if (m_Plot.Merchant != null)
-                    {
                         break;
-                    }
-
                     if (m_Plot.HasTempMulti())
-                    {
                         from.SendGump(new ConfirmAddMultiGump(from, m_Plot, false));
-                    }
                     else
-                    {
                         from.SendGump(new HireBrokerGump(from, m_Plot, false));
-                    }
-
                     break;
                 case 2: // HIRE COMMODITY BROKER
                     if (m_Plot.Merchant != null)
-                    {
                         break;
-                    }
-
                     if (m_Plot.HasTempMulti())
-                    {
                         from.SendGump(new ConfirmAddMultiGump(from, m_Plot, true));
-                    }
                     else
-                    {
                         from.SendGump(new HireBrokerGump(from, m_Plot, true));
-                    }
-
                     break;
                 case 3: // FIRE BROKER
                     if (m_Plot.Merchant != null)
-                    {
                         from.SendGump(new ConfirmFireBrokerGump(from, m_Plot));
-                    }
-
                     break;
                 case 4: // ABANDON LEASE
                     from.SendGump(new ConfirmAbandonLeaseGump(from, m_Plot));
@@ -256,14 +216,10 @@ namespace Server.Engines.NewMagincia
             Mobile from = state.Mobile;
 
             if (m_Plot == null || !m_Plot.IsOwner(from))
-            {
                 return;
-            }
 
             if (info.ButtonID == 1 && m_Plot.Merchant == null)
-            {
                 m_Plot.Abandon();
-            }
         }
     }
 
@@ -312,14 +268,10 @@ namespace Server.Engines.NewMagincia
             Mobile from = state.Mobile;
 
             if (m_Plot == null || !m_Plot.IsOwner(from))
-            {
                 return;
-            }
 
             if (info.ButtonID == 1 && !m_HasInventory)
-            {
                 m_Plot.FireBroker();
-            }
         }
     }
 
@@ -358,9 +310,7 @@ namespace Server.Engines.NewMagincia
             Mobile from = state.Mobile;
 
             if (m_Plot == null || !m_Plot.IsOwner(from))
-            {
                 return;
-            }
 
             int idx1 = m_Commodity ? 0 : 1;
             int idx2 = info.ButtonID - 1;
@@ -415,9 +365,7 @@ namespace Server.Engines.NewMagincia
             Mobile from = state.Mobile;
 
             if (m_Plot == null || !m_Plot.IsOwner(from))
-            {
                 return;
-            }
 
             switch (info.ButtonID)
             {
@@ -428,9 +376,7 @@ namespace Server.Engines.NewMagincia
                     break;
                 case 2:
                     if (m_Plot.HasTempMulti())
-                    {
                         m_Plot.ConfirmMulti(m_Commodity);
-                    }
                     else
                     {
                         from.SendGump(new HireBrokerGump(from, m_Plot, m_Commodity));
@@ -462,17 +408,11 @@ namespace Server.Engines.NewMagincia
             AddHtmlLocalized(86, 135, 200, 18, 1150389, RedColor16, false, false); // You are bidding on:
 
             if (biddingPlot != null)
-            {
                 AddHtmlLocalized(215, 135, 100, 18, 1150541, biddingPlot.PlotDef.ID, BlueColor16, false, false); // ~1_TOKEN~
-            }
             else if (MaginciaBazaar.IsBiddingNextAvailable(from))
-            {
                 AddHtmlLocalized(215, 135, 100, 18, 1150538, BlueColor16, false, false); // Next Available Stall
-            }
             else
-            {
                 AddHtmlLocalized(215, 135, 100, 18, 1150396, BlueColor16, false, false); // NONE
-            }
 
             AddHtmlLocalized(135, 160, 150, 18, 1150407, RedColor16, false, false); // Bid Amount:
             AddHtml(215, 160, 100, 18, Color(FormatAmt(bidAmount), BlueColor), false, false);
@@ -488,9 +428,7 @@ namespace Server.Engines.NewMagincia
 
             AddHtmlLocalized(215, 304, 250, 18, 1150568, m_Plot.PlotDef.ID, isOwner ? GrayColor16 : BlueColor16, false, false); // BID ON THIS STALL (Stall ~1_STALLID~)
             if (!isOwner)
-            {
                 AddButton(175, 304, 4005, 4007, 2, GumpButtonType.Reply, 0);
-            }
 
             AddHtmlLocalized(215, 328, 250, 18, 1150569, BlueColor16, false, false); // BID ON FIRST AVAILABLE
             AddButton(175, 328, 4005, 4007, 3, GumpButtonType.Reply, 0);
@@ -527,9 +465,7 @@ namespace Server.Engines.NewMagincia
                                 amount = (int)(Math.Floor(r) * 1000.0);
 
                                 if (amount < 1000)
-                                {
                                     amount = 1000;
-                                }
 
                                 from.SendGump(new ConfirmBidGump(from, m_Plot, m_Plot, amount, amount <= 0));
                             }
@@ -556,9 +492,7 @@ namespace Server.Engines.NewMagincia
                                 amount1 = (int)(Math.Floor(r1) * 1000.0);
 
                                 if (amount1 < 1000)
-                                {
                                     amount1 = 1000;
-                                }
                             }
                             else if (!hasBiddingPlot)
                             {
@@ -630,14 +564,10 @@ namespace Server.Engines.NewMagincia
         public override void OnResponse(NetState state, RelayInfo info)
         {
             if (m_Plot == null)
-            {
                 return;
-            }
 
             if (info.ButtonID == 1)
-            {
                 state.Mobile.SendGump(new StallLeasingGump(state.Mobile, m_Plot));
-            }
         }
     }
 
@@ -670,18 +600,12 @@ namespace Server.Engines.NewMagincia
             //int dif = 0;
 
             if (hasbidspecific)
-            {
                 oldBid = oldPlot.Auction.GetBidAmount(from);
-            }
             else if (hasbidnextavailable)
-            {
                 oldBid = MaginciaBazaar.NextAvailable[from].Amount;
-            }
 
             if (newBid < 1000)
-            {
                 newBid = 1000;
-            }
 
             bool increase = newBid > oldBid;
 
@@ -1145,9 +1069,7 @@ namespace Server.Engines.NewMagincia
         public override void OnResponse(NetState state, RelayInfo info)
         {
             if (info.ButtonID == 1)
-            {
                 state.Mobile.SendGump(new StallBidGump(state.Mobile, m_Plot));
-            }
         }
     }
 
@@ -1169,13 +1091,9 @@ namespace Server.Engines.NewMagincia
             AddHtmlLocalized(12, 120, 150, 18, 1150393, RedColor16, false, false); // Bid Match Limit:
 
             if (m_Plot != null)
-            {
                 AddHtml(260, 100, 150, 18, Color(m_Plot.PlotDef.ID, BlueColor), false, false);
-            }
             else
-            {
                 AddHtml(260, 100, 250, 18, Color("You are not leasing stall.", BlueColor), false, false);
-            }
 
             AddHtml(260, 120, 150, 18, Color(FormatAmt(amount), BlueColor), false, false);
 
@@ -1196,9 +1114,7 @@ namespace Server.Engines.NewMagincia
             Mobile from = state.Mobile;
 
             if (m_Plot != null && !m_Plot.IsOwner(from))
-            {
                 return;
-            }
 
             switch (info.ButtonID)
             {
@@ -1224,10 +1140,7 @@ namespace Server.Engines.NewMagincia
                     break;
                 case 3: // MAIN MENU
                     if (m_Plot != null)
-                    {
                         from.SendGump(new StallLeasingGump(from, m_Plot));
-                    }
-
                     break;
             }
         }
@@ -1243,9 +1156,7 @@ namespace Server.Engines.NewMagincia
             m_Plot = plot;
 
             if (amount < 0)
-            {
                 amount = 0;
-            }
 
             AddHtmlLocalized(10, 10, 500, 18, 1114513, "#1150385", RedColor16, false, false); // New Magincia Bazaar
             AddHtmlLocalized(10, 48, 500, 18, 1114513, "#1150386", RedColor16, false, false); // Stall Leasing
@@ -1311,13 +1222,9 @@ namespace Server.Engines.NewMagincia
             }
 
             if (args1 != null)
-            {
                 AddHtmlLocalized(10, 100, 500, 120, cliloc1, args1, GreenColor16, false, false);
-            }
             else
-            {
                 AddHtmlLocalized(10, 100, 500, 120, cliloc1, GreenColor16, false, false);
-            }
 
             AddHtmlLocalized(50, 490, 150, 18, 1150540, BlueColor16, false, false); // MY BID MATCHING
             AddButton(10, 490, 4014, 4016, 1, GumpButtonType.Reply, 0);
@@ -1328,14 +1235,10 @@ namespace Server.Engines.NewMagincia
             Mobile from = state.Mobile;
 
             if (m_Plot != null && !m_Plot.IsOwner(from))
-            {
                 return;
-            }
 
             if (info.ButtonID == 1)
-            {
                 state.Mobile.SendGump(new MatchBidGump(from, m_Plot));
-            }
         }
     }
 
@@ -1361,9 +1264,7 @@ namespace Server.Engines.NewMagincia
             AddHtmlLocalized(10, 10, 500, 18, 1114513, "#1150385", useHue, false, false); // New Magincia Bazaar
 
             if (title > 0)
-            {
                 AddHtmlLocalized(10, 48, 500, 40, 1114513, string.Format("#{0}", title), useHue, false, false);
-            }
 
             AddHtmlLocalized(10, 95, 500, 375, 1114513, string.Format("#{0}", message), useHue, true, true);
 
@@ -1377,9 +1278,7 @@ namespace Server.Engines.NewMagincia
         public override void OnResponse(NetState state, RelayInfo info)
         {
             if (info.ButtonID == 1)
-            {
                 state.Mobile.SendGump(_Gump);
-            }
         }
     }
 
@@ -1430,14 +1329,10 @@ namespace Server.Engines.NewMagincia
                         from.SendMessage("An item has been placed in your bankbox.");
                     }
                     else
-                    {
                         from.SendLocalizedMessage(1153657); // An item has been placed in your backpack.
-                    }
                 }
                 else
-                {
                     from.SendMessage("You must be withing 2 tiles of the stall sign to mark a rune.");
-                }
             }
         }
     }

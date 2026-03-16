@@ -81,9 +81,7 @@ namespace Server.Items
                 int random = Utility.Random(3);
 
                 if (i == 5)
-                {
                     random = 0;
-                }
 
                 switch (random)
                 {
@@ -123,9 +121,7 @@ namespace Server.Items
         public override bool TryDropItem(Mobile from, Item dropped, bool sendFullMessage)
         {
             if (dropped is PlagueBeastInnard || dropped is PlagueBeastGland)
-            {
                 return base.TryDropItem(from, dropped, sendFullMessage);
-            }
 
             return false;
         }

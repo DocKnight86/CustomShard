@@ -179,13 +179,9 @@ namespace Server.Mobiles
                     }
                     // calculate the serial index of the new tag by adding one to the last one if there is one, otherwise just reset to 0
                     if (spawner.m_KeywordTagList.Count > 0)
-                    {
                         Serial = spawner.m_KeywordTagList[spawner.m_KeywordTagList.Count - 1].Serial + 1;
-                    }
                     else
-                    {
                         Serial = 0;
-                    }
 
                     spawner.m_KeywordTagList.Add(this);
 
@@ -230,9 +226,7 @@ namespace Server.Mobiles
                 m_End = DateTime.UtcNow + delay;
 
                 if (m_Timer != null)
-                {
                     m_Timer.Stop();
-                }
 
                 m_Timer = new KeywordTimer(m_Spawner, this, delay, repeatdelay, condition, gotogroup);
                 m_Timer.Start();
@@ -325,9 +319,7 @@ namespace Server.Mobiles
                             {
                                 // set the trigmob to the mob that originally triggered the wait keyword
                                 if (m_Tag != null)
-                                {
                                     m_Spawner.TriggerMob = m_Tag.m_TrigMob;
-                                }
 
                                 // spawn the subgroup
                                 m_Spawner.SpawnSubGroup(m_Goto, 0);
@@ -411,25 +403,15 @@ namespace Server.Mobiles
             string toString;
 
             if (value == null)
-            {
                 toString = "(-null-)";
-            }
             else if (IsNumeric(type))
-            {
                 toString = string.Format("{0} (0x{0:X})", value);
-            }
             else if (IsChar(type))
-            {
                 toString = string.Format("'{0}' ({1} [0x{1:X}])", value, (int)value);
-            }
             else if (IsString(type))
-            {
                 toString = $"\"{value}\"";
-            }
             else
-            {
                 toString = value.ToString();
-            }
 
             return $"{p.Name} = {toString}";
         }
@@ -449,9 +431,7 @@ namespace Server.Mobiles
             object toSet;
 
             if (value == "(-null-)" && !type.IsValueType)
-            {
                 value = null;
-            }
 
             if (IsEnum(type))
             {
@@ -470,22 +450,14 @@ namespace Server.Mobiles
                 {
                     MethodInfo info = p.PropertyType.GetMethod("Parse", new[] { typeof(string) });
                     if (info != null)
-                    {
                         toSet = info.Invoke(null, new object[] { value });
-                    }
                     else if (p.PropertyType == typeof(Enum) || p.PropertyType.IsSubclassOf(typeof(Enum)))
-                    {
                         toSet = Enum.Parse(p.PropertyType, value, false);
-                    }
                     else
-                    {
                         toSet = null;
-                    }
 
                     if (toSet == null)
-                    {
                         return "That is not a valid custom enumeration member.";
-                    }
                 }
                 catch
                 {
@@ -499,9 +471,7 @@ namespace Server.Mobiles
                     toSet = ScriptCompiler.FindTypeByName(value);
 
                     if (toSet == null)
-                    {
                         return "No type with that name was found.";
-                    }
                 }
                 catch
                 {
@@ -601,16 +571,12 @@ namespace Server.Mobiles
             string result = ConstructFromString(p, p.PropertyType, o, value, ref toSet);
 
             if (result != null)
-            {
                 return result;
-            }
 
             try
             {
                 if (shouldLog)
-                {
                     CommandLogging.LogChangeProperty(from, o, p.Name, value);
-                }
 
                 if (ptype.IsPrimitive)
                 {
@@ -707,10 +673,7 @@ namespace Server.Mobiles
 
                     if (plookup != null)
                     {
-                        if (!plookup.CanWrite)
-                        {
-                            return "Property is read only.";
-                        }
+                        if (!plookup.CanWrite) return "Property is read only.";
 
                         string returnvalue = InternalSetValue(null, o, plookup, value, false, index);
 
@@ -839,10 +802,7 @@ namespace Server.Mobiles
             while (true)
             {
                 ptype = null;
-                if (o == null || name == null)
-                {
-                    return null;
-                }
+                if (o == null || name == null) return null;
 
                 Type type = o.GetType();
                 object po = null;
@@ -924,9 +884,7 @@ namespace Server.Mobiles
                     if (plookup != null)
                     {
                         if (!plookup.CanRead)
-                        {
                             return "Property is write only.";
-                        }
 
                         ptype = plookup.PropertyType;
                         if (ptype.IsPrimitive)
@@ -1036,10 +994,7 @@ namespace Server.Mobiles
         {
             status_str = null;
 
-            if (str == null || str.Length <= 0 || o == null)
-            {
-                return false;
-            }
+            if (str == null || str.Length <= 0 || o == null) return false;
 
             // object strings will be of the form "object/modifier" where the modifier string is of the form "propname/value/propname/value/..."
             // some keywords do not have value arguments so the modifier could take the form "propname/propname/value/..."
@@ -1061,9 +1016,7 @@ namespace Server.Mobiles
 
             // place the modifier section of the string in remainder
             if (arglist.Length > 1)
-            {
                 remainder = arglist[1];
-            }
 
             bool no_error = true;
 
@@ -1107,9 +1060,7 @@ namespace Server.Mobiles
                     if (!string.IsNullOrEmpty(groupargstring))
                     {
                         if (value_keywordargs.Length > 0)
-                        {
                             value_keywordargs[value_keywordargs.Length - 1] = groupargstring;
-                        }
                     }
 
                     // this quick optimization can determine whether this is a regular prop/value assignment
@@ -1127,9 +1078,7 @@ namespace Server.Mobiles
                                 singlearglist = ParseLiteralTerminator(singlearglist[1]);
                                 string lstr = singlearglist[0];
                                 if (terminated && lstr[lstr.Length - 1] == '/')
-                                {
                                     lstr = lstr.Remove(lstr.Length - 1, 1);
-                                }
 
                                 string result = SetPropertyValue(spawner, o, arglist[0], lstr.Remove(0, 1));
 
@@ -1158,11 +1107,7 @@ namespace Server.Mobiles
                                     status_str = arglist[0] + " : " + result;
                                     no_error = false;
                                 }
-                                if (arglist.Length < 3)
-                                {
-                                    break;
-                                }
-
+                                if (arglist.Length < 3) break;
                                 remainder = arglist[2];
                             }
                         }
@@ -1176,9 +1121,7 @@ namespace Server.Mobiles
                             singlearglist = ParseLiteralTerminator(singlearglist[1]);
                             string lstr = singlearglist[0];
                             if (terminated && lstr[lstr.Length - 1] == '/')
-                            {
                                 lstr = lstr.Remove(lstr.Length - 1, 1);
-                            }
 
                             string result = SetPropertyValue(spawner, o, arglist[0], lstr.Remove(0, 1));
                             // see if it was successful
@@ -1207,11 +1150,7 @@ namespace Server.Mobiles
                                 no_error = false;
                             }
 
-                            if (arglist.Length < 3)
-                            {
-                                break;
-                            }
-
+                            if (arglist.Length < 3) break;
                             remainder = arglist[2];
                         }
                     }
@@ -1253,17 +1192,11 @@ namespace Server.Mobiles
 
         public static PropertyInfo LookupPropertyInfo(XmlSpawner spawner, Type type, string propname)
         {
-            if (spawner == null || type == null || propname == null)
-            {
-                return null;
-            }
+            if (spawner == null || type == null || propname == null) return null;
 
             // look up the info in the current list
 
-            if (spawner.PropertyInfoList == null)
-            {
-                spawner.PropertyInfoList = new List<TypeInfo>();
-            }
+            if (spawner.PropertyInfoList == null) spawner.PropertyInfoList = new List<TypeInfo>();
 
             PropertyInfo pinfo = null;
             TypeInfo tinfo = null;
@@ -1330,10 +1263,7 @@ namespace Server.Mobiles
         {
             ptype = null;
 
-            if (valstr == null || valstr.Length <= 0)
-            {
-                return null;
-            }
+            if (valstr == null || valstr.Length <= 0) return null;
 
             string str = valstr.Trim();
 
@@ -1418,9 +1348,7 @@ namespace Server.Mobiles
             // propname = value (hexvalue)
 
             if (str == null)
-            {
                 return null;
-            }
 
             // find the separator
             string[] arglist = str.Split("=".ToCharArray(), 2);
@@ -1448,9 +1376,7 @@ namespace Server.Mobiles
             status_str = null;
 
             if (o == null)
-            {
                 return false;
-            }
 
             if (string.IsNullOrEmpty(testString))
             {
@@ -1496,10 +1422,7 @@ namespace Server.Mobiles
         {
             status_str = null;
 
-            if (o == null || testString == null || testString.Length == 0)
-            {
-                return false;
-            }
+            if (o == null || testString == null || testString.Length == 0) return false;
 
             //get the prop name and test value
             // format will be prop=prop, or prop>prop, prop<prop, prop!prop
@@ -1544,9 +1467,7 @@ namespace Server.Mobiles
 
             // does it have a valid operator?
             if (!hasequal && !hasgreaterthan && !haslessthan && !hasnotequals)
-            {
                 return false;
-            }
 
             Type ptype1;
             Type ptype2;
@@ -1594,10 +1515,7 @@ namespace Server.Mobiles
                     TimeSpan ts1, ts2;
                     if (TimeSpan.TryParse(value1, out ts1) && TimeSpan.TryParse(value2, out ts2))
                     {
-                        if (ts1 == ts2)
-                        {
-                            return !invertreturn;
-                        }
+                        if (ts1 == ts2) return !invertreturn;
                     }
                     else
                     {
@@ -1609,10 +1527,7 @@ namespace Server.Mobiles
                     TimeSpan ts1, ts2;
                     if (TimeSpan.TryParse(value1, out ts1) && TimeSpan.TryParse(value2, out ts2))
                     {
-                        if (ts1 != ts2)
-                        {
-                            return !invertreturn;
-                        }
+                        if (ts1 != ts2) return !invertreturn;
                     }
                     else
                     {
@@ -1624,10 +1539,7 @@ namespace Server.Mobiles
                     TimeSpan ts1, ts2;
                     if (TimeSpan.TryParse(value1, out ts1) && TimeSpan.TryParse(value2, out ts2))
                     {
-                        if (ts1 > ts2)
-                        {
-                            return !invertreturn;
-                        }
+                        if (ts1 > ts2) return !invertreturn;
                     }
                     else
                     {
@@ -1639,10 +1551,7 @@ namespace Server.Mobiles
                     TimeSpan ts1, ts2;
                     if (TimeSpan.TryParse(value1, out ts1) && TimeSpan.TryParse(value2, out ts2))
                     {
-                        if (ts1 < ts2)
-                        {
-                            return !invertreturn;
-                        }
+                        if (ts1 < ts2) return !invertreturn;
                     }
                     else
                     {
@@ -1659,10 +1568,7 @@ namespace Server.Mobiles
                     DateTime dt1, dt2;
                     if (DateTime.TryParse(value1, out dt1) && DateTime.TryParse(value2, out dt2))
                     {
-                        if (dt1 == dt2)
-                        {
-                            return !invertreturn;
-                        }
+                        if (dt1 == dt2) return !invertreturn;
                     }
                     else
                     {
@@ -1674,10 +1580,7 @@ namespace Server.Mobiles
                     DateTime dt1, dt2;
                     if (DateTime.TryParse(value1, out dt1) && DateTime.TryParse(value2, out dt2))
                     {
-                        if (dt1 != dt2)
-                        {
-                            return !invertreturn;
-                        }
+                        if (dt1 != dt2) return !invertreturn;
                     }
                     else
                     {
@@ -1689,10 +1592,7 @@ namespace Server.Mobiles
                     DateTime dt1, dt2;
                     if (DateTime.TryParse(value1, out dt1) && DateTime.TryParse(value2, out dt2))
                     {
-                        if (dt1 > dt2)
-                        {
-                            return !invertreturn;
-                        }
+                        if (dt1 > dt2) return !invertreturn;
                     }
                     else
                     {
@@ -1704,10 +1604,7 @@ namespace Server.Mobiles
                     DateTime dt1, dt2;
                     if (DateTime.TryParse(value1, out dt1) && DateTime.TryParse(value2, out dt2))
                     {
-                        if (dt1 < dt2)
-                        {
-                            return !invertreturn;
-                        }
+                        if (dt1 < dt2) return !invertreturn;
                     }
                     else
                     {
@@ -1721,10 +1618,7 @@ namespace Server.Mobiles
                 {
                     try
                     {
-                        if (Convert.ToInt64(value1, base1) == Convert.ToInt64(value2, base2))
-                        {
-                            return !invertreturn;
-                        }
+                        if (Convert.ToInt64(value1, base1) == Convert.ToInt64(value2, base2)) return !invertreturn;
                     }
                     catch
                     {
@@ -1735,10 +1629,7 @@ namespace Server.Mobiles
                 {
                     try
                     {
-                        if (Convert.ToInt64(value1, base1) != Convert.ToInt64(value2, base2))
-                        {
-                            return !invertreturn;
-                        }
+                        if (Convert.ToInt64(value1, base1) != Convert.ToInt64(value2, base2)) return !invertreturn;
                     }
                     catch
                     {
@@ -1749,10 +1640,7 @@ namespace Server.Mobiles
                 {
                     try
                     {
-                        if (Convert.ToInt64(value1, base1) > Convert.ToInt64(value2, base2))
-                        {
-                            return !invertreturn;
-                        }
+                        if (Convert.ToInt64(value1, base1) > Convert.ToInt64(value2, base2)) return !invertreturn;
                     }
                     catch { status_str = "invalid int comparison : {0}" + testString; }
                 }
@@ -1760,10 +1648,7 @@ namespace Server.Mobiles
                 {
                     try
                     {
-                        if (Convert.ToInt64(value1, base1) < Convert.ToInt64(value2, base2))
-                        {
-                            return !invertreturn;
-                        }
+                        if (Convert.ToInt64(value1, base1) < Convert.ToInt64(value2, base2)) return !invertreturn;
                     }
                     catch { status_str = "invalid int comparison : {0}" + testString; }
                 }
@@ -1774,10 +1659,7 @@ namespace Server.Mobiles
                 {
                     try
                     {
-                        if (Convert.ToInt64(value1, base1) == double.Parse(value2))
-                        {
-                            return !invertreturn;
-                        }
+                        if (Convert.ToInt64(value1, base1) == double.Parse(value2)) return !invertreturn;
                     }
                     catch
                     {
@@ -1788,10 +1670,7 @@ namespace Server.Mobiles
                 {
                     try
                     {
-                        if (Convert.ToInt64(value1, base1) != double.Parse(value2))
-                        {
-                            return !invertreturn;
-                        }
+                        if (Convert.ToInt64(value1, base1) != double.Parse(value2)) return !invertreturn;
                     }
                     catch
                     {
@@ -1802,10 +1681,7 @@ namespace Server.Mobiles
                 {
                     try
                     {
-                        if (Convert.ToInt64(value1, base1) > double.Parse(value2))
-                        {
-                            return !invertreturn;
-                        }
+                        if (Convert.ToInt64(value1, base1) > double.Parse(value2)) return !invertreturn;
                     }
                     catch { status_str = "invalid int comparison : {0}" + testString; }
                 }
@@ -1813,10 +1689,7 @@ namespace Server.Mobiles
                 {
                     try
                     {
-                        if (Convert.ToInt64(value1, base1) < double.Parse(value2))
-                        {
-                            return !invertreturn;
-                        }
+                        if (Convert.ToInt64(value1, base1) < double.Parse(value2)) return !invertreturn;
                     }
                     catch { status_str = "invalid int comparison : {0}" + testString; }
                 }
@@ -1827,10 +1700,7 @@ namespace Server.Mobiles
                 {
                     try
                     {
-                        if (double.Parse(value1) == Convert.ToInt64(value2, base2))
-                        {
-                            return !invertreturn;
-                        }
+                        if (double.Parse(value1) == Convert.ToInt64(value2, base2)) return !invertreturn;
                     }
                     catch
                     {
@@ -1841,10 +1711,7 @@ namespace Server.Mobiles
                 {
                     try
                     {
-                        if (double.Parse(value1) != Convert.ToInt64(value2, base2))
-                        {
-                            return !invertreturn;
-                        }
+                        if (double.Parse(value1) != Convert.ToInt64(value2, base2)) return !invertreturn;
                     }
                     catch
                     {
@@ -1855,10 +1722,7 @@ namespace Server.Mobiles
                 {
                     try
                     {
-                        if (double.Parse(value1) > Convert.ToInt64(value2, base2))
-                        {
-                            return !invertreturn;
-                        }
+                        if (double.Parse(value1) > Convert.ToInt64(value2, base2)) return !invertreturn;
                     }
                     catch { status_str = "invalid int comparison : {0}" + testString; }
                 }
@@ -1866,10 +1730,7 @@ namespace Server.Mobiles
                 {
                     try
                     {
-                        if (double.Parse(value1) < Convert.ToInt64(value2, base2))
-                        {
-                            return !invertreturn;
-                        }
+                        if (double.Parse(value1) < Convert.ToInt64(value2, base2)) return !invertreturn;
                     }
                     catch { status_str = "invalid int comparison : {0}" + testString; }
                 }
@@ -1883,9 +1744,7 @@ namespace Server.Mobiles
                     if (double.TryParse(value1, NumberStyles.Any, CultureInfo.InvariantCulture, out val1) && double.TryParse(value2, NumberStyles.Any, CultureInfo.InvariantCulture, out val2))
                     {
                         if (val1 == val2)
-                        {
                             return !invertreturn;
-                        }
                     }
                     else
                     {
@@ -1897,9 +1756,7 @@ namespace Server.Mobiles
                     if (double.TryParse(value1, NumberStyles.Any, CultureInfo.InvariantCulture, out val1) && double.TryParse(value2, NumberStyles.Any, CultureInfo.InvariantCulture, out val2))
                     {
                         if (val1 != val2)
-                        {
                             return !invertreturn;
-                        }
                     }
                     else
                     {
@@ -1911,9 +1768,7 @@ namespace Server.Mobiles
                     if (double.TryParse(value1, NumberStyles.Any, CultureInfo.InvariantCulture, out val1) && double.TryParse(value2, NumberStyles.Any, CultureInfo.InvariantCulture, out val2))
                     {
                         if (val1 > val2)
-                        {
                             return !invertreturn;
-                        }
                     }
                     else { status_str = "invalid int comparison : {0}" + testString; }
                 }
@@ -1922,9 +1777,7 @@ namespace Server.Mobiles
                     if (double.TryParse(value1, NumberStyles.Any, CultureInfo.InvariantCulture, out val1) && double.TryParse(value2, NumberStyles.Any, CultureInfo.InvariantCulture, out val2))
                     {
                         if (val1 < val2)
-                        {
                             return !invertreturn;
-                        }
                     }
                     else { status_str = "invalid int comparison : {0}" + testString; }
                 }
@@ -1936,10 +1789,7 @@ namespace Server.Mobiles
                 {
                     if (bool.TryParse(value1, out val1) && bool.TryParse(value2, out val2))
                     {
-                        if (val1 == val2)
-                        {
-                            return !invertreturn;
-                        }
+                        if (val1 == val2) return !invertreturn;
                     }
                     else { status_str = "invalid bool comparison : {0}" + testString; }
                 }
@@ -1947,10 +1797,7 @@ namespace Server.Mobiles
                 {
                     if (bool.TryParse(value1, out val1) && bool.TryParse(value2, out val2))
                     {
-                        if (val1 != val2)
-                        {
-                            return !invertreturn;
-                        }
+                        if (val1 != val2) return !invertreturn;
                     }
                     else { status_str = "invalid bool comparison : {0}" + testString; }
                 }
@@ -1963,10 +1810,7 @@ namespace Server.Mobiles
                 {
                     if (double.TryParse(value1, NumberStyles.Any, CultureInfo.InvariantCulture, out val1) && double.TryParse(value2, NumberStyles.Any, CultureInfo.InvariantCulture, out val2))
                     {
-                        if (val1 == val2)
-                        {
-                            return !invertreturn;
-                        }
+                        if (val1 == val2) return !invertreturn;
                     }
                     else { status_str = "invalid double comparison : {0}" + testString; }
                 }
@@ -1974,10 +1818,7 @@ namespace Server.Mobiles
                 {
                     if (double.TryParse(value1, NumberStyles.Any, CultureInfo.InvariantCulture, out val1) && double.TryParse(value2, NumberStyles.Any, CultureInfo.InvariantCulture, out val2))
                     {
-                        if (val1 != val2)
-                        {
-                            return !invertreturn;
-                        }
+                        if (val1 != val2) return !invertreturn;
                     }
                     else { status_str = "invalid double comparison : {0}" + testString; }
                 }
@@ -1985,10 +1826,7 @@ namespace Server.Mobiles
                 {
                     if (double.TryParse(value1, NumberStyles.Any, CultureInfo.InvariantCulture, out val1) && double.TryParse(value2, NumberStyles.Any, CultureInfo.InvariantCulture, out val2))
                     {
-                        if (val1 > val2)
-                        {
-                            return !invertreturn;
-                        }
+                        if (val1 > val2) return !invertreturn;
                     }
                     else { status_str = "invalid double comparison : {0}" + testString; }
                 }
@@ -1996,10 +1834,7 @@ namespace Server.Mobiles
                 {
                     if (double.TryParse(value1, NumberStyles.Any, CultureInfo.InvariantCulture, out val1) && double.TryParse(value2, NumberStyles.Any, CultureInfo.InvariantCulture, out val2))
                     {
-                        if (val1 < val2)
-                        {
-                            return !invertreturn;
-                        }
+                        if (val1 < val2) return !invertreturn;
                     }
                     else { status_str = "invalid double comparison : {0}" + testString; }
                 }
@@ -2009,18 +1844,12 @@ namespace Server.Mobiles
                 // by default just do a string comparison
                 if (hasequal)
                 {
-                    if (value1 == value2)
-                    {
-                        return !invertreturn;
-                    }
+                    if (value1 == value2) return !invertreturn;
                 }
                 else
                     if (hasnotequals)
                 {
-                    if (value1 != value2)
-                    {
-                        return !invertreturn;
-                    }
+                    if (value1 != value2) return !invertreturn;
                 }
             }
             return invertreturn;
@@ -2030,10 +1859,7 @@ namespace Server.Mobiles
         #region Search object methods
         public static Item FindItemByName(XmlSpawner fromspawner, string name, string typestr)
         {
-            if (name == null)
-            {
-                return null;
-            }
+            if (name == null) return null;
 
             int count = 0;
 
@@ -2079,19 +1905,13 @@ namespace Server.Mobiles
 
         public static Mobile FindMobileByName(XmlSpawner fromspawner, string name, string typestr)
         {
-            if (name == null)
-            {
-                return null;
-            }
+            if (name == null) return null;
 
             int count = 0;
 
             Mobile foundmobile = FindInRecentMobileSearchList(fromspawner, name, typestr);
 
-            if (foundmobile != null)
-            {
-                return foundmobile;
-            }
+            if (foundmobile != null) return foundmobile;
 
             Type targettype = null;
             if (typestr != null)
@@ -2124,10 +1944,7 @@ namespace Server.Mobiles
 
         public static void AddToRecentItemSearchList(XmlSpawner spawner, Item target)
         {
-            if (spawner == null || target == null)
-            {
-                return;
-            }
+            if (spawner == null || target == null) return;
 
             if (spawner.RecentItemSearchList == null)
             {
@@ -2145,10 +1962,7 @@ namespace Server.Mobiles
 
         public static Item FindInRecentItemSearchList(XmlSpawner spawner, string name, string typestr)
         {
-            if (spawner == null || name == null || spawner.RecentItemSearchList == null)
-            {
-                return null;
-            }
+            if (spawner == null || name == null || spawner.RecentItemSearchList == null) return null;
 
             List<Item> deletelist = null;
             Item founditem = null;
@@ -2197,10 +2011,7 @@ namespace Server.Mobiles
 
         public static void AddToRecentMobileSearchList(XmlSpawner spawner, Mobile target)
         {
-            if (spawner == null || target == null)
-            {
-                return;
-            }
+            if (spawner == null || target == null) return;
 
             if (spawner.RecentMobileSearchList == null)
             {
@@ -2319,9 +2130,7 @@ namespace Server.Mobiles
 
                 // continue processing the rest of the string
                 if (endindex + startindex + 2 >= remaining.Length)
-                {
                     break;
-                }
 
                 remaining = remaining.Substring(endindex + startindex + 2, remaining.Length - endindex - startindex - 2);
             }
@@ -2356,9 +2165,7 @@ namespace Server.Mobiles
                 string[] typeargs = null;
                 int argstart = 0;
                 if (!string.IsNullOrEmpty(itemtypestring))
-                {
                     argstart = itemtypestring.IndexOf(",") + 1;
-                }
 
                 if (argstart > 1 && argstart < itemtypestring.Length)
                 {
@@ -2380,15 +2187,8 @@ namespace Server.Mobiles
             for (int i = 0; i < str.Length; i++)
             {
                 // walk through the string until a matching close delimstr is found
-                if (str[i] == opendelim)
-                {
-                    nopen++;
-                }
-
-                if (str[i] == closedelim)
-                {
-                    nclose++;
-                }
+                if (str[i] == opendelim) nopen++;
+                if (str[i] == closedelim) nclose++;
 
                 if (nopen == nclose)
                 {
@@ -2413,10 +2213,7 @@ namespace Server.Mobiles
 
         public static string[] ParseString(string str, int nitems, string delimstr)
         {
-            if (str == null || delimstr == null)
-            {
-                return null;
-            }
+            if (str == null || delimstr == null) return null;
 
             char[] delims = delimstr.ToCharArray();
             str = str.Trim();
@@ -2427,11 +2224,7 @@ namespace Server.Mobiles
 
         public static string[] ParseSlashArgs(string str, int nitems)
         {
-            if (str == null)
-            {
-                return null;
-            }
-
+            if (str == null) return null;
             str = str.Trim();
 
             string[] args;
@@ -2491,11 +2284,7 @@ namespace Server.Mobiles
 
         public static string[] ParseCommaArgs(string str, int nitems)
         {
-            if (str == null)
-            {
-                return null;
-            }
-
+            if (str == null) return null;
             str = str.Trim();
 
             string[] args = str.Split(commadelim, nitems);
@@ -2504,11 +2293,7 @@ namespace Server.Mobiles
 
         public static string[] ParseLiteralTerminator(string str)
         {
-            if (str == null)
-            {
-                return null;
-            }
-
+            if (str == null) return null;
             str = str.Trim();
 
             string[] args = str.Split(literalend, 2);
@@ -2517,11 +2302,7 @@ namespace Server.Mobiles
 
         public static string[] ParseSemicolonArgs(string str, int nitems)
         {
-            if (str == null)
-            {
-                return null;
-            }
-
+            if (str == null) return null;
             str = str.Trim();
 
             string[] args = str.Split(semicolondelim, nitems);
@@ -2531,9 +2312,7 @@ namespace Server.Mobiles
         public static string[] SplitString(string str, string separator)
         {
             if (str == null || separator == null)
-            {
                 return null;
-            }
 
             int lastindex = 0;
             List<string> strargs = new List<string>();
@@ -2572,10 +2351,7 @@ namespace Server.Mobiles
             List<XmlSpawner.SpawnPositionInfo> spawnpositioning, string propertyString, bool smartspawn, out string status_str)
         {
             status_str = null;
-            if (item == null || theSpawn == null)
-            {
-                return;
-            }
+            if (item == null || theSpawn == null) return;
 
             // add the item to the spawned list
             theSpawn.SpawnedObjects.Add(item);
@@ -2608,13 +2384,10 @@ namespace Server.Mobiles
                         // this will distribute multiple items around the spawn point, and allow precise
                         // placement of single spawns at the spawn point
                         if (spawner.SpawnRange > 0)
-                        {
                             c.DropItem(item);
-                        }
                         else
-                        {
                             c.AddItem(item);
-                        }
+
                     }
                     else
                     {
@@ -2671,10 +2444,7 @@ namespace Server.Mobiles
         {
             status_str = null;
 
-            if (typeName == null || TheSpawn == null || substitutedtypeName == null)
-            {
-                return false;
-            }
+            if (typeName == null || TheSpawn == null || substitutedtypeName == null) return false;
 
             XmlSpawner spawner = invoker as XmlSpawner;
 
@@ -2712,9 +2482,7 @@ namespace Server.Mobiles
                                     }
                                     catch { }
                                     if (serial >= 0)
-                                    {
                                         setitem = World.FindEntity(serial);
-                                    }
                                 }
                                 else
                                 {

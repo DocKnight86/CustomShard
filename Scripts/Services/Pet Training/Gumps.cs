@@ -98,9 +98,7 @@ namespace Server.Mobiles
             double bd = BaseInstrument.GetBaseDifficulty(Creature);
 
             if (Creature.Uncalmable)
-            {
                 bd = 0;
-            }
 
             AddHtmlLocalized(53, 200, 160, 18, 1070793, _Label, false, false); // Barding Difficulty
             AddHtml(180, 200, 75, 18, FormatDouble(bd), false, false);
@@ -275,29 +273,17 @@ namespace Server.Mobiles
             int foodPref = 3000340;
 
             if ((Creature.FavoriteFood & FoodType.FruitsAndVegies) != 0)
-            {
                 foodPref = 1049565; // Fruits and Vegetables
-            }
             else if ((Creature.FavoriteFood & FoodType.GrainsAndHay) != 0)
-            {
                 foodPref = 1049566; // Grains and Hay
-            }
             else if ((Creature.FavoriteFood & FoodType.Fish) != 0)
-            {
                 foodPref = 1049568; // Fish
-            }
             else if ((Creature.FavoriteFood & FoodType.Meat) != 0)
-            {
                 foodPref = 1049564; // Meat
-            }
             else if ((Creature.FavoriteFood & FoodType.Eggs) != 0)
-            {
                 foodPref = 1044477; // Eggs
-            }
             else if ((Creature.FavoriteFood & FoodType.BlackrockStew) != 0)
-            {
                 foodPref = 1115752; // blackrock stew
-            }
 
             AddHtmlLocalized(53, 164, 160, 18, foodPref, _Label, false, false);
 
@@ -308,37 +294,21 @@ namespace Server.Mobiles
             int packInstinct = 3000340;
 
             if ((Creature.PackInstinct & PackInstinct.Canine) != 0)
-            {
                 packInstinct = 1049570; // Canine
-            }
             else if ((Creature.PackInstinct & PackInstinct.Ostard) != 0)
-            {
                 packInstinct = 1049571; // Ostard
-            }
             else if ((Creature.PackInstinct & PackInstinct.Feline) != 0)
-            {
                 packInstinct = 1049572; // Feline
-            }
             else if ((Creature.PackInstinct & PackInstinct.Arachnid) != 0)
-            {
                 packInstinct = 1049573; // Arachnid
-            }
             else if ((Creature.PackInstinct & PackInstinct.Daemon) != 0)
-            {
                 packInstinct = 1049574; // Daemon
-            }
             else if ((Creature.PackInstinct & PackInstinct.Bear) != 0)
-            {
                 packInstinct = 1049575; // Bear
-            }
             else if ((Creature.PackInstinct & PackInstinct.Equine) != 0)
-            {
                 packInstinct = 1049576; // Equine
-            }
             else if ((Creature.PackInstinct & PackInstinct.Bull) != 0)
-            {
                 packInstinct = 1049577; // Bull
-            }
 
             AddHtmlLocalized(53, 200, 160, 18, packInstinct, _Label, false, false);
 
@@ -374,9 +344,7 @@ namespace Server.Mobiles
                     TextDefinition[] loc = PetTrainingHelper.GetLocalization(o);
 
                     if (loc[0] == null)
-                    {
                         continue;
-                    }
 
                     if (loc[0].Number > 0)
                     {
@@ -479,9 +447,7 @@ namespace Server.Mobiles
             int id = info.ButtonID;
 
             if (Creature == null || Creature.Map == null || Creature.Map == Map.Internal || !Creature.Alive || Creature.Deleted || Creature.IsDeadBondedPet)
-            {
                 id = 0;
-            }
 
             switch (id)
             {
@@ -555,6 +521,7 @@ namespace Server.Mobiles
                     trainProfile2.BeginTraining();
                     Refresh();
 
+                    Engines.Quests.UsingAnimalLoreQuest.CheckComplete(User);
                     break;
             }
         }
@@ -600,9 +567,7 @@ namespace Server.Mobiles
         private static string FormatAttributes(int cur, int max)
         {
             if (max == 0)
-            {
                 return "<div align=right>---</div>";
-            }
 
             return $"<div align=right>{cur}/{max}</div>";
         }
@@ -610,9 +575,7 @@ namespace Server.Mobiles
         private static string FormatStat(int val)
         {
             if (val == 0)
-            {
                 return "<div align=right>---</div>";
-            }
 
             return $"<div align=right>{val}</div>";
         }
@@ -620,9 +583,7 @@ namespace Server.Mobiles
         public static string FormatDouble(double val)
         {
             if (val == 0)
-            {
                 return "<div align=right>---</div>";
-            }
 
             return $"<div align=right>{val:F1}</div>";
         }
@@ -996,9 +957,7 @@ namespace Server.Mobiles
                 WeaponAbility abil = Definition.WeaponAbilities[i];
 
                 if (AbilityProfile.HasAbility(abil))
-                {
                     continue;
-                }
 
                 TrainingPoint tp = PetTrainingHelper.GetTrainingPoint(abil);
 
@@ -1055,9 +1014,7 @@ namespace Server.Mobiles
         private bool HasAvailable(object o)
         {
             if (o == null)
-            {
                 return false;
-            }
 
             if (o is MagicalAbility && Definition.MagicalAbilities != 0)
             {
@@ -1304,24 +1261,16 @@ namespace Server.Mobiles
             AddHtmlLocalized(50, 105, 60, 16, 1114272, false, false); // Weight:
 
             if (TrainingPoint.Name.Number > 0)
-            {
                 AddHtmlLocalized(120, 85, 200, 16, TrainingPoint.Name.Number, false, false);
-            }
             else if (TrainingPoint.Name.String != null)
-            {
                 AddLabel(120, 85, 0, TrainingPoint.Name.String);
-            }
 
             AddLabel(120, 105, 0, TrainingPoint.Weight.ToString("0.0"));
 
             if (TrainingPoint.Description.Number > 0)
-            {
                 AddHtmlLocalized(305, 55, 215, 115, TrainingPoint.Description.Number, true, true);
-            }
             else if (TrainingPoint.Description.String != null)
-            {
                 AddHtml(305, 55, 215, 115, TrainingPoint.Description.String, true, true);
-            }
 
             AddHtmlLocalized(290, 205, 245, 20, CenterLoc, "#1113650", 0, false, false); // RESULTS
 
@@ -1336,9 +1285,7 @@ namespace Server.Mobiles
             }
 
             if (Value > max)
-            {
                 Value = max;
-            }
 
             int cost = PetTrainingHelper.GetTotalCost(TrainingPoint, Creature, Value, StartValue);
             double weight = TrainingPoint.Weight;
@@ -1458,13 +1405,9 @@ namespace Server.Mobiles
             AddLabel(455, 245, 0, $"{((int) (Value * weight)).ToString()}/{(max * weight).ToString()}");
 
             if (TrainingPoint.Name.Number > 0)
-            {
                 AddHtmlLocalized(305, 265, 145, 18, TrainingPoint.Name.Number, false, false);
-            }
             else if (TrainingPoint.Name.String != null)
-            {
                 AddLabel(305, 265, 0, TrainingPoint.Name.String);
-            }
 
             if (TrainingPoint.TrainPoint is SkillName)
             {
@@ -1699,9 +1642,7 @@ namespace Server.Mobiles
                                         Effects.SendTargetParticles(Creature, 0x375A, 35, 90, 0x00, 0x00, 9502, (EffectLayer)255, 0x100);
 
                                         if (scroll != null)
-                                        {
                                             scroll.Delete();
-                                        }
                                     }
                                     else
                                     {
@@ -1712,6 +1653,8 @@ namespace Server.Mobiles
                                     profile.OnTrain(User, cost);
 
                                     ResendGumps(profile.HasBegunTraining);
+
+                                    Engines.Quests.TeachingSomethingNewQuest.CheckComplete(User);
                                 }
                             },
                             () =>
@@ -1881,9 +1824,7 @@ namespace Server.Mobiles
             int id = info.ButtonID;
 
             if (id == 0)
-            {
                 return;
-            }
 
             TrainingProfile profile = PetTrainingHelper.GetTrainingProfile(Creature, true);
             PlanningProfile plan = profile.PlanningProfile;

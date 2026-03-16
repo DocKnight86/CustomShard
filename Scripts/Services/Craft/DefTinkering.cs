@@ -1,6 +1,8 @@
 using Server.Items;
+using Server.Mobiles;
 using Server.Targeting;
 using System;
+using Server.Services.BasketWeaving.Baskets;
 
 namespace Server.Engines.Craft
 {
@@ -19,9 +21,7 @@ namespace Server.Engines.Craft
             get
             {
                 if (m_CraftSystem == null)
-                {
                     m_CraftSystem = new DefTinkering();
-                }
 
                 return m_CraftSystem;
             }
@@ -35,9 +35,7 @@ namespace Server.Engines.Craft
         public override double GetChanceAtMin(CraftItem item)
         {
             if (item.NameNumber == 1044258 || item.NameNumber == 1046445) // potion keg 
-            {
                 return 0.5; // 50%
-            }
 
             return 0.0; // 0%
         }
@@ -47,14 +45,13 @@ namespace Server.Engines.Craft
             int num = 0;
 
             if (tool == null || tool.Deleted || tool.UsesRemaining <= 0)
-            {
                 return 1044038; // You have worn out your tool!
-            }
 
             if (!tool.CheckAccessible(from, ref num))
-            {
                 return num; // The tool must be on your person to use.
-            }
+
+            if (itemType == typeof(ModifiedClockworkAssembly) && !(from is PlayerMobile mobile && mobile.MechanicalLife))
+                return 1113034; // You haven't read the Mechanical Life Manual. Talking to Sutek might help!
 
             return 0;
         }
@@ -75,22 +72,16 @@ namespace Server.Engines.Craft
         public override bool RetainsColorFrom(CraftItem item, Type type)
         {
             if (type == typeof(CrystalDust))
-            {
                 return false;
-            }
 
             bool contains = false;
             type = item.ItemType;
 
             for (int i = 0; !contains && i < m_TinkerColorables.Length; ++i)
-            {
                 contains = m_TinkerColorables[i] == type;
-            }
 
             if (!contains && !type.IsSubclassOf(typeof(BaseIngot)))
-            {
                 return false;
-            }
 
             return contains;
         }
@@ -103,9 +94,7 @@ namespace Server.Engines.Craft
         public override int PlayEndingEffect(Mobile from, bool failed, bool lostMaterial, bool toolBroken, int quality, bool makersMark, CraftItem item)
         {
             if (toolBroken)
-            {
                 from.SendLocalizedMessage(1044038); // You have worn out your tool
-            }
 
             if (failed)
             {
@@ -118,14 +107,10 @@ namespace Server.Engines.Craft
             }
 
             if (quality == 0)
-            {
                 return 502785; // You were barely able to make this item.  It's quality is below average.
-            }
 
             if (makersMark && quality == 2)
-            {
                 return 1044156; // You create an exceptional quality item and affix your maker's mark.
-            }
 
             if (quality == 2)
             {
@@ -167,6 +152,14 @@ namespace Server.Engines.Craft
             AddCraft(typeof(GoldRing), 1044049, 1024234, 65.0, 115.0, typeof(IronIngot), 1044036, 3, 1044037);
             AddCraft(typeof(GoldBracelet), 1044049, 1024230, 55.0, 105.0, typeof(IronIngot), 1044036, 3, 1044037);
 
+            index = AddCraft(typeof(GargishNecklace), 1044049, 1095784, 60.0, 110.0, typeof(IronIngot), 1044036, 3, 1044037);
+
+            index = AddCraft(typeof(GargishBracelet), 1044049, 1095785, 55.0, 105.0, typeof(IronIngot), 1044036, 3, 1044037);
+
+            index = AddCraft(typeof(GargishRing), 1044049, 1095786, 65.0, 115.0, typeof(IronIngot), 1044036, 3, 1044037);
+
+            index = AddCraft(typeof(GargishEarrings), 1044049, 1095787, 55.0, 105.0, typeof(IronIngot), 1044036, 3, 1044037);
+
             AddJewelrySet(GemType.StarSapphire, typeof(StarSapphire));
             AddJewelrySet(GemType.Emerald, typeof(Emerald));
             AddJewelrySet(GemType.Sapphire, typeof(Sapphire));
@@ -176,6 +169,9 @@ namespace Server.Engines.Craft
             AddJewelrySet(GemType.Tourmaline, typeof(Tourmaline));
             AddJewelrySet(GemType.Amber, typeof(Amber));
             AddJewelrySet(GemType.Diamond, typeof(Diamond));
+
+            index = AddCraft(typeof(KrampusMinionEarrings), 1044049, 1125645, 100.0, 500.0, typeof(IronIngot), 1044036, 3, 1044037);
+            AddRecipe(index, (int)CraftRecipes.KrampusMinionEarrings);
             #endregion
 
             #region Wooden Items
@@ -190,6 +186,72 @@ namespace Server.Engines.Craft
             AddCraft(typeof(RollingPin), 1044042, 1024163, 0.0, 50.0, typeof(Board), 1044041, 5, 1044351);
 
             AddCraft(typeof(Ramrod), 1044042, 1095839, 0.0, 50.0, typeof(Board), 1044041, 8, 1044253);
+
+            index = AddCraft(typeof(SoftenedReeds), 1044042, 1112249, 75.0, 100.0, typeof(DryReeds), 1112248, 1, 1112250);
+            AddRes(index, typeof(ScouringToxin), 1112292, 2, 1112326);
+            SetRequiresBasketWeaving(index);
+            SetRequireResTarget(index);
+
+            index = AddCraft(typeof(RoundBasket), 1044042, 1112293, 75.0, 100.0, typeof(SoftenedReeds), 1112249, 2, 1112251);
+            AddRes(index, typeof(Shaft), 1027125, 3, 1044351);
+            SetRequireResTarget(index);
+            SetRequiresBasketWeaving(index);
+
+            index = AddCraft(typeof(RoundBasketHandles), 1044042, 1112357, 75.0, 100.0, typeof(SoftenedReeds), 1112249, 2, 1112251);
+            AddRes(index, typeof(Shaft), 1027125, 3, 1044351);
+            SetRequireResTarget(index);
+            SetRequiresBasketWeaving(index);
+
+            index = AddCraft(typeof(SmallBushel), 1044042, 1112337, 75.0, 100.0, typeof(SoftenedReeds), 1112249, 1, 1112251);
+            AddRes(index, typeof(Shaft), 1027125, 2, 1044351);
+            SetRequireResTarget(index);
+            SetRequiresBasketWeaving(index);
+
+            index = AddCraft(typeof(PicnicBasket2), 1044042, 1023706, 75.0, 100.0, typeof(SoftenedReeds), 1112249, 1, 1112251);
+            AddRes(index, typeof(Shaft), 1027125, 2, 1044351);
+            SetRequireResTarget(index);
+            SetRequiresBasketWeaving(index);
+
+            index = AddCraft(typeof(WinnowingBasket), 1044042, 1026274, 75.0, 100.0, typeof(SoftenedReeds), 1112249, 2, 1112251);
+            AddRes(index, typeof(Shaft), 1027125, 3, 1044351);
+            SetRequireResTarget(index);
+            SetRequiresBasketWeaving(index);
+
+            index = AddCraft(typeof(SquareBasket), 1044042, 1112295, 75.0, 100.0, typeof(SoftenedReeds), 1112249, 2, 1112251);
+            AddRes(index, typeof(Shaft), 1027125, 3, 1044351);
+            SetRequireResTarget(index);
+            SetRequiresBasketWeaving(index);
+
+            index = AddCraft(typeof(BasketCraftable), 1044042, 1022448, 75.0, 100.0, typeof(SoftenedReeds), 1112249, 2, 1112251);
+            AddRes(index, typeof(Shaft), 1027125, 3, 1044351);
+            SetRequireResTarget(index);
+            SetRequiresBasketWeaving(index);
+
+            index = AddCraft(typeof(TallRoundBasket), 1044042, 1112297, 75.0, 100.0, typeof(SoftenedReeds), 1112249, 3, 1112251);
+            AddRes(index, typeof(Shaft), 1027125, 4, 1044351);
+            SetRequireResTarget(index);
+            SetRequiresBasketWeaving(index);
+
+            index = AddCraft(typeof(SmallSquareBasket), 1044042, 1112296, 75.0, 100.0, typeof(SoftenedReeds), 1112249, 1, 1112251);
+            AddRes(index, typeof(Shaft), 1027125, 2, 1044351);
+            SetRequireResTarget(index);
+            SetRequiresBasketWeaving(index);
+
+            index = AddCraft(typeof(TallBasket), 1044042, 1112299, 75.0, 100.0, typeof(SoftenedReeds), 1112249, 3, 1112251);
+            AddRes(index, typeof(Shaft), 1027125, 4, 1044351);
+            SetRequireResTarget(index);
+            SetRequiresBasketWeaving(index);
+
+            index = AddCraft(typeof(SmallRoundBasket), 1044042, 1112298, 75.0, 100.0, typeof(SoftenedReeds), 1112249, 1, 1112251);
+            AddRes(index, typeof(Shaft), 1027125, 2, 1044351);
+            SetRequireResTarget(index);
+            SetRequiresBasketWeaving(index);
+
+            index = AddCraft(typeof(EnchantedPicnicBasket), 1044042, 1158333, 75.0, 100.0, typeof(SoftenedReeds), 1112249, 2, 1112251);
+            AddRes(index, typeof(Shaft), 1027125, 3, 1044351);
+            AddRecipe(index, (int)CraftRecipes.EnchantedPicnicBasket);
+            SetRequireResTarget(index);
+            SetRequiresBasketWeaving(index);
             #endregion
 
             #region Tools
@@ -255,6 +317,10 @@ namespace Server.Engines.Craft
             AddCraft(typeof(Goblet), 1044048, 1022458, 10.0, 60.0, typeof(IronIngot), 1044036, 2, 1044037);
             AddCraft(typeof(PewterMug), 1044048, 1024097, 10.0, 60.0, typeof(IronIngot), 1044036, 2, 1044037);
             AddCraft(typeof(SkinningKnife), 1044048, 1023781, 25.0, 75.0, typeof(IronIngot), 1044036, 2, 1044037);
+
+            AddCraft(typeof(GargishCleaver), 1044048, 1097478, 20.0, 70.0, typeof(IronIngot), 1044036, 3, 1044037);
+
+            AddCraft(typeof(GargishButcherKnife), 1044048, 1097486, 25.0, 75.0, typeof(IronIngot), 1044036, 2, 1044037);
             #endregion
 
             #region Misc
@@ -307,8 +373,64 @@ namespace Server.Engines.Craft
             AddRes(index, typeof(Candelabra), 1011213, 1, 1154172);
             AddRes(index, typeof(WorkableGlass), 1154170, 1, 1154171);
 
+            index = AddCraft(typeof(CraftableHouseItem), 1044050, 1155851, 40.0, 90.0, typeof(IronIngot), 1044036, 8, 1044253);
+            SetData(index, CraftableItemType.CurledMetalSignHanger);
+            SetDisplayID(index, 2971);
+
+            index = AddCraft(typeof(CraftableHouseItem), 1044050, 1155852, 40.0, 90.0, typeof(IronIngot), 1044036, 8, 1044253);
+            SetData(index, CraftableItemType.FlourishedMetalSignHanger);
+            SetDisplayID(index, 2973);
+
+            index = AddCraft(typeof(CraftableHouseItem), 1044050, 1155853, 40.0, 90.0, typeof(IronIngot), 1044036, 8, 1044253);
+            SetData(index, CraftableItemType.InwardCurledMetalSignHanger);
+            SetDisplayID(index, 2975);
+
+            index = AddCraft(typeof(CraftableHouseItem), 1044050, 1155854, 40.0, 90.0, typeof(IronIngot), 1044036, 8, 1044253);
+            SetData(index, CraftableItemType.EndCurledMetalSignHanger);
+            SetDisplayID(index, 2977);
+
+            index = AddCraft(typeof(CraftableMetalHouseDoor), 1044050, 1156080, 85.0, 135.0, typeof(IronIngot), 1044036, 50, 1044253);
+            SetData(index, DoorType.LeftMetalDoor_S_In);
+            SetDisplayID(index, 1653);
+            AddCreateItem(index, CraftableMetalHouseDoor.Create);
+
+            index = AddCraft(typeof(CraftableMetalHouseDoor), 1044050, 1156081, 85.0, 135.0, typeof(IronIngot), 1044036, 50, 1044253);
+            SetData(index, DoorType.RightMetalDoor_S_In);
+            SetDisplayID(index, 1659);
+            AddCreateItem(index, CraftableMetalHouseDoor.Create);
+
+            index = AddCraft(typeof(CraftableMetalHouseDoor), 1044050, 1156082, 85.0, 135.0, typeof(IronIngot), 1044036, 50, 1044253);
+            SetData(index, DoorType.LeftMetalDoor_E_Out);
+            SetDisplayID(index, 1660);
+            AddCreateItem(index, CraftableMetalHouseDoor.Create);
+
+            index = AddCraft(typeof(CraftableMetalHouseDoor), 1044050, 1156083, 85.0, 135.0, typeof(IronIngot), 1044036, 50, 1044253);
+            SetData(index, DoorType.RightMetalDoor_E_Out);
+            SetDisplayID(index, 1663);
+            AddCreateItem(index, CraftableMetalHouseDoor.Create);
+
             index = AddCraft(typeof(WallSafeDeed), 1044050, 1155860, 0.0, 0.0, typeof(IronIngot), 1044036, 20, 1044253);
             ForceNonExceptional(index);
+
+            index = AddCraft(typeof(CraftableMetalHouseDoor), 1044050, 1156352, 85.0, 135.0, typeof(IronIngot), 1044036, 50, 1044253);
+            SetData(index, DoorType.LeftMetalDoor_E_In);
+            SetDisplayID(index, 1660);
+            AddCreateItem(index, CraftableMetalHouseDoor.Create);
+
+            index = AddCraft(typeof(CraftableMetalHouseDoor), 1044050, 1156353, 85.0, 135.0, typeof(IronIngot), 1044036, 50, 1044253);
+            SetData(index, DoorType.RightMetalDoor_E_In);
+            SetDisplayID(index, 1663);
+            AddCreateItem(index, CraftableMetalHouseDoor.Create);
+
+            index = AddCraft(typeof(CraftableMetalHouseDoor), 1044050, 1156350, 85.0, 135.0, typeof(IronIngot), 1044036, 50, 1044253);
+            SetData(index, DoorType.LeftMetalDoor_S_Out);
+            SetDisplayID(index, 1653);
+            AddCreateItem(index, CraftableMetalHouseDoor.Create);
+
+            index = AddCraft(typeof(CraftableMetalHouseDoor), 1044050, 1156351, 85.0, 135.0, typeof(IronIngot), 1044036, 50, 1044253);
+            SetData(index, DoorType.RightMetalDoor_S_Out);
+            SetDisplayID(index, 1659);
+            AddCreateItem(index, CraftableMetalHouseDoor.Create);
 
             index = AddCraft(typeof(KotlPowerCore), 1044050, 1124179, 85.0, 135.0, typeof(WorkableGlass), 1154170, 5, 1154171);
             AddRes(index, typeof(CopperWire), 1026265, 5, 1150700);
@@ -553,6 +675,7 @@ namespace Server.Engines.Craft
             MarkOption = true;
             Repair = true;
             CanEnhance = true;
+            CanAlter = true;
         }
     }
 
@@ -572,34 +695,17 @@ namespace Server.Engines.Craft
         private int Verify(LockableContainer container)
         {
             if (container == null || container.KeyValue == 0)
-            {
                 return 1005638; // You can only trap lockable chests.
-            }
-
             if (From.Map != container.Map || !From.InRange(container.GetWorldLocation(), 2))
-            {
                 return 500446; // That is too far away.
-            }
-
             if (!container.Movable)
-            {
                 return 502944; // You cannot trap this item because it is locked down.
-            }
-
             if (!container.IsAccessibleTo(From))
-            {
                 return 502946; // That belongs to someone else.
-            }
-
             if (container.Locked)
-            {
                 return 502943; // You can only trap an unlocked object.
-            }
-
             if (container.TrapType != TrapType.None)
-            {
                 return 502945; // You can only place one trap on an object at a time.
-            }
 
             return 0;
         }
@@ -640,21 +746,15 @@ namespace Server.Engines.Craft
                 int message;
 
                 if (m_TrapCraft.Acquire(targeted, out message))
-                {
                     m_TrapCraft.CraftItem.CompleteCraft(m_TrapCraft.Quality, false, m_TrapCraft.From, m_TrapCraft.CraftSystem, m_TrapCraft.TypeRes, m_TrapCraft.Tool, m_TrapCraft);
-                }
                 else
-                {
                     Failure(message);
-                }
             }
 
             protected override void OnTargetCancel(Mobile from, TargetCancelType cancelType)
             {
                 if (cancelType == TargetCancelType.Canceled)
-                {
                     Failure(0);
-                }
             }
 
             private void Failure(int message)
@@ -669,13 +769,9 @@ namespace Server.Engines.Craft
                 }
 
                 if (tool != null && !tool.Deleted && tool.UsesRemaining > 0)
-                {
                     from.SendGump(new CraftGump(from, m_TrapCraft.CraftSystem, tool, message));
-                }
                 else if (message > 0)
-                {
                     from.SendLocalizedMessage(message);
-                }
             }
         }
 

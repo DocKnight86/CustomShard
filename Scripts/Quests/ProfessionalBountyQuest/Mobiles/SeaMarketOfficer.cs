@@ -75,9 +75,7 @@ namespace Server.Mobiles
         public bool HasQuest(PlayerMobile pm)
         {
             if (pm.Quests == null)
-            {
                 return false;
-            }
 
             for (int i = 0; i < pm.Quests.Count; i++)
             {
@@ -90,9 +88,7 @@ namespace Server.Mobiles
                         for (int j = 0; j < quest.Objectives.Count; j++)
                         {
                             if (quest.Objectives[j].Update(pm))
-                            {
                                 quest.Objectives[j].Complete();
-                            }
                         }
                     }
 

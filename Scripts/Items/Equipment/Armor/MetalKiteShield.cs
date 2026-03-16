@@ -1,5 +1,8 @@
+using Server.Engines.Craft;
+
 namespace Server.Items
 {
+    [Alterable(typeof(DefBlacksmithy), typeof(GargishKiteShield))]
     public class MetalKiteShield : BaseShield, IDyable
     {
         [Constructable]
@@ -25,9 +28,7 @@ namespace Server.Items
         public bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
-            {
                 return false;
-            }
 
             Hue = sender.DyedHue;
 

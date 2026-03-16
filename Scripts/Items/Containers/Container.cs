@@ -24,9 +24,7 @@ namespace Server.Items
             get
             {
                 if (IsSecure)
-                {
                     return 0;
-                }
 
                 return base.DefaultMaxWeight;
             }
@@ -41,14 +39,9 @@ namespace Server.Items
             set
             {
                 if (value != null)
-                {
                     m_EngravedText = value;
-                }
                 else
-                {
                     m_EngravedText = string.Empty;
-                }
-
                 InvalidateProperties();
             }
         }
@@ -56,9 +49,7 @@ namespace Server.Items
         public override bool IsAccessibleTo(Mobile m)
         {
             if (!BaseHouse.CheckAccessible(m, this))
-            {
                 return false;
-            }
 
             return base.IsAccessibleTo(m);
         }
@@ -66,9 +57,7 @@ namespace Server.Items
         public override bool CheckHold(Mobile m, Item item, bool message, bool checkItems, int plusItems, int plusWeight)
         {
             if (IsSecure && !BaseHouse.CheckHold(m, this, item, message, checkItems, plusItems, plusWeight))
-            {
                 return false;
-            }
 
             return base.CheckHold(m, item, message, checkItems, plusItems, plusWeight);
         }
@@ -76,9 +65,7 @@ namespace Server.Items
         public override bool CheckItemUse(Mobile from, Item item)
         {
             if (IsDecoContainer && item is BaseBook)
-            {
                 return true;
-            }
 
             return base.CheckItemUse(from, item);
         }
@@ -123,9 +110,7 @@ namespace Server.Items
                 Item item = list[i];
 
                 if (!(item is Container) && item.StackWith(null, dropped, false))
-                {
                     return;
-                }
             }
 
             DropItem(dropped);
@@ -134,9 +119,7 @@ namespace Server.Items
         public override bool TryDropItem(Mobile from, Item dropped, bool sendFullMessage)
         {
             if (!CheckHold(from, dropped, sendFullMessage, !CheckStack(from, dropped)))
-            {
                 return false;
-            }
 
             if (dropped.QuestItem && from.Backpack != this)
             {
@@ -155,9 +138,7 @@ namespace Server.Items
                 }
 
                 if (!house.LockDown(from, dropped, false))
-                {
                     return false;
-                }
             }
 
             List<Item> list = Items;
@@ -167,9 +148,7 @@ namespace Server.Items
                 Item item = list[i];
 
                 if (!(item is Container) && item.StackWith(from, dropped, false))
-                {
                     return true;
-                }
             }
 
             DropItem(dropped);
@@ -179,9 +158,7 @@ namespace Server.Items
             EventSink.InvokeContainerDroppedTo(new ContainerDroppedToEventArgs(from, this, dropped));
 
             if (!EnchantedHotItemSocket.CheckDrop(from, this, dropped))
-            {
                 return false;
-            }
 
             return true;
         }
@@ -189,9 +166,7 @@ namespace Server.Items
         public override bool OnDragDropInto(Mobile from, Item item, Point3D p)
         {
             if (!CheckHold(from, item, true, true))
-            {
                 return false;
-            }
 
             if (item.QuestItem && from.Backpack != this)
             {
@@ -210,9 +185,7 @@ namespace Server.Items
                 }
 
                 if (!house.LockDown(from, item, false))
-                {
                     return false;
-                }
             }
 
             item.Location = new Point3D(p.X, p.Y, 0);
@@ -226,9 +199,7 @@ namespace Server.Items
             EventSink.InvokeContainerDroppedTo(new ContainerDroppedToEventArgs(from, this, item));
 
             if (!EnchantedHotItemSocket.CheckDrop(from, this, item))
-            {
                 return false;
-            }
 
             return true;
         }
@@ -250,9 +221,7 @@ namespace Server.Items
             base.UpdateTotal(sender, type, delta);
 
             if (type == TotalType.Weight && RootParent is Mobile mobile)
-            {
-                mobile.InvalidateProperties();
-            }
+               mobile.InvalidateProperties();
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -276,6 +245,13 @@ namespace Server.Items
             {
                 list.Add(1072305, Utility.FixHtml(EngravedText)); // Engraved: ~1_INSCRIPTION~
             }
+        }
+
+        public override bool DropToWorld(Mobile m, Point3D p)
+        {
+            Engines.Despise.WispOrb.CheckDrop(this, m);
+
+            return base.DropToWorld(m, p);
         }
 
         public virtual void Open(Mobile from)
@@ -381,21 +357,15 @@ namespace Server.Items
         public override void AddNameProperty(ObjectPropertyList list)
         {
             if (Name != null)
-            {
                 list.Add(1075257, Name); // Contents of ~1_PETNAME~'s pack.
-            }
             else
-            {
                 base.AddNameProperty(list);
-            }
         }
 
         public override void OnItemRemoved(Item item)
         {
             if (Items.Count == 0)
-            {
                 Delete();
-            }
 
             base.OnItemRemoved(item);
         }
@@ -403,9 +373,7 @@ namespace Server.Items
         public override bool OnDragLift(Mobile from)
         {
             if (!from.IsPlayer())
-            {
                 return true;
-            }
 
             from.SendLocalizedMessage(500169); // You cannot pick that up.
             return false;
@@ -459,9 +427,7 @@ namespace Server.Items
             object root = RootParent;
 
             if (root is BaseCreature creature && creature.Controlled && creature.ControlMaster == from)
-            {
                 return true;
-            }
 
             return base.CheckContentDisplay(from);
         }
@@ -509,9 +475,7 @@ namespace Server.Items
         public bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
-            {
                 return false;
-            }
 
             Hue = sender.DyedHue;
 
@@ -574,9 +538,7 @@ namespace Server.Items
         public bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
-            {
                 return false;
-            }
 
             Hue = sender.DyedHue;
 
@@ -665,9 +627,7 @@ namespace Server.Items
         public bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
-            {
                 return false;
-            }
 
             Hue = sender.DyedHue;
 
@@ -877,13 +837,9 @@ namespace Server.Items
                 Map map = Map;
 
                 if (TrapLevel > 0)
-                {
                     damage = Utility.RandomMinMax(5, 15) * TrapLevel;
-                }
                 else
-                {
                     damage = TrapPower;
-                }
 
                 AOS.Damage(from, damage, 100, 0, 0, 0, 0);
 

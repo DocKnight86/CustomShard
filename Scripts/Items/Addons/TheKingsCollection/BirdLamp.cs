@@ -56,13 +56,9 @@ namespace Server.Items
         public void OnFlip(Mobile from)
         {
             if (ItemID == NorthID)
-            {
                 ItemID = WestID;
-            }
             else if (ItemID == WestID)
-            {
                 ItemID = NorthID;
-            }
         }
 
         public BirdLamp(Serial serial)
@@ -131,9 +127,7 @@ namespace Server.Items
             Map map = from.Map;
 
             if (p == null || map == null || Deleted)
-            {
                 return;
-            }
 
             if (IsChildOf(from.Backpack))
             {

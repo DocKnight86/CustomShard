@@ -77,9 +77,7 @@ namespace Server.Items
             }
 
             else
-            {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
-            }
         }
 
         public virtual void OnPlacement(BaseHouse house)
@@ -150,9 +148,7 @@ namespace Server.Items
         public override void OnResponse(NetState sender, RelayInfo info)
         {
             if (!m_From.CheckAlive() || m_From.Backpack == null || !m_Tool.IsChildOf(m_From.Backpack))
-            {
                 return;
-            }
 
             switch (info.ButtonID)
             {
@@ -279,9 +275,7 @@ namespace Server.Items
         public override void OnResponse(NetState sender, RelayInfo info)
         {
             if (!m_From.CheckAlive() || m_From.Backpack == null || !m_Tool.IsChildOf(m_From.Backpack))
-            {
                 return;
-            }
 
             int index = info.ButtonID - 1;
 
@@ -371,35 +365,23 @@ namespace Server.Items
                 Region reg = Region.Find(new Point3D(p), from.Map);
 
                 if (from.AccessLevel >= AccessLevel.GameMaster || reg.AllowHousing(from, p))
-                {
                     m_Placed = m_Entry.OnPlacement(m_Tool, from, p);
-                }
                 else if (reg.IsPartOf<TempNoHousingRegion>())
-                {
                     from.SendLocalizedMessage(501270); // Lord British has decreed a 'no build' period, thus you cannot build this house at this time.
-                }
                 else if (reg.IsPartOf<HouseRegion>())
-                {
                     from.SendLocalizedMessage(1043287); // The house could not be created here.  Either something is blocking the house, or the house would not be on valid terrain.
-                }
                 else
-                {
                     from.SendLocalizedMessage(501265); // Housing can not be created in this area.
-                }
             }
         }
 
         protected override void OnTargetFinish(Mobile from)
         {
             if (!from.CheckAlive() || from.Backpack == null || !m_Tool.IsChildOf(from.Backpack))
-            {
                 return;
-            }
 
             if (!m_Placed)
-            {
                 from.SendGump(new HousePlacementListGump(m_Tool, from, m_Entries, m_Classic));
-            }
         }
     }
 
@@ -676,17 +658,11 @@ namespace Server.Items
                 object[] args;
 
                 if (m_Type == typeof(HouseFoundation))
-                {
                     args = new object[4] { from, m_MultiID, m_Storage, m_Lockdowns };
-                }
                 else if (m_Type == typeof(SmallOldHouse) || m_Type == typeof(SmallShop) || m_Type == typeof(TwoStoryHouse))
-                {
                     args = new object[2] { from, m_MultiID };
-                }
                 else
-                {
                     args = new object[1] { from };
-                }
 
                 return Activator.CreateInstance(m_Type, args) as BaseHouse;
             }
@@ -706,9 +682,7 @@ namespace Server.Items
             HousePlacementTool tool = objs[1] as HousePlacementTool;
 
             if (!from.CheckAlive() || from.Backpack == null || tool == null || !tool.IsChildOf(from.Backpack))
-            {
                 return;
-            }
 
             if (!okay)
             {
@@ -744,9 +718,7 @@ namespace Server.Items
                             BaseHouse house = ConstructHouse(from);
 
                             if (house == null)
-                            {
                                 return;
-                            }
 
                             house.Price = m_Cost;
 
@@ -825,9 +797,7 @@ namespace Server.Items
         public bool OnPlacement(HousePlacementTool tool, Mobile from, Point3D p)
         {
             if (!from.CheckAlive() || from.Backpack == null || !tool.IsChildOf(from.Backpack))
-            {
                 return false;
-            }
 
             ArrayList toMove;
             Point3D center = new Point3D(p.X - m_Offset.X, p.Y - m_Offset.Y, p.Z - m_Offset.Z);
@@ -863,13 +833,9 @@ namespace Server.Items
                             object o = toMove[i];
 
                             if (o is Mobile mobile)
-                            {
                                 mobile.Location = banLoc;
-                            }
                             else if (o is Item item)
-                            {
                                 item.Location = banLoc;
-                            }
                         }
 
                         prev.MoveToWorld(center, from.Map);
@@ -1065,9 +1031,7 @@ namespace Server.Items
         public override void OnResponse(RelayInfo info)
         {
             if (!m_From.CheckAlive() || m_From.Backpack == null || m_From.Backpack.FindItemByType(typeof(HousePlacementTool)) == null)
-            {
                 return;
-            }
 
             int index = info.ButtonID - 1;
 
@@ -1112,7 +1076,7 @@ namespace Server.Items
                         newHouse.VendorInventories.AddRange(m_House.VendorInventories);
                         m_House.VendorInventories.Clear();
 
-                        for (int i = 0; i < newHouse.VendorInventories.Count; i++)
+                        for (var i = 0; i < newHouse.VendorInventories.Count; i++)
                         {
                             VendorInventory inventory = newHouse.VendorInventories[i];
 
@@ -1122,7 +1086,7 @@ namespace Server.Items
                         newHouse.InternalizedVendors.AddRange(m_House.InternalizedVendors);
                         m_House.InternalizedVendors.Clear();
 
-                        for (int i = 0; i < newHouse.InternalizedVendors.Count; i++)
+                        for (var i = 0; i < newHouse.InternalizedVendors.Count; i++)
                         {
                             Mobile mobile = newHouse.InternalizedVendors[i];
 
@@ -1151,14 +1115,14 @@ namespace Server.Items
                                 m_House.Z + m_House.ConvertOffsetZ), m_House.Map);
                         m_House.Delete();
 
-                        for (int i = 0; i < items.Count; i++)
+                        for (var i = 0; i < items.Count; i++)
                         {
                             Item item = items[i];
 
                             item.Location = newHouse.BanLocation;
                         }
 
-                        for (int i = 0; i < mobiles.Count; i++)
+                        for (var i = 0; i < mobiles.Count; i++)
                         {
                             Mobile mobile = mobiles[i];
 

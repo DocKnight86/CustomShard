@@ -44,9 +44,7 @@ namespace Server.Items
                     writer.Write(PlayerFishingEntry.FishingEntries.Count);
 
                     foreach (PlayerFishingEntry entry in PlayerFishingEntry.FishingEntries.Values)
-                    {
                         entry.Serialize(writer);
-                    }
 
                     if (CharydbisSpawner.SpawnInstance != null)
                     {
@@ -54,9 +52,9 @@ namespace Server.Items
                         CharydbisSpawner.SpawnInstance.Serialize(writer);
                     }
                     else
-                    {
                         writer.Write(1);
-                    }
+
+                    ForgedPardon.Save(writer);
                 });
         }
 
@@ -71,15 +69,15 @@ namespace Server.Items
                     SeaMarketRegion.Load(reader);
                     int count = reader.ReadInt();
                     for (int i = 0; i < count; i++)
-                    {
                         new PlayerFishingEntry(reader);
-                    }
 
                     if (version == 0 || reader.ReadInt() == 0)
                     {
                         CharydbisSpawner.SpawnInstance = new CharydbisSpawner();
                         CharydbisSpawner.SpawnInstance.Deserialize(reader);
                     }
+
+                    ForgedPardon.Load(reader);
                 });
         }
     }

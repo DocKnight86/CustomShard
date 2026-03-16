@@ -163,9 +163,7 @@ namespace Server.Items
             m_Timer.Start();
 
             if (Instances == null)
-            {
                 Instances = new List<BedrollSpawner>();
-            }
 
             Instances.Add(this);
         }
@@ -283,13 +281,9 @@ namespace Server.Items
             writer.Write(1);
 
             if (m_Timer != null)
-            {
                 writer.Write(m_Timer.Next);
-            }
             else
-            {
                 writer.Write(DateTime.UtcNow + RestartDelay);
-            }
 
             writer.Write(Bedrolls == null ? 0 : Bedrolls.Count);
 
@@ -312,18 +306,14 @@ namespace Server.Items
             int version = reader.ReadInt();
 
             if (Instances == null)
-            {
                 Instances = new List<BedrollSpawner>();
-            }
 
             Instances.Add(this);
 
             DateTime next = reader.ReadDateTime();
 
             if (next < DateTime.UtcNow)
-            {
                 next = DateTime.UtcNow;
-            }
 
             m_Timer = Timer.DelayCall(next - DateTime.UtcNow, RestartDelay, CheckRespawn);
             m_Timer.Start();

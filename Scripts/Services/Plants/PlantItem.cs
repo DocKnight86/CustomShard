@@ -72,19 +72,13 @@ namespace Server.Engines.Plants
             set
             {
                 if (m_PlantStatus == value || value < PlantStatus.BowlOfDirt || value > PlantStatus.DeadTwigs)
-                {
                     return;
-                }
 
                 double ratio;
                 if (m_PlantSystem != null)
-                {
                     ratio = (double)m_PlantSystem.Hits / m_PlantSystem.MaxHits;
-                }
                 else
-                {
                     ratio = 1.0;
-                }
 
                 m_PlantStatus = value;
 
@@ -95,20 +89,14 @@ namespace Server.Engines.Plants
                 else
                 {
                     if (m_PlantSystem == null)
-                    {
                         m_PlantSystem = new PlantSystem(this, false);
-                    }
 
                     int hits = (int)(m_PlantSystem.MaxHits * ratio);
 
                     if (hits == 0 && m_PlantStatus > PlantStatus.BowlOfDirt)
-                    {
                         m_PlantSystem.Hits = hits + 1;
-                    }
                     else
-                    {
                         m_PlantSystem.Hits = hits;
-                    }
                 }
 
                 Update();
@@ -154,27 +142,19 @@ namespace Server.Engines.Plants
             get
             {
                 if (IsLockedDown && RootParent == null)
-                {
                     return true;
-                }
 
 
                 Mobile owner = RootParent as Mobile;
                 if (owner == null)
-                {
                     return false;
-                }
 
                 if (owner.Backpack != null && IsChildOf(owner.Backpack))
-                {
                     return true;
-                }
 
                 BankBox bank = owner.FindBankNoCreate();
                 if (bank != null && IsChildOf(bank))
-                {
                     return true;
-                }
 
                 return false;
             }
@@ -237,19 +217,11 @@ namespace Server.Engines.Plants
         public int GetLocalizedPlantStatus()
         {
             if (m_PlantStatus >= PlantStatus.Plant)
-            {
                 return 1060812; // plant
-            }
-
             if (m_PlantStatus >= PlantStatus.Sapling)
-            {
                 return 1023305; // sapling
-            }
-
             if (m_PlantStatus >= PlantStatus.Seed)
-            {
                 return 1060810; // seed
-            }
 
             return 1026951; // dirt
         }
@@ -296,13 +268,9 @@ namespace Server.Engines.Plants
                 string args;
 
                 if (ShowContainerType)
-                {
                     args = string.Format("#{0}\t#{1}", GetLocalizedContainerType(), m_PlantSystem.GetLocalizedDirtStatus());
-                }
                 else
-                {
                     args = string.Format("#{0}", m_PlantSystem.GetLocalizedDirtStatus());
-                }
 
                 list.Add(1060830, args); // a ~1_val~ of ~2_val~ dirt
             }
@@ -324,26 +292,18 @@ namespace Server.Engines.Plants
                     string args;
 
                     if (ShowContainerType)
-                    {
                         args = string.Format("#{0}\t#{1}\t#{2}", GetLocalizedContainerType(), m_PlantSystem.GetLocalizedDirtStatus(), m_PlantSystem.GetLocalizedHealth());
-                    }
                     else
-                    {
                         args = string.Format("#{0}\t#{1}", m_PlantSystem.GetLocalizedDirtStatus(), m_PlantSystem.GetLocalizedHealth());
-                    }
 
                     if (m_ShowType)
                     {
                         args += string.Format("\t#{0}\t#{1}\t#{2}", hueInfo.Name, typeInfo.Name, GetLocalizedPlantStatus());
 
                         if (m_PlantStatus == PlantStatus.Plant)
-                        {
                             list.Add(typeInfo.GetPlantLabelPlant(hueInfo), args);
-                        }
                         else
-                        {
                             list.Add(typeInfo.GetPlantLabelSeed(hueInfo), args);
-                        }
                     }
                     else
                     {
@@ -363,9 +323,7 @@ namespace Server.Engines.Plants
         public override void OnDoubleClick(Mobile from)
         {
             if (m_PlantStatus >= PlantStatus.DecorativePlant)
-            {
                 return;
-            }
 
             Point3D loc = GetWorldLocation();
 
@@ -397,13 +355,9 @@ namespace Server.Engines.Plants
             else if (m_PlantStatus != PlantStatus.BowlOfDirt)
             {
                 if (RequiresUpkeep && !MaginciaPlant)
-                {
                     from.SendLocalizedMessage(1080389, "#" + GetLocalizedPlantStatus()); // This bowl of dirt already has a ~1_val~ in it!
-                }
                 else
-                {
                     from.SendLocalizedMessage(1150441); // This mound of dirt already has a seed in it!
-                }
             }
             else if (RequiresUpkeep && m_PlantSystem.Water < 2)
             {
@@ -444,9 +398,7 @@ namespace Server.Engines.Plants
         public void Pour(Mobile from, Item item)
         {
             if (m_PlantStatus >= PlantStatus.DeadTwigs)
-            {
                 return;
-            }
 
             if (m_PlantStatus == PlantStatus.DecorativePlant)
             {
@@ -475,9 +427,7 @@ namespace Server.Engines.Plants
                 }
 
                 if (!beverage.ValidateUse(from, true))
-                {
                     return;
-                }
 
                 beverage.Quantity--;
                 m_PlantSystem.Water++;
@@ -549,46 +499,30 @@ namespace Server.Engines.Plants
             if (effect == PotionEffect.PoisonGreater || effect == PotionEffect.PoisonDeadly)
             {
                 if (m_PlantSystem.IsFullPoisonPotion)
-                {
                     full = true;
-                }
                 else if (!testOnly)
-                {
                     m_PlantSystem.PoisonPotion++;
-                }
             }
             else if (effect == PotionEffect.CureGreater)
             {
                 if (m_PlantSystem.IsFullCurePotion)
-                {
                     full = true;
-                }
                 else if (!testOnly)
-                {
                     m_PlantSystem.CurePotion++;
-                }
             }
             else if (effect == PotionEffect.HealGreater)
             {
                 if (m_PlantSystem.IsFullHealPotion)
-                {
                     full = true;
-                }
                 else if (!testOnly)
-                {
                     m_PlantSystem.HealPotion++;
-                }
             }
             else if (effect == PotionEffect.StrengthGreater)
             {
                 if (m_PlantSystem.IsFullStrengthPotion)
-                {
                     full = true;
-                }
                 else if (!testOnly)
-                {
                     m_PlantSystem.StrengthPotion++;
-                }
             }
             else if (effect == PotionEffect.PoisonLesser || effect == PotionEffect.Poison || effect == PotionEffect.CureLesser || effect == PotionEffect.Cure ||
                 effect == PotionEffect.HealLesser || effect == PotionEffect.Heal || effect == PotionEffect.Strength)
@@ -626,9 +560,7 @@ namespace Server.Engines.Plants
             writer.Write(m_ShowType);
 
             if (m_PlantStatus < PlantStatus.DecorativePlant)
-            {
                 m_PlantSystem.Save(writer);
-            }
         }
 
         public override void Deserialize(GenericReader reader)
@@ -648,9 +580,7 @@ namespace Server.Engines.Plants
                 case 0:
                     {
                         if (version < 1)
-                        {
                             m_Level = SecureLevel.CoOwners;
-                        }
 
                         m_PlantStatus = (PlantStatus)reader.ReadInt();
                         m_PlantType = (PlantType)reader.ReadInt();
@@ -658,14 +588,10 @@ namespace Server.Engines.Plants
                         m_ShowType = reader.ReadBool();
 
                         if (m_PlantStatus < PlantStatus.DecorativePlant)
-                        {
                             m_PlantSystem = new PlantSystem(this, reader);
-                        }
 
                         if (version < 2 && PlantHueInfo.IsCrossable(m_PlantHue))
-                        {
                             m_PlantHue |= PlantHue.Reproduces;
-                        }
 
                         break;
                     }

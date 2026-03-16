@@ -52,23 +52,17 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile m)
         {
             if (!m_Active)
-            {
                 return;
-            }
 
             Map map = m_MapDest;
 
             if (map == null || map == Map.Internal)
-            {
                 map = m.Map;
-            }
 
             Point3D p = m_PointDest;
 
             if (p == Point3D.Zero)
-            {
                 p = m.Location;
-            }
 
             if (m.InRange(this, 3))
             {

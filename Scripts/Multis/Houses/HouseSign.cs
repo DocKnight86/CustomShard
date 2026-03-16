@@ -26,9 +26,7 @@ namespace Server.Multis
         public string GetName()
         {
             if (Name == null)
-            {
                 return "An Unnamed House";
-            }
 
             return Name;
         }
@@ -42,9 +40,7 @@ namespace Server.Multis
             set
             {
                 if (m_Owner != null)
-                {
                     m_Owner.RestrictDecay = value;
-                }
             }
         }
 
@@ -56,9 +52,7 @@ namespace Server.Multis
             base.OnAfterDelete();
 
             if (m_Owner != null && !m_Owner.Deleted)
-            {
                 m_Owner.Delete();
-            }
         }
 
         public override void AddNameProperty(ObjectPropertyList list)
@@ -94,9 +88,7 @@ namespace Server.Multis
                 else if (level != DecayLevel.Ageless)
                 {
                     if (level == DecayLevel.Collapsed)
-                    {
                         level = DecayLevel.IDOC;
-                    }
 
                     list.Add(1062028, $"#{1043009 + (int)level}"); // Condition: This structure is ...
                 }
@@ -120,13 +112,9 @@ namespace Server.Multis
                 bool canClaim = false;
 
                 if (m_Owner.CoOwners == null || m_Owner.CoOwners.Count == 0)
-                {
                     canClaim = m_Owner.IsFriend(from);
-                }
                 else
-                {
                     canClaim = m_Owner.IsCoOwner(from);
-                }
 
                 if (canClaim && !BaseHouse.AtAccountHouseLimit(from))
                 {
@@ -142,22 +130,16 @@ namespace Server.Multis
         public override void OnDoubleClick(Mobile m)
         {
             if (m_Owner == null)
-            {
                 return;
-            }
 
             if (m.AccessLevel < AccessLevel.GameMaster && m_Owner.Owner == null && m_Owner.DecayLevel != DecayLevel.DemolitionPending)
             {
                 bool canClaim = false;
 
                 if (m_Owner.CoOwners == null || m_Owner.CoOwners.Count == 0)
-                {
                     canClaim = m_Owner.IsFriend(m);
-                }
                 else
-                {
                     canClaim = m_Owner.IsCoOwner(m);
-                }
 
                 if (canClaim && !BaseHouse.AtAccountHouseLimit(m))
                 {
@@ -183,14 +165,10 @@ namespace Server.Multis
             if (from.Alive && Owner != null)
             {
                 if (Owner.AreThereAvailableVendorsFor(from))
-                {
                     list.Add(new VendorsEntry(this));
-                }
 
                 if (Owner.VendorInventories.Count > 0)
-                {
                     list.Add(new ReclaimVendorInventoryEntry(this));
-                }
             }
         }
 
@@ -209,9 +187,7 @@ namespace Server.Multis
                 Mobile from = Owner.From;
 
                 if (!from.CheckAlive() || m_Sign.Deleted || m_Sign.Owner == null || !m_Sign.Owner.AreThereAvailableVendorsFor(from))
-                {
                     return;
-                }
 
                 if (from.Map != m_Sign.Map || !from.InRange(m_Sign, 5))
                 {
@@ -239,9 +215,7 @@ namespace Server.Multis
                 Mobile from = Owner.From;
 
                 if (m_Sign.Deleted || m_Sign.Owner == null || m_Sign.Owner.VendorInventories.Count == 0 || !from.CheckAlive())
-                {
                     return;
-                }
 
                 if (from.Map != m_Sign.Map || !from.InRange(m_Sign, 5))
                 {

@@ -52,13 +52,9 @@ namespace Server.Engines.BulkOrders
                     if (vi != null && !vi.IsForSale)
                     {
                         if (m_Object is BOBLargeEntry largeEntry)
-                        {
                             price = largeEntry.Price;
-                        }
                         else if (m_Object is BOBSmallEntry smallEntry)
-                        {
                             price = smallEntry.Price;
-                        }
                     }
 
                     if (price != m_Price)
@@ -74,13 +70,9 @@ namespace Server.Engines.BulkOrders
                         Item item = null;
 
                         if (m_Object is BOBLargeEntry largeEntry)
-                        {
                             item = largeEntry.Reconstruct();
-                        }
                         else if (m_Object is BOBSmallEntry smallEntry)
-                        {
                             item = smallEntry.Reconstruct();
-                        }
 
                         if (item == null)
                         {
@@ -114,13 +106,9 @@ namespace Server.Engines.BulkOrders
                                     }
 
                                     if (m_Book.Entries.Count > 0)
-                                    {
                                         m_From.SendGump(new BOBGump(m_From, m_Book, m_Page, null));
-                                    }
                                     else
-                                    {
                                         m_From.SendLocalizedMessage(1062381); // The book is empty.
-                                    }
                                 }
                                 else
                                 {
@@ -134,13 +122,9 @@ namespace Server.Engines.BulkOrders
                 else
                 {
                     if (pv == null)
-                    {
                         m_From.SendLocalizedMessage(1062382); // The deed selected is not available.
-                    }
                     else
-                    {
                         pv.SayTo(m_From, 1062382); // The deed selected is not available.
-                    }
                 }
             }
             else

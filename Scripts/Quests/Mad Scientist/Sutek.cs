@@ -32,6 +32,7 @@ namespace Server.Engines.Quests
         {
             AddObjective(new ObtainObjective(typeof(CompletedClockworkAssembly), "Completed Clockwork Assembly", 1));
 
+            AddReward(new BaseReward(typeof(MechanicalLifeManual), 1112874)); // Mechanical Life Manual
             AddReward(new BaseReward(typeof(SuteksDirtyGear), 1115722)); // Sutek's Dirty Gear
         }
 

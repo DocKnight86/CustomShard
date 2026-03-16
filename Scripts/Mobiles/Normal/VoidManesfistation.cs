@@ -97,9 +97,7 @@ namespace Server.Mobiles
             base.OnThink();
 
             if (Combatant == null)
-            {
                 return;
-            }
 
             if (m_NextSummon < DateTime.UtcNow && Mana > 40 && Followers + 5 <= FollowersMax)
             {
@@ -113,17 +111,26 @@ namespace Server.Mobiles
             if (m_NextAIChange < DateTime.UtcNow)
             {
                 if (AIObject is MageAI)
-                {
                     ChangeAIType(AIType.AI_Mystic);
-                }
                 else
-                {
                     ChangeAIType(AIType.AI_Mage);
-                }
 
                 Combatant = combatant;
 
                 m_NextAIChange = DateTime.UtcNow + TimeSpan.FromSeconds(Utility.RandomMinMax(10, 30));
+            }
+        }
+
+        public override void OnDeath(Container c)
+        {
+            base.OnDeath(c);
+
+            switch (m_Type)
+            {
+                default: break;
+                case 1: c.DropItem(new VoidCrystalOfCorruptedArcaneEssence()); break;
+                case 2: c.DropItem(new VoidCrystalOfCorruptedSpiritualEssence()); break;
+                case 3: c.DropItem(new VoidCrystalOfCorruptedMysticalEssence()); break;
             }
         }
 

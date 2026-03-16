@@ -72,13 +72,9 @@ namespace Server.Mobiles
             }
 
             if (Utility.RandomDouble() > .2)
-            {
                 AddItem(new NoDachi());
-            }
             else
-            {
                 AddItem(new Halberd());
-            }
 
             PackItem(new Wakizashi());
             PackItem(new Longsword());
@@ -106,9 +102,7 @@ namespace Server.Mobiles
             get
             {
                 if (Combatant is Mobile mobile && mobile.Mounted)
-                {
                     return 0.8;
-                }
 
                 return base.WeaponAbilityChance;
             }
@@ -117,33 +111,25 @@ namespace Server.Mobiles
         private void ChangeWeapon()
         {
             if (Backpack == null)
-            {
                 return;
-            }
 
             Item item = FindItemOnLayer(Layer.OneHanded);
 
             if (item == null)
-            {
                 item = FindItemOnLayer(Layer.TwoHanded);
-            }
 
             System.Collections.Generic.List<BaseWeapon> weapons = new System.Collections.Generic.List<BaseWeapon>();
 
             foreach (Item i in Backpack.Items)
             {
                 if (i is BaseWeapon weapon && i != item)
-                {
                     weapons.Add(weapon);
-                }
             }
 
             if (weapons.Count > 0)
             {
                 if (item != null)
-                {
                     Backpack.DropItem(item);
-                }
 
                 AddItem(weapons[Utility.Random(weapons.Count)]);
 
@@ -156,9 +142,7 @@ namespace Server.Mobiles
             base.OnThink();
 
             if (Combatant != null && m_NextWeaponChange < DateTime.UtcNow)
-            {
                 ChangeWeapon();
-            }
         }
 
         public Ronin(Serial serial) : base(serial)

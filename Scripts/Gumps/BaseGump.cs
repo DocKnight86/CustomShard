@@ -48,9 +48,7 @@ namespace Server.Gumps
             : base(x, y)
         {
             if (user == null)
-            {
                 return;
-            }
 
             Children = new List<BaseGump>();
 
@@ -66,20 +64,14 @@ namespace Server.Gumps
         public static BaseGump SendGump(BaseGump gump)
         {
             if (gump == null)
-            {
                 return null;
-            }
 
             BaseGump g = gump.User.FindGump(gump.GetType()) as BaseGump;
 
             if (g == gump)
-            {
                 gump.Refresh();
-            }
             else
-            {
                 gump.SendGump();
-            }
 
             return gump;
         }
@@ -136,9 +128,7 @@ namespace Server.Gumps
             OnBeforeRefresh();
 
             if (User == null || User.NetState == null)
-            {
                 return;
-            }
 
             if (close)
             {
@@ -163,14 +153,10 @@ namespace Server.Gumps
         public void RefreshParent(bool resend = false)
         {
             if (Parent is BaseGump gump)
-            {
                 gump.Refresh();
-            }
 
             if (resend)
-            {
                 Refresh();
-            }
         }
 
         public virtual void OnBeforeRefresh()
@@ -214,9 +200,7 @@ namespace Server.Gumps
             OnResponse(info);
 
             if (info.ButtonID == 0)
-            {
                 OnClosed();
-            }
         }
 
         public virtual void OnResponse(RelayInfo info)
@@ -231,9 +215,7 @@ namespace Server.Gumps
         public virtual void Close()
         {
             if (User == null || User.NetState == null)
-            {
                 return;
-            }
 
             OnServerClose(User.NetState);
 
@@ -529,9 +511,7 @@ namespace Server.Gumps
             for (int i = 0; i < args.Length; i++)
             {
                 if (i >= Spoof.EmptyClilocs.Length)
-                {
                     break;
-                }
 
                 clilocs[i] = Spoof.EmptyClilocs[i];
             }

@@ -89,16 +89,12 @@ namespace Server.Spells.SkillMasteries
         public override void OnHit(Mobile defender, ref int damage)
         {
             if (SpecialMove.GetCurrentMove(Caster) != null)
-            {
                 return;
-            }
 
             damage = damage + (int)(damage * (_DamageBonus / 100.0));
 
             if (defender is PlayerMobile && damage > 100)
-            {
                 damage = 100;
-            }
         }
 
         public static int GetHitChanceBonus(Mobile m)

@@ -53,16 +53,12 @@ namespace Server.Items
         public static void AddContextMenuEntries(Mobile from, Item item, List<ContextMenuEntry> list)
         {
             if (!item.IsChildOf(from.Backpack) && item.Parent != from)
-            {
                 return;
-            }
 
             PlayerMobile pm = from as PlayerMobile;
 
             if (pm == null)
-            {
                 return;
-            }
 
             list.Add(new ToggleClippings(pm, true, false, false, 1112282)); //Set to clip plants
             list.Add(new ToggleClippings(pm, false, true, false, 1112283)); //Set to cut reeds
@@ -162,9 +158,7 @@ namespace Server.Items
             else
             {
                 if (from != null)
-                {
                     from.SendLocalizedMessage(1112126); // Your clippers break as you use up the last charge..
-                }
 
                 Delete();
             }

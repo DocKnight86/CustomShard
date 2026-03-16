@@ -59,9 +59,7 @@ namespace Server.Mobiles
         public override bool OnBeforeDeath()
         {
             if (!base.OnBeforeDeath())
-            {
                 return false;
-            }
 
             // 1 in 20 chance that a Thread of Fate will appear in the killer's pack
 

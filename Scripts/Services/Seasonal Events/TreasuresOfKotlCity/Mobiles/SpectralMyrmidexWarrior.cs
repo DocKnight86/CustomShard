@@ -66,9 +66,7 @@ namespace Server.Mobiles
         public override bool IsEnemy(Mobile m)
         {
             if (m is SpectralKotlWarrior)
-            {
                 return true;
-            }
 
             return base.IsEnemy(m);
         }

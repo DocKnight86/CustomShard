@@ -40,24 +40,16 @@ namespace Server.Items
             if (info != null)
             {
                 if (info.Rarity == DawnsMusicRarity.Common)
-                {
                     list.Add(1075204); // Gear for Dawn's Music Box (Common)
-                }
                 else if (info.Rarity == DawnsMusicRarity.Uncommon)
-                {
                     list.Add(1075205); // Gear for Dawn's Music Box (Uncommon)
-                }
                 else if (info.Rarity == DawnsMusicRarity.Rare)
-                {
                     list.Add(1075206); // Gear for Dawn's Music Box (Rare)
-                }
 
                 list.Add(info.Name);
             }
             else
-            {
                 base.AddNameProperty(list);
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -95,17 +87,11 @@ namespace Server.Items
                 double rand = Utility.RandomDouble();
 
                 if (rand < 0.025)
-                {
                     rarity = DawnsMusicRarity.Rare;
-                }
                 else if (rand < 0.225)
-                {
                     rarity = DawnsMusicRarity.Uncommon;
-                }
                 else
-                {
                     rarity = DawnsMusicRarity.Common;
-                }
 
                 m_Music = DawnsMusicBox.RandomTrack(rarity);
             }
@@ -123,9 +109,7 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Gear == null || m_Gear.Deleted)
-                {
                     return;
-                }
 
                 if (targeted is DawnsMusicBox box)
                 {
@@ -139,14 +123,10 @@ namespace Server.Items
                         from.SendLocalizedMessage(1071961); // This song has been added to the musicbox.
                     }
                     else
-                    {
                         from.SendLocalizedMessage(1071962); // This song track is already in the musicbox.
-                    }
                 }
                 else
-                {
                     from.SendLocalizedMessage(1071964); // Gears can only be put into a musicbox.
-                }
             }
         }
     }

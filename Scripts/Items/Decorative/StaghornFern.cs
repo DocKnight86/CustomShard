@@ -59,9 +59,7 @@ namespace Server.Items
         private void FixMovingCrate()
         {
             if (Deleted)
-            {
                 return;
-            }
 
             if (Movable || IsLockedDown)
             {
@@ -130,9 +128,7 @@ namespace Server.Items
             IPoint3D p = targeted as IPoint3D;
 
             if (p == null)
-            {
                 return;
-            }
 
             Point3D loc = new Point3D(p);
 
@@ -160,17 +156,11 @@ namespace Server.Items
                 int itemID = 0;
 
                 if (northWall)
-                {
                     itemID = 0x9964;
-                }
                 else if (westWall)
-                {
                     itemID = 0x9965;
-                }
                 else
-                {
                     from.SendLocalizedMessage(1042626); // The trophy must be placed next to a wall.
-                }
 
                 if (itemID > 0)
                 {

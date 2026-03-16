@@ -75,7 +75,7 @@ namespace Server.Spells.SkillMasteries
             }
             else if (CheckSequence())
             {
-                int level = GetMasteryLevel();
+                var level = GetMasteryLevel();
                 double skill = Caster.Skills[CastSkill].Value * 1.5 + Caster.Skills[DamageSkill].Value;
                 double duration = (skill + level * 50) * 2;
 

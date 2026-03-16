@@ -50,14 +50,10 @@ namespace Server.Items
             BaseWeapon weapon = from.Weapon as BaseWeapon;
 
             if (weapon != null && (weapon.PrimaryAbility == this || weapon.PrimaryAbility == Bladeweave))
-            {
                 return 70.0;
-            }
 
             if (weapon != null && (weapon.SecondaryAbility == this || weapon.SecondaryAbility == Bladeweave))
-            {
                 return 90.0;
-            }
 
             return 200.0;
         }
@@ -65,21 +61,15 @@ namespace Server.Items
         public virtual double GetRequiredSecondarySkill(Mobile from)
         {
             if (!RequiresSecondarySkill(from))
-            {
                 return 0.0;
-            }
 
             BaseWeapon weapon = from.Weapon as BaseWeapon;
 
             if (weapon != null && (weapon.PrimaryAbility == this || weapon.PrimaryAbility == Bladeweave))
-            {
                 return 30.0;
-            }
 
             if (weapon != null && (weapon.SecondaryAbility == this || weapon.SecondaryAbility == Bladeweave))
-            {
                 return 60.0;
-            }
 
             return 200.0;
         }
@@ -96,13 +86,9 @@ namespace Server.Items
             double skillTotal = GetSkillTotal(from);
 
             if (skillTotal >= 300.0)
-            {
                 mana -= 10;
-            }
             else if (skillTotal >= 200.0)
-            {
                 mana -= 5;
-            }
 
             double scalar = 1.0;
 
@@ -123,9 +109,7 @@ namespace Server.Items
 
             // Using a special move within 3 seconds of the previous special move costs double mana 
             if (GetContext(from) != null)
-            {
                 mana *= 2;
-            }
 
             return mana;
         }
@@ -135,9 +119,7 @@ namespace Server.Items
             BaseWeapon weapon = from.Weapon as BaseWeapon;
 
             if (weapon == null)
-            {
                 return false;
-            }
 
             Skill skill = from.Skills[weapon.Skill];
 
@@ -162,15 +144,11 @@ namespace Server.Items
             }
 
             if (skill != null && skill.Base >= reqSkill)
-            {
                 return true;
-            }
 
             /* <UBWS> */
             if (weapon.WeaponAttributes.UseBestSkill > 0 && (from.Skills[SkillName.Swords].Base >= reqSkill || from.Skills[SkillName.Macing].Base >= reqSkill || from.Skills[SkillName.Fencing].Base >= reqSkill))
-            {
                 return true;
-            }
             /* </UBWS> */
 
             from.SendLocalizedMessage(1060182, reqSkill.ToString()); // You need ~1_SKILL_REQUIREMENT~ weapon skill to perform that attack
@@ -211,9 +189,7 @@ namespace Server.Items
             Skill skill = from.Skills[skillName];
 
             if (skill == null)
-            {
                 return 0.0;
-            }
 
             return skill.Value;
         }
@@ -239,13 +215,9 @@ namespace Server.Items
                 }
 
                 if (ManaPhasingOrb.IsInManaPhase(from))
-                {
                     ManaPhasingOrb.RemoveFromTable(from);
-                }
                 else
-                {
                     from.Mana -= mana;
-                }
 
                 CrazedMage.ManaCorruption(from, BaseMana);
             }
@@ -256,16 +228,12 @@ namespace Server.Items
         public virtual bool Validate(Mobile from)
         {
             if (!from.Player && CheckMana(from, false))
-            {
                 return true;
-            }
 
             NetState state = from.NetState;
 
             if (state == null)
-            {
                 return false;
-            }
 
             if (Spells.Bushido.HonorableExecution.IsUnderPenalty(from) || Spells.Ninjitsu.AnimalForm.UnderTransformation(from))
             {
@@ -435,21 +403,15 @@ namespace Server.Items
             m_Table.Remove(m);
 
             if (m.NetState != null)
-            {
                 m.Send(ClearWeaponAbilityPacket.Instance);
-            }
         }
 
         public static void SetWeaponAbility(Mobile m, int index)
         {
             if (index == 0)
-            {
                 ClearCurrentAbility(m);
-            }
             else if (index >= 1 && index < m_Abilities.Length)
-            {
                 SetCurrentAbility(m, m_Abilities[index]);
-            }
         }
 
         private static readonly Hashtable m_PlayersTable = new Hashtable();

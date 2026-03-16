@@ -20,30 +20,20 @@ namespace Server.Gumps
         private void Parse(XmlTextReader xml)
         {
             if (xml.MoveToAttribute("name"))
-            {
                 m_Name = xml.Value;
-            }
             else
-            {
                 m_Name = "empty";
-            }
 
             int x = 0, y = 0, z = 0;
 
             if (xml.MoveToAttribute("x"))
-            {
                 x = Utility.ToInt32(xml.Value);
-            }
 
             if (xml.MoveToAttribute("y"))
-            {
                 y = Utility.ToInt32(xml.Value);
-            }
 
             if (xml.MoveToAttribute("z"))
-            {
                 z = Utility.ToInt32(xml.Value);
-            }
 
             m_Location = new Point3D(x, y, z);
         }

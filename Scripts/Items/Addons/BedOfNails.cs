@@ -20,9 +20,7 @@ namespace Server.Items
             bool allow = base.OnMoveOver(m);
 
             if (allow && Addon is BedOfNailsAddon addon)
-            {
                 addon.OnMoveOver(m);
-            }
 
             return allow;
         }
@@ -68,19 +66,13 @@ namespace Server.Items
                 if (m.Player)
                 {
                     if (m.Female)
-                    {
                         Effects.PlaySound(Location, Map, Utility.RandomMinMax(0x53B, 0x53D));
-                    }
                     else
-                    {
                         Effects.PlaySound(Location, Map, Utility.RandomMinMax(0x53E, 0x540));
-                    }
                 }
 
                 if (m_Timer == null || !m_Timer.Running)
-                {
                     (m_Timer = new InternalTimer(m)).Start();
-                }
             }
 
             return true;

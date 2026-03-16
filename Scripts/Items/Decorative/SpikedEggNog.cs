@@ -29,16 +29,12 @@ namespace Server.Items
         public bool CheckAccessible(Mobile from, Item item)
         {
             if (from.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return true; // Staff can access anything
-            }
 
             BaseHouse house = BaseHouse.FindHouseAt(item);
 
             if (house == null)
-            {
                 return false;
-            }
 
             switch (Level)
             {
@@ -145,9 +141,7 @@ namespace Server.Items
                     m_Item.DoBleed(m_Mobile);
 
                     if (++m_Count == m_MaxCount)
-                    {
                         m_Item.EndBleed(m_Mobile);
-                    }
                 }
             }
         }

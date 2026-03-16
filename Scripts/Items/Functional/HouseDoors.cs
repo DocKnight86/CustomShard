@@ -130,13 +130,9 @@ namespace Server.Items
             Point3D loc;
 
             if (Open)
-            {
                 loc = new Point3D(X - Offset.X, Y - Offset.Y, Z - Offset.Z);
-            }
             else
-            {
                 loc = Location;
-            }
 
             return BaseHouse.FindHouseAt(loc, Map, 20);
         }
@@ -146,14 +142,10 @@ namespace Server.Items
             BaseHouse house = FindHouse();
 
             if (house == null)
-            {
                 return false;
-            }
 
             if (house.Public ? house.IsBanned(m) : !house.HasAccess(m))
-            {
                 return false;
-            }
 
             return house.HasSecureAccess(m, m_Level);
         }
@@ -163,9 +155,7 @@ namespace Server.Items
             BaseHouse house = FindHouse();
 
             if (house != null && house.IsFriend(from) && from.IsPlayer() && house.RefreshDecay())
-            {
                 from.SendLocalizedMessage(1043293); // Your house's age and contents have been refreshed.
-            }
         }
 
         public override bool UseLocks()
@@ -178,13 +168,9 @@ namespace Server.Items
         public override void Use(Mobile from)
         {
             if (from.AccessLevel == AccessLevel.Player && !CheckAccess(from))
-            {
                 from.SendLocalizedMessage(1061637); // You are not allowed to access 
-            }
             else
-            {
                 base.Use(from);
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -214,9 +200,7 @@ namespace Server.Items
                 case 0:
                     {
                         if (version < 1)
-                        {
                             m_Level = SecureLevel.Anyone;
-                        }
 
                         m_Facing = (DoorFacing)reader.ReadInt();
                         break;

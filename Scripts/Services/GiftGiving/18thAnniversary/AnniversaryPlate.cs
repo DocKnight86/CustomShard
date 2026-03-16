@@ -17,13 +17,9 @@ namespace Server.Items
         public AnniversaryPlate(Mobile m) : base(0x9BC8)
         {
             if (m != null && .01 > Utility.RandomDouble())
-            {
                 LabelType = $"{m.Name} first adventure in Britannia!"; // No Cliloc???
-            }
             else
-            {
                 LabelType = Utility.RandomMinMax(1156150, 1156157);
-            }
         }
 
         public override void AddNameProperty(ObjectPropertyList list)
@@ -31,13 +27,9 @@ namespace Server.Items
             list.Add(1156149); // An Ornately Decorated Commemorative Plate
 
             if (LabelType.Number > 0)
-            {
                 list.Add(1062613, $"#{LabelType.Number}");
-            }
             else if (LabelType.String != null)
-            {
                 list.Add(1062613, LabelType.String);
-            }
         }
 
         public override void GetProperties(ObjectPropertyList list)
@@ -45,13 +37,9 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (LabelType.Number > 0)
-            {
                 list.Add(LabelType.Number);
-            }
             else if (LabelType.String != null)
-            {
                 list.Add(LabelType.String);
-            }
         }
 
         public AnniversaryPlate(Serial serial) : base(serial)

@@ -52,9 +52,7 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
-            {
                 list.Add(1076218); // 2nd Year Veteran Reward
-            }
         }
 
         void IChopable.OnChop(Mobile user)
@@ -74,14 +72,10 @@ namespace Server.Items
                     from.SendGump(new RewardDemolitionGump(this, 1018318)); // Do you wish to re-deed this banner?
                 }
                 else
-                {
                     from.SendLocalizedMessage(1018330); // You can only re-deed a banner if you placed it or you are the owner of the house.
-                }
             }
             else
-            {
                 from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -105,9 +99,7 @@ namespace Server.Items
         public bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
-            {
                 return false;
-            }
 
             Hue = sender.DyedHue;
 
@@ -117,9 +109,7 @@ namespace Server.Items
         public bool CouldFit(IPoint3D p, Map map)
         {
             if (map == null || !map.CanFit(p.X, p.Y, p.Z, ItemData.Height))
-            {
                 return false;
-            }
 
             if (FacingSouth)
             {
@@ -164,13 +154,14 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
-            {
                 list.Add(1076218); // 2nd Year Veteran Reward
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (m_IsRewardItem && !RewardSystem.CheckIsUsableBy(from, this, null))
+                return;
+
             if (IsChildOf(from.Backpack))
             {
                 BaseHouse house = BaseHouse.FindHouseAt(from);
@@ -181,14 +172,10 @@ namespace Server.Items
                     from.SendGump(new InternalGump(this));
                 }
                 else
-                {
                     from.SendLocalizedMessage(502092); // You must be in your house to do 
-                }
             }
             else
-            {
                 from.SendLocalizedMessage(1042038); // You must have the object in your backpack to use it.          	
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -241,29 +228,21 @@ namespace Server.Items
                         AddButton(50 + 60 * j, 50, 0x845, 0x846, itemID, GumpButtonType.Reply, 0);
 
                         if (itemID >= End)
-                        {
                             break;
-                        }
                     }
 
                     if (i > 1)
-                    {
                         AddButton(75, 198, 0x8AF, 0x8AF, 0, GumpButtonType.Page, i - 1);
-                    }
 
                     if (i < 5)
-                    {
                         AddButton(475, 198, 0x8B0, 0x8B0, 0, GumpButtonType.Page, i + 1);
-                    }
                 }
             }
 
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (m_Banner == null || m_Banner.Deleted)
-                {
                     return;
-                }
 
                 Mobile m = sender.Mobile;
 
@@ -292,9 +271,7 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Banner == null || m_Banner.Deleted)
-                {
                     return;
-                }
 
                 if (m_Banner.IsChildOf(from.Backpack))
                 {
@@ -306,9 +283,7 @@ namespace Server.Items
                         Map map = from.Map;
 
                         if (p == null || map == null)
-                        {
                             return;
-                        }
 
                         Point3D p3d = new Point3D(p);
                         ItemData id = TileData.ItemTable[m_ItemID & TileData.MaxItemValue];
@@ -332,13 +307,9 @@ namespace Server.Items
                                     Banner banner = null;
 
                                     if (north)
-                                    {
                                         banner = new Banner(m_ItemID);
-                                    }
                                     else if (west)
-                                    {
                                         banner = new Banner(m_ItemID + 1);
-                                    }
 
                                     house.Addons[banner] = from;
 
@@ -348,29 +319,19 @@ namespace Server.Items
                                     m_Banner.Delete();
                                 }
                                 else
-                                {
                                     from.SendLocalizedMessage(1042039); // The banner must be placed next to a wall.								
-                                }
                             }
                             else
-                            {
                                 from.SendLocalizedMessage(1042036); // That location is not in your house.
-                            }
                         }
                         else
-                        {
                             from.SendLocalizedMessage(500269); // You cannot build that there.		
-                        }
                     }
                     else
-                    {
                         from.SendLocalizedMessage(502092); // You must be in your house to do 
-                    }
                 }
                 else
-                {
                     from.SendLocalizedMessage(1042038); // You must have the object in your backpack to use it.     
-                }
             }
 
             private class FacingGump : Gump
@@ -412,21 +373,14 @@ namespace Server.Items
                 public override void OnResponse(NetState sender, RelayInfo info)
                 {
                     if (m_Banner == null || m_Banner.Deleted || m_House == null)
-                    {
                         return;
-                    }
 
                     Banner banner = null;
 
                     if (info.ButtonID == (int)Buttons.East)
-                    {
                         banner = new Banner(m_ItemID + 1);
-                    }
-
                     if (info.ButtonID == (int)Buttons.South)
-                    {
                         banner = new Banner(m_ItemID);
-                    }
 
                     if (banner != null)
                     {

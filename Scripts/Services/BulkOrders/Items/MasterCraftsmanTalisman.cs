@@ -28,9 +28,7 @@ namespace Server.Items
             list.Add(1157213); // Crafting Failure Protection
 
             if (Charges > 0)
-            {
                 list.Add(1049116, Charges.ToString()); // [ Charges: ~1_CHARGES~ ]
-            }
         }
 
         public MasterCraftsmanTalisman(Serial serial)

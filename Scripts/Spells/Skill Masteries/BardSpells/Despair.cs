@@ -112,16 +112,12 @@ namespace Server.Spells.SkillMasteries
             bool tick = base.OnTick();
 
             if (Target == null || !Caster.InRange(Target.Location, PartyRange))
-            {
                 return false;
-            }
 
             int damage = m_Damage;
 
             if (!Target.Player)
-            {
                 damage += AOS.Scale(damage, 50); // pvm = 1.5x
-            }
 
             damage = (int)(damage * GetSlayerBonus()); // 3.0x slayer bonus
             damage -= (int)(damage * DamageModifier(Target)); // resist modifier
@@ -129,9 +125,7 @@ namespace Server.Spells.SkillMasteries
             AOS.Damage(Target, Caster, damage, 100, 0, 0, 0, 0); // Now only does physical
 
             if (Target != null && Target.Alive && Target.Map != null)
-            {
                 Target.FixedEffect(0x376A, 1, 32);
-            }
 
             if (m_Rounds-- == 0)
             {
@@ -153,9 +147,7 @@ namespace Server.Spells.SkillMasteries
             protected override void OnTarget(Mobile from, object o)
             {
                 if (o is Mobile mobile)
-                {
                     m_Owner.OnTarget(mobile);
-                }
             }
 
             protected override void OnTargetFinish(Mobile from)

@@ -171,9 +171,7 @@ namespace Server.Items
             m_CustomizableSquaredDoorMatType = (DirectionType)choice;
 
             if (!Deleted)
-            {
                 base.OnDoubleClick(from);
-            }
         }
     }
 }

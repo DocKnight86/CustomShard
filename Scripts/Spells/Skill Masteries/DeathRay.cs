@@ -57,9 +57,7 @@ namespace Server.Spells.SkillMasteries
                 return true;
             }
             else
-            {
                 return false;
-            }
         }
 
         protected override void OnTarget(object o)
@@ -105,24 +103,18 @@ namespace Server.Spells.SkillMasteries
         public override void EndEffects()
         {
             if (Target != null && _Mod != null)
-            {
                 Target.RemoveResistanceMod(_Mod);
-            }
 
             BuffInfo.RemoveBuff(Caster, BuffIcon.DeathRay);
 
             if (Target != null)
-            {
                 BuffInfo.RemoveBuff(Target, BuffIcon.DeathRayDebuff);
-            }
         }
 
         public override bool OnTick()
         {
             if (!base.OnTick())
-            {
                 return false;
-            }
 
             if (Target == Caster || !Target.Alive || Caster.Map != Target.Map)
             {

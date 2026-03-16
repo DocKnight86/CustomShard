@@ -27,17 +27,11 @@ namespace Server.Items
             set
             {
                 if (value > MaxCharges)
-                {
                     m_Charges = MaxCharges;
-                }
                 else if (value < 0)
-                {
                     m_Charges = 0;
-                }
                 else
-                {
                     m_Charges = value;
-                }
 
                 InvalidateProperties();
             }
@@ -59,25 +53,15 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!from.InRange(GetWorldLocation(), 2))
-            {
                 from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
-            }
             else if (!from.Region.IsPartOf<HouseRegion>())
-            {
                 from.SendLocalizedMessage(502092); // You must be in your house to do this.
-            }
             else if (!IsLockedDown && !IsSecure)
-            {
                 from.SendLocalizedMessage(1112573); // This must be locked down or secured in order to use it.
-            }
             else if (m_Charges == 0)
-            {
                 from.SendLocalizedMessage(1019073); // This item is out of charges.
-            }
             else if (CheckAccessible(from, this))
-            {
                 from.Target = new SendTarget(this);
-            }
         }
 
         public override void GetProperties(ObjectPropertyList list)
@@ -91,16 +75,12 @@ namespace Server.Items
         public bool CheckAccessible(Mobile from, Item item)
         {
             if (from.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return true; // Staff can access anything
-            }
 
             BaseHouse house = BaseHouse.FindHouseAt(item);
 
             if (house == null)
-            {
                 return false;
-            }
 
             switch (m_Level)
             {
@@ -126,16 +106,12 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Chest.Deleted)
-                {
                     return;
-                }
 
                 Item item = targeted as Item;
 
                 if (item == null || from.Backpack == null)
-                {
                     return;
-                }
 
                 if (!from.Region.IsPartOf<HouseRegion>())
                 {
@@ -145,7 +121,7 @@ namespace Server.Items
                 {
                     from.SendLocalizedMessage(1054107); // This item must be in your backpack.
                 }
-                else if (item is Container || item is ChestOfSending)
+                else if (item is Container || item is BagOfSending || item is ChestOfSending)
                 {
                     from.SendLocalizedMessage(1150420, "#1150424"); // You cannot send a container through the ~1_NAME~.
                 }
@@ -164,7 +140,7 @@ namespace Server.Items
                 {
                     from.SendLocalizedMessage(1150422, "#1150424"); // The ~1_NAME~ will not function while being traded.
                 }
-                else if (!item.VerifyMove(from))
+                else if (!item.VerifyMove(from) || item is Engines.Quests.QuestItem)
                 {
                     from.SendLocalizedMessage(1150421, "#1150424"); // The ~1_NAME~ rejects that item.
                 }
@@ -185,9 +161,7 @@ namespace Server.Items
             base.GetContextMenuEntries(from, list);
 
             if (from.CheckAlive())
-            {
                 list.Add(new UseChestEntry(this, CheckAccessible(from, this)));
-            }
 
             SetSecureLevelEntry.AddTo(from, this, list);
         }
@@ -201,24 +175,18 @@ namespace Server.Items
                 m_Chest = chest;
 
                 if (!enabled)
-                {
                     Flags |= CMEFlags.Disabled;
-                }
             }
 
             public override void OnClick()
             {
                 if (m_Chest.Deleted)
-                {
                     return;
-                }
 
                 Mobile from = Owner.From;
 
                 if (from.CheckAlive())
-                {
                     m_Chest.OnDoubleClick(from);
-                }
             }
         }
 
@@ -253,10 +221,7 @@ namespace Server.Items
                 case 2:
                 case 1:
                     if (version == 1)
-                    {
                         reader.ReadInt();
-                    }
-
                     goto case 0;
                 case 0:
                     m_Level = (SecureLevel)reader.ReadInt();

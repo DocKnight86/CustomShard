@@ -256,18 +256,11 @@ namespace Server.Spells.SkillMasteries
 
             #region Mondain's Legacy
             if (p == Poison.DarkGlow)
-            {
                 p = Poison.GetPoison(10 + Math.Min(maxLevel, 2));
-            }
             else if (p == Poison.Parasitic)
-            {
                 p = Poison.GetPoison(14 + Math.Min(maxLevel, 3));
-            }
             else if (p.Level > maxLevel)
-            {
                 p = Poison.GetPoison(maxLevel);
-            }
-
             #endregion
 
             if (Caster.Skills[SkillName.Poisoning].Value / 100.0 > Utility.RandomDouble() && p.Level < 3)
@@ -296,14 +289,10 @@ namespace Server.Spells.SkillMasteries
             int malus = 30;
 
             if (defender is PlayerMobile)
-            {
                 malus /= 2;
-            }
 
             if (weapon is BaseRanged)
-            {
                 malus /= 2;
-            }
 
             ResistanceMod mod = new ResistanceMod(ResistanceType.Poison, -malus);
             defender.AddResistanceMod(mod);

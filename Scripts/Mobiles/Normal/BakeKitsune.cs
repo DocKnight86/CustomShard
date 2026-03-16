@@ -65,9 +65,7 @@ namespace Server.Mobiles
         public override void OnCombatantChange()
         {
             if (Combatant == null && !IsBodyMod && !Controlled && m_DisguiseTimer == null && Utility.RandomBool())
-            {
                 m_DisguiseTimer = Timer.DelayCall(TimeSpan.FromSeconds(Utility.RandomMinMax(15, 30)), Disguise);
-            }
         }
 
         public override bool OnBeforeDeath()
@@ -83,9 +81,7 @@ namespace Server.Mobiles
         public void Disguise()
         {
             if (Combatant != null || IsBodyMod || Controlled)
-            {
                 return;
-            }
 
             FixedEffect(0x376A, 8, 32);
             PlaySound(0x1FE);
@@ -158,9 +154,7 @@ namespace Server.Mobiles
             Item item = FindItemOnLayer(layer);
 
             if (item != null)
-            {
                 item.Delete();
-            }
         }
 
         #endregion

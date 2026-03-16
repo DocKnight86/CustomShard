@@ -40,9 +40,7 @@ namespace Server.Items
                 m_HasSubmitted = value;
 
                 if (m_HasSubmitted && m_Permits.Contains(this))
-                {
                     m_Permits.Remove(this);
-                }
             }
         }
 
@@ -66,9 +64,7 @@ namespace Server.Items
                     MessageHelper.SendLocalizedMessageTo(this, from, 1155705, 0x45); // Target the kill you wish to document
                 }
                 else
-                {
                     from.SendLocalizedMessage(1155712); // This hunting permit has already documented a kill.
-                }
             }
         }
 
@@ -77,41 +73,27 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_KillEntry == null || m_KillEntry.KillIndex < 0 || m_KillEntry.KillIndex >= HuntingTrophyInfo.Infos.Count)
-            {
                 return;
-            }
 
             HuntingTrophyInfo info = HuntingTrophyInfo.Infos[m_KillEntry.KillIndex];
 
             if (m_Owner != null)
-            {
                 list.Add(1155708, m_Owner.Name); // Hunter: ~1_NAME~
-            }
 
             if (m_KillEntry.DateKilled != DateTime.MinValue)
-            {
                 list.Add(1155709, m_KillEntry.DateKilled.ToShortDateString()); // Date of Kill: ~1_DATE~
-            }
 
             if (m_KillEntry.Location != null)
-            {
                 list.Add(1061114, m_KillEntry.Location); // Location: ~1_val~
-            }
 
             list.Add(1155718, info.Species.ToString());
 
             if (info.MeasuredBy == MeasuredBy.Length)
-            {
                 list.Add(1155711, m_KillEntry.Measurement.ToString()); // Length: ~1_VAL~
-            }
             else if (info.MeasuredBy == MeasuredBy.Wingspan)
-            {
                 list.Add(1155710, m_KillEntry.Measurement.ToString());	// Wingspan: ~1_VAL~
-            }
             else
-            {
                 list.Add(1072789, m_KillEntry.Measurement.ToString()); // Weight: ~1_WEIGHT~
-            }
         }
 
         private class InternalTarget : Target
@@ -129,34 +111,21 @@ namespace Server.Items
                 if (targeted is Corpse c)
                 {
                     if (!from.InRange(c.Location, 3))
-                    {
                         from.SendLocalizedMessage(500446); // That is too far away.
-                    }
-
                     if (c.VisitedByTaxidermist)
-                    {
                         from.SendLocalizedMessage(1042596); // That corpse seems to have been visited by a taxidermist already.
-                    }
                     else if (!m_Permit.IsChildOf(from.Backpack))
-                    {
                         from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
-                    }
                     else if (c.Owner == null)
-                    {
                         from.SendLocalizedMessage(1155706); // That is not a valid kill.
-                    }
                     else if (!IsOnlyAttacker(from, c.Owner))
-                    {
                         from.SendLocalizedMessage(1155707);	  // You cannot document someone else's kill.
-                    }
                     else
                     {
                         Type t = c.Owner.GetType();
 
                         if (t == typeof(RagingGrizzlyBear)) // Bandaid Fix, we'll keep this until others arise
-                        {
                             t = typeof(GrizzlyBear);
-                        }
 
                         for (int i = 0; i < HuntingTrophyInfo.Infos.Count; i++)
                         {
@@ -211,9 +180,7 @@ namespace Server.Items
             base.Delete();
 
             if (m_Permits.Contains(this))
-            {
                 m_Permits.Remove(this);
-            }
         }
 
         public static bool HasPermit(Mobile from)
@@ -251,9 +218,7 @@ namespace Server.Items
                 m_KillEntry.Serialize(writer);
             }
             else
-            {
                 writer.Write(0);
-            }
         }
 
         public override void Deserialize(GenericReader reader)
@@ -266,14 +231,10 @@ namespace Server.Items
             m_HasSubmitted = reader.ReadBool();
 
             if (reader.ReadInt() == 1)
-            {
                 m_KillEntry = new HuntingKillEntry(reader);
-            }
 
             if (m_Owner != null && !m_HasSubmitted)
-            {
                 m_Permits.Add(this);
-            }
         }
     }
 }

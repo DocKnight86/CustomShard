@@ -26,14 +26,10 @@ namespace Server.Engines.Doom
         public override void OnEnter(Mobile m)
         {
             if (m == null || m is WandererOfTheVoid)
-            {
                 return;
-            }
 
             if (m.IsStaff())
-            {
                 return;
-            }
 
             if (Controller.Successful != null)
             {
@@ -56,9 +52,7 @@ namespace Server.Engines.Doom
         public override void OnExit(Mobile m)
         {
             if (m != null && m == Controller.Successful)
-            {
                 Controller.RemoveSuccessful();
-            }
         }
 
         public override void OnDeath(Mobile m)
@@ -97,27 +91,20 @@ namespace Server.Engines.Doom
             get
             {
                 if (m_Occupant != null && m_Occupant.Alive)
-                {
                     return m_Occupant;
-                }
-
                 return null;
             }
         }
         public override void OnEnter(Mobile m)
         {
             if (m != null && m_Occupant == null && m is PlayerMobile && m.Alive)
-            {
                 m_Occupant = m;
-            }
         }
 
         public override void OnExit(Mobile m)
         {
             if (m != null && m == m_Occupant)
-            {
                 m_Occupant = null;
-            }
         }
     }
 }

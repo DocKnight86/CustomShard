@@ -180,14 +180,10 @@ namespace Server.Mobiles
         public bool Devour(Corpse corpse)
         {
             if (corpse == null || corpse.Owner == null) // sorry we can't devour because the corpse's owner is null
-            {
                 return false;
-            }
 
             if (corpse.Owner.Body.IsHuman)
-            {
                 corpse.TurnToBones(); // Not bones yet, and we are a human body therefore we turn to bones.
-            }
 
             IncreaseHits((int)Math.Ceiling(corpse.Owner.HitsMax * 0.75));
             m_DevourTotal++;
@@ -210,9 +206,7 @@ namespace Server.Mobiles
             int maxhits = 2000;
 
             if (IsParagon)
-            {
                 maxhits = (int)(maxhits * Paragon.HitsBuff);
-            }
 
             if (HitsMaxSeed >= maxhits)
             {

@@ -32,25 +32,15 @@ namespace Server.Items
         private void SetHue()
         {
             if (Type == SBType.Bedlam)
-            {
                 Hue = 2611;
-            }
             else if (Type == SBType.BlueBoar)
-            {
                 Hue = 2514;
-            }
             else if (Type == SBType.DrunkMans)
-            {
                 Hue = 2659;
-            }
             else if (Type == SBType.DrunkWomans)
-            {
                 Hue = 2596;
-            }
             else
-            {
                 Hue = 2554;
-            }
         }
 
         public override int SoundList()
@@ -58,25 +48,15 @@ namespace Server.Items
             int sound = 0;
 
             if (Type == SBType.Bedlam)
-            {
                 sound = Utility.RandomList(897, 1005, 889, 1001, 1002, 1004, 1005, 894, 893, 889, 1003);
-            }
             else if (Type == SBType.BlueBoar)
-            {
                 sound = Utility.RandomList(1073, 1085, 811, 799, 1066, 794, 801, 1075, 803, 811, 1071);
-            }
             else if (Type == SBType.DrunkMans)
-            {
                 sound = Utility.RandomMinMax(1049, 1098);
-            }
             else if (Type == SBType.DrunkWomans)
-            {
                 sound = Utility.RandomMinMax(778, 823);
-            }
             else
-            {
                 sound = Utility.RandomList(1218, 751, 629, 1226, 1305, 1246, 1019, 1508, 674, 1241);
-            }
 
             return sound;
         }

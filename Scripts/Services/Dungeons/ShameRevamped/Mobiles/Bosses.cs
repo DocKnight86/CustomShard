@@ -21,9 +21,7 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (Altar != null)
-            {
                 Altar.OnGuardianKilled();
-            }
 
             c.DropItem(new ShameCrystal(Utility.RandomMinMax(3, 5)));
 
@@ -33,26 +31,18 @@ namespace Server.Mobiles
         public override int Damage(int amount, Mobile from, bool informMount, bool checkfizzle)
         {
             if (from == null)
-            {
                 return 0;
-            }
 
             if (Altar == null || Altar.Summoner == null)
-            {
                 amount = base.Damage(amount, from, informMount, checkfizzle);
-            }
             else
             {
                 bool good = false;
 
                 if (from == Altar.Summoner || Altar.DeadLine > DateTime.UtcNow && Altar.DeadLine - DateTime.UtcNow < TimeSpan.FromMinutes(10))
-                {
                     good = true;
-                }
                 else if (from is BaseCreature creature && creature.GetMaster() == Altar.Summoner)
-                {
                     good = true;
-                }
                 else if (ShameAltar.AllowParties)
                 {
                     Party p = Engines.PartySystem.Party.Get(from);
@@ -68,9 +58,7 @@ namespace Server.Mobiles
                 }
 
                 if (good)
-                {
                     amount = base.Damage(amount, from, informMount, checkfizzle);
-                }
                 else
                 {
                     amount = 0;
@@ -150,9 +138,7 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (c.Map != null && c.Map.Rules == MapRules.FeluccaRules || 0.5 > Utility.RandomDouble())
-            {
                 c.DropItem(new QuartzGrit());
-            }
         }
 
         public QuartzElemental(Serial serial)
@@ -236,9 +222,7 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (c.Map != null && c.Map.Rules == MapRules.FeluccaRules || 0.5 > Utility.RandomDouble())
-            {
                 c.DropItem(new CorrosiveAsh());
-            }
         }
 
         public FlameElemental(Serial serial)
@@ -311,9 +295,7 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (c.Map != null && c.Map.Rules == MapRules.FeluccaRules || 0.5 > Utility.RandomDouble())
-            {
                 c.DropItem(new CursedOilstone());
-            }
         }
 
         public WindElemental(Serial serial)

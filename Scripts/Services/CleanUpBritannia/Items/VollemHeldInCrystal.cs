@@ -22,13 +22,9 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (IsChildOf(from.Backpack))
-            {
                 from.SendGump(new ConfirmBreakCrystalGump(this));
-            }
             else
-            {
                 from.SendLocalizedMessage(1010095); // This must be on your person to use.
-            }
         }
 
         public VollemHeldInCrystal(Serial serial)

@@ -25,9 +25,7 @@ namespace Server.Engines.NewMagincia
             MaginciaLottoSystem system = MaginciaLottoSystem.Instance;
 
             if (system == null || !system.Enabled || m_Plot == null)
-            {
                 return;
-            }
 
             if (from.InRange(Location, 4))
             {
@@ -37,22 +35,16 @@ namespace Server.Engines.NewMagincia
                     from.SendGump(new MaginciaLottoGump(from, m_Plot));
                 }
                 else if (!m_Plot.IsAvailable)
-                {
                     from.SendMessage("The lottory for this lot has ended.");
-                }
                 else
-                {
                     from.SendMessage("The lottory for this lot has expired.  Check back soon!");
-                }
             }
         }
 
         public override void OnAfterDelete()
         {
             if (m_Plot != null)
-            {
                 MaginciaLottoSystem.UnregisterPlot(m_Plot);
-            }
 
             base.OnAfterDelete();
         }

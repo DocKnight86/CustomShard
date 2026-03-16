@@ -19,16 +19,12 @@ namespace Server.Items
         public override bool CheckSkills(Mobile from)
         {
             if (!base.CheckSkills(from))
-            {
                 return false;
-            }
 
             Skill skill = from.Skills[SkillName.Stealth];
 
             if (skill != null && skill.Value >= 80.0)
-            {
                 return true;
-            }
 
             from.SendLocalizedMessage(1060183); // You lack the required stealth to perform that attack
 
@@ -38,9 +34,7 @@ namespace Server.Items
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
             if (!Validate(attacker) || !CheckMana(attacker, true))
-            {
                 return;
-            }
 
             ClearCurrentAbility(attacker);
 

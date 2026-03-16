@@ -76,9 +76,7 @@ namespace Server.Gumps
             Mobile from = sender.Mobile;
 
             if (from.AccessLevel < AccessLevel.Administrator)
-            {
                 return;
-            }
 
             TextRelay d = info.GetTextEntry(0);
             TextRelay h = info.GetTextEntry(1);
@@ -233,9 +231,7 @@ namespace Server.Gumps
                     comment = c.Text.Trim();
 
                     if (comment.Length == 0)
-                    {
                         comment = null;
-                    }
                 }
 
                 for (int i = 0; i < m_List.Count; ++i)
@@ -245,19 +241,13 @@ namespace Server.Gumps
                     a.SetBanTags(from, DateTime.UtcNow, duration);
 
                     if (comment != null)
-                    {
                         a.Comments.Add(new AccountComment(from.RawName, $"Duration: {(duration == TimeSpan.MaxValue ? "Infinite" : duration.ToString())}, Comment: {comment}"));
-                    }
                 }
 
                 if (duration == TimeSpan.MaxValue)
-                {
                     from.SendMessage("Ban Duration: Infinite");
-                }
                 else
-                {
                     from.SendMessage("Ban Duration: {0}", duration);
-                }
             }
             else
             {

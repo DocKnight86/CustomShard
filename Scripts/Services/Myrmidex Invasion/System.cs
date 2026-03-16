@@ -35,9 +35,7 @@ namespace Server.Engines.MyrmidexInvasion
             AllianceEntry entry = GetEntry(pm);
 
             if (entry != null)
-            {
                 AllianceEntries.Remove(entry);
-            }
 
             pm.SendLocalizedMessage(1156636, $"#{(int)type}"); // You have declared allegiance to the ~1_SIDE~!  You may only change your allegiance once every 2 hours.
 
@@ -153,9 +151,7 @@ namespace Server.Engines.MyrmidexInvasion
                                 mobile.SendGump(new PropertiesGump(mobile, entry));
                             }
                             else
-                            {
                                 e.Mobile.SendMessage("They don't belong to an alliance.");
-                            }
                         }
                     });
             });
@@ -194,9 +190,7 @@ namespace Server.Engines.MyrmidexInvasion
                        AllianceEntry entry = new AllianceEntry(reader);
 
                        if (entry.Player != null)
-                       {
                            AllianceEntries.Add(entry);
-                       }
                    }
 
                    MoonstonePowerGeneratorAddon.Boss = reader.ReadMobile() as Zipactriotl;

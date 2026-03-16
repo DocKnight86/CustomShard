@@ -116,9 +116,9 @@ namespace Server.Items
 
         private static bool IsSnake(BaseCreature bc)
         {
-            for (int index = 0; index < m_SnakeTypes.Length; index++)
+            for (var index = 0; index < m_SnakeTypes.Length; index++)
             {
-                Type t = m_SnakeTypes[index];
+                var t = m_SnakeTypes[index];
 
                 if (t == bc.GetType())
                 {

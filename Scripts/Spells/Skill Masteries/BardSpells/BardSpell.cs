@@ -33,40 +33,16 @@ namespace Server.Spells.SkillMasteries
                 {
                     default: return 0.0;
                     case SkillName.Provocation:
-                        if (peac >= 100)
-                        {
-                            bonus += 1 + ((peac - 100) / 10);
-                        }
-
-                        if (disc >= 100)
-                        {
-                            bonus += 1 + ((disc - 100) / 10);
-                        }
-
+                        if (peac >= 100) bonus += 1 + ((peac - 100) / 10);
+                        if (disc >= 100) bonus += 1 + ((disc - 100) / 10);
                         break;
                     case SkillName.Peacemaking:
-                        if (prov >= 100)
-                        {
-                            bonus += 1 + ((peac - 100) / 10);
-                        }
-
-                        if (disc >= 100)
-                        {
-                            bonus += 1 + ((disc - 100) / 10);
-                        }
-
+                        if (prov >= 100) bonus += 1 + ((peac - 100) / 10);
+                        if (disc >= 100) bonus += 1 + ((disc - 100) / 10);
                         break;
                     case SkillName.Discordance:
-                        if (prov >= 100)
-                        {
-                            bonus += 1 + ((peac - 100) / 10);
-                        }
-
-                        if (peac >= 100)
-                        {
-                            bonus += 1 + ((disc - 100) / 10);
-                        }
-
+                        if (prov >= 100) bonus += 1 + ((peac - 100) / 10);
+                        if (peac >= 100) bonus += 1 + ((disc - 100) / 10);
                         break;
                 }
 
@@ -89,9 +65,7 @@ namespace Server.Spells.SkillMasteries
             int mana = ScaleMana(RequiredMana);
 
             if (!base.CheckCast())
-            {
                 return false;
-            }
 
             m_Instrument = BaseInstrument.GetInstrument(Caster);
 
@@ -145,16 +119,12 @@ namespace Server.Spells.SkillMasteries
         public static int GetMasteryBonus(PlayerMobile pm, SkillName useSkill)
         {
             if (useSkill == pm.Skills.CurrentMastery)
-            {
                 return 10;
-            }
 
             if (pm.Skills.CurrentMastery == SkillName.Provocation
                 || pm.Skills.CurrentMastery == SkillName.Discordance
                 || pm.Skills.CurrentMastery == SkillName.Peacemaking)
-            {
                 return 5;
-            }
 
             return 0;
         }
@@ -162,9 +132,7 @@ namespace Server.Spells.SkillMasteries
         public virtual double GetSlayerBonus()
         {
             if (Target == null)
-            {
                 return 1.0;
-            }
 
             ISlayer slayer = Instrument;
 
@@ -184,7 +152,7 @@ namespace Server.Spells.SkillMasteries
 
         public override int GetUpkeep()
         {
-            int upkeep = base.GetUpkeep();
+            var upkeep = base.GetUpkeep();
 
             if (CastSkill != SkillName.Provocation && Caster.Skills[SkillName.Provocation].Base > 100.0)
             {

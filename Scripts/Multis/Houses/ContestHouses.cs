@@ -62,7 +62,7 @@ namespace Server.Multis
 
             if (Fixtures != null)
             {
-                for (int index = 0; index < Fixtures.Count; index++)
+                for (var index = 0; index < Fixtures.Count; index++)
                 {
                     Item item = Fixtures[index];
 
@@ -81,7 +81,7 @@ namespace Server.Multis
 
             if (Fixtures != null)
             {
-                for (int index = 0; index < Fixtures.Count; index++)
+                for (var index = 0; index < Fixtures.Count; index++)
                 {
                     Item item = Fixtures[index];
 
@@ -96,7 +96,7 @@ namespace Server.Multis
 
             if (Fixtures != null)
             {
-                for (int index = 0; index < Fixtures.Count; index++)
+                for (var index = 0; index < Fixtures.Count; index++)
                 {
                     Item item = Fixtures[index];
 
@@ -140,7 +140,7 @@ namespace Server.Multis
 
                 if (Fixtures != null)
                 {
-                    for (int index = 0; index < Fixtures.Count; index++)
+                    for (var index = 0; index < Fixtures.Count; index++)
                     {
                         Item fixture = Fixtures[index];
 
@@ -164,7 +164,7 @@ namespace Server.Multis
 
             Dictionary<int, List<MultiTileEntry>> teleporters = new Dictionary<int, List<MultiTileEntry>>();
 
-            for (int index = 0; index < components.List.Length; index++)
+            for (var index = 0; index < components.List.Length; index++)
             {
                 MultiTileEntry entry = components.List[index];
 
@@ -203,13 +203,13 @@ namespace Server.Multis
                 }
             }
 
-            for (int index = 0; index < Doors.Count; index++)
+            for (var index = 0; index < Doors.Count; index++)
             {
                 Item item = Doors[index];
 
                 if (item is BaseDoor door)
                 {
-                    for (int i = 0; i < Doors.Count; i++)
+                    for (var i = 0; i < Doors.Count; i++)
                     {
                         Item houseDoor = Doors[i];
 
@@ -257,7 +257,7 @@ namespace Server.Multis
 
             if (Fixtures != null)
             {
-                for (int index = 0; index < Fixtures.Count; index++)
+                for (var index = 0; index < Fixtures.Count; index++)
                 {
                     Item item = Fixtures[index];
                     writer.Write(item);

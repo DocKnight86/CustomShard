@@ -37,10 +37,7 @@ namespace Server.Items
                 m_Hue = value;
                 // set any invalid pigment hue to Plain
                 if (m_Hue != PlantPigmentHueInfo.GetInfo(m_Hue).PlantPigmentHue)
-                {
                     m_Hue = PlantPigmentHue.Plain;
-                }
-
                 Hue = PlantPigmentHueInfo.GetInfo(m_Hue).Hue;
                 InvalidateProperties();
             }
@@ -73,13 +70,9 @@ namespace Server.Items
             PlantPigmentHueInfo hueInfo = PlantPigmentHueInfo.GetInfo(m_Hue);
 
             if (Amount > 1)
-            {
                 list.Add(PlantPigmentHueInfo.IsBright(m_Hue) ? 1113277 : 1113276, "{0}\t{1}", Amount, "#" + hueInfo.Name);  // ~1_COLOR~ Softened Reeds
-            }
             else
-            {
                 list.Add(hueInfo.IsBright() ? 1112138 : 1112137, "#" + hueInfo.Name);  // ~1_COLOR~ natural dye
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -125,9 +118,7 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Item.Deleted)
-                {
                     return;
-                }
 
                 if (targeted is Item item)
                 {
@@ -190,13 +181,9 @@ namespace Server.Items
                         from.PlaySound(0x23E);
 
                         if (--m_Item.UsesRemaining > 0)
-                        {
                             m_Item.InvalidateProperties();
-                        }
                         else
-                        {
                             m_Item.Delete();
-                        }
 
                         return;
                     }

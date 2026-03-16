@@ -34,9 +34,7 @@ namespace Server.Items
                 from.SendLocalizedMessage(1072612); // Target the Parrot Perch you wish to place this Parrot upon.
             }
             else
-            {
                 from.SendLocalizedMessage(1042004); // That must be in your pack for you to use it.
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -83,24 +81,16 @@ namespace Server.Items
                                 m_Parrot.Delete();
                             }
                             else
-                            {
                                 from.SendLocalizedMessage(1072616); //That Parrot Perch already has a Parrot.
-                            }
                         }
                         else
-                        {
                             from.SendLocalizedMessage(1072618); //Parrots can only be placed on Parrot Perches in houses where you are an owner or co-owner.	
-                        }
                     }
                     else
-                    {
                         from.SendLocalizedMessage(1072614); //You must place the Parrot on a Parrot Perch.
-                    }
                 }
                 else
-                {
                     from.SendLocalizedMessage(1072614); //You must place the Parrot on a Parrot Perch.
-                }
             }
 
             protected override void OnTargetOutOfRange(Mobile from, object targeted)

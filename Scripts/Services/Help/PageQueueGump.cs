@@ -26,9 +26,7 @@ namespace Server.Engines.Help
             AddBackground(0, 0, 92, 75, 0xA3C);
 
             if (mobile != null && mobile.NetState != null && mobile.NetState.IsEnhancedClient)
-            {
                 AddBackground(5, 7, 82, 61, 9300);
-            }
             else
             {
                 AddImageTiled(5, 7, 82, 61, 0xA40);
@@ -58,9 +56,7 @@ namespace Server.Engines.Help
             Add(new GumpPage(0));
 
             if (m != null && m.NetState != null && m.NetState.IsEnhancedClient)
-            {
                 AddBackground(1, 1, 408, 446, 9300);
-            }
             else
             {
                 Add(new GumpImageTiled(0, 0, 410, 448, 0xA40));
@@ -153,9 +149,7 @@ namespace Server.Engines.Help
             get
             {
                 if (m_List == null)
-                {
                     m_List = Load();
-                }
 
                 return m_List;
             }
@@ -185,9 +179,7 @@ namespace Server.Engines.Help
         public static PredefinedResponse Add(string title, string message)
         {
             if (m_List == null)
-            {
                 m_List = Load();
-            }
 
             PredefinedResponse resp = new PredefinedResponse(title, message);
 
@@ -200,9 +192,7 @@ namespace Server.Engines.Help
         public static void Save()
         {
             if (m_List == null)
-            {
                 m_List = Load();
-            }
 
             try
             {
@@ -245,16 +235,12 @@ namespace Server.Engines.Help
                                 line = line.Trim();
 
                                 if (line.Length == 0 || line.StartsWith("#"))
-                                {
                                     continue;
-                                }
 
                                 string[] split = line.Split('\t');
 
                                 if (split.Length == 2)
-                                {
                                     list.Add(new PredefinedResponse(split[0], split[1]));
-                                }
                             }
                             catch (Exception e)
                             {
@@ -294,9 +280,7 @@ namespace Server.Engines.Help
             if (response == null)
             {
                 if (from != null && from.NetState != null && from.NetState.IsEnhancedClient)
-                {
                     AddBackground(1, 1, 408, 446, 9300);
-                }
                 else
                 {
                     AddImageTiled(0, 0, 410, 448, 0xA40);
@@ -333,22 +317,14 @@ namespace Server.Engines.Help
                         AddButton(370, 44 + ((i % 5) * 80) + 24, 0xFA5, 0xFA7, 2 + (i * 3), GumpButtonType.Reply, 0);
 
                         if (i > 0)
-                        {
                             AddButton(377, 44 + ((i % 5) * 80) + 2, 0x15E0, 0x15E4, 3 + (i * 3), GumpButtonType.Reply, 0);
-                        }
                         else
-                        {
                             AddImage(377, 44 + ((i % 5) * 80) + 2, 0x25E4);
-                        }
 
                         if (i < (list.Count - 1))
-                        {
                             AddButton(377, 44 + ((i % 5) * 80) + 70 - 2 - 16, 0x15E2, 0x15E6, 4 + (i * 3), GumpButtonType.Reply, 0);
-                        }
                         else
-                        {
                             AddImage(377, 44 + ((i % 5) * 80) + 70 - 2 - 16, 0x25E8);
-                        }
                     }
                 }
 
@@ -372,13 +348,9 @@ namespace Server.Engines.Help
                 AddImageTiled(0, 0, 410, 250, 0xA40);
 
                 if (from.NetState.IsEnhancedClient)
-                {
                     AddBackground(1, 1, 408, 248, 9300);
-                }
                 else
-                {
                     AddAlphaRegion(1, 1, 408, 248);
-                }
 
                 AddHtml(10, 10, 390, 20, Color(Center("Predefined Response Editor"), LabelColor32), false, false);
 
@@ -415,9 +387,7 @@ namespace Server.Engines.Help
         public override void OnResponse(NetState sender, RelayInfo info)
         {
             if (m_From.AccessLevel < AccessLevel.Administrator)
-            {
                 return;
-            }
 
             if (m_Response == null)
             {
@@ -501,9 +471,7 @@ namespace Server.Engines.Help
                             TextRelay te = info.GetTextEntry(0);
 
                             if (te != null)
-                            {
                                 m_Response.Title = te.Text;
-                            }
 
                             PredefinedResponse.Save();
                             m_From.SendGump(new PredefGump(m_From, m_Response));
@@ -515,9 +483,7 @@ namespace Server.Engines.Help
                             TextRelay te = info.GetTextEntry(1);
 
                             if (te != null)
-                            {
                                 m_Response.Message = te.Text;
-                            }
 
                             PredefinedResponse.Save();
                             m_From.SendGump(new PredefGump(m_From, m_Response));
@@ -564,9 +530,7 @@ namespace Server.Engines.Help
                 AddPage(0);
 
                 if (m != null && m.NetState != null && m.NetState.IsEnhancedClient)
-                {
                     AddBackground(1, 1, 408, 454, 9300);
-                }
                 else
                 {
                     AddImageTiled(0, 0, 410, 456, 0xA40);

@@ -268,6 +268,9 @@ namespace Server
 		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual MusicName DefaultMusic => m_Parent != null ? m_Parent.Music : MusicName.Invalid;
 
+		[CommandProperty(AccessLevel.GameMaster)]
+		public virtual double InsuranceMultiplier => 1.0;
+
 		public Region(string name, Map map, int priority, params Rectangle2D[] area)
 			: this(name, map, priority, ConvertTo3D(area))
 		{ }

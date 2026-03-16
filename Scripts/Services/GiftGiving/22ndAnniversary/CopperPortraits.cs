@@ -27,9 +27,7 @@ namespace Server.Items
             }
 
             if (Hue == 2951)
-            {
                 list.Add(1076187); // Antique
-            }
         }
 
         public CopperPortrait1(Serial serial)
@@ -88,9 +86,7 @@ namespace Server.Items
             }
 
             if (Hue == 2951)
-            {
                 list.Add(1076187); // Antique
-            }
         }
 
         public CopperPortrait2(Serial serial)

@@ -1,5 +1,7 @@
 using Server.Commands;
+using Server.Engines.Fellowship;
 using Server.Engines.JollyRoger;
+using Server.Engines.Khaldun;
 using Server.Engines.RisingTide;
 using Server.Engines.SorcerersDungeon;
 using Server.Engines.TreasuresOfKotlCity;
@@ -22,8 +24,10 @@ namespace Server.Engines.SeasonalEvents
         TreasuresOfKotlCity,
         SorcerersDungeon,
         TreasuresOfDoom,
+        TreasuresOfKhaldun,
         KrampusEncounter,
         RisingTide,
+        Fellowship,
         JollyRoger,
         ArtisanFestival
     }
@@ -66,8 +70,10 @@ namespace Server.Engines.SeasonalEvents
             Entries.Add(new TreasuresOfKotlCityEvent(EventType.TreasuresOfKotlCity, "Treasures of Kotl", EventStatus.Inactive, 10, 1, 60));
             Entries.Add(new SorcerersDungeonEvent(EventType.SorcerersDungeon, "Sorcerer's Dungeon", EventStatus.Seasonal, 10, 1, 60));
             Entries.Add(new TreasuresOfDoomEvent(EventType.TreasuresOfDoom, "Treasures of Doom", EventStatus.Seasonal, 10, 1, 60));
+            Entries.Add(new TreasuresOfKhaldunEvent(EventType.TreasuresOfKhaldun, "Treasures of Khaldun", EventStatus.Seasonal, 10, 1, 60));
             Entries.Add(new KrampusEvent(EventType.KrampusEncounter, "Krampus Encounter", EventStatus.Seasonal, 12, 1, 60));
             Entries.Add(new RisingTideEvent(EventType.RisingTide, "Rising Tide", EventStatus.Active));
+            Entries.Add(new ForsakenFoesEvent(EventType.Fellowship, "Fellowship", EventStatus.Inactive));
             Entries.Add(new JollyRogerEvent(EventType.JollyRoger, "Jolly Roger", EventStatus.Inactive));
             Entries.Add(new ArtisanFestivalEvent(EventType.ArtisanFestival, "Artisan Festival", EventStatus.Seasonal, 12, 1, -1));
         }
@@ -309,9 +315,7 @@ namespace Server.Engines.SeasonalEvents
                 case EventStatus.Seasonal:
                     {
                         if (Duration >= 365)
-                        {
                             return true;
-                        }
 
                         DateTime now = DateTime.Now;
                         DateTime starts = new DateTime(now.Year, MonthStart, DayStart, 0, 0, 0);

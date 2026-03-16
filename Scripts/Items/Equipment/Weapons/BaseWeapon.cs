@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using Server.ContextMenus;
 using Server.Engines.Craft;
+using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
 using Server.Network.Packets;
+using Server.Services.Virtues;
 using Server.Spells;
 using Server.Spells.Bushido;
 using Server.Spells.Chivalry;
@@ -60,9 +62,7 @@ namespace Server.Items
         public int GetUsesScalar()
         {
             if (m_Quality == ItemQuality.Exceptional)
-            {
                 return 200;
-            }
 
             return 100;
         }
@@ -83,12 +83,7 @@ namespace Server.Items
         public Mobile Owner
         {
             get => _Owner;
-            set { _Owner = value; if (_Owner != null)
-                {
-                    _OwnerName = _Owner.Name;
-                }
-
-                InvalidateProperties(); }
+            set { _Owner = value; if (_Owner != null) _OwnerName = _Owner.Name; InvalidateProperties(); }
         }
 
         public virtual string OwnerName
@@ -202,13 +197,54 @@ namespace Server.Items
             get
             {
                 if (NegativeAttributes == null || NegativeAttributes.Unwieldly == 0)
-                {
                     return base.DefaultWeight;
-                }
 
                 return 50;
             }
         }
+
+        #region Personal Bless Deed
+        private Mobile m_BlessedBy;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public Mobile BlessedBy
+        {
+            get => m_BlessedBy;
+            set
+            {
+                m_BlessedBy = value;
+                InvalidateProperties();
+            }
+        }
+
+        private class UnBlessEntry : ContextMenuEntry
+        {
+            private readonly Mobile m_From;
+            private readonly BaseWeapon m_Weapon; // BaseArmor, BaseWeapon or BaseClothing
+
+            public UnBlessEntry(Mobile from, BaseWeapon weapon)
+                : base(6208, -1)
+            {
+                m_From = from;
+                m_Weapon = weapon;
+            }
+
+            public override void OnClick()
+            {
+                m_Weapon.BlessedFor = null;
+                m_Weapon.BlessedBy = null;
+
+                Container pack = m_From.Backpack;
+
+                if (pack != null)
+                {
+                    pack.DropItem(new PersonalBlessDeed(m_From));
+                    m_From.SendLocalizedMessage(1062200); // A personal bless deed has been placed in your backpack.
+                }
+            }
+        }
+        #endregion
+
         #endregion
 
         #region Getters & Setters
@@ -497,24 +533,16 @@ namespace Server.Items
             get
             {
                 if (TimesImbued >= 1 && !m_IsImbued)
-                {
                     m_IsImbued = true;
-                }
 
                 return m_IsImbued;
             }
             set
             {
                 if (TimesImbued >= 1)
-                {
                     m_IsImbued = true;
-                }
                 else
-                {
-                    m_IsImbued = value;
-                }
-
-                InvalidateProperties();
+                    m_IsImbued = value; InvalidateProperties();
             }
         }
 
@@ -578,6 +606,11 @@ namespace Server.Items
             {
                 list.Add(new SearingWeapon.ToggleExtinguishEntry(from, this));
             }
+
+            if (BlessedFor == from && BlessedBy == from && RootParent == from)
+            {
+                list.Add(new UnBlessEntry(from, this));
+            }
         }
 
         public override void OnAfterDuped(Item newItem)
@@ -620,14 +653,10 @@ namespace Server.Items
             m_MaxHits = (m_MaxHits * scale + 99) / 100;
 
             if (m_MaxHits > 255)
-            {
                 m_MaxHits = 255;
-            }
 
             if (m_Hits > 255)
-            {
                 m_Hits = 255;
-            }
 
             InvalidateProperties();
         }
@@ -768,6 +797,11 @@ namespace Server.Items
                 }
             }
 
+            if (!RaceDefinitions.ValidateEquipment(from, this))
+            {
+                return false;
+            }
+
             if (from.Dex < DexRequirement)
             {
                 from.SendLocalizedMessage(1071936); // You cannot equip that.
@@ -789,6 +823,13 @@ namespace Server.Items
             if (!from.CanBeginAction(typeof(BaseWeapon)))
             {
                 from.SendLocalizedMessage(3000201); // You must wait to perform another action.
+                return false;
+            }
+
+            if (BlessedBy != null && BlessedBy != from)
+            {
+                from.SendLocalizedMessage(1075277); // That item is blessed by another player.
+
                 return false;
             }
 
@@ -865,6 +906,11 @@ namespace Server.Items
                     }
                 }
 
+                if (HasSocket<Caddellite>())
+                {
+                    Caddellite.UpdateBuff(from);
+                }
+
                 if (ExtendedWeaponAttributes.Focus > 0)
                 {
                     Focus.UpdateBuff(from);
@@ -904,9 +950,7 @@ namespace Server.Items
                 Spells.Mysticism.EnchantSpell.OnWeaponRemoved(this, m);
 
                 if (FocusWeilder != null)
-                {
                     FocusWeilder = null;
-                }
 
                 SkillMasterySpell.OnWeaponRemoved(m, this);
                 ForceOfNature.Remove(m);
@@ -914,6 +958,11 @@ namespace Server.Items
                 if (IsSetItem && m_SetEquipped)
                 {
                     SetHelper.RemoveSetBonus(m, SetID, this);
+                }
+
+                if (HasSocket<Caddellite>())
+                {
+                    Caddellite.UpdateBuff(m);
                 }
 
                 if (SearingWeapon)
@@ -937,16 +986,12 @@ namespace Server.Items
         public void AddMysticMod(Mobile from)
         {
             if (m_MysticMod != null)
-            {
                 m_MysticMod.Remove();
-            }
 
             int value = m_ExtendedWeaponAttributes.MysticWeapon;
 
             if (Enhancement.GetValue(from, ExtendedWeaponAttribute.MysticWeapon) > value)
-            {
                 value = Enhancement.GetValue(from, ExtendedWeaponAttribute.MysticWeapon);
-            }
 
             m_MysticMod = new DefaultSkillMod(SkillName.Mysticism, true, -30 + value);
             from.AddSkillMod(m_MysticMod);
@@ -1076,8 +1121,8 @@ namespace Server.Items
                 bonus = Math.Max(bonus, 45);
             }
 
-            //SA cap is 45
-            bonus = Math.Min(45, bonus);
+            //SA Gargoyle cap is 50, else 45
+            bonus = Math.Min(attacker.Race == Race.Gargoyle ? 50 : 45, bonus);
 
             var ourValue = (atkValue + 20.0) * (100 + bonus);
 
@@ -1437,9 +1482,7 @@ namespace Server.Items
                             weapon.OnSwing(defender, attacker);
 
                             if (combatant != null && defender.Combatant != combatant && combatant.Alive)
-                            {
                                 defender.Combatant = combatant;
-                            }
                         }
 
                         CounterAttack.StopCountering(defender);
@@ -1639,13 +1682,9 @@ namespace Server.Items
                 m_InDoubleStrike = value;
 
                 if (m_InDoubleStrike)
-                {
                     ProcessingMultipleHits = true;
-                }
                 else
-                {
                     ProcessingMultipleHits = false;
-                }
             }
         }
 
@@ -1657,9 +1696,7 @@ namespace Server.Items
                 m_ProcessingMultipleHits = value;
 
                 if (!m_ProcessingMultipleHits)
-                {
                     BlockHitEffects = false;
-                }
             }
         }
 
@@ -1696,16 +1733,12 @@ namespace Server.Items
             PlaySwingAnimation(attacker);
 
             if (defender != null)
-            {
                 PlayHurtAnimation(defender);
-            }
 
             attacker.PlaySound(GetHitAttackSound(attacker, defender));
 
             if (defender != null)
-            {
                 defender.PlaySound(GetHitDefendSound(attacker, defender));
-            }
 
             int damage = ComputeDamage(attacker, defender);
 
@@ -1744,26 +1777,11 @@ namespace Server.Items
 
                     phys = fire = cold = pois = nrgy = chaos = direct = 0;
 
-                    if (type == 0)
-                    {
-                        phys = 100;
-                    }
-                    else if (type == 1)
-                    {
-                        fire = 100;
-                    }
-                    else if (type == 2)
-                    {
-                        cold = 100;
-                    }
-                    else if (type == 3)
-                    {
-                        pois = 100;
-                    }
-                    else if (type == 4)
-                    {
-                        nrgy = 100;
-                    }
+                    if (type == 0) phys = 100;
+                    else if (type == 1) fire = 100;
+                    else if (type == 2) cold = 100;
+                    else if (type == 3) pois = 100;
+                    else if (type == 4) nrgy = 100;
                 }
                 else if (ranged && attacker.FindItemOnLayer(Layer.Cloak) is IRangeDamage rangeDamage)
                 {
@@ -1776,9 +1794,7 @@ namespace Server.Items
             if (m_AosWeaponAttributes.SplinteringWeapon > 0 && m_AosWeaponAttributes.SplinteringWeapon > Utility.Random(100))
             {
                 if (SplinteringWeaponContext.CheckHit(attacker, defender, a, this))
-                {
                     splintering = true;
-                }
             }
 
             double chance = NegativeAttributes.Antique > 0 ? 5 : 0;
@@ -1824,9 +1840,7 @@ namespace Server.Items
                             }
 
                             if (m_MaxHits <= 0)
-                            {
                                 Delete();
-                            }
                         }
                     }
                 }
@@ -1899,25 +1913,17 @@ namespace Server.Items
             if (cs1 != CheckSlayerResult.None)
             {
                 if (cs1 == CheckSlayerResult.SuperSlayer)
-                {
                     percentageBonus += 100;
-                }
                 else if (cs1 == CheckSlayerResult.Slayer)
-                {
                     percentageBonus += 200;
-                }
             }
 
             if (cs2 != CheckSlayerResult.None)
             {
                 if (cs2 == CheckSlayerResult.SuperSlayer)
-                {
                     percentageBonus += 100;
-                }
                 else if (cs2 == CheckSlayerResult.Slayer)
-                {
                     percentageBonus += 200;
-                }
             }
 
             if (suit != CheckSlayerResult.None)
@@ -1986,6 +1992,19 @@ namespace Server.Items
                 percentageBonus += 25;
             }
 
+            if (attacker is PlayerMobile pmAttacker && !(defender is PlayerMobile))
+            {
+                if (pmAttacker.HonorActive && pmAttacker.InRange(defender, 1))
+                {
+                    percentageBonus += 25;
+                }
+
+                if (pmAttacker.SentHonorContext != null && pmAttacker.SentHonorContext.Target == defender)
+                {
+                    percentageBonus += pmAttacker.SentHonorContext.PerfectionDamageBonus;
+                }
+            }
+
             percentageBonus -= Block.GetMeleeReduction(defender);
 
             percentageBonus += BattleLust.GetBonus(attacker, defender);
@@ -2009,6 +2028,14 @@ namespace Server.Items
             if (attacker.Talisman is BaseTalisman talisman && talisman.Killer != null)
             {
                 percentageBonus += talisman.Killer.DamageBonus(defender);
+            }
+
+            if (this is ButchersWarCleaver)
+            {
+                if (defender is Bull || defender is Cow || defender is Gaman)
+                {
+                    percentageBonus += 100;
+                }
             }
 
             if (m_ExtendedWeaponAttributes.AssassinHoned > 0 && GetOppositeDir(attacker.Direction) == defender.Direction)
@@ -2096,14 +2123,10 @@ namespace Server.Items
             if (a == null && move == null)
             {
                 if (m_ExtendedWeaponAttributes.BoneBreaker > 0 && !AnimalForm.UnderTransformation(attacker))
-                {
                     BoneBreakerContext.CheckHit(attacker, defender);
-                }
 
                 if (m_ExtendedWeaponAttributes.HitSwarm > 0 && Utility.Random(100) < m_ExtendedWeaponAttributes.HitSwarm)
-                {
                     SwarmContext.CheckHit(attacker, defender);
-                }
 
                 if (m_ExtendedWeaponAttributes.HitSparks > 0 && Utility.Random(100) < m_ExtendedWeaponAttributes.HitSparks)
                 {
@@ -2130,15 +2153,11 @@ namespace Server.Items
             }
 
             if (Feint.Registry.ContainsKey(defender) && Feint.Registry[defender].Enemy == attacker)
-            {
                 damage -= (int)(damage * ((double)Feint.Registry[defender].DamageReduction / 100));
-            }
 
             // Skill Masteries
             if (this is Fists)
-            {
                 damage += (int)(damage * (MasteryInfo.GetKnockoutModifier(attacker, defender is PlayerMobile) / 100.0));
-            }
 
             SkillMasterySpell.OnHit(attacker, defender, ref damage);
 
@@ -2175,11 +2194,7 @@ namespace Server.Items
             if (sparks)
             {
                 int mana = attacker.Mana + damageGiven;
-                if (!defender.Player)
-                {
-                    mana *= 2;
-                }
-
+                if (!defender.Player) mana *= 2;
                 attacker.Mana = Math.Min(attacker.ManaMax, attacker.Mana + mana);
             }
 
@@ -2375,9 +2390,7 @@ namespace Server.Items
                     AosWeaponAttributes attrs = RunicReforging.GetAosWeaponAttributes(helm);
 
                     if (attrs != null)
-                    {
                         hldGlasses = attrs.HitLowerDefend;
-                    }
                 }
 
                 if (hldWep > 0 && hldWep > Utility.Random(100) || hldGlasses > 0 && hldGlasses > Utility.Random(100))
@@ -2389,7 +2402,7 @@ namespace Server.Items
             #region Bracers Of Alchemical Devastation
             Item arms = attacker.FindItemOnLayer(Layer.Arms);
 
-            if (arms is BracersofAlchemicalDevastation && 0.35 > Utility.RandomDouble())
+            if (arms is BracersofAlchemicalDevastation or GargishBracersofAlchemicalDevastation && 0.35 > Utility.RandomDouble())
             {
                 if (attacker.FindItemOnLayer(Layer.OneHanded) == null && (attacker.FindItemOnLayer(Layer.TwoHanded) == null || attacker.FindItemOnLayer(Layer.TwoHanded) is BaseShield))
                 {
@@ -2420,6 +2433,11 @@ namespace Server.Items
                 move.OnHit(attacker, defender, damage);
             }
 
+            if (defender is IHonorTarget target && target.ReceivedHonorContext != null)
+            {
+                target.ReceivedHonorContext.OnTargetHit(attacker);
+            }
+
             if (!ranged)
             {
                 if (AnimalForm.UnderTransformation(attacker, typeof(GiantSerpent)))
@@ -2442,44 +2460,28 @@ namespace Server.Items
             Direction direction = Direction.Down;
 
             if (d == Direction.West)
-            {
                 direction = Direction.East;
-            }
 
             if (d == Direction.East)
-            {
                 direction = Direction.West;
-            }
 
             if (d == Direction.North)
-            {
                 direction = Direction.South;
-            }
 
             if (d == Direction.South)
-            {
                 direction = Direction.North;
-            }
 
             if (d == Direction.Right)
-            {
                 direction = Direction.Left;
-            }
 
             if (d == Direction.Left)
-            {
                 direction = Direction.Right;
-            }
 
             if (d == Direction.Up)
-            {
                 direction = Direction.Down;
-            }
 
             if (d == Direction.Down)
-            {
                 direction = Direction.Up;
-            }
 
             return direction;
         }
@@ -2498,9 +2500,7 @@ namespace Server.Items
             damage = AOS.Scale(damage, 100 + damageBonus);
 
             if (defender != null && Feint.Registry.ContainsKey(defender) && Feint.Registry[defender].Enemy == attacker)
-            {
                 damage -= (int)(damage * ((double)Feint.Registry[defender].DamageReduction / 100));
-            }
 
             // All hit spells use 80 eval
             int evalScale = 30 + 9 * 800 / 100;
@@ -2528,9 +2528,7 @@ namespace Server.Items
             SpellHelper.Damage(TimeSpan.FromSeconds(1.0), defender, attacker, damage, 0, 100, 0, 0, 0);
 
             if (ProcessingMultipleHits)
-            {
                 BlockHitEffects = true;
-            }
         }
 
         public virtual void DoHarm(Mobile attacker, Mobile defender)
@@ -2559,9 +2557,7 @@ namespace Server.Items
             SpellHelper.Damage(TimeSpan.Zero, defender, attacker, damage, 0, 0, 100, 0, 0);
 
             if (ProcessingMultipleHits)
-            {
                 BlockHitEffects = true;
-            }
         }
 
         public virtual void DoFireball(Mobile attacker, Mobile defender)
@@ -2581,9 +2577,7 @@ namespace Server.Items
             SpellHelper.Damage(TimeSpan.FromSeconds(1.0), defender, attacker, damage, 0, 100, 0, 0, 0);
 
             if (ProcessingMultipleHits)
-            {
                 BlockHitEffects = true;
-            }
         }
 
         public virtual void DoLightning(Mobile attacker, Mobile defender)
@@ -2602,9 +2596,7 @@ namespace Server.Items
             SpellHelper.Damage(TimeSpan.Zero, defender, attacker, damage, 0, 0, 0, 0, 100);
 
             if (ProcessingMultipleHits)
-            {
                 BlockHitEffects = true;
-            }
         }
 
         public virtual void DoDispel(Mobile attacker, Mobile defender)
@@ -2661,9 +2653,7 @@ namespace Server.Items
             SpellHelper.Damage(TimeSpan.FromSeconds(1.0), defender, attacker, damage, 0, 100, 0, 0, 0);
 
             if (ProcessingMultipleHits)
-            {
                 BlockHitEffects = true;
-            }
         }
 
         public virtual void DoHitVelocity(Mobile attacker, IDamageable damageable)
@@ -2686,9 +2676,7 @@ namespace Server.Items
             }
 
             if (ProcessingMultipleHits)
-            {
                 BlockHitEffects = true;
-            }
         }
 
         #region Stygian Abyss
@@ -2712,9 +2700,7 @@ namespace Server.Items
             BuffInfo.AddBuff(defender, new BuffInfo(BuffIcon.Curse, 1075835, 1075836, duration, defender, args));
 
             if (ProcessingMultipleHits)
-            {
                 BlockHitEffects = true;
-            }
         }
 
         public virtual void DoFatigue(Mobile attacker, Mobile defender, int damagegiven)
@@ -2724,9 +2710,7 @@ namespace Server.Items
             defender.Stam -= damagegiven * (100 - m_AosWeaponAttributes.HitFatigue) / 100;
 
             if (ProcessingMultipleHits)
-            {
                 BlockHitEffects = true;
-            }
         }
 
         public virtual void DoManaDrain(Mobile attacker, Mobile defender, int damagegiven)
@@ -2737,9 +2721,7 @@ namespace Server.Items
             defender.Mana -= damagegiven * (100 - m_AosWeaponAttributes.HitManaDrain) / 100;
 
             if (ProcessingMultipleHits)
-            {
                 BlockHitEffects = true;
-            }
         }
         #endregion
 
@@ -2792,18 +2774,14 @@ namespace Server.Items
             }
 
             if (ProcessingMultipleHits)
-            {
                 BlockHitEffects = true;
-            }
         }
         #endregion
 
         public virtual CheckSlayerResult CheckSlayers(Mobile attacker, Mobile defender, SlayerName slayer)
         {
             if (slayer == SlayerName.None)
-            {
                 return CheckSlayerResult.None;
-            }
 
             BaseWeapon atkWeapon = attacker.Weapon as BaseWeapon;
             SlayerEntry atkSlayer = SlayerGroup.GetEntryByName(slayer);
@@ -3016,9 +2994,7 @@ namespace Server.Items
             attacker.PlaySound(GetMissAttackSound(attacker, defender));
 
             if (defender != null)
-            {
                 defender.PlaySound(GetMissDefendSound(attacker, defender));
-            }
 
             WeaponAbility ability = WeaponAbility.GetCurrentAbility(attacker);
 
@@ -3032,6 +3008,11 @@ namespace Server.Items
             if (move != null)
             {
                 move.OnMiss(attacker, defender);
+            }
+
+            if (defender is IHonorTarget target && target.ReceivedHonorContext != null)
+            {
+                target.ReceivedHonorContext.OnTargetMissed(attacker);
             }
 
             SkillMasterySpell.OnMiss(attacker, defender);
@@ -3208,7 +3189,12 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
+
             writer.Write(20); // version
+
+            // Version 20 - Removes all era checks and old code
+            // Version 19 - Removes m_SearingWeapon as its handled as a socket now
+            // Version 18 - removed VvV Item (handled in VvV System) and BlockRepair (Handled as negative attribute)
 
             writer.Write(m_UsesRemaining);
             writer.Write(m_ShowUsesRemaining);
@@ -3216,8 +3202,14 @@ namespace Server.Items
             writer.Write(_Owner);
             writer.Write(_OwnerName);
 
+            // Version 15 converts old leech to new leech
+
+            //Version 14
             writer.Write(m_IsImbued);
 
+            //version 13, converted SaveFlags to long, added negative attributes
+
+            //version 12
             #region Runic Reforging
             writer.Write((int)m_ReforgedPrefix);
             writer.Write((int)m_ReforgedSuffix);
@@ -3226,7 +3218,10 @@ namespace Server.Items
 
             writer.Write(m_DImodded);
 
+            // Version 11
             writer.Write(m_TimesImbued);
+            // Version 10
+            writer.Write(m_BlessedBy); // Bless Deed
 
             #region Veteran Rewards
             writer.Write(m_EngravedText);
@@ -3502,9 +3497,9 @@ namespace Server.Items
         private enum SaveFlag : long
         {
             None = 0x00000000,
-            UNUSED1 = 0x00000001,
-            UNUSED2 = 0x00000002,
-            UNUSED3 = 0x00000004,
+            Empty1 = 0x00000001,
+            Empty2 = 0x00000002,
+            Empty3 = 0x00000004,
             Quality = 0x00000008,
             Hits = 0x00000010,
             MaxHits = 0x00000020,
@@ -3580,8 +3575,8 @@ namespace Server.Items
 
             switch (version)
             {
-                case 20: 
-                case 19: 
+                case 20: // Removed Eras
+                case 19: // Removed SearingWeapon
                 case 18:
                 case 17:
                     {
@@ -3591,6 +3586,9 @@ namespace Server.Items
                     }
                 case 16:
                     {
+                        if (version == 17)
+                            reader.ReadBool();
+
                         _Owner = reader.ReadMobile();
                         _OwnerName = reader.ReadString();
                         goto case 15;
@@ -3643,6 +3641,7 @@ namespace Server.Items
                     }
                 case 10:
                     {
+                        m_BlessedBy = reader.ReadMobile();
                         m_EngravedText = reader.ReadString();
                         m_Slayer3 = (TalismanSlayerName)reader.ReadInt();
 
@@ -3726,12 +3725,23 @@ namespace Server.Items
                         SaveFlag flags;
 
                         if (version < 13)
-                        {
                             flags = (SaveFlag)reader.ReadInt();
-                        }
                         else
-                        {
                             flags = (SaveFlag)reader.ReadLong();
+
+                        if (version < 20 && GetSaveFlag(flags, SaveFlag.Empty1))
+                        {
+                            reader.ReadInt();
+                        }
+
+                        if (version < 20 && GetSaveFlag(flags, SaveFlag.Empty2))
+                        {
+                            reader.ReadInt();
+                        }
+
+                        if (version < 20 && GetSaveFlag(flags, SaveFlag.Empty3))
+                        {
+                            reader.ReadInt();
                         }
 
                         if (GetSaveFlag(flags, SaveFlag.Quality))
@@ -4060,14 +4070,10 @@ namespace Server.Items
             }
 
             if (m_Slayer == SlayerName.DaemonDismissal || m_Slayer == SlayerName.BalronDamnation)
-            {
                 m_Slayer = SlayerName.Exorcism;
-            }
 
             if (m_Slayer2 == SlayerName.DaemonDismissal || m_Slayer2 == SlayerName.BalronDamnation)
-            {
                 m_Slayer2 = SlayerName.Exorcism;
-            }
         }
         #endregion
 
@@ -4279,13 +4285,9 @@ namespace Server.Items
                     int prefix = RunicReforging.GetPrefixName(m_ReforgedPrefix);
 
                     if (m_ReforgedSuffix == ReforgedSuffix.None)
-                    {
                         list.Add(1151757, $"#{prefix}\t{GetNameString()}"); // ~1_PREFIX~ ~2_ITEM~
-                    }
                     else
-                    {
                         list.Add(1151756, $"#{prefix}\t{GetNameString()}\t#{RunicReforging.GetSuffixName(m_ReforgedSuffix)}"); // ~1_PREFIX~ ~2_ITEM~ of ~3_SUFFIX~
-                    }
                 }
                 else if (m_ReforgedSuffix != ReforgedSuffix.None)
                 {
@@ -4345,9 +4347,7 @@ namespace Server.Items
             get
             {
                 if (IsVvVItem)
-                {
                     return true;
-                }
 
                 return base.DisplayWeight;
             }
@@ -4410,9 +4410,7 @@ namespace Server.Items
             base.AddWeightProperty(list);
 
             if (IsVvVItem)
-            {
                 list.Add(1154937); // VvV Item
-            }
         }
 
         public override void AddUsesRemainingProperties(ObjectPropertyList list)
@@ -4433,14 +4431,10 @@ namespace Server.Items
                 list.Add(1073491, Pieces.ToString()); // Part of a Weapon/Armor Set (~1_val~ pieces)
 
                 if (SetID == SetItem.Bestial)
-                {
                     list.Add(1151541, BestialSetHelper.GetTotalBerserk(this).ToString()); // Berserk ~1_VAL~
-                }
 
                 if (BardMasteryBonus)
-                {
                     list.Add(1151553); // Activate: Bard Mastery Bonus x2<br>(Effect: 1 min. Cooldown: 30 min.)
-                }
 
                 if (m_SetEquipped)
                 {
@@ -4461,13 +4455,20 @@ namespace Server.Items
             }
 
             if (m_NegativeAttributes != null)
-            {
                 m_NegativeAttributes.GetProperties(list, this);
-            }
 
             if (m_AosSkillBonuses != null)
             {
                 m_AosSkillBonuses.GetProperties(list);
+            }
+
+            if (RaceDefinitions.GetRequiredRace(this) == Race.Elf)
+            {
+                list.Add(1075086); // Elves Only
+            }
+            else if (RaceDefinitions.GetRequiredRace(this) == Race.Gargoyle)
+            {
+                list.Add(1111709); // Gargoyles Only
             }
 
             if (ArtifactRarity > 0)
@@ -4500,6 +4501,7 @@ namespace Server.Items
                 }
             }
 
+            #region Mondain's Legacy
             if (m_Slayer3 != TalismanSlayerName.None)
             {
                 if (m_Slayer3 == TalismanSlayerName.Wolf)
@@ -4519,7 +4521,13 @@ namespace Server.Items
                     list.Add(1072503 + (int)m_Slayer3);
                 }
             }
-            
+            #endregion
+
+            if (HasSocket<Caddellite>())
+            {
+                list.Add(1158662); // Caddellite Infused
+            }
+
             double focusBonus = 1;
             int enchantBonus = 0;
             bool fcMalus = false;
@@ -5078,13 +5086,9 @@ namespace Server.Items
             if (m_ItemPower != ItemPower.None)
             {
                 if (m_ItemPower <= ItemPower.LegendaryArtifact)
-                {
                     list.Add(1151488 + ((int)m_ItemPower - 1));
-                }
                 else
-                {
                     list.Add(1152281 + ((int)m_ItemPower - 9));
-                }
             }
         }
 

@@ -14,9 +14,7 @@ namespace Server.Items
                 Clock.GetTime(Map, GetWorldLocation().X, GetWorldLocation().Y, out hour, out min);
 
                 if (hour > 20 || hour < 4)
-                {
                     return 1156199; // Moon Dial
-                }
 
                 return 1123890; // Sun Dial
                 //return 1077186; 
@@ -31,9 +29,7 @@ namespace Server.Items
                 int id = base.ItemID;
 
                 if (id != GetID())
-                {
                     return GetID();
-                }
 
                 return id;
             }
@@ -67,16 +63,12 @@ namespace Server.Items
             Clock.GetTime(Map, GetWorldLocation().X, GetWorldLocation().Y, out hour, out min);
 
             if (hour > 12)
-            {
                 hour -= 12;
-            }
 
             int id = 0x9BBA + Math.Max(0, (hour - 1));
 
             if (id != ItemID)
-            {
                 ItemID = id;
-            }
         }
 
         private int GetID()
@@ -90,9 +82,7 @@ namespace Server.Items
                 Clock.GetTime(Map, GetWorldLocation().X, GetWorldLocation().Y, out hour, out min);
 
                 if (hour > 12)
-                {
                     hour -= 12;
-                }
 
                 id = 0x9BBA + Math.Max(0, (hour - 1));
             }
@@ -105,9 +95,7 @@ namespace Server.Items
             base.Delete();
 
             if (_TimePieces.Contains(this))
-            {
                 _TimePieces.Remove(this);
-            }
         }
 
         private static readonly List<EnchantedTimepiece> _TimePieces = new List<EnchantedTimepiece>();

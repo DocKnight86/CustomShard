@@ -44,9 +44,7 @@ namespace Server.Items
         public void OnChangeHairstyle(Mobile from, bool facialHair, int itemID)
         {
             if (!IsChildOf(from.Backpack))
-            {
                 return;
-            }
 
             if (from.IsBodyMod || from.HueMod > 0 || !from.CanBeginAction(typeof(Spells.Fifth.IncognitoSpell)))
             {
@@ -63,13 +61,13 @@ namespace Server.Items
                     _HairID = itemID;
                 }
 
-                if (!from.Female || facialHair)
+                if (!from.Female || from.Race == Race.Elf || facialHair)
                 {
                     EndGenderChange(from);
                 }
                 else
                 {
-                    from.SendGump(new ChangeHairstyleGump(!from.Female, from, null, 0, true, ChangeHairstyleEntry.BeardEntries, this));
+                    from.SendGump(new ChangeHairstyleGump(!from.Female, from, null, 0, true, from.Race == Race.Gargoyle ? ChangeHairstyleEntry.BeardEntriesGargoyle : ChangeHairstyleEntry.BeardEntries, this));
                 }
             }
         }
@@ -77,9 +75,7 @@ namespace Server.Items
         public void OnFailedHairstyle(Mobile from, bool facialHair)
         {
             if (!IsChildOf(from.Backpack))
-            {
                 return;
-            }
 
             if (facialHair)
             {
@@ -87,9 +83,9 @@ namespace Server.Items
             }
             else
             {
-                if (from.Female)
+                if (from.Female && from.Race != Race.Elf)
                 {
-                    from.SendGump(new ChangeHairstyleGump(!from.Female, from, null, 0, true, ChangeHairstyleEntry.BeardEntries, this));
+                    from.SendGump(new ChangeHairstyleGump(!from.Female, from, null, 0, true, from.Race == Race.Gargoyle ? ChangeHairstyleEntry.BeardEntriesGargoyle : ChangeHairstyleEntry.BeardEntries, this));
                 }
                 else
                 {
@@ -111,10 +107,8 @@ namespace Server.Items
                 from.Female = true;
             }
 
-            if (from.Female && _BeardID != 0)
-            {
+            if ((from.Female || from.Race == Race.Elf) && _BeardID != 0)
                 _BeardID = 0;
-            }
 
             from.FacialHairItemID = _BeardID;
             from.HairItemID = _HairID;
@@ -192,7 +186,14 @@ namespace Server.Items
 
         public static ChangeHairstyleEntry[] GetHairstyleEntries(Mobile m)
         {
-            return ChangeHairstyleEntry.HairEntries;
+            ChangeHairstyleEntry[] entries = ChangeHairstyleEntry.HairEntries;
+
+            if (m.Race == Race.Elf)
+                entries = ChangeHairstyleEntry.HairEntriesElf;
+            else if (m.Race == Race.Gargoyle)
+                entries = ChangeHairstyleEntry.HairEntriesGargoyle;
+
+            return entries;
         }
     }
 }

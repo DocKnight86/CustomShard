@@ -19,13 +19,9 @@
         public override void OnDoubleClick(Mobile from)
         {
             if (ItemID == 0x49C2)
-            {
                 ItemID = 0x49C1;
-            }
             else if (ItemID == 0x49C1)
-            {
                 ItemID = 0x49C2;
-            }
         }
 
         public override void Serialize(GenericWriter writer)

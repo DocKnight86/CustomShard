@@ -41,9 +41,7 @@ namespace Server.Engines.BulkOrders
             if (deedType == BODType.Tailor)
             {
                 if (itemType == null || itemType.IsSubclassOf(typeof(BaseArmor)) || itemType.IsSubclassOf(typeof(BaseShoes)))
-                {
                     return BulkGenericType.Leather;
-                }
 
                 return BulkGenericType.Cloth;
             }
@@ -51,9 +49,7 @@ namespace Server.Engines.BulkOrders
             if (deedType == BODType.Tinkering && itemType != null)
             {
                 if (itemType == typeof(Clock) || itemType.IsSubclassOf(typeof(Clock)))
-                {
                     return BulkGenericType.Wood;
-                }
 
                 CraftItem item = DefTinkering.CraftSystem.CraftItems.SearchFor(itemType);
 
@@ -62,9 +58,7 @@ namespace Server.Engines.BulkOrders
                     Type typeRes = item.Resources.GetAt(0).ItemType;
 
                     if (typeRes == typeof(Board) || typeRes == typeof(Log))
-                    {
                         return BulkGenericType.Wood;
-                    }
                 }
             }
             else if (deedType == BODType.Fletching || deedType == BODType.Carpentry)

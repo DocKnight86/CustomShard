@@ -33,9 +33,7 @@ namespace Server.Engines.Chat
         public bool CheckOnline()
         {
             if (IsOnline)
-            {
                 return true;
-            }
 
             RemoveChatUser(this);
             return false;
@@ -49,9 +47,7 @@ namespace Server.Engines.Chat
         public void SendMessage(int number, Mobile from, string param1, string param2)
         {
             if (m_Mobile.NetState != null)
-            {
                 m_Mobile.Send(new ChatMessagePacket(from, number, param1, param2));
-            }
         }
 
         private static readonly List<ChatUser> m_Users = new List<ChatUser>();
@@ -77,18 +73,14 @@ namespace Server.Engines.Chat
         public static void RemoveChatUser(ChatUser user)
         {
             if (user == null)
-            {
                 return;
-            }
 
             if (m_Users.Contains(user))
             {
                 ChatSystem.SendCommandTo(user.Mobile, ChatCommand.CloseChatWindow);
 
                 if (user.m_Channel != null)
-                {
                     user.m_Channel.RemoveUser(user);
-                }
 
                 m_Users.Remove(user);
                 m_Table.Remove(user.m_Mobile);

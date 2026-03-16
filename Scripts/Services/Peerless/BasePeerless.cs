@@ -26,14 +26,10 @@ namespace Server.Mobiles
             base.OnThink();
 
             if (HasFireRing && Combatant != null && Alive && Hits > 0.8 * HitsMax && m_NextFireRing > Core.TickCount && Utility.RandomDouble() < FireRingChance)
-            {
                 FireRing();
-            }
 
             if (CanSpawnHelpers && Combatant != null && Alive && CanSpawnWave())
-            {
                 SpawnHelpers();
-            }
         }
 
         public override void OnDeath(Container c)
@@ -52,9 +48,7 @@ namespace Server.Mobiles
                     m.SendLocalizedMessage(1156209); // You have received a mastery primer!
 
                     if (m.Backpack == null || !m.Backpack.TryDropItem(m, primer, false))
-                    {
                         m.BankBox.DropItem(primer);
-                    }
                 }
                 else
                 {
@@ -70,9 +64,10 @@ namespace Server.Mobiles
             if (GiveMLSpecial)
             {
                 if (Utility.RandomDouble() < 0.10)
-                {
                     c.DropItem(new HumanFeyLeggings());
-                }
+
+                if (Utility.RandomDouble() < 0.025)
+                    c.DropItem(new CrimsonCincture());
 
                 if (0.05 > Utility.RandomDouble())
                 {
@@ -115,9 +110,7 @@ namespace Server.Mobiles
             }
 
             if (m_Altar != null)
-            {
                 m_Altar.OnPeerlessDeath();
-            }
         }
 
         public BasePeerless(AIType aiType, FightMode fightMode, int rangePerception, int rangeFight, double activeSpeed, double passiveSpeed)
@@ -199,17 +192,13 @@ namespace Server.Mobiles
         public void SpawnHelper(BaseCreature helper, Point3D location)
         {
             if (helper == null)
-            {
                 return;
-            }
 
             helper.Home = location;
             helper.RangeHome = 4;
 
             if (m_Altar != null)
-            {
                 m_Altar.AddHelper(helper);
-            }
 
             helper.MoveToWorld(location, Map);
         }

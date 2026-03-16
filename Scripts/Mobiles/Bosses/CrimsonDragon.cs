@@ -77,6 +77,7 @@ namespace Server.Mobiles
             AddLoot(LootPack.Gems, 12);
             AddLoot(LootPack.PeerlessResource, 8);
             AddLoot(LootPack.LootItem<ParrotItem>(25.0));
+            AddLoot(LootPack.LootItem<CrimsonCincture>(2.5));
         }
 
         public override int GetIdleSound()
@@ -173,9 +174,7 @@ namespace Server.Mobiles
                             double dist = Math.Sqrt(x * x + y * y);
 
                             if (dist <= 12)
-                            {
                                 new GoodiesTimer(map, X + x, Y + y).Start();
-                            }
                         }
                     }
                 }
@@ -218,15 +217,11 @@ namespace Server.Mobiles
                     canFit = m_Map.CanFit(m_X, m_Y, z + i, 6, false, false);
 
                     if (canFit)
-                    {
                         z += i;
-                    }
                 }
 
                 if (!canFit)
-                {
                     return;
-                }
 
                 Gold g = new Gold(300, 500);
 

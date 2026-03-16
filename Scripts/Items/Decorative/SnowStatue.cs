@@ -205,9 +205,7 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (m_Deed == null || m_Deed.Deleted)
-                {
                     return;
-                }
 
                 Mobile from = sender.Mobile;
 
@@ -236,9 +234,7 @@ namespace Server.Items
                 }
 
                 if (statue == null)
-                {
                     return;
-                }
 
                 if (!from.PlaceInBackpack(statue))
                 {

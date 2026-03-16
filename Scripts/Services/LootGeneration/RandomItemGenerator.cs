@@ -1,3 +1,4 @@
+using Server.Engines.Despise;
 using Server.Engines.Shadowguard;
 using Server.Mobiles;
 using System;
@@ -74,9 +75,7 @@ namespace Server.Items
         public static int GetBaseBudget(BaseCreature bc)
         {
             if (bc is BaseRenowned)
-            {
                 return MaxBaseBudget;
-            }
 
             return bc.Fame / (20500 / MaxBaseBudget);
         }
@@ -84,9 +83,7 @@ namespace Server.Items
         public static int GetDifficultyFor(BaseCreature bc)
         {
             if (bc == null)
-            {
                 return 0;
-            }
 
             int fame = bc.Fame;
 
@@ -157,14 +154,18 @@ namespace Server.Items
         {
             Entries = new List<BossEntry>();
 
-            Entries.Add(new BossEntry(100, typeof(BaseRenowned), typeof(TRex), typeof(BaseShipCaptain), typeof(Navrey)));
+            Entries.Add(
+                new BossEntry(100, typeof(BaseRenowned), typeof(TRex), typeof(BaseShipCaptain), typeof(Navrey)));
 
-            Entries.Add(new BossEntry(150, typeof(BaseChampion), typeof(Impaler), typeof(DarknightCreeper), typeof(FleshRenderer),
-                                   typeof(ShadowKnight), typeof(AbysmalHorror)));
+            Entries.Add(
+                new BossEntry(150, typeof(BaseChampion), typeof(Impaler), typeof(DarknightCreeper), typeof(FleshRenderer),
+                                   typeof(ShadowKnight), typeof(AbysmalHorror), typeof(AdrianTheGloriousLord), typeof(AndrosTheDreadLord)));
 
-            Entries.Add(new BossEntry(250, typeof(BasePeerless), typeof(Harrower), typeof(DemonKnight), typeof(ShadowguardBoss), typeof(Osiredon)));
+            Entries.Add(
+                new BossEntry(250, typeof(BasePeerless), typeof(Harrower), typeof(DemonKnight), typeof(ShadowguardBoss), typeof(Osiredon)));
 
-            Entries.Add(new BossEntry(350, typeof(ClockworkExodus), typeof(CoraTheSorceress), typeof(Charydbis), typeof(Zipactriotl), typeof(MyrmidexQueen)));
+            Entries.Add(
+                new BossEntry(350, typeof(ClockworkExodus), typeof(CoraTheSorceress), typeof(Charydbis), typeof(Zipactriotl), typeof(MyrmidexQueen)));
         }
     }
 }

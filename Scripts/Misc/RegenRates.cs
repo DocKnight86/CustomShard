@@ -46,9 +46,7 @@ namespace Server.Misc
         private static void CheckBonusSkill(Mobile m, int cur, int max, SkillName skill)
         {
             if (!m.Alive)
-            {
                 return;
-            }
 
             double n = (double)cur / max;
             double v = Math.Sqrt(m.Skills[skill].Value * 0.005);
@@ -77,9 +75,7 @@ namespace Server.Misc
         private static TimeSpan Mobile_StamRegenRate(Mobile from)
         {
             if (from.Skills == null)
-            {
                 return Mobile.DefaultStamRate;
-            }
 
             CheckBonusSkill(from, from.Stam, from.StamMax, SkillName.Focus);
 
@@ -101,14 +97,10 @@ namespace Server.Misc
         private static TimeSpan Mobile_ManaRegenRate(Mobile from)
         {
             if (from.Skills == null)
-            {
                 return Mobile.DefaultManaRate;
-            }
 
             if (!from.Meditating)
-            {
                 CheckBonusSkill(from, from.Mana, from.ManaMax, SkillName.Meditation);
-            }
 
             double rate;
             double armorPenalty = GetArmorOffset(from);
@@ -127,9 +119,7 @@ namespace Server.Misc
                 medBonus = (0.0075 * med) + (0.0025 * from.Int);
 
                 if (medBonus >= 100.0)
-                {
                     medBonus *= 1.1;
-                }
 
                 if (from.Meditating)
                 {
@@ -141,9 +131,7 @@ namespace Server.Misc
             double intensityBonus = Math.Sqrt(ManaRegen(from));
 
             if (intensityBonus > 5.5)
-            {
                 intensityBonus = 5.5;
-            }
 
             double itemBonus = ((itemBase * intensityBonus) - (itemBase - 1)) / 10;
 
@@ -162,34 +150,22 @@ namespace Server.Misc
             double points = AosAttributes.GetValue(from, AosAttribute.RegenHits);
 
             if (from is BaseCreature creature)
-            {
                 points += creature.DefaultHitsRegen;
-            }
 
             if (from is PlayerMobile && from.Race == Race.Human)	//Is this affected by the cap?
-            {
                 points += 2;
-            }
 
             if (points < 0)
-            {
                 points = 0;
-            }
 
             if (from is PlayerMobile)	//does racial bonus go before/after?
-            {
                 points = Math.Min(points, 18);
-            }
 
             if (CheckTransform(from, typeof(HorrificBeastSpell)))
-            {
                 points += 20;
-            }
 
             if (CheckAnimal(from, typeof(Dog)) || CheckAnimal(from, typeof(Cat)))
-            {
                 points += from.Skills[SkillName.Ninjitsu].Fixed / 30;
-            }
 
             // Skill Masteries - goes after cap
             points += RampageSpell.GetBonus(from, RampageSpell.BonusType.HitPointRegen);
@@ -211,32 +187,22 @@ namespace Server.Misc
             double points = AosAttributes.GetValue(from, AosAttribute.RegenStam);
 
             if (from is BaseCreature creature)
-            {
                 points += creature.DefaultStamRegen;
-            }
 
             if (CheckTransform(from, typeof(VampiricEmbraceSpell)))
-            {
                 points += 15;
-            }
 
             if (CheckAnimal(from, typeof(Kirin)))
-            {
                 points += 20;
-            }
 
             if (from is PlayerMobile)
-            {
                 points = Math.Min(points, 24);
-            }
 
             // Skill Masteries - goes after cap
             points += RampageSpell.GetBonus(from, RampageSpell.BonusType.StamRegen);
 
             if (points < -1)
-            {
                 points = -1;
-            }
 
             for (var index = 0; index < StamBonusHandlers.Count; index++)
             {
@@ -253,18 +219,15 @@ namespace Server.Misc
             double points = AosAttributes.GetValue(from, AosAttribute.RegenMana);
 
             if (from is BaseCreature creature)
-            {
                 points += creature.DefaultManaRegen;
-            }
 
             if (CheckTransform(from, typeof(VampiricEmbraceSpell)))
-            {
                 points += 3;
-            }
             else if (CheckTransform(from, typeof(LichFormSpell)))
-            {
                 points += 13;
-            }
+
+            if (from is PlayerMobile && from.Race == Race.Gargoyle)
+                points += 2;
 
             for (var index = 0; index < ManaBonusHandlers.Count; index++)
             {
@@ -279,9 +242,7 @@ namespace Server.Misc
         public static double GetArmorMeditationValue(BaseArmor ar)
         {
             if (ar == null || ar.ArmorAttributes.MageArmor != 0 || ar.Attributes.SpellChanneling != 0)
-            {
                 return 0.0;
-            }
 
             switch (ar.MeditationAllowance)
             {

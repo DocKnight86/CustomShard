@@ -26,9 +26,7 @@ namespace Server.Mobiles
             m_SBInfos.Add(new SBWeaponSmith());
 
             if (IsTokunoVendor)
-            {
                 m_SBInfos.Add(new SBSEWeapons());
-            }
         }
 
         public override VendorShoeType ShoeType => Utility.RandomBool() ? VendorShoeType.Boots : VendorShoeType.ThighBoots;
@@ -55,22 +53,14 @@ namespace Server.Mobiles
                 double theirSkill = pm.Skills[SkillName.Blacksmith].Base;
 
                 if (theirSkill >= 70.1)
-                {
                     pm.NextSmithBulkOrder = TimeSpan.FromHours(6.0);
-                }
                 else if (theirSkill >= 50.1)
-                {
                     pm.NextSmithBulkOrder = TimeSpan.FromHours(2.0);
-                }
                 else
-                {
                     pm.NextSmithBulkOrder = TimeSpan.FromHours(1.0);
-                }
 
                 if (theirSkill >= 70.1 && (theirSkill - 40.0) / 300.0 > Utility.RandomDouble())
-                {
                     return new LargeSmithBOD();
-                }
 
                 return SmallSmithBOD.CreateRandomFor(from);
             }
@@ -91,9 +81,7 @@ namespace Server.Mobiles
         public override TimeSpan GetNextBulkOrder(Mobile from)
         {
             if (from is PlayerMobile mobile)
-            {
                 return mobile.NextSmithBulkOrder;
-            }
 
             return TimeSpan.Zero;
         }
@@ -101,9 +89,7 @@ namespace Server.Mobiles
         public override void OnSuccessfulBulkOrderReceive(Mobile from)
         {
             if (from is PlayerMobile mobile)
-            {
                 mobile.NextSmithBulkOrder = TimeSpan.Zero;
-            }
         }
 
         #endregion

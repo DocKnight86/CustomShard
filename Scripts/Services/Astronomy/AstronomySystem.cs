@@ -104,10 +104,7 @@ namespace Server.Engines.Astronomy
                 for (var index = 0; index < Constellations.Count; index++)
                 {
                     var c = Constellations[index];
-                    if (c.TimeCoordinate == TimeCoordinate.FiveToEight)
-                    {
-                        count1++;
-                    }
+                    if (c.TimeCoordinate == TimeCoordinate.FiveToEight) count1++;
                 }
 
                 if (count1 > count)
@@ -120,20 +117,14 @@ namespace Server.Engines.Astronomy
                     for (var index = 0; index < Constellations.Count; index++)
                     {
                         var c = Constellations[index];
-                        if (c.TimeCoordinate == TimeCoordinate.Midnight)
-                        {
-                            count2++;
-                        }
+                        if (c.TimeCoordinate == TimeCoordinate.Midnight) count2++;
                     }
 
                     int count3 = 0;
                     for (var index = 0; index < Constellations.Count; index++)
                     {
                         var c = Constellations[index];
-                        if (c.TimeCoordinate == TimeCoordinate.NineToEleven)
-                        {
-                            count3++;
-                        }
+                        if (c.TimeCoordinate == TimeCoordinate.NineToEleven) count3++;
                     }
 
                     if (count3 > count2)
@@ -146,20 +137,14 @@ namespace Server.Engines.Astronomy
                         for (var index = 0; index < Constellations.Count; index++)
                         {
                             var c = Constellations[index];
-                            if (c.TimeCoordinate == TimeCoordinate.OneToFour)
-                            {
-                                count4++;
-                            }
+                            if (c.TimeCoordinate == TimeCoordinate.OneToFour) count4++;
                         }
 
                         int count5 = 0;
                         for (var index = 0; index < Constellations.Count; index++)
                         {
                             var c = Constellations[index];
-                            if (c.TimeCoordinate == TimeCoordinate.Midnight)
-                            {
-                                count5++;
-                            }
+                            if (c.TimeCoordinate == TimeCoordinate.Midnight) count5++;
                         }
 
                         if (count5 > count4)

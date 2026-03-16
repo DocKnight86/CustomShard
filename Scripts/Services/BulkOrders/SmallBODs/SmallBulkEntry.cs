@@ -47,23 +47,17 @@ namespace Server.Engines.BulkOrders
         public static SmallBulkEntry[] GetEntries(string type, string name)
         {
             if (m_Cache == null)
-            {
                 m_Cache = new Hashtable();
-            }
 
             Hashtable table = (Hashtable)m_Cache[type];
 
             if (table == null)
-            {
                 m_Cache[type] = table = new Hashtable();
-            }
 
             SmallBulkEntry[] entries = (SmallBulkEntry[])table[name];
 
             if (entries == null)
-            {
                 table[name] = entries = LoadEntries(type, name);
-            }
 
             return entries;
         }
@@ -94,9 +88,7 @@ namespace Server.Engines.BulkOrders
                          */
 
                         if (line.Length == 0 || line.StartsWith("#"))
-                        {
                             continue;
-                        }
 
                         try
                         {

@@ -80,18 +80,14 @@ namespace Server.Engines.Doom
             get
             {
                 if (m_Creatures.Count == 0)
-                {
                     return false;
-                }
 
                 for (int i = 0; i < m_Creatures.Count; ++i)
                 {
                     Mobile mob = m_Creatures[i];
 
                     if (!mob.Deleted)
-                    {
                         return false;
-                    }
                 }
 
                 return true;
@@ -108,9 +104,7 @@ namespace Server.Engines.Doom
             set
             {
                 if (m_State == value)
-                {
                     return;
-                }
 
                 m_State = value;
 
@@ -155,9 +149,7 @@ namespace Server.Engines.Doom
                 }
 
                 if (m_Addon != null)
-                {
                     m_Addon.Hue = hue;
-                }
 
                 if (m_State == GauntletSpawnerState.InProgress)
                 {
@@ -173,9 +165,7 @@ namespace Server.Engines.Doom
                     DestroyRegion();
 
                     if (m_Timer != null)
-                    {
                         m_Timer.Stop();
-                    }
 
                     m_Timer = null;
                 }
@@ -449,9 +439,7 @@ namespace Server.Engines.Doom
                 Item item = dealer.Items[ic];
 
                 if (item.Layer != Layer.ShopBuy && item.Layer != Layer.ShopResale && item.Layer != Layer.ShopSell)
-                {
                     item.Delete();
-                }
             }
 
             dealer.HairItemID = 0x2049; // Pig Tails
@@ -583,16 +571,12 @@ namespace Server.Engines.Doom
         public virtual void CreateRegion()
         {
             if (m_Region != null)
-            {
                 return;
-            }
 
             Map map = Map;
 
             if (map == null || map == Map.Internal)
-            {
                 return;
-            }
 
             m_Region = new GauntletRegion(this, map);
         }
@@ -600,9 +584,7 @@ namespace Server.Engines.Doom
         public virtual void DestroyRegion()
         {
             if (m_Region != null)
-            {
                 m_Region.Unregister();
-            }
 
             m_Region = null;
         }
@@ -617,9 +599,7 @@ namespace Server.Engines.Doom
         public virtual void ClearTraps()
         {
             for (int i = 0; i < m_Traps.Count; ++i)
-            {
                 m_Traps[i].Delete();
-            }
 
             m_Traps.Clear();
         }
@@ -629,39 +609,25 @@ namespace Server.Engines.Doom
             Map map = Map;
 
             if (map == null)
-            {
                 return;
-            }
 
             BaseTrap trap = null;
 
             int random = Utility.Random(100);
 
             if (22 > random)
-            {
                 trap = new SawTrap(Utility.RandomBool() ? SawTrapType.WestFloor : SawTrapType.NorthFloor);
-            }
             else if (44 > random)
-            {
                 trap = new SpikeTrap(Utility.RandomBool() ? SpikeTrapType.WestFloor : SpikeTrapType.NorthFloor);
-            }
             else if (66 > random)
-            {
                 trap = new GasTrap(Utility.RandomBool() ? GasTrapType.NorthWall : GasTrapType.WestWall);
-            }
             else if (88 > random)
-            {
                 trap = new FireColumnTrap();
-            }
             else
-            {
                 trap = new MushroomTrap();
-            }
 
             if (trap is FireColumnTrap || trap is MushroomTrap)
-            {
                 trap.Hue = 0x451;
-            }
 
             // try 10 times to find a valid location
             for (int i = 0; i < 10; ++i)
@@ -671,14 +637,10 @@ namespace Server.Engines.Doom
                 int z = Z;
 
                 if (!map.CanFit(x, y, z, 16, false, false))
-                {
                     z = map.GetAverageZ(x, y);
-                }
 
                 if (!map.CanFit(x, y, z, 16, false, false))
-                {
                     continue;
-                }
 
                 trap.MoveToWorld(new Point3D(x, y, z), map);
                 m_Traps.Add(trap);
@@ -731,9 +693,7 @@ namespace Server.Engines.Doom
             int count = (playerCount + PlayersPerSpawn - 1) / PlayersPerSpawn;
 
             if (count < 1)
-            {
                 count = 1;
-            }
 
             return count;
         }
@@ -774,23 +734,17 @@ namespace Server.Engines.Doom
             try
             {
                 if (m_TypeName == null)
-                {
                     return;
-                }
 
                 Type type = ScriptCompiler.FindTypeByName(m_TypeName, true);
 
                 if (type == null)
-                {
                     return;
-                }
 
                 object obj = Activator.CreateInstance(type);
 
                 if (obj == null)
-                {
                     return;
-                }
 
                 if (obj is Item item)
                 {
@@ -816,25 +770,19 @@ namespace Server.Engines.Doom
                 State = GauntletSpawnerState.InSequence;
 
                 if (m_Sequence != null && !m_Sequence.Deleted)
-                {
                     m_Sequence.RecurseReset();
-                }
             }
         }
 
         public virtual void Slice()
         {
             if (m_State != GauntletSpawnerState.InProgress)
-            {
                 return;
-            }
 
             int count = ComputeSpawnCount();
 
             for (int i = m_Creatures.Count; i < count; ++i)
-            {
                 Spawn();
-            }
 
             if (HasCompleted)
             {
@@ -843,9 +791,7 @@ namespace Server.Engines.Doom
                 if (m_Sequence != null && !m_Sequence.Deleted)
                 {
                     if (m_Sequence.State == GauntletSpawnerState.Completed)
-                    {
                         RecurseReset();
-                    }
 
                     m_Sequence.State = GauntletSpawnerState.InProgress;
                 }
@@ -859,9 +805,7 @@ namespace Server.Engines.Doom
             DestroyRegion();
 
             if (m_Timer != null)
-            {
                 m_Timer.Stop();
-            }
 
             m_Timer = null;
 

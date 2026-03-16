@@ -33,13 +33,9 @@ namespace Server.Items
             if (version == 0)
             {
                 if (ItemID == 0x2D4B)
-                {
                     ItemID = 0x2DDD;
-                }
                 else
-                {
                     ItemID = 0x2DDE;
-                }
             }
         }
     }

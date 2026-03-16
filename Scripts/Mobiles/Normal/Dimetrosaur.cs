@@ -111,13 +111,9 @@ namespace Server.Mobiles
         public override void GenerateLoot()
         {
             if (IsChampionSpawn)
-            {
                 AddLoot(LootPack.FilthyRich, 2);
-            }
             else
-            {
                 AddLoot(LootPack.UltraRich, 2);
-            }
         }
 
         public Dimetrosaur(Serial serial)

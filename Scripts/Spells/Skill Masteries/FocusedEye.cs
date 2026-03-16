@@ -88,9 +88,7 @@ namespace Server.Spells.SkillMasteries
             SkillMasterySpell spell = GetSpell(attacker, typeof(FocusedEyeSpell));
 
             if (spell != null)
-            {
                 return spell.PropertyBonus();
-            }
 
             return 0;
         }

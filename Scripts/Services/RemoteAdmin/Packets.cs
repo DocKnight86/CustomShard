@@ -72,13 +72,9 @@ namespace Server.RemoteAdmin
             foreach (Account acct in Accounts.GetAccounts())
             {
                 if (acct.Banned)
-                {
                     ++banned;
-                }
                 else
-                {
                     ++active;
-                }
             }
 
             m_Stream.Write(active);
@@ -114,9 +110,7 @@ namespace Server.RemoteAdmin
                 string pwToSend = a.PlainPassword;
 
                 if (pwToSend == null)
-                {
                     pwToSend = "(hidden)";
-                }
 
                 m_Stream.WriteAsciiNull(pwToSend);
                 m_Stream.Write((byte)a.AccessLevel);
@@ -128,15 +122,11 @@ namespace Server.RemoteAdmin
 
                 m_Stream.Write((ushort)a.LoginIPs.Length);
                 for (int i = 0; i < a.LoginIPs.Length; i++)
-                {
                     m_Stream.WriteAsciiNull(a.LoginIPs[i].ToString());
-                }
 
                 m_Stream.Write((ushort)a.IPRestrictions.Length);
                 for (int i = 0; i < a.IPRestrictions.Length; i++)
-                {
                     m_Stream.WriteAsciiNull(a.IPRestrictions[i]);
-                }
             }
         }
     }

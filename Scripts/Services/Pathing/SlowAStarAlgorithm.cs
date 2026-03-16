@@ -91,9 +91,7 @@ namespace Server.PathAlgorithms.SlowAStar
                 if (curNode.x == goalNode.x && curNode.y == goalNode.y && Math.Abs(curNode.z - goalNode.z) < 16)
                 {
                     if (closedCount == MaxNodes)
-                    {
                         break;
-                    }
 
                     closed[closedCount++] = curNode;
 
@@ -102,9 +100,7 @@ namespace Server.PathAlgorithms.SlowAStar
                     zBacktrack = curNode.pz;
 
                     if (pathCount == MaxNodes)
-                    {
                         break;
-                    }
 
                     path[pathCount++] = (Direction)curNode.dir;
 
@@ -117,9 +113,7 @@ namespace Server.PathAlgorithms.SlowAStar
                             if (closed[j].x == xBacktrack && closed[j].y == yBacktrack && closed[j].z == zBacktrack)
                             {
                                 if (pathCount == MaxNodes)
-                                {
                                     break;
-                                }
 
                                 curNode = closed[j];
                                 path[pathCount++] = (Direction)curNode.dir;
@@ -137,15 +131,11 @@ namespace Server.PathAlgorithms.SlowAStar
                         }
 
                         if (pathCount == MaxNodes)
-                        {
                             break;
-                        }
                     }
 
                     if (pathCount == MaxNodes)
-                    {
                         break;
-                    }
 
                     Direction[] dirs = new Direction[pathCount];
 
@@ -158,9 +148,7 @@ namespace Server.PathAlgorithms.SlowAStar
                 --openCount;
 
                 for (int i = popIndex; i < openCount; ++i)
-                {
                     open[i] = open[i + 1];
-                }
 
                 sucCount = 0;
 
@@ -216,9 +204,7 @@ namespace Server.PathAlgorithms.SlowAStar
                 MoveImpl.Goal = Point3D.Zero;
 
                 if (sucCount == 0 || ++depth > MaxDepth)
-                {
                     break;
-                }
 
                 for (int i = 0; i < sucCount; ++i)
                 {
@@ -233,37 +219,27 @@ namespace Server.PathAlgorithms.SlowAStar
                     for (int j = 0; openIndex == -1 && j < openCount; ++j)
                     {
                         if (open[j].x == x && open[j].y == y && open[j].z == z)
-                        {
                             openIndex = j;
-                        }
                     }
 
                     if (openIndex >= 0 && open[openIndex].g < successors[i].g)
-                    {
                         continue;
-                    }
 
                     for (int j = 0; closedIndex == -1 && j < closedCount; ++j)
                     {
                         if (closed[j].x == x && closed[j].y == y && closed[j].z == z)
-                        {
                             closedIndex = j;
-                        }
                     }
 
                     if (closedIndex >= 0 && closed[closedIndex].g < successors[i].g)
-                    {
                         continue;
-                    }
 
                     if (openIndex >= 0)
                     {
                         --openCount;
 
                         for (int j = openIndex; j < openCount; ++j)
-                        {
                             open[j] = open[j + 1];
-                        }
                     }
 
                     if (closedIndex >= 0)
@@ -271,9 +247,7 @@ namespace Server.PathAlgorithms.SlowAStar
                         --closedCount;
 
                         for (int j = closedIndex; j < closedCount; ++j)
-                        {
                             closed[j] = closed[j + 1];
-                        }
                     }
 
                     successors[i].px = curNode.x;
@@ -283,17 +257,13 @@ namespace Server.PathAlgorithms.SlowAStar
                     successors[i].h = Heuristic(x, y, z);
 
                     if (openCount == MaxNodes)
-                    {
                         break;
-                    }
 
                     open[openCount++] = successors[i];
                 }
 
                 if (openCount == MaxNodes || closedCount == MaxNodes)
-                {
                     break;
-                }
 
                 closed[closedCount++] = curNode;
             }

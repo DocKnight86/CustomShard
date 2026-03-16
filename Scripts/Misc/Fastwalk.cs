@@ -18,9 +18,7 @@ namespace Server.Misc
             Mobile.FwdAccessOverride = AccessOverride;
 
             if (Enabled)
-            {
                 EventSink.FastWalk += OnFastWalk;
-            }
         }
 
         public static void OnFastWalk(FastWalkEventArgs e)

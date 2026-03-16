@@ -83,9 +83,7 @@ namespace Server.Engines.VoidPool
         public void LoadSpawns()
         {
             if (Spawns != null)
-            {
                 Spawns.Clear();
-            }
 
             Spawns = new List<SpawnEntry>();
             Spawns.Add(new SpawnEntry(this, new[] { new Rectangle2D(5564, 1888, 26, 31) }));
@@ -142,13 +140,9 @@ namespace Server.Engines.VoidPool
             if (stats != null)
             {
                 if (!stats.OverallTotal.ContainsKey(m))
-                {
                     stats.OverallTotal[m] = points;
-                }
                 else
-                {
                     stats.OverallTotal[m] += points;
-                }
             }
         }
 
@@ -242,9 +236,7 @@ namespace Server.Engines.VoidPool
                 case 1:
                     {
                         if (version == 1)
-                        {
                             Active = controller.Active;
-                        }
 
                         _Active = reader.ReadBool();
                     }
@@ -321,9 +313,7 @@ namespace Server.Engines.VoidPool
                             p = map.GetRandomSpawnPoint(rec);
 
                             if (map.CanSpawnMobile(p))
-                            {
                                 break;
-                            }
                         }
 
                         if (p != Point3D.Zero)
@@ -376,9 +366,7 @@ namespace Server.Engines.VoidPool
                 }
 
                 if (Spawn.Count == 0)
-                {
                     Timer.DelayCall(DoSpawn);
-                }
             }
         }
     }

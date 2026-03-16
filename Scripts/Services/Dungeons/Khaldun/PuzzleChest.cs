@@ -59,9 +59,7 @@ namespace Server.Items
                     PuzzleChestCylinder cylinder = (PuzzleChestCylinder)reader.ReadInt();
 
                     if (i < m_Cylinders.Length)
-                    {
                         m_Cylinders[i] = cylinder;
-                    }
                 }
                 else if (i < m_Cylinders.Length)
                 {
@@ -229,13 +227,9 @@ namespace Server.Items
             {
                 PuzzleChestSolution solution = GetLastGuess(from);
                 if (solution != null)
-                {
                     solution = new PuzzleChestSolution(solution);
-                }
                 else
-                {
                     solution = new PuzzleChestSolution(PuzzleChestCylinder.None, PuzzleChestCylinder.None, PuzzleChestCylinder.None, PuzzleChestCylinder.None, PuzzleChestCylinder.None);
-                }
 
                 from.CloseGump(typeof(PuzzleGump));
                 from.CloseGump(typeof(StatusGump));
@@ -382,14 +376,10 @@ namespace Server.Items
                 PuzzleChestCylinder cylinder = (PuzzleChestCylinder)reader.ReadInt();
 
                 if (length == m_Hints.Length)
-                {
                     m_Hints[i] = cylinder;
-                }
             }
             if (length != m_Hints.Length)
-            {
                 InitHints();
-            }
 
             int guesses = reader.ReadEncodedInt();
             for (int i = 0; i < guesses; i++)
@@ -539,9 +529,7 @@ namespace Server.Items
         {
             List<PuzzleChestCylinder> list = new List<PuzzleChestCylinder>(Solution.Cylinders.Length - 1);
             for (int i = 1; i < Solution.Cylinders.Length; i++)
-            {
                 list.Add(Solution.Cylinders[i]);
-            }
 
             m_Hints = new PuzzleChestCylinder[HintsCount];
 
@@ -604,14 +592,10 @@ namespace Server.Items
                         AddCylinder(350, 200, chest.FirstHint);
 
                         if (lockpicking >= 90.0)
-                        {
                             AddCylinder(350, 212, chest.SecondHint);
-                        }
 
                         if (lockpicking >= 100.0)
-                        {
                             AddCylinder(350, 224, chest.ThirdHint);
-                        }
                     }
                     else
                     {
@@ -619,9 +603,7 @@ namespace Server.Items
                         AddCylinder(350, 160, chest.FirstHint);
 
                         if (lockpicking >= 70.0)
-                        {
                             AddCylinder(350, 172, chest.SecondHint);
-                        }
                     }
                 }
 
@@ -651,9 +633,7 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (m_Chest.Deleted || info.ButtonID == 0 || !m_From.CheckAlive())
-                {
                     return;
-                }
 
                 if (m_From.IsPlayer() && (m_From.Map != m_Chest.Map || !m_From.InRange(m_Chest.GetWorldLocation(), 2)))
                 {
@@ -668,15 +648,11 @@ namespace Server.Items
                 else
                 {
                     if (info.Switches.Length == 0)
-                    {
                         return;
-                    }
 
                     int pedestal = info.Switches[0];
                     if (pedestal < 0 || pedestal >= m_Solution.Cylinders.Length)
-                    {
                         return;
-                    }
 
                     PuzzleChestCylinder cylinder;
                     switch (info.ButtonID)
@@ -752,13 +728,9 @@ namespace Server.Items
             private void AddCylinder(int x, int y, PuzzleChestCylinder cylinder)
             {
                 if (cylinder != PuzzleChestCylinder.None)
-                {
                     AddItem(x, y, (int)cylinder);
-                }
                 else
-                {
                     AddItem(x + 9, y, (int)cylinder);
-                }
             }
         }
 

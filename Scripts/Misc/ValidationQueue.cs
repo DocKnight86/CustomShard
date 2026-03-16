@@ -12,9 +12,7 @@ namespace Server
         public static void Initialize()
         {
             if (StartValidation != null)
-            {
                 StartValidation();
-            }
 
             StartValidation = null;
         }

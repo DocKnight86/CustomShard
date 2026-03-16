@@ -334,47 +334,33 @@ namespace Server.Misc
                         needUpperCase = true;
 
                         if (random > 13)
-                        {
                             sentance.Append("! ");
-                        }
                         else
-                        {
                             sentance.Append(". ");
-                        }
                     }
                 }
 
                 int syllableCount;
 
                 if (30 > Utility.Random(100))
-                {
                     syllableCount = Utility.Random(1, 5);
-                }
                 else
-                {
                     syllableCount = Utility.Random(1, 3);
-                }
 
                 string word = ConstructWord(syllableCount);
 
                 sentance.Append(word);
 
                 if (needUpperCase)
-                {
                     sentance.Replace(word[0], char.ToUpper(word[0]), sentance.Length - word.Length, 1);
-                }
 
                 needUpperCase = false;
             }
 
             if (Utility.RandomMinMax(1, 5) == 1)
-            {
                 sentance.Append('!');
-            }
             else
-            {
                 sentance.Append('.');
-            }
 
             return sentance.ToString();
         }
@@ -388,29 +374,19 @@ namespace Server.Misc
         public bool OnSpeech(Mobile mob, Mobile speaker, string text)
         {
             if ((m_Flags & IHSFlags.OnSpeech) == 0 || m_Keywords == null || m_Responses == null || m_KeywordHash == null)
-            {
                 return false; // not enabled
-            }
 
             if (!speaker.Alive)
-            {
                 return false;
-            }
 
             if (!speaker.InRange(mob, 3))
-            {
                 return false;
-            }
 
             if ((speaker.Direction & Direction.Mask) != speaker.GetDirectionTo(mob))
-            {
                 return false;
-            }
 
             if ((mob.Direction & Direction.Mask) != mob.GetDirectionTo(speaker))
-            {
                 return false;
-            }
 
             string[] split = text.Split(' ');
             List<string> keywordsFound = new List<string>();
@@ -421,9 +397,7 @@ namespace Server.Misc
                 m_KeywordHash.TryGetValue(split[i], out keyword);
 
                 if (keyword != null)
-                {
                     keywordsFound.Add(keyword);
-                }
             }
 
             if (keywordsFound.Count > 0)
@@ -431,13 +405,9 @@ namespace Server.Misc
                 string responseWord;
 
                 if (Utility.RandomBool())
-                {
                     responseWord = GetRandomResponseWord(keywordsFound);
-                }
                 else
-                {
                     responseWord = keywordsFound[Utility.Random(keywordsFound.Count)];
-                }
 
                 string secondResponseWord = GetRandomResponseWord(keywordsFound);
 
@@ -488,13 +458,9 @@ namespace Server.Misc
                 int maxWords = (split.Length / 2) + 1;
 
                 if (maxWords < 2)
-                {
                     maxWords = 2;
-                }
                 else if (maxWords > 6)
-                {
                     maxWords = 6;
-                }
 
                 SaySentance(mob, Utility.RandomMinMax(2, maxWords));
                 mob.Say(response.ToString());
@@ -508,14 +474,10 @@ namespace Server.Misc
         public void OnDeath(Mobile mob)
         {
             if ((m_Flags & IHSFlags.OnDeath) == 0)
-            {
                 return; // not enabled
-            }
 
             if (90 > Utility.Random(100))
-            {
                 return; // 90% chance to do nothing; 10% chance to talk
-            }
 
             SayRandomTranslate(mob,
                 "Revenge!",
@@ -531,24 +493,16 @@ namespace Server.Misc
         public void OnMovement(Mobile mob, Mobile mover, Point3D oldLocation)
         {
             if ((m_Flags & IHSFlags.OnMovement) == 0)
-            {
                 return; // not enabled
-            }
 
             if (!mover.Player || (mover.Hidden && mover.IsStaff()))
-            {
                 return;
-            }
 
             if (!mob.InRange(mover, 5) || mob.InRange(oldLocation, 5))
-            {
                 return; // only talk when they enter 5 tile range
-            }
 
             if (90 > Utility.Random(100))
-            {
                 return; // 90% chance to do nothing; 10% chance to talk
-            }
 
             SaySentance(mob, 6);
         }
@@ -556,14 +510,10 @@ namespace Server.Misc
         public void OnDamage(Mobile mob, int amount)
         {
             if ((m_Flags & IHSFlags.OnDamaged) == 0)
-            {
                 return; // not enabled
-            }
 
             if (90 > Utility.Random(100))
-            {
                 return; // 90% chance to do nothing; 10% chance to talk
-            }
 
             if (amount < 5)
             {
@@ -603,9 +553,7 @@ namespace Server.Misc
             int random = Utility.Random(keywordsFound.Count + m_Responses.Length);
 
             if (random < keywordsFound.Count)
-            {
                 return keywordsFound[random];
-            }
 
             return m_Responses[random - keywordsFound.Count];
         }

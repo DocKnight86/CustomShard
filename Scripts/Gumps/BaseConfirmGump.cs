@@ -32,24 +32,16 @@ namespace Server.Gumps
             AddImage(2, 2, 0x2716);
 
             if (TitleString == null)
-            {
                 AddHtmlLocalized(25, 25, 200, 20, TitleNumber, 0x7D00, false, false);
-            }
             else
-            {
                 AddHtml(25, 25, 200, 20, "<BASEFONT COLOR=#FF0000>" + TitleString + "</BASEFONT>", false, false);
-            }
 
             AddImage(25, 40, 0xBBF);
 
             if (LabelString == null)
-            {
                 AddHtmlLocalized(25, 55, 300, 120, LabelNumber, 0xFFFFFF, false, false);
-            }
             else
-            {
                 AddHtml(25, 55, 300, 120, "<BASEFONT COLOR=#FFFFFF>" + LabelString + "</BASEFONT>", false, false);
-            }
 
             AddRadio(25, 175, 0x25F8, 0x25FB, true, (int)Buttons.Break);
             AddRadio(25, 210, 0x25F8, 0x25FB, false, (int)Buttons.Close);
@@ -77,13 +69,9 @@ namespace Server.Gumps
             if (info.ButtonID == (int)Buttons.Confirm)
             {
                 if (info.IsSwitched((int)Buttons.Break))
-                {
                     Confirm(state.Mobile);
-                }
                 else
-                {
                     Refuse(state.Mobile);
-                }
             }
         }
 

@@ -50,9 +50,7 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (Utility.RandomDouble() < 0.5)
-            {
                 c.DropItem(new AnimalPheromone());
-            }
         }
 
         public override void GenerateLoot()

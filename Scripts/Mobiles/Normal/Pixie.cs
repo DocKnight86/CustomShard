@@ -1,3 +1,5 @@
+using Server.Items;
+
 namespace Server.Mobiles
 {
     [CorpseName("a pixie corpse")]
@@ -55,6 +57,14 @@ namespace Server.Mobiles
             AddLoot(LootPack.LowScrolls);
             AddLoot(LootPack.Gems, 2);
             AddLoot(LootPack.Statue);
+        }
+
+        public override void OnDeath(Container c)
+        {
+            base.OnDeath(c);
+
+            if (Utility.RandomDouble() < 0.3)
+                c.DropItem(new PixieLeg());
         }
 
         public override void Serialize(GenericWriter writer)

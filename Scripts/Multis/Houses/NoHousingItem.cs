@@ -32,14 +32,10 @@ namespace Server.Items
         public override void OnAfterDelete()
         {
             if (m_Region != null)
-            {
                 m_Region.Unregister();
-            }
 
             if (m_Timer != null && m_Timer.Running)
-            {
                 m_Timer.Stop();
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -48,17 +44,13 @@ namespace Server.Items
             writer.Write(0); // version
 
             if (m_Timer != null)
-            {
                 writer.Write(m_Timer.Next);
-            }
             else
-            {
                 writer.Write(DateTime.UtcNow);
-            }
 
             writer.Write(m_Area.Length);
 
-            for (int index = 0; index < m_Area.Length; index++)
+            for (var index = 0; index < m_Area.Length; index++)
             {
                 Rectangle3D rect = m_Area[index];
 
@@ -86,9 +78,7 @@ namespace Server.Items
                 m_Timer.Start();
             }
             else
-            {
                 Delete();
-            }
         }
 
         private class SimpleNoHousingRegion : BaseRegion
@@ -122,9 +112,7 @@ namespace Server.Items
             protected override void OnTick()
             {
                 if (m_Item != null && !m_Item.Deleted)
-                {
                     m_Item.Delete();
-                }
             }
         }
     }

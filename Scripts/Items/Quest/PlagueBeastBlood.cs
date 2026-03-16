@@ -22,9 +22,7 @@ namespace Server.Items
         public override void OnAfterDelete()
         {
             if (m_Timer != null && m_Timer.Running)
-            {
                 m_Timer.Stop();
-            }
         }
 
         public override bool OnBandage(Mobile from)
@@ -32,9 +30,7 @@ namespace Server.Items
             if (IsAccessibleTo(from) && !Patched)
             {
                 if (m_Timer != null && m_Timer.Running)
-                {
                     m_Timer.Stop();
-                }
 
                 if (Starting)
                 {
@@ -42,13 +38,9 @@ namespace Server.Items
                     Y -= 9;
 
                     if (Organ is PlagueBeastRubbleOrgan)
-                    {
                         Y -= 5;
-                    }
                     else if (Organ is PlagueBeastBackupOrgan)
-                    {
                         X += 7;
-                    }
                 }
                 else
                 {
@@ -97,14 +89,10 @@ namespace Server.Items
         private void Hemorrhage()
         {
             if (Patched)
-            {
                 return;
-            }
 
             if (Owner != null)
-            {
                 Owner.PlaySound(0x25);
-            }
 
             if (ItemID == 0x122A)
             {

@@ -72,9 +72,7 @@ namespace Server.Spells.SkillMasteries
         public override void OnCast()
         {
             if (!CheckSequence())
-            {
                 return;
-            }
 
             Phase = 1;
             DefenseModifier = GetMasteryLevel() * 6;
@@ -129,9 +127,7 @@ namespace Server.Spells.SkillMasteries
         public override void OnGotHit(Mobile attacker, ref int damage)
         {
             if (Target == attacker && DefenseModifier > 0)
-            {
                 damage = (int)(damage - (damage * (DefenseModifier / 100.0)));
-            }
         }
 
         private bool CheckMana()

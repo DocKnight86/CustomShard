@@ -28,9 +28,7 @@ namespace Server.Items
             bool ret = base.DropToWorld(from, p);
 
             if (ret)
-            {
                 DestroyItem(from);
-            }
 
             return ret;
         }
@@ -40,9 +38,7 @@ namespace Server.Items
             bool ret = base.DropToMobile(from, target, p);
 
             if (ret)
-            {
                 DestroyItem(from);
-            }
 
             return ret;
         }
@@ -52,9 +48,7 @@ namespace Server.Items
             bool ret = base.DropToItem(from, target, p);
 
             if (ret && Parent != from.Backpack)
-            {
                 DestroyItem(from);
-            }
 
             return ret;
         }

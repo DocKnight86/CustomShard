@@ -10,9 +10,7 @@ namespace Server.Items
             get
             {
                 if (Movable && IsInsideHouse())
-                {
                     return 253;
-                }
 
                 return base.Hue;
             }
@@ -30,9 +28,7 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (Movable && IsInsideHouse())
-            {
                 list.Add(1113267); // (Double Click to Lockdown)
-            }
         }
 
         public override bool DisplayWeight => Movable;
@@ -40,9 +36,7 @@ namespace Server.Items
         public override bool OnDroppedToWorld(Mobile from, Point3D p)
         {
             if (!base.OnDroppedToWorld(from, p))
-            {
                 return false;
-            }
 
             InvalidateProperties();
             return true;
@@ -59,13 +53,9 @@ namespace Server.Items
                     Movable = !Movable;
 
                     if (Movable)
-                    {
                         house.Carpets.Remove(this);
-                    }
                     else
-                    {
                         house.Carpets.Add(this);
-                    }
 
                     InvalidateProperties();
                 }

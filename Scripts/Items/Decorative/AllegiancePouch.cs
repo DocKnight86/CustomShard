@@ -31,9 +31,7 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
-            {
                 list.Add(1113802); // 12th Year Veteran Reward
-            }
         }
 
         public AllegiancePouch(Serial serial)

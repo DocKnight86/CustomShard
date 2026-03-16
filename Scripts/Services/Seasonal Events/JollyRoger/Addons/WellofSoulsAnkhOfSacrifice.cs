@@ -238,7 +238,7 @@ namespace Server.Items
             {
                 Mobile from = sender.Mobile;
 
-                var robe = from.Backpack.FindItemByType(typeof(Robe)); // PLACE HOLDER FOR REMOVED ARTIFACT
+                var robe = from.Backpack.FindItemByType(typeof(HawkwindsRobe));
 
                 if (robe != null)
                 {

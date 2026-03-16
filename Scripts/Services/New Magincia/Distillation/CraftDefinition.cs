@@ -34,48 +34,28 @@ namespace Server.Engines.Distillation
                 Type type = m_Ingredients[i];
 
                 if (type == typeof(Yeast))
-                {
                     m_Labels[i] = 1150453;
-                }
                 else if (type == typeof(WheatWort))
-                {
                     m_Labels[i] = 1150275;
-                }
                 else if (type == typeof(PewterBowlOfCorn))
-                {
                     m_Labels[i] = 1025631;
-                }
                 else if (type == typeof(PewterBowlOfPotatos))
-                {
                     m_Labels[i] = 1025634;
-                }
                 else if (type == typeof(TribalBerry))
-                {
                     m_Labels[i] = 1040001;
-                }
                 else if (type == typeof(HoneydewMelon))
-                {
                     m_Labels[i] = 1023189;
-                }
                 else if (type == typeof(JarHoney))
-                {
                     m_Labels[i] = 1022540;
-                }
                 else if (type == typeof(Pitcher))
                 {
                     if (m_Liquor == Liquor.Brandy)
-                    {
                         m_Labels[i] = 1028091;      // pitcher of wine
-                    }
                     else
-                    {
                         m_Labels[i] = 1024088;      // pitcher of water
-                    }
                 }
                 else if (type == typeof(Dates))
-                {
                     m_Labels[i] = 1025927;
-                }
                 else
                 {
                     Item item = Loot.Construct(type);

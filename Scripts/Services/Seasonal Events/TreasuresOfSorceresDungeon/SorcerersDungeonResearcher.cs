@@ -63,6 +63,12 @@ namespace Server.Engines.SorcerersDungeon
             };
             PackItem(item);
 
+            item = new TalonsOfEscaping
+            {
+                Movable = false
+            };
+            PackItem(item);
+
             item = new BootsOfEscaping
             {
                 Movable = false
@@ -95,9 +101,7 @@ namespace Server.Engines.SorcerersDungeon
         public override void SendRewardGump(Mobile m)
         {
             if (m.Player && m.CheckAlive())
-            {
                 m.SendGump(new SorcerersDungeonRewardGump(this, m as PlayerMobile));
-            }
         }
 
         public SorcerersDungeonResearcher(Serial serial)

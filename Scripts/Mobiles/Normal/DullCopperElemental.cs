@@ -68,7 +68,7 @@ namespace Server.Mobiles
                 }
             }
 
-            for (int index = 0; index < list.Count; index++)
+            for (var index = 0; index < list.Count; index++)
             {
                 Mobile m = list[index];
 

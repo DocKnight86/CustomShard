@@ -55,9 +55,7 @@ namespace Server.Items
                 }
 
                 if (Hue == 2951)
-                {
                     list.Add(1076187); // Antique
-                }
             }
 
             public CopperShipReliefComponent(Serial serial)
@@ -132,13 +130,9 @@ namespace Server.Items
             LootType = LootType.Blessed;
 
             if (name == null)
-            {
                 _DisplayName = _Names[Utility.Random(_Names.Length)];
-            }
             else
-            {
                 _DisplayName = name;
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -149,9 +143,7 @@ namespace Server.Items
                 from.SendGump(new AddonOptionGump(this));
             }
             else
-            {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.       	
-            }
         }
 
         public override void GetProperties(ObjectPropertyList list)
@@ -164,9 +156,7 @@ namespace Server.Items
             }
 
             if (Hue == 2951)
-            {
                 list.Add(1076187); // Antique
-            }
         }
 
         public CopperShipReliefAddonDeed(Serial serial)
@@ -202,9 +192,7 @@ namespace Server.Items
             Facing = (AddonFacing)choice;
 
             if (!Deleted)
-            {
                 base.OnDoubleClick(from);
-            }
         }
 
         public static string[] _Names =

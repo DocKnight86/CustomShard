@@ -105,14 +105,10 @@ namespace Server.Engines.ArenaSystem
         public void Register(PVPArena arena)
         {
             if (Arenas == null)
-            {
                 Arenas = new List<PVPArena>();
-            }
 
             if (!Arenas.Contains(arena))
-            {
                 Arenas.Add(arena);
-            }
         }
 
         public void Unregister(PVPArena arena)
@@ -237,9 +233,7 @@ namespace Server.Engines.ArenaSystem
                     for (int i = 0; i < c; i++)
                     {
                         if (BlockedArenas == null)
-                        {
                             BlockedArenas = new List<string>();
-                        }
 
                         BlockedArenas.Add(reader.ReadString());
                     }
@@ -250,9 +244,7 @@ namespace Server.Engines.ArenaSystem
                     for (int i = 0; i < count; i++)
                     {
                         if (Arenas == null)
-                        {
                             Arenas = new List<PVPArena>();
-                        }
 
                         if (version >= 2)
                         {
@@ -334,9 +326,7 @@ namespace Server.Engines.ArenaSystem
         public static bool HasSameIP(Mobile m, ArenaDuel duel)
         {
             if (duel == null || m.AccessLevel > AccessLevel.Player)
-            {
                 return false;
-            }
 
             foreach (KeyValuePair<PlayerMobile, PlayerStatsEntry> kvp in duel.GetParticipants())
             {
@@ -352,9 +342,7 @@ namespace Server.Engines.ArenaSystem
         public static bool IsSameIP(Mobile one, Mobile two)
         {
             if (one.NetState == null || two.NetState == null || one.AccessLevel > AccessLevel.Player || two.AccessLevel > AccessLevel.Player)
-            {
                 return false;
-            }
 
             System.Net.IPAddress oneAddress = one.NetState.Address;
             System.Net.IPAddress twoAddress = two.NetState.Address;

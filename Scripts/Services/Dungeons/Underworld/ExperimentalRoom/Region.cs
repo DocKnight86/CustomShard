@@ -25,18 +25,14 @@ namespace Server.Regions
                         Mobile master = creature.GetMaster();
 
                         if (master != null && master.NetState != null)
-                        {
                             master.SendLocalizedMessage(1113472); // Your pet has been kicked out of the room. This is not a stable!
-                        }
                     }
                 }
             }
             else if (m is PlayerMobile && m.AccessLevel == AccessLevel.Player)
             {
                 if (m.Backpack == null)
-                {
                     KickToEntrance(m);
-                }
                 else
                 {
                     Item item = m.Backpack.FindItemByType(typeof(ExperimentalGem));
@@ -46,9 +42,7 @@ namespace Server.Regions
                         foreach (Rectangle2D rec in m_RoomRecs)
                         {
                             if (rec.Contains(m.Location))
-                            {
                                 KickToEntrance(m);
-                            }
                         }
                     }
                 }
@@ -58,9 +52,7 @@ namespace Server.Regions
         public void KickToEntrance(Mobile from)
         {
             if (from == null || from.Map == null)
-            {
                 return;
-            }
 
             int x = Utility.RandomMinMax(m_Entrance.X, m_Entrance.X + m_Entrance.Width);
             int y = Utility.RandomMinMax(m_Entrance.Y, m_Entrance.Y + m_Entrance.Height);
@@ -70,9 +62,7 @@ namespace Server.Regions
             Point3D p = new Point3D(x, y, z);
 
             if (from is PlayerMobile)
-            {
                 BaseCreature.TeleportPets(from, p, Map.TerMur);
-            }
 
             from.MoveToWorld(p, Map.TerMur);
 

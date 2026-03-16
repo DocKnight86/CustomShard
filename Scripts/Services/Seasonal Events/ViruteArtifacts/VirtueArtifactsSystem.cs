@@ -33,14 +33,10 @@ namespace Server.Misc
             Region r = m.Region;
 
             if (m is BaseCreature creature && creature.IsChampionSpawn)
-            {
                 return false;
-            }
 
             if (r.IsPartOf<Regions.HouseRegion>() || Multis.BaseBoat.FindBoatAt(m, m.Map) != null)
-            {
                 return false;
-            }
 
             return r.IsPartOf("Covetous") || r.IsPartOf("Deceit") || r.IsPartOf("Despise") || r.IsPartOf("Destard") ||
                    r.IsPartOf("Hythloth") || r.IsPartOf("Shame") || r.IsPartOf("Wrong");
@@ -62,14 +58,10 @@ namespace Server.Misc
             BaseCreature bc = victim as BaseCreature;
 
             if (!Enabled || pm == null || bc == null || !CheckLocation(bc) || !CheckLocation(pm) || !damager.InRange(victim, 18) || !damager.Alive || bc.GivenSpecialArtifact)
-            {
                 return;
-            }
 
             if (bc.Controlled || bc.Owners.Count > 0 || bc.Fame <= 0)
-            {
                 return;
-            }
 
             int luck = Math.Max(0, pm.RealLuck);
             AwardPoints(pm, (int)Math.Max(0, (bc.Fame * (1 + Math.Sqrt(luck) / 100))));
@@ -103,9 +95,7 @@ namespace Server.Misc
                     if (!pm.PlaceInBackpack(i))
                     {
                         if (pm.BankBox != null && pm.BankBox.TryDropItem(damager, i, false))
-                        {
                             pm.SendLocalizedMessage(1079730); // The item has been placed into your bank box.
-                        }
                         else
                         {
                             pm.SendLocalizedMessage(1072523); // You find an artifact, but your backpack and bank are too full to hold it.

@@ -52,9 +52,7 @@ namespace Server.Items
         public void OnChop(Mobile from)
         {
             if (HoldAmount > 0)
-            {
                 from.SendLocalizedMessage(1155841); // You can't use a bladed item on a wall safe with a balance.
-            }
             else
             {
                 BaseHouse house = BaseHouse.FindHouseAt(this);
@@ -71,9 +69,7 @@ namespace Server.Items
                     Item deed = Deed;
 
                     if (deed != null)
-                    {
                         from.AddToBackpack(deed);
-                    }
                 }
             }
         }
@@ -81,9 +77,7 @@ namespace Server.Items
         public bool CouldFit(IPoint3D p, Map map)
         {
             if (!map.CanFit(p.X, p.Y, p.Z, ItemData.Height))
-            {
                 return false;
-            }
 
             if (ItemID == 0x2375)
             {
@@ -105,25 +99,19 @@ namespace Server.Items
                     mobile.SendGump(new WallSafeGump(mobile, this));
                 }
                 else
-                {
                     mobile.SendLocalizedMessage(1061637); // You are not allowed to access this.
-                }
             }
         }
 
         public void AddHistory(string str)
         {
             if (History == null)
-            {
                 History = new List<string>();
-            }
 
             History.Add(str);
 
             if (History.Count > HistoryMax)
-            {
                 History.RemoveAt(0);
-            }
         }
 
         public WallSafe(Serial serial)
@@ -143,9 +131,7 @@ namespace Server.Items
             writer.Write(History == null ? 0 : History.Count);
 
             if (History != null)
-            {
                 History.ForEach(writer.Write);
-            }
         }
 
         public override void Deserialize(GenericReader reader)
@@ -215,17 +201,11 @@ namespace Server.Items
                                 int itemID = 0;
 
                                 if (northWall)
-                                {
                                     itemID = 0x8B8F;
-                                }
                                 else if (westWall)
-                                {
                                     itemID = 0x8B90;
-                                }
                                 else
-                                {
                                     m.SendLocalizedMessage(500268); // This object needs to be mounted on something.
-                                }
 
                                 if (itemID != 0)
                                 {
@@ -240,16 +220,12 @@ namespace Server.Items
                                 }
                             }
                             else
-                            {
                                 m.SendLocalizedMessage(500274); // You can only place this in a house that you own!
-                            }
                         }
                     });
             }
             else
-            {
                 m.SendLocalizedMessage(1080058); // This must be in your backpack to use it.
-            }
         }
 
         public WallSafeDeed(Serial serial) : base(serial)
@@ -324,9 +300,7 @@ namespace Server.Items
             int secureAmount = 0;
 
             if (account != null)
-            {
                 secureAmount = account.GetSecureAccountAmount(User);
-            }
 
             switch (info.ButtonID)
             {
@@ -342,9 +316,7 @@ namespace Server.Items
                             v = Utility.ToInt32(text);
 
                             if (v <= 0 || v > secureAmount)
-                            {
                                 from.SendLocalizedMessage(1155867); // The amount entered is invalid. Verify that there are sufficient funds to complete this transaction.
-                            }
                             else if (acct != null)
                             {
                                 int left = WallSafe.MaxGold - Safe.HoldAmount;
@@ -366,9 +338,7 @@ namespace Server.Items
                             }
                         }
                         else
-                        {
                             from.SendLocalizedMessage(1155867); // The amount entered is invalid. Verify that there are sufficient funds to complete this transaction.
-                        }
                     },
                     (from, text, acct) =>
                     {
@@ -387,9 +357,7 @@ namespace Server.Items
                             v = Utility.ToInt32(text);
 
                             if (v <= 0 || v > Safe.HoldAmount)
-                            {
                                 from.SendLocalizedMessage(1155867); // The amount entered is invalid. Verify that there are sufficient funds to complete this transaction.
-                            }
                             else if (acct != null)
                             {
                                 int left = Account.MaxSecureAmount - secureAmount;
@@ -411,9 +379,7 @@ namespace Server.Items
                             }
                         }
                         else
-                        {
                             from.SendLocalizedMessage(1155867); // The amount entered is invalid. Verify that there are sufficient funds to complete this transaction.
-                        }
                     },
                     (from, text, acct) =>
                     {

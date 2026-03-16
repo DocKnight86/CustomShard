@@ -22,9 +22,7 @@ namespace Server.Engines.Quests.Doom
             Movable = false;
 
             if (Instances == null)
-            {
                 Instances = new List<BellOfTheDead>();
-            }
 
             Instances.Add(this);
         }
@@ -86,13 +84,9 @@ namespace Server.Engines.Quests.Doom
         public override void OnDoubleClick(Mobile from)
         {
             if (from.InRange(GetWorldLocation(), 2))
-            {
                 BeginSummon(from);
-            }
             else
-            {
                 from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
-            }
         }
 
         public virtual void BeginSummon(Mobile from)
@@ -166,9 +160,7 @@ namespace Server.Engines.Quests.Doom
             reader.ReadInt();
 
             if (Instances == null)
-            {
                 Instances = new List<BellOfTheDead>();
-            }
 
             Instances.Add(this);
 
@@ -176,9 +168,7 @@ namespace Server.Engines.Quests.Doom
             m_Dragon = reader.ReadMobile() as SkeletalDragon;
 
             if (m_Chyloth != null)
-            {
                 m_Chyloth.Delete();
-            }
         }
     }
 }

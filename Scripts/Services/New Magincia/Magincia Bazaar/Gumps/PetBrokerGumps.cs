@@ -17,13 +17,9 @@ namespace Server.Engines.NewMagincia
             AddHtmlLocalized(215, 10, 200, 18, 1150311, RedColor16, false, false); // Animal Broker
 
             if (!string.IsNullOrEmpty(m_Broker.Plot.ShopName))
-            {
                 AddHtml(173, 40, 173, 18, Color(FormatStallName(m_Broker.Plot.ShopName), BlueColor), false, false);
-            }
             else
-            {
                 AddHtmlLocalized(180, 40, 200, 18, 1150314, BlueColor16, false, false); // This Shop Has No Name
-            }
 
             AddHtml(173, 65, 173, 18, Color(FormatBrokerName(string.Format("Proprietor: {0}", broker.Name)), BlueColor), false, false);
 
@@ -75,9 +71,7 @@ namespace Server.Engines.NewMagincia
             Mobile from = state.Mobile;
 
             if (m_Broker == null || m_Broker.Plot == null)
-            {
                 return;
-            }
 
             switch (info.ButtonID)
             {
@@ -92,10 +86,7 @@ namespace Server.Engines.NewMagincia
                     string text = tr.Text;
 
                     if (!m_Broker.Plot.TrySetShopName(from, text))
-                    {
                         from.SendLocalizedMessage(1150775); // Shop names are limited to 40 characters in length. Shop names must pass an obscenity filter check. The text you have entered is not valid.
-                    }
-
                     break;
                 case 3: // Withdraw Funds
                     TextRelay tr1 = info.TextEntries[1];
@@ -214,9 +205,7 @@ namespace Server.Engines.NewMagincia
                 BaseCreature bc = m_List[i];
 
                 if (bc == null)
-                {
                     continue;
-                }
 
                 AddButton(10, y, 4005, 4007, i + 1, GumpButtonType.Reply, 0);
                 AddHtmlLocalized(60, y, 200, 18, 1150340, string.Format("{0}\t{1}", bc.Name, PetBrokerEntry.GetOriginalName(bc)), col, false, false); // ~1_NAME~ (~2_type~)
@@ -237,9 +226,7 @@ namespace Server.Engines.NewMagincia
             Mobile from = state.Mobile;
 
             if (info.ButtonID == 0)
-            {
                 return;
-            }
 
             if (info.ButtonID == 500) // MAIN MENU
             {
@@ -305,9 +292,7 @@ namespace Server.Engines.NewMagincia
                 if (pet == null || pet.Deleted)
                 {
                     if (pet != null)
-                    {
                         pet.IsStabled = false;
-                    }
 
                     from.Stabled.RemoveAt(i);
                     --i;
@@ -364,9 +349,7 @@ namespace Server.Engines.NewMagincia
             Mobile from = state.Mobile;
 
             if (info.ButtonID == 0)
-            {
                 return;
-            }
 
             if (info.ButtonID == 500) // MAIN MENU
             {
@@ -381,9 +364,7 @@ namespace Server.Engines.NewMagincia
                     PetBrokerEntry entry = m_Broker.BrokerEntries[m_Index];
 
                     if (from.Stabled.Count >= AnimalTrainer.GetMaxStabled(from) || entry.Pet == null)
-                    {
                         from.SendLocalizedMessage(1150634); // Failed to transfer the selected pet to your stables. Either the pet is no longer in the broker's inventory, or you do not have any available stable slots.
-                    }
                     else
                     {
                         BaseCreature bc = entry.Pet;
@@ -397,16 +378,12 @@ namespace Server.Engines.NewMagincia
                     }
                 }
                 else
-                {
                     from.SendLocalizedMessage(1150341); // You did not select a pet.
-                }
 
                 from.SendGump(new RemovePetsGump(m_Broker, from, m_Index));
             }
             else
-            {
                 from.SendGump(new RemovePetsGump(m_Broker, from, info.ButtonID - 1));
-            }
         }
     }
 
@@ -483,28 +460,19 @@ namespace Server.Engines.NewMagincia
                             catch (Exception e) { Diagnostics.ExceptionLogging.LogException(e); }
 
                             if (amount > 0)
-                            {
                                 entry.SalePrice = amount;
-                            }
                             else
-                            {
                                 from.SendLocalizedMessage(1150343); // You have entered an invalid price.
-                            }
                         }
                         else
-                        {
                             from.SendLocalizedMessage(1150341); // You did not select a pet.
-                        }
                     }
                     from.SendGump(new SetPetPricesGump(m_Broker, -1));
                     break;
                 default:
                     int idx = info.ButtonID - 3;
                     if (idx >= 0 && idx < m_Broker.BrokerEntries.Count)
-                    {
                         m_Index = idx;
-                    }
-
                     from.SendGump(new SetPetPricesGump(m_Broker, m_Index));
                     break;
             }
@@ -636,9 +604,7 @@ namespace Server.Engines.NewMagincia
                         from.SendLocalizedMessage(1150369, string.Format("{0}\t{1}", entry.TypeName, pet.Name)); // The ~1_TYPE~ named "~2_NAME~" is now in the animal broker's pen for inspection.
                     }
                     else
-                    {
                         from.SendLocalizedMessage(1150368); // The selected animal is not available.
-                    }
                 }
 
                 from.SendGump(new PetInventoryGump(m_Broker, from));
@@ -652,9 +618,7 @@ namespace Server.Engines.NewMagincia
                     PetBrokerEntry entry = m_Entries[id];
 
                     if (entry != null && entry.Pet != null && m_Broker.BrokerEntries.Contains(entry))
-                    {
                         from.SendGump(new ConfirmBuyPetGump(m_Broker, entry));
-                    }
                 }
             }
         }

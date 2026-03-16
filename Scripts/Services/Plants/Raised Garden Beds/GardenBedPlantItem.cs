@@ -34,9 +34,7 @@ namespace Server.Engines.Plants
                 int label = base.LabelNumber;
 
                 if (label == 1029913)
-                {
                     label = 1022321;   // dirt patch
-                }
 
                 return label;
             }
@@ -52,9 +50,7 @@ namespace Server.Engines.Plants
                 if (m_Component != null)
                 {
                     if (m_Component.X != X || m_Component.Y != Y || m_Component.Map != Map || m_Component.Deleted)
-                    {
                         m_Component = null;
-                    }
                 }
 
                 return m_Component;
@@ -66,9 +62,7 @@ namespace Server.Engines.Plants
                 if (m_Component != null)
                 {
                     if (m_Component.X != X || m_Component.Y != Y || m_Component.Map != Map || m_Component.Deleted)
-                    {
                         m_Component = null;
-                    }
                 }
             }
         }
@@ -134,9 +128,7 @@ namespace Server.Engines.Plants
         public override void Delete()
         {
             if (m_Component != null && m_Component.Plant == this)
-            {
                 m_Component.Plant = null;
-            }
 
             base.Delete();
         }
@@ -144,9 +136,7 @@ namespace Server.Engines.Plants
         public override void OnDoubleClick(Mobile from)
         {
             if (PlantStatus >= PlantStatus.DecorativePlant)
-            {
                 return;
-            }
 
             Point3D loc = GetWorldLocation();
 

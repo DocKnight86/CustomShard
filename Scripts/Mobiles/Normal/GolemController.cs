@@ -58,6 +58,10 @@ namespace Server.Mobiles
 
         public override void GenerateLoot()
         {
+            if (Map == Map.Ilshenar)
+            {
+                AddLoot(LootPack.LootItem<CompassionSage>(2.0));
+            }
             AddLoot(LootPack.Rich);
             AddLoot(LootPack.LootItem<ArcaneGem>(70.0));
         }

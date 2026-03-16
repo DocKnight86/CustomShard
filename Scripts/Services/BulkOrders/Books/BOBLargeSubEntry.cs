@@ -35,9 +35,7 @@ namespace Server.Engines.BulkOrders
                         string type = reader.ReadString();
 
                         if (type != null)
-                        {
                             m_ItemType = ScriptCompiler.FindTypeByFullName(type);
-                        }
 
                         m_AmountCur = reader.ReadEncodedInt();
                         m_Number = reader.ReadEncodedInt();

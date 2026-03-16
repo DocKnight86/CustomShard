@@ -187,9 +187,7 @@ namespace Server.Spells
             if (d is Mobile mobile)
             {
                 if (mobile != m_Caster)
-                {
                     NegativeAttributes.OnCombatAction(mobile);
-                }
 
                 EvilOmenSpell.TryEndEffect(mobile);
             }
@@ -264,14 +262,10 @@ namespace Server.Spells
                 int focus = SAAbsorptionAttributes.GetValue(Caster, SAAbsorptionAttribute.CastingFocus);
 
                 if (BaseFishPie.IsUnderEffects(m_Caster, FishPieEffect.CastFocus))
-                {
                     focus += 2;
-                }
 
                 if (focus > 12)
-                {
                     focus = 12;
-                }
 
                 focus += m_Caster.Skills[SkillName.Inscribe].Value >= 50 ? GetInscribeFixed(m_Caster) / 200 : 0;
 
@@ -285,34 +279,22 @@ namespace Server.Spells
                     int res = 0;
 
                     if (phys == 100)
-                    {
                         res = Math.Min(40, SAAbsorptionAttributes.GetValue(m_Caster, SAAbsorptionAttribute.ResonanceKinetic));
-                    }
 
                     else if (fire == 100)
-                    {
                         res = Math.Min(40, SAAbsorptionAttributes.GetValue(m_Caster, SAAbsorptionAttribute.ResonanceFire));
-                    }
 
                     else if (cold == 100)
-                    {
                         res = Math.Min(40, SAAbsorptionAttributes.GetValue(m_Caster, SAAbsorptionAttribute.ResonanceCold));
-                    }
 
                     else if (pois == 100)
-                    {
                         res = Math.Min(40, SAAbsorptionAttributes.GetValue(m_Caster, SAAbsorptionAttribute.ResonancePoison));
-                    }
 
                     else if (nrgy == 100)
-                    {
                         res = Math.Min(40, SAAbsorptionAttributes.GetValue(m_Caster, SAAbsorptionAttribute.ResonanceEnergy));
-                    }
 
                     if (res > Utility.Random(100))
-                    {
                         disturb = false;
-                    }
                 }
                 #endregion
 
@@ -456,9 +438,7 @@ namespace Server.Spells
             double scalar = 1.0;
 
             if (target == null)
-            {
                 return scalar;
-            }
 
             if (target is BaseCreature targetCreature)
             {
@@ -504,13 +484,9 @@ namespace Server.Spells
                     bool isSuper = false;
 
                     if (atkSlayer != null && atkSlayer == atkSlayer.Group.Super && atkSlayer.Group != SlayerGroup.Groups[6]) //Fey Slayers give 300% damage
-                    {
                         isSuper = true;
-                    }
                     else if (atkSlayer2 != null && atkSlayer2 == atkSlayer2.Group.Super && atkSlayer2.Group != SlayerGroup.Groups[6])
-                    {
                         isSuper = true;
-                    }
 
                     scalar = isSuper ? 2.0 : 3.0;
                 }
@@ -519,14 +495,10 @@ namespace Server.Spells
                 TransformContext context = TransformationSpellHelper.GetContext(defender);
 
                 if ((atkBook.Slayer == SlayerName.Silver || atkBook.Slayer2 == SlayerName.Silver) && context != null && context.Type != typeof(HorrificBeastSpell))
-                {
                     scalar += .25; // Every necromancer transformation other than horrific beast take an additional 25% damage
-                }
 
                 if (scalar != 1.0)
-                {
                     return scalar;
-                }
             }
 
             ISlayer defISlayer = Spellbook.FindEquippedSpellbook(defender);
@@ -672,9 +644,7 @@ namespace Server.Spells
             {
                 if (TransformationSpellHelper.UnderTransformation(Caster, typeof(HorrificBeastSpell)) &&
                     SpellHelper.HasSpellFocus(Caster, CastSkill))
-                {
                     return false;
-                }
 
                 return true;
             }
@@ -724,6 +694,22 @@ namespace Server.Spells
             }
             else if (!CheckManaBeforeCast || m_Caster.Mana >= ScaleMana(GetMana()))
             {
+                #region Stygian Abyss
+                if (m_Caster.Race == Race.Gargoyle && m_Caster.Flying)
+                {
+                    if (BaseMount.OnFlightPath(m_Caster))
+                    {
+                        if (m_Caster.IsPlayer())
+                        {
+                            m_Caster.SendLocalizedMessage(1113750); // You may not cast spells while flying over such precarious terrain.
+                            return false;
+                        }
+
+                        m_Caster.SendMessage("Your staff level allows you to cast while flying over precarious terrain.");
+                    }
+                }
+                #endregion
+
                 if (m_Caster.Spell == null && m_Caster.CheckSpellCast(this) && CheckCast() &&
                     m_Caster.Region.OnBeginSpellCast(m_Caster, this))
                 {
@@ -1147,9 +1133,7 @@ namespace Server.Spells
         public bool ValidateBeneficial(Mobile target)
         {
             if (target == null)
-            {
                 return true;
-            }
 
             if (this is HealSpell || this is GreaterHealSpell || this is CloseWoundsSpell)
             {

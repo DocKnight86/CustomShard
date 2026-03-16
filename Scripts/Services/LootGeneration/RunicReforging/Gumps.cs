@@ -106,9 +106,7 @@ namespace Server.Gumps
                 }
 
                 if (HasMetPrerequisite(option) && CanReforge(from, option))
-                {
                     AddButton(15, y, buttonID, buttonID, i + 100, GumpButtonType.Reply, 0);
-                }
 
                 AddHtmlLocalized(55, y, 250, 20, GetCliloc(option), buttonHue, false, false);
 
@@ -174,44 +172,26 @@ namespace Server.Gumps
                 case ReforgingOption.Powerful: break;
                 case ReforgingOption.Structural:
                     if ((m_Options & ReforgingOption.Fortified) != 0)
-                    {
                         m_Options ^= ReforgingOption.Fortified;
-                    }
-
                     break;
                 case ReforgingOption.Fortified: break;
                 case ReforgingOption.Fundamental:
                     if ((m_Options & ReforgingOption.Integral) != 0)
-                    {
                         m_Options ^= ReforgingOption.Integral;
-                    }
-
                     break;
                 case ReforgingOption.Integral: break;
                 case ReforgingOption.GrandArtifice:
                     if ((m_Options & ReforgingOption.InspiredArtifice) != 0)
-                    {
                         m_Options ^= ReforgingOption.InspiredArtifice;
-                    }
-
                     if ((m_Options & ReforgingOption.ExaltedArtifice) != 0)
-                    {
                         m_Options ^= ReforgingOption.ExaltedArtifice;
-                    }
-
                     if ((m_Options & ReforgingOption.SublimeArtifice) != 0)
-                    {
                         m_Options ^= ReforgingOption.SublimeArtifice;
-                    }
-
                     break;
                 case ReforgingOption.InspiredArtifice: break;
                 case ReforgingOption.ExaltedArtifice:
                     if ((m_Options & ReforgingOption.SublimeArtifice) != 0)
-                    {
                         m_Options ^= ReforgingOption.SublimeArtifice;
-                    }
-
                     break;
                 case ReforgingOption.SublimeArtifice: break;
             }
@@ -304,9 +284,7 @@ namespace Server.Gumps
                             CraftResourceInfo resInfo = CraftResources.GetInfo(m_Tool.Resource);
 
                             if (resInfo == null)
-                            {
                                 return;
-                            }
 
                             CraftAttributeInfo attrs = resInfo.AttributeInfo;
 
@@ -477,19 +455,13 @@ namespace Server.Gumps
             }
 
             if ((m_Options & ReforgingOption.Powerful) != 0)
-            {
                 budget += 60;
-            }
 
             if ((m_Options & ReforgingOption.Structural) != 0)
-            {
                 budget += 60;
-            }
 
             if ((m_Options & ReforgingOption.Fundamental) != 0)
-            {
                 budget += 100;
-            }
 
             return budget;
         }
@@ -513,34 +485,24 @@ namespace Server.Gumps
             if (attr != null && (m_Options & ReforgingOption.Structural) != 0)
             {
                 if (neg != null)
-                {
                     neg.Brittle = 1;
-                }
 
                 if ((m_Options & ReforgingOption.Fortified) != 0)
-                {
                     durability = 150;
-                }
 
                 if (item is BaseArmor || item is BaseClothing)
-                {
                     item.Hue = 2500;
-                }
             }
 
             if ((m_Options & ReforgingOption.Fundamental) != 0)
             {
                 if (neg != null)
-                {
                     neg.NoRepair = 1;
-                }
 
                 durability = (m_Options & ReforgingOption.Integral) != 0 ? 255 : 200;
 
                 if (item.Hue == 0 && (item is BaseArmor || item is BaseClothing))
-                {
                     item.Hue = 2500;
-                }
             }
 
             if (durability > 0 && item is IDurability dura)
@@ -586,9 +548,7 @@ namespace Server.Gumps
                 foreach (int i in Enum.GetValues(typeof(ReforgedPrefix)))
                 {
                     if (i == 0)
-                    {
                         continue;
-                    }
 
                     if (isprefix && prefix == (ReforgedPrefix)i || !isprefix && suffix == (ReforgedSuffix)i)
                     {
@@ -624,9 +584,7 @@ namespace Server.Gumps
                 Mobile from = state.Mobile;
 
                 if (info.ButtonID == 0)
-                {
                     return;
-                }
 
                 int index = info.ButtonID - 100;
 

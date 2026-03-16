@@ -65,9 +65,7 @@ namespace Server.Items
             if (Parent == null && Utility.InRange(Location, m.Location, 3) && !Utility.InRange(Location, oldLocation, 3) && m is PlayerMobile)
             {
                 if (m.X > X)
-                {
                     m.SendLocalizedMessage(1111665); // You notice something odd about the vines covering the wall.
-                }
             }
         }
 

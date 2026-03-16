@@ -58,6 +58,34 @@ namespace Server.Items
         }
     }
 
+    public class GargishRangersGuildSash : GargishSash
+    {
+        public override int LabelNumber => 1155744;  // Member of the Skara Brae Ranger's Guild
+
+        [Constructable]
+        public GargishRangersGuildSash()
+        {
+            LootType = LootType.Blessed;
+        }
+
+        public GargishRangersGuildSash(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write(0);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            reader.ReadInt();
+        }
+    }
+
     public class HuntmastersRewardTitleDeed : BaseRewardTitleDeed
     {
         public override TextDefinition Title => new TextDefinition(1155727);  // Huntmaster's Champion
@@ -133,10 +161,7 @@ namespace Server.Items
                     case 4:
                         BaseCreature bc = new Turkey(true);
                         if (0.10 > Utility.RandomDouble())
-                        {
                             bc.Name = "Mister Gobbles";
-                        }
-
                         bc.MoveToWorld(from.Location, from.Map);
                         from.SendLocalizedMessage(1153512); //That one's not cooked!
                         break;
@@ -153,9 +178,7 @@ namespace Server.Items
                 if (item != null)
                 {
                     if (from.Backpack == null || !from.Backpack.TryDropItem(from, item, false))
-                    {
                         item.MoveToWorld(from.Location, from.Map);
-                    }
 
                     UsesRemaining--;
                 }
@@ -179,9 +202,7 @@ namespace Server.Items
                 m_Ticks++;
 
                 if (m_Ticks % 3 == 0)
-                {
                     m_From.Say(1153513); // * ZzzzZzzzZzzzZ *
-                }
 
                 if (m_Ticks == 10)
                 {
@@ -194,9 +215,7 @@ namespace Server.Items
         public override void AddUsesRemainingProperties(ObjectPropertyList list)
         {
             if (ShowUsesRemaining)
-            {
                 list.Add(1049116, m_UsesRemaining.ToString()); // [ Charges: ~1_CHARGES~ ]
-            }
         }
 
         private void CheckRecharge()
@@ -264,6 +283,50 @@ namespace Server.Items
         }
 
         public HarvestersAxe(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write(0);
+
+            writer.Write(_Charges);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            reader.ReadInt();
+
+            _Charges = reader.ReadInt();
+        }
+    }
+
+    public class GargishHarvestersAxe : GargishAxe
+    {
+        public override int LabelNumber => 1158774;  // Harvester's Axe
+
+        private int _Charges;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int Charges { get => _Charges; set { _Charges = value; InvalidateProperties(); } }
+
+        [Constructable]
+        public GargishHarvestersAxe()
+        {
+            Charges = 1000;
+        }
+
+        public override void AddWeightProperty(ObjectPropertyList list)
+        {
+            base.AddWeightProperty(list);
+            list.Add(1158775);  // * Magically Chops Logs into Boards *
+            list.Add(1060741, _Charges.ToString()); // charges: 
+        }
+
+        public GargishHarvestersAxe(Serial serial)
             : base(serial)
         {
         }

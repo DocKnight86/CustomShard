@@ -243,9 +243,7 @@ namespace Server.Engines.SphynxFortune
         public static void StartTimer()
         {
             if (m_Timer != null && m_Timer.Running)
-            {
                 return;
-            }
 
             m_Timer = Timer.DelayCall(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1), DefragTables);
             m_Timer.Start();

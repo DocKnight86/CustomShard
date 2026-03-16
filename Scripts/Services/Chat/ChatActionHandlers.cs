@@ -17,17 +17,13 @@ namespace Server.Engines.Chat
         public static void Register(int actionId, bool requireConference, OnChatAction callback)
         {
             if (actionId >= 0 && actionId < m_Handlers.Length)
-            {
                 m_Handlers[actionId] = new ChatActionHandler(requireConference, callback);
-            }
         }
 
         public static ChatActionHandler GetHandler(int actionId)
         {
             if (actionId >= 0 && actionId < m_Handlers.Length)
-            {
                 return m_Handlers[actionId];
-            }
 
             return null;
         }

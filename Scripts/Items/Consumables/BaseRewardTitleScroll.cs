@@ -54,13 +54,9 @@ namespace Server.Items
                         TextDefinition textdef = tuple.Item1;
 
                         if (textdef.Number > 0)
-                        {
                             AddHtmlLocalized(50, 65 + i * 20, 240, 20, textdef.Number, 0xFFFF, false, false);
-                        }
                         else if (!string.IsNullOrEmpty(textdef.String))
-                        {
                             AddHtml(50, 65 + i * 20, 240, 20, $"<basefond color=#FFFFFF>{textdef.String}", false, false);
-                        }
 
                         i++;
                     });

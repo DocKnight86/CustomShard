@@ -36,9 +36,7 @@ namespace Server.Items
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
             if (m_TurnedOn && IsLockedDown && (!m.Hidden || m.IsPlayer()) && Utility.InRange(m.Location, Location, 2) && !Utility.InRange(oldLocation, Location, 2))
-            {
                 Effects.PlaySound(Location, Map, m_Sounds[Utility.Random(m_Sounds.Length)]);
-            }
 
             base.OnMovement(m, oldLocation);
         }
@@ -48,13 +46,9 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_TurnedOn)
-            {
                 list.Add(502695); // turned on
-            }
             else
-            {
                 list.Add(502696); // turned off
-            }
         }
 
         public bool IsOwner(Mobile mob)
@@ -129,9 +123,7 @@ namespace Server.Items
                     m_Chimes.TurnedOn = newValue;
 
                     if (newValue && !m_Chimes.IsLockedDown)
-                    {
                         from.SendLocalizedMessage(502693); // Remember, this only works when locked down.
-                    }
                 }
                 else
                 {

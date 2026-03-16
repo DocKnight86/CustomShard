@@ -41,9 +41,7 @@ namespace Server.Items
                 if (m_Bonus == 0)
                 {
                     if (m_SkillMod != null)
-                    {
                         m_SkillMod.Remove();
-                    }
 
                     m_SkillMod = null;
                 }
@@ -67,9 +65,7 @@ namespace Server.Items
             if (m_Bonus != 0 && parent is Mobile mobile)
             {
                 if (m_SkillMod != null)
-                {
                     m_SkillMod.Remove();
-                }
 
                 m_SkillMod = new DefaultSkillMod(SkillName.Blacksmith, true, m_Bonus);
                 mobile.AddSkillMod(m_SkillMod);
@@ -81,9 +77,7 @@ namespace Server.Items
             base.OnRemoved(parent);
 
             if (m_SkillMod != null)
-            {
                 m_SkillMod.Remove();
-            }
 
             m_SkillMod = null;
         }
@@ -93,9 +87,7 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_Bonus != 0)
-            {
                 list.Add(1060451, "#1042354\t{0}", m_Bonus.ToString()); // ~1_skillname~ +~2_val~
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -126,18 +118,14 @@ namespace Server.Items
             if (m_Bonus != 0 && Parent is Mobile)
             {
                 if (m_SkillMod != null)
-                {
                     m_SkillMod.Remove();
-                }
 
                 m_SkillMod = new DefaultSkillMod(SkillName.Blacksmith, true, m_Bonus);
                 ((Mobile)Parent).AddSkillMod(m_SkillMod);
             }
 
             if (version == 0 && Hue == 0)
-            {
                 Hue = 0x482;
-            }
         }
     }
 }

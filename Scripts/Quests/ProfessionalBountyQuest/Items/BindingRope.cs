@@ -49,9 +49,7 @@ namespace Server.Items
             Mobile from = (Mobile)o;
 
             if (from != null)
-            {
                 from.SendMessage("Your crew uses the rope to bind the captain to the front of your galleon.");
-            }
 
             Delete();
         }

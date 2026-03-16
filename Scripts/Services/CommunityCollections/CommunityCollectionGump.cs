@@ -1,4 +1,5 @@
 using Server.Accounting;
+using Server.Engines.Quests;
 using Server.Items;
 using Server.Mobiles;
 using Server.Prompts;
@@ -57,9 +58,7 @@ namespace Server.Gumps
 
             // add pages
             if (m_Collection == null)
-            {
                 return;
-            }
 
             m_Index = 0;
             m_Page = 1;
@@ -106,12 +105,8 @@ namespace Server.Gumps
             if (list != null)
             {
                 for (int i = 0; i < list.Count; i++)
-                {
                     if (m_Max < list[i].Width)
-                    {
                         m_Max = list[i].Width;
-                    }
-                }
             }
         }
 
@@ -162,40 +157,28 @@ namespace Server.Gumps
                 int y = offset - item.Y;
 
                 if (item.Height < 20)
-                {
                     y += (20 - item.Height) / 2;
-                }
 
                 AddItem(55 - item.X + m_Max / 2 - item.Width / 2, y, item.ItemID, item.Hue);
                 TextDefinition.AddTooltip(this, item.Tooltip);
 
                 if (item.Points < 1 && item.Points > 0)
-                {
                     AddLabel(65 + m_Max, offset + height / 2 - 10, 0x64, "1 per " + ((int)Math.Pow(item.Points, -1)).ToString());
-                }
                 else
-                {
                     AddLabel(65 + m_Max, offset + height / 2 - 10, 0x64, item.Points.ToString());
-                }
 
                 TextDefinition.AddTooltip(this, item.Tooltip);
 
                 if (amount > 0)
-                {
                     AddLabel(235, offset + height / 2 - 5, 0xB1, amount.ToString("N0", System.Globalization.CultureInfo.GetCultureInfo("en-US")));
-                }
 
                 offset += 5 + height;
                 m_Index += 1;
 
                 if (m_Index < m_Collection.Donations.Count)
-                {
                     next = Math.Max(m_Collection.Donations[m_Index].Height, 20);
-                }
                 else
-                {
                     next = 0;
-                }
             }
 
             // buttons
@@ -237,6 +220,12 @@ namespace Server.Gumps
             {
                 CollectionItem item = m_Collection.Rewards[m_Index];
 
+                if (item.QuestItem && SkipQuestReward(m_Owner, item))
+                {
+                    m_Index++;
+                    continue;
+                }
+
                 int height = Math.Max(item.Height, 20);
 
                 if (points >= item.Points && item.CanSelect(m_Owner))
@@ -248,9 +237,7 @@ namespace Server.Gumps
                 int y = offset - item.Y;
 
                 if (item.Height < 20)
-                {
                     y += (20 - item.Height) / 2;
-                }
 
                 AddItem(55 - item.X + m_Max / 2 - item.Width / 2, y, item.ItemID, points >= item.Points ? item.Hue : 0x3E9);
                 TextDefinition.AddTooltip(this, item.Tooltip);
@@ -261,13 +248,9 @@ namespace Server.Gumps
                 m_Index += 1;
 
                 if (m_Index < m_Collection.Donations.Count)
-                {
                     next = Math.Max(m_Collection.Donations[m_Index].Height, 20);
-                }
                 else
-                {
                     next = 0;
-                }
             }
 
             // buttons
@@ -328,13 +311,9 @@ namespace Server.Gumps
             if (m_Index < m_Item.Hues.Length && m_Page > 2)
             {
                 if (m_Index < m_Item.Hues.Length)
-                {
                     AddButton(270, 335, 0x15E1, 0x15E5, (int)Buttons.Next, GumpButtonType.Page, m_Page);
-                }
                 else
-                {
                     AddButton(270, 335, 0x15E1, 0x15E5, (int)Buttons.Next, GumpButtonType.Page, 1);
-                }
 
                 AddHtmlLocalized(210, 335, 60, 20, 1074256, 0x1, false, false); // More Hues
             }
@@ -343,18 +322,12 @@ namespace Server.Gumps
         public override void OnResponse(Network.NetState state, RelayInfo info)
         {
             if (m_Collection == null || !m_Owner.InRange(m_Location, 2))
-            {
                 return;
-            }
 
             if (info.ButtonID == (int)Buttons.Rewards)
-            {
                 m_Owner.SendGump(new CommunityCollectionGump(m_Owner, m_Collection, m_Location, Section.Rewards));
-            }
             else if (info.ButtonID == (int)Buttons.Status)
-            {
                 m_Owner.SendGump(new CommunityCollectionGump(m_Owner, m_Collection, m_Location, Section.Donates));
-            }
             else if (info.ButtonID >= 300 && m_Collection.Donations != null && info.ButtonID - 300 < m_Collection.Donations.Count && m_Section == Section.Donates)
             {
                 CollectionItem item = m_Collection.Donations[info.ButtonID - 300];
@@ -382,9 +355,7 @@ namespace Server.Gumps
                         }
                     }
                     else
-                    {
                         m_Owner.SendLocalizedMessage(1073122); // You don't have enough points for that!
-                    }
                 }
             }
             else if (info.ButtonID >= 100 && m_Item != null && info.ButtonID - 200 < m_Item.Hues.Length && m_Section == Section.Hues)
@@ -410,9 +381,7 @@ namespace Server.Gumps
             public override void OnResponse(Mobile from, string text)
             {
                 if (!from.InRange(m_Location, 2) || !(from is PlayerMobile))
-                {
                     return;
-                }
 
                 HandleResponse(from, text);
                 from.SendGump(new CommunityCollectionGump((PlayerMobile)from, m_Collection, m_Location));
@@ -429,9 +398,7 @@ namespace Server.Gumps
                 }
 
                 if (from.Backpack == null)
-                {
                     return;
-                }
 
                 if (m_Selected.Type == typeof(Gold))
                 {
@@ -449,7 +416,7 @@ namespace Server.Gumps
                     int accountcount = acct == null ? 0 : acct.TotalGold;
                     int amountRemaining = amount;
 
-                    for (int index = 0; index < items.Length; index++)
+                    for (var index = 0; index < items.Length; index++)
                     {
                         Item item = items[index];
 
@@ -458,7 +425,7 @@ namespace Server.Gumps
 
                     if (goldcount >= amountRemaining)
                     {
-                        for (int index = 0; index < items.Length; index++)
+                        for (var index = 0; index < items.Length; index++)
                         {
                             Item item = items[index];
 
@@ -474,14 +441,12 @@ namespace Server.Gumps
                             }
 
                             if (amountRemaining == 0)
-                            {
                                 break;
-                            }
                         }
                     }
                     else if (goldcount + accountcount >= amountRemaining)
                     {
-                        for (int index = 0; index < items.Length; index++)
+                        for (var index = 0; index < items.Length; index++)
                         {
                             Item item = items[index];
 
@@ -522,9 +487,7 @@ namespace Server.Gumps
                             Item item = GetActual(items[i]);
 
                             if (item != null && !item.Deleted)
-                            {
                                 count += item.Amount;
-                            }
                         }
 
                         // check
@@ -585,17 +548,39 @@ namespace Server.Gumps
             public override void OnCancel(Mobile from)
             {
                 if (!(from is PlayerMobile))
-                {
                     return;
-                }
 
                 from.SendLocalizedMessage(1073184); // You cancel your donation.
 
                 if (from.InRange(m_Location, 2))
-                {
                     from.SendGump(new CommunityCollectionGump((PlayerMobile)from, m_Collection, m_Location));
+            }
+        }
+
+        private bool SkipQuestReward(PlayerMobile pm, CollectionItem item)
+        {
+            if (pm.Quests != null)
+            {
+                for (var index = 0; index < pm.Quests.Count; index++)
+                {
+                    BaseQuest q = pm.Quests[index];
+
+                    if (!q.Completed)
+                    {
+                        for (var i = 0; i < q.Objectives.Count; i++)
+                        {
+                            BaseObjective obj = q.Objectives[i];
+
+                            if (obj is CollectionsObtainObjective objective && item.Type == objective.Obtain)
+                            {
+                                return false;
+                            }
+                        }
+                    }
                 }
             }
+
+            return true;
         }
 
         public static bool CheckType(Item item, Type type, bool checkDerives)
@@ -618,9 +603,9 @@ namespace Server.Gumps
             }
 
             bool lobsters = false;
-            for (int index = 0; index < BaseHighseasFish.Lobsters.Length; index++)
+            for (var index = 0; index < BaseHighseasFish.Lobsters.Length; index++)
             {
-                Type x = BaseHighseasFish.Lobsters[index];
+                var x = BaseHighseasFish.Lobsters[index];
                 if (x == t)
                 {
                     lobsters = true;
@@ -633,9 +618,9 @@ namespace Server.Gumps
             }
 
             bool crabs = false;
-            for (int index = 0; index < BaseHighseasFish.Crabs.Length; index++)
+            for (var index = 0; index < BaseHighseasFish.Crabs.Length; index++)
             {
-                Type x = BaseHighseasFish.Crabs[index];
+                var x = BaseHighseasFish.Crabs[index];
                 if (x == t)
                 {
                     crabs = true;
@@ -664,7 +649,7 @@ namespace Server.Gumps
 
             int count = 0;
 
-            for (int index = 0; index < pm.Backpack.Items.Count; index++)
+            for (var index = 0; index < pm.Backpack.Items.Count; index++)
             {
                 Item item = pm.Backpack.Items[index];
 
@@ -692,7 +677,7 @@ namespace Server.Gumps
 
             List<Item> list = new List<Item>();
 
-            for (int index = 0; index < pm.Backpack.Items.Count; index++)
+            for (var index = 0; index < pm.Backpack.Items.Count; index++)
             {
                 Item item = pm.Backpack.Items[index];
 

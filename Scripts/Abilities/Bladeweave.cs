@@ -24,13 +24,9 @@ namespace Server.Items
             BladeWeaveRedirect bwr;
             bool success = m_NewAttack.TryGetValue(attacker, out bwr);
             if (success)
-            {
                 a = bwr.NewAbility;
-            }
             else
-            {
                 a = null;
-            }
 
             return success;
         }
@@ -40,9 +36,7 @@ namespace Server.Items
         public override bool OnBeforeSwing(Mobile attacker, Mobile defender)
         {
             if (!Validate(attacker) || !CheckMana(attacker, false))
-            {
                 return false;
-            }
 
             int ran = -1;
 
@@ -129,9 +123,7 @@ namespace Server.Items
                     bwr.NewAbility.OnHit(attacker, defender, damage);
                 }
                 else
-                {
                     base.OnHit(attacker, defender, damage);
-                }
 
                 m_NewAttack.Remove(attacker);
                 ClearCurrentAbility(attacker);
@@ -142,13 +134,9 @@ namespace Server.Items
         {
             BladeWeaveRedirect bwr;
             if (m_NewAttack.TryGetValue(attacker, out bwr))
-            {
                 bwr.NewAbility.OnMiss(attacker, defender);
-            }
             else
-            {
                 base.OnMiss(attacker, defender);
-            }
 
             m_NewAttack.Remove(attacker);
         }

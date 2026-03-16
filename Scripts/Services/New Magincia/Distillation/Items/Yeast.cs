@@ -12,15 +12,8 @@ namespace Server.Items
             {
                 m_BacterialResistance = value;
 
-                if (m_BacterialResistance < 1)
-                {
-                    m_BacterialResistance = 1;
-                }
-
-                if (m_BacterialResistance > 5)
-                {
-                    m_BacterialResistance = 5;
-                }
+                if (m_BacterialResistance < 1) m_BacterialResistance = 1;
+                if (m_BacterialResistance > 5) m_BacterialResistance = 5;
 
                 InvalidateProperties();
             }
@@ -36,25 +29,15 @@ namespace Server.Items
             int ran = Utility.Random(100);
 
             if (ran <= 5)
-            {
                 m_BacterialResistance = 5;
-            }
             else if (ran <= 10)
-            {
                 m_BacterialResistance = 4;
-            }
             else if (ran <= 20)
-            {
                 m_BacterialResistance = 3;
-            }
             else if (ran <= 40)
-            {
                 m_BacterialResistance = 2;
-            }
             else
-            {
                 m_BacterialResistance = 1;
-            }
         }
 
         [Constructable]

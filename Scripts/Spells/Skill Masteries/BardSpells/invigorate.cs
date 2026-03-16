@@ -85,7 +85,7 @@ namespace Server.Spells.SkillMasteries
         {
             if (PartyList != null)
             {
-                for (int index = 0; index < PartyList.Count; index++)
+                for (var index = 0; index < PartyList.Count; index++)
                 {
                     Mobile m = PartyList[index];
 
@@ -101,9 +101,7 @@ namespace Server.Spells.SkillMasteries
             base.OnTick();
 
             if (m_NextHeal > DateTime.UtcNow)
-            {
                 return false;
-            }
 
             PartyList.IterateReverse(m =>
             {
@@ -142,9 +140,7 @@ namespace Server.Spells.SkillMasteries
             SkillMasterySpell spell = GetSpellForParty(m, typeof(InvigorateSpell));
 
             if (spell != null)
-            {
                 return spell.StatBonus();
-            }
 
             return 0;
         }

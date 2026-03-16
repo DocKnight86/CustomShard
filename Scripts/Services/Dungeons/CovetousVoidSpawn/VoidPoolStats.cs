@@ -66,14 +66,10 @@ namespace Server.Engines.VoidPool
                     goto case 0;
                 case 0:
                     if (version == 0)
-                    {
                         Timer.DelayCall(() => Controller = VoidPoolController.InstanceTram);
-                    }
 
                     if (reader.ReadInt() == 1)
-                    {
                         BestWave = new BestWave(reader);
-                    }
 
                     int count = reader.ReadInt();
                     for (int i = 0; i < count; i++)
@@ -82,9 +78,7 @@ namespace Server.Engines.VoidPool
                         long l = reader.ReadLong();
 
                         if (m != null)
-                        {
                             BestSingle[m] = l;
-                        }
                     }
 
                     count = reader.ReadInt();
@@ -94,9 +88,7 @@ namespace Server.Engines.VoidPool
                         long l = reader.ReadLong();
 
                         if (m != null)
-                        {
                             OverallTotal[m] = l;
-                        }
                     }
 
                     count = reader.ReadInt();
@@ -110,15 +102,11 @@ namespace Server.Engines.VoidPool
                             long l = reader.ReadLong();
 
                             if (m != null)
-                            {
                                 dic[m] = l;
-                            }
                         }
 
                         if (dic.Count > 0)
-                        {
                             Top20.Add(dic);
-                        }
                     }
                     break;
             }
@@ -136,9 +124,7 @@ namespace Server.Engines.VoidPool
                 BestWave.Serialize(writer);
             }
             else
-            {
                 writer.Write(0);
-            }
 
             writer.Write(BestSingle.Count);
             foreach (KeyValuePair<Mobile, long> kvp in BestSingle)
@@ -244,13 +230,9 @@ namespace Server.Engines.VoidPool
             foreach (KeyValuePair<Mobile, long> kvp in controller.CurrentScore)
             {
                 if (!stats.OverallTotal.ContainsKey(kvp.Key))
-                {
                     stats.OverallTotal[kvp.Key] = kvp.Value;
-                }
                 else
-                {
                     stats.OverallTotal[kvp.Key] += kvp.Value;
-                }
             }
         }
 
@@ -278,9 +260,7 @@ namespace Server.Engines.VoidPool
         public static long GetCollectiveScore(Dictionary<Mobile, long> score)
         {
             if (score == null)
-            {
                 return 0;
-            }
 
             long s = 0;
 
@@ -344,9 +324,7 @@ namespace Server.Engines.VoidPool
                 Mobile m = reader.ReadMobile();
                 long score = reader.ReadLong();
                 if (m != null)
-                {
                     Score[m] = score;
-                }
             }
         }
 

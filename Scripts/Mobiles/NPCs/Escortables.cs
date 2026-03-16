@@ -510,20 +510,14 @@ namespace Server.Engines.Quests
             AddItem(new ThighBoots());
 
             if (Female)
-            {
                 AddItem(new FancyDress(lowHue));
-            }
             else
-            {
                 AddItem(new FancyShirt(lowHue));
-            }
 
             AddItem(new LongPants(lowHue));
 
             if (!Female)
-            {
                 AddItem(new BodySash(lowHue));
-            }
 
             PackGold(50, 100);
         }
@@ -573,13 +567,9 @@ namespace Server.Engines.Quests
             AddItem(new ShortPants(lowHue));
 
             if (Female)
-            {
                 AddItem(new ThighBoots(lowHue));
-            }
             else
-            {
                 AddItem(new Boots(lowHue));
-            }
 
             PackGold(50, 100);
         }
@@ -615,26 +605,18 @@ namespace Server.Engines.Quests
         public override void InitOutfit()
         {
             if (Female)
-            {
                 AddItem(new PlainDress());
-            }
             else
-            {
                 AddItem(new Shirt(GetRandomHue()));
-            }
 
             int lowHue = GetRandomHue();
 
             AddItem(new ShortPants(lowHue));
 
             if (Female)
-            {
                 AddItem(new Boots(lowHue));
-            }
             else
-            {
                 AddItem(new Shoes(lowHue));
-            }
 
             switch (Utility.Random(4))
             {
@@ -688,31 +670,21 @@ namespace Server.Engines.Quests
         public override void InitOutfit()
         {
             if (Female)
-            {
                 AddItem(new FancyDress(GetRandomHue()));
-            }
             else
-            {
                 AddItem(new FancyShirt(GetRandomHue()));
-            }
 
             int lowHue = GetRandomHue();
 
             AddItem(new ShortPants(lowHue));
 
             if (Female)
-            {
                 AddItem(new ThighBoots(lowHue));
-            }
             else
-            {
                 AddItem(new Boots(lowHue));
-            }
 
             if (!Female)
-            {
                 AddItem(new BodySash(lowHue));
-            }
 
             AddItem(new Cloak(GetRandomHue()));
 
@@ -758,38 +730,26 @@ namespace Server.Engines.Quests
         public override void InitOutfit()
         {
             if (Female)
-            {
                 AddItem(new FancyDress());
-            }
             else
-            {
                 AddItem(new FancyShirt(GetRandomHue()));
-            }
 
             int lowHue = GetRandomHue();
 
             AddItem(new ShortPants(lowHue));
 
             if (Female)
-            {
                 AddItem(new ThighBoots(lowHue));
-            }
             else
-            {
                 AddItem(new Boots(lowHue));
-            }
 
             if (!Female)
-            {
                 AddItem(new BodySash(lowHue));
-            }
 
             AddItem(new Cloak(GetRandomHue()));
 
             if (!Female)
-            {
                 AddItem(new Longsword());
-            }
 
             PackGold(50, 100);
         }
@@ -813,13 +773,9 @@ namespace Server.Engines.Quests
         public NewHavenBrideGroom()
         {
             if (Female)
-            {
                 Title = "the bride";
-            }
             else
-            {
                 Title = "the groom";
-            }
         }
 
         public NewHavenBrideGroom(Serial serial)
@@ -832,35 +788,23 @@ namespace Server.Engines.Quests
         public override void InitOutfit()
         {
             if (Female)
-            {
                 AddItem(new FancyDress());
-            }
             else
-            {
                 AddItem(new FancyShirt());
-            }
 
             int lowHue = GetRandomHue();
 
             AddItem(new LongPants(lowHue));
 
             if (Female)
-            {
                 AddItem(new Shoes(lowHue));
-            }
             else
-            {
                 AddItem(new Boots(lowHue));
-            }
 
             if (Utility.RandomBool())
-            {
                 HairItemID = 0x203B;
-            }
             else
-            {
                 HairItemID = 0x203C;
-            }
 
             HairHue = Race.RandomHairHue();
 
@@ -898,26 +842,18 @@ namespace Server.Engines.Quests
         public override void InitOutfit()
         {
             if (Female)
-            {
                 AddItem(new PlainDress());
-            }
             else
-            {
                 AddItem(new Shirt(GetRandomHue()));
-            }
 
             int lowHue = GetRandomHue();
 
             AddItem(new ShortPants(lowHue));
 
             if (Female)
-            {
                 AddItem(new Boots(lowHue));
-            }
             else
-            {
                 AddItem(new Shoes(lowHue));
-            }
 
             Utility.AssignRandomHair(this);
 
@@ -996,9 +932,7 @@ namespace Server.Engines.Quests
         public override bool CheckTeach(SkillName skill, Mobile from)
         {
             if (!base.CheckTeach(skill, from))
-            {
                 return false;
-            }
 
             return skill == SkillName.Anatomy || skill == SkillName.Camping || skill == SkillName.Forensics || skill == SkillName.Healing || skill == SkillName.SpiritSpeak;
         }

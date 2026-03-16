@@ -107,9 +107,7 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
-            {
                 list.Add(1080457); // 10th Year Veteran Reward
-            }
         }
 
         public void GetOptions(RewardOptionList list)
@@ -123,9 +121,7 @@ namespace Server.Items
             _Direction = (DirectionType)choice;
 
             if (!Deleted)
-            {
                 base.OnDoubleClick(from);
-            }
         }
 
         public override void OnDoubleClick(Mobile from)

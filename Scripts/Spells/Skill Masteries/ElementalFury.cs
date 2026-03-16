@@ -34,9 +34,7 @@ namespace Server.Spells.SkillMasteries
         public override bool CheckCast()
         {
             if (IsInCooldown(Caster, GetType()))
-            {
                 return false;
-            }
 
             if (!CheckWeapon())
             {
@@ -88,9 +86,7 @@ namespace Server.Spells.SkillMasteries
         public override void OnHit(Mobile defender, ref int damage)
         {
             if (_Table == null)
-            {
                 _Table = new Dictionary<Mobile, int>();
-            }
 
             _Table.TryAdd(defender, 0);
 
@@ -106,13 +102,9 @@ namespace Server.Spells.SkillMasteries
                 int d;
 
                 if (defender is PlayerMobile)
-                {
                     d = (int)(BaseSkillBonus / 6);
-                }
                 else
-                {
                     d = (int)(BaseSkillBonus / 3) + Utility.RandomMinMax(40, 60);
-                }
 
                 switch (_Type)
                 {
@@ -156,9 +148,7 @@ namespace Server.Spells.SkillMasteries
         private ResistanceType GetResistanceType(BaseWeapon weapon)
         {
             if (weapon == null)
-            {
                 return ResistanceType.Physical;
-            }
 
             int phys, fire, cold, pois, nrgy, chaos, direct;
             weapon.GetDamageTypes(null, out phys, out fire, out cold, out pois, out nrgy, out chaos, out direct);

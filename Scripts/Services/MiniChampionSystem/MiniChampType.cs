@@ -62,9 +62,7 @@ namespace Server.Engines.MiniChamps
             level--;
 
             if (level >= 0 && level < Levels.Length)
-            {
                 return Levels[level];
-            }
 
             return null;
         }
@@ -394,9 +392,7 @@ namespace Server.Engines.MiniChamps
             int v = (int)type;
 
             if (v < 0 || v >= m_Table.Length)
-            {
                 v = 0;
-            }
 
             return m_Table[v];
         }

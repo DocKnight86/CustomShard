@@ -10,13 +10,9 @@ namespace Server.Misc
             Movable = false;
 
             if (m_Instance == null || m_Instance.Deleted)
-            {
                 m_Instance = this;
-            }
             else
-            {
                 base.Delete();
-            }
         }
 
         public TreasuresOfTokunoPersistence(Serial serial)
@@ -30,9 +26,7 @@ namespace Server.Misc
         public static void Initialize()
         {
             if (m_Instance == null)
-            {
                 new TreasuresOfTokunoPersistence();
-            }
         }
 
         public override void Serialize(GenericWriter writer)

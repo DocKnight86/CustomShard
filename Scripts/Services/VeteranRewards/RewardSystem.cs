@@ -22,33 +22,26 @@ namespace Server.Engines.VeteranRewards
 
         private static RewardCategory[] m_Categories;
         private static RewardList[] m_Lists;
-
         public static RewardCategory[] Categories
         {
             get
             {
                 if (m_Categories == null)
-                {
                     SetupRewardTables();
-                }
 
                 return m_Categories;
             }
         }
-
         public static RewardList[] Lists
         {
             get
             {
                 if (m_Lists == null)
-                {
                     SetupRewardTables();
-                }
 
                 return m_Lists;
             }
         }
-
         public static bool HasAccess(Mobile mob, RewardCategory category)
         {
             List<RewardEntry> entries = category.Entries;
@@ -92,11 +85,19 @@ namespace Server.Engines.VeteranRewards
 
 
             if (ts <= TimeSpan.Zero)
-            {
                 return true;
-            }
 
             return false;
+        }
+
+        public static int GetRewardLevel(Mobile mob)
+        {
+            Account acct = mob.Account as Account;
+
+            if (acct == null)
+                return 0;
+
+            return GetRewardLevel(acct);
         }
 
         public static int GetRewardLevel(Account acct)
@@ -108,9 +109,7 @@ namespace Server.Engines.VeteranRewards
             int levelosi = (int)(ositotalTime.TotalDays / 365);
 
             if (level < 0)
-            {
                 level = 0;
-            }
 
             level += StartingLevel;
 
@@ -122,9 +121,7 @@ namespace Server.Engines.VeteranRewards
             Account acct = mob.Account as Account;
 
             if (acct == null)
-            {
                 return false;
-            }
 
             TimeSpan totalTime = (DateTime.UtcNow - acct.Created);
 
@@ -140,16 +137,12 @@ namespace Server.Engines.VeteranRewards
             ComputeRewardInfo(mob, out cur, out max);
 
             if (cur >= max)
-            {
                 return false;
-            }
 
             Account acct = mob.Account as Account;
 
             if (acct == null)
-            {
                 return false;
-            }
 
             //if ( mob.AccessLevel < AccessLevel.GameMaster )
             acct.SetTag("numRewardsChosen", (cur + 1).ToString());
@@ -185,22 +178,159 @@ namespace Server.Engines.VeteranRewards
             string tag = acct.GetTag("numRewardsChosen");
 
             if (string.IsNullOrEmpty(tag))
-            {
                 cur = 0;
-            }
             else
-            {
                 cur = Utility.ToInt32(tag);
-            }
 
             if (level >= 6)
-            {
                 max = 9 + ((level - 6) * 2);
-            }
             else
-            {
                 max = 2 + level;
+        }
+
+        public static bool CheckIsUsableBy(Mobile from, Item item, object[] args)
+        {
+            if (from.AccessLevel > AccessLevel.GameMaster || UseableByAnyone(item.GetType()))
+                return true;
+
+            if (m_Lists == null)
+                SetupRewardTables();
+
+            Type type = item.GetType();
+
+            for (int i = 0; i < m_Lists.Length; ++i)
+            {
+                RewardList list = m_Lists[i];
+                RewardEntry[] entries = list.Entries;
+                TimeSpan ts;
+
+                for (int j = 0; j < entries.Length; ++j)
+                {
+                    if (entries[j].ItemType == type)
+                    {
+                        if (args == null && entries[j].Args.Length == 0)
+                        {
+                            if (i > 0 && !HasAccess(from, list, out ts))
+                            {
+                                from.SendLocalizedMessage(1008126, true, Math.Ceiling(ts.TotalDays / 30.0).ToString()); // Your account is not old enough to use this item. Months until you can use this item : 
+                                return false;
+                            }
+
+                            return true;
+                        }
+
+                        if (args.Length == entries[j].Args.Length)
+                        {
+                            bool match = true;
+
+                            for (int k = 0; match && k < args.Length; ++k)
+                                match = (args[k].Equals(entries[j].Args[k]));
+
+                            if (match)
+                            {
+                                if (i > 0 && !HasAccess(from, list, out ts))
+                                {
+                                    from.SendLocalizedMessage(1008126, true, Math.Ceiling(ts.TotalDays / 30.0).ToString()); // Your account is not old enough to use this item. Months until you can use this item : 
+                                    return false;
+                                }
+
+                                return true;
+                            }
+                        }
+                    }
+                }
             }
+
+            // no entry?
+            return true;
+        }
+
+        private static bool UseableByAnyone(Type type)
+        {
+            foreach (Type t in _AnyoneTypes)
+            {
+                if (t == type || type.IsSubclassOf(t))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private static readonly Type[] _AnyoneTypes =
+        {
+            typeof(DyeTub), typeof(MonsterStatuette)
+        };
+
+        public static int GetRewardYearLabel(Item item, object[] args)
+        {
+            int level = GetRewardYear(item, args);
+
+            return 1076216 + ((level < 10) ? level : (level < 12) ? ((level - 9) + 4240) : ((level - 11) + 37585));
+        }
+
+        public static int GetRewardYearHue(int hue)
+        {
+            if (m_Lists == null)
+                SetupRewardTables();
+
+            for (int i = 0; i < m_Lists.Length; ++i)
+            {
+                RewardList list = m_Lists[i];
+                RewardEntry[] entries = list.Entries;
+
+                for (int j = 0; j < entries.Length; ++j)
+                {
+                    if (entries[j].Args.Length == 0)
+                        continue;
+
+                    if (hue.Equals(entries[j].Args[0]))
+                    {
+                        int level = i + 1;
+
+                        return 1076216 + ((level < 10) ? level : (level < 12) ? ((level - 9) + 4240) : ((level - 11) + 37585));
+                    }
+                }
+            }
+
+            // no entry?
+            return 0;
+        }
+
+        public static int GetRewardYear(Item item, object[] args)
+        {
+            if (m_Lists == null)
+                SetupRewardTables();
+
+            Type type = item.GetType();
+
+            for (int i = 0; i < m_Lists.Length; ++i)
+            {
+                RewardList list = m_Lists[i];
+                RewardEntry[] entries = list.Entries;
+
+                for (int j = 0; j < entries.Length; ++j)
+                {
+                    if (entries[j].ItemType == type)
+                    {
+                        if (args == null && entries[j].Args.Length == 0)
+                            return i + 1;
+
+                        if (args.Length == entries[j].Args.Length)
+                        {
+                            bool match = true;
+
+                            for (int k = 0; match && k < args.Length; ++k)
+                                match = (args[k].Equals(entries[j].Args[k]));
+
+                            if (match)
+                                return i + 1;
+                        }
+                    }
+                }
+            }
+
+            // no entry?
+            return 0;
         }
 
         public static void SetupRewardTables()
@@ -230,6 +360,13 @@ namespace Server.Engines.VeteranRewards
                     new RewardEntry(specialDyeTubs, 1006013, typeof(FurnitureDyeTub)),
                     new RewardEntry(specialDyeTubs, 1006047, typeof(SpecialDyeTub)),
 
+                    new RewardEntry(cloaksAndRobes, 1006009, typeof(RewardCloak), ClothRewardHue.Bronze, 1041286),
+                    new RewardEntry(cloaksAndRobes, 1080366, typeof(RewardDress), ClothRewardHue.Bronze, 1080366),
+                    new RewardEntry(cloaksAndRobes, 1006010, typeof(RewardRobe), ClothRewardHue.Bronze, 1041287),                    
+                    new RewardEntry(cloaksAndRobes, 1006011, typeof(RewardCloak), ClothRewardHue.Copper, 1041288),
+                    new RewardEntry(cloaksAndRobes, 1080367, typeof(RewardDress), ClothRewardHue.Copper, 1080367),
+                    new RewardEntry(cloaksAndRobes, 1006012, typeof(RewardRobe), ClothRewardHue.Copper, 1041289),                    
+
                     new RewardEntry(monsterStatues, 1006024, typeof(MonsterStatuette), MonsterStatuetteType.Crocodile),
                     new RewardEntry(monsterStatues, 1006025, typeof(MonsterStatuette), MonsterStatuetteType.Daemon),
                     new RewardEntry(monsterStatues, 1006026, typeof(MonsterStatuette), MonsterStatuetteType.Dragon),
@@ -254,6 +391,7 @@ namespace Server.Engines.VeteranRewards
                     new RewardEntry(houseAddOns,    1062692, typeof(ContestMiniHouseDeed), MiniHouseType.MalasMountainPass),
                     new RewardEntry(houseAddOns,    1072216, typeof(ContestMiniHouseDeed), MiniHouseType.ChurchAtNight),
 
+                    new RewardEntry(miscellaneous,  1076155, typeof(RedSoulstone)),
                     new RewardEntry(miscellaneous,  1080523, typeof(CommodityDeedBox)),
                     new RewardEntry(miscellaneous,  1113945,  typeof(CrystalPortal)),
                     new RewardEntry(miscellaneous,  1150074,  typeof(CorruptedCrystalPortal)),
@@ -266,6 +404,13 @@ namespace Server.Engines.VeteranRewards
                 {
                     new RewardEntry(specialDyeTubs, 1006052, typeof(LeatherDyeTub)),
 
+                    new RewardEntry(cloaksAndRobes, 1006014, typeof(RewardCloak), ClothRewardHue.Agapite, 1041290),
+                    new RewardEntry(cloaksAndRobes, 1080369, typeof(RewardDress), ClothRewardHue.Agapite, 1080369),
+                    new RewardEntry(cloaksAndRobes, 1006015, typeof(RewardRobe), ClothRewardHue.Agapite, 1041291),                    
+                    new RewardEntry(cloaksAndRobes, 1006016, typeof(RewardCloak), ClothRewardHue.Golden, 1041292),
+                    new RewardEntry(cloaksAndRobes, 1080368, typeof(RewardDress), ClothRewardHue.Golden, 1080368),
+                    new RewardEntry(cloaksAndRobes, 1006017, typeof(RewardRobe), ClothRewardHue.Golden, 1041293),                    
+
                     new RewardEntry(monsterStatues, 1155747, typeof(MonsterStatuette), MonsterStatuetteType.CrystalElemental),
                     new RewardEntry(monsterStatues, 1157078, typeof(MonsterStatuette), MonsterStatuetteType.TRex),
                     new RewardEntry(monsterStatues, 1158877, typeof(MonsterStatuette), MonsterStatuetteType.KhalAnkur),
@@ -277,6 +422,13 @@ namespace Server.Engines.VeteranRewards
                 }),
                 new RewardList(RewardInterval, 3, new RewardEntry[]
                 {
+                    new RewardEntry(cloaksAndRobes, 1006020, typeof(RewardCloak), ClothRewardHue.Verite, 1041294),
+                    new RewardEntry(cloaksAndRobes, 1080370, typeof(RewardDress), ClothRewardHue.Verite, 1080370),
+                    new RewardEntry(cloaksAndRobes, 1006021, typeof(RewardRobe), ClothRewardHue.Verite, 1041295),                    
+                    new RewardEntry(cloaksAndRobes, 1006022, typeof(RewardCloak), ClothRewardHue.Valorite, 1041296),
+                    new RewardEntry(cloaksAndRobes, 1080371, typeof(RewardDress), ClothRewardHue.Valorite, 1080371),
+                    new RewardEntry(cloaksAndRobes, 1006023, typeof(RewardRobe), ClothRewardHue.Valorite, 1041297),
+
                     new RewardEntry(monsterStatues, 1006038, typeof(MonsterStatuette), MonsterStatuetteType.Cow),
                     new RewardEntry(monsterStatues, 1006039, typeof(MonsterStatuette), MonsterStatuetteType.Zombie),
                     new RewardEntry(monsterStatues, 1006040, typeof(MonsterStatuette), MonsterStatuetteType.Llama),
@@ -293,6 +445,16 @@ namespace Server.Engines.VeteranRewards
                 new RewardList(RewardInterval, 4, new RewardEntry[]
                 {
                     new RewardEntry(specialDyeTubs, 1049740, typeof(RunebookDyeTub)),
+
+                    new RewardEntry(cloaksAndRobes, 1049725, typeof(RewardCloak), ClothRewardHue.DarkGray, 1049757),
+                    new RewardEntry(cloaksAndRobes, 1080374, typeof(RewardDress), ClothRewardHue.DarkGray, 1080374),
+                    new RewardEntry(cloaksAndRobes, 1049726, typeof(RewardRobe), ClothRewardHue.DarkGray, 1049756),                    
+                    new RewardEntry(cloaksAndRobes, 1049727, typeof(RewardCloak), ClothRewardHue.IceGreen, 1049759),
+                    new RewardEntry(cloaksAndRobes, 1080372, typeof(RewardDress), ClothRewardHue.IceGreen, 1080372),
+                    new RewardEntry(cloaksAndRobes, 1049728, typeof(RewardRobe), ClothRewardHue.IceGreen, 1049758),                    
+                    new RewardEntry(cloaksAndRobes, 1049729, typeof(RewardCloak), ClothRewardHue.IceBlue, 1049761),
+                    new RewardEntry(cloaksAndRobes, 1080373, typeof(RewardDress), ClothRewardHue.IceBlue, 1080373),
+                    new RewardEntry(cloaksAndRobes, 1049730, typeof(RewardRobe), ClothRewardHue.IceBlue, 1049760),                    
 
                     new RewardEntry(monsterStatues, 1049742, typeof(MonsterStatuette), MonsterStatuetteType.Ophidian),
                     new RewardEntry(monsterStatues, 1049743, typeof(MonsterStatuette), MonsterStatuetteType.Reaper),
@@ -318,6 +480,16 @@ namespace Server.Engines.VeteranRewards
                     new RewardEntry(specialDyeTubs, 1049741, typeof(StatuetteDyeTub)),
                     new RewardEntry(specialDyeTubs, 1153495, typeof(MetallicLeatherDyeTub)),
                     new RewardEntry(specialDyeTubs, 1150067, typeof(MetallicDyeTub)),
+
+                    new RewardEntry(cloaksAndRobes, 1049731, typeof(RewardCloak), ClothRewardHue.JetBlack, 1049763),
+                    new RewardEntry(cloaksAndRobes, 1080377, typeof(RewardDress), ClothRewardHue.JetBlack, 1080377),
+                    new RewardEntry(cloaksAndRobes, 1049732, typeof(RewardRobe), ClothRewardHue.JetBlack, 1049762),                    
+                    new RewardEntry(cloaksAndRobes, 1049733, typeof(RewardCloak), ClothRewardHue.IceWhite, 1049765),
+                    new RewardEntry(cloaksAndRobes, 1080376, typeof(RewardDress), ClothRewardHue.IceWhite, 1080376),
+                    new RewardEntry(cloaksAndRobes, 1049734, typeof(RewardRobe), ClothRewardHue.IceWhite, 1049764),                    
+                    new RewardEntry(cloaksAndRobes, 1049735, typeof(RewardCloak), ClothRewardHue.Fire, 1049767),
+                    new RewardEntry(cloaksAndRobes, 1080375, typeof(RewardDress), ClothRewardHue.Fire, 1080375),
+                    new RewardEntry(cloaksAndRobes, 1049736, typeof(RewardRobe), ClothRewardHue.Fire, 1049766),                    
 
                     new RewardEntry(monsterStatues, 1049768, typeof(MonsterStatuette), MonsterStatuetteType.Gazer),
                     new RewardEntry(monsterStatues, 1049769, typeof(MonsterStatuette), MonsterStatuetteType.FireElemental),
@@ -369,6 +541,13 @@ namespace Server.Engines.VeteranRewards
                     new RewardEntry(monsterStatues, 1080520, typeof(MonsterStatuette), MonsterStatuetteType.Harrower),
                     new RewardEntry(monsterStatues, 1080521, typeof(MonsterStatuette), MonsterStatuetteType.Efreet),
 
+                    new RewardEntry(cloaksAndRobes, 1080382, typeof(RewardCloak), ClothRewardHue.Pink, 1080382),
+                    new RewardEntry(cloaksAndRobes, 1080378, typeof(RewardDress), ClothRewardHue.Pink, 1080378),
+                    new RewardEntry(cloaksAndRobes, 1080380, typeof(RewardRobe), ClothRewardHue.Pink, 1080380),                    
+                    new RewardEntry(cloaksAndRobes, 1080383, typeof(RewardCloak), ClothRewardHue.Crimson, 1080383),
+                    new RewardEntry(cloaksAndRobes, 1080379, typeof(RewardDress), ClothRewardHue.Crimson, 1080379),
+                    new RewardEntry(cloaksAndRobes, 1080381, typeof(RewardRobe), ClothRewardHue.Crimson, 1080381),                    
+
                     new RewardEntry(etherealSteeds, 1080386, typeof(EtherealCuSidhe)),
 
                     new RewardEntry(houseAddOns,    1080548, typeof(MiningCartDeed)),
@@ -383,6 +562,10 @@ namespace Server.Engines.VeteranRewards
                 {
                     new RewardEntry(etherealSteeds, 1113908, typeof(EtherealReptalon)),
 
+                    new RewardEntry(cloaksAndRobes, 1113902, typeof(RewardCloak), ClothRewardHue.GreenForest, 1113902),
+                    new RewardEntry(cloaksAndRobes, 1113903, typeof(RewardDress), ClothRewardHue.GreenForest, 1113903),
+                    new RewardEntry(cloaksAndRobes, 1113904, typeof(RewardRobe), ClothRewardHue.GreenForest, 1113904),
+
                     new RewardEntry(monsterStatues, 1113800, typeof(MonsterStatuette), MonsterStatuetteType.TerathanMatriarch),
                     new RewardEntry(monsterStatues, 1153593, typeof(MonsterStatuette), MonsterStatuetteType.Navrey),
 
@@ -391,6 +574,10 @@ namespace Server.Engines.VeteranRewards
                 new RewardList(RewardInterval, 12, new RewardEntry[]
                 {
                     new RewardEntry(etherealSteeds, 1113813, typeof(EtherealHiryu)),
+
+                    new RewardEntry(cloaksAndRobes, 1113910, typeof(RewardCloak), ClothRewardHue.RoyalBlue, 1113910),
+                    new RewardEntry(cloaksAndRobes, 1113911, typeof(RewardDress), ClothRewardHue.RoyalBlue, 1113911),
+                    new RewardEntry(cloaksAndRobes, 1113912, typeof(RewardRobe), ClothRewardHue.RoyalBlue, 1113912),
 
                     new RewardEntry(monsterStatues, 1113801, typeof(MonsterStatuette), MonsterStatuetteType.FireAnt),
 
@@ -420,22 +607,16 @@ namespace Server.Engines.VeteranRewards
         public static void OnLogin(Mobile m)
         {
             if (!m.Alive)
-            {
                 return;
-            }
 
             int cur, max, level;
 
             ComputeRewardInfo(m, out cur, out max, out level);
 
             if (level > SkillCapBonusLevels)
-            {
                 level = SkillCapBonusLevels;
-            }
             else if (level < 0)
-            {
                 level = 0;
-            }
 
             m.SkillsCap = SkillCap + SkillCapBonus;
 
@@ -445,9 +626,7 @@ namespace Server.Engines.VeteranRewards
             }
 
             if (cur < max)
-            {
                 m.SendGump(new RewardNoticeGump(m));
-            }
         }
     }
 }

@@ -31,9 +31,7 @@ namespace Server.Engines.TombOfKings
         public static void Generate()
         {
             if (ChamberLever.Levers.Count == 0)
-            {
                 return;
-            }
 
             for (var index = 0; index < m_ChamberInfos.Length; index++)
             {

@@ -73,9 +73,7 @@ namespace Server.Items
             Gift = (HolidayGift2019)choice;
 
             if (!Deleted)
-            {
                 GiveGift(from);
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -102,13 +100,9 @@ namespace Server.Items
             box.DropItem(gift);
 
             if (Utility.Random(100) < 60)
-            {
                 box.DropItem(new Poinsettia(33));
-            }
             else
-            {
                 box.DropItem(new Poinsettia(1154));
-            }
 
             switch (Gift)
             {

@@ -25,17 +25,11 @@ namespace Server.Misc
             int random = Utility.Random(100);
 
             if (random < 60)
-            {
                 box.DropItem(new DecorativeTopiary());
-            }
             else if (random < 84)
-            {
                 box.DropItem(new FestiveCactus());
-            }
             else
-            {
                 box.DropItem(new SnowyTree());
-            }
 
             switch (GiveGift(mob, box))
             {

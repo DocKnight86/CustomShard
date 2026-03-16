@@ -176,9 +176,7 @@ namespace Server.Engines.TreasuresOfKotlCity
         private void DoSpawn()
         {
             if (!_Active)
-            {
                 return;
-            }
 
             Point3D loc;
 
@@ -208,9 +206,7 @@ namespace Server.Engines.TreasuresOfKotlCity
             bc.OnAfterSpawn();
 
             if (Spawn == null)
-            {
                 Spawn = new List<ISpawnable>();
-            }
 
             Spawn.Add(bc);
         }
@@ -266,9 +262,7 @@ namespace Server.Engines.TreasuresOfKotlCity
                     bc.RangeHome = HomeRange;
 
                     if (Spawn == null)
-                    {
                         Spawn = new List<ISpawnable>();
-                    }
 
                     Spawn.Add(bc);
                 }
@@ -281,9 +275,7 @@ namespace Server.Engines.TreasuresOfKotlCity
                 if (Spawn == null || Spawn.Count == 0)
                 {
                     if (Spawn == null)
-                    {
                         Spawn = new List<ISpawnable>();
-                    }
 
                     if (Level >= Levels)
                     {

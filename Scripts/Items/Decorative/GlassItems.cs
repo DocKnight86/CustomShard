@@ -1369,19 +1369,13 @@ namespace Server.Items
                             serp.Hue = 0;
                         }
                         else
-                        {
                             from.SendLocalizedMessage(1112218); // You handle the creature but fail to harvest any resources from it.
-                        }
                     }
                     else
-                    {
                         from.SendLocalizedMessage(1112223);// This serpent has already been drained of all its venom.
-                    }
                 }
                 else
-                {
                     from.SendLocalizedMessage(1112221); // You may only use this on a silver serpent.
-                }
             }
         }
         public override void Serialize(GenericWriter writer)

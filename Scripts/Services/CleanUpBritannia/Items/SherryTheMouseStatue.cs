@@ -47,9 +47,7 @@ namespace Server.Items
             if (index < 0 || index >= tce.Lines.Length)
             {
                 if (m_NewsTimer != null)
-                {
                     m_NewsTimer.Stop();
-                }
 
                 m_NewsTimer = null;
             }

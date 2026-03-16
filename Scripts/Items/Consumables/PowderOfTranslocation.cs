@@ -72,9 +72,7 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Powder.Deleted)
-                {
                     return;
-                }
 
                 if (!from.InRange(m_Powder.GetWorldLocation(), 2))
                 {

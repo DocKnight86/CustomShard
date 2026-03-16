@@ -124,9 +124,7 @@ namespace Server.Mobiles
                 m_BardingResource = value;
 
                 if (m_HasBarding)
-                {
                     Hue = CraftResources.GetHue(value);
-                }
 
                 InvalidateProperties();
             }
@@ -152,23 +150,17 @@ namespace Server.Mobiles
         private int CalculateBardingResistance(ResistanceType type)
         {
             if (m_BardingResource == CraftResource.None || !m_HasBarding)
-            {
                 return 0;
-            }
 
             CraftResourceInfo resInfo = CraftResources.GetInfo(m_BardingResource);
 
             if (resInfo == null)
-            {
                 return 0;
-            }
 
             CraftAttributeInfo attrs = resInfo.AttributeInfo;
 
             if (attrs == null)
-            {
                 return 0;
-            }
 
             int expBonus = BardingExceptional ? 1 : 0;
             int resBonus = 0;
@@ -256,9 +248,7 @@ namespace Server.Mobiles
             base.OnRiderDamaged(from, ref amount, willKill);
 
             if (Rider == null)
-            {
                 return;
-            }
 
             if ((from == null || !from.Player) && Rider.Player && Rider.Mount == this)
             {
@@ -271,9 +261,7 @@ namespace Server.Mobiles
 
                     // Mondain's Legacy mod
                     if (!(this is ParoxysmusSwampDragon))
-                    {
                         BardingHP -= absorbed;
-                    }
 
                     if (BardingHP < 0)
                     {
@@ -319,14 +307,10 @@ namespace Server.Mobiles
             }
 
             if (Hue == 0 && !m_HasBarding)
-            {
                 Hue = 0x851;
-            }
 
             if (BaseSoundID == -1)
-            {
                 BaseSoundID = 0x16A;
-            }
         }
     }
 }

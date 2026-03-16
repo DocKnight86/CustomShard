@@ -108,13 +108,9 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (IsChildOf(from.Backpack))
-            {
                 from.Target = new InternalTarget(this);
-            }
             else
-            {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
-            }
         }
 
         public virtual void DeleteDeed()
@@ -127,9 +123,7 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (!CraftResources.IsStandard(m_Resource))
-            {
                 list.Add(CraftResources.GetLocalizationNumber(m_Resource));
-            }
         }
 
         public virtual int OnCraft(int quality, bool makersMark, Mobile from, CraftSystem craftSystem, Type typeRes, ITool tool, CraftItem craftItem, int resHue)
@@ -137,22 +131,16 @@ namespace Server.Items
             Type resourceType = typeRes;
 
             if (resourceType == null)
-            {
                 resourceType = craftItem.Resources.GetAt(0).ItemType;
-            }
 
             Resource = CraftResources.GetFromType(resourceType);
 
             CraftContext context = craftSystem.GetContext(from);
 
             if (context != null && context.DoNotColor)
-            {
                 Hue = 0;
-            }
             else if (Hue == 0)
-            {
                 Hue = resHue;
-            }
 
             return quality;
         }
@@ -173,9 +161,7 @@ namespace Server.Items
                 Map map = from.Map;
 
                 if (p == null || map == null || m_Deed.Deleted)
-                {
                     return;
-                }
 
                 if (m_Deed.IsChildOf(from.Backpack))
                 {

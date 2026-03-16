@@ -68,9 +68,7 @@ namespace Server.Spells.SkillMasteries
                 return true;
             }
             else
-            {
                 return false;
-            }
         }
 
         protected override void OnTarget(object o)
@@ -89,7 +87,7 @@ namespace Server.Spells.SkillMasteries
                 {
                     Caster.SendLocalizedMessage(1046439); // That is not a valid target.
                 }
-                else if (m.Hits > m.HitsMax && m.Stam >= m.StamMax && m.Mana >= m.ManaMax)
+                else if (m.Hits >= m.HitsMax && m.Stam >= m.StamMax && m.Mana >= m.ManaMax)
                 {
                     Caster.SendLocalizedMessage(1155788); // Your target is already at full health, mana and stamina!
                 }
@@ -97,10 +95,7 @@ namespace Server.Spells.SkillMasteries
                 {
                     double rejuv = (GetMasteryLevel() * 33.3) / 100;
 
-                    if (rejuv > 1.0)
-                    {
-                        rejuv = 1.0;
-                    }
+                    if (rejuv > 1.0) rejuv = 1.0;
 
                     int hitsNeeds = m.HitsMax - m.Hits;
                     int stamNeeds = m.StamMax - m.Stam;
@@ -113,9 +108,7 @@ namespace Server.Spells.SkillMasteries
                         toRejuv = (int)Math.Ceiling(hitsNeeds * rejuv);
 
                         if (toRejuv > 0)
-                        {
                             SpellHelper.Heal(toRejuv, m, Caster, false);
-                        }
                     }
 
                     if (stamNeeds > 0)
@@ -123,9 +116,7 @@ namespace Server.Spells.SkillMasteries
                         toRejuv = (int)Math.Ceiling(stamNeeds * rejuv);
 
                         if (toRejuv > 0)
-                        {
                             m.Stam += toRejuv;
-                        }
                     }
 
                     if (manaNeeds > 0)
@@ -133,37 +124,27 @@ namespace Server.Spells.SkillMasteries
                         toRejuv = (int)Math.Ceiling(manaNeeds * rejuv);
 
                         if (toRejuv > 0)
-                        {
                             m.Mana += toRejuv;
-                        }
                     }
 
                     if (Caster.Karma > Utility.Random(5000))
                     {
                         if (m.Poison != null)
-                        {
                             m.CurePoison(Caster);
-                        }
 
                         StatMod mod;
 
                         mod = m.GetStatMod("[Magic] Str Offset");
                         if (mod != null && mod.Offset < 0)
-                        {
                             m.RemoveStatMod("[Magic] Str Offset");
-                        }
 
                         mod = m.GetStatMod("[Magic] Dex Offset");
                         if (mod != null && mod.Offset < 0)
-                        {
                             m.RemoveStatMod("[Magic] Dex Offset");
-                        }
 
                         mod = m.GetStatMod("[Magic] Int Offset");
                         if (mod != null && mod.Offset < 0)
-                        {
                             m.RemoveStatMod("[Magic] Int Offset");
-                        }
 
                         m.Paralyzed = false;
 
@@ -194,33 +175,23 @@ namespace Server.Spells.SkillMasteries
                         Caster.SendLocalizedMessage(1155790); // Your target has been rejuvenated!
                     }
 
-                    int skill = ((int)Caster.Skills[CastSkill].Value + GetWeaponSkill() + GetMasteryLevel() * 40) / 3;
+                    int skill = ((int)Caster.Skills[CastSkill].Value + GetWeaponSkill() + GetMasteryLevel() * 45) / 3;
                     int duration;
 
                     if (skill >= 120)
-                    {
                         duration = 60;
-                    }
                     else if (skill >= 110)
-                    {
                         duration = 120;
-                    }
                     else
-                    {
                         duration = 180;
-                    }
 
-                    TimeSpan d;
-
-                    d = Caster.AccessLevel == AccessLevel.Player ? TimeSpan.FromMinutes(duration) : TimeSpan.FromSeconds(10);
+                    TimeSpan d = Caster.AccessLevel == AccessLevel.Player ? TimeSpan.FromMinutes(duration) : TimeSpan.FromSeconds(10);
 
                     AddToCooldown(d);
                 }
             }
             else
-            {
                 Caster.SendLocalizedMessage(1046439); // That is not a valid target.
-            }
         }
 
         public override bool CheckSequence()
@@ -234,14 +205,10 @@ namespace Server.Spells.SkillMasteries
             }
 
             if (AosAttributes.GetValue(Caster, AosAttribute.LowerRegCost) > Utility.Random(100))
-            {
                 requiredTithing = 0;
-            }
 
             if (requiredTithing > 0 && Caster is PlayerMobile)
-            {
                 Caster.TithingPoints -= requiredTithing;
-            }
 
             return base.CheckSequence();
         }

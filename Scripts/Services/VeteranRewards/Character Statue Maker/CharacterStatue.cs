@@ -143,13 +143,9 @@ namespace Server.Mobiles
             if (m_SculptedBy != null)
             {
                 if (m_SculptedBy.ShowFameTitle && (m_SculptedBy.Player || m_SculptedBy.Body.IsHuman) && m_SculptedBy.Fame >= 10000)
-                {
                     list.Add(1076202, string.Format("{0} {1}", m_SculptedBy.Female ? "Lady" : "Lord", m_SculptedBy.Name)); // Sculpted by ~1_Name~
-                }
                 else
-                {
                     list.Add(1076202, m_SculptedBy.Name); // Sculpted by ~1_Name~
-                }
             }
         }
 
@@ -173,9 +169,7 @@ namespace Server.Mobiles
             base.OnAfterDelete();
 
             if (m_Plinth != null && !m_Plinth.Deleted)
-            {
                 m_Plinth.Delete();
-            }
         }
 
         public override bool CanBeRenamedBy(Mobile from)
@@ -255,9 +249,7 @@ namespace Server.Mobiles
                 deed.IsRewardItem = m_IsRewardItem;
 
                 if (m_Plinth != null)
-                {
                     m_Plinth.Delete();
-                }
 
                 return true;
             }
@@ -296,18 +288,14 @@ namespace Server.Mobiles
         public void CloneClothes(Mobile from)
         {
             for (int i = Items.Count - 1; i >= 0; i--)
-            {
                 Items[i].Delete();
-            }
 
             for (int i = from.Items.Count - 1; i >= 0; i--)
             {
                 Item item = from.Items[i];
 
                 if (item.Layer != Layer.Backpack && item.Layer != Layer.Mount && item.Layer != Layer.Bank)
-                {
                     AddItem(CloneItem(item));
-                }
             }
         }
 
@@ -332,19 +320,13 @@ namespace Server.Mobiles
             HairHue = Hue;
 
             if (FacialHairItemID > 0)
-            {
                 FacialHairHue = Hue;
-            }
 
             for (int i = Items.Count - 1; i >= 0; i--)
-            {
                 Items[i].Hue = Hue;
-            }
 
             if (m_Plinth != null)
-            {
                 m_Plinth.InvalidateHue();
-            }
         }
 
         public void InvalidatePose()
@@ -390,9 +372,7 @@ namespace Server.Mobiles
                     state.Mobile.ProcessDelta();
 
                     if (p == null)
-                    {
                         p = Packet.Acquire(new UpdateStatueAnimation(this, 1, m_Animation, m_Frames));
-                    }
 
                     state.Send(p);
                 }
@@ -408,9 +388,7 @@ namespace Server.Mobiles
             InvalidatePose();
 
             if (m_Plinth != null)
-            {
                 m_Plinth.Map = Map;
-            }
         }
 
         protected override void OnLocationChange(Point3D oldLocation)
@@ -418,9 +396,7 @@ namespace Server.Mobiles
             InvalidatePose();
 
             if (m_Plinth != null)
-            {
                 m_Plinth.Location = new Point3D(X, Y, Z - 5);
-            }
         }
 
         private class DemolishEntry : ContextMenuEntry
@@ -435,9 +411,7 @@ namespace Server.Mobiles
             public override void OnClick()
             {
                 if (m_Statue.Deleted)
-                {
                     return;
-                }
 
                 m_Statue.Demolish(Owner.From);
             }
@@ -505,9 +479,7 @@ namespace Server.Mobiles
             get
             {
                 if (m_Statue != null)
-                {
                     return m_Statue.StatueType;
-                }
 
                 return m_Type;
             }
@@ -528,14 +500,10 @@ namespace Server.Mobiles
             base.GetProperties(list);
 
             if (m_IsRewardItem)
-            {
                 list.Add(1076222); // 6th Year Veteran Reward
-            }
 
             if (m_Statue != null)
-            {
                 list.Add(1076231, m_Statue.Name); // Statue of ~1_Name~
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -559,14 +527,10 @@ namespace Server.Mobiles
                     from.Target = new CharacterStatueTarget(this, StatueType);
                 }
                 else
-                {
                     from.SendLocalizedMessage(1073648); // You may only proceed while in your original state...
-                }
             }
             else
-            {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
-            }
         }
 
         public override void OnDelete()
@@ -574,9 +538,7 @@ namespace Server.Mobiles
             base.OnDelete();
 
             if (m_Statue != null)
-            {
                 m_Statue.Delete();
-            }
         }
 
         public override void Serialize(GenericWriter writer)

@@ -21,13 +21,9 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (Utility.InRange(Location, from.Location, 2))
-            {
                 Effects.PlaySound(Location, Map, Utility.RandomMinMax(0x565, 0x566));
-            }
             else
-            {
                 from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
-            }
         }
 
         public override void OnMovement(Mobile m, Point3D old)
@@ -67,9 +63,7 @@ namespace Server.Items
             int version = reader.ReadEncodedInt();
 
             if (version == 0 && ItemID != 0x2A69 && ItemID != 0x2A6D)
-            {
                 ItemID = 0x2A69;
-            }
         }
 
         private void Up()

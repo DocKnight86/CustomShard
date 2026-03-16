@@ -1,3 +1,5 @@
+using Server.Engines.Craft;
+
 namespace Server.Items
 {
     #region Reward Clothing
@@ -63,9 +65,7 @@ namespace Server.Items
         public override bool Scissor(Mobile from, Scissors scissors)
         {
             if (DefaultResource == CraftResource.None)
-            {
                 return base.Scissor(from, scissors);
-            }
 
             from.SendLocalizedMessage(502440); // Scissors can not be used on that to produce anything.
             return false;
@@ -102,6 +102,7 @@ namespace Server.Items
         }
     }
 
+    [Alterable(typeof(DefTailoring), typeof(LeatherTalons), true)]
     [Flipable(0x2307, 0x2308)]
     public class FurBoots : BaseShoes
     {
@@ -136,6 +137,7 @@ namespace Server.Items
         }
     }
 
+    [Alterable(typeof(DefTailoring), typeof(LeatherTalons), true)]
     [Flipable(0x170b, 0x170c)]
     public class Boots : BaseShoes
     {
@@ -172,6 +174,7 @@ namespace Server.Items
         }
     }
 
+    [Alterable(typeof(DefTailoring), typeof(LeatherTalons), true)]
     [Flipable]
     public class ThighBoots : BaseShoes, IArcaneEquip
     {
@@ -212,21 +215,15 @@ namespace Server.Items
             base.AddCraftedProperties(list);
 
             if (IsArcane)
-            {
                 list.Add(1061837, "{0}\t{1}", m_CurArcaneCharges, m_MaxArcaneCharges); // arcane charges: ~1_val~ / ~2_val~
-            }
         }
 
         public void Update()
         {
             if (IsArcane)
-            {
                 ItemID = 0x26AF;
-            }
             else if (ItemID == 0x26AF)
-            {
                 ItemID = 0x1711;
-            }
 
             if (IsArcane && CurArcaneCharges == 0)
             {
@@ -238,13 +235,9 @@ namespace Server.Items
         public void Flip()
         {
             if (ItemID == 0x1711)
-            {
                 ItemID = 0x1712;
-            }
             else if (ItemID == 0x1712)
-            {
                 ItemID = 0x1711;
-            }
         }
 
         #endregion
@@ -319,6 +312,7 @@ namespace Server.Items
         }
     }
 
+    [Alterable(typeof(DefTailoring), typeof(LeatherTalons), true)]
     [Flipable(0x170f, 0x1710)]
     public class Shoes : BaseShoes
     {
@@ -355,6 +349,7 @@ namespace Server.Items
         }
     }
 
+    [Alterable(typeof(DefTailoring), typeof(LeatherTalons), true)]
     [Flipable(0x170d, 0x170e)]
     public class Sandals : BaseShoes
     {
@@ -391,6 +386,7 @@ namespace Server.Items
         }
     }
 
+    [Alterable(typeof(DefTailoring), typeof(LeatherTalons), true)]
     [Flipable(0x2797, 0x27E2)]
     public class NinjaTabi : BaseShoes
     {
@@ -425,6 +421,7 @@ namespace Server.Items
         }
     }
 
+    [Alterable(typeof(DefTailoring), typeof(LeatherTalons), true)]
     [Flipable(0x2796, 0x27E1)]
     public class SamuraiTabi : BaseShoes
     {
@@ -459,6 +456,7 @@ namespace Server.Items
         }
     }
 
+    [Alterable(typeof(DefTailoring), typeof(LeatherTalons), true)]
     [Flipable(0x2796, 0x27E1)]
     public class Waraji : BaseShoes
     {
@@ -493,6 +491,7 @@ namespace Server.Items
         }
     }
 
+    [Alterable(typeof(DefTailoring), typeof(LeatherTalons), true)]
     [Flipable(0x2FC4, 0x317A)]
     public class ElvenBoots : BaseShoes
     {
@@ -534,6 +533,7 @@ namespace Server.Items
         }
     }
 
+    [Alterable(typeof(DefTailoring), typeof(LeatherTalons), true)]
     public class JesterShoes : BaseShoes
     {
         public override int LabelNumber => 1109617;  // Jester Shoes

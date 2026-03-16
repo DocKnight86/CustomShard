@@ -62,9 +62,7 @@ namespace Server.Guilds
             PlayerMobile pm = sender.Mobile as PlayerMobile;
 
             if (pm == null || !IsMember(pm, guild) || !IsMember(m_Member, guild))
-            {
                 return;
-            }
 
             RankDefinition playerRank = pm.GuildRank;
             RankDefinition targetRank = m_Member.GuildRank;
@@ -99,9 +97,7 @@ namespace Server.Guilds
                             }
                         }
                         else
-                        {
                             pm.SendLocalizedMessage(1063143); // You don't have permission to promote this member.
-                        }
 
                         break;
                     }
@@ -112,13 +108,9 @@ namespace Server.Guilds
                             if (targetRank == RankDefinition.Lowest)
                             {
                                 if (RankDefinition.Lowest.Name.Number == 1062963)
-                                {
                                     pm.SendLocalizedMessage(1063333); // You can't demote a ronin.
-                                }
                                 else
-                                {
                                     pm.SendMessage("You can't demote a {0}.", RankDefinition.Lowest.Name);
-                                }
                             }
                             else
                             {
@@ -127,9 +119,7 @@ namespace Server.Guilds
                             }
                         }
                         else
-                        {
                             pm.SendLocalizedMessage(1063146); // You don't have permission to demote this member.
-                        }
 
                         break;
                     }
@@ -155,19 +145,13 @@ namespace Server.Guilds
                 case 4:	//Vote
                     {
                         if (m_Member == pm.GuildFealty && guild.Leader != m_Member)
-                        {
                             pm.SendLocalizedMessage(1063158); // You have cleared your vote for guild leader.
-                        }
                         else if (guild.CanVote(m_Member))//( playerRank.GetFlag( RankFlags.CanVote ) )
                         {
                             if (m_Member == guild.Leader)
-                            {
                                 pm.SendLocalizedMessage(1063424); // You can't vote for the current guild leader.
-                            }
                             else if (!guild.CanBeVotedFor(m_Member))
-                            {
                                 pm.SendLocalizedMessage(1063425); // You can't vote for an inactive guild member.
-                            }
                             else
                             {
                                 pm.GuildFealty = m_Member;
@@ -175,9 +159,7 @@ namespace Server.Guilds
                             }
                         }
                         else
-                        {
                             pm.SendLocalizedMessage(1063149); // You don't have permission to vote.
-                        }
 
                         break;
                     }
@@ -197,9 +179,7 @@ namespace Server.Guilds
                             }
                         }
                         else
-                        {
                             pm.SendLocalizedMessage(1063151); // You don't have permission to remove this member.
-                        }
 
                         break;
                     }
@@ -212,22 +192,16 @@ namespace Server.Guilds
             PlayerMobile targ = m_Member;
 
             if (pm == null || targ == null)
-            {
                 return;
-            }
 
             Guild g = targ.Guild as Guild;
 
             if (g == null || !IsMember(pm, g) || !(pm.GuildRank.GetFlag(RankFlags.CanSetGuildTitle) && (pm.GuildRank.Rank > targ.GuildRank.Rank || pm == targ)))
             {
                 if (m_Member.GuildTitle == null || m_Member.GuildTitle.Length <= 0)
-                {
                     pm.SendLocalizedMessage(1070746); // You don't have the permission to set that member's guild title.
-                }
                 else
-                {
                     pm.SendLocalizedMessage(1063148); // You don't have permission to change this member's guild title.
-                }
 
                 return;
             }
@@ -235,13 +209,9 @@ namespace Server.Guilds
             string title = Utility.FixHtml(text.Trim());
 
             if (title.Length > 20)
-            {
                 from.SendLocalizedMessage(501178); // That title is too long.
-            }
             else if (!CheckProfanity(title))
-            {
                 from.SendLocalizedMessage(501179); // That title is disallowed.
-            }
             else
             {
                 targ.GuildTitle = Insensitive.Equals(title, "none") ? null : title;

@@ -71,9 +71,17 @@ namespace Server.Spells.Seventh
             }
             else if (SpellHelper.CheckTown(p, Caster) && (item != null || CheckSequence()))
             {
-                if (item is MaskOfKhalAnkur mask)
+                if (item != null)
                 {
-                    mask.Charges--;
+                    if (item is MaskOfKhalAnkur mask)
+                    {
+                        mask.Charges--;
+                    }
+
+                    if (item is PendantOfKhalAnkur pendant)
+                    {
+                        pendant.Charges--;
+                    }
                 }
 
                 SpellHelper.Turn(Caster, p);

@@ -21,13 +21,9 @@ namespace Server.Items
         public void OnFlip(Mobile from)
         {
             if (ItemID == 0xA130 || ItemID == 0xA131)
-            {
                 ItemID = ItemID + 4;
-            }
             else
-            {
                 ItemID = ItemID - 4;
-            }
         }
 
         public override void OnDoubleClick(Mobile m)
@@ -119,13 +115,9 @@ namespace Server.Items
                 int ItemID = Sign.ItemID;
 
                 if (ItemID == 0xA130 || ItemID == 0xA134)
-                {
                     Sign.ItemID = ItemID + 1;
-                }
                 else
-                {
                     Sign.ItemID = ItemID - 1;
-                }
             }
         }
 

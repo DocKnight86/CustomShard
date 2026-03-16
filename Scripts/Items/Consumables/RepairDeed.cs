@@ -103,9 +103,7 @@ namespace Server.Items
             for (int i = 0; i < RepairSkillInfo.Table.Length; i++)
             {
                 if (RepairSkillInfo.Table[i].System == s)
-                {
                     return (RepairSkillType)i;
-                }
             }
 
             return RepairSkillType.Smithing;
@@ -119,9 +117,7 @@ namespace Server.Items
         public override void AddWeightProperty(ObjectPropertyList list)
         {
             if (m_Crafter != null)
-            {
                 list.Add(1050043, m_Crafter.TitleName); // crafted by ~1_NAME~
-            }
 
             list.Add(1060636); // exceptional
 
@@ -145,25 +141,17 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (Check(from))
-            {
                 Repair.Do(from, RepairSkillInfo.GetInfo(m_Skill).System, this);
-            }
         }
 
         public bool Check(Mobile from)
         {
             if (!IsChildOf(from.Backpack))
-            {
                 from.SendLocalizedMessage(1047012); // The contract must be in your backpack to use it.
-            }
             else if (!VerifyRegion(from))
-            {
                 TextDefinition.SendMessageTo(from, RepairSkillInfo.GetInfo(m_Skill).NotNearbyMessage);
-            }
             else
-            {
                 return true;
-            }
 
             return false;
         }
@@ -172,9 +160,7 @@ namespace Server.Items
         {
             //TODO: When the entire region system data is in, convert to that instead of a proximity thing.
             if (!m.Region.IsPartOf<TownRegion>())
-            {
                 return false;
-            }
 
             return IsNearType(m, RepairSkillInfo.GetInfo(m_Skill).NearbyTypes, 6);
         }
@@ -226,14 +212,9 @@ namespace Server.Items
             int skill = (int)(skillLevel / 10);
 
             if (skill >= 11)
-            {
                 return 1062008 + skill - 11;
-            }
-
             if (skill >= 5)
-            {
                 return 1061123 + skill - 5;
-            }
 
             switch (skill)
             {

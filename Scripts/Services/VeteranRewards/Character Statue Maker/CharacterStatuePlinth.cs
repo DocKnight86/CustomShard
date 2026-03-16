@@ -28,25 +28,19 @@ namespace Server.Items
             base.OnAfterDelete();
 
             if (m_Statue != null && !m_Statue.Deleted)
-            {
                 m_Statue.Delete();
-            }
         }
 
         public override void OnMapChange()
         {
             if (m_Statue != null)
-            {
                 m_Statue.Map = Map;
-            }
         }
 
         public override void OnLocationChange(Point3D oldLocation)
         {
             if (m_Statue != null)
-            {
                 m_Statue.Location = new Point3D(X, Y, Z + 5);
-            }
         }
 
         void IChopable.OnChop(Mobile user)
@@ -57,9 +51,7 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (m_Statue != null)
-            {
                 from.SendGump(new CharacterPlinthGump(m_Statue));
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -88,9 +80,7 @@ namespace Server.Items
         public void InvalidateHue()
         {
             if (m_Statue != null)
-            {
                 Hue = 0xB8F + (int)m_Statue.StatueType * 4 + (int)m_Statue.Material;
-            }
         }
 
         public virtual bool CouldFit(IPoint3D p, Map map)
@@ -98,23 +88,17 @@ namespace Server.Items
             Point3D point = new Point3D(p.X, p.Y, p.Z);
 
             if (map == null || !map.CanFit(point, 20))
-            {
                 return false;
-            }
 
             BaseHouse house = BaseHouse.FindHouseAt(point, map, 20);
 
             if (house == null)
-            {
                 return false;
-            }
 
             AddonFitResult result = CharacterStatueTarget.CheckDoors(point, 20, house);
 
             if (result == AddonFitResult.Valid)
-            {
                 return true;
-            }
 
             return false;
         }

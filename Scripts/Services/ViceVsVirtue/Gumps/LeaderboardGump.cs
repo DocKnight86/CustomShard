@@ -45,31 +45,19 @@ namespace Server.Engines.VvV
             AddHtmlLocalized(810, 55, 80, 20, 1155573, 0xFFFF, false, false); // <DIV ALIGN=RIGHT>Stolen Sigil:</DIV>
 
             if (Filter != Filter.Score)
-            {
                 AddButton(400, 55, 2437, 2438, 1, GumpButtonType.Reply, 0);
-            }
             else
-            {
                 AddImage(400, 55, 10006);
-            }
 
             if (Filter != Filter.Kills)
-            {
                 AddButton(475, 55, 2437, 2438, 2, GumpButtonType.Reply, 0);
-            }
             else
-            {
                 AddImage(475, 55, 10006);
-            }
 
             if (Filter != Filter.ReturnedSigils)
-            {
                 AddButton(700, 55, 2437, 2438, 3, GumpButtonType.Reply, 0);
-            }
             else
-            {
                 AddImage(700, 55, 10006);
-            }
 
             AddButton(280, 290, 4005, 4007, 4, GumpButtonType.Reply, 0);
             AddHtmlLocalized(315, 290, 150, 20, 1114923, 0xFFFF, false, false); // Guild Rankings
@@ -90,9 +78,7 @@ namespace Server.Engines.VvV
             int pageindex = 0;
 
             if (pages < 1)
-            {
                 pages = 1;
-            }
 
             AddPage(page);
             AddHtmlLocalized(60, 290, 150, 20, 1153561, $"{page}\t{pages}", 0xFFFF, false, false); // Page ~1_CUR~ of ~2_MAX~
@@ -102,9 +88,7 @@ namespace Server.Engines.VvV
                 VvVPlayerEntry entry = list[i];
 
                 if (entry.Player == null)
-                {
                     continue;
-                }
 
                 Guild g = entry.Player.Guild as Guild;
 

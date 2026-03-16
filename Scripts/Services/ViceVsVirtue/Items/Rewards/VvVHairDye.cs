@@ -7,9 +7,7 @@ namespace Server.Engines.VvV
             get
             {
                 if (Hue == ViceVsVirtueSystem.VirtueHue)
-                {
                     return 1155538;
-                }
 
                 return 1155539;
             }

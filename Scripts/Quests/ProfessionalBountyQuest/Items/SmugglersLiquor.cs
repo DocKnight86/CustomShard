@@ -244,14 +244,9 @@ namespace Server.Items
                     int type = reader.ReadInt();
 
                     if (type > (int)SmugglersLiquorType.WhiteRoseZinfandel)
-                    {
                         m_Type = SmugglersLiquorType.WhiteRoseZinfandel;
-                    }
                     else
-                    {
                         m_Type = (SmugglersLiquorType)type;
-                    }
-
                     break;
             }
         }

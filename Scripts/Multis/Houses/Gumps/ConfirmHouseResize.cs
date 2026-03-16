@@ -79,7 +79,7 @@ namespace Server.Gumps
                     {
                         m_Mobile.SendMessage("You do not get a refund for your house as you are not a player");
 
-                        TempNoHousingRegion region = new TempNoHousingRegion(m_House, m_Mobile);
+                        var region = new TempNoHousingRegion(m_House, m_Mobile);
                         Timer.DelayCall(m_House.RestrictedPlacingTime, region.Unregister);
 
                         m_House.Delete();
@@ -88,7 +88,7 @@ namespace Server.Gumps
                     {
                         Banker.Deposit(m_Mobile, m_House.Price, true);
 
-                        TempNoHousingRegion region = new TempNoHousingRegion(m_House, m_Mobile);
+                        var region = new TempNoHousingRegion(m_House, m_Mobile);
                         Timer.DelayCall(m_House.RestrictedPlacingTime, region.Unregister);
 
                         m_House.Delete();

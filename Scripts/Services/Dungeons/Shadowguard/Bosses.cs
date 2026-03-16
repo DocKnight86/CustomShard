@@ -23,7 +23,15 @@ namespace Server.Engines.Shadowguard
 
         public virtual bool CanSummon => Hits <= HitsMax - (HitsMax / 4);
 
-        private readonly Type[] _ArtifactTypes = [];
+        private readonly Type[] _ArtifactTypes =
+        {
+            typeof(AnonsBoots),                 typeof(AnonsSpellbook),         typeof(BalakaisShamanStaff),
+            typeof(EnchantressCameo),           typeof(GrugorsShield),          typeof(WamapsBoneEarrings),
+            typeof(HalawasHuntingBow),          typeof(HawkwindsRobe),          typeof(JumusSacredHide),
+            typeof(JuonarsGrimoire),            typeof(LereisHuntingSpear),     typeof(UnstableTimeRift),
+            typeof(MinaxsSandles),              typeof(MocapotlsObsidianSword), typeof(OzymandiasObi),
+            typeof(ShantysWaders),              typeof(TotemOfTheTribe),        typeof(BalakaisShamanStaffGargoyle)
+        };
 
         public ShadowguardBoss(AIType ai) : base(ai, FightMode.Closest, 10, 1, .15, .3)
         {
@@ -128,10 +136,8 @@ namespace Server.Engines.Shadowguard
                                         "For your valor in combating the fallen beast, a special reward has been placed in your bank box.");
                                 }
                                 else
-                                {
                                     m.SendLocalizedMessage(
                                         1062317); // For your valor in combating the fallen beast, a special reward has been bestowed on you.
-                                }
                             }
                         }
                     }
@@ -161,9 +167,7 @@ namespace Server.Engines.Shadowguard
                         double dist = Math.Sqrt(x * x + y * y);
 
                         if (dist <= 12)
-                        {
                             new GoodiesTimer(map, X + x, Y + y).Start();
-                        }
                     }
                 }
             }
@@ -192,15 +196,11 @@ namespace Server.Engines.Shadowguard
                     canFit = m_Map.CanFit(m_X, m_Y, z + i, 6, false, false);
 
                     if (canFit)
-                    {
                         z += i;
-                    }
                 }
 
                 if (!canFit)
-                {
                     return;
-                }
 
                 Gold g = new Gold(500, 1000);
                 g.MoveToWorld(new Point3D(m_X, m_Y, z), m_Map);
@@ -242,23 +242,17 @@ namespace Server.Engines.Shadowguard
             ShadowguardEncounter inst = ShadowguardController.GetEncounter(Location, Map);
 
             if (inst != null)
-            {
                 max += inst.PartySize() * 2;
-            }
 
             if (map == null || SummonTypes == null || SummonTypes.Length == 0 || TotalSummons() > max)
-            {
                 return;
-            }
 
             int count = Utility.RandomList(1, 2, 2, 2, 3, 3, 4, 5);
 
             for (int i = 0; i < count; i++)
             {
                 if (Combatant == null)
-                {
                     return;
-                }
 
                 Point3D p = Combatant.Location;
 
@@ -285,9 +279,12 @@ namespace Server.Engines.Shadowguard
                     {
                         BaseCreature s = o;
 
-                        if (s != null && s.Combatant != null && !(s.Combatant is PlayerMobile))
+                        if (s != null && s.Combatant != null)
                         {
-                            s.Combatant = Combatant;
+                            if (!(s.Combatant is PlayerMobile) || !((PlayerMobile)s.Combatant).HonorActive)
+                            {
+                                s.Combatant = Combatant;
+                            }
                         }
 
                     }, spawn);
@@ -302,14 +299,10 @@ namespace Server.Engines.Shadowguard
         protected virtual void AddHelper(BaseCreature bc)
         {
             if (SummonedHelpers == null)
-            {
                 SummonedHelpers = new List<BaseCreature>();
-            }
 
             if (!SummonedHelpers.Contains(bc))
-            {
                 SummonedHelpers.Add(bc);
-            }
         }
 
         public override void Delete()
@@ -455,9 +448,7 @@ namespace Server.Engines.Shadowguard
             base.OnThink();
 
             if (Form != Form.Human && _LastChange + TimeSpan.FromSeconds(45) < DateTime.UtcNow)
-            {
                 Form = Form.Human;
-            }
         }
 
         private void SetHighResistance(ResistanceType type)
@@ -540,14 +531,10 @@ namespace Server.Engines.Shadowguard
             base.OnGotMeleeAttack(m);
 
             if (_LastChange == DateTime.MinValue)
-            {
                 _LastChange = DateTime.UtcNow;
-            }
 
             if (CanChange)
-            {
                 CheckChange(m);
-            }
         }
 
         public void CheckChange(Mobile m)
@@ -567,36 +554,11 @@ namespace Server.Engines.Shadowguard
                 {
                     switch (type)
                     {
-                        case 0: if (Form != Form.Earth)
-                            {
-                                Form = Form.Earth;
-                            }
-
-                            break;
-                        case 1: if (Form != Form.Fire)
-                            {
-                                Form = Form.Fire;
-                            }
-
-                            break;
-                        case 2: if (Form != Form.Cold)
-                            {
-                                Form = Form.Cold;
-                            }
-
-                            break;
-                        case 3: if (Form != Form.Poison)
-                            {
-                                Form = Form.Poison;
-                            }
-
-                            break;
-                        case 4: if (Form != Form.Energy)
-                            {
-                                Form = Form.Energy;
-                            }
-
-                            break;
+                        case 0: if (Form != Form.Earth) Form = Form.Earth; break;
+                        case 1: if (Form != Form.Fire) Form = Form.Fire; break;
+                        case 2: if (Form != Form.Cold) Form = Form.Cold; break;
+                        case 3: if (Form != Form.Poison) Form = Form.Poison; break;
+                        case 4: if (Form != Form.Energy) Form = Form.Energy; break;
                     }
                 }
             }
@@ -629,13 +591,9 @@ namespace Server.Engines.Shadowguard
                 if (slayer != null && slayer.Slays(m))
                 {
                     if (slayer == slayer.Group.Super)
-                    {
                         damage *= 2;
-                    }
                     else
-                    {
                         damage *= 3;
-                    }
                 }
 
                 int highest;
@@ -861,9 +819,7 @@ namespace Server.Engines.Shadowguard
             base.OnThink();
 
             if (Combatant == null)
-            {
                 return;
-            }
 
             if (Combatant is Mobile && InRange(Combatant.Location, 10))
             {
@@ -890,9 +846,7 @@ namespace Server.Engines.Shadowguard
         public void DoNuke(Point3D p)
         {
             if (!Alive || Map == null)
-            {
                 return;
-            }
 
             int range = 8;
 
@@ -1001,13 +955,9 @@ namespace Server.Engines.Shadowguard
                 if (mount != null)
                 {
                     if (m is PlayerMobile mobile)
-                    {
                         mobile.SetMountBlock(BlockMountType.Dazed, TimeSpan.FromSeconds(10), true);
-                    }
                     else
-                    {
                         mount.Rider = null;
-                    }
                 }
                 else if (m.Flying)
                 {
@@ -1106,9 +1056,7 @@ namespace Server.Engines.Shadowguard
             base.OnThink();
 
             if (Combatant == null || Backpack == null || _NextWeaponSwitch > DateTime.UtcNow)
-            {
                 return;
-            }
 
             BaseWeapon wep = Weapon as BaseWeapon;
 
@@ -1119,9 +1067,7 @@ namespace Server.Engines.Shadowguard
                 if (scimitar != null)
                 {
                     if (wep is BaseRanged)
-                    {
                         Backpack.DropItem(wep);
-                    }
 
                     SetWearable(scimitar);
 
@@ -1135,9 +1081,7 @@ namespace Server.Engines.Shadowguard
                 if (yumi != null)
                 {
                     if (!(wep is Fists))
-                    {
                         Backpack.DropItem(wep);
-                    }
 
                     SetWearable(yumi);
 

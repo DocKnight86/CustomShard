@@ -55,15 +55,11 @@ namespace Server.Engines.VendorSearching
             switch (criteria.SortBy)
             {
                 case SortBy.LowToHigh:
-                {
                     list.Sort((a, b) => a.Price.CompareTo(b.Price));
                     break;
-                }
                 case SortBy.HighToLow:
-                {
                     list.Sort((a, b) => b.Price.CompareTo(a.Price));
                     break;
-                }
             }
 
             return list;
@@ -137,15 +133,11 @@ namespace Server.Engines.VendorSearching
             switch (criteria.SortBy)
             {
                 case SortBy.LowToHigh:
-                {
                     list.Sort((a, b) => a.Price.CompareTo(b.Price));
                     break;
-                }
                 case SortBy.HighToLow:
-                {
                     list.Sort((a, b) => b.Price.CompareTo(a.Price));
                     break;
-                }
             }
 
             return list;
@@ -224,9 +216,7 @@ namespace Server.Engines.VendorSearching
             }
 
             if (searchCriteria.Details.Count == 0)
-            {
                 return true;
-            }
 
             for (var index = 0; index < searchCriteria.Details.Count; index++)
             {
@@ -261,18 +251,14 @@ namespace Server.Engines.VendorSearching
                         }
                     }
                     else if (attrs == null || attrs[weaponAttribute] < value)
-                    {
                         return false;
-                    }
                 }
                 else if (o is SAAbsorptionAttribute absorptionAttribute)
                 {
                     SAAbsorptionAttributes attrs = RunicReforging.GetSAAbsorptionAttributes(item);
 
                     if (attrs == null || attrs[absorptionAttribute] < value)
-                    {
                         return false;
-                    }
                 }
                 else if (o is AosArmorAttribute armorAttribute)
                 {
@@ -306,16 +292,12 @@ namespace Server.Engines.VendorSearching
                             }
 
                             if (!hasSkill)
-                            {
                                 return false;
-                            }
                         }
                         else if (item is SpecialScroll scroll && value >= 105)
                         {
                             if (scroll.Skill != skillName || scroll.Value < value)
-                            {
                                 return false;
-                            }
                         }
                         else
                         {
@@ -344,68 +326,26 @@ namespace Server.Engines.VendorSearching
                             switch (elementAttribute)
                             {
                                 case AosElementAttribute.Physical:
-                                {
-                                    if (phys < value)
-                                    {
-                                        return false;
-                                    }
-
+                                    if (phys < value) return false;
                                     break;
-                                }
                                 case AosElementAttribute.Fire:
-                                {
-                                    if (fire < value)
-                                    {
-                                        return false;
-                                    }
-
+                                    if (fire < value) return false;
                                     break;
-                                }
                                 case AosElementAttribute.Cold:
-                                {
-                                    if (cold < value)
-                                    {
-                                        return false;
-                                    }
-
+                                    if (cold < value) return false;
                                     break;
-                                }
                                 case AosElementAttribute.Poison:
-                                {
-                                    if (pois < value)
-                                    {
-                                        return false;
-                                    }
-
+                                    if (pois < value) return false;
                                     break;
-                                }
                                 case AosElementAttribute.Energy:
-                                {
-                                    if (nrgy < value)
-                                    {
-                                        return false;
-                                    }
-
+                                    if (nrgy < value) return false;
                                     break;
-                                }
                                 case AosElementAttribute.Chaos:
-                                {
-                                    if (chaos < value)
-                                    {
-                                        return false;
-                                    }
-
+                                    if (chaos < value) return false;
                                     break;
-                                }
                                 case AosElementAttribute.Direct:
-                                {
-                                    if (direct < value)
-                                    {
-                                        return false;
-                                    }
-
+                                    if (direct < value) return false;
                                     break;
-                                }
                             }
                         }
                         else
@@ -413,50 +353,20 @@ namespace Server.Engines.VendorSearching
                             switch (elementAttribute)
                             {
                                 case AosElementAttribute.Physical:
-                                {
-                                    if (wep.WeaponAttributes.ResistPhysicalBonus < value)
-                                    {
-                                        return false;
-                                    }
-
+                                    if (wep.WeaponAttributes.ResistPhysicalBonus < value) return false;
                                     break;
-                                }
                                 case AosElementAttribute.Fire:
-                                {
-                                    if (wep.WeaponAttributes.ResistFireBonus < value)
-                                    {
-                                        return false;
-                                    }
-
+                                    if (wep.WeaponAttributes.ResistFireBonus < value) return false;
                                     break;
-                                }
                                 case AosElementAttribute.Cold:
-                                {
-                                    if (wep.WeaponAttributes.ResistColdBonus < value)
-                                    {
-                                        return false;
-                                    }
-
+                                    if (wep.WeaponAttributes.ResistColdBonus < value) return false;
                                     break;
-                                }
                                 case AosElementAttribute.Poison:
-                                {
-                                    if (wep.WeaponAttributes.ResistPoisonBonus < value)
-                                    {
-                                        return false;
-                                    }
-
+                                    if (wep.WeaponAttributes.ResistPoisonBonus < value) return false;
                                     break;
-                                }
                                 case AosElementAttribute.Energy:
-                                {
-                                    if (wep.WeaponAttributes.ResistEnergyBonus < value)
-                                    {
-                                        return false;
-                                    }
-
+                                    if (wep.WeaponAttributes.ResistEnergyBonus < value) return false;
                                     break;
-                                }
                             }
                         }
                     }
@@ -465,50 +375,20 @@ namespace Server.Engines.VendorSearching
                         switch (elementAttribute)
                         {
                             case AosElementAttribute.Physical:
-                            {
-                                if (armor.PhysicalResistance < value)
-                                {
-                                    return false;
-                                }
-
+                                if (armor.PhysicalResistance < value) return false;
                                 break;
-                            }
                             case AosElementAttribute.Fire:
-                            {
-                                if (armor.FireResistance < value)
-                                {
-                                    return false;
-                                }
-
+                                if (armor.FireResistance < value) return false;
                                 break;
-                            }
                             case AosElementAttribute.Cold:
-                            {
-                                if (armor.ColdResistance < value)
-                                {
-                                    return false;
-                                }
-
+                                if (armor.ColdResistance < value) return false;
                                 break;
-                            }
                             case AosElementAttribute.Poison:
-                            {
-                                if (armor.PoisonResistance < value)
-                                {
-                                    return false;
-                                }
-
+                                if (armor.PoisonResistance < value) return false;
                                 break;
-                            }
                             case AosElementAttribute.Energy:
-                            {
-                                if (armor.EnergyResistance < value)
-                                {
-                                    return false;
-                                }
-
+                                if (armor.EnergyResistance < value) return false;
                                 break;
-                            }
                         }
                     }
                     else if (detail.Category != Category.DamageType)
@@ -529,112 +409,74 @@ namespace Server.Engines.VendorSearching
                 {
                     switch (misc)
                     {
-                        case Misc.ExcludeFel:
-                        {
+                        case Misc.ExcludeFel: break;
+                        case Misc.GargoyleOnly:
+                            if (!IsGargoyle(item))
+                                return false;
                             break;
-                        }
+                        case Misc.NotGargoyleOnly:
+                            if (IsGargoyle(item))
+                                return false;
+                            break;
+                        case Misc.ElvesOnly:
+                            if (!IsElf(item))
+                                return false;
+                            break;
+                        case Misc.NotElvesOnly:
+                            if (IsElf(item))
+                                return false;
+                            break;
                         case Misc.FactionItem:
-                        {
                             return false;
-                        }
                         case Misc.PromotionalToken:
-                        {
                             if (!(item is PromotionalToken))
-                            {
                                 return false;
-                            }
-
                             break;
-                        }
                         case Misc.Cursed:
-                        {
                             if (item.LootType != LootType.Cursed)
-                            {
                                 return false;
-                            }
-
                             break;
-                        }
                         case Misc.NotCursed:
-                        {
                             if (item.LootType == LootType.Cursed)
-                            {
                                 return false;
-                            }
-
                             break;
-                        }
                         case Misc.CannotRepair:
-                        {
                             if (CheckCanRepair(item))
-                            {
                                 return false;
-                            }
-
                             break;
-                        }
                         case Misc.NotCannotBeRepaired:
-                        {
                             if (!CheckCanRepair(item))
-                            {
                                 return false;
-                            }
-
                             break;
-                        }
                         case Misc.Brittle:
-                        {
                             NegativeAttributes neg2 = RunicReforging.GetNegativeAttributes(item);
                             if (neg2 == null || neg2.Brittle == 0)
-                            {
                                 return false;
-                            }
-
                             break;
-                        }
                         case Misc.NotBrittle:
-                        {
                             NegativeAttributes neg3 = RunicReforging.GetNegativeAttributes(item);
                             if (neg3 != null && neg3.Brittle > 0)
-                            {
                                 return false;
-                            }
-
                             break;
-                        }
                         case Misc.Antique:
-                        {
                             NegativeAttributes neg4 = RunicReforging.GetNegativeAttributes(item);
                             if (neg4 == null || neg4.Antique == 0)
-                            {
                                 return false;
-                            }
-
                             break;
-                        }
                         case Misc.NotAntique:
-                        {
                             NegativeAttributes neg5 = RunicReforging.GetNegativeAttributes(item);
                             if (neg5 != null && neg5.Antique > 0)
-                            {
                                 return false;
-                            }
-
                             break;
-                        }
                     }
                 }
                 else if (o is string s)
                 {
                     if (s == "WeaponVelocity" && (!(item is BaseRanged) || ((BaseRanged) item).Velocity < value))
-                    {
                         return false;
-                    }
 
                     if (s == "SearingWeapon" && (!(item is BaseWeapon) || !((BaseWeapon) item).SearingWeapon))
-                    {
                         return false;
-                    }
 
                     if (s == "ArtifactRarity" && (!(item is IArtifact) || ((IArtifact) item).ArtifactRarity < value))
                     {
@@ -716,6 +558,16 @@ namespace Server.Engines.VendorSearching
             return Keywords.ContainsKey(searchstring.ToLower()) && Keywords[searchstring.ToLower()] == item.GetType();
         }
 
+        public static bool IsGargoyle(Item item)
+        {
+            return Race.Gargoyle.ValidateEquipment(item);
+        }
+
+        public static bool IsElf(Item item)
+        {
+            return Race.Elf.ValidateEquipment(item);
+        }
+
         public static SearchCriteria AddNewContext(PlayerMobile pm)
         {
             SearchCriteria criteria = new SearchCriteria();
@@ -758,10 +610,7 @@ namespace Server.Engines.VendorSearching
 
                     foreach (var kvp in Contexts)
                     {
-                        if (!kvp.Value.IsEmpty)
-                        {
-                            count++;
-                        }
+                        if (!kvp.Value.IsEmpty) count++;
                     }
 
                     writer.Write(Contexts == null ? 0 : count);
@@ -797,9 +646,7 @@ namespace Server.Engines.VendorSearching
                         if (pm != null)
                         {
                             if (Contexts == null)
-                            {
                                 Contexts = new Dictionary<PlayerMobile, SearchCriteria>();
-                            }
 
                             Contexts[pm] = criteria;
                         }
@@ -1108,6 +955,10 @@ namespace Server.Engines.VendorSearching
     public enum Misc
     {
         ExcludeFel,
+        GargoyleOnly,
+        NotGargoyleOnly,
+        ElvesOnly,
+        NotElvesOnly,
         FactionItem,
         PromotionalToken,
         Cursed,
@@ -1296,14 +1147,10 @@ namespace Server.Engines.VendorSearching
             Details = new List<SearchDetail>();
 
             if (version > 1)
-            {
                 Auction = reader.ReadBool();
-            }
 
             if (version != 0)
-            {
                 EntryPrice = reader.ReadBool();
-            }
 
             SearchType = (Layer)reader.ReadInt();
             SearchName = reader.ReadString();
@@ -1411,66 +1258,21 @@ namespace Server.Engines.VendorSearching
 
             switch (attrID)
             {
-                case 0:
-                {
-                    break;
-                }
-                case 1:
-                {
-                    writer.Write((int)(AosAttribute)Attribute); break;
-                }
-                case 2:
-                {
-                    writer.Write((int)(AosArmorAttribute)Attribute); break;
-                }
-                case 3:
-                {
-                    writer.Write((int)(AosWeaponAttribute)Attribute); break;
-                }
-                case 4:
-                {
-                    writer.Write((int)(AosElementAttribute)Attribute); break;
-                }
-                case 5:
-                {
-                    writer.Write((int)(SkillName)Attribute); break;
-                }
-                case 6:
-                {
-                    writer.Write((int)(SAAbsorptionAttribute)Attribute); break;
-                }
-                case 7:
-                {
-                    writer.Write((int)(ExtendedWeaponAttribute)Attribute); break;
-                }
-                case 8:
-                {
-                    writer.Write((int)(NegativeAttribute)Attribute); break;
-                }
-                case 9:
-                {
-                    writer.Write((int)(SlayerName)Attribute); break;
-                }
-                case 10:
-                {
-                    writer.Write((string)Attribute); break;
-                }
-                case 11:
-                {
-                    writer.Write((int)(TalismanSlayerName)Attribute); break;
-                }
-                case 12:
-                {
-                    writer.Write((int)(TalismanSkill)Attribute); break;
-                }
-                case 13:
-                {
-                    writer.Write((int)(TalismanRemoval)Attribute); break;
-                }
-                case 14:
-                {
-                    writer.Write((int)Attribute); break;
-                }
+                case 0: break;
+                case 1: writer.Write((int)(AosAttribute)Attribute); break;
+                case 2: writer.Write((int)(AosArmorAttribute)Attribute); break;
+                case 3: writer.Write((int)(AosWeaponAttribute)Attribute); break;
+                case 4: writer.Write((int)(AosElementAttribute)Attribute); break;
+                case 5: writer.Write((int)(SkillName)Attribute); break;
+                case 6: writer.Write((int)(SAAbsorptionAttribute)Attribute); break;
+                case 7: writer.Write((int)(ExtendedWeaponAttribute)Attribute); break;
+                case 8: writer.Write((int)(NegativeAttribute)Attribute); break;
+                case 9: writer.Write((int)(SlayerName)Attribute); break;
+                case 10: writer.Write((string)Attribute); break;
+                case 11: writer.Write((int)(TalismanSlayerName)Attribute); break;
+                case 12: writer.Write((int)(TalismanSkill)Attribute); break;
+                case 13: writer.Write((int)(TalismanRemoval)Attribute); break;
+                case 14: writer.Write((int)Attribute); break;
             }
         }
 
@@ -1478,140 +1280,67 @@ namespace Server.Engines.VendorSearching
         {
             switch (reader.ReadInt())
             {
-                case 0:
-                {
-                    break;
-                }
-                case 1:
-                {
-                    Attribute = (AosAttribute)reader.ReadInt(); break;
-                }
-                case 2:
-                {
-                    Attribute = (AosArmorAttribute)reader.ReadInt(); break;
-                }
-                case 3:
-                {
-                    Attribute = (AosWeaponAttribute)reader.ReadInt(); break;
-                }
-                case 4:
-                {
-                    Attribute = (AosElementAttribute)reader.ReadInt(); break;
-                }
-                case 5:
-                {
-                    Attribute = (SkillName)reader.ReadInt(); break;
-                }
-                case 6:
-                {
-                    Attribute = (SAAbsorptionAttribute)reader.ReadInt(); break;
-                }
-                case 7:
-                {
-                    Attribute = (ExtendedWeaponAttribute)reader.ReadInt(); break;
-                }
-                case 8:
-                {
-                    Attribute = (NegativeAttribute)reader.ReadInt(); break;
-                }
-                case 9:
-                {
-                    Attribute = (SlayerName)reader.ReadInt(); break;
-                }
-                case 10:
-                {
-                    Attribute = reader.ReadString(); break;
-                }
-                case 11:
-                {
-                    Attribute = (TalismanSlayerName)reader.ReadInt(); break;
-                }
-                case 12:
-                {
-                    Attribute = (TalismanSkill)reader.ReadInt(); break;
-                }
-                case 13:
-                {
-                    Attribute = (TalismanRemoval)reader.ReadInt(); break;
-                }
-                case 14:
-                {
-                    Attribute = reader.ReadInt(); break;
-                }
+                case 0: break;
+                case 1: Attribute = (AosAttribute)reader.ReadInt(); break;
+                case 2: Attribute = (AosArmorAttribute)reader.ReadInt(); break;
+                case 3: Attribute = (AosWeaponAttribute)reader.ReadInt(); break;
+                case 4: Attribute = (AosElementAttribute)reader.ReadInt(); break;
+                case 5: Attribute = (SkillName)reader.ReadInt(); break;
+                case 6: Attribute = (SAAbsorptionAttribute)reader.ReadInt(); break;
+                case 7: Attribute = (ExtendedWeaponAttribute)reader.ReadInt(); break;
+                case 8: Attribute = (NegativeAttribute)reader.ReadInt(); break;
+                case 9: Attribute = (SlayerName)reader.ReadInt(); break;
+                case 10: Attribute = reader.ReadString(); break;
+                case 11: Attribute = (TalismanSlayerName)reader.ReadInt(); break;
+                case 12: Attribute = (TalismanSkill)reader.ReadInt(); break;
+                case 13: Attribute = (TalismanRemoval)reader.ReadInt(); break;
+                case 14: Attribute = reader.ReadInt(); break;
             }
         }
 
         public static int GetAttributeID(object o)
         {
             if (o is AosAttribute)
-            {
                 return (int)AttributeID.AosAttribute;
-            }
 
             if (o is AosArmorAttribute)
-            {
                 return (int)AttributeID.AosArmorAttribute;
-            }
 
             if (o is AosWeaponAttribute)
-            {
                 return (int)AttributeID.AosWeaponAttribute;
-            }
 
             if (o is AosElementAttribute)
-            {
                 return (int)AttributeID.AosElementAttribute;
-            }
 
             if (o is SkillName)
-            {
                 return (int)AttributeID.SkillName;
-            }
 
             if (o is SAAbsorptionAttribute)
-            {
                 return (int)AttributeID.SAAbosorptionAttribute;
-            }
 
             if (o is ExtendedWeaponAttribute)
-            {
                 return (int)AttributeID.ExtendedWeaponAttribute;
-            }
 
             if (o is NegativeAttribute)
-            {
                 return (int)AttributeID.NegativeAttribute;
-            }
 
             if (o is SlayerName)
-            {
                 return (int)AttributeID.SlayerName;
-            }
 
             if (o is TalismanSlayerName)
-            {
                 return (int)AttributeID.TalismanSlayerName;
-            }
 
             if (o is string)
-            {
                 return (int)AttributeID.String;
-            }
 
             if (o is TalismanSkill)
-            {
                 return (int)AttributeID.TalismanSkill;
-            }
 
             if (o is TalismanRemoval)
-            {
                 return (int)AttributeID.TalismanRemoval;
-            }
 
             if (o is int)
-            {
                 return (int)AttributeID.Int;
-            }
 
             return (int)AttributeID.None;
         }

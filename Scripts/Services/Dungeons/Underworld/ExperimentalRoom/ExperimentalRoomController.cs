@@ -22,9 +22,7 @@ namespace Server.Items
         public static void AddToTable(Mobile from)
         {
             if (from == null)
-            {
                 return;
-            }
 
             m_Table[from] = DateTime.UtcNow + TimeSpan.FromHours(24);
         }
@@ -43,9 +41,7 @@ namespace Server.Items
             foreach (KeyValuePair<Mobile, DateTime> kvp in m_Table)
             {
                 if (kvp.Value <= DateTime.UtcNow)
-                {
                     list.Add(kvp.Key);
-                }
             }
 
             for (var index = 0; index < list.Count; index++)
@@ -59,9 +55,7 @@ namespace Server.Items
         public static bool HasItem(Mobile from, Type type)
         {
             if (from == null || from.Backpack == null)
-            {
                 return false;
-            }
 
             Item item = from.Backpack.FindItemByType(type);
 

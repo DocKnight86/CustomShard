@@ -160,9 +160,7 @@ namespace Server.Items
                 yOffset = yo;
 
                 if (LateralOffset > 1 && currentRange % LateralOffset == 0)
-                {
                     lateralOffset++;
-                }
 
                 TimeSpan delay = TimeSpan.FromSeconds(currentRange / 10.0);
 
@@ -178,13 +176,9 @@ namespace Server.Items
                             for (int i = -lateralOffset; i <= lateralOffset; i++)
                             {
                                 if (xOffset == 0)
-                                {
                                     newPoint = new Point3D(pnt.X + xOffset + i, pnt.Y + yOffset * currentRange, pnt.Z);
-                                }
                                 else
-                                {
                                     newPoint = new Point3D(pnt.X + xOffset * currentRange, pnt.Y + yOffset + i, pnt.Z);
-                                }
 
                                 BaseGalleon g = FindValidBoatTarget(newPoint, map, ammo);
 
@@ -210,13 +204,9 @@ namespace Server.Items
                             for (int i = -lateralOffset; i <= lateralOffset; i++)
                             {
                                 if (xOffset == 0)
-                                {
                                     newPoint = new Point3D(pnt.X + xOffset + i, pnt.Y + yOffset * currentRange, pnt.Z);
-                                }
                                 else
-                                {
                                     newPoint = new Point3D(pnt.X + xOffset * currentRange, pnt.Y + yOffset + i, pnt.Z);
-                                }
 
                                 foreach (Mobile m in GetTargets(newPoint, map))
                                 {
@@ -296,18 +286,12 @@ namespace Server.Items
                     case Direction.North:
                     case Direction.South:
                         if (newPoint.X <= galleon.X - d || newPoint.X >= galleon.X + d)
-                        {
                             return null;
-                        }
-
                         break;
                     case Direction.East:
                     case Direction.West:
                         if (newPoint.Y <= galleon.Y - d || newPoint.Y >= galleon.Y + d)
-                        {
                             return null;
-                        }
-
                         break;
                 }
 

@@ -75,9 +75,7 @@ namespace Server.Mobiles
             if (t != null)
             {
                 if (message)
-                {
                     m.PublicOverheadMessage(Network.MessageType.Emote, m.SpeechHue, true, "* The open flame begins to scatter the swarm of insects *");
-                }
 
                 t.Stop();
                 m_Table.Remove(m);
@@ -127,9 +125,7 @@ namespace Server.Mobiles
                         Point3D loc = new Point3D(x, y, combatant.Map.GetAverageZ(x, y));
 
                         if (!combatant.Map.CanSpawnMobile(loc))
-                        {
                             continue;
-                        }
 
                         switch (i)
                         {
@@ -199,9 +195,7 @@ namespace Server.Mobiles
                     states[1] = count + 1;
 
                     if (!m.Alive)
-                    {
                         StopEffect(m, false);
-                    }
                 }
             }
         }

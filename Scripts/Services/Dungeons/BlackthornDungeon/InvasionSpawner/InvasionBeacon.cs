@@ -35,17 +35,13 @@ namespace Server.Engines.Blackthorn
             foreach (Mobile m in eable)
             {
                 if (m.NetState != null)
-                {
                     m.PrivateOverheadMessage(Network.MessageType.Regular, 1154, 1154551, m.NetState); // *Minax's Beacon surges with energy into an invulnerable state! Defeat her Captains to weaken the Beacon's defenses!*
-                }
             }
 
             eable.Free();
 
             if (Controller != null)
-            {
                 Timer.DelayCall(TimeSpan.FromSeconds(1), () => Controller.SpawnWave());
-            }
         }
 
         public override bool OnBeforeDestroyed()

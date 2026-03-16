@@ -24,24 +24,16 @@ namespace Server.Gumps
 
             //Arrows
             if (pointList.Contains(northLoc))
-            {
                 AddImage(100, 50, 4501);
-            }
 
             if (pointList.Contains(eastLoc))
-            {
                 AddImage(100, 100, 4503);
-            }
 
             if (pointList.Contains(southLoc))
-            {
                 AddImage(50, 100, 4505);
-            }
 
             if (pointList.Contains(westLoc))
-            {
                 AddImage(50, 50, 4507);
-            }
         }
     }
 }

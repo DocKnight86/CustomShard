@@ -42,9 +42,7 @@ namespace Server.Engines.VvV
             base.AddCraftedProperties(list);
 
             if (IsArcane)
-            {
                 list.Add(1061837, "{0}\t{1}", m_CurArcaneCharges, m_MaxArcaneCharges); // arcane charges: ~1_val~ / ~2_val~
-            }
         }
         #endregion
 
@@ -116,9 +114,7 @@ namespace Server.Engines.VvV
             }
 
             if (version == 0)
-            {
                 Timer.DelayCall(() => ViceVsVirtueSystem.Instance.AddVvVItem(this));
-            }
         }
     }
 
@@ -162,9 +158,7 @@ namespace Server.Engines.VvV
             base.AddCraftedProperties(list);
 
             if (IsArcane)
-            {
                 list.Add(1061837, "{0}\t{1}", m_CurArcaneCharges, m_MaxArcaneCharges); // arcane charges: ~1_val~ / ~2_val~
-            }
         }
         #endregion
 
@@ -236,9 +230,7 @@ namespace Server.Engines.VvV
             }
 
             if (version == 0)
-            {
                 Timer.DelayCall(() => ViceVsVirtueSystem.Instance.AddVvVItem(this));
-            }
         }
     }
 }

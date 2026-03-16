@@ -51,13 +51,9 @@ namespace Server.Engines.BulkOrders
             BulkMaterialType material;
 
             if (useMaterials)
-            {
                 material = GetRandomMaterial(BulkMaterialType.OakWood, m_FletchingingMaterialChances);
-            }
             else
-            {
                 material = BulkMaterialType.None;
-            }
 
             Hue = hue;
             AmountMax = amountMax;
@@ -105,9 +101,7 @@ namespace Server.Engines.BulkOrders
                         Item item = rewardGroup.Items[i].Construct();
 
                         if (item != null)
-                        {
                             list.Add(item);
-                        }
                     }
                 }
                 else
@@ -119,9 +113,7 @@ namespace Server.Engines.BulkOrders
                         Item item = rewardItem.Construct();
 
                         if (item != null)
-                        {
                             list.Add(item);
-                        }
                     }
                 }
             }

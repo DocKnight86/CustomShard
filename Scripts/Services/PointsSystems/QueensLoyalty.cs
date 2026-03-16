@@ -32,26 +32,18 @@ namespace Server.Engines.Points
             BaseCreature bc = victim as BaseCreature;
 
             if (bc == null || bc.Map != Map.TerMur || damager.Map != Map.TerMur)
-            {
                 return;
-            }
 
             Type type = bc.GetType();
 
             if (!Entries.ContainsKey(type))
-            {
                 return;
-            }
 
             if (damager is BaseCreature creature && (creature.Controlled || creature.Summoned))
-            {
                 damager = creature.GetMaster();
-            }
 
             if (damager == null)
-            {
                 return;
-            }
 
             if (bc.GetHighestDamager() == damager)
             {
@@ -66,9 +58,7 @@ namespace Server.Engines.Points
         public override void ProcessQuest(Mobile from, Type type)
         {
             if (from == null || type == null)
-            {
                 return;
-            }
 
             if (Entries.TryGetValue(type, out Tuple<double, double> value))
             {
@@ -78,10 +68,10 @@ namespace Server.Engines.Points
 
         public override void OnPlayerAdded(PlayerMobile pm)
         {
-            /*if (pm.Race == Race.Gargoyle)
+            if (pm.Race == Race.Gargoyle)
             {
                 AwardPoints(pm, 2000, false, false);
-            }*/
+            }
         }
 
         public bool IsNoble(Mobile from)
@@ -92,26 +82,16 @@ namespace Server.Engines.Points
         public QueensLoyaltyRating GetLoyalty(PlayerMobile from)
         {
             if (from == null)
-            {
                 return QueensLoyaltyRating.Enemy;
-            }
 
             double points = GetPoints(from);
 
             if (points <= 0)
-            {
                 return QueensLoyaltyRating.Enemy;
-            }
-
             if (points <= 1999)
-            {
                 return QueensLoyaltyRating.Friend;
-            }
-
             if (points <= 9999)
-            {
                 return QueensLoyaltyRating.Citizen;
-            }
 
             return QueensLoyaltyRating.Noble;
         }
@@ -174,6 +154,9 @@ namespace Server.Engines.Points
             Entries[typeof(Anlorvaglem)] = new Tuple<double, double>(50, 5);
             Entries[typeof(VitaviRenowned)] = new Tuple<double, double>(50, 5);
             Entries[typeof(WyvernRenowned)] = new Tuple<double, double>(50, 5);
+            Entries[typeof(MinionOfScelestus)] = new Tuple<double, double>(35, 3.5);
+            Entries[typeof(GargishRouser)] = new Tuple<double, double>(50, 5.0);
+            Entries[typeof(GargishOutcast)] = new Tuple<double, double>(25, 2.5);
             Entries[typeof(VoidManifestation)] = new Tuple<double, double>(50, 5);
             Entries[typeof(Navrey)] = new Tuple<double, double>(75, 7.5);
             Entries[typeof(Niporailem)] = new Tuple<double, double>(75, 7.5);
@@ -184,8 +167,13 @@ namespace Server.Engines.Points
             Entries[typeof(AbyssalInfernal)] = new Tuple<double, double>(150, 15.0);
 
             //Quests
+            Entries[typeof(ABrokenVaseQuest)] = new Tuple<double, double>(5, 0.5);
+            Entries[typeof(PuttingThePiecesTogetherQuest)] = new Tuple<double, double>(15, 1.5);
+            Entries[typeof(ALittleSomething)] = new Tuple<double, double>(25, 2.5);
             Entries[typeof(TheExchangeQuest)] = new Tuple<double, double>(35, 3.5);
+            Entries[typeof(YeOldeGargishQuest)] = new Tuple<double, double>(50, 5.0);
             Entries[typeof(AWorthyPropositionQuest)] = new Tuple<double, double>(50, 5.0);
+            Entries[typeof(UnusualGoods)] = new Tuple<double, double>(75, 7.5);
         }
 
         public override void Serialize(GenericWriter writer)

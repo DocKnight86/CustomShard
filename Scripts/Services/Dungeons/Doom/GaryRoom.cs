@@ -605,9 +605,7 @@ namespace Server.Engines.Doom
             get
             {
                 if (_Info == null)
-                {
                     return base.LabelNumber;
-                }
 
                 return _Info.LabelNumber;
             }
@@ -667,14 +665,10 @@ namespace Server.Engines.Doom
                 _Index = value;
 
                 if (_Index < 0)
-                {
                     _Index = 0;
-                }
 
                 if (_Index > 9)
-                {
                     _Index = 0;
-                }
             }
         }
 
@@ -787,9 +781,7 @@ namespace Server.Engines.Doom
             int version = reader.ReadInt();
 
             if (version == 0)
-            {
                 Delete();
-            }
         }
     }
 

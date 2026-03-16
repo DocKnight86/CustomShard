@@ -121,9 +121,7 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (CarvedBy == null)
-            {
                 return;
-            }
 
             base.OnDoubleClick(from);
         }

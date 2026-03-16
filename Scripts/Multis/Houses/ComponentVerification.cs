@@ -205,15 +205,15 @@ namespace Server.Multis
 
             int featureCID = ss.GetColumnID("FeatureMask");
 
-            for (int i = 0; i < ss.Records.Length; i++)
+            for (var i = 0; i < ss.Records.Length; i++)
             {
                 DataRecord record = ss.Records[i];
 
                 int fid = record.GetInt32(featureCID);
 
-                for (int index = 0; index < tileCIDs.Length; index++)
+                for (var index = 0; index < tileCIDs.Length; index++)
                 {
-                    int v = tileCIDs[index];
+                    var v = tileCIDs[index];
 
                     int itemID = record.GetInt32(v);
 

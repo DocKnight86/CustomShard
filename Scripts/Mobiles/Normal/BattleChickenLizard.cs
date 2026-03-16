@@ -67,9 +67,7 @@ namespace Server.Mobiles
             PassiveSpeed = 0.4;
 
             if (Frozen)
-            {
                 Frozen = false;
-            }
         }
 
         public BattleChickenLizard(Serial serial)

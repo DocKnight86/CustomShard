@@ -54,6 +54,7 @@ namespace Server.Mobiles
             AddLoot(LootPack.Gems);
             AddLoot(LootPack.HighScrolls, 2);
             AddLoot(LootPack.ArcanistScrolls, 0, 2);
+            AddLoot(LootPack.LootItem<CrystallineFragments>(75.0));
             AddLoot(LootPack.LootItem<PiecesOfCrystal>(7.0));
             AddLoot(LootPack.LootItem<ParrotItem>(10.0));
         }
@@ -63,9 +64,7 @@ namespace Server.Mobiles
             base.OnGaveMeleeAttack(defender);
 
             if (Utility.RandomDouble() < 0.1)
-            {
                 Drain(defender);
-            }
         }
 
         public override void OnGotMeleeAttack(Mobile attacker)
@@ -73,9 +72,7 @@ namespace Server.Mobiles
             base.OnGotMeleeAttack(attacker);
 
             if (Utility.RandomDouble() < 0.1)
-            {
                 Drain(attacker);
-            }
         }
 
         public virtual void Drain(Mobile m)

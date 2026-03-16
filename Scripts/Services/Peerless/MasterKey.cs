@@ -30,9 +30,7 @@ namespace Server.Items
             else
             {
                 if (!CanOfferConfirmation(from) && Altar == null)
-                {
                     return;
-                }
 
                 if (Altar.Peerless == null)
                 {

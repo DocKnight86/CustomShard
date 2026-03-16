@@ -1,5 +1,8 @@
+using Server.Engines.Craft;
+
 namespace Server.Items
 {
+    [Alterable(typeof(DefBlacksmithy), typeof(DreadSword))]
     [Flipable(0xF5E, 0xF5F)]
     public class Broadsword : BaseSword
     {

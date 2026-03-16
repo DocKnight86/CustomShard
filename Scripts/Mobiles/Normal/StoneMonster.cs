@@ -206,6 +206,7 @@ namespace Server.Mobiles
             if (LootStage == LootStage.Death && Body == 772)
             {
                 AddLoot(LootPack.LootItem<GargoylesPickaxe>(2.5));
+                AddLoot(LootPack.LootItem<UndeadGargHorn>(20.0));
             }
         }
 

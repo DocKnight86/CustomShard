@@ -127,9 +127,7 @@ namespace Server.Gumps
             int idx = info.ButtonID - 1;
 
             if (idx < 0 || idx >= m_Entries.Length)
-            {
                 return;
-            }
 
             Spell spell = new PolymorphSpell(m_Caster, m_Scroll, m_Entries[idx].BodyID);
             spell.Cast();

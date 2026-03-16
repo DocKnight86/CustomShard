@@ -1,3 +1,4 @@
+using Server.Engines.Craft;
 using Server.Engines.PartySystem;
 using Server.Mobiles;
 using Server.Targeting;
@@ -5,6 +6,7 @@ using System;
 
 namespace Server.Items
 {
+    [Alterable(typeof(DefBlacksmithy), typeof(ExodusSacrificalGargishDagger))]
     [Flipable(0x2D21, 0x2D2D)]
     public class ExodusSacrificalDagger : BaseKnife
     {
@@ -134,34 +136,22 @@ namespace Server.Items
                 int minutes = t.Minutes;
 
                 if (weeks > 0)
-                {
                     list.Add(string.Format("Lifespan: {0} {1}", weeks, weeks == 1 ? "week" : "weeks"));
-                }
                 else if (days > 0)
-                {
                     list.Add(string.Format("Lifespan: {0} {1}", days, days == 1 ? "day" : "days"));
-                }
                 else if (hours > 0)
-                {
                     list.Add(string.Format("Lifespan: {0} {1}", hours, hours == 1 ? "hour" : "hours"));
-                }
                 else if (minutes > 0)
-                {
                     list.Add(string.Format("Lifespan: {0} {1}", minutes, minutes == 1 ? "minute" : "minutes"));
-                }
                 else
-                {
                     list.Add(1072517, m_Lifespan.ToString()); // Lifespan: ~1_val~ seconds
-                }
             }
         }
 
         public virtual void StartTimer()
         {
             if (m_Timer != null)
-            {
                 return;
-            }
 
             m_Timer = Timer.DelayCall(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10), Slice);
         }
@@ -169,9 +159,7 @@ namespace Server.Items
         public virtual void StopTimer()
         {
             if (m_Timer != null)
-            {
                 m_Timer.Stop();
-            }
 
             m_Timer = null;
         }
@@ -183,9 +171,7 @@ namespace Server.Items
             InvalidateProperties();
 
             if (m_Lifespan <= 0)
-            {
                 Decay();
-            }
         }
 
         public virtual void Decay()
@@ -195,13 +181,9 @@ namespace Server.Items
                 Mobile parent = mobile;
 
                 if (Name == null)
-                {
                     parent.SendLocalizedMessage(1072515, "#" + LabelNumber); // The ~1_name~ expired...
-                }
                 else
-                {
                     parent.SendLocalizedMessage(1072515, Name); // The ~1_name~ expired...
-                }
 
                 Effects.SendLocationParticles(EffectItem.Create(parent.Location, parent.Map, EffectItem.DefaultDuration), 0x3728, 8, 20, 5042);
                 Effects.PlaySound(parent.Location, parent.Map, 0x201);
@@ -232,6 +214,33 @@ namespace Server.Items
             m_Lifespan = reader.ReadInt();
 
             StartTimer();
+        }
+    }
+
+    [Flipable(0x0902, 0x406A)]
+    public class ExodusSacrificalGargishDagger : ExodusSacrificalDagger
+    {
+        [Constructable]
+        public ExodusSacrificalGargishDagger()
+        {
+            ItemID = 0x406A;
+            Weight = 4.0;
+        }
+
+        public ExodusSacrificalGargishDagger(Serial serial) : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write(0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            reader.ReadInt();
         }
     }
 }

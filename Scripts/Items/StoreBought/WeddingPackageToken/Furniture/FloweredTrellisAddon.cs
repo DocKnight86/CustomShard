@@ -122,9 +122,7 @@ namespace Server.Items
             m_South = choice == 0;
 
             if (!Deleted)
-            {
                 base.OnDoubleClick(from);
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -135,9 +133,7 @@ namespace Server.Items
                 from.SendGump(new AddonOptionGump(this, 1154194)); // Choose a Facing:
             }
             else
-            {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.       	
-            }
         }
 
         public override void Serialize(GenericWriter writer)

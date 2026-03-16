@@ -32,9 +32,7 @@ namespace Server.Mobiles
                     _HasYelled = value;
 
                     if (_HasYelled)
-                    {
                         Timer.DelayCall(TimeSpan.FromSeconds(Utility.RandomMinMax(180, 360)), () => _HasYelled = false);
-                    }
                 }
             }
         }
@@ -48,9 +46,7 @@ namespace Server.Mobiles
             get
             {
                 if (TribeType == EodonTribe.Barrab)
-                {
                     return Poison.Deadly;
-                }
 
                 return null;
             }
@@ -70,14 +66,11 @@ namespace Server.Mobiles
 
                 List<MasteryInfo> list = new List<MasteryInfo>();
 
-                for (int index = 0; index < MasteryInfo.Infos.Count; index++)
+                for (var index = 0; index < MasteryInfo.Infos.Count; index++)
                 {
-                    MasteryInfo i = MasteryInfo.Infos[index];
+                    var i = MasteryInfo.Infos[index];
 
-                    if (i.MasterySkill == wep.DefSkill && !i.Passive)
-                    {
-                        list.Add(i);
-                    }
+                    if (i.MasterySkill == wep.DefSkill && !i.Passive) list.Add(i);
                 }
 
                 MasteryInfo[] infos = list.ToArray();
@@ -180,9 +173,7 @@ namespace Server.Mobiles
             base.AggressiveAction(aggressor, criminal);
 
             if (Map == null)
-            {
                 return;
-            }
 
             IPooledEnumerable eable = Map.GetMobilesInRange(Location, RangePerception);
 
@@ -207,9 +198,9 @@ namespace Server.Mobiles
             // Basically, this makes them FightMode.Aggressor. More can can be added in to make them attack others, such as other tribes, etc.
             AggressorInfo first = null;
 
-            for (int index = 0; index < Aggressors.Count; index++)
+            for (var index = 0; index < Aggressors.Count; index++)
             {
-                AggressorInfo a = Aggressors[index];
+                var a = Aggressors[index];
 
                 if (a.Attacker == m)
                 {
@@ -323,6 +314,7 @@ namespace Server.Mobiles
                 case EodonTribe.Urali:
                     Female = true;
                     Body = 0x25E;
+                    Race = Race.Elf;
                     HairItemID = 0x2FC1;
                     Hue = 35356;
                     break;
@@ -523,6 +515,7 @@ namespace Server.Mobiles
                 case EodonTribe.Urali:
                     Female = false;
                     Body = 0x25D;
+                    Race = Race.Elf;
                     HairItemID = 0x2FC1;
                     Hue = 35356;
                     break;
@@ -679,6 +672,7 @@ namespace Server.Mobiles
                 case EodonTribe.Urali:
                     Female = true;
                     Body = 0x25E;
+                    Race = Race.Elf;
                     HairItemID = 0x2FD0;
                     Hue = 35356;
                     break;

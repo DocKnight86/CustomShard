@@ -16,9 +16,7 @@ namespace Server.Engines.TreasuresOfKotlCity
             KeyValue = Key.RandomValue();
 
             if (Instance == null)
-            {
                 Instance = this;
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -54,9 +52,7 @@ namespace Server.Engines.TreasuresOfKotlCity
             reader.ReadInt();
 
             if (Instance == null)
-            {
                 Instance = this;
-            }
         }
     }
 }

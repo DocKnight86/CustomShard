@@ -90,9 +90,7 @@ namespace Server.Gumps
         {
             if (m_Token == null || m_Token.Deleted || info.ButtonID == 0 ||
                 m_User == null || m_User.Deleted)
-            {
                 return;
-            }
 
             if (!m_Token.IsChildOf(m_User.Backpack))
             {
@@ -161,9 +159,7 @@ namespace Server.Gumps
                 sender.Mobile.SendGump(new ConfirmSpringDecorGump(m_Token, types.ToArray(), cliloc, m_User));
             }
             else
-            {
                 sender.Mobile.SendLocalizedMessage(501311); // This option is currently disabled, while we evaluate it for game balance.
-            }
         }
     }
 
@@ -197,9 +193,7 @@ namespace Server.Gumps
         {
             if (m_Token == null || m_Token.Deleted ||
                 m_User == null || m_User.Deleted)
-            {
                 return;
-            }
 
             if (!m_Token.IsChildOf(m_User.Backpack))
             {

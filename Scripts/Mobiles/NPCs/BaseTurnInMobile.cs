@@ -30,16 +30,12 @@ namespace Server.Mobiles
         public virtual IEnumerable<ItemTileButtonInfo> FindRedeemableItems(Mobile m)
         {
             if (m == null || m.Backpack == null)
-            {
                 yield break;
-            }
 
             foreach (Item item in m.Backpack.Items)
             {
                 if (IsRedeemableItem(item))
-                {
                     yield return new ItemTileButtonInfo(item);
-                }
             }
         }
 
@@ -87,13 +83,9 @@ namespace Server.Mobiles
                 m_Buttons = m_Vendor.FindRedeemableItems(m_Mobile);
 
                 if (m_Buttons.Any())
-                {
                     Enabled = true;
-                }
                 else
-                {
                     Enabled = false;
-                }
             }
 
             public override void OnClick()
@@ -125,18 +117,14 @@ namespace Server.Mobiles
             public override void OnClick()
             {
                 if (m_Mobile.CheckAlive())
-                {
                     m_Vendor.SendRewardGump(m_Mobile);
-                }
             }
         }
 
         public override void OnDoubleClick(Mobile from)
         {
             if (from is PlayerMobile && from.InRange(Location, 5))
-            {
                 SendRewardGump(from);
-            }
         }
 
         public BaseTurnInMobile(Serial serial)
@@ -175,9 +163,7 @@ namespace Server.Mobiles
             Item item = ((ItemTileButtonInfo)buttonInfo).Item;
 
             if (!(pm != null && item.IsChildOf(pm.Backpack) && pm.InRange(m_Collector.Location, 7)))
-            {
                 return;
-            }
 
             m_Collector.AwardPoints(pm, item, m_Collector.TurnInPoints);
 
@@ -186,9 +172,7 @@ namespace Server.Mobiles
             IEnumerable<ItemTileButtonInfo> buttons = m_Collector.FindRedeemableItems(pm);
 
             if (buttons != null && buttons.Any())
-            {
                 pm.SendGump(new TurnInGump(m_Collector, buttons));
-            }
         }
 
         public override void HandleCancel(NetState sender)

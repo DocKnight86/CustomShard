@@ -146,9 +146,7 @@ namespace Server.AccountVault
                 Auction.Serialize(writer);
             }
             else
-            {
                 writer.Write(0);
-            }
         }
 
         public override void Deserialize(GenericReader reader)
@@ -159,9 +157,7 @@ namespace Server.AccountVault
             Index = reader.ReadInt();
 
             if (reader.ReadInt() == 1)
-            {
                 Auction = new Auction(this, reader);
-            }
 
             AddVault(this);
         }

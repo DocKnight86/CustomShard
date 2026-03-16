@@ -37,9 +37,7 @@ namespace Server.Items
             OrangePetalsContext context = GetContext(m);
 
             if (context != null)
-            {
                 RemoveContext(m, context);
-            }
         }
 
         public static bool UnderEffect(Mobile m)
@@ -50,9 +48,7 @@ namespace Server.Items
         public override bool CheckItemUse(Mobile from, Item item)
         {
             if (item != this)
-            {
                 return base.CheckItemUse(from, item);
-            }
 
             if (from != RootParent)
             {

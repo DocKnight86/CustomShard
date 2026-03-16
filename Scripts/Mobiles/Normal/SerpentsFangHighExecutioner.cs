@@ -39,9 +39,7 @@ namespace Server.Mobiles
         public override void AlterMeleeDamageFrom(Mobile from, ref int damage)
         {
             if (from != null)
-            {
                 from.Damage(damage / 2, from);
-            }
         }
 
         public override void OnDeath(Container c)
@@ -51,9 +49,7 @@ namespace Server.Mobiles
             c.DropItem(new SerpentFangKey());
 
             if (Utility.RandomDouble() < 0.5)
-            {
                 c.DropItem(new SerpentFangSectBadge());
-            }
         }
 
         public override void Serialize(GenericWriter writer)

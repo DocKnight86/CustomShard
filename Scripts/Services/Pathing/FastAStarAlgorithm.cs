@@ -48,9 +48,7 @@ namespace Server.PathAlgorithms.FastAStar
         public override Direction[] Find(IPoint3D p, Map map, Point3D start, Point3D goal)
         {
             if (!Utility.InRange(start, goal, AreaSize))
-            {
                 return null;
-            }
 
             m_Touched.SetAll(false);
 
@@ -84,9 +82,7 @@ namespace Server.PathAlgorithms.FastAStar
                 int bestNode = FindBest(m_OpenList);
 
                 if (++depth > MaxDepth)
-                {
                     break;
-                }
 
                 MoveImpl.Goal = goal;
 
@@ -96,9 +92,7 @@ namespace Server.PathAlgorithms.FastAStar
                 MoveImpl.Goal = Point3D.Zero;
 
                 if (count == 0)
-                {
                     break;
-                }
 
                 for (int i = 0; i < count; ++i)
                 {
@@ -133,9 +127,7 @@ namespace Server.PathAlgorithms.FastAStar
                                         parent = m_Nodes[newNode].parent;
 
                                         if (newNode == fromNode)
-                                        {
                                             break;
-                                        }
                                     }
 
                                     Direction[] dirs = new Direction[pathCount];
@@ -209,9 +201,7 @@ namespace Server.PathAlgorithms.FastAStar
                 y += py;
 
                 if (x < 0 || x >= AreaSize || y < 0 || y >= AreaSize)
-                {
                     continue;
-                }
 
                 if (CalcMoves.CheckMovement(pnt, map, p3D, (Direction)i, out z))
                 {
@@ -231,32 +221,22 @@ namespace Server.PathAlgorithms.FastAStar
         private void RemoveFromChain(int node)
         {
             if (node < 0 || node >= NodeCount)
-            {
                 return;
-            }
 
             if (!m_Touched[node] || !m_OnOpen[node])
-            {
                 return;
-            }
 
             int prev = m_Nodes[node].prev;
             int next = m_Nodes[node].next;
 
             if (m_OpenList == node)
-            {
                 m_OpenList = next;
-            }
 
             if (prev != -1)
-            {
                 m_Nodes[prev].next = next;
-            }
 
             if (next != -1)
-            {
                 m_Nodes[next].prev = prev;
-            }
 
             m_Nodes[node].prev = -1;
             m_Nodes[node].next = -1;
@@ -265,16 +245,12 @@ namespace Server.PathAlgorithms.FastAStar
         private void AddToChain(int node)
         {
             if (node < 0 || node >= NodeCount)
-            {
                 return;
-            }
 
             RemoveFromChain(node);
 
             if (m_OpenList != -1)
-            {
                 m_Nodes[m_OpenList].prev = node;
-            }
 
             m_Nodes[node].next = m_OpenList;
             m_Nodes[node].prev = -1;

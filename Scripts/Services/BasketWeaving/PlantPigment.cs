@@ -43,10 +43,7 @@ namespace Server.Items
                 m_Hue = value;
                 //set any invalid pigment hue to Plain
                 if (m_Hue != PlantPigmentHueInfo.GetInfo(m_Hue).PlantPigmentHue)
-                {
                     m_Hue = PlantPigmentHue.Plain;
-                }
-
                 Hue = PlantPigmentHueInfo.GetInfo(m_Hue).Hue;
                 InvalidateProperties();
             }
@@ -95,9 +92,7 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!PlantPigmentHueInfo.IsMixable(PigmentHue))
-            {
                 from.SendLocalizedMessage(1112125); // This pigment is saturated and cannot be mixed further.
-            }
             else
             {
                 from.SendLocalizedMessage(1112123); // Which plant pigment do you wish to mix this with?
@@ -118,9 +113,7 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Item.Deleted)
-                {
                     return;
-                }
 
                 PlantPigment pigment = targeted as PlantPigment;
                 if (null == pigment)
@@ -154,16 +147,12 @@ namespace Server.Items
                     from.SendLocalizedMessage(1112241); // This pigment is too diluted to be faded further.
                 }
                 else if (!PlantPigmentHueInfo.IsMixable(pigment.PigmentHue))
-                {
                     from.SendLocalizedMessage(1112125); // This pigment is saturated and cannot be mixed further.
-                }
                 else
                 {
                     PlantPigmentHue newHue = PlantPigmentHueInfo.Mix(m_Item.PigmentHue, pigment.PigmentHue);
                     if (PlantPigmentHue.None == newHue)
-                    {
                         from.SendLocalizedMessage(1112125); // This pigment is saturated and cannot be mixed further.
-                    }
                     else
                     {
                         pigment.PigmentHue = newHue;

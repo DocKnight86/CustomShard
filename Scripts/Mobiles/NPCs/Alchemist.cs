@@ -31,9 +31,7 @@ namespace Server.Mobiles
         public override void OnSuccessfulBulkOrderReceive(Mobile from)
         {
             if (from is PlayerMobile mobile)
-            {
                 mobile.NextAlchemyBulkOrder = TimeSpan.Zero;
-            }
         }
 
         #endregion

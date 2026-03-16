@@ -81,9 +81,7 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile m)
         {
             if (!m_Active || m_TeleDest == null || m_TeleDest.Deleted || m_TeleDest.Map == Map.Internal)
-            {
                 return;
-            }
 
             if (Engines.CityLoyalty.CityTradeSystem.HasTrade(m))
             {
@@ -227,9 +225,7 @@ namespace Server.Items
         public void ChangeActive(bool active)
         {
             if (m_Changing)
-            {
                 return;
-            }
 
             m_Changing = true;
 
@@ -244,9 +240,7 @@ namespace Server.Items
         public void ChangeDest(SHTeleComponent dest)
         {
             if (m_Changing)
-            {
                 return;
-            }
 
             m_Changing = true;
 
@@ -273,9 +267,7 @@ namespace Server.Items
         public void ChangeDest(SHTeleporter destAddon)
         {
             if (m_Changing)
-            {
                 return;
-            }
 
             m_Changing = true;
 

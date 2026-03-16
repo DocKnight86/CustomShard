@@ -135,9 +135,7 @@ namespace Server.Engines.Doom
         public void Activate(Mobile m)
         {
             if (Active)
-            {
                 return;
-            }
 
             CheckDoors();
 
@@ -202,9 +200,7 @@ namespace Server.Engines.Doom
         public void Reset()
         {
             if (!Active)
-            {
                 return;
-            }
 
             if (m_Timer != null)
             {
@@ -242,14 +238,10 @@ namespace Server.Engines.Doom
             }
 
             if (DoorOne != null && DoorOne.Link != DoorTwo)
-            {
                 DoorOne.Link = DoorTwo;
-            }
 
             if (DoorTwo != null && DoorTwo.Link != DoorOne)
-            {
                 DoorTwo.Link = DoorOne;
-            }
 
             CheckPentagram();
         }
@@ -265,13 +257,9 @@ namespace Server.Engines.Doom
                     eable.Free();
 
                     if (door == 1)
-                    {
                         DoorOne = baseDoor;
-                    }
                     else
-                    {
                         DoorTwo = baseDoor;
-                    }
 
                     return true;
                 }

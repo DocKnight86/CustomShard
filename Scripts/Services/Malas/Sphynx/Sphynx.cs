@@ -56,9 +56,7 @@ namespace Server.Mobiles
         public override void AddCustomContextEntries(Mobile from, List<ContextMenuEntry> list)
         {
             if (from.Alive)
-            {
                 list.Add(new AskAboutFutureEntry(from, this));
-            }
 
             base.AddCustomContextEntries(from, list);
         }

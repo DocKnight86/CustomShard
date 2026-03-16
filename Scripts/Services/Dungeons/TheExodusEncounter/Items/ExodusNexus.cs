@@ -48,13 +48,9 @@ namespace Server.Items
             set
             {
                 if (value < 3)
-                {
                     value = 3;
-                }
                 else if (value > 6)
-                {
                     value = 6;
-                }
 
                 if (m_SideLength != value)
                 {
@@ -106,24 +102,16 @@ namespace Server.Items
                 int count = 0;
 
                 if (current.X > 0 && !visited[current.X - 1, current.Y])
-                {
                     choices[count++] = PathDirection.Left;
-                }
 
                 if (current.Y > 0 && !visited[current.X, current.Y - 1])
-                {
                     choices[count++] = PathDirection.Up;
-                }
 
                 if (current.X < SideLength - 1 && !visited[current.X + 1, current.Y])
-                {
                     choices[count++] = PathDirection.Right;
-                }
 
                 if (current.Y < SideLength - 1 && !visited[current.X, current.Y + 1])
-                {
                     choices[count++] = PathDirection.Down;
-                }
 
                 if (count > 0)
                 {
@@ -148,9 +136,7 @@ namespace Server.Items
                     stack[stackSize++] = current;
 
                     if (current.X == SideLength - 1 && current.Y == SideLength - 1)
-                    {
                         break;
-                    }
 
                     visited[current.X, current.Y] = true;
                 }
@@ -189,9 +175,7 @@ namespace Server.Items
             if (User != null)
             {
                 if (User == from)
-                {
                     return;
-                }
 
                 if (User.Deleted || User.Map != Map || !User.InRange(this, 3) ||
                     User.NetState == null || DateTime.UtcNow - LastUse >= m_UseTimeout)
@@ -221,9 +205,7 @@ namespace Server.Items
             AOS.Damage(to, to, 60, 0, 0, 0, 0, 100);
 
             if (!to.Alive)
-            {
                 return;
-            }
 
             if (!DamageTable.ContainsKey(to))
             {
@@ -326,9 +308,7 @@ namespace Server.Items
             }
 
             if (Hue == 0)
-            {
                 Timer.DelayCall(TimeSpan.FromMinutes(10), delegate { Hue = 1987; });
-            }
         }
 
         public class NexusGameGump : Gump
@@ -457,9 +437,7 @@ namespace Server.Items
                     double lockpicking = m_From.Skills.Lockpicking.Value;
 
                     if (lockpicking < 65.0)
-                    {
                         return;
-                    }
 
                     m_From.PlaySound(0x241);
 

@@ -30,9 +30,7 @@ namespace Server.Spells.SkillMasteries
             get
             {
                 if (Caster.Skills[SkillName.Focus].Value > Caster.Skills[SkillName.Imbuing].Value)
-                {
                     return SkillName.Focus;
-                }
 
                 return SkillName.Imbuing;
             }
@@ -75,9 +73,7 @@ namespace Server.Spells.SkillMasteries
                 return true;
             }
             else
-            {
                 return false;
-            }
         }
 
         protected override void OnTarget(object o)
@@ -131,7 +127,7 @@ namespace Server.Spells.SkillMasteries
         {
             Dictionary<Mobile, InternalItem> list = new Dictionary<Mobile, InternalItem>();
 
-            for (int index = 0; index < Items.Count; index++)
+            for (var index = 0; index < Items.Count; index++)
             {
                 InternalItem item = Items[index];
 
@@ -158,7 +154,7 @@ namespace Server.Spells.SkillMasteries
 
         public override void OnExpire()
         {
-            for (int index = 0; index < Items.Count; index++)
+            for (var index = 0; index < Items.Count; index++)
             {
                 InternalItem item = Items[index];
 
@@ -171,9 +167,7 @@ namespace Server.Spells.SkillMasteries
             if (item.Visible && Caster != null && m != Caster && SpellHelper.ValidIndirectTarget(Caster, m) && Caster.CanBeHarmful(m, false))
             {
                 if (SpellHelper.CanRevealCaster(m))
-                {
                     Caster.RevealingAction();
-                }
 
                 SkillName damageSkill = Caster.Skills[SkillName.Focus].Value > Caster.Skills[SkillName.Imbuing].Value ? SkillName.Focus : SkillName.Imbuing;
 
@@ -220,18 +214,12 @@ namespace Server.Spells.SkillMasteries
                 MoveToWorld(loc, map);
 
                 if (caster.InLOS(this))
-                {
                     Visible = true;
-                }
                 else
-                {
                     Delete();
-                }
 
                 if (Deleted)
-                {
                     return;
-                }
             }
 
             public InternalItem(Serial serial)

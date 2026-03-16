@@ -52,9 +52,7 @@ namespace Server.SkillHandlers
                 protected override void OnTarget(Mobile from, object targeted)
                 {
                     if (m_Potion.Deleted)
-                    {
                         return;
-                    }
 
                     bool startTimer = false;
 
@@ -140,13 +138,9 @@ namespace Server.SkillHandlers
                                 if (m_Target is BaseWeapon weapon)
                                 {
                                     if (weapon.Type == WeaponType.Slashing)
-                                    {
                                         m_From.SendLocalizedMessage(1010516); // You fail to apply a sufficient dose of poison on the blade
-                                    }
                                     else
-                                    {
                                         m_From.SendLocalizedMessage(1010518); // You fail to apply a sufficient dose of poison
-                                    }
                                 }
                                 else
                                 {

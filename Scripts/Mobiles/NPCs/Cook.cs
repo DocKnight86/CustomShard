@@ -27,9 +27,7 @@ namespace Server.Mobiles
             m_SBInfos.Add(new SBCook());
 
             if (IsTokunoVendor)
-            {
                 m_SBInfos.Add(new SBSECook());
-            }
         }
 
         public override void InitOutfit()
@@ -55,9 +53,7 @@ namespace Server.Mobiles
         public override void OnSuccessfulBulkOrderReceive(Mobile from)
         {
             if (from is PlayerMobile mobile)
-            {
                 mobile.NextCookingBulkOrder = TimeSpan.Zero;
-            }
         }
 
         #endregion

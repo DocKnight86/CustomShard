@@ -121,9 +121,7 @@ namespace Server.Engines.ResortAndCasino
         public void AddGame(PlayerMobile pm, BaseDiceGame game)
         {
             if (Players == null)
-            {
                 Players = new Dictionary<PlayerMobile, BaseDiceGame>();
-            }
 
             Players[pm] = game;
         }
@@ -131,9 +129,7 @@ namespace Server.Engines.ResortAndCasino
         public void RemoveGame(PlayerMobile pm, BaseDiceGame game)
         {
             if (Players == null || !Players.ContainsKey(pm))
-            {
                 return;
-            }
 
             Players.Remove(pm);
         }
@@ -146,9 +142,7 @@ namespace Server.Engines.ResortAndCasino
         public BaseDiceGame GetGame(PlayerMobile pm)
         {
             if (Players == null || !Players.ContainsKey(pm) || Players[pm] == null)
-            {
                 return null;
-            }
 
             return Players[pm];
         }
@@ -368,27 +362,19 @@ namespace Server.Engines.ResortAndCasino
         public override void OnDoubleClick(Mobile m)
         {
             if (!m.InRange(Location, 3))
-            {
                 return;
-            }
 
             if (_Drinks == null)
-            {
                 _Drinks = new Dictionary<Mobile, int>();
-            }
 
             if (!_Drinks.ContainsKey(m) || _Drinks[m] < 2)
             {
                 GiveDrink(m);
 
                 if (_Drinks.ContainsKey(m))
-                {
                     _Drinks[m]++;
-                }
                 else
-                {
                     _Drinks[m] = 1;
-                }
             }
         }
 
@@ -410,9 +396,7 @@ namespace Server.Engines.ResortAndCasino
             bool canspeak = _NextAdvertise < DateTime.UtcNow;
 
             if (!canspeak)
-            {
                 return;
-            }
 
             canspeak = false;
             foreach (Mobile m in eable)
@@ -425,9 +409,7 @@ namespace Server.Engines.ResortAndCasino
             }
 
             if (canspeak)
-            {
                 Say(1153419);
-            }
 
             _NextAdvertise = DateTime.UtcNow + TimeSpan.FromSeconds(Utility.RandomMinMax(60, 120));
         }
@@ -451,9 +433,7 @@ namespace Server.Engines.ResortAndCasino
             writer.Write(0);
 
             if (_Drinks != null)
-            {
                 _Drinks.Clear();
-            }
         }
 
         public override void Deserialize(GenericReader reader)

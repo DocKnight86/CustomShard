@@ -22,9 +22,7 @@ namespace Server.Gumps
         {
             // SoulForge Check
             if (!Imbuing.CheckSoulForge(User, 2))
-            {
                 return;
-            }
 
             ImbuingContext context = Imbuing.GetContext(User);
             context.LastImbued = m_Item;

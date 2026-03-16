@@ -35,9 +35,7 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (HarvestSystem == null || Deleted)
-            {
                 return;
-            }
 
             Point3D loc = GetWorldLocation();
 
@@ -54,9 +52,7 @@ namespace Server.Items
             }
 
             if (!(HarvestSystem is Mining))
-            {
                 from.SendLocalizedMessage(1010018); // What do you want to use this item on?
-            }
 
             HarvestSystem.BeginHarvesting(from, this);
         }
@@ -66,9 +62,7 @@ namespace Server.Items
             base.GetContextMenuEntries(from, list);
 
             if (HarvestSystem == null)
-            {
                 return;
-            }
 
             BaseHarvestTool.AddContextMenuEntries(from, this, list, HarvestSystem);
         }

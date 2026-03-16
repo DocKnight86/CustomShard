@@ -17,9 +17,7 @@ namespace Server.Engines.NewMagincia
         public void AddComponent(Item item)
         {
             if (item != null)
-            {
                 m_Fillers.Add(item);
-            }
         }
 
         public override void OnLocationChange(Point3D old)
@@ -93,9 +91,7 @@ namespace Server.Engines.NewMagincia
                 Item item = reader.ReadItem();
 
                 if (item != null)
-                {
                     AddComponent(item);
-                }
             }
         }
     }

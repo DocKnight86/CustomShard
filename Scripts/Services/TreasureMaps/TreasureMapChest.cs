@@ -133,9 +133,7 @@ namespace Server.Items
                 cont.DropItem(new Gold(Utility.RandomMinMax(50, 100)));
 
                 if (Utility.RandomDouble() < 0.75)
-                {
                     cont.DropItem(new TreasureMap(0, Map.Trammel));
-                }
             }
             else
             {
@@ -192,10 +190,7 @@ namespace Server.Items
                 }
 
                 for (int i = 0; i < count; ++i)
-                {
                     cont.DropItem(Loot.RandomScroll(0, 63, SpellbookType.Regular));
-                }
-
                 #endregion
 
                 #region Magical Items
@@ -357,6 +352,15 @@ namespace Server.Items
             {
                 cont.DropItem(special);
             }
+
+            int rolls = 2;
+
+            if (level >= 5)
+            {
+                rolls += level - 2;
+            }
+
+            RefinementComponent.Roll(cont, rolls, 0.10);
         }
 
         public static void GetRandomItemStat(out int min, out int max, double scale = 1.0)
@@ -592,9 +596,7 @@ namespace Server.Items
             base.GetContextMenuEntries(from, list);
 
             if (from.Alive)
-            {
                 list.Add(new RemoveEntry(from, this));
-            }
         }
 
         public override void LockPick(Mobile from)
@@ -641,13 +643,9 @@ namespace Server.Items
                 int damage;
 
                 if (TrapLevel > 0)
-                {
                     damage = Utility.RandomMinMax(10, 30) * TrapLevel;
-                }
                 else
-                {
                     damage = TrapPower;
-                }
 
                 AOS.Damage(from, damage, 0, 100, 0, 0, 0);
 
@@ -666,9 +664,7 @@ namespace Server.Items
         public void BeginRemove(Mobile from)
         {
             if (!from.Alive)
-            {
                 return;
-            }
 
             from.CloseGump(typeof(RemoveGump));
             from.SendGump(new RemoveGump(from, this));
@@ -677,9 +673,7 @@ namespace Server.Items
         public void EndRemove(Mobile from)
         {
             if (Deleted || from != Owner || !from.InRange(GetWorldLocation(), 3))
-            {
                 return;
-            }
 
             from.SendLocalizedMessage(1048124, "", 0x8A5); // The old, rusted chest crumbles when you hit it.
             Delete();
@@ -688,34 +682,24 @@ namespace Server.Items
         private bool CheckLoot(Mobile m, bool criminalAction)
         {
             if (Temporary)
-            {
                 return false;
-            }
 
             if (m.AccessLevel >= AccessLevel.GameMaster || Owner == null || m == Owner)
-            {
                 return true;
-            }
 
             Party p = Party.Get(Owner);
 
             if (p != null && p.Contains(m))
-            {
                 return true;
-            }
 
             Map map = Map;
 
             if (map != null && (map.Rules & MapRules.HarmfulRestrictions) == 0)
             {
                 if (criminalAction)
-                {
                     m.CriminalAction(true);
-                }
                 else
-                {
                     m.SendLocalizedMessage(1010630); // Taking someone else's treasure is a criminal offense!
-                }
 
                 return true;
             }
@@ -754,9 +738,7 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (info.ButtonID == 1)
-                {
                     m_Chest.EndRemove(m_From);
-                }
             }
         }
 
@@ -776,9 +758,7 @@ namespace Server.Items
             public override void OnClick()
             {
                 if (m_Chest.Deleted || m_From != m_Chest.Owner || !m_From.CheckAlive())
-                {
                     return;
-                }
 
                 m_Chest.BeginRemove(m_From);
             }

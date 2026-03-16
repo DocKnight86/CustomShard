@@ -37,7 +37,7 @@ namespace Server.Items
             {
                 typeof(GrizzlyBear), typeof(BlackBear),
                 typeof(BrownBear), typeof(PolarBear),
-                typeof(RagingGrizzlyBear)
+                typeof(Grobu), typeof(RagingGrizzlyBear)
             };
 
             m_Table[TalismanSlayerName.Vermin] = new[]
@@ -45,7 +45,7 @@ namespace Server.Items
                 typeof(RatmanMage), typeof(RatmanArcher),
                 typeof(Barracoon), typeof(Ratman),
                 typeof(Sewerrat), typeof(Rat),
-                typeof(GiantRat), 
+                typeof(GiantRat), typeof(Chiikkaha),
                 typeof(ClanRibbonPlagueRat), typeof(ClanRS),
                 typeof(ClanRC), typeof(VitaviRenowned),
                 typeof(ClanCA), typeof(ClanCT),

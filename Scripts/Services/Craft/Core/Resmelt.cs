@@ -52,13 +52,9 @@ namespace Server.Engines.Craft
                         DefBlacksmithy.CheckAnvilAndForge(from, 2, out anvil, out forge);
 
                         if (!anvil)
-                        {
                             num = 1044266; // You must be near an anvil
-                        }
                         else if (!forge)
-                        {
                             num = 1044265; // You must be near a forge.
-                        }
                     }
 
                     from.SendGump(new CraftGump(from, m_CraftSystem, m_Tool, num));
@@ -108,30 +104,22 @@ namespace Server.Engines.Craft
                 try
                 {
                     if (CraftResources.GetType(resource) != CraftResourceType.Metal)
-                    {
                         return SmeltResult.Invalid;
-                    }
 
                     CraftResourceInfo info = CraftResources.GetInfo(resource);
 
                     if (info == null || info.ResourceTypes.Length == 0)
-                    {
                         return SmeltResult.Invalid;
-                    }
 
                     CraftItem craftItem = m_CraftSystem.CraftItems.SearchFor(item.GetType());
 
                     if (craftItem == null || craftItem.Resources.Count == 0)
-                    {
                         return SmeltResult.Invalid;
-                    }
 
                     CraftRes craftResource = craftItem.Resources.GetAt(0);
 
                     if (craftResource.Amount < 2)
-                    {
                         return SmeltResult.Invalid; // Not enough metal to resmelt
-                    }
 
                     double difficulty = 0.0;
 
@@ -166,21 +154,15 @@ namespace Server.Engines.Craft
                     double skill = Math.Max(from.Skills[SkillName.Mining].Value, from.Skills[SkillName.Blacksmith].Value);
 
                     if (difficulty > skill)
-                    {
                         return SmeltResult.NoSkill;
-                    }
 
                     Type resourceType = info.ResourceTypes[0];
                     Item ingot = (Item)Activator.CreateInstance(resourceType);
 
                     if (item is DragonBardingDeed || item is BaseArmor armor && armor.PlayerConstructed || item is BaseWeapon weapon && weapon.PlayerConstructed || item is BaseClothing clothing && clothing.PlayerConstructed)
-                    {
                         ingot.Amount = (int)(craftResource.Amount * .66);
-                    }
                     else
-                    {
                         ingot.Amount = 1;
-                    }
 
                     item.Delete();
                     from.AddToBackpack(ingot);

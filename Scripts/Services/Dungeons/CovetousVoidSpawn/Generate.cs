@@ -24,9 +24,7 @@ namespace Server.Engines.VoidPool
         public static void Setup(CommandEventArgs e)
         {
             if (VoidPoolController.InstanceTram != null || VoidPoolController.InstanceFel != null)
-            {
                 e.Mobile.SendMessage("This has already been setup!");
-            }
             else
             {
                 VoidPoolController one = new VoidPoolController(Map.Trammel);
@@ -44,38 +42,14 @@ namespace Server.Engines.VoidPool
                 {
                     for (int y = 1995; y <= 2001; y++)
                     {
-                        if (x == 5497 && y == 1995)
-                        {
-                            id = 1886;
-                        }
-                        else if (x == 5497 && y == 2001)
-                        {
-                            id = 1887;
-                        }
-                        else if (x == 5503 && y == 1995)
-                        {
-                            id = 1888;
-                        }
-                        else if (x == 5503 && y == 2001)
-                        {
-                            id = 1885;
-                        }
-                        else if (x == 5497)
-                        {
-                            id = 1874;
-                        }
-                        else if (x == 5503)
-                        {
-                            id = 1876;
-                        }
-                        else if (y == 1995)
-                        {
-                            id = 1873;
-                        }
-                        else if (y == 2001)
-                        {
-                            id = 1875;
-                        }
+                        if (x == 5497 && y == 1995) id = 1886;
+                        else if (x == 5497 && y == 2001) id = 1887;
+                        else if (x == 5503 && y == 1995) id = 1888;
+                        else if (x == 5503 && y == 2001) id = 1885;
+                        else if (x == 5497) id = 1874;
+                        else if (x == 5503) id = 1876;
+                        else if (y == 1995) id = 1873;
+                        else if (y == 2001) id = 1875;
                         else
                         {
                             //id = 1168;
@@ -141,9 +115,7 @@ namespace Server.Engines.VoidPool
             VoidPoolController two = VoidPoolController.InstanceFel;
 
             if (one == null || two == null)
-            {
                 return;
-            }
 
             for (var index = 0; index < one.WaypointsA.Count; index++)
             {
@@ -380,9 +352,7 @@ namespace Server.Engines.VoidPool
                 WayPoint waypoint = one.WaypointsA[i];
 
                 if (i < one.WaypointsA.Count - 1)
-                {
                     waypoint.NextPoint = one.WaypointsA[i + 1];
-                }
             }
 
             for (int i = 0; i < one.WaypointsB.Count; i++)
@@ -390,9 +360,7 @@ namespace Server.Engines.VoidPool
                 WayPoint waypoint = one.WaypointsB[i];
 
                 if (i < one.WaypointsB.Count - 1)
-                {
                     waypoint.NextPoint = one.WaypointsB[i + 1];
-                }
             }
 
             for (int i = 0; i < two.WaypointsA.Count; i++)
@@ -400,9 +368,7 @@ namespace Server.Engines.VoidPool
                 WayPoint waypoint = two.WaypointsA[i];
 
                 if (i < two.WaypointsA.Count - 1)
-                {
                     waypoint.NextPoint = two.WaypointsA[i + 1];
-                }
             }
 
             for (int i = 0; i < two.WaypointsB.Count; i++)
@@ -410,9 +376,7 @@ namespace Server.Engines.VoidPool
                 WayPoint waypoint = two.WaypointsB[i];
 
                 if (i < two.WaypointsB.Count - 1)
-                {
                     waypoint.NextPoint = two.WaypointsB[i + 1];
-                }
             }
 
             one.WaypointACount = one.WaypointsA.Count;
@@ -459,9 +423,7 @@ namespace Server.Engines.VoidPool
         public static void ConvertRegionSpawners(Region r)
         {
             if (r == null)
-            {
                 return;
-            }
 
             List<XmlSpawner> list = new List<XmlSpawner>();
 
@@ -484,21 +446,13 @@ namespace Server.Engines.VoidPool
                                 string name = obj.TypeName.ToLower();
 
                                 if (name == "gazer" || name == "gazerlarva")
-                                {
                                     obj.TypeName = "StrangeGazer";
-                                }
                                 else if (name == "headlessone")
-                                {
                                     obj.TypeName = "HeadlessMiner";
-                                }
                                 else if (name == "harpy")
-                                {
                                     obj.TypeName = "DazzledHarpy";
-                                }
                                 else if (name == "stoneharpy")
-                                {
                                     obj.TypeName = "VampireMongbat";
-                                }
                             }
                         }
 

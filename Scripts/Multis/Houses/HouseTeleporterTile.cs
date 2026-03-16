@@ -39,9 +39,7 @@ namespace Server.Multis
             get
             {
                 if (Target != null && Target.Deleted)
-                {
                     Target = null;
-                }
 
                 return Target as HouseTeleporterTile;
             }
@@ -174,9 +172,7 @@ namespace Server.Multis
             }
 
             if (!flip)
-            {
                 from.SendLocalizedMessage(1042273); // You cannot turn that.
-            }
         }
 
         public override bool OnMoveOver(Mobile m)
@@ -222,9 +218,7 @@ namespace Server.Multis
             public override void OnClick()
             {
                 if (Item == null || Item.Deleted)
-                {
                     return;
-                }
 
                 Mobile.SendLocalizedMessage(1158897); // Target the gate scrolls you wish to recharge this item with...
                 Mobile.Target = new InternalTarget(Item);
@@ -308,9 +302,7 @@ namespace Server.Multis
             public override void OnClick()
             {
                 if (Item == null || Item.Deleted)
-                {
                     return;
-                }
 
                 if (!Mobile.HasGump(typeof(HouseTeleporterTypeGump)))
                 {
@@ -392,7 +384,7 @@ namespace Server.Multis
 
             bool any = false;
 
-            foreach (Region r in Region.FindRegions(dest, destMap))
+            foreach (var r in Region.FindRegions(dest, destMap))
             {
                 if (r.Name == "Abyss")
                 {
@@ -447,14 +439,10 @@ namespace Server.Multis
                                 from.SendLocalizedMessage(1115119); // The two House Teleporters are now linked and the charges remaining have been rebalanced.
 
                                 if (!UsesCharges)
-                                {
                                     UsesCharges = true;
-                                }
 
                                 if (!tile.UsesCharges)
-                                {
                                     tile.UsesCharges = true;
-                                }
 
                                 int charges = _Charges + tile.Charges;
 
@@ -484,9 +472,7 @@ namespace Server.Multis
                     if (CheckAccess(m))
                     {
                         if (!m.Hidden || m.IsPlayer())
-                        {
                             new EffectTimer(m.Location, m.Map, 2023, 0x1F0, TimeSpan.FromSeconds(0.4)).Start();
-                        }
 
                         new DelayTimer(this, m).Start();
                     }
@@ -579,9 +565,7 @@ namespace Server.Multis
             UsesCharges = reader.ReadBool();
 
             if (ItemID == 0x40B9)
-            {
                 ItemID = 0x574A;
-            }
         }
     }
 

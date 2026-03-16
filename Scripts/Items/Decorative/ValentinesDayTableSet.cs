@@ -15,13 +15,9 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile m)
         {
             if (ItemID == 0xA004)
-            {
                 ItemID = 0xA005;
-            }
             else
-            {
                 ItemID = 0xA004;
-            }
         }
 
         public ValentinesTable(Serial serial)

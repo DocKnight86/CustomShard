@@ -111,9 +111,7 @@ namespace Server.Items
                 bool allow = base.OnDragDrop(from, dropped);
 
                 if (allow)
-                {
                     Enhance(from);
-                }
 
                 return allow;
             }
@@ -129,9 +127,7 @@ namespace Server.Items
                 bool allow = base.OnDragDropInto(from, item, p);
 
                 if (allow)
-                {
                     Enhance(from);
-                }
 
                 return allow;
             }
@@ -241,13 +237,9 @@ namespace Server.Items
                     if (from == null || !TryDropItem(from, enhanced, false))
                     {
                         if (existing != null)
-                        {
                             existing.StackWith(from, enhanced);
-                        }
                         else
-                        {
                             DropItem(enhanced);
-                        }
                     }
                 }
             }

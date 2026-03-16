@@ -53,14 +53,13 @@ namespace Server.Mobiles
         {
             AddLoot(LootPack.Meager, 2);
             AddLoot(LootPack.LootItem<Yeast>(50.0));
+            AddLoot(LootPack.LootItem<StoutWhip>(5.0));
         }
 
         public override bool IsEnemy(Mobile m)
         {
             if (m.Player && m.FindItemOnLayer(Layer.Helm) is OrcishKinMask)
-            {
                 return false;
-            }
 
             return base.IsEnemy(m);
         }

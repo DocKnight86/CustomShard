@@ -43,19 +43,13 @@ namespace Server.Engines.NewMagincia
             base.GetProperties(list);
 
             if (m_Plot == null)
-            {
                 return;
-            }
 
             if (m_Plot.ShopName != null)
-            {
                 list.Add(1062449, m_Plot.ShopName); // Shop Name: ~1_NAME~
-            }
 
             if (m_Plot.Merchant != null)
-            {
                 list.Add(1150529, m_Plot.Merchant.Name); // Proprietor: ~1_NAME~
-            }
 
             if (m_Plot.Auction != null)
             {
@@ -70,21 +64,15 @@ namespace Server.Engines.NewMagincia
             }
 
             if (!m_Plot.Active)
-            {
                 list.Add(1153036); // Inactive
-            }
         }
 
         public override void AddNameProperty(ObjectPropertyList list)
         {
             if (m_Plot == null)
-            {
                 list.Add(1150530, "unknown"); // Stall ~1_NAME~
-            }
             else
-            {
                 list.Add(1150530, m_Plot.PlotDef != null ? m_Plot.PlotDef.ID : "unknown"); // Stall ~1_NAME~
-            }
         }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
@@ -92,9 +80,7 @@ namespace Server.Engines.NewMagincia
             base.GetContextMenuEntries(from, list);
 
             if (m_Plot != null && m_Plot.Active)
-            {
                 list.Add(new RecallRuneEntry(from, this));
-            }
         }
 
         private class RecallRuneEntry : ContextMenuEntry

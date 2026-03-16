@@ -69,9 +69,7 @@ namespace Server.Engines.Shadowguard
                             Delete();
                         }
                         else
-                        {
                             m.SendLocalizedMessage(1156211); // You cannot throw this there!
-                        }
                     });
                 }
             }
@@ -80,9 +78,7 @@ namespace Server.Engines.Shadowguard
         public override void OnAfterDelete()
         {
             if (Encounter != null)
-            {
                 Encounter.CheckEncounter();
-            }
         }
 
         public ShadowguardBottleOfLiquor(Serial serial) : base(serial)
@@ -143,9 +139,7 @@ namespace Server.Engines.Shadowguard
         public override void AddNameProperty(ObjectPropertyList list)
         {
             if (Tree != null)
-            {
                 list.Add(1156210, Tree.VirtueType.ToString()); // An Enchanted Apple of ~1_TYPE~
-            }
         }
 
         public override void OnDoubleClick(Mobile m)
@@ -206,9 +200,7 @@ namespace Server.Engines.Shadowguard
                                         foreach (PlayerMobile pm in Encounter.Region.GetEnumeratedMobiles().OfType<PlayerMobile>())
                                         {
                                             if (!pm.Alive)
-                                            {
                                                 continue;
-                                            }
 
                                             p = pm.Location;
                                             VileTreefellow creature = new VileTreefellow();
@@ -251,9 +243,7 @@ namespace Server.Engines.Shadowguard
                 foreach (PlayerMobile pm in Encounter.Region.GetEnumeratedMobiles().OfType<PlayerMobile>())
                 {
                     if (!pm.Alive)
-                    {
                         continue;
-                    }
 
                     Point3D p = pm.Location;
                     Map map = pm.Map;
@@ -341,17 +331,13 @@ namespace Server.Engines.Shadowguard
             base.OnLocationChange(oldLocation);
 
             if (Foilage != null)
-            {
                 Foilage.Location = new Point3D(X, Y, Z + 6);
-            }
         }
 
         public override void OnMapChange()
         {
             if (Foilage != null)
-            {
                 Foilage.Map = Map;
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -397,14 +383,10 @@ namespace Server.Engines.Shadowguard
             base.Delete();
 
             if (Foilage != null)
-            {
                 Foilage.Delete();
-            }
 
             if (Encounter != null)
-            {
                 Encounter.CheckEncounter();
-            }
         }
 
         public class ShadowguardCypressFoilage : Item
@@ -421,9 +403,7 @@ namespace Server.Engines.Shadowguard
             public override void OnDoubleClick(Mobile m)
             {
                 if (Tree != null)
-                {
                     Tree.OnDoubleClick(m);
-                }
             }
 
             public ShadowguardCypressFoilage(Serial serial)
@@ -511,9 +491,7 @@ namespace Server.Engines.Shadowguard
                     if (targeted is PurifyingFlames flames)
                     {
                         if (!from.InLOS(flames))
-                        {
                             from.SendLocalizedMessage(500237); // Target cannot be seen.
-                        }
                         else if (!Purified)
                         {
                             m.PrivateOverheadMessage(MessageType.Regular, 0x3B2, 1156225, m.NetState); // *You purify the phylactery!*
@@ -528,13 +506,9 @@ namespace Server.Engines.Shadowguard
                     else if (targeted is CursedSuitOfArmor armor)
                     {
                         if (!from.InLOS(armor))
-                        {
                             from.SendLocalizedMessage(500237); // Target cannot be seen.
-                        }
                         else if (!_Purified)
-                        {
                             m.SendLocalizedMessage(1156224); // *The cursed armor rejects the phylactery!*
-                        }
                         else
                         {
                             m.SendLocalizedMessage(1156222); // *You throw the phylactery at the armor causing it to disintegrate!*
@@ -543,13 +517,9 @@ namespace Server.Engines.Shadowguard
                             Point3D p;
 
                             if (armor.ItemID == 5402)
-                            {
                                 p = new Point3D(armor.X - 1, armor.Y, armor.Z);
-                            }
                             else
-                            {
                                 p = new Point3D(armor.X, armor.Y - 1, armor.Z);
-                            }
 
                             armor.Delete();
                             Delete();
@@ -629,9 +599,7 @@ namespace Server.Engines.Shadowguard
             base.Delete();
 
             if (Encounter != null)
-            {
                 Encounter.CheckEncounter();
-            }
         }
 
         public CursedSuitOfArmor(Serial serial) : base(serial)

@@ -20,7 +20,14 @@ namespace Server.Mobiles
         protected override List<SBInfo> SBInfos => m_SBInfos;
         public override void InitSBInfo()
         {
-            m_SBInfos.Add(new SBTanner());
+            if (!IsStygianVendor)
+            {
+                m_SBInfos.Add(new SBTanner());
+            }
+            else
+            {
+                m_SBInfos.Add(new SBSATanner());
+            }
         }
 
         public override bool ValidateBought(Mobile buyer, Item item)

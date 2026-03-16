@@ -53,13 +53,9 @@ namespace Server.Items
             else if (m_PlayersCanToggle)
             {
                 if (from.InRange(GetWorldLocation(), 1))
-                {
                     Toggle();
-                }
                 else
-                {
                     from.SendLocalizedMessage(500446); // That is too far away.
-                }
             }
         }
 

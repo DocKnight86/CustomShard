@@ -47,24 +47,16 @@ namespace Server.Multis
             Map map = from.Map;
 
             if (map == null || map == Map.Internal)
-            {
                 return HousePlacementResult.BadLand; // A house cannot go here
-            }
 
             if (from.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return HousePlacementResult.Valid; // Staff can place anywhere
-            }
 
             if (map == Map.Ilshenar || SpellHelper.IsAnyT2A(map, center) || SpellHelper.IsEodon(map, center))
-            {
                 return HousePlacementResult.BadRegion; // No houses in Ilshenar/T2A/Eodon
-            }
 
             if (map == Map.Malas && (multiID == 0x007C || multiID == 0x007E))
-            {
                 return HousePlacementResult.InvalidCastleKeep;
-            }
 
             if (map == Map.TerMur && !Engines.Points.PointsSystem.QueensLoyalty.IsNoble(from))
             {
@@ -74,17 +66,13 @@ namespace Server.Multis
             NoHousingRegion noHousingRegion = (NoHousingRegion)Region.Find(center, map).GetRegion(typeof(NoHousingRegion));
 
             if (noHousingRegion != null)
-            {
                 return HousePlacementResult.BadRegion;
-            }
 
             // This holds data describing the internal structure of the house
             MultiComponentList mcl = MultiData.GetComponents(multiID);
 
             if (multiID >= 0x13EC && multiID < 0x1D00)
-            {
                 HouseFoundation.AddStairsTo(ref mcl); // this is a AOS house, add the stairs
-            }
 
             // Location of the nortwest-most corner of the house
             Point3D start = new Point3D(center.X + mcl.Min.X, center.Y + mcl.Min.Y, center.Z);
@@ -115,9 +103,7 @@ namespace Server.Multis
                     StaticTile[] addTiles = mcl.Tiles[x][y];
 
                     if (addTiles.Length == 0)
-                    {
                         continue; // There are no tiles here, continue checking somewhere else
-                    }
 
                     Point3D testPoint = new Point3D(tileX, tileY, center.Z);
 
@@ -126,14 +112,10 @@ namespace Server.Multis
                     if (!reg.AllowHousing(from, testPoint)) // Cannot place houses in dungeons, towns, treasure map areas etc
                     {
                         if (reg.IsPartOf<TempNoHousingRegion>())
-                        {
                             return HousePlacementResult.BadRegionTemp;
-                        }
 
                         if (reg.IsPartOf<HouseRegion>())
-                        {
                             return HousePlacementResult.BadRegionHidden;
-                        }
 
                         return HousePlacementResult.BadRegion;
                     }
@@ -152,9 +134,7 @@ namespace Server.Multis
                         Item item = sector.Items[i];
 
                         if (item.Visible && item.X == tileX && item.Y == tileY)
-                        {
                             items.Add(item);
-                        }
                     }
 
                     mobiles.Clear();
@@ -164,9 +144,7 @@ namespace Server.Multis
                         Mobile m = sector.Mobiles[i];
 
                         if (m.X == tileX && m.Y == tileY)
-                        {
                             mobiles.Add(m);
-                        }
                     }
 
                     int landStartZ = 0, landAvgZ = 0, landTopZ = 0;
@@ -180,9 +158,7 @@ namespace Server.Multis
                         StaticTile addTile = addTiles[i];
 
                         if (addTile.ID == 0x1) // Nodraw
-                        {
                             continue;
-                        }
 
                         TileFlag addTileFlags = TileData.ItemTable[addTile.ID & TileData.MaxItemValue].Flags;
 
@@ -190,27 +166,19 @@ namespace Server.Multis
                         bool hasSurface = false;
 
                         if (isFoundation)
-                        {
                             hasFoundation = true;
-                        }
 
                         int addTileZ = center.Z + addTile.Z;
                         int addTileTop = addTileZ + addTile.Height;
 
                         if ((addTileFlags & TileFlag.Surface) != 0)
-                        {
                             addTileTop += 16;
-                        }
 
                         if (addTileTop > landStartZ && landAvgZ > addTileZ)
-                        {
                             return HousePlacementResult.BadLand; // Broke rule #2
-                        }
 
                         if (isFoundation && (TileData.LandTable[landTile.ID & TileData.MaxLandValue].Flags & TileFlag.Impassable) == 0 && landAvgZ == center.Z)
-                        {
                             hasSurface = true;
-                        }
 
                         for (int j = 0; j < oldTiles.Length; ++j)
                         {
@@ -242,9 +210,7 @@ namespace Server.Multis
                         }
 
                         if (isFoundation && !hasSurface)
-                        {
                             return HousePlacementResult.NoSurface; // Broke rule #4
-                        }
 
                         for (int j = 0; j < mobiles.Count; ++j)
                         {
@@ -274,9 +240,7 @@ namespace Server.Multis
                                 Point2D yardPoint = new Point2D(tileX + xOffset, tileY + yOffset);
 
                                 if (!yard.Contains(yardPoint))
-                                {
                                     yard.Add(yardPoint);
-                                }
                             }
                         }
 
@@ -285,9 +249,7 @@ namespace Server.Multis
                             for (int yOffset = -1; yOffset <= 1; ++yOffset)
                             {
                                 if (xOffset == 0 && yOffset == 0)
-                                {
                                     continue;
-                                }
 
                                 // To ease this rule, we will not add to the border list if the tile here is under a base floor (z<=8)
 
@@ -304,23 +266,17 @@ namespace Server.Multis
                                         StaticTile breakTile = breakTiles[i];
 
                                         if (breakTile.Height == 0 && breakTile.Z <= 8 && TileData.ItemTable[breakTile.ID & TileData.MaxItemValue].Surface)
-                                        {
                                             shouldBreak = true;
-                                        }
                                     }
 
                                     if (shouldBreak)
-                                    {
                                         continue;
-                                    }
                                 }
 
                                 Point2D borderPoint = new Point2D(tileX + xOffset, tileY + yOffset);
 
                                 if (!borders.Contains(borderPoint))
-                                {
                                     borders.Add(borderPoint);
-                                }
                             }
                         }
                     }
@@ -335,16 +291,12 @@ namespace Server.Multis
                 int landID = landTile.ID & TileData.MaxLandValue;
 
                 if ((TileData.LandTable[landID].Flags & TileFlag.Impassable) != 0)
-                {
                     return HousePlacementResult.BadLand;
-                }
 
                 for (int j = 0; j < m_RoadIDs.Length; j += 2)
                 {
                     if (landID >= m_RoadIDs[j] && landID <= m_RoadIDs[j + 1])
-                    {
                         return HousePlacementResult.BadLand; // Broke rule #5
-                    }
                 }
 
                 StaticTile[] tiles = map.Tiles.GetStaticTiles(borderPoint.X, borderPoint.Y, true);
@@ -411,7 +363,7 @@ namespace Server.Multis
 
             for (int i = 0; i < yard.Count; ++i)
             {
-                for (int index = 0; index < _houses.Count; index++)
+                for (var index = 0; index < _houses.Count; index++)
                 {
                     BaseHouse b = _houses[index];
 

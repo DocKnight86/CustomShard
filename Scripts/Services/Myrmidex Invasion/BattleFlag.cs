@@ -16,9 +16,7 @@ namespace Server.Engines.MyrmidexInvasion
                 if (BattleSpawner != null)
                 {
                     if (this == BattleSpawner.MyrmidexFlag)
-                    {
                         return Allegiance.Myrmidex;
-                    }
 
                     return Allegiance.Tribes;
                 }
@@ -50,9 +48,7 @@ namespace Server.Engines.MyrmidexInvasion
                 }
             }
             else
-            {
                 m.SendLocalizedMessage(500618); // That is too far away!
-            }
         }
 
         public static void DisplayWaveInfo(BattleSpawner spawner, Mobile m)
@@ -218,13 +214,9 @@ namespace Server.Engines.MyrmidexInvasion
             int version = reader.ReadInt();
 
             if (version > 0)
-            {
                 NextSpawn = reader.ReadDateTime();
-            }
             else
-            {
                 NextSpawn = DateTime.UtcNow + TimeSpan.FromMinutes(1);
-            }
         }
     }
 }

@@ -26,13 +26,9 @@ namespace Server.Items
             get
             {
                 if (ItemID == 0xA05)
-                {
                     return 0xA07;
-                }
                 else
-                {
                     return 0xA0C;
-                }
             }
         }
         public override int UnlitItemID
@@ -40,25 +36,17 @@ namespace Server.Items
             get
             {
                 if (ItemID == 0xA07)
-                {
                     return 0xA05;
-                }
                 else
-                {
                     return 0xA0A;
-                }
             }
         }
         public void Flip()
         {
             if (Light == LightType.WestBig)
-            {
                 Light = LightType.NorthBig;
-            }
             else if (Light == LightType.NorthBig)
-            {
                 Light = LightType.WestBig;
-            }
 
             switch (ItemID)
             {

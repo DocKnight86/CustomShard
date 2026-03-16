@@ -66,30 +66,18 @@ namespace Server.Items
                 m_Stage++;
 
                 if (m_Cicle == 0)
-                {
                     item.Z += 1;
-                }
                 else if (m_Cicle == 1)
-                {
                     item.Z += 0;
-                }
                 else
-                {
                     item.Z += -1;
-                }
 
                 if (m_Stage == 8)
-                {
                     m_Cicle++;
-                }
                 else if (m_Stage == 14)
-                {
                     m_Cicle++;
-                }
                 else if (m_Stage == 22)
-                {
                     Stop();
-                }
             }
         }
     }

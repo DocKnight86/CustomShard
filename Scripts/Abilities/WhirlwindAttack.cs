@@ -51,21 +51,15 @@ namespace Server.Items
             Map map = attacker.Map;
 
             if (map == null)
-            {
                 return;
-            }
 
             BaseWeapon weapon = attacker.Weapon as BaseWeapon;
 
             if (weapon == null)
-            {
                 return;
-            }
 
             if (!CheckMana(attacker, true))
-            {
                 return;
-            }
 
             attacker.FixedEffect(0x3728, 10, 15);
             attacker.PlaySound(0x2A1);

@@ -138,14 +138,10 @@ namespace Server.Items
                     }
                 }
                 else
-                {
                     from.SendLocalizedMessage(1094720); // There are no more logs available.
-                }
             }
             else
-            {
                 from.SendLocalizedMessage(1061637); // You are not allowed to access 
-            }
         }
 
         private class InternalAddonComponent : AddonComponent
@@ -279,22 +275,21 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
-            {
                 list.Add(1076223); // 7th Year Veteran Reward
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (m_IsRewardItem && !RewardSystem.CheckIsUsableBy(from, this, null))
+                return;
+
             if (IsChildOf(from.Backpack))
             {
                 from.CloseGump(typeof(RewardOptionGump));
                 from.SendGump(new RewardOptionGump(this));
             }
             else
-            {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -342,9 +337,7 @@ namespace Server.Items
             }
 
             if (!Deleted)
-            {
                 base.OnDoubleClick(from);
-            }
         }
     }
 }

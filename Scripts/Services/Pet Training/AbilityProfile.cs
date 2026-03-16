@@ -47,6 +47,11 @@ namespace Server.Mobiles
 
         public void OnTame()
         {
+            if (Creature.ControlMaster is PlayerMobile mobile)
+            {
+                Engines.Quests.TamingPetQuest.CheckTame(mobile);
+            }
+
             if (Creature.Map == Map.Tokuno)
             {
                 TokunoTame = true;
@@ -329,29 +334,19 @@ namespace Server.Mobiles
         public bool CanAddAbility(object o)
         {
             if (!Creature.Controlled)
-            {
                 return true;
-            }
 
             if (o is MagicalAbility)
-            {
                 return true;
-            }
 
             if (o is SpecialAbility && (SpecialAbilities == null || SpecialAbilities.Length == 0))
-            {
                 return true;
-            }
 
             if (o is AreaEffect && (AreaEffects == null || AreaEffects.Length == 0))
-            {
                 return true;
-            }
 
             if (o is WeaponAbility && (WeaponAbilities == null || WeaponAbilities.Length < 2))
-            {
                 return true;
-            }
 
             return false;
         }
@@ -407,9 +402,7 @@ namespace Server.Mobiles
             if (Creature.Controlled)
             {
                 if (Advancements == null)
-                {
                     Advancements = new List<object>();
-                }
 
                 if (!Advancements.Contains(o))
                 {
@@ -631,14 +624,10 @@ namespace Server.Mobiles
         public bool CanChooseAreaEffect()
         {
             if (!Creature.Controlled)
-            {
                 return true;
-            }
 
             if (HasSpecialMagicalAbility() && (AreaEffects == null || AreaEffects.Length == 0) && (SpecialAbilities == null || SpecialAbilities.Length == 0))
-            {
                 return true;
-            }
 
             return !HasSpecialMagicalAbility() && (AreaEffects == null || AreaEffects.Length == 0) && AbilityCount() < 3;
         }
@@ -646,9 +635,7 @@ namespace Server.Mobiles
         public bool CanChooseWeaponAbility()
         {
             if (!Creature.Controlled)
-            {
                 return true;
-            }
 
             return !HasSpecialMagicalAbility() && (WeaponAbilities == null || WeaponAbilities.Length < 2) && AbilityCount() < 3;
         }
@@ -695,17 +682,11 @@ namespace Server.Mobiles
                     break;
                 case MagicalAbility.Poisoning:
                     if (Creature.Controlled && Creature.AI != AIType.AI_Melee)
-                    {
                         Creature.AI = AIType.AI_Melee;
-                    }
-
                     break;
                 case MagicalAbility.Bushido:
                     if (Creature.Controlled && Creature.AI != AIType.AI_Samurai)
-                    {
                         Creature.AI = AIType.AI_Samurai;
-                    }
-
                     if (!HasAbility(WeaponAbility.WhirlwindAttack))
                     {
                         AddAbility(WeaponAbility.WhirlwindAttack, false);
@@ -713,10 +694,7 @@ namespace Server.Mobiles
                     break;
                 case MagicalAbility.Ninjitsu:
                     if (Creature.Controlled && Creature.AI != AIType.AI_Ninja)
-                    {
                         Creature.AI = AIType.AI_Ninja;
-                    }
-
                     if (!HasAbility(WeaponAbility.FrenziedWhirlwind))
                     {
                         AddAbility(WeaponAbility.FrenziedWhirlwind, false);
@@ -724,53 +702,32 @@ namespace Server.Mobiles
                     break;
                 case MagicalAbility.Discordance:
                     if (Creature.Controlled && Creature.AI != AIType.AI_Melee)
-                    {
                         Creature.AI = AIType.AI_Melee;
-                    }
-
                     break;
                 case MagicalAbility.Magery:
                 case MagicalAbility.MageryMastery:
                     if (Creature.Controlled && Creature.AI != AIType.AI_Mage)
-                    {
                         Creature.AI = AIType.AI_Mage;
-                    }
-
                     break;
                 case MagicalAbility.Mysticism:
                     if (Creature.Controlled && Creature.AI != AIType.AI_Mystic)
-                    {
                         Creature.AI = AIType.AI_Mystic;
-                    }
-
                     break;
                 case MagicalAbility.Spellweaving:
                     if (Creature.Controlled && Creature.AI != AIType.AI_Spellweaving)
-                    {
                         Creature.AI = AIType.AI_Spellweaving;
-                    }
-
                     break;
                 case MagicalAbility.Chivalry:
                     if (Creature.Controlled && Creature.AI != AIType.AI_Paladin)
-                    {
                         Creature.AI = AIType.AI_Paladin;
-                    }
-
                     break;
                 case MagicalAbility.Necromage:
                     if (Creature.Controlled && Creature.AI != AIType.AI_NecroMage)
-                    {
                         Creature.AI = AIType.AI_NecroMage;
-                    }
-
                     break;
                 case MagicalAbility.Necromancy:
                     if (Creature.Controlled && Creature.AI != AIType.AI_Necro)
-                    {
                         Creature.AI = AIType.AI_Necro;
-                    }
-
                     break;
             }
         }
@@ -810,9 +767,7 @@ namespace Server.Mobiles
         public bool IsNaturalAbility(object o)
         {
             if (Advancements == null)
-            {
                 return true;
-            }
 
             if (o is SpecialAbility specialAbility)
             {
@@ -1009,9 +964,7 @@ namespace Server.Mobiles
             for (int i = 0; i < count; i++)
             {
                 if (Advancements == null)
-                {
                     Advancements = new List<object>();
-                }
 
                 switch (reader.ReadInt())
                 {

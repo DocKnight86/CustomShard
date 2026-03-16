@@ -15,9 +15,9 @@ namespace Server.Mobiles
         private DateTime m_NextCarve;
         private DateTime m_GazeDelay;
 
-        public override Type[] UniqueSAList => [typeof(MedusaFloorTileAddonDeed)];
+        public override Type[] UniqueSAList => new[] { typeof(Slither), typeof(IronwoodCompositeBow), typeof(Venom), typeof(PetrifiedSnake), typeof(StoneDragonsTooth), typeof(MedusaFloorTileAddonDeed), typeof(EternalGuardianStaff) };
 
-        public override Type[] SharedSAList => [];
+        public override Type[] SharedSAList => Array.Empty<Type>();
 
         [Constructable]
         public Medusa()
@@ -257,9 +257,7 @@ namespace Server.Mobiles
         private bool CheckBlockGaze(Mobile m)
         {
             if (m == null)
-            {
                 return false;
-            }
 
             Item helm = m.FindItemOnLayer(Layer.Helm);
             Item neck = m.FindItemOnLayer(Layer.Neck);
@@ -430,9 +428,7 @@ namespace Server.Mobiles
             }
 
             if (0.6 > Utility.RandomDouble())
-            {
                 CreateReplica(m);
-            }
         }
 
         public override void OnGotMeleeAttack(Mobile attacker)
@@ -467,9 +463,7 @@ namespace Server.Mobiles
                     Mobile master = pet.Summoned ? pet.SummonMaster : pet.ControlMaster;
 
                     if (master != null)
-                    {
                         master.SendLocalizedMessage(1113281, "", 42); // Your pet has been petrified!
-                    }
 
                     pet.Frozen = true;
                     pet.Blessed = true;
@@ -521,9 +515,7 @@ namespace Server.Mobiles
             corpse.DropItem(new MedusaDarkScales(amount));
 
             if (0.20 > Utility.RandomDouble())
-            {
                 corpse.DropItem(new MedusaBlood());
-            }
 
             base.OnCarve(from, corpse, with);
 
@@ -698,9 +690,7 @@ namespace Server.Mobiles
         public override WeaponAbility GetWeaponAbility()
         {
             if (Weapon == null)
-            {
                 return null;
-            }
 
             BaseWeapon weapon = this.Weapon as BaseWeapon;
 
@@ -738,9 +728,7 @@ namespace Server.Mobiles
             for (int i = 0; i < m.Items.Count; i++)
             {
                 if (m.Items[i].Layer != Layer.Backpack && m.Items[i].Layer != Layer.Mount && m.Items[i].Layer != Layer.Bank)
-                {
                     AddItem(CloneItem(m.Items[i]));
-                }
             }
         }
 
@@ -821,9 +809,7 @@ namespace Server.Mobiles
             FocusMob = m_Original;
 
             if (AIObject != null)
-            {
                 AIObject.Action = ActionType.Combat;
-            }
 
             base.OnThink();
         }
@@ -862,29 +848,17 @@ namespace Server.Mobiles
             AIType ai;
 
             if (GetSkill(SkillName.Necromancy) > 50.0)
-            {
                 ai = AIType.AI_Necro;
-            }
             else if (GetSkill(SkillName.Mysticism) > 50.0)
-            {
                 ai = AIType.AI_Mystic;
-            }
             else if (GetSkill(SkillName.Spellweaving) > 50.0)
-            {
                 ai = AIType.AI_Spellweaving;
-            }
             else if (GetSkill(SkillName.Magery) > 50.0)
-            {
                 ai = AIType.AI_Mage;
-            }
             else if (GetSkill(SkillName.Archery) > 50.0)
-            {
                 ai = AIType.AI_Archer;
-            }
             else
-            {
                 ai = AIType.AI_Melee;
-            }
 
             ChangeAIType(ai);
         }

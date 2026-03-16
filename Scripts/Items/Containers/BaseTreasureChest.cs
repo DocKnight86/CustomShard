@@ -88,9 +88,7 @@ namespace Server.Items
                     base.Locked = value;
 
                     if (!value)
-                    {
                         StartResetTimer();
-                    }
                 }
             }
         }
@@ -100,9 +98,7 @@ namespace Server.Items
             get
             {
                 if (Locked)
-                {
                     return "a locked treasure chest";
-                }
 
                 return "a treasure chest";
             }
@@ -128,9 +124,7 @@ namespace Server.Items
             m_MaxSpawnTime = reader.ReadShort();
 
             if (!Locked)
-            {
                 StartResetTimer();
-            }
         }
 
         public void ClearContents()
@@ -138,9 +132,7 @@ namespace Server.Items
             for (int i = Items.Count - 1; i >= 0; --i)
             {
                 if (i < Items.Count)
-                {
                     Items[i].Delete();
-                }
             }
         }
 
@@ -149,9 +141,7 @@ namespace Server.Items
             if (m_ResetTimer != null)
             {
                 if (m_ResetTimer.Running)
-                {
                     m_ResetTimer.Stop();
-                }
             }
 
             Locked = true;
@@ -223,13 +213,9 @@ namespace Server.Items
         private void StartResetTimer()
         {
             if (m_ResetTimer == null)
-            {
                 m_ResetTimer = new TreasureResetTimer(this);
-            }
             else
-            {
                 m_ResetTimer.Delay = TimeSpan.FromMinutes(Utility.Random(m_MinSpawnTime, m_MaxSpawnTime));
-            }
 
             m_ResetTimer.Start();
         }

@@ -830,7 +830,9 @@ namespace Server
 			Deleted = 0x04,
 			Stackable = 0x08,
 			InQueue = 0x10,
-            QuestItem = 0x20
+			Insured = 0x20,
+			PayedInsurance = 0x40,
+			QuestItem = 0x80
 		}
 
 		private class CompactInfo
@@ -1176,6 +1178,10 @@ namespace Server
             else if (m_LootType == LootType.Cursed)
             {
                 list.Add(1049643); // cursed
+            }
+            else if (Insured)
+            {
+                list.Add(1061682); // <b>insured</b>
             }
 		}
 
@@ -2545,7 +2551,8 @@ namespace Server
 				}
 			}
 
-			ImplFlag implFlags = m_Flags & (ImplFlag.Visible | ImplFlag.Movable | ImplFlag.Stackable | ImplFlag.QuestItem);
+			ImplFlag implFlags = m_Flags & (ImplFlag.Visible | ImplFlag.Movable | ImplFlag.Stackable | ImplFlag.Insured |
+										ImplFlag.PayedInsurance | ImplFlag.QuestItem);
 
 			if (implFlags != (ImplFlag.Visible | ImplFlag.Movable))
 			{
@@ -5299,6 +5306,18 @@ namespace Server
 			}
 		}
 
+		public bool Insured
+		{
+			get => GetFlag(ImplFlag.Insured);
+			set
+			{
+				SetFlag(ImplFlag.Insured, value);
+				InvalidateProperties();
+			}
+		}
+
+		public bool PayedInsurance { get => GetFlag(ImplFlag.PayedInsurance); set => SetFlag(ImplFlag.PayedInsurance, value); }
+
 		public Mobile BlessedFor
 		{
 			get
@@ -5334,7 +5353,7 @@ namespace Server
 
 		public virtual bool CheckBlessed(Mobile m)
 		{
-			if (m_LootType == LootType.Blessed)
+			if (m_LootType == LootType.Blessed || Mobile.InsuranceEnabled && Insured)
 			{
 				return true;
 			}
@@ -5344,6 +5363,11 @@ namespace Server
 
         public virtual bool IsStandardLoot()
 		{
+			if (Mobile.InsuranceEnabled && Insured)
+			{
+				return false;
+			}
+
 			if (BlessedFor != null)
 			{
 				return false;

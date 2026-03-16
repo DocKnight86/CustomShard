@@ -64,9 +64,7 @@ namespace Server.Engines.Help
                     string speech = entry.Speech;
 
                     if (i != min)
-                    {
                         builder.Append("<br>");
-                    }
 
                     builder.Append($"<u>{name}</u> (<i>{Utility.FixHtml(account)}</i>): {Utility.FixHtml(speech)}");
                 }
@@ -77,16 +75,12 @@ namespace Server.Engines.Help
             AddHtml(10, 40, 280, 350, sLog, false, true);
 
             if (page > 0)
-            {
                 AddButton(10, 395, 0xFAE, 0xFB0, 1, GumpButtonType.Reply, 0); // Previous page
-            }
 
             AddLabel(45, 395, 0x481, $"Current page: {page + 1}/{lastPage + 1}");
 
             if (page < lastPage)
-            {
                 AddButton(261, 395, 0xFA5, 0xFA7, 2, GumpButtonType.Reply, 0); // Next page
-            }
         }
 
         public override void OnResponse(NetState sender, RelayInfo info)
@@ -98,18 +92,14 @@ namespace Server.Engines.Help
                 case 1: // Previous page
                     {
                         if (m_Page - 1 >= 0)
-                        {
                             from.SendGump(new SpeechLogGump(m_Player, m_Log, m_Page - 1));
-                        }
 
                         break;
                     }
                 case 2: // Next page
                     {
                         if ((m_Page + 1) * MaxEntriesPerPage < m_Log.Count)
-                        {
                             from.SendGump(new SpeechLogGump(m_Player, m_Log, m_Page + 1));
-                        }
 
                         break;
                     }

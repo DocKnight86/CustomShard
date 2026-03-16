@@ -33,9 +33,7 @@ namespace Server.Engines.Craft
                 string nameString = craftGroup.NameString;
 
                 if (nameNumber != 0 && nameNumber == groupName.Number || nameString != null && nameString == groupName.String)
-                {
                     return i;
-                }
             }
 
             return -1;

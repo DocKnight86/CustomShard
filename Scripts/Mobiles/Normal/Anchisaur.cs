@@ -59,9 +59,7 @@ namespace Server.Mobiles
             base.OnThink();
 
             if (Combatant == null)
-            {
                 return;
-            }
 
             if (_NextMastery < DateTime.UtcNow)
             {

@@ -45,9 +45,7 @@ namespace Server
         public static int ComputeLevelFor(Mobile from)
         {
             if (_LevelOverride > int.MinValue)
-            {
                 return _LevelOverride;
-            }
 
             int hours, minutes;
 
@@ -67,24 +65,16 @@ namespace Server
             */
 
             if (hours < 4)
-            {
                 return NightLevel;
-            }
 
             if (hours < 6)
-            {
                 return NightLevel + (((hours - 4) * 60) + minutes) * (DayLevel - NightLevel) / 120;
-            }
 
             if (hours < 22)
-            {
                 return DayLevel;
-            }
 
             if (hours < 24)
-            {
                 return DayLevel + (((hours - 22) * 60) + minutes) * (NightLevel - DayLevel) / 120;
-            }
 
             return NightLevel; // should never be
         }
@@ -96,23 +86,17 @@ namespace Server
             while (--i >= 0)
             {
                 if (i >= NetState.Instances.Count)
-                {
                     continue;
-                }
 
                 NetState ns = NetState.Instances[i];
 
                 if (ns == null)
-                {
                     continue;
-                }
 
                 Mobile m = ns.Mobile;
 
                 if (m != null)
-                {
                     m.CheckLightLevels(false);
-                }
             }
         }
 

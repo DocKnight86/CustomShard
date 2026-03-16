@@ -22,13 +22,9 @@ namespace Server.Gumps
         private void Parse(XmlTextReader xml)
         {
             if (xml.MoveToAttribute("name"))
-            {
                 m_Name = xml.Value;
-            }
             else
-            {
                 m_Name = "empty";
-            }
 
             if (xml.IsEmptyElement)
             {
@@ -41,9 +37,7 @@ namespace Server.Gumps
                 while (xml.Read() && (xml.NodeType == XmlNodeType.Element || xml.NodeType == XmlNodeType.Comment))
                 {
                     if (xml.NodeType == XmlNodeType.Comment)
-                    {
                         continue;
-                    }
 
                     if (xml.Name == "child")
                     {

@@ -50,6 +50,7 @@ namespace Server.Mobiles
         {
             AddLoot(LootPack.Average);
             AddLoot(LootPack.LootItem<AcidSac>(75.0));
+            AddLoot(LootPack.LootItem<CongealedSlugAcid>());
         }
 
         public override int GetIdleSound()
@@ -75,14 +76,10 @@ namespace Server.Mobiles
         public override bool CheckMovement(Direction d, out int newZ)
         {
             if (!base.CheckMovement(d, out newZ))
-            {
                 return false;
-            }
 
             if (Region.IsPartOf("Underworld") && newZ > Location.Z)
-            {
                 return false;
-            }
 
             return true;
         }

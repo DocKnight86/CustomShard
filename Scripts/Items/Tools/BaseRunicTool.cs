@@ -96,9 +96,7 @@ namespace Server.Items
             }
 
             if (hasSkill)
-            {
                 from.SendLocalizedMessage(1152334); // You must be near a Soul Forge to re-forge items. Using standard Runic Crafting instead.
-            }
 
             eable.Free();
             base.OnDoubleClick(from);
@@ -112,15 +110,11 @@ namespace Server.Items
             for (int i = 0; i < count; ++i)
             {
                 if (!m_Props[i])
-                {
                     m_Possible[avail++] = i;
-                }
             }
 
             if (avail == 0)
-            {
                 return -1;
-            }
 
             int v = m_Possible[Utility.Random(avail)];
 
@@ -197,9 +191,7 @@ namespace Server.Items
             CraftResourceInfo resInfo = CraftResources.GetInfo(Resource);
 
             if (resInfo == null)
-            {
                 return;
-            }
 
             CraftAttributeInfo attrs = resInfo.AttributeInfo;
 
@@ -306,9 +298,7 @@ namespace Server.Items
                 int random = GetUniqueRandom(27);
 
                 if (random == -1)
-                {
                     break;
-                }
 
                 switch (random)
                 {
@@ -454,9 +444,7 @@ namespace Server.Items
             SlayerGroup[] groups = SlayerGroup.Groups;
 
             if (groups.Length == 0)
-            {
                 return SlayerName.None;
-            }
 
             SlayerGroup group = groups[Utility.Random(6)]; //-1 To Exclude the Fey Slayer which appears ONLY on a certain artifact.
             SlayerEntry entry;
@@ -509,24 +497,21 @@ namespace Server.Items
             int baseOffset = isShield ? 0 : 4;
 
             if (!isShield && armor.MeditationAllowance == ArmorMeditationAllowance.All)
-            {
                 m_Props.Set(3, true); // remove mage armor from possible properties
-            }
-
             if (armor.Resource >= CraftResource.RegularLeather && armor.Resource <= CraftResource.BarbedLeather)
             {
                 m_Props.Set(0, true); // remove lower requirements from possible properties for leather armor
                 m_Props.Set(2, true); // remove durability bonus from possible properties
             }
+            if (Race.Elf.ValidateEquipment(armor))
+                m_Props.Set(7, true); // elves inherently have night sight and elf only armor doesn't get night sight as a mod
 
             for (int i = 0; i < attributeCount; ++i)
             {
                 int random = GetUniqueRandom(baseCount);
 
                 if (random == -1)
-                {
                     break;
-                }
 
                 random += baseOffset;
 
@@ -648,9 +633,7 @@ namespace Server.Items
                 int random = GetUniqueRandom(19);
 
                 if (random == -1)
-                {
                     break;
-                }
 
                 switch (random)
                 {
@@ -751,9 +734,7 @@ namespace Server.Items
                 int random = GetUniqueRandom(24);
 
                 if (random == -1)
-                {
                     break;
-                }
 
                 switch (random)
                 {
@@ -862,9 +843,7 @@ namespace Server.Items
                 int random = GetUniqueRandom(16);
 
                 if (random == -1)
-                {
                     break;
-                }
 
                 switch (random)
                 {
@@ -949,16 +928,12 @@ namespace Server.Items
             CraftResourceInfo resInfo = CraftResources.GetInfo(Resource);
 
             if (resInfo == null)
-            {
                 return;
-            }
 
             CraftAttributeInfo attrs = resInfo.AttributeInfo;
 
             if (attrs == null)
-            {
                 return;
-            }
 
             int attributeCount = Utility.RandomMinMax(attrs.RunicMinAttributes, attrs.RunicMaxAttributes);
             int min = attrs.RunicMinIntensity;
@@ -972,16 +947,12 @@ namespace Server.Items
             CraftResourceInfo resInfo = CraftResources.GetInfo(Resource);
 
             if (resInfo == null)
-            {
                 return;
-            }
 
             CraftAttributeInfo attrs = resInfo.AttributeInfo;
 
             if (attrs == null)
-            {
                 return;
-            }
 
             int attributeCount = Utility.RandomMinMax(attrs.RunicMinAttributes, attrs.RunicMaxAttributes);
             int min = attrs.RunicMinIntensity;
@@ -1006,9 +977,7 @@ namespace Server.Items
                 v = 100 - v;
 
                 if (LootPack.CheckLuck(m_LuckChance))
-                {
                     v += 10;
-                }
 
                 percent = Math.Min(max, min + AOS.Scale((max - min), v));
             }
@@ -1016,9 +985,7 @@ namespace Server.Items
             int scaledBy = Math.Abs(high - low) + 1;
 
             if (scaledBy != 0)
-            {
                 scaledBy = 10000 / scaledBy;
-            }
 
             percent *= (10000 + scaledBy);
 
@@ -1033,18 +1000,12 @@ namespace Server.Items
         private static void ApplyAttribute(AosAttributes attrs, int min, int max, AosAttribute attr, int low, int high, int scale)
         {
             if (attr == AosAttribute.CastSpeed)
-            {
                 attrs[attr] += Scale(min, max, low / scale, high / scale) * scale;
-            }
             else
-            {
                 attrs[attr] = Scale(min, max, low / scale, high / scale) * scale;
-            }
 
             if (attr == AosAttribute.SpellChanneling)
-            {
                 attrs[AosAttribute.CastSpeed] -= 1;
-            }
         }
 
         private static void ApplyAttribute(AosArmorAttributes attrs, int min, int max, AosArmorAttribute attr, int low, int high)

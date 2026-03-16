@@ -114,9 +114,7 @@ namespace Server.Spells
             int total = (int)(mana * scalar);
 
             if (m.Skills[MoveSkill].Value < 50.0 && GetContext(m) != null)
-            {
                 total *= 2;
-            }
 
             return total;
         }
@@ -134,9 +132,7 @@ namespace Server.Spells
             if (consume)
             {
                 if (!DelayedContext)
-                {
                     SetContext(from);
-                }
 
                 from.Mana -= mana;
             }
@@ -161,9 +157,7 @@ namespace Server.Spells
         public virtual bool Validate(Mobile from)
         {
             if (!from.Player)
-            {
                 return true;
-            }
 
             if (Bushido.HonorableExecution.IsUnderPenalty(from))
             {
@@ -196,9 +190,7 @@ namespace Server.Spells
                 int moveID = kvp.Key;
 
                 if (moveID != -1)
-                {
                     m.Send(new ToggleSpecialAbilityPacket(moveID + 1, false));
-                }
             }
         }
 
@@ -207,9 +199,7 @@ namespace Server.Spells
         public static SpecialMove GetCurrentMove(Mobile m)
         {
             if (m == null)
-            {
                 return null;
-            }
 
             SpecialMove move = null;
             m_Table.TryGetValue(m, out move);
@@ -236,9 +226,7 @@ namespace Server.Spells
             ClearCurrentMove(m);
 
             if (sameMove)
-            {
                 return true;
-            }
 
             if (move != null)
             {
@@ -251,9 +239,7 @@ namespace Server.Spells
                 int moveID = SpellRegistry.GetRegistryNumber(move);
 
                 if (moveID > 0)
-                {
                     m.Send(new ToggleSpecialAbilityPacket(moveID + 1, true));
-                }
 
                 move.SendAbilityMessage(m);
 
@@ -275,9 +261,7 @@ namespace Server.Spells
                 int moveID = SpellRegistry.GetRegistryNumber(move);
 
                 if (moveID > 0)
-                {
                     m.Send(new ToggleSpecialAbilityPacket(moveID + 1, false));
-                }
             }
 
             m_Table.Remove(m);
@@ -313,9 +297,7 @@ namespace Server.Spells
             m_PlayersTable.TryGetValue(m, out context);
 
             if (context == null)
-            {
                 return false;
-            }
 
             return (context.Type == type);
         }

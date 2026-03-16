@@ -18,16 +18,7 @@ namespace Server.Engines.ArenaSystem
         public bool ShowArenaEffects
         {
             get => false;
-            set { if (value)
-                {
-                    DoArenaEffects();
-                }
-
-                if (!value)
-                {
-                    HideArenaEffects();
-                }
-            }
+            set { if (value) DoArenaEffects(); if (!value) HideArenaEffects(); }
         }
 
         [Constructable]
@@ -96,9 +87,7 @@ namespace Server.Engines.ArenaSystem
         public void DoArenaEffects()
         {
             if (Arena == null)
-            {
                 return;
-            }
 
             _Items = new List<Item>();
 
@@ -119,9 +108,7 @@ namespace Server.Engines.ArenaSystem
         public void HideArenaEffects()
         {
             if (_Items == null)
-            {
                 return;
-            }
 
             _Items.ForEach(s =>
                 {

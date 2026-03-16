@@ -68,9 +68,7 @@ namespace Server.Engines.VvV
                 from.SendGump(new RewardOptionGump(this));
             }
             else
-            {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.       	
-            }
         }
 
         public ShameTileDeed(Serial serial)
@@ -102,9 +100,7 @@ namespace Server.Engines.VvV
             TileType = (TileType)choice;
 
             if (!Deleted)
-            {
                 base.OnDoubleClick(from);
-            }
         }
     }
 }

@@ -15,19 +15,11 @@ namespace Server.Guilds
             public int Compare(PlayerMobile x, PlayerMobile y)
             {
                 if (x == null && y == null)
-                {
                     return 0;
-                }
-
                 if (x == null)
-                {
                     return -1;
-                }
-
                 if (y == null)
-                {
                     return 1;
-                }
 
                 return Insensitive.Compare(x.Name, y.Name);
             }
@@ -40,19 +32,11 @@ namespace Server.Guilds
             public int Compare(PlayerMobile x, PlayerMobile y)
             {
                 if (x == null && y == null)
-                {
                     return 0;
-                }
-
                 if (x == null)
-                {
                     return -1;
-                }
-
                 if (y == null)
-                {
                     return 1;
-                }
 
                 NetState aState = x.NetState;
                 NetState bState = y.NetState;
@@ -83,19 +67,11 @@ namespace Server.Guilds
             public int Compare(PlayerMobile x, PlayerMobile y)
             {
                 if (x == null && y == null)
-                {
                     return 0;
-                }
-
                 if (x == null)
-                {
                     return -1;
-                }
-
                 if (y == null)
-                {
                     return 1;
-                }
 
                 return Insensitive.Compare(x.GuildTitle, y.GuildTitle);
             }
@@ -108,19 +84,11 @@ namespace Server.Guilds
             public int Compare(PlayerMobile x, PlayerMobile y)
             {
                 if (x == null && y == null)
-                {
                     return 0;
-                }
-
                 if (x == null)
-                {
                     return -1;
-                }
-
                 if (y == null)
-                {
                     return 1;
-                }
 
                 return x.GuildRank.Rank.CompareTo(y.GuildRank.Rank);
             }
@@ -168,13 +136,9 @@ namespace Server.Guilds
             string name = $"{pm.Name} {(Engines.VvV.ViceVsVirtueSystem.IsVvV(pm) ? "VvV" : "")}{(player.GuildFealty == pm && player.GuildFealty != guild.Leader ? " *" : "")}";
 
             if (pm == player)
-            {
                 name = Color(name, 0x006600);
-            }
             else if (pm.NetState != null)
-            {
                 name = Color(name, 0x000066);
-            }
 
             defs[0] = name;
             defs[1] = pm.GuildRank.Name;
@@ -187,9 +151,7 @@ namespace Server.Guilds
         protected override bool IsFiltered(PlayerMobile pm, string filter)
         {
             if (pm == null)
-            {
                 return true;
-            }
 
             return !Insensitive.Contains(pm.Name, filter);
         }
@@ -211,9 +173,7 @@ namespace Server.Guilds
             PlayerMobile pm = sender.Mobile as PlayerMobile;
 
             if (pm == null || !IsMember(pm, guild))
-            {
                 return;
-            }
 
             if (info.ButtonID == 8)
             {
@@ -223,9 +183,7 @@ namespace Server.Guilds
                     pm.BeginTarget(-1, false, Targeting.TargetFlags.None, new TargetStateCallback(InvitePlayer_Callback), guild);
                 }
                 else
-                {
                     pm.SendLocalizedMessage(503301); // You don't have permission to do that.
-                }
             }
         }
 

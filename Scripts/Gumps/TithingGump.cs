@@ -69,9 +69,7 @@ namespace Server.Gumps
                         m_Offer = MaxTithing - from.TithingPoints;
 
                         if (m_Offer > totalGold)
-                        {
                             m_Offer = totalGold;
-                        }
 
                         from.SendGump(new TithingGump(from, m_Offer));
 
@@ -104,18 +102,12 @@ namespace Server.Gumps
                             if (num > 0)
                             {
                                 if (num > totalGold)
-                                {
                                     m_Offer = totalGold;
-                                }
                                 else
-                                {
                                     m_Offer = num;
-                                }
 
                                 if ((from.TithingPoints + m_Offer) > MaxTithing)
-                                {
                                     m_Offer = MaxTithing - from.TithingPoints;
-                                }
 
                                 if (Banker.Withdraw(from, m_Offer, true))
                                 {

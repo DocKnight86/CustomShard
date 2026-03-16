@@ -61,9 +61,7 @@ namespace Server.Items
             set
             {
                 if (Status == value)
-                {
                     return;
-                }
 
                 switch (value)
                 {
@@ -97,9 +95,7 @@ namespace Server.Items
         public override void OnAfterDelete()
         {
             if (m_Timer != null)
-            {
                 m_Timer.Stop();
-            }
 
             ClearEntries();
         }

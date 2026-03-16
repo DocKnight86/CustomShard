@@ -62,7 +62,8 @@ namespace Server.Items
                     typeof(SavageRider), typeof(SavageShaman),
                     typeof(Savage), typeof(Titan),
                     typeof(Troll),
-                    typeof(Troglodyte), typeof(Minotaur),
+                    typeof(Troglodyte), typeof(MougGuur),
+                    typeof(Chiikkaha), typeof(Minotaur),
                     typeof(MinotaurGeneral), typeof(Medusa),
                     typeof(RakktaviRenowned), typeof(TikitaviRenowned),
                     typeof(VitaviRenowned), typeof(EnslavedGoblinScout),
@@ -169,7 +170,8 @@ namespace Server.Items
                     typeof(InsaneDryad), typeof(CorporealBrume),
                     typeof(CrystalLatticeSeeker), typeof(LadyMelisande),
                     typeof(DreadHorn), typeof(Travesty),
-                    typeof(ShimmeringEffusion), typeof(DarkWisp),
+                    typeof(ShimmeringEffusion), typeof(Guile),
+                    typeof(Irk), typeof(DarkWisp),
                     typeof(FeralTreefellow)
                 );
 
@@ -313,7 +315,7 @@ namespace Server.Items
                     typeof(Ravager), typeof(Semidar),
                     typeof(StoneGargoyle), typeof(Succubus),
                     typeof(PatchworkSkeleton), typeof(TsukiWolf),
-                    typeof(CrystalDaemon),
+                    typeof(Szavetra), typeof(CrystalDaemon),
                     typeof(SlasherOfVeils), typeof(GargoyleShade),
                     typeof(Putrefier), typeof(ChiefParoxysmus),
                     typeof(Anzuanord), typeof(Ballem),
@@ -362,6 +364,7 @@ namespace Server.Items
                     typeof(Mephitis), typeof(Scorpion),
                     typeof(TerathanAvenger), typeof(TerathanDrone),
                     typeof(TerathanMatriarch), typeof(TerathanWarrior),
+                    typeof(Miasma), typeof(SpeckledScorpion),
                     typeof(LadyLissith), typeof(LadySabrix),
                     typeof(Virulent), typeof(Silk),
                     typeof(Malefic), typeof(Navrey),
@@ -376,7 +379,8 @@ namespace Server.Items
                     (
                         SlayerName.ScorpionsBane,
 
-                        typeof(Scorpion), typeof(DesertScorpion)
+                        typeof(Scorpion),           typeof(Miasma),
+                        typeof(SpeckledScorpion), typeof(DesertScorpion)
                     ),
 
                 new SlayerEntry
@@ -438,14 +442,15 @@ namespace Server.Items
                     typeof(SwampDragon), typeof(WhiteWyrm),
                     typeof(Wyvern), typeof(Yamandon),
                     typeof(Hydra), typeof(CrystalHydra),
-                    typeof(CrystalSeaSerpent),
-                    typeof(Abscess), typeof(ChickenLizard),
+                    typeof(CrystalSeaSerpent), typeof(Rend),
+                    typeof(Thrasher), typeof(Abscess),
+                    typeof(Grim), typeof(ChickenLizard),
                     typeof(StygianDragon), typeof(FairyDragon),
                     typeof(Skree), typeof(Slith),
                     typeof(StoneSlith), typeof(ToxicSlith),
                     typeof(Raptor), typeof(Kepetch),
                     typeof(KepetchAmbusher), typeof(FrostDragon),
-                    typeof(ColdDrake), typeof(FrostDrake), 
+                    typeof(ColdDrake), typeof(FrostDrake), typeof(Coil),
                     typeof(SkeletalDrake), typeof(CoralSnake)
                 );
 
@@ -464,7 +469,8 @@ namespace Server.Items
                         typeof(SkeletalDragon),     typeof(SwampDragon),
                         typeof(WhiteWyrm),          typeof(Wyvern),
                         typeof(Hydra),              typeof(CrystalHydra),
-                        typeof(Abscess),            typeof(StygianDragon),
+                        typeof(Rend),               typeof(Abscess),
+                        typeof(Grim),               typeof(StygianDragon),
                         typeof(FairyDragon),        typeof(SkeletalDrake),
                         typeof(ColdDrake)
                     ),
@@ -490,7 +496,7 @@ namespace Server.Items
                     (
                         SlayerName.SnakesBane,
 
-                        typeof(CrystalSeaSerpent),
+                        typeof(CrystalSeaSerpent),  typeof(Coil),
                         typeof(CoralSnake),         typeof(DeepSeaSerpent),
                         typeof(GiantIceWorm),       typeof(GiantSerpent),
                         typeof(IceSerpent),         typeof(IceSnake),
@@ -598,9 +604,7 @@ namespace Server.Items
             int v = (int)name;
 
             if (v >= 0 && v < m_TotalEntries.Length)
-            {
                 return m_TotalEntries[v];
-            }
 
             return null;
         }
@@ -622,9 +626,7 @@ namespace Server.Items
                     int index = Utility.Random(1 + group.Entries.Length);
 
                     if (index == 0)
-                    {
                         return group.m_Super.Name;
-                    }
 
                     return group.Entries[index - 1].Name;
                 }
@@ -638,15 +640,11 @@ namespace Server.Items
             for (int i = 0; i < Opposition.Length; i++)
             {
                 if (Opposition[i].Super.Slays(m))
-                {
                     return true;
-                }
             }
 
             if (m_Super.Name == SlayerName.Eodon && !m_Super.Slays(m))
-            {
                 return true;
-            }
 
             return false;
         }

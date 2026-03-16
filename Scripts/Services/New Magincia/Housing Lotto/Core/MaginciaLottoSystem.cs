@@ -124,9 +124,7 @@ namespace Server.Engines.NewMagincia
         public void StartTimer()
         {
             if (m_Timer != null)
-            {
                 m_Timer.Stop();
-            }
 
             m_Timer = Timer.DelayCall(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1), ProcessTick);
             
@@ -149,29 +147,21 @@ namespace Server.Engines.NewMagincia
             foreach (MaginciaHousingPlot plot in plots)
             {
                 if (plot.IsAvailable && plot.LottoEnds != DateTime.MinValue && DateTime.UtcNow > plot.LottoEnds)
-                {
                     plot.EndLotto();
-                }
 
                 if (plot.Expires != DateTime.MinValue && plot.Expires < DateTime.UtcNow)
                 {
                     if (plot.Writ != null)
-                    {
                         plot.Writ.OnExpired();
-                    }
                     else
-                    {
                         UnregisterPlot(plot);
-                    }
                 }
             }
 
             ColUtility.Free(plots);
 
             if (m_Plots.Count == 0)
-            {
                 EndTimer();
-            }
         }
 
         public override void Delete()
@@ -186,21 +176,15 @@ namespace Server.Engines.NewMagincia
         public static void UnregisterPlot(MaginciaHousingPlot plot)
         {
             if (plot == null)
-            {
                 return;
-            }
 
             if (plot.Stone != null && !plot.Stone.Deleted)
-            {
                 plot.Stone.Delete();
-            }
 
             m_Plots.Remove(plot);
 
             if (plot.Map != null && m_FreeHousingZones.ContainsKey(plot.Map) && !m_FreeHousingZones[plot.Map].Contains(plot.Bounds))
-            {
                 m_FreeHousingZones[plot.Map].Add(plot.Bounds);
-            }
         }
 
         public static bool IsRegisteredPlot(MaginciaHousingPlot plot)
@@ -211,16 +195,12 @@ namespace Server.Engines.NewMagincia
         public static bool IsFreeHousingZone(Point3D p, Map map)
         {
             if (!m_FreeHousingZones.ContainsKey(map))
-            {
                 return false;
-            }
 
             foreach (Rectangle2D rec in m_FreeHousingZones[map])
             {
                 if (rec.Contains(p))
-                {
                     return true;
-                }
             }
 
             return false;
@@ -341,16 +321,12 @@ namespace Server.Engines.NewMagincia
         public static Point3D GetPlotStoneLoc(MaginciaHousingPlot plot)
         {
             if (plot == null)
-            {
                 return Point3D.Zero;
-            }
 
             for (int i = 0; i < m_Identifiers.Length; i++)
             {
                 if (m_Identifiers[i] == plot.Identifier)
-                {
                     return m_StoneLocs[i];
-                }
             }
 
             int z = plot.Map.GetAverageZ(plot.Bounds.X - 1, plot.Bounds.Y - 1);
@@ -400,9 +376,7 @@ namespace Server.Engines.NewMagincia
         public static void RemoveMessageFromQueue(Mobile from, NewMaginciaMessage message)
         {
             if (from == null || message == null)
-            {
                 return;
-            }
 
             if (m_MessageQueue.ContainsKey(from) && m_MessageQueue[from].Contains(message))
             {
@@ -532,18 +506,14 @@ namespace Server.Engines.NewMagincia
         public static void CheckMessages(Mobile from)
         {
             if (!m_MessageQueue.ContainsKey(from) || m_MessageQueue[from] == null || m_MessageQueue[from].Count == 0)
-            {
                 return;
-            }
 
             List<NewMaginciaMessage> list = new List<NewMaginciaMessage>(m_MessageQueue[from]);
 
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i].Expired)
-                {
                     m_MessageQueue[from].Remove(list[i]);
-                }
             }
         }
         #endregion
@@ -562,9 +532,7 @@ namespace Server.Engines.NewMagincia
                 Mobile m = acct[i];
 
                 if (m == null)
-                {
                     continue;
-                }
 
                 for (var index = 0; index < m_Plots.Count; index++)
                 {
@@ -595,21 +563,15 @@ namespace Server.Engines.NewMagincia
 
             writer.Write(m_Plots.Count);
             for (int i = 0; i < m_Plots.Count; i++)
-            {
                 m_Plots[i].Serialize(writer);
-            }
 
             writer.Write(m_FreeHousingZones[Map.Trammel].Count);
             foreach (Rectangle2D rec in m_FreeHousingZones[Map.Trammel])
-            {
                 writer.Write(rec);
-            }
 
             writer.Write(m_FreeHousingZones[Map.Felucca].Count);
             foreach (Rectangle2D rec in m_FreeHousingZones[Map.Felucca])
-            {
                 writer.Write(rec);
-            }
 
             writer.Write(m_MessageQueue.Count);
             foreach (KeyValuePair<Mobile, List<NewMaginciaMessage>> kvp in m_MessageQueue)
@@ -640,21 +602,15 @@ namespace Server.Engines.NewMagincia
 
             int c = reader.ReadInt();
             for (int i = 0; i < c; i++)
-            {
                 RegisterPlot(new MaginciaHousingPlot(reader));
-            }
 
             c = reader.ReadInt();
             for (int i = 0; i < c; i++)
-            {
                 m_FreeHousingZones[Map.Trammel].Add(reader.ReadRect2D());
-            }
 
             c = reader.ReadInt();
             for (int i = 0; i < c; i++)
-            {
                 m_FreeHousingZones[Map.Felucca].Add(reader.ReadRect2D());
-            }
 
             c = reader.ReadInt();
             for (int i = 0; i < c; i++)
@@ -664,20 +620,14 @@ namespace Server.Engines.NewMagincia
 
                 int count = reader.ReadInt();
                 for (int j = 0; j < count; j++)
-                {
                     messages.Add(new NewMaginciaMessage(reader));
-                }
 
                 if (m != null && messages.Count > 0)
-                {
                     m_MessageQueue[m] = messages;
-                }
             }
 
             if (m_Enabled)
-            {
                 StartTimer();
-            }
 
             m_Instance = this;
 

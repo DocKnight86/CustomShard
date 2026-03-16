@@ -24,13 +24,9 @@ namespace Server.Multis
             DecayStageInfo info = new DecayStageInfo(min, max);
 
             if (m_Stages.ContainsKey(level))
-            {
                 m_Stages[level] = info;
-            }
             else
-            {
                 m_Stages.Add(level, info);
-            }
         }
 
         public static bool Decays(DecayLevel level)
@@ -41,9 +37,7 @@ namespace Server.Multis
         public static TimeSpan GetRandomDuration(DecayLevel level)
         {
             if (!m_Stages.ContainsKey(level))
-            {
                 return TimeSpan.Zero;
-            }
 
             DecayStageInfo info = m_Stages[level];
             long min = info.MinDuration.Ticks;

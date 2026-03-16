@@ -36,9 +36,7 @@ namespace Server.Engines.BulkOrders
             BulkOrderSystem.RemovePending(m, (BODType)ohs[2]);
 
             if (m is PlayerMobile mobile)
-            {
                 mobile.SendGump(new RewardsGump((Mobile)ohs[3], mobile, (BODType)ohs[2]));
-            }
         }
 
         private static void OnClaim(Mobile m, object state)

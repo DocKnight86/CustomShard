@@ -109,9 +109,7 @@ namespace Server.Items
             base.OnMapChange();
 
             if (Deleted)
-            {
                 return;
-            }
 
             if (SecondContainer != null)
             {
@@ -122,9 +120,7 @@ namespace Server.Items
         public override void OnDelete()
         {
             if (SecondContainer != null)
-            {
                 SecondContainer.Delete();
-            }
 
             base.OnDelete();
         }
@@ -191,9 +187,7 @@ namespace Server.Items
         public override void OnMapChange()
         {
             if (m_MainContainer != null)
-            {
                 m_MainContainer.Map = Map;
-            }
         }
 
         public override void OnAfterDelete()
@@ -201,17 +195,13 @@ namespace Server.Items
             base.OnAfterDelete();
 
             if (m_MainContainer != null)
-            {
                 m_MainContainer.Delete();
-            }
         }
 
         public override void OnChop(Mobile from)
         {
             if (m_MainContainer == null)
-            {
                 return;
-            }
 
             if (!m_MainContainer.IsSecure)
             {
@@ -269,9 +259,7 @@ namespace Server.Items
                 from.SendGump(new InternalGump(this));
             }
             else
-            {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.
-            }
         }
 
         public override void GetProperties(ObjectPropertyList list)
@@ -279,9 +267,7 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (IsRewardItem)
-            {
                 list.Add(1113805); // 15th Year Veteran Reward
-            }
         }
 
         private void SendTarget(Mobile m)
@@ -303,9 +289,7 @@ namespace Server.Items
             int version = reader.ReadEncodedInt();
 
             if (version > 0)
-            {
                 IsRewardItem = reader.ReadBool();
-            }
         }
 
         private class InternalGump : Gump
@@ -338,9 +322,7 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (m_Deed == null || m_Deed.Deleted || info.ButtonID == 0)
-                {
                     return;
-                }
 
                 m_Deed.m_East = info.ButtonID != 1;
                 m_Deed.SendTarget(sender.Mobile);

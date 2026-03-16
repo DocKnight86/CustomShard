@@ -58,9 +58,7 @@ namespace Server.Items
                 m_altar = altar;
 
                 if (altar.Owner != from)
-                {
                     Flags |= CMEFlags.Disabled;
-                }
             }
 
             public override void OnClick()

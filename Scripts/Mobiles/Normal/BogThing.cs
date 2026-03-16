@@ -70,9 +70,7 @@ namespace Server.Mobiles
             Map map = Map;
 
             if (map == null)
-            {
                 return;
-            }
 
             Bogling spawned = new Bogling
             {
@@ -89,13 +87,9 @@ namespace Server.Mobiles
                 int z = map.GetAverageZ(x, y);
 
                 if (validLocation = map.CanFit(x, y, Z, 16, false, false))
-                {
                     loc = new Point3D(x, y, Z);
-                }
                 else if (validLocation = map.CanFit(x, y, z, 16, false, false))
-                {
                     loc = new Point3D(x, y, z);
-                }
             }
 
             spawned.MoveToWorld(loc, map);
@@ -110,9 +104,7 @@ namespace Server.Mobiles
             foreach (Mobile m in eable)
             {
                 if (m is Bogling)
-                {
                     toEat.Add(m);
-                }
             }
             eable.Free();
 
@@ -135,9 +127,7 @@ namespace Server.Mobiles
             if (Hits > HitsMax / 4)
             {
                 if (0.25 >= Utility.RandomDouble())
-                {
                     SpawnBogling(attacker);
-                }
             }
             else if (0.25 >= Utility.RandomDouble())
             {

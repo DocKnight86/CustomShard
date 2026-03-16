@@ -17,9 +17,7 @@ namespace Server.Engines.Craft
             get
             {
                 if (m_CraftSystem == null)
-                {
                     m_CraftSystem = new DefMasonry();
-                }
 
                 return m_CraftSystem;
             }
@@ -45,24 +43,16 @@ namespace Server.Engines.Craft
             int num = 0;
 
             if (tool == null || tool.Deleted || tool.UsesRemaining <= 0)
-            {
                 return 1044038; // You have worn out your tool!
-            }
 
             if (tool is Item item && !BaseTool.CheckTool(item, from))
-            {
                 return 1048146; // If you have a tool equipped, you must use that tool.
-            }
 
             if (!(from is PlayerMobile mobile && mobile.Masonry && mobile.Skills[SkillName.Carpentry].Base >= 100.0))
-            {
                 return 1044633; // You havent learned stonecraft.
-            }
 
             if (!tool.CheckAccessible(from, ref num))
-            {
                 return num; // The tool must be on your person to use.
-            }
 
             return 0;
         }
@@ -74,9 +64,7 @@ namespace Server.Engines.Craft
         public override int PlayEndingEffect(Mobile from, bool failed, bool lostMaterial, bool toolBroken, int quality, bool makersMark, CraftItem item)
         {
             if (toolBroken)
-            {
                 from.SendLocalizedMessage(1044038); // You have worn out your tool 
-            }
 
             if (failed)
             {
@@ -89,14 +77,10 @@ namespace Server.Engines.Craft
             }
 
             if (quality == 0)
-            {
                 return 502785; // You were barely able to make this item.  It's quality is below average.
-            }
 
             if (makersMark && quality == 2)
-            {
                 return 1044156; // You create an exceptional quality item and affix your maker's mark.
-            }
 
             if (quality == 2)
             {
@@ -164,6 +148,112 @@ namespace Server.Engines.Craft
             index = AddCraft(typeof(GargishCotSouthDeed), 1044290, 1111920, 76.0, 126.0, typeof(Granite), 1044514, 3, 1044513);
             AddSkill(index, SkillName.Tailoring, 70.0, 75.0);
             AddRes(index, typeof(Cloth), 1044286, 100, 1044287);
+
+            // Stone Armor
+            index = AddCraft(typeof(FemaleGargishStoneArms), 1111705, 1020643, 56.3, 106.3, typeof(Granite), 1044514, 8, 1044513);
+            AddCraft(typeof(FemaleGargishStoneChest), 1111705, 1020645, 55.0, 105.0, typeof(Granite), 1044514, 12, 1044513);
+            AddCraft(typeof(FemaleGargishStoneLegs), 1111705, 1020649, 58.8, 108.8, typeof(Granite), 1044514, 10, 1044513);
+            AddCraft(typeof(FemaleGargishStoneKilt), 1111705, 1020647, 48.9, 98.9, typeof(Granite), 1044514, 6, 1044513);
+            AddCraft(typeof(GargishStoneArms), 1111705, 1020643, 56.3, 106.3, typeof(Granite), 1044514, 8, 1044513);
+            AddCraft(typeof(GargishStoneChest), 1111705, 1020645, 65.0, 115.0, typeof(Granite), 1044514, 12, 1044513);
+            AddCraft(typeof(GargishStoneLegs), 1111705, 1020649, 58.8, 108.8, typeof(Granite), 1044514, 10, 1044513);
+            AddCraft(typeof(GargishStoneKilt), 1111705, 1020647, 48.9, 98.9, typeof(Granite), 1044514, 6, 1044513);
+            AddCraft(typeof(LargeStoneShield), 1111705, 1095773, 55.0, 105.0, typeof(Granite), 1044514, 16, 1044513);
+            AddCraft(typeof(GargishStoneAmulet), 1111705, 1098594, 60.0, 110.0, typeof(Granite), 1044514, 3, 1044513);
+
+            // Stone Weapons
+            AddCraft(typeof(StoneWarSword), 1111719, 1022304, 55.0, 105.0, typeof(Granite), 1044514, 18, 1044513);
+
+            // Stone Walls
+            index = AddCraft(typeof(CraftableHouseItem), 1155792, 1155794, 60.0, 110.0, typeof(Granite), 1044514, 10, 1044513);
+            SetData(index, CraftableItemType.RoughWindowless);
+            SetDisplayID(index, 464);
+
+            index = AddCraft(typeof(CraftableHouseItem), 1155792, 1155797, 60.0, 110.0, typeof(Granite), 1044514, 10, 1044513);
+            SetData(index, CraftableItemType.RoughWindow);
+            SetDisplayID(index, 467);
+
+            index = AddCraft(typeof(CraftableHouseItem), 1155792, 1155799, 60.0, 110.0, typeof(Granite), 1044514, 10, 1044513);
+            SetData(index, CraftableItemType.RoughArch);
+            SetDisplayID(index, 469);
+
+            index = AddCraft(typeof(CraftableHouseItem), 1155792, 1155804, 60.0, 110.0, typeof(Granite), 1044514, 10, 1044513);
+            SetData(index, CraftableItemType.RoughPillar);
+            SetDisplayID(index, 474);
+
+            index = AddCraft(typeof(CraftableHouseItem), 1155792, 1155805, 60.0, 110.0, typeof(Granite), 1044514, 10, 1044513);
+            SetData(index, CraftableItemType.RoughRoundedArch);
+            SetDisplayID(index, 475);
+
+            index = AddCraft(typeof(CraftableHouseItem), 1155792, 1155810, 60.0, 110.0, typeof(Granite), 1044514, 10, 1044513);
+            SetData(index, CraftableItemType.RoughSmallArch);
+            SetDisplayID(index, 480);
+
+            index = AddCraft(typeof(CraftableHouseItem), 1155792, 1155814, 60.0, 110.0, typeof(Granite), 1044514, 10, 1044513);
+            SetData(index, CraftableItemType.RoughAngledPillar);
+            SetDisplayID(index, 486);
+
+            index = AddCraft(typeof(CraftableHouseItem), 1155792, 1155816, 60.0, 110.0, typeof(Granite), 1044514, 10, 1044513);
+            SetData(index, CraftableItemType.ShortRough);
+            SetDisplayID(index, 488);
+
+            index = AddCraft(typeof(CraftableStoneHouseDoor), 1155792, 1156078, 60.0, 110.0, typeof(Granite), 1044514, 10, 1044513);
+            SetData(index, DoorType.StoneDoor_S_In);
+            SetDisplayID(index, 804);
+            AddCreateItem(index, CraftableStoneHouseDoor.Create);
+
+            index = AddCraft(typeof(CraftableStoneHouseDoor), 1155792, 1156079, 60.0, 110.0, typeof(Granite), 1044514, 10, 1044513);
+            SetData(index, DoorType.StoneDoor_E_Out);
+            SetDisplayID(index, 805);
+            AddCreateItem(index, CraftableStoneHouseDoor.Create);
+
+            index = AddCraft(typeof(CraftableStoneHouseDoor), 1155792, 1156348, 60.0, 110.0, typeof(Granite), 1044514, 10, 1044513);
+            SetData(index, DoorType.StoneDoor_S_Out);
+            SetDisplayID(index, 804);
+            AddCreateItem(index, CraftableStoneHouseDoor.Create);
+
+            index = AddCraft(typeof(CraftableStoneHouseDoor), 1155792, 1156349, 60.0, 110.0, typeof(Granite), 1044514, 10, 1044513);
+            SetData(index, DoorType.StoneDoor_E_In);
+            SetDisplayID(index, 805);
+            AddCreateItem(index, CraftableStoneHouseDoor.Create);
+
+            // Stone Stairs
+            index = AddCraft(typeof(CraftableHouseItem), 1155820, 1155821, 60.0, 110.0, typeof(Granite), 1044514, 5, 1044513);
+            SetData(index, CraftableItemType.RoughBlock);
+            SetDisplayID(index, 1928);
+
+            index = AddCraft(typeof(CraftableHouseItem), 1155820, 1155822, 60.0, 110.0, typeof(Granite), 1044514, 5, 1044513);
+            SetData(index, CraftableItemType.RoughSteps);
+            SetDisplayID(index, 1929);
+
+            index = AddCraft(typeof(CraftableHouseItem), 1155820, 1155826, 60.0, 110.0, typeof(Granite), 1044514, 5, 1044513);
+            SetData(index, CraftableItemType.RoughCornerSteps);
+            SetDisplayID(index, 1934);
+
+            index = AddCraft(typeof(CraftableHouseItem), 1155820, 1155830, 60.0, 110.0, typeof(Granite), 1044514, 5, 1044513);
+            SetData(index, CraftableItemType.RoughRoundedCornerSteps);
+            SetDisplayID(index, 1938);
+
+            index = AddCraft(typeof(CraftableHouseItem), 1155820, 1155834, 60.0, 110.0, typeof(Granite), 1044514, 5, 1044513);
+            SetData(index, CraftableItemType.RoughInsetSteps);
+            SetDisplayID(index, 1941);
+
+            index = AddCraft(typeof(CraftableHouseItem), 1155820, 1155838, 60.0, 110.0, typeof(Granite), 1044514, 5, 1044513);
+            SetData(index, CraftableItemType.RoughRoundedInsetSteps);
+            SetDisplayID(index, 1945);
+
+            // Stone Floors
+            index = AddCraft(typeof(CraftableHouseItem), 1155877, 1155878, 60.0, 110.0, typeof(Granite), 1044514, 5, 1044513);
+            SetData(index, CraftableItemType.LightPaver);
+            SetDisplayID(index, 1305);
+
+            index = AddCraft(typeof(CraftableHouseItem), 1155877, 1155879, 60.0, 110.0, typeof(Granite), 1044514, 5, 1044513);
+            SetData(index, CraftableItemType.MediumPaver);
+            SetDisplayID(index, 1309);
+
+            index = AddCraft(typeof(CraftableHouseItem), 1155877, 1155880, 60.0, 110.0, typeof(Granite), 1044514, 5, 1044513);
+            SetData(index, CraftableItemType.DarkPaver);
+            SetDisplayID(index, 1313);
 
             MarkOption = true;
             Repair = true;

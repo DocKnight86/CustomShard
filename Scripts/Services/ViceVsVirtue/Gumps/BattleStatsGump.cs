@@ -18,9 +18,7 @@ namespace Server.Engines.VvV
             Guild myGuild = pm.Guild as Guild;
 
             if (leader == null || leader.Guild == null || myGuild == null)
-            {
                 return;
-            }
 
             AddBackground(0, 0, 500, 500, 9380);
 

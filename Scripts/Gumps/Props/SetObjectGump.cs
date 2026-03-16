@@ -81,9 +81,7 @@ namespace Server.Gumps
             x += EntryWidth + OffsetSize;
 
             if (SetGumpID != 0)
-            {
                 AddImageTiled(x, y, SetWidth, EntryHeight, SetGumpID);
-            }
 
             x = BorderSize + OffsetSize;
             y += EntryHeight + OffsetSize;
@@ -93,9 +91,7 @@ namespace Server.Gumps
             x += EntryWidth + OffsetSize;
 
             if (SetGumpID != 0)
-            {
                 AddImageTiled(x, y, SetWidth, EntryHeight, SetGumpID);
-            }
 
             AddButton(x + SetOffsetX, y + SetOffsetY, SetButtonID1, SetButtonID2, 1, GumpButtonType.Reply, 0);
 
@@ -107,9 +103,7 @@ namespace Server.Gumps
             x += EntryWidth + OffsetSize;
 
             if (SetGumpID != 0)
-            {
                 AddImageTiled(x, y, SetWidth, EntryHeight, SetGumpID);
-            }
 
             AddButton(x + SetOffsetX, y + SetOffsetY, SetButtonID1, SetButtonID2, 2, GumpButtonType.Reply, 0);
 
@@ -121,9 +115,7 @@ namespace Server.Gumps
             x += EntryWidth + OffsetSize;
 
             if (SetGumpID != 0)
-            {
                 AddImageTiled(x, y, SetWidth, EntryHeight, SetGumpID);
-            }
 
             AddButton(x + SetOffsetX, y + SetOffsetY, SetButtonID1, SetButtonID2, 3, GumpButtonType.Reply, 0);
 
@@ -135,9 +127,7 @@ namespace Server.Gumps
             x += EntryWidth + OffsetSize;
 
             if (SetGumpID != 0)
-            {
                 AddImageTiled(x, y, SetWidth, EntryHeight, SetGumpID);
-            }
 
             AddButton(x + SetOffsetX, y + SetOffsetY, SetButtonID1, SetButtonID2, 4, GumpButtonType.Reply, 0);
         }
@@ -194,17 +184,11 @@ namespace Server.Gumps
                         object obj = m_Property.GetValue(m_Object, null);
 
                         if (obj == null)
-                        {
                             m_Mobile.SendMessage("The property is null and so you cannot view its properties.");
-                        }
                         else if (!BaseCommand.IsAccessible(m_Mobile, obj))
-                        {
                             m_Mobile.SendMessage("You may not view their properties.");
-                        }
                         else
-                        {
                             viewProps = obj;
-                        }
 
                         break;
                     }
@@ -232,14 +216,10 @@ namespace Server.Gumps
             }
 
             if (shouldSend)
-            {
                 m_Mobile.SendGump(new SetObjectGump(m_Property, m_Mobile, m_Object, m_Stack, m_Type, m_Page, m_List));
-            }
 
             if (viewProps != null)
-            {
                 m_Mobile.SendGump(new PropertiesGump(m_Mobile, viewProps));
-            }
         }
 
         private class InternalPrompt : Prompt

@@ -10,15 +10,7 @@ namespace Server.Engines.Exodus
         public static bool Active
         {
             get => m_Active;
-            set { if (value)
-                {
-                    Start();
-                }
-                else
-                {
-                    Stop();
-                }
-            }
+            set { if (value) Start(); else Stop(); }
         }
 
         private static ClockworkExodus m_Mobile;
@@ -70,17 +62,13 @@ namespace Server.Engines.Exodus
             m_Mobile = (ClockworkExodus)reader.ReadMobile();
 
             if (Map == Map.Ilshenar)
-            {
                 IlshenarInstance = this;
-            }
         }
 
         public static void Start()
         {
             if (m_Active)
-            {
                 return;
-            }
 
             m_Active = true;
 
@@ -99,9 +87,7 @@ namespace Server.Engines.Exodus
         public static void Stop()
         {
             if (!m_Active)
-            {
                 return;
-            }
 
             m_Active = false;
             m_Mobile.Delete();

@@ -132,16 +132,12 @@ namespace Server.Engines.Plants
         public static PlantPigmentHue HueFromPlantHue(PlantHue hue)
         {
             if (hue == PlantHue.None || hue == PlantHue.Plain)
-            {
                 return PlantPigmentHue.Plain;
-            }
 
             foreach (KeyValuePair<PlantPigmentHue, PlantPigmentHueInfo> kvp in m_Table)
             {
                 if (kvp.Value.PlantHue == hue)
-                {
                     return kvp.Key;
-                }
             }
 
             return PlantPigmentHue.Plain;
@@ -150,9 +146,7 @@ namespace Server.Engines.Plants
         public static PlantPigmentHueInfo GetInfo(PlantPigmentHue hue)
         {
             if (!m_Table.ContainsKey(hue))
-            {
                 return m_Table[PlantPigmentHue.Plain];
-            }
 
             return m_Table[hue];
         }
@@ -175,57 +169,34 @@ namespace Server.Engines.Plants
         public static PlantPigmentHue Mix(PlantPigmentHue first, PlantPigmentHue second)
         {
             if (!IsMixable(first) || !IsMixable(second))
-            {
                 return PlantPigmentHue.None;
-            }
 
             if (first == second && (PlantPigmentHue.Plain == first || PlantPigmentHue.Black == first || PlantPigmentHue.White == first))
-            {
                 return PlantPigmentHue.None;
-            }
 
             if (first == second)
-            {
                 return second | PlantPigmentHue.Bright;
-            }
 
             if (first == PlantPigmentHue.Plain)
-            {
                 return second | PlantPigmentHue.Bright;
-            }
-
             if (second == PlantPigmentHue.Plain)
-            {
                 return first | PlantPigmentHue.Bright;
-            }
 
             if (first == PlantPigmentHue.White)
-            {
                 return second | PlantPigmentHue.Ice;
-            }
-
             if (second == PlantPigmentHue.White)
-            {
                 return first | PlantPigmentHue.Ice;
-            }
 
             if (first == PlantPigmentHue.Black)
-            {
                 return second | PlantPigmentHue.Dark;
-            }
-
             if (second == PlantPigmentHue.Black)
-            {
                 return first | PlantPigmentHue.Dark;
-            }
 
             bool firstPrimary = IsPrimary(first);
             bool secondPrimary = IsPrimary(second);
 
             if (firstPrimary && secondPrimary)
-            {
                 return first | second;
-            }
 
             //
             // not sure after this point
@@ -238,14 +209,10 @@ namespace Server.Engines.Plants
             // 
 
             if (firstPrimary && !secondPrimary)
-            {
                 return first;
-            }
 
             if (!firstPrimary && secondPrimary)
-            {
                 return second;
-            }
 
             return first & second;
         }

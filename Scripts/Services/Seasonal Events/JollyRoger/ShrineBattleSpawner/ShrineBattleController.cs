@@ -54,13 +54,9 @@ namespace Server.Engines.JollyRoger
             set
             {
                 if (value)
-                {
                     BeginInvasion();
-                }
                 else
-                {
                     RemoveSpawn();
-                }
             }
         }
 
@@ -74,9 +70,7 @@ namespace Server.Engines.JollyRoger
             set
             {
                 if (!value)
-                {
                     return;
-                }
 
                 RemoveSpawn();
                 BeginInvasion();
@@ -216,9 +210,7 @@ namespace Server.Engines.JollyRoger
         public void BeginInvasion()
         {
             if (m_Active || Deleted)
-            {
                 return;
-            }
 
             m_Active = true;
 
@@ -249,9 +241,7 @@ namespace Server.Engines.JollyRoger
                 Misc.Geometry.Circle2D(p, Map, 4, (pnt, map) =>
                 {
                     if (Map.CanSpawnMobile(pnt.X, pnt.Y, pnt.Z))
-                    {
                         points.Add(pnt);
-                    }
                 });
 
                 if (points.Count == 0)
@@ -342,9 +332,7 @@ namespace Server.Engines.JollyRoger
         public void CleanupSpawn()
         {
             if (Spawn == null)
-            {
                 return;
-            }
 
             List<BaseCreature> list = null;
 
@@ -375,7 +363,7 @@ namespace Server.Engines.JollyRoger
 
         public static Item CreateItem(Mobile damager)
         {
-            Item i = Loot.RandomArmorOrShieldOrWeaponOrJewelry();
+            Item i = Loot.RandomArmorOrShieldOrWeaponOrJewelry(LootPackEntry.IsInTokuno(damager), LootPackEntry.IsMondain(damager), LootPackEntry.IsStygian(damager));
 
             if (i != null)
             {
@@ -388,9 +376,7 @@ namespace Server.Engines.JollyRoger
         public void RemoveSpawn()
         {
             if (!m_Active || Deleted || Spawn == null)
-            {
                 return;
-            }
 
             m_Active = false;
 
@@ -478,9 +464,7 @@ namespace Server.Engines.JollyRoger
                 }
 
                 if (captain != null)
-                {
                     Spawn[captain] = list;
-                }
                 else
                 {
                     list.Clear();

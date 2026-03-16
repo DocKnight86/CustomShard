@@ -83,45 +83,27 @@ namespace Server.Mobiles
             AddItem(new LeatherNinjaMitts());
 
             if (Utility.RandomDouble() < 0.33)
-            {
                 PackItem(new SmokeBomb());
-            }
 
             if (Utility.RandomBool())
-            {
                 PackItem(new Tessen());
-            }
             else
-            {
                 PackItem(new Wakizashi());
-            }
 
             if (Utility.RandomBool())
-            {
                 PackItem(new Nunchaku());
-            }
             else
-            {
                 PackItem(new Daisho());
-            }
 
             if (Utility.RandomBool())
-            {
                 PackItem(new Sai());
-            }
             else
-            {
                 PackItem(new Tekagi());
-            }
 
             if (Utility.RandomBool())
-            {
                 PackItem(new Kama());
-            }
             else
-            {
                 PackItem(new Katana());
-            }
 
             Utility.AssignRandomHair(this);
             ChangeWeapon();
@@ -147,33 +129,25 @@ namespace Server.Mobiles
         private void ChangeWeapon()
         {
             if (Backpack == null)
-            {
                 return;
-            }
 
             Item item = FindItemOnLayer(Layer.OneHanded);
 
             if (item == null)
-            {
                 item = FindItemOnLayer(Layer.TwoHanded);
-            }
 
             System.Collections.Generic.List<BaseWeapon> weapons = new System.Collections.Generic.List<BaseWeapon>();
 
             foreach (Item i in Backpack.Items)
             {
                 if (i is BaseWeapon weapon && i != item)
-                {
                     weapons.Add(weapon);
-                }
             }
 
             if (weapons.Count > 0)
             {
                 if (item != null)
-                {
                     Backpack.DropItem(item);
-                }
 
                 AddItem(weapons[Utility.Random(weapons.Count)]);
 
@@ -188,9 +162,7 @@ namespace Server.Mobiles
             base.OnThink();
 
             if (Combatant != null && m_NextWeaponChange < DateTime.UtcNow)
-            {
                 ChangeWeapon();
-            }
         }
 
         public EliteNinja(Serial serial) : base(serial)

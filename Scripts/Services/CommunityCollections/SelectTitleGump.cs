@@ -26,18 +26,12 @@ namespace Server.Gumps
             if (page > -1 && page < from.RewardTitles.Count)
             {
                 if (from.RewardTitles[page] is int)
-                {
                     AddHtmlLocalized(20, 35, 230, 40, (int)from.RewardTitles[page], 0x32, true, false);
-                }
                 else if (from.RewardTitles[page] is string)
-                {
                     AddHtml(20, 35, 230, 40, $"<BASEFONT COLOR=#{0x32:X6}>{(string)from.RewardTitles[page]}</BASEFONT>", true, false);
-                }
             }
             else
-            {
                 AddHtmlLocalized(20, 35, 230, 40, 1073995, 0x32, true, false);
-            }
 
             AddHtmlLocalized(55, 80, 75, 20, 1073996, 0x0, false, false); // ACCEPT
             AddHtmlLocalized(170, 80, 75, 20, 1073997, 0x0, false, false); // NEXT
@@ -61,17 +55,11 @@ namespace Server.Gumps
                     break;
                 case (int)Buttons.Next:
                     if (m_Page == m_From.RewardTitles.Count - 1)
-                    {
                         m_From.SendGump(new SelectTitleGump(m_From, -1));
-                    }
                     else if (m_Page < m_From.RewardTitles.Count - 1 && m_Page > -1)
-                    {
                         m_From.SendGump(new SelectTitleGump(m_From, m_Page + 1));
-                    }
                     else
-                    {
                         m_From.SendGump(new SelectTitleGump(m_From, 0));
-                    }
 
                     break;
             }

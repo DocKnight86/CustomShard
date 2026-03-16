@@ -60,17 +60,11 @@ namespace Server.Engines.Plants
             set
             {
                 if (value < 0)
-                {
                     m_Water = 0;
-                }
                 else if (value > 4)
-                {
                     m_Water = 4;
-                }
                 else
-                {
                     m_Water = value;
-                }
 
                 Plant.InvalidateProperties();
             }
@@ -82,27 +76,17 @@ namespace Server.Engines.Plants
             set
             {
                 if (m_Hits == value)
-                {
                     return;
-                }
 
                 if (value < 0)
-                {
                     m_Hits = 0;
-                }
                 else if (value > MaxHits)
-                {
                     m_Hits = MaxHits;
-                }
                 else
-                {
                     m_Hits = value;
-                }
 
                 if (m_Hits == 0)
-                {
                     Plant.Die();
-                }
 
                 Plant.InvalidateProperties();
             }
@@ -117,19 +101,11 @@ namespace Server.Engines.Plants
                 int perc = m_Hits * 100 / MaxHits;
 
                 if (perc < 33)
-                {
                     return PlantHealth.Dying;
-                }
-
                 if (perc < 66)
-                {
                     return PlantHealth.Wilted;
-                }
-
                 if (perc < 100)
-                {
                     return PlantHealth.Healthy;
-                }
 
                 return PlantHealth.Vibrant;
             }
@@ -141,17 +117,11 @@ namespace Server.Engines.Plants
             set
             {
                 if (value < 0)
-                {
                     m_Infestation = 0;
-                }
                 else if (value > 2)
-                {
                     m_Infestation = 2;
-                }
                 else
-                {
                     m_Infestation = value;
-                }
             }
         }
 
@@ -161,17 +131,11 @@ namespace Server.Engines.Plants
             set
             {
                 if (value < 0)
-                {
                     m_Fungus = 0;
-                }
                 else if (value > 2)
-                {
                     m_Fungus = 2;
-                }
                 else
-                {
                     m_Fungus = value;
-                }
             }
         }
 
@@ -181,17 +145,11 @@ namespace Server.Engines.Plants
             set
             {
                 if (value < 0)
-                {
                     m_Poison = 0;
-                }
                 else if (value > 2)
-                {
                     m_Poison = 2;
-                }
                 else
-                {
                     m_Poison = value;
-                }
             }
         }
 
@@ -201,17 +159,11 @@ namespace Server.Engines.Plants
             set
             {
                 if (value < 0)
-                {
                     m_Disease = 0;
-                }
                 else if (value > 2)
-                {
                     m_Disease = 2;
-                }
                 else
-                {
                     m_Disease = value;
-                }
             }
         }
 
@@ -222,17 +174,11 @@ namespace Server.Engines.Plants
             set
             {
                 if (value < 0)
-                {
                     m_PoisonPotion = 0;
-                }
                 else if (value > 2)
-                {
                     m_PoisonPotion = 2;
-                }
                 else
-                {
                     m_PoisonPotion = value;
-                }
             }
         }
 
@@ -243,17 +189,11 @@ namespace Server.Engines.Plants
             set
             {
                 if (value < 0)
-                {
                     m_CurePotion = 0;
-                }
                 else if (value > 2)
-                {
                     m_CurePotion = 2;
-                }
                 else
-                {
                     m_CurePotion = value;
-                }
             }
         }
 
@@ -264,17 +204,11 @@ namespace Server.Engines.Plants
             set
             {
                 if (value < 0)
-                {
                     m_HealPotion = 0;
-                }
                 else if (value > 2)
-                {
                     m_HealPotion = 2;
-                }
                 else
-                {
                     m_HealPotion = value;
-                }
             }
         }
 
@@ -285,17 +219,11 @@ namespace Server.Engines.Plants
             set
             {
                 if (value < 0)
-                {
                     m_StrengthPotion = 0;
-                }
                 else if (value > 2)
-                {
                     m_StrengthPotion = 2;
-                }
                 else
-                {
                     m_StrengthPotion = value;
-                }
             }
         }
 
@@ -336,41 +264,25 @@ namespace Server.Engines.Plants
         public int AvailableSeeds
         {
             get => m_AvailableSeeds;
-            set { if (value >= 0)
-                {
-                    m_AvailableSeeds = value;
-                }
-            }
+            set { if (value >= 0) m_AvailableSeeds = value; }
         }
 
         public int LeftSeeds
         {
             get => m_LeftSeeds;
-            set { if (value >= 0)
-                {
-                    m_LeftSeeds = value;
-                }
-            }
+            set { if (value >= 0) m_LeftSeeds = value; }
         }
 
         public int AvailableResources
         {
             get => m_AvailableResources;
-            set { if (value >= 0)
-                {
-                    m_AvailableResources = value;
-                }
-            }
+            set { if (value >= 0) m_AvailableResources = value; }
         }
 
         public int LeftResources
         {
             get => m_LeftResources;
-            set { if (value >= 0)
-                {
-                    m_LeftResources = value;
-                }
-            }
+            set { if (value >= 0) m_LeftResources = value; }
         }
 
         public PlantSystem(PlantItem plant, bool fertileDirt)
@@ -415,24 +327,14 @@ namespace Server.Engines.Plants
         public int GetLocalizedDirtStatus()
         {
             if (!Plant.RequiresUpkeep)
-            {
                 return 1060827; // soft
-            }
 
             if (Water <= 1)
-            {
                 return 1060826; // hard
-            }
-
             if (Water <= 2)
-            {
                 return 1060827; // soft
-            }
-
             if (Water <= 3)
-            {
                 return 1060828; // squishy
-            }
 
             return 1060829; // sopping wet
         }
@@ -453,9 +355,7 @@ namespace Server.Engines.Plants
             EventSink.WorldLoad += EventSink_WorldLoad;
 
             if (!Misc.AutoRestart.Enabled)
-            {
                 EventSink.WorldSave += EventSink_WorldSave;
-            }
         }
 
         public static void OnLogin(Mobile from)
@@ -503,9 +403,7 @@ namespace Server.Engines.Plants
                 PlantItem plant = (PlantItem)plants[i];
 
                 if (plant.IsGrowable && plant.RootParent as Mobile == null && now >= plant.PlantSystem.NextGrowth)
-                {
                     plant.PlantSystem.DoGrowthCheck();
-                }
             }
         }
 
@@ -524,9 +422,7 @@ namespace Server.Engines.Plants
         public void DoGrowthCheck()
         {
             if (!Plant.IsGrowable)
-            {
                 return;
-            }
 
             if (DateTime.UtcNow < NextGrowth)
             {
@@ -547,27 +443,20 @@ namespace Server.Engines.Plants
                 if (Plant.PlantStatus == PlantStatus.BowlOfDirt)
                 {
                     if (Water > 2 || Utility.RandomDouble() < 0.9)
-                    {
                         Water--;
-                    }
-
                     return;
                 }
 
                 ApplyBeneficEffects();
 
                 if (!ApplyMaladiesEffects()) // Dead
-                {
                     return;
-                }
             }
 
             Grow();
 
             if (!MaginciaPlantContract)
-            {
                 UpdateMaladies();
-            }
         }
 
         private void ApplyBeneficEffects()
@@ -619,13 +508,9 @@ namespace Server.Engines.Plants
             if (!HasMaladies)
             {
                 if (HealPotion > 0)
-                {
                     Hits += HealPotion * 7;
-                }
                 else
-                {
                     Hits += 2;
-                }
             }
 
             HealPotion = 0;
@@ -634,40 +519,26 @@ namespace Server.Engines.Plants
         private bool ApplyMaladiesEffects()
         {
             if (!Plant.RequiresUpkeep)
-            {
                 return true;
-            }
 
             int damage = 0;
 
             if (Infestation > 0)
-            {
                 damage += Infestation * Utility.RandomMinMax(3, 6);
-            }
 
             if (Fungus > 0)
-            {
                 damage += Fungus * Utility.RandomMinMax(3, 6);
-            }
 
             if (Poison > 0)
-            {
                 damage += Poison * Utility.RandomMinMax(3, 6);
-            }
 
             if (Disease > 0)
-            {
                 damage += Disease * Utility.RandomMinMax(3, 6);
-            }
 
             if (Water > 2)
-            {
                 damage += (Water - 2) * Utility.RandomMinMax(3, 6);
-            }
             else if (Water < 2)
-            {
                 damage += (2 - Water) * Utility.RandomMinMax(3, 6);
-            }
 
             Hits -= damage;
 
@@ -722,40 +593,28 @@ namespace Server.Engines.Plants
         private void UpdateMaladies()
         {
             if (!Plant.RequiresUpkeep)
-            {
                 return;
-            }
 
             double infestationChance = 0.30 - StrengthPotion * 0.075 + (Water - 2) * 0.10;
 
             PlantTypeInfo typeInfo = PlantTypeInfo.GetInfo(Plant.PlantType);
             if (typeInfo.Flowery)
-            {
                 infestationChance += 0.10;
-            }
 
             if (PlantHueInfo.IsBright(Plant.PlantHue))
-            {
                 infestationChance += 0.10;
-            }
 
             if (Utility.RandomDouble() < infestationChance)
-            {
                 Infestation++;
-            }
 
 
             double fungusChance = 0.15 - StrengthPotion * 0.075 + (Water - 2) * 0.10;
 
             if (Utility.RandomDouble() < fungusChance)
-            {
                 Fungus++;
-            }
 
             if (Water > 2 || Utility.RandomDouble() < 0.9)
-            {
                 Water--;
-            }
 
             if (PoisonPotion > 0)
             {
@@ -812,13 +671,9 @@ namespace Server.Engines.Plants
             FertileDirt = reader.ReadBool();
 
             if (version >= 1)
-            {
                 NextGrowth = reader.ReadDateTime();
-            }
             else
-            {
                 NextGrowth = reader.ReadDeltaTime();
-            }
 
             GrowthIndicator = (PlantGrowthIndicator)reader.ReadInt();
 
@@ -844,9 +699,7 @@ namespace Server.Engines.Plants
             m_LeftResources = reader.ReadInt();
 
             if (version < 2 && PlantHueInfo.IsCrossable(m_SeedHue))
-            {
                 m_SeedHue |= PlantHue.Reproduces;
-            }
         }
     }
 }

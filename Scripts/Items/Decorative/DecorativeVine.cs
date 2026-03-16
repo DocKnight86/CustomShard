@@ -13,9 +13,7 @@ namespace Server.Items
             : base(0x2CF9)
         {
             if (v < 0 || v > 3)
-            {
                 v = 0;
-            }
 
             ItemID += v;
             Weight = 1.0;

@@ -60,9 +60,7 @@ namespace Server.Engines.MyrmidexInvasion
                 Damage *= 3;
 
                 if (Damage > 0)
-                {
                     m.FixedEffect(0x37B9, 10, 5);
-                }
             }
 
             return base.OnDamage(m, ref Damage);

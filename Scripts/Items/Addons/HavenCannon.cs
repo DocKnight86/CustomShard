@@ -103,17 +103,13 @@ namespace Server.Engines.Quests.Haven
             target.Damage(9999, from);
 
             if (target.Corpse != null)
-            {
                 target.Corpse.Delete();
-            }
         }
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
             if (m_Canoneer == null || m_Canoneer.Deleted || !m_Canoneer.Active)
-            {
                 return;
-            }
 
             bool canFire;
             switch (m_CannonDirection)
@@ -133,17 +129,13 @@ namespace Server.Engines.Quests.Haven
             }
 
             if (canFire && m_Canoneer.WillFire(this, m))
-            {
                 Fire(m_Canoneer, m);
-            }
         }
 
         public override void Serialize(GenericWriter writer)
         {
             if (m_Canoneer != null && m_Canoneer.Deleted)
-            {
                 m_Canoneer = null;
-            }
 
             base.Serialize(writer);
 
@@ -183,9 +175,7 @@ namespace Server.Engines.Quests.Haven
             set
             {
                 if (Addon is Cannon cannon)
-                {
                     cannon.Canoneer = value;
-                }
             }
         }
 

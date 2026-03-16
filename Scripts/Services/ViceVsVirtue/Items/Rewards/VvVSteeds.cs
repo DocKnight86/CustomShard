@@ -89,9 +89,7 @@ namespace Server.Engines.VvV
                 _Readiness = value;
 
                 if (_Readiness > 20)
-                {
                     _Readiness = 20;
-                }
 
                 if (old != value && ControlMaster != null && ControlMaster.NetState != null)
                 {
@@ -100,39 +98,27 @@ namespace Server.Engines.VvV
                     if (old > value)
                     {
                         if (_Readiness < 5)
-                        {
                             cliloc = 1155551; // *Your steed's battle readiness is dangerously low!*
-                        }
                         else
-                        {
                             cliloc = 1155549; // *Your steed's battle readiness is fading...*
-                        }
                     }
                     else
                     {
                         if (_Readiness == 20)
-                        {
                             cliloc = 1155553; // *Your steed is at maximum battle readiness!*
-                        }
                         else
-                        {
                             cliloc = 1155552;// *Your steed's battle readiness has increased!*
-                        }
                     }
 
                     Timer.DelayCall(TimeSpan.FromSeconds(1), () =>
                     {
                         if (!Deleted && ControlMaster != null)
-                        {
                             ControlMaster.PrivateOverheadMessage(Network.MessageType.Regular, 1154, cliloc, ControlMaster.NetState);
-                        }
                     });
                 }
 
                 if (_Readiness <= 0)
-                {
                     GoPoof();
-                }
             }
         }
 
@@ -147,13 +133,9 @@ namespace Server.Engines.VvV
             Hue = hue;
 
             if (id == 0xDA)
-            {
                 BaseSoundID = 0x275;
-            }
             else
-            {
                 BaseSoundID = 0xA8;
-            }
 
             InitStats(Utility.Random(300, 100), 125, 60);
 
@@ -199,9 +181,7 @@ namespace Server.Engines.VvV
             }
 
             if (ControlMaster != null && ControlMaster.NetState != null)
-            {
                 ControlMaster.PrivateOverheadMessage(Network.MessageType.Regular, 1154, 1155550, ControlMaster.NetState); // *Your steed has depleted it's battle readiness!*
-            }
 
             Delete();
         }
@@ -223,9 +203,7 @@ namespace Server.Engines.VvV
             base.OnDeath(c);
 
             if (BattleReadiness > 1)
-            {
                 BattleReadiness--;
-            }
         }
 
         public override bool OnDragDrop(Mobile from, Item dropped)
@@ -261,9 +239,7 @@ namespace Server.Engines.VvV
         public override bool CanTransfer(Mobile m)
         {
             if (ControlMaster != null && ControlMaster.NetState != null)
-            {
                 ControlMaster.SendLocalizedMessage(1155547); // Pets obtained from VvV are non-transferable.
-            }
 
             return false;
         }
@@ -271,9 +247,7 @@ namespace Server.Engines.VvV
         public override bool CanFriend(Mobile m)
         {
             if (ControlMaster != null && ControlMaster.NetState != null)
-            {
                 ControlMaster.SendLocalizedMessage(1155548); // You may not add friends to a VvV War Steed.
-            }
 
             return false;
         }
@@ -339,9 +313,7 @@ namespace Server.Engines.VvV
                         s.BattleReadiness--;
 
                         if (!s.Deleted)
-                        {
                             s.NextReadinessAtrophy = DateTime.UtcNow + TimeSpan.FromHours(24);
-                        }
                     }
                 });
 

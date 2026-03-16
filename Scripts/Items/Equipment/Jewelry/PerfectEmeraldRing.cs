@@ -11,13 +11,9 @@ namespace Server.Items
             BaseRunicTool.ApplyAttributesTo(this, true, 0, Utility.RandomMinMax(2, 4), 0, 100);
 
             if (Utility.RandomBool())
-            {
                 Resistances.Poison += 10;
-            }
             else
-            {
                 Attributes.SpellDamage += 5;
-            }
         }
 
         public PerfectEmeraldRing(Serial serial)

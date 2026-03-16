@@ -159,9 +159,7 @@ namespace Server.Mobiles
             FightMode = FightMode.Aggressor;
 
             if (wall != null)
-            {
                 Title = "the wall guardian";
-            }
 
             Hue = 638;
             Wall = wall;
@@ -709,9 +707,7 @@ namespace Server.Mobiles
         public override void AlterSpellDamageFrom(Mobile from, ref int damage)
         {
             if (from is BaseCreature creature && (creature.Summoned || creature.Controlled))
-            {
                 damage /= 2;
-            }
 
             base.AlterSpellDamageFrom(from, ref damage);
         }
@@ -719,9 +715,7 @@ namespace Server.Mobiles
         public override void AlterMeleeDamageFrom(Mobile from, ref int damage)
         {
             if (from is BaseCreature creature && (creature.Summoned || creature.Controlled))
-            {
                 damage /= 2;
-            }
 
             base.AlterMeleeDamageFrom(from, ref damage);
         }
@@ -911,9 +905,7 @@ namespace Server.Mobiles
         public static void DoDivertEffects(Mobile attacker, Mobile defender)
         {
             if (DivertTable == null)
-            {
                 DivertTable = new Dictionary<Mobile, Mobile>();
-            }
 
             if (!DivertTable.ContainsKey(defender))
             {
@@ -935,9 +927,7 @@ namespace Server.Mobiles
         public static void DoTaintEffects(Mobile from)
         {
             if (TaintTable == null)
-            {
                 TaintTable = new List<Mobile>();
-            }
 
             if (!TaintTable.Contains(from))
             {
@@ -1177,14 +1167,10 @@ namespace Server.Mobiles
         public override void AlterSpellDamageFrom(Mobile from, ref int damage)
         {
             if (from is BaseCreature creature && (creature.Summoned || creature.Controlled))
-            {
                 damage /= 2;
-            }
 
             if (NextTeleport < DateTime.UtcNow)
-            {
                 DoTeleport(from);
-            }
 
             base.AlterSpellDamageFrom(from, ref damage);
         }
@@ -1192,14 +1178,10 @@ namespace Server.Mobiles
         public override void AlterMeleeDamageFrom(Mobile from, ref int damage)
         {
             if (from is BaseCreature creature && (creature.Summoned || creature.Controlled))
-            {
                 damage /= 2;
-            }
 
             if (NextTeleport < DateTime.UtcNow)
-            {
                 DoTeleport(from);
-            }
 
             base.AlterMeleeDamageFrom(from, ref damage);
         }
@@ -1225,9 +1207,7 @@ namespace Server.Mobiles
                 }
 
                 if (p == Point3D.Zero)
-                {
                     p = Location;
-                }
 
                 Point3D from = m.Location;
 
@@ -1320,14 +1300,10 @@ namespace Server.Mobiles
         public override void AlterSpellDamageFrom(Mobile from, ref int damage)
         {
             if (from is BaseCreature creature && (creature.Summoned || creature.Controlled))
-            {
                 damage /= 2;
-            }
 
             if (NextTeleport < DateTime.UtcNow)
-            {
                 DoTeleport(from);
-            }
 
             base.AlterSpellDamageFrom(from, ref damage);
         }
@@ -1335,14 +1311,10 @@ namespace Server.Mobiles
         public override void AlterMeleeDamageFrom(Mobile from, ref int damage)
         {
             if (from is BaseCreature creature && (creature.Summoned || creature.Controlled))
-            {
                 damage /= 2;
-            }
 
             if (NextTeleport < DateTime.UtcNow)
-            {
                 DoTeleport(from);
-            }
 
             base.AlterMeleeDamageFrom(from, ref damage);
         }
@@ -1368,9 +1340,7 @@ namespace Server.Mobiles
                 }
 
                 if (p == Point3D.Zero)
-                {
                     p = Location;
-                }
 
                 Point3D from = m.Location;
 

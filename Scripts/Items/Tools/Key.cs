@@ -118,9 +118,7 @@ namespace Server.Items
         public static void RemoveKeys(Mobile m, uint keyValue)
         {
             if (keyValue == 0)
-            {
                 return;
-            }
 
             RemoveKeys(m.Backpack, keyValue);
             RemoveKeys(m.BankBox, keyValue);
@@ -129,9 +127,7 @@ namespace Server.Items
         public static void RemoveKeys(Container cont, uint keyValue)
         {
             if (cont == null || keyValue == 0)
-            {
                 return;
-            }
 
             Item[] items = cont.FindItemsByType(new[] { typeof(Key), typeof(KeyRing) });
 
@@ -140,9 +136,7 @@ namespace Server.Items
                 if (item is Key key)
                 {
                     if (key.KeyValue == keyValue)
-                    {
                         key.Delete();
-                    }
                 }
                 else
                 {
@@ -156,9 +150,7 @@ namespace Server.Items
         public static bool ContainsKey(Container cont, uint keyValue)
         {
             if (cont == null)
-            {
                 return false;
-            }
 
             Item[] items = cont.FindItemsByType(new[] { typeof(Key), typeof(KeyRing) });
 
@@ -167,18 +159,14 @@ namespace Server.Items
                 if (item is Key key)
                 {
                     if (key.KeyValue == keyValue)
-                    {
                         return true;
-                    }
                 }
                 else
                 {
                     KeyRing keyRing = (KeyRing)item;
 
                     if (keyRing.ContainsKey(keyValue))
-                    {
                         return true;
-                    }
                 }
             }
 
@@ -234,9 +222,7 @@ namespace Server.Items
                 case 0:
                     {
                         if (version < 2 || m_MaxRange == 0)
-                        {
                             m_MaxRange = 3;
-                        }
 
                         m_Description = reader.ReadString();
 
@@ -278,18 +264,12 @@ namespace Server.Items
             string desc;
 
             if (m_KeyVal == 0)
-            {
                 desc = "(blank)";
-            }
             else if ((desc = m_Description) == null || (desc = desc.Trim()).Length <= 0)
-            {
                 desc = null;
-            }
 
             if (desc != null)
-            {
                 list.Add(desc);
-            }
 
             if (_Crafter != null)
             {
@@ -319,16 +299,12 @@ namespace Server.Items
             Quality = (ItemQuality)quality;
 
             if (makersMark)
-            {
                 Crafter = from;
-            }
 
             if (!craftItem.ForceNonExceptional)
             {
                 if (typeRes == null)
-                {
                     typeRes = craftItem.Resources.GetAt(0).ItemType;
-                }
 
                 Resource = CraftResources.GetFromType(typeRes);
             }
@@ -355,13 +331,9 @@ namespace Server.Items
                 if (o is Item item)
                 {
                     if (o.Locked)
-                    {
                         item.SendLocalizedMessageTo(from, 1048000); // You lock it.
-                    }
                     else
-                    {
                         item.SendLocalizedMessageTo(from, 1048001); // You unlock it.
-                    }
 
                     if (item is LockableContainer cont && cont.TrapType != TrapType.None && cont.TrapOnLockpick)
                     {
@@ -438,13 +410,9 @@ namespace Server.Items
                     }
 
                     if (m_Key.UseOn(from, lockable))
-                    {
                         number = -1;
-                    }
                     else
-                    {
                         number = 501668; // This key doesn't seem to unlock that.
-                    }
                 }
                 else
                 {

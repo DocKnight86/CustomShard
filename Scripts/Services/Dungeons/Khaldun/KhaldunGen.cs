@@ -70,9 +70,7 @@ namespace Server.Commands
         public static void CreateMorphItem(int x, int y, int z, int inactiveItemID, int activeItemID, int range)
         {
             if (FindMorphItem(x, y, z, inactiveItemID, activeItemID))
-            {
                 return;
-            }
 
             MorphItem item = new MorphItem(inactiveItemID, activeItemID, range, 3);
             WeakEntityCollection.Add("khaldun", item);
@@ -84,9 +82,7 @@ namespace Server.Commands
         public static void CreateApproachLight(int x, int y, int z, int off, int on, LightType light)
         {
             if (FindMorphItem(x, y, z, off, on))
-            {
                 return;
-            }
 
             MorphItem item = new MorphItem(off, on, 2, 3);
             WeakEntityCollection.Add("khaldun", item);
@@ -99,9 +95,7 @@ namespace Server.Commands
         public static void CreateSoundEffect(int x, int y, int z, int sound, int range)
         {
             if (FindEffectController(x, y, z))
-            {
                 return;
-            }
 
             EffectController item = new EffectController();
             WeakEntityCollection.Add("khaldun", item);
@@ -116,9 +110,7 @@ namespace Server.Commands
         public static void CreateBigTeleporterItem(int x, int y, bool reverse)
         {
             if (FindMorphItem(x, y, 0, reverse ? 0x17DC : 0x17EE, reverse ? 0x17EE : 0x17DC))
-            {
                 return;
-            }
 
             MorphItem item = new MorphItem(reverse ? 0x17DC : 0x17EE, reverse ? 0x17EE : 0x17DC, 1, 3);
             WeakEntityCollection.Add("khaldun", item);

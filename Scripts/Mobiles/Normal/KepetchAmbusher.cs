@@ -63,9 +63,7 @@ namespace Server.Mobiles
                 }
             }
             else
-            {
                 from.SendLocalizedMessage(1112358); // The Kepetch nimbly escapes your attempts to shear its mane.
-            }
 
             return false;
         }
@@ -195,13 +193,9 @@ namespace Server.Mobiles
             int version = reader.ReadInt();
 
             if (version == 1)
-            {
                 reader.ReadDeltaTime();
-            }
             else
-            {
                 GatheredFur = reader.ReadBool();
-            }
         }
     }
 }

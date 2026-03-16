@@ -1,5 +1,8 @@
+using Server.Engines.Craft;
+
 namespace Server.Items
 {
+    [Alterable(typeof(DefTailoring), typeof(FemaleGargishLeatherChest))]
     [Flipable(0x1c06, 0x1c07)]
     public class FemaleLeatherChest : BaseArmor
     {

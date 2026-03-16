@@ -43,9 +43,7 @@ namespace Server.Engines.VvV
         public override bool OnDragDrop(Mobile from, Item dropped)
         {
             if (ViceVsVirtueSystem.Instance == null || Battle == null)
-            {
                 return false;
-            }
 
             VvVPlayerEntry entry = ViceVsVirtueSystem.Instance.GetPlayerEntry<VvVPlayerEntry>(from);
 

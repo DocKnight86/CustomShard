@@ -90,9 +90,7 @@ namespace Server.Engines.VoidPool
                                 Container pack = mob.Backpack;
 
                                 if (pack == null || !pack.TryDropItem(mob, artifact, false))
-                                {
                                     mob.BankBox.DropItem(artifact);
-                                }
 
                                 mob.SendLocalizedMessage(1062317); // For your valor in combating the fallen beast, a special artifact has been bestowed on you.
                             }
@@ -128,9 +126,7 @@ namespace Server.Engines.VoidPool
         public override bool CheckTravel(Mobile m, Point3D newLocation, TravelCheckType travelType)
         {
             if (m.AccessLevel > AccessLevel.Player)
-            {
                 return true;
-            }
 
             switch (travelType)
             {

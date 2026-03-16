@@ -1,7 +1,9 @@
+#region References
 using Server.Items;
 using Server.Spells;
 using System;
 using System.Collections;
+#endregion
 
 namespace Server.Mobiles
 {
@@ -64,6 +66,37 @@ namespace Server.Mobiles
             AddLoot(LootPack.MageryRegs, 10, 15);
             AddLoot(LootPack.LootItem<TribalBerry>(10.0, true));
             AddLoot(LootPack.LootItem<Bandage>(1, 15));
+            AddLoot(LootPack.LootItem<SeveredHumanEars>(75.0, 1));
+        }
+
+        public override bool IsEnemy(Mobile m)
+        {
+            if (m.BodyMod == 183 || m.BodyMod == 184)
+            {
+                return false;
+            }
+
+            return base.IsEnemy(m);
+        }
+
+        public override void AggressiveAction(Mobile aggressor, bool criminal)
+        {
+            base.AggressiveAction(aggressor, criminal);
+
+            if (aggressor.BodyMod == 183 || aggressor.BodyMod == 184)
+            {
+                AOS.Damage(aggressor, 50, 0, 100, 0, 0, 0);
+                aggressor.BodyMod = 0;
+                aggressor.HueMod = -1;
+                aggressor.FixedParticles(0x36BD, 20, 10, 5044, EffectLayer.Head);
+                aggressor.PlaySound(0x307);
+                aggressor.SendLocalizedMessage(1040008); // Your skin is scorched as the tribal paint burns away!
+
+                if (aggressor is PlayerMobile mobile)
+                {
+                    mobile.SavagePaintExpiration = TimeSpan.Zero;
+                }
+            }
         }
 
         public override void AlterMeleeDamageTo(Mobile to, ref int damage)
@@ -151,9 +184,9 @@ namespace Server.Mobiles
                 {
                     case 0: /* greater heal */
                     {
-                        for (int index = 0; index < list.Count; index++)
+                        for (var index = 0; index < list.Count; index++)
                         {
-                            Mobile m = (Mobile) list[index];
+                            var m = (Mobile) list[index];
 
                             bool isFriendly = m is Savage || m is SavageRider || m is SavageShaman || m is SavageRidgeback;
 
@@ -184,9 +217,9 @@ namespace Server.Mobiles
                     }
                     case 1: /* lightning */
                     {
-                        for (int index = 0; index < list.Count; index++)
+                        for (var index = 0; index < list.Count; index++)
                         {
-                            Mobile m = (Mobile) list[index];
+                            var m = (Mobile) list[index];
 
                             bool isFriendly = m is Savage || m is SavageRider || m is SavageShaman || m is SavageRidgeback;
 
@@ -217,9 +250,9 @@ namespace Server.Mobiles
                     }
                     case 2: /* poison */
                     {
-                        for (int index = 0; index < list.Count; index++)
+                        for (var index = 0; index < list.Count; index++)
                         {
-                            Mobile m = (Mobile) list[index];
+                            var m = (Mobile) list[index];
 
                             bool isFriendly = m is Savage || m is SavageRider || m is SavageShaman || m is SavageRidgeback;
 

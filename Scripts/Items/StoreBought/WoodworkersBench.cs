@@ -91,9 +91,7 @@ namespace Server.Items
         public static bool HasBonus(Mobile m)
         {
             if (_Table == null)
-            {
                 return false;
-            }
 
             return _Table.ContainsKey(m) && _Table[m].Item1;
         }
@@ -101,9 +99,7 @@ namespace Server.Items
         public static bool IsInCooldown(Mobile m)
         {
             if (m.AccessLevel > AccessLevel.Player || _Table == null || !_Table.ContainsKey(m))
-            {
                 return false;
-            }
 
             if (_Table[m].Item2 + TimeSpan.FromMinutes(BonusDuration + Cooldown) < DateTime.UtcNow)
             {
@@ -117,9 +113,7 @@ namespace Server.Items
         public static void CheckTable()
         {
             if (_Table == null)
-            {
                 return;
-            }
 
             List<Mobile> list = new List<Mobile>(_Table.Keys);
 
@@ -207,9 +201,7 @@ namespace Server.Items
             m_East = choice == 1;
 
             if (!Deleted)
-            {
                 base.OnDoubleClick(from);
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -220,9 +212,7 @@ namespace Server.Items
                 from.SendGump(new RewardOptionGump(this));
             }
             else
-            {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.       	
-            }
         }
 
         public override void Serialize(GenericWriter writer)

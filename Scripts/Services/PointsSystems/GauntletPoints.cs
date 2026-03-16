@@ -29,17 +29,13 @@ namespace Server.Engines.Points
             BaseCreature bc = victim as BaseCreature;
 
             if (pm == null || bc == null || bc.NoKillAwards || !pm.Alive)
-            {
                 return;
-            }
 
             //Make sure its a boss we killed!!
             bool boss = bc is Impaler || bc is DemonKnight || bc is DarknightCreeper || bc is FleshRenderer || bc is ShadowKnight || bc is AbysmalHorror;
 
             if (!boss)
-            {
                 return;
-            }
 
             int luck = Math.Max(0, pm.RealLuck);
             AwardPoints(pm, (int)Math.Max(0, (bc.Fame * (1 + Math.Sqrt(luck) / 100)) / 2));
@@ -59,7 +55,7 @@ namespace Server.Engines.Points
 
                 if (ran >= m_RewardTable.Length)
                 {
-                    i = Loot.RandomArmorOrShieldOrWeaponOrJewelry();
+                    i = Loot.RandomArmorOrShieldOrWeaponOrJewelry(LootPackEntry.IsInTokuno(killer), LootPackEntry.IsMondain(killer), LootPackEntry.IsStygian(killer));
                     RunicReforging.GenerateRandomArtifactItem(i, luck, Utility.RandomMinMax(800, 1200));
                     NegativeAttributes attrs = RunicReforging.GetNegativeAttributes(i);
 
@@ -85,9 +81,7 @@ namespace Server.Engines.Points
                     if (!pm.PlaceInBackpack(i))
                     {
                         if (pm.BankBox != null && pm.BankBox.TryDropItem(killer, i, false))
-                        {
                             pm.SendLocalizedMessage(1079730); // The item has been placed into your bank box.
-                        }
                         else
                         {
                             pm.SendLocalizedMessage(1072523); // You find an artifact, but your backpack and bank are too full to hold it.
@@ -122,7 +116,8 @@ namespace Server.Engines.Points
             new[] { typeof(HatOfTheMagi) },            new[] { typeof(StaffOfTheMagi) },      new[] { typeof(OrnamentOfTheMagician) },
             new[] { typeof(ShadowDancerLeggings) },    new[] {typeof(RingOfTheElements) },    new[] { typeof(GauntletsOfNobility) },
             new[] { typeof(LeggingsOfBane) },          new[] { typeof(MidnightBracers) },     new[] { typeof(Glenda) },
-            new[] { typeof(BowOfTheInfiniteSwarm) },   new[] { typeof(TheDeceiver) },         new[] { typeof(DoomRecipeScroll) },
+            new[] { typeof(BowOfTheInfiniteSwarm) },   new[] { typeof(TheDeceiver) },         new[] { typeof(TheScholarsHalo) },
+            new[] { typeof(DoomRecipeScroll) },
             new[]
             {
                 typeof(LegacyOfTheDreadLord),       typeof(TheTaskmaster),

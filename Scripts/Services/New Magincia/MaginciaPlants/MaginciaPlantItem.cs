@@ -31,9 +31,7 @@ namespace Server.Engines.Plants
                 int label = base.LabelNumber;
 
                 if (label == 1029913)
-                {
                     label = 1022321;    // patch of dirt
-                }
 
                 return label;
             }
@@ -82,9 +80,7 @@ namespace Server.Engines.Plants
         public override void OnDoubleClick(Mobile from)
         {
             if (PlantStatus >= PlantStatus.DecorativePlant)
-            {
                 return;
-            }
 
             Point3D loc = GetWorldLocation();
 
@@ -119,9 +115,7 @@ namespace Server.Engines.Plants
         public override void Delete()
         {
             if (Owner != null && PlantStatus < PlantStatus.DecorativePlant)
-            {
                 MaginciaPlantSystem.OnPlantDelete(Owner, Map);
-            }
 
             base.Delete();
         }
@@ -142,9 +136,7 @@ namespace Server.Engines.Plants
                 }
 
                 if (PlantStatus == PlantStatus.DecorativePlant)
-                {
                     list.Add(1150490, SetToDecorative.ToShortDateString()); // Date harvested: ~1_val~
-                }
             }
         }
 
@@ -156,9 +148,7 @@ namespace Server.Engines.Plants
         public override bool PlantSeed(Mobile from, Seed seed)
         {
             if (!CheckLocation(from, seed) || !base.PlantSeed(from, seed))
-            {
                 return false;
-            }
 
             if (m_Timer != null)
             {
@@ -172,9 +162,7 @@ namespace Server.Engines.Plants
         private bool CheckLocation(Mobile from, Seed seed)
         {
             if (!BlocksMovement(seed))
-            {
                 return true;
-            }
 
             IPooledEnumerable eable = Map.GetItemsInRange(Location, 1);
 
@@ -195,9 +183,7 @@ namespace Server.Engines.Plants
         public bool BlocksMovement()
         {
             if (PlantStatus == PlantStatus.BowlOfDirt || PlantStatus == PlantStatus.DeadTwigs)
-            {
                 return false;
-            }
 
             PlantTypeInfo info = PlantTypeInfo.GetInfo(PlantType);
             ItemData data = TileData.ItemTable[info.ItemID & TileData.MaxItemValue];
@@ -258,9 +244,7 @@ namespace Server.Engines.Plants
             }
 
             if (PlantStatus == PlantStatus.BowlOfDirt)
-            {
                 Delete();
-            }
         }
     }
 }

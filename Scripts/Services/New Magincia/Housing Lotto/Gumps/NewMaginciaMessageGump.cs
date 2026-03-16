@@ -89,16 +89,12 @@ namespace Server.Engines.NewMagincia
             for (int i = 0; i < Messages.Count; i++)
             {
                 if (page > 1)
-                {
                     AddButton(Widescreen ? 446 : 246, 7, 0x1458, 0x1458, 0, GumpButtonType.Page, page - 1);
-                }
 
                 NewMaginciaMessage message = Messages[i];
 
                 if (message == null)
-                {
                     continue;
-                }
 
                 if (message.Title != null)
                 {

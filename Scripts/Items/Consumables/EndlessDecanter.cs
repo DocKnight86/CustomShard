@@ -98,13 +98,9 @@ namespace Server.Items
             list.Add(1115889);  // Auto Water Refill
 
             if (m_Linked)
-            {
                 list.Add(1115893);  // Linked
-            }
             else
-            {
                 list.Add(1115894);  // Unlinked
-            }
         }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
@@ -116,9 +112,7 @@ namespace Server.Items
                 list.Add(new LinkEntry(from, this));
 
                 if (m_Linked)
-                {
                     list.Add(new UnlinkEntry(from, this));
-                }
             }
         }
 
@@ -164,9 +158,7 @@ namespace Server.Items
             public override void OnClick()
             {
                 if (m_Decanter.Deleted || !m_Decanter.Movable || !m_From.CheckAlive() || !m_Decanter.CheckItemUse(m_From))
-                {
                     return;
-                }
 
                 m_From.SendLocalizedMessage(1115892);   // Target a water trough you wish to link.
 
@@ -227,9 +219,7 @@ namespace Server.Items
             public override void OnClick()
             {
                 if (m_Decanter.Deleted || !m_Decanter.Movable || !m_From.CheckAlive() || !m_Decanter.CheckItemUse(m_From))
-                {
                     return;
-                }
 
                 m_From.SendLocalizedMessage(1115898);   // The link between this decanter and the water trough has been removed.
                 m_Decanter.Linked = false;

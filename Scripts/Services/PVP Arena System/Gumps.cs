@@ -60,9 +60,7 @@ namespace Server.Engines.ArenaSystem
         public override void OnResponse(RelayInfo info)
         {
             if (info.ButtonID == 0)
-            {
                 return;
-            }
 
             int id = info.ButtonID - 500;
 
@@ -136,9 +134,7 @@ namespace Server.Engines.ArenaSystem
         private static void SendGump(PlayerMobile pm)
         {
             if (pm == null)
-            {
                 return;
-            }
 
             PVPArenaSystemSetupGump gump = GetGump<PVPArenaSystemSetupGump>(pm, null);
 
@@ -431,10 +427,7 @@ namespace Server.Engines.ArenaSystem
                     case 1:
                         Duel.Entries++;
                         if (Duel.Entries > ArenaDuel.MaxEntries)
-                        {
                             Duel.Entries = 2;
-                        }
-
                         Refresh();
                         break;
                     case 2:
@@ -478,10 +471,7 @@ namespace Server.Engines.ArenaSystem
                     case 8:
                         Duel.PetSlots++;
                         if (Duel.PetSlots > ArenaDuel.MaxPetSlots)
-                        {
                             Duel.PetSlots = 0;
-                        }
-
                         Refresh();
                         break;
                     case 9:
@@ -645,14 +635,10 @@ namespace Server.Engines.ArenaSystem
                     int x = 10;
 
                     if (i >= 5)
-                    {
                         x += 200;
-                    }
 
                     if (i == 5)
-                    {
                         y = 215;
-                    }
 
                     AddButton(x, y, 4011, 4013, 50 + i, GumpButtonType.Reply, 0);
                     x += 37;
@@ -675,14 +661,10 @@ namespace Server.Engines.ArenaSystem
                     int x = 10;
 
                     if (i >= 5)
-                    {
                         x += 200;
-                    }
 
                     if (i == 5)
-                    {
                         y = 215;
-                    }
 
                     AddButton(x, y, 4011, 4013, 50 + i, GumpButtonType.Reply, 0);
                     x += 37;
@@ -1204,9 +1186,7 @@ namespace Server.Engines.ArenaSystem
                     y = 80;
 
                     if (i < BookedDuels.Count - 1)
-                    {
                         AddButton(273, 343, 4005, 4007, 0, GumpButtonType.Page, page + 1);
-                    }
 
                     page++;
                     AddPage(page);
@@ -1304,13 +1284,9 @@ namespace Server.Engines.ArenaSystem
             string rewardTitle = "None";
 
             if (title is int iTitle)
-            {
                 rewardTitle = $"#{iTitle}";
-            }
             else if (title is string sTitle)
-            {
                 rewardTitle = sTitle;
-            }
 
             AddHtmlLocalized(0, 12, 580, 20, CenterLoc, "#1115976", 0xFFFF, false, false); // <CENTER>Arena Menu - Stats</CENTER>
             AddHtmlLocalized(0, 32, 580, 20, 1149602, $"{WhosStats.Name}\t{rewardTitle}", 0xFFFF, false, false); // <CENTER>Arena Menu - Stats</CENTER>
@@ -1333,9 +1309,7 @@ namespace Server.Engines.ArenaSystem
             AddHtmlLocalized(229, 66, 344, 20, CenterLoc, "#1115984", 0xFFFF, false, false); // Kill/Death Stats
 
             if (entry == null)
-            {
                 return;
-            }
 
             AddLabel(128, 100, LabelHue, entry.SurvivalWins.ToString());
             AddLabel(128, 125, LabelHue, entry.SurvivalLosses.ToString());
@@ -1599,13 +1573,9 @@ namespace Server.Engines.ArenaSystem
                 if (Duel.BattleMode == BattleMode.Team)
                 {
                     if (Winners == Duel.TeamOrder)
-                    {
                         winner = "#1116479"; // Order Team (Blue)
-                    }
                     else if (Winners == Duel.TeamChaos)
-                    {
                         winner = "#1116480"; // Chaos Team (Red)
-                    }
                 }
                 else
                 {
@@ -1628,9 +1598,7 @@ namespace Server.Engines.ArenaSystem
                 i++;
 
                 if (i >= 10)
-                {
                     break;
-                }
             }
 
             AddHtmlLocalized(42, 343, 150, 20, 1150300, 0xFFFF, false, false); // CANCEL

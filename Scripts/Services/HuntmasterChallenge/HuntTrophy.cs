@@ -92,24 +92,17 @@ namespace Server.Items
             list.Add(1155709, m_DateKilled); // Date of Kill: ~1_DATE~
 
             if (m_Location != null)
-            {
                 list.Add(1061114, m_Location); // Location: ~1_val~
-            }
 
             list.Add(1155718, Species.ToString());
 
             if (MeasuredBy == MeasuredBy.Length)
-            {
                 list.Add(1155711, m_Measurement.ToString()); // Length: ~1_VAL~
-            }
             else if (MeasuredBy == MeasuredBy.Wingspan)
-            {
                 list.Add(1155710, m_Measurement.ToString());	// Wingspan: ~1_VAL~
-            }
             else
-            {
                 list.Add(1072225, m_Measurement.ToString()); // Weight: ~1_WEIGHT~ stones
-            }
+
         }
 
         public HuntTrophy(Serial serial) : base(serial)
@@ -216,9 +209,7 @@ namespace Server.Items
             get
             {
                 if (Species.Number > 0)
-                {
                     return Species.Number;
-                }
 
                 return 1084024 + ItemID;
             }
@@ -263,17 +254,11 @@ namespace Server.Items
                     int itemID = 0;
 
                     if (northWall)
-                    {
                         itemID = SouthID;
-                    }
                     else if (westWall)
-                    {
                         itemID = EastID;
-                    }
                     else
-                    {
                         from.SendLocalizedMessage(1042626); // The trophy must be placed next to a wall.
-                    }
 
                     if (itemID > 0)
                     {
@@ -316,24 +301,16 @@ namespace Server.Items
             list.Add(1155709, m_DateKilled); // Date of Kill: ~1_DATE~
 
             if (m_Location != null)
-            {
                 list.Add(1061114, m_Location); // Location: ~1_val~
-            }
 
             list.Add(1155718, Species.ToString());
 
             if (MeasuredBy == MeasuredBy.Length)
-            {
                 list.Add(1155711, Measurement.ToString()); // Length: ~1_VAL~
-            }
             else if (MeasuredBy == MeasuredBy.Wingspan)
-            {
                 list.Add(1155710, Measurement.ToString());	// Wingspan: ~1_VAL~
-            }
             else
-            {
                 list.Add(1072225, Measurement.ToString()); // Weight: ~1_WEIGHT~ stones
-            }
         }
 
         public HuntTrophyDeed(Serial serial)

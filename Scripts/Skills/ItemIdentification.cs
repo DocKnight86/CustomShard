@@ -108,18 +108,14 @@ namespace Server.Items
                             imbIngred = "Enchanted Essence";
 
                             if (skill < 45.0)
-                            {
                                 badSkill = true;
-                            }
                         }
                         else if (weight >= 480)
                         {
                             imbIngred = "Relic Fragment";
 
                             if (skill < 95.0)
-                            {
                                 badSkill = true;
-                            }
                         }
 
                         if (imbIngred != null)
@@ -155,14 +151,10 @@ namespace Server.Items
                 }
 
                 if (TypeCostCache == null)
-                {
                     TypeCostCache = new Dictionary<Type, int>();
-                }
 
                 if (!TypeCostCache.ContainsKey(type))
-                {
                     TypeCostCache[type] = Utility.RandomMinMax(2, 7);
-                }
 
                 return TypeCostCache[type];
             }

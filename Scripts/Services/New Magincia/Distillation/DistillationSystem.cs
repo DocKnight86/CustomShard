@@ -58,22 +58,16 @@ namespace Server.Engines.Distillation
         public static void AddContext(Mobile from, DistillationContext context)
         {
             if (from != null)
-            {
                 m_Contexts[from] = context;
-            }
         }
 
         public static DistillationContext GetContext(Mobile from)
         {
             if (from == null)
-            {
                 return null;
-            }
 
             if (!m_Contexts.ContainsKey(from))
-            {
                 m_Contexts[from] = new DistillationContext();
-            }
 
             return m_Contexts[from];
         }
@@ -81,9 +75,7 @@ namespace Server.Engines.Distillation
         public static int GetLabel(Liquor liquor, bool strong)
         {
             if (strong)
-            {
                 return 1150718 + (int)liquor;
-            }
 
             return 1150442 + (int)liquor;
         }
@@ -91,9 +83,7 @@ namespace Server.Engines.Distillation
         public static int GetLabel(Group group)
         {
             if (group == Group.Other)
-            {
                 return 1077435;
-            }
 
             return 1150736 + (int)group;
         }

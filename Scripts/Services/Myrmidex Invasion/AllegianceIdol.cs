@@ -76,14 +76,10 @@ namespace Server.Engines.MyrmidexInvasion
                     }
                 }
                 else
-                {
                     MyrmidexInvasionSystem.System.Join(pm, _AllegianceType);
-                }
             }
             else
-            {
                 from.SendLocalizedMessage(1149687); //You are too far away.
-            }
         }
 
         public override void AddNameProperty(ObjectPropertyList list)

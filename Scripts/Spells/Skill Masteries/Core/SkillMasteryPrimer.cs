@@ -47,9 +47,7 @@ namespace Server.Items
                     Delete();
 
                     if (from.Skills.CurrentMastery == Skill)
-                    {
                         MasteryInfo.OnMasteryChanged(from, from.Skills.CurrentMastery);
-                    }
                 }
             }
         }
@@ -69,14 +67,10 @@ namespace Server.Items
         private string GetVolume(int volume)
         {
             if (volume == 1)
-            {
                 return "I";
-            }
 
             if (volume == 2)
-            {
                 return "II";
-            }
 
             return "III";
         }
@@ -85,9 +79,9 @@ namespace Server.Items
         {
             List<DamageStore> rights = killed.GetLootingRights();
 
-            for (int index = 0; index < rights.Count; index++)
+            for (var index = 0; index < rights.Count; index++)
             {
-                DamageStore ds = rights[index];
+                var ds = rights[index];
 
                 if (ds.m_HasRight)
                 {
@@ -119,13 +113,9 @@ namespace Server.Items
             double random = Utility.RandomDouble();
 
             if (0.2 >= random)
-            {
                 volume = 3;
-            }
             else if (0.5 >= random)
-            {
                 volume = 2;
-            }
 
             SkillMasteryPrimer primer = new SkillMasteryPrimer(skill, volume);
 

@@ -92,6 +92,15 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            PlayerMobile pm = from as PlayerMobile;
+            if (null == pm)
+                return;
+
+            if (!pm.MechanicalLife)
+            {
+                from.SendLocalizedMessage(1113034);   // You haven't read the Mechanical Life Manual. Talking to Sutek might help!
+            }
+
             if (!IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1071944);   // The clockwork assembly must be in your backpack to construct a golem.
@@ -107,9 +116,7 @@ namespace Server.Items
             }
 
             if ((int)m_Type > m_Info.Length)
-            {
                 return;
-            }
 
             GolemInfo ginfo = m_Info[(int)m_Type];
 
@@ -122,15 +129,11 @@ namespace Server.Items
             Container pack = from.Backpack;
 
             if (pack == null)
-            {
                 return;
-            }
 
             // check array length to prevent errors
             if (ginfo.Types.Length != ginfo.Amounts.Length)
-            {
                 return;
-            }
 
             int res = pack.ConsumeTotal(ginfo.Types, ginfo.Amounts);
 
@@ -138,10 +141,7 @@ namespace Server.Items
             {
                 // send message, if valid index
                 if (res < ginfo.MsgIds.Length)
-                {
                     from.SendLocalizedMessage(ginfo.MsgIds[res]);   // You need _____ to construct a mechanical pet.
-                }
-
                 return;
             }
 

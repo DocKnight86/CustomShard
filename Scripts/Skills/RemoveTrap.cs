@@ -133,9 +133,7 @@ namespace Server.SkillHandlers
                             trap.Delete();
 
                             if (!from.AddToBackpack(kit))
-                            {
                                 kit.MoveToWorld(from.Location, from.Map);
-                            }
 
                             if (trap.Owner != null && from != trap.Owner)
                             {
@@ -167,9 +165,7 @@ namespace Server.SkillHandlers
                             Item item = new FloorTrapComponent();
 
                             if (from.Backpack == null || !from.Backpack.TryDropItem(from, item, false))
-                            {
                                 item.MoveToWorld(from.Location, from.Map);
-                            }
                         }
 
                         floorTrap.Delete();

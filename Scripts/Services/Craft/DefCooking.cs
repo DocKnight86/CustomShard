@@ -16,9 +16,7 @@ namespace Server.Engines.Craft
             get
             {
                 if (m_CraftSystem == null)
-                {
                     m_CraftSystem = new DefCooking();
-                }
 
                 return m_CraftSystem;
             }
@@ -47,14 +45,10 @@ namespace Server.Engines.Craft
             int num = 0;
 
             if (tool == null || tool.Deleted || tool.UsesRemaining <= 0)
-            {
                 return 1044038; // You have worn out your tool!
-            }
 
             if (!tool.CheckAccessible(from, ref num))
-            {
                 return num; // The tool must be on your person to use.
-            }
 
             return 0;
         }
@@ -66,9 +60,7 @@ namespace Server.Engines.Craft
         public override int PlayEndingEffect(Mobile from, bool failed, bool lostMaterial, bool toolBroken, int quality, bool makersMark, CraftItem item)
         {
             if (toolBroken)
-            {
                 from.SendLocalizedMessage(1044038); // You have worn out your tool
-            }
 
             if (failed)
             {
@@ -81,14 +73,10 @@ namespace Server.Engines.Craft
             }
 
             if (quality == 0)
-            {
                 return 502785; // You were barely able to make this item.  It's quality is below average.
-            }
 
             if (makersMark && quality == 2)
-            {
                 return 1044156; // You create an exceptional quality item and affix your maker's mark.
-            }
 
             if (quality == 2)
             {
@@ -178,6 +166,9 @@ namespace Server.Engines.Craft
 
             index = AddCraft(typeof(SushiPlatter), 1044496, 1030305, 90.0, 120.0, typeof(BaseBeverage), 1046458, 1, 1044253);
             AddRes(index, typeof(RawFishSteak), 1044476, 10, 1044253);
+
+            index = AddCraft(typeof(TribalPaint), 1044496, 1040000, 55.0, 105.0, typeof(SackFlourOpen), 1044468, 1, 1151092);
+            AddRes(index, typeof(TribalBerry), 1046460, 1, 1044253);
 
             index = AddCraft(typeof(EggBomb), 1044496, 1030249, 90.0, 120.0, typeof(Eggs), 1044477, 1, 1044253);
             AddRes(index, typeof(SackFlourOpen), 1044468, 3, 1151092);
@@ -317,6 +308,10 @@ namespace Server.Engines.Craft
             SetItemHue(index, 1954);
             AddRecipe(index, (int)CraftRecipes.BlackrockStew);
             ForceNonExceptional(index);
+
+            index = AddCraft(typeof(KhaldunTastyTreat), 1044498, 1158680, 60.0, 100.0, typeof(RawFishSteak), 1044476, 40, 1044253);
+            SetUseAllRes(index, true);
+            SetNeedHeat(index, true);
 
             index = AddCraft(typeof(Hamburger), 1044498, 1125202, 45.0, 95.0, typeof(BreadLoaf), 1024155, 1, 1044253);
             AddRes(index, typeof(RawRibs), 1044485, 1, 1044253);

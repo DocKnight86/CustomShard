@@ -11,9 +11,7 @@ namespace Server.Mobiles
             Body = 205;
 
             if (0.5 >= Utility.RandomDouble())
-            {
                 Hue = Utility.RandomAnimalHue();
-            }
 
             SetStr(6, 10);
             SetDex(26, 38);

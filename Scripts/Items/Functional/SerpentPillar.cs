@@ -61,16 +61,12 @@ namespace Server.Items
                 BaseBoat boat = BaseBoat.FindBoatAt(from, from.Map);
 
                 if (boat == null)
-                {
                     return;
-                }
 
                 if (!Active)
                 {
                     if (boat.TillerMan != null)
-                    {
                         boat.TillerManSay(502507); // Ar, Legend has it that these pillars are inactive! No man knows how it might be undone!
-                    }
 
                     return;
                 }
@@ -98,9 +94,7 @@ namespace Server.Items
                 }
 
                 if (boat.TillerMan != null)
-                {
                     boat.TillerManSay(502508); // Ar, I refuse to take that matey through here!
-                }
             }
         }
 

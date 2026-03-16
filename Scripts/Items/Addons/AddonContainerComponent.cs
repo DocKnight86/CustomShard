@@ -38,18 +38,14 @@ namespace Server.Items
                 base.Hue = value;
 
                 if (Addon != null && Addon.ShareHue)
-                {
                     Addon.Hue = value;
-                }
             }
         }
 
         public override bool OnDragDrop(Mobile from, Item dropped)
         {
             if (Addon != null)
-            {
                 return Addon.OnDragDrop(from, dropped);
-            }
 
             return false;
         }
@@ -57,25 +53,19 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (Addon != null)
-            {
                 Addon.OnComponentUsed(this, from);
-            }
         }
 
         public override void OnLocationChange(Point3D old)
         {
             if (Addon != null)
-            {
                 Addon.Location = new Point3D(X - Offset.X, Y - Offset.Y, Z - Offset.Z);
-            }
         }
 
         public override void OnMapChange()
         {
             if (Addon != null)
-            {
                 Addon.Map = Map;
-            }
         }
 
         public override void OnAfterDelete()
@@ -83,9 +73,7 @@ namespace Server.Items
             base.OnAfterDelete();
 
             if (Addon != null)
-            {
                 Addon.Delete();
-            }
         }
 
         public override void GetProperties(ObjectPropertyList list)
@@ -128,9 +116,7 @@ namespace Server.Items
             Offset = reader.ReadPoint3D();
 
             if (Addon != null)
-            {
                 Addon.OnComponentLoaded(this);
-            }
 
             AddonComponent.ApplyLightTo(this);
         }
@@ -138,13 +124,9 @@ namespace Server.Items
         public virtual void OnChop(Mobile from)
         {
             if (Addon != null && from.InRange(GetWorldLocation(), 3))
-            {
                 Addon.OnChop(from);
-            }
             else
-            {
                 from.SendLocalizedMessage(500446); // That is too far away.
-            }
         }
     }
 
@@ -167,9 +149,7 @@ namespace Server.Items
             get
             {
                 if (m_LabelNumber > 0)
-                {
                     return m_LabelNumber;
-                }
 
                 return base.LabelNumber;
             }

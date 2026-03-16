@@ -33,19 +33,13 @@ namespace Server.Items
             if (_MessageItem.Lines != null)
             {
                 if (_MessageItem.Lines.Length > 0)
-                {
                     line1 = _MessageItem.Lines[0];
-                }
 
                 if (_MessageItem.Lines.Length > 1)
-                {
                     line2 = _MessageItem.Lines[1];
-                }
 
                 if (_MessageItem.Lines.Length > 2)
-                {
                     line3 = _MessageItem.Lines[2];
-                }
             }
 
             AddPage(0);
@@ -76,9 +70,7 @@ namespace Server.Items
         public override void OnResponse(RelayInfo info)
         {
             if (((Item)_MessageItem).Deleted)
-            {
                 return;
-            }
 
             if (info.ButtonID == 1)
             {
@@ -93,9 +85,7 @@ namespace Server.Items
                     string s = text.Text;
 
                     if (s.Length > 25)
-                    {
                         s = s.Substring(0, 25);
-                    }
 
                     _MessageItem.Lines[i] = s;
                 }

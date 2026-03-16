@@ -22,7 +22,8 @@ namespace Server.Engines.Craft
             typeof(Blight), typeof(Corruption), typeof(Muculent), typeof(Scourge), typeof(Putrefaction), typeof(Taint),
 
             // Tailoring
-            typeof(MidnightBracers), typeof(LeurociansMempoOfFortune),
+            typeof(MidnightBracers), typeof(CrimsonCincture), typeof(GargishCrimsonCincture), typeof(LeurociansMempoOfFortune), typeof(TheScholarsHalo),
+            typeof(MaceAndShieldGlasses),
 
             // Blacksmithy
             typeof(LeggingsOfBane), typeof(GauntletsOfNobility),
@@ -89,6 +90,8 @@ namespace Server.Engines.Craft
         public CraftSubResCol CraftSubRes2 { get; }
 
         public bool CanEnhance { get; set; }
+
+        public bool CanAlter { get; set; }
 
         public bool Resmelt { get; set; }
 
@@ -169,9 +172,7 @@ namespace Server.Engines.Craft
         public virtual bool ConsumeOnFailure(Mobile from, Type resourceType, CraftItem craftItem, ref MasterCraftsmanTalisman talisman)
         {
             if (!ConsumeOnFailure(resourceType, craftItem))
-            {
                 return false;
-            }
 
             Item item = from.FindItemOnLayer(Layer.Talisman);
 
@@ -190,9 +191,7 @@ namespace Server.Engines.Craft
         public void AddContext(Mobile m, CraftContext c)
         {
             if (c == null || m == null || c.System != this)
-            {
                 return;
-            }
 
             m_ContextTable[m] = c;
         }
@@ -200,9 +199,7 @@ namespace Server.Engines.Craft
         public CraftContext GetContext(Mobile m)
         {
             if (m == null)
-            {
                 return null;
-            }
 
             if (m.Deleted)
             {
@@ -214,9 +211,7 @@ namespace Server.Engines.Craft
             m_ContextTable.TryGetValue(m, out c);
 
             if (c == null)
-            {
                 m_ContextTable[m] = c = new CraftContext(m, this);
-            }
 
             return c;
         }
@@ -224,9 +219,7 @@ namespace Server.Engines.Craft
         private void AddSystem(CraftSystem system)
         {
             if (Systems == null)
-            {
                 Systems = new List<CraftSystem>();
-            }
 
             Systems.Add(system);
         }
@@ -355,10 +348,22 @@ namespace Server.Engines.Craft
             craftItem.NeedMill = needMill;
         }
 
+        public void SetRequiresBasketWeaving(int index)
+        {
+            CraftItem craftItem = CraftItems.GetAt(index);
+            craftItem.RequiresBasketWeaving = true;
+        }
+
         public void SetRequireResTarget(int index)
         {
             CraftItem craftItem = CraftItems.GetAt(index);
             craftItem.RequiresResTarget = true;
+        }
+
+        public void SetRequiresMechanicalLife(int index)
+        {
+            CraftItem craftItem = CraftItems.GetAt(index);
+            craftItem.RequiresMechanicalLife = true;
         }
 
         public void SetData(int index, object data)

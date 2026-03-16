@@ -42,9 +42,7 @@ namespace Server.Engines.BulkOrders
             int y = 120;
 
             for (int i = 0; i < entries.Length; ++i, y += 24)
-            {
                 AddHtmlLocalized(40, y, 210, 20, entries[i].Details.Number, 0x7FFF, false, false);
-            }
 
             if (deed.RequireExceptional || deed.Material != BulkMaterialType.None)
             {

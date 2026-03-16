@@ -35,6 +35,7 @@ namespace Server.Engines.RisingTide
             PackItem(new Orchid1());
             PackItem(new Orchid2());
             PackItem(new Orchid3());
+            PackItem(new GargishFellowshipMedallion());
             PackItem(new FellowshipMedallion());
             PackItem(new QuartermasterRewardDeed());
             PackItem(new SailingMasterRewardDeed());
@@ -85,9 +86,7 @@ namespace Server.Engines.RisingTide
         public override void SendRewardGump(Mobile m)
         {
             if (m.Player && m.CheckAlive())
-            {
                 m.SendGump(new RisingTideRewardGump(this, m as PlayerMobile));
-            }
         }
 
         public override void Delete()

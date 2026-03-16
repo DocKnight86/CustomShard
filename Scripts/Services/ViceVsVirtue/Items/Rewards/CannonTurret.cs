@@ -25,9 +25,7 @@ namespace Server.Engines.VvV
                 _ShotsRemaining = value;
 
                 if (_ShotsRemaining <= 0)
-                {
                     Delete();
-                }
             }
         }
 
@@ -68,9 +66,7 @@ namespace Server.Engines.VvV
             base.OnLocationChange(oldLocation);
 
             if (Base != null && !Base.Deleted)
-            {
                 Base.Location = Location;
-            }
         }
 
         public override void OnMapChange()
@@ -78,9 +74,7 @@ namespace Server.Engines.VvV
             base.OnMapChange();
 
             if (Base != null && !Base.Deleted)
-            {
                 Base.Map = Map;
-            }
         }
 
         public override void Delete()
@@ -88,17 +82,13 @@ namespace Server.Engines.VvV
             base.Delete();
 
             if (Base != null && !Base.Deleted)
-            {
                 Base.Delete();
-            }
         }
 
         public void Scan()
         {
             if (Deleted || Map == null || _ShotsRemaining <= 0 || _NoShoot)
-            {
                 return;
-            }
 
             IPooledEnumerable eable = Map.GetMobilesInRange(Location, ScanRange);
             List<Mobile> list = new List<Mobile>();
@@ -154,9 +144,7 @@ namespace Server.Engines.VvV
             }
 
             if (_NextShot > DateTime.UtcNow)
-            {
                 return;
-            }
 
             Timer.DelayCall(TimeSpan.FromMilliseconds(250), () =>
             {
@@ -178,9 +166,7 @@ namespace Server.Engines.VvV
             Timer.DelayCall(TimeSpan.FromMilliseconds(250 + (150 * range)), () =>
             {
                 if (Owner != null)
-                {
                     Owner.DoHarmful(target);
-                }
 
                 AOS.Damage(target, Owner, Utility.RandomMinMax(75, 100), 100, 0, 0, 0, 0);
 
@@ -213,9 +199,7 @@ namespace Server.Engines.VvV
                 base.Delete();
 
                 if (Turret != null)
-                {
                     Turret.Delete();
-                }
             }
 
             public CannonBase(Serial serial)

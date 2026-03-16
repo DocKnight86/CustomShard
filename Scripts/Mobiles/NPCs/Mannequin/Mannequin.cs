@@ -47,9 +47,7 @@ namespace Server.Mobiles
         public bool IsOwner(Mobile m)
         {
             if (m == Owner || m.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return true;
-            }
 
             return AccountHandler.CheckAccount(m, Owner);
         }
@@ -67,9 +65,7 @@ namespace Server.Mobiles
         public override bool AllowEquipFrom(Mobile from)
         {
             if (IsOwner(from))
-            {
                 return true;
-            }
 
             return base.AllowEquipFrom(from);
         }
@@ -77,9 +73,7 @@ namespace Server.Mobiles
         public override bool CheckNonlocalLift(Mobile from, Item item)
         {
             if (IsOwner(from))
-            {
                 return true;
-            }
 
             return base.CheckNonlocalLift(from, item);
         }
@@ -87,9 +81,7 @@ namespace Server.Mobiles
         public override bool CheckNonlocalDrop(Mobile from, Item item, Item target)
         {
             if (IsOwner(from))
-            {
                 return true;
-            }
 
             return false;
         }
@@ -128,9 +120,7 @@ namespace Server.Mobiles
                         state.Mobile.ProcessDelta();
 
                         if (p == null)
-                        {
                             p = Packet.Acquire(new UpdateStatueAnimation(this, 1, 4, 0));
-                        }
 
                         state.Send(p);
                     }
@@ -283,13 +273,14 @@ namespace Server.Mobiles
                 }
 
                 if (from.InRange(this, 4))
-                {
                     list.Add(new CustomizeBodyEntry(from, this));
-                }
 
                 if (from.Alive && from.InRange(this, 2))
                 {
-                    list.Add(new SwitchClothesEntry(from, this));
+                    if (from.Race == Race || from.Race == Race.Elf && Race == Race.Human || from.Race == Race.Human && Race == Race.Elf)
+                    {
+                        list.Add(new SwitchClothesEntry(from, this));
+                    }
 
                     list.Add(new RotateEntry(from, this));
                     list.Add(new RedeedEntry(from, this));
@@ -425,9 +416,7 @@ namespace Server.Mobiles
                 protected override void OnTarget(Mobile from, object targeted)
                 {
                     if (targeted is Item item)
-                    {
                         from.SendGump(new MannequinStatsGump(_Mannequin, item));
-                    }
                 }
             }
         }
@@ -477,9 +466,7 @@ namespace Server.Mobiles
                 public override void OnResponse(NetState sender, RelayInfo info)
                 {
                     if (_Mannequin.Deleted)
-                    {
                         return;
-                    }
 
                     if (info.ButtonID == 1)
                     {
@@ -487,9 +474,7 @@ namespace Server.Mobiles
                         string s = text.Text;
 
                         if (s.Length > 44)
-                        {
                             s = s.Substring(0, 44);
-                        }
 
                         _Mannequin.Description = s;
                         _Mannequin.InvalidateProperties();
@@ -641,9 +626,7 @@ namespace Server.Mobiles
                 direction++;
 
                 if (direction > 0x7)
-                {
                     direction = 0x0;
-                }
 
                 _Mannequin.Direction = (Direction)direction;
 

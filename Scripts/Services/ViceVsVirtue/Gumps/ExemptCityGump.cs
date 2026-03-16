@@ -31,21 +31,15 @@ namespace Server.Engines.VvV
             int id = info.ButtonID;
 
             if (id == 0)
-            {
                 return;
-            }
 
             VvVCity city = (VvVCity)id - 1;
 
             if (!ViceVsVirtueSystem.Instance.ExemptCities.Remove(city))
-            {
                 ViceVsVirtueSystem.Instance.ExemptCities.Add(city);
-            }
 
             if (state.Gumps.Contains(this))
-            {
                 state.Gumps.Remove(this);
-            }
 
             Entries.Clear();
             AddGumpLayout();

@@ -84,9 +84,7 @@ namespace Server.Mobiles
         public virtual void BeginTunnel()
         {
             if (Deleted)
-            {
                 return;
-            }
 
             new BunnyHole().MoveToWorld(Location, Map);
 

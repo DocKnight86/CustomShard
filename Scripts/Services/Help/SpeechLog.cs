@@ -84,9 +84,7 @@ namespace Server.Engines.Help
         public void Add(SpeechLogEntry entry)
         {
             if (MaxLength > 0 && m_Queue.Count >= MaxLength)
-            {
                 m_Queue.Dequeue();
-            }
 
             Clean();
 
@@ -100,13 +98,9 @@ namespace Server.Engines.Help
                 SpeechLogEntry entry = m_Queue.Peek();
 
                 if (DateTime.UtcNow - entry.Created > EntryDuration)
-                {
                     m_Queue.Dequeue();
-                }
                 else
-                {
                     break;
-                }
             }
         }
 

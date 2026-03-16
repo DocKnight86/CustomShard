@@ -71,9 +71,7 @@ namespace Server.Engines.TreasuresOfKotlCity
         public override void SendRewardGump(Mobile m)
         {
             if (m.Player && m.CheckAlive())
-            {
                 m.SendGump(new KotlCityRewardGump(this, m as PlayerMobile));
-            }
         }
 
         public Hal(Serial serial) : base(serial)

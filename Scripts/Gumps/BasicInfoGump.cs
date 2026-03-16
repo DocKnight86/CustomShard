@@ -25,35 +25,23 @@ namespace Server.Gumps
                 AddImageTiled(10, 40, length - 20, height - 50, 2702);
 
                 if (title.Number > 0)
-                {
                     AddHtmlLocalized(12, 10, 275, 20, title.Number, 0xFFFFFF, false, false);
-                }
                 else if (title.String != null)
-                {
                     AddHtml(12, 10, 275, 20, $"<BASEFONT COLOR=WHITE>{title.String}</BASEFONT>", false, false);
-                }
 
                 if (body.Number > 0)
-                {
                     AddHtmlLocalized(12, 40, 275, height - 60, body.Number, 0xFFFFFF, false, false);
-                }
                 else if (body.String != null)
-                {
                     AddHtml(12, 40, 275, height - 60, $"<BASEFONT COLOR=WHITE>{body.String}</BASEFONT>", false, false);
-                }
             }
             else
             {
                 AddImageTiled(10, 10, length - 20, height - 20, 2702);
 
                 if (body.Number > 0)
-                {
                     AddHtmlLocalized(12, 10, 275, height - 25, body, 0xFFFFFF, false, false);
-                }
                 else if (body.String != null)
-                {
                     AddHtml(12, 10, 275, height - 25, $"<BASEFONT COLOR=WHITE>{body.String}</BASEFONT>", false, false);
-                }
             }
         }
     }
@@ -81,13 +69,9 @@ namespace Server.Gumps
             AddButton(190, height - 25, 0xFB1, 0xFB2, 2, GumpButtonType.Reply, 0);
 
             if (warning.Number > 0)
-            {
                 AddHtmlLocalized(10, 10, width - 20, height - 50, warning.Number, 0xFFFF, false, false);
-            }
             else
-            {
                 AddHtml(10, 10, width - 20, height - 50, $"<BASEFONT COLOR=#FFFFFF>{warning.String}</BASEFONT>", false, true);
-            }
         }
 
         public override void OnResponse(Network.NetState sender, RelayInfo info)

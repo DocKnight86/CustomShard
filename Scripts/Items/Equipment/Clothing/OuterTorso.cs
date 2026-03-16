@@ -1,3 +1,6 @@
+using Server.Engines.VeteranRewards;
+using System;
+
 namespace Server.Items
 {
     public abstract class BaseOuterTorso : BaseClothing
@@ -336,6 +339,40 @@ namespace Server.Items
         }
     }
 
+    public class OdricsRobe : Robe
+    {
+        public override int LabelNumber => 1073250;// Odric's Robe - Museum of Vesper Replica
+
+        [Constructable]
+        public OdricsRobe()
+            : this(0)
+        {
+        }
+
+        [Constructable]
+        public OdricsRobe(int hue)
+            : base(hue)
+        {
+        }
+
+        public OdricsRobe(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write(0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            reader.ReadInt();
+        }
+    }
+
     public class BaronLenshiresCloak : Cloak
     {
         public override int LabelNumber => 1073252;// Baron Lenshire's Cloak - Museum of Vesper Replica
@@ -438,6 +475,546 @@ namespace Server.Items
         }
     }
 
+    public class DeathRobe : Robe
+    {
+        private Timer m_DecayTimer;
+        private DateTime m_DecayTime;
+
+        private static readonly TimeSpan m_DefaultDecayTime = TimeSpan.FromMinutes(1.0);
+
+        [Constructable]
+        public DeathRobe()
+        {
+            LootType = LootType.Newbied;
+            Hue = 2301;
+            BeginDecay(m_DefaultDecayTime);
+        }
+
+        public new bool Scissor(Mobile from, Scissors scissors)
+        {
+            from.SendLocalizedMessage(502440); // Scissors can not be used on that to produce anything.
+            return false;
+        }
+
+        public void BeginDecay()
+        {
+            BeginDecay(m_DefaultDecayTime);
+        }
+
+        private void BeginDecay(TimeSpan delay)
+        {
+            if (m_DecayTimer != null)
+                m_DecayTimer.Stop();
+
+            m_DecayTime = DateTime.UtcNow + delay;
+
+            m_DecayTimer = new InternalTimer(this, delay);
+            m_DecayTimer.Start();
+        }
+
+        public override bool OnDroppedToWorld(Mobile from, Point3D p)
+        {
+            BeginDecay(m_DefaultDecayTime);
+
+            return true;
+        }
+
+        public override bool OnDroppedToMobile(Mobile from, Mobile target)
+        {
+            if (m_DecayTimer != null)
+            {
+                m_DecayTimer.Stop();
+                m_DecayTimer = null;
+            }
+
+            return true;
+        }
+
+        public override void OnAfterDelete()
+        {
+            if (m_DecayTimer != null)
+                m_DecayTimer.Stop();
+
+            m_DecayTimer = null;
+        }
+
+        private class InternalTimer : Timer
+        {
+            private readonly DeathRobe m_Robe;
+
+            public InternalTimer(DeathRobe c, TimeSpan delay)
+                : base(delay)
+            {
+                m_Robe = c;
+            }
+
+            protected override void OnTick()
+            {
+                if (m_Robe.Parent != null || m_Robe.IsLockedDown)
+                    Stop();
+                else
+                    m_Robe.Delete();
+            }
+        }
+
+        public DeathRobe(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write(2); // version
+
+            writer.Write(m_DecayTimer != null);
+
+            if (m_DecayTimer != null)
+                writer.WriteDeltaTime(m_DecayTime);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+
+            switch (version)
+            {
+                case 2:
+                    {
+                        if (reader.ReadBool())
+                        {
+                            m_DecayTime = reader.ReadDeltaTime();
+                            BeginDecay(m_DecayTime - DateTime.UtcNow);
+                        }
+                        break;
+                    }
+                case 1:
+                case 0:
+                    {
+                        if (Parent == null)
+                            BeginDecay(m_DefaultDecayTime);
+                        break;
+                    }
+            }
+
+            if (version < 1 && Hue == 0)
+                Hue = 2301;
+        }
+    }
+
+    [Flipable]
+    public class RewardRobe : BaseOuterTorso, IRewardItem
+    {
+        private int m_LabelNumber;
+        private bool m_IsRewardItem;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool IsRewardItem
+        {
+            get => m_IsRewardItem;
+            set => m_IsRewardItem = value;
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int Number
+        {
+            get => m_LabelNumber;
+            set
+            {
+                m_LabelNumber = value;
+                InvalidateProperties();
+            }
+        }
+
+        public override int LabelNumber
+        {
+            get
+            {
+                if (m_LabelNumber > 0)
+                    return m_LabelNumber;
+
+                return base.LabelNumber;
+            }
+        }
+
+        public override int BasePhysicalResistance => 3;
+
+        public override bool Dye(Mobile from, DyeTub sender)
+        {
+            from.SendLocalizedMessage(sender.FailMessage);
+            return false;
+        }
+
+        public override void GetProperties(ObjectPropertyList list)
+        {
+            base.GetProperties(list);
+
+            if (m_IsRewardItem)
+                list.Add(RewardSystem.GetRewardYearLabel(this, new object[] { Hue, m_LabelNumber })); // X Year Veteran Reward
+        }
+
+        public override bool CanEquip(Mobile m)
+        {
+            if (!base.CanEquip(m))
+                return false;
+
+            return !m_IsRewardItem || RewardSystem.CheckIsUsableBy(m, this, new object[] { Hue, m_LabelNumber });
+        }
+
+        [Constructable]
+        public RewardRobe()
+            : this(0)
+        {
+        }
+
+        [Constructable]
+        public RewardRobe(int hue)
+            : this(hue, 0)
+        {
+        }
+
+        [Constructable]
+        public RewardRobe(int hue, int labelNumber)
+            : base(0x1F03, hue)
+        {
+            Weight = 3.0;
+            LootType = LootType.Blessed;
+
+            m_LabelNumber = labelNumber;
+        }
+
+        public RewardRobe(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write(0); // version
+
+            writer.Write(m_LabelNumber);
+            writer.Write(m_IsRewardItem);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            reader.ReadInt();
+
+            m_LabelNumber = reader.ReadInt();
+            m_IsRewardItem = reader.ReadBool();
+        }
+    }
+
+    [Flipable]
+    public class RewardDress : BaseOuterTorso, IRewardItem
+    {
+        private int m_LabelNumber;
+        private bool m_IsRewardItem;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool IsRewardItem
+        {
+            get => m_IsRewardItem;
+            set => m_IsRewardItem = value;
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int Number
+        {
+            get => m_LabelNumber;
+            set
+            {
+                m_LabelNumber = value;
+                InvalidateProperties();
+            }
+        }
+
+        public override int LabelNumber
+        {
+            get
+            {
+                if (m_LabelNumber > 0)
+                    return m_LabelNumber;
+
+                return base.LabelNumber;
+            }
+        }
+
+        public override int BasePhysicalResistance => 3;
+
+        public override bool Dye(Mobile from, DyeTub sender)
+        {
+            from.SendLocalizedMessage(sender.FailMessage);
+            return false;
+        }
+
+        public override void GetProperties(ObjectPropertyList list)
+        {
+            base.GetProperties(list);
+
+            if (m_IsRewardItem)
+                list.Add(RewardSystem.GetRewardYearLabel(this, new object[] { Hue, m_LabelNumber })); // X Year Veteran Reward
+        }
+
+        public override bool CanEquip(Mobile m)
+        {
+            if (!base.CanEquip(m))
+                return false;
+
+            return !m_IsRewardItem || RewardSystem.CheckIsUsableBy(m, this, new object[] { Hue, m_LabelNumber });
+        }
+
+        [Constructable]
+        public RewardDress()
+            : this(0)
+        {
+        }
+
+        [Constructable]
+        public RewardDress(int hue)
+            : this(hue, 0)
+        {
+        }
+
+        [Constructable]
+        public RewardDress(int hue, int labelNumber)
+            : base(0x1F01, hue)
+        {
+            Weight = 2.0;
+            LootType = LootType.Blessed;
+
+            m_LabelNumber = labelNumber;
+        }
+
+        public RewardDress(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write(0); // version
+
+            writer.Write(m_LabelNumber);
+            writer.Write(m_IsRewardItem);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            reader.ReadInt();
+
+            m_LabelNumber = reader.ReadInt();
+            m_IsRewardItem = reader.ReadBool();
+        }
+    }
+
+    public class RewardGargishRobe : BaseOuterTorso, IRewardItem
+    {
+        private int m_LabelNumber;
+        private bool m_IsRewardItem;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool IsRewardItem { get => m_IsRewardItem; set => m_IsRewardItem = value; }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int Number
+        {
+            get => m_LabelNumber;
+            set
+            {
+                m_LabelNumber = value;
+                InvalidateProperties();
+            }
+        }
+
+        public override int LabelNumber
+        {
+            get
+            {
+                if (m_LabelNumber > 0)
+                    return m_LabelNumber;
+
+                return base.LabelNumber;
+            }
+        }
+
+        public override int BasePhysicalResistance => 3;
+
+        public override bool Dye(Mobile from, DyeTub sender)
+        {
+            from.SendLocalizedMessage(sender.FailMessage);
+            return false;
+        }
+
+        public override void GetProperties(ObjectPropertyList list)
+        {
+            base.GetProperties(list);
+
+            if (m_IsRewardItem)
+                list.Add(RewardSystem.GetRewardYearHue(Hue)); // X Year Veteran Reward
+        }
+
+        public override bool CanEquip(Mobile m)
+        {
+            if (!base.CanEquip(m))
+                return false;
+
+            return !m_IsRewardItem || RewardSystem.CheckIsUsableBy(m, this, new object[] { Hue, m_LabelNumber });
+        }
+
+        [Constructable]
+        public RewardGargishRobe()
+            : this(0)
+        {
+        }
+
+        [Constructable]
+        public RewardGargishRobe(int hue)
+            : this(hue, 0)
+        {
+        }
+
+        [Constructable]
+        public RewardGargishRobe(int hue, int labelNumber)
+            : base(0x4000, hue)
+        {
+            Weight = 3.0;
+            LootType = LootType.Blessed;
+
+            m_LabelNumber = labelNumber;
+        }
+
+        public RewardGargishRobe(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write(0); // version
+
+            writer.Write(m_LabelNumber);
+            writer.Write(m_IsRewardItem);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            reader.ReadInt();
+
+            m_LabelNumber = reader.ReadInt();
+            m_IsRewardItem = reader.ReadBool();
+        }
+    }
+
+    public class RewardGargishFancyRobe : BaseOuterTorso, IRewardItem
+    {
+        private int m_LabelNumber;
+        private bool m_IsRewardItem;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool IsRewardItem { get => m_IsRewardItem; set => m_IsRewardItem = value; }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int Number
+        {
+            get => m_LabelNumber;
+            set
+            {
+                m_LabelNumber = value;
+                InvalidateProperties();
+            }
+        }
+
+        public override int LabelNumber
+        {
+            get
+            {
+                if (m_LabelNumber > 0)
+                    return m_LabelNumber;
+
+                return base.LabelNumber;
+            }
+        }
+
+        public override int BasePhysicalResistance => 3;
+
+        public override bool Dye(Mobile from, DyeTub sender)
+        {
+            from.SendLocalizedMessage(sender.FailMessage);
+            return false;
+        }
+
+        public override void GetProperties(ObjectPropertyList list)
+        {
+            base.GetProperties(list);
+
+            if (m_IsRewardItem)
+                list.Add(RewardSystem.GetRewardYearHue(Hue)); // X Year Veteran Reward
+        }
+
+        public override bool CanEquip(Mobile m)
+        {
+            if (!base.CanEquip(m))
+                return false;
+
+            return !m_IsRewardItem || RewardSystem.CheckIsUsableBy(m, this, new object[] { Hue, m_LabelNumber });
+        }
+
+        [Constructable]
+        public RewardGargishFancyRobe()
+            : this(0)
+        {
+        }
+
+        [Constructable]
+        public RewardGargishFancyRobe(int hue)
+            : this(hue, 0)
+        {
+        }
+
+        [Constructable]
+        public RewardGargishFancyRobe(int hue, int labelNumber)
+            : base(0x4002, hue)
+        {
+            Weight = 3.0;
+            LootType = LootType.Blessed;
+
+            m_LabelNumber = labelNumber;
+        }
+
+        public RewardGargishFancyRobe(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write(0); // version
+
+            writer.Write(m_LabelNumber);
+            writer.Write(m_IsRewardItem);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            reader.ReadInt();
+
+            m_LabelNumber = reader.ReadInt();
+            m_IsRewardItem = reader.ReadBool();
+        }
+    }
+
     [Flipable]
     public class Robe : BaseOuterTorso, IArcaneEquip
     {
@@ -476,13 +1053,9 @@ namespace Server.Items
         public void Update()
         {
             if (IsArcane)
-            {
                 ItemID = 0x26AE;
-            }
             else if (ItemID == 0x26AE)
-            {
                 ItemID = 0x1F04;
-            }
 
             if (IsArcane && CurArcaneCharges == 0)
             {
@@ -496,21 +1069,15 @@ namespace Server.Items
             base.AddCraftedProperties(list);
 
             if (IsArcane)
-            {
                 list.Add(1061837, $"{m_CurArcaneCharges}\t{m_MaxArcaneCharges}"); // arcane charges: ~1_val~ / ~2_val~
-            }
         }
 
         public void Flip()
         {
             if (ItemID == 0x1F03)
-            {
                 ItemID = 0x1F04;
-            }
             else if (ItemID == 0x1F04)
-            {
                 ItemID = 0x1F03;
-            }
         }
 
         #endregion
@@ -955,6 +1522,41 @@ namespace Server.Items
         }
 
         public Epaulette(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write(0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            reader.ReadInt();
+        }
+    }
+
+    public class GargishEpaulette : BaseClothing
+    {
+        public override int LabelNumber => 1123326;  // Gargish Epaulette
+
+        [Constructable]
+        public GargishEpaulette()
+            : this(0)
+        {
+        }
+
+        [Constructable]
+        public GargishEpaulette(int hue)
+            : base(0x9986, Layer.OuterTorso, hue)
+        {
+            Weight = 1.0;
+        }
+
+        public GargishEpaulette(Serial serial)
             : base(serial)
         {
         }

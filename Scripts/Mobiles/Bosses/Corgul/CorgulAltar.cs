@@ -141,21 +141,15 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!m_Active)
-            {
                 from.SendMessage("This altar has been deactivated.");
-            }
             else if (!CheckCanUse(from))
-            {
                 from.SendLocalizedMessage(1116791); // You must wait a few minutes before making your sacrifice.
-            }
             else if (from.InRange(Location, 3))
             {
                 from.Target = new InternalTarget(this);
 
                 if (m_KeyStage == 0)
-                {
                     from.SendLocalizedMessage(1116586); // Your offering will be consumed by the altar if the sacrifice is accepted. You will then have 30 seconds to re-use the shrine to mark your map and pay the blood cost.
-                }
             }
 
         }
@@ -165,14 +159,10 @@ namespace Server.Items
             if (m_Activated)
             {
                 if (Map == Map.Trammel)
-                {
                     return false;
-                }
 
                 if (m_Boss == null || !m_Boss.Alive || m_Boss.Hits < m_Boss.HitsMax / 2)
-                {
                     return false;
-                }
             }
 
             return true;
@@ -251,9 +241,7 @@ namespace Server.Items
             m_KeyStage = 0;
 
             if (m_KeyResetTimer != null)
-            {
                 m_KeyResetTimer.Stop();
-            }
 
             m_KeyResetTimer = null;
         }
@@ -263,27 +251,17 @@ namespace Server.Items
             Type type = item.GetType();
 
             if (m_KeyStage >= 0 && m_KeyStage < m_Keys.Length && type == m_Keys[m_KeyStage])
-            {
                 return true;
-            }
 
             if (m_KeyStage == 1 && item is PresetMap && item.LabelNumber == 1041204)
-            {
                 return true;
-            }
 
             if (m_KeyStage == 1 && item is TreasureMap)
-            {
                 from.SendLocalizedMessage(1116360); // The island's location cannot be marked on a treasure map.
-            }
             else if (m_KeyStage == 1 && item is MapItem)
-            {
                 from.SendLocalizedMessage(1116358); // The island's location cannot be marked on this map.
-            }
             else
-            {
                 from.SendLocalizedMessage(1072682); // This is not the proper key.
-            }
 
             return false;
         }
@@ -295,25 +273,19 @@ namespace Server.Items
             EndDeadLineTimer();
 
             if (m_BossRegion == null)
-            {
                 return;
-            }
 
             foreach (Mobile m in m_BossRegion.GetMobiles())
             {
                 if (m is PlayerMobile)
-                {
                     m.SendLocalizedMessage(1072681); // The master of this realm has been slain! You may only stay here so long.
-                }
             }
         }
 
         public void OnDeadLine()
         {
             if (m_BossRegion == null)
-            {
                 return;
-            }
 
             foreach (Mobile m in m_BossRegion.GetMobiles())
             {
@@ -333,26 +305,20 @@ namespace Server.Items
             m_WarpPoint = Point3D.Zero;
 
             if (m_BossRegion != null)
-            {
                 m_BossRegion.RemovePlayers(false);
-            }
 
             EndResetTimer();
             EndDeadLineTimer();
 
             if (m_Boss != null && !m_Boss.Deleted)
-            {
                 m_Boss.Delete();
-            }
 
             m_Boss = null;
 
             foreach (Item item in m_IslandMaps)
             {
                 if (item != null && !item.Deleted)
-                {
                     item.Delete();
-                }
             }
 
             Timer.DelayCall(TimeSpan.FromSeconds(1), UnregisterWarpRegion);
@@ -368,9 +334,7 @@ namespace Server.Items
         public void EndResetTimer()
         {
             if (m_ResetTimer != null)
-            {
                 m_ResetTimer.Stop();
-            }
 
             m_ResetTimer = null;
         }
@@ -378,9 +342,7 @@ namespace Server.Items
         public void EndDeadLineTimer()
         {
             if (m_DeadLineTimer != null)
-            {
                 m_DeadLineTimer.Stop();
-            }
 
             m_DeadLine = DateTime.MinValue;
             m_DeadLineTimer = null;
@@ -505,9 +467,7 @@ namespace Server.Items
             if (m_Active && m_Activated && m_WarpPoint != Point3D.Zero)
             {
                 if (m_DeadLine < DateTime.UtcNow || m_Boss == null || m_Boss.Deleted)
-                {
                     Reset();
-                }
                 else
                 {
                     Rectangle2D bounds = GetRectangle(m_WarpPoint);

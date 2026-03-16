@@ -34,9 +34,7 @@ namespace Server.Items
         public bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
-            {
                 return false;
-            }
 
             Hue = sender.DyedHue;
 
@@ -46,9 +44,7 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (from.AccessLevel >= AccessLevel.GameMaster)
-            {
                 base.OnDoubleClick(from);
-            }
 
             if (!from.InRange(GetWorldLocation(), 2))
             {
@@ -67,16 +63,12 @@ namespace Server.Items
         public bool CheckAccessible(Mobile from, Item item)
         {
             if (from.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return true; // Staff can access anything
-            }
 
             BaseHouse house = BaseHouse.FindHouseAt(item);
 
             if (house == null)
-            {
                 return false;
-            }
 
             switch (Level)
             {
@@ -156,9 +148,7 @@ namespace Server.Items
                 int weight = base.GetTotal(type);
 
                 if (weight > 0)
-                {
                     return (int)Math.Max(1, (base.GetTotal(type) * 0.3));
-                }
             }
 
             return base.GetTotal(type);

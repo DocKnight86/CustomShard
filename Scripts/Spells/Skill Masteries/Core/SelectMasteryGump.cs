@@ -45,9 +45,7 @@ namespace Server.Gumps
         public override void OnResponse(RelayInfo info)
         {
             if (info.ButtonID == 0)
-            {
                 return;
-            }
 
             SkillName n = (SkillName)info.ButtonID - 1;
             SkillName current = User.Skills.CurrentMastery;
@@ -67,9 +65,7 @@ namespace Server.Gumps
                 BookOfMasteries.AddToCooldown(User);
             }
             else
-            {
                 User.SendLocalizedMessage(1156236, $"{MasteryInfo.MinSkillRequirement.ToString()}\t{User.Skills[n].Info.Name}"); // You need at least ~1_SKILL_REQUIREMENT~ ~2_SKILL_NAME~ skill to use that mastery.
-            }
         }
     }
 }

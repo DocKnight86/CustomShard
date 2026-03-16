@@ -38,9 +38,7 @@ namespace Server.Mobiles
             : base(X, Y)
         {
             if (spawner == null || spawner.Deleted)
-            {
                 return;
-            }
 
             m_Spawner = spawner;
             spawner.SpawnerGump = this;
@@ -188,18 +186,12 @@ namespace Server.Mobiles
 
             // add gump extension button
             if (m_ShowGump > 1)
-            {
                 AddButton(645 + xoffset + 30, 450, 0x15E3, 0x15E7, 200, GumpButtonType.Reply, 0);
-            }
             else
                 if (m_ShowGump > 0)
-                {
-                    AddButton(315 + xoffset, 450, 0x15E1, 0x15E5, 200, GumpButtonType.Reply, 0);
-                }
-                else
-            {
+                AddButton(315 + xoffset, 450, 0x15E1, 0x15E5, 200, GumpButtonType.Reply, 0);
+            else
                 AddButton(285 + xoffset, 450, 0x15E1, 0x15E5, 200, GumpButtonType.Reply, 0);
-            }
 
             // add the textentry extender button
             if (xoffset > 0)
@@ -214,10 +206,7 @@ namespace Server.Mobiles
 
             for (int i = 0; i < MaxSpawnEntries; i++)
             {
-                if (page != i / MaxEntriesPerPage)
-                {
-                    continue;
-                }
+                if (page != i / MaxEntriesPerPage) continue;
 
                 string str = string.Empty;
                 int texthue = 0;
@@ -289,10 +278,7 @@ namespace Server.Mobiles
                     int spawnsper = m_Spawner.SpawnObjects[i].SpawnsPerTick;
 
                     texthue = subgrp * 11;
-                    if (texthue < 0)
-                    {
-                        texthue = 0;
-                    }
+                    if (texthue < 0) texthue = 0;
 
                     // Add current count
                     AddImageTiled(231 + xoffset, 22 * (i % MaxEntriesPerPage) + 30, 35, 23, 0x52);
@@ -452,9 +438,7 @@ namespace Server.Mobiles
                         Type type = SpawnerType.GetType(typestr);
 
                         if (type != null)
-                        {
                             SpawnObjects.Add(new XmlSpawner.SpawnObject(from, m_Spawner, str, 0));
-                        }
                         else
                         {
                             // check for special keywords
@@ -463,9 +447,7 @@ namespace Server.Mobiles
                                 SpawnObjects.Add(new XmlSpawner.SpawnObject(from, m_Spawner, str, 0));
                             }
                             else
-                            {
                                 m_Spawner.status_str = $"{str} is not a valid type name.";
-                            }
                             //from.SendMessage( "{0} is not a valid type name.", str );
                         }
 
@@ -524,10 +506,7 @@ namespace Server.Mobiles
 
         public static void RefreshSpawnerGumps(Mobile from)
         {
-            if (from == null)
-            {
-                return;
-            }
+            if (from == null) return;
 
             NetState ns = from.NetState;
 
@@ -569,9 +548,7 @@ namespace Server.Mobiles
             if (o is Item i)
             {
                 if (!i.Deleted && i.Map != null && i.Map != Map.Internal)
-                {
                     return true;
-                }
 
                 if (from != null && !from.Deleted)
                 {
@@ -581,9 +558,7 @@ namespace Server.Mobiles
             else if (o is Mobile m)
             {
                 if (!m.Deleted && m.Map != null && m.Map != Map.Internal)
-                {
                     return true;
-                }
 
                 if (from != null && !from.Deleted)
                 {
@@ -598,11 +573,7 @@ namespace Server.Mobiles
         {
             if (m_Spawner == null || m_Spawner.Deleted || state == null || info == null)
             {
-                if (m_Spawner != null)
-                {
-                    m_Spawner.SpawnerGump = null;
-                }
-
+                if (m_Spawner != null) m_Spawner.SpawnerGump = null;
                 return;
             }
 
@@ -627,10 +598,7 @@ namespace Server.Mobiles
 
             for (int i = 0; i < m_Spawner.SpawnObjects.Length; i++)
             {
-                if (page != i / MaxEntriesPerPage)
-                {
-                    continue;
-                }
+                if (page != i / MaxEntriesPerPage) continue;
 
                 // check the max count entry
                 TextRelay temcnt = info.GetTextEntry(500 + i);
@@ -639,10 +607,7 @@ namespace Server.Mobiles
                     int maxval = 0;
                     try { maxval = Convert.ToInt32(temcnt.Text, 10); }
                     catch (Exception e) { Diagnostics.ExceptionLogging.LogException(e); }
-                    if (maxval < 0)
-                    {
-                        maxval = 0;
-                    }
+                    if (maxval < 0) maxval = 0;
 
                     m_Spawner.SpawnObjects[i].MaxCount = maxval;
                 }
@@ -656,10 +621,7 @@ namespace Server.Mobiles
                         int grpval = 0;
                         try { grpval = Convert.ToInt32(tegrp.Text, 10); }
                         catch (Exception e) { Diagnostics.ExceptionLogging.LogException(e); }
-                        if (grpval < 0)
-                        {
-                            grpval = 0;
-                        }
+                        if (grpval < 0) grpval = 0;
 
                         m_Spawner.SpawnObjects[i].SubGroup = grpval;
                     }
@@ -680,10 +642,7 @@ namespace Server.Mobiles
                             double grpval = 0;
                             try { grpval = Convert.ToDouble(tegrp.Text); }
                             catch (Exception e) { Diagnostics.ExceptionLogging.LogException(e); }
-                            if (grpval < 0)
-                            {
-                                grpval = 0;
-                            }
+                            if (grpval < 0) grpval = 0;
 
                             m_Spawner.SpawnObjects[i].SequentialResetTime = 0;
 
@@ -696,10 +655,7 @@ namespace Server.Mobiles
                             int grpval = 0;
                             try { grpval = Convert.ToInt32(tegrp.Text, 10); }
                             catch (Exception e) { Diagnostics.ExceptionLogging.LogException(e); }
-                            if (grpval < 0)
-                            {
-                                grpval = 0;
-                            }
+                            if (grpval < 0) grpval = 0;
 
                             m_Spawner.SpawnObjects[subgroupindex].SequentialResetTo = grpval;
                         }
@@ -710,10 +666,7 @@ namespace Server.Mobiles
                             int grpval = 0;
                             try { grpval = Convert.ToInt32(tegrp.Text, 10); }
                             catch (Exception e) { Diagnostics.ExceptionLogging.LogException(e); }
-                            if (grpval < 0)
-                            {
-                                grpval = 0;
-                            }
+                            if (grpval < 0) grpval = 0;
 
                             m_Spawner.SpawnObjects[subgroupindex].KillsNeeded = grpval;
                         }
@@ -728,10 +681,7 @@ namespace Server.Mobiles
                             double grpval = -1;
                             try { grpval = Convert.ToDouble(tegrp.Text); }
                             catch (Exception e) { Diagnostics.ExceptionLogging.LogException(e); }
-                            if (grpval < 0)
-                            {
-                                grpval = -1;
-                            }
+                            if (grpval < 0) grpval = -1;
 
                             // if this value has changed, then update the next spawn time
                             if (grpval != m_Spawner.SpawnObjects[i].MinDelay)
@@ -757,10 +707,7 @@ namespace Server.Mobiles
                             double grpval = -1;
                             try { grpval = Convert.ToDouble(tegrp.Text); }
                             catch (Exception e) { Diagnostics.ExceptionLogging.LogException(e); }
-                            if (grpval < 0)
-                            {
-                                grpval = -1;
-                            }
+                            if (grpval < 0) grpval = -1;
 
                             // if this value has changed, then update the next spawn time
                             if (grpval != m_Spawner.SpawnObjects[i].MaxDelay)
@@ -786,10 +733,7 @@ namespace Server.Mobiles
                             int grpval = 1;
                             try { grpval = int.Parse(tegrp.Text); }
                             catch (Exception e) { Diagnostics.ExceptionLogging.LogException(e); }
-                            if (grpval < 0)
-                            {
-                                grpval = 1;
-                            }
+                            if (grpval < 0) grpval = 1;
 
                             // if this value has changed, then update the next spawn time
                             if (grpval != m_Spawner.SpawnObjects[i].SpawnsPerTick)
@@ -812,10 +756,7 @@ namespace Server.Mobiles
                             int grpval = 1;
                             try { grpval = int.Parse(tegrp.Text); }
                             catch (Exception e) { Diagnostics.ExceptionLogging.LogException(e); }
-                            if (grpval < 0)
-                            {
-                                grpval = 1;
-                            }
+                            if (grpval < 0) grpval = 1;
 
                             // if this value has changed, then update 
                             if (grpval != m_Spawner.SpawnObjects[i].PackRange)
@@ -838,11 +779,7 @@ namespace Server.Mobiles
                 int maxval = 0;
                 try { maxval = Convert.ToInt32(temax.Text, 10); }
                 catch (Exception e) { Diagnostics.ExceptionLogging.LogException(e); }
-                if (maxval < 0)
-                {
-                    maxval = 0;
-                }
-
+                if (maxval < 0) maxval = 0;
                 // if the maxcount of the spawner has been altered external to the interface (e.g. via props, or by the running spawner itself
                 // then that change will override the text entry
                 if (m_Spawner.MaxCount == initial_maxcount)
@@ -943,17 +880,14 @@ namespace Server.Mobiles
                         {
                             int index = info.ButtonID - 300;
                             if (index < m_Spawner.SpawnObjects.Length)
-                            {
                                 m_Spawner.SpawnObjects[index].RestrictKillsToSubgroup = !m_Spawner.SpawnObjects[index].RestrictKillsToSubgroup;
-                            }
+
                         }
                         else if (info.ButtonID >= 400 && info.ButtonID < 400 + MaxSpawnEntries)
                         {
                             int index = info.ButtonID - 400;
                             if (index < m_Spawner.SpawnObjects.Length)
-                            {
                                 m_Spawner.SpawnObjects[index].ClearOnAdvance = !m_Spawner.SpawnObjects[index].ClearOnAdvance;
-                            }
                         }
                         else if (info.ButtonID >= 800 && info.ButtonID < 800 + MaxSpawnEntries)
                         {
@@ -1027,14 +961,10 @@ namespace Server.Mobiles
                                             Map m = m_Spawner.Map;
 
                                             if (o is Item item)
-                                            {
                                                 m = item.Map;
-                                            }
 
                                             if (o is Mobile mobile)
-                                            {
                                                 m = mobile.Map;
-                                            }
 
                                             state.Mobile.Location = new Point3D(o);
                                             state.Mobile.Map = m;
@@ -1059,9 +989,7 @@ namespace Server.Mobiles
 
                                 // clear any current spawns on the disabled entry
                                 if (m_Spawner.SpawnObjects[index].Disabled)
-                                {
                                     m_Spawner.RemoveSpawnObjects(m_Spawner.SpawnObjects[index]);
-                                }
                             }
                         }
                         else if (info.ButtonID >= 5000 && info.ButtonID < 5000 + MaxSpawnEntries)
@@ -1139,9 +1067,7 @@ namespace Server.Mobiles
                                     string str = m_Spawner.SpawnObjects[index].TypeName;
 
                                     if (str != null && str.Length >= 230)
-                                    {
                                         entrystr = str;
-                                    }
                                 }
 #endif
                                 if (type == 0) // Add creature

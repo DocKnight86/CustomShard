@@ -17,29 +17,21 @@ namespace Server.Misc
         public static void Initialize()
         {
             if (Enabled) // If enabled, register our crash event handler
-            {
                 EventSink.Crashed += CrashGuard_OnCrash;
-            }
         }
 
         public static void CrashGuard_OnCrash(CrashedEventArgs e)
         {
             if (GenerateReport)
-            {
                 GenerateCrashReport(e);
-            }
 
             World.WaitForWriteCompletion();
 
             if (SaveBackup)
-            {
                 Backup();
-            }
 
             if (RestartServer)
-            {
                 Restart(e);
-            }
         }
 
         private static void SendEmail(string filePath)
@@ -56,13 +48,9 @@ namespace Server.Misc
             message.Attachments.Add(new Attachment(filePath));
 
             if (Email.Send(message))
-            {
                 Console.WriteLine("done");
-            }
             else
-            {
                 Console.WriteLine("failed");
-            }
         }
 
         private static string GetRoot()
@@ -81,9 +69,7 @@ namespace Server.Misc
         private static string Combine(string path1, string path2)
         {
             if (path1.Length == 0)
-            {
                 return path2;
-            }
 
             return Path.Combine(path1, path2);
         }
@@ -110,9 +96,7 @@ namespace Server.Misc
         private static void CreateDirectory(string path)
         {
             if (!Directory.Exists(path))
-            {
                 Directory.CreateDirectory(path);
-            }
         }
 
         private static void CreateDirectory(string path1, string path2)
@@ -154,9 +138,7 @@ namespace Server.Misc
             try
             {
                 if (File.Exists(originPath))
-                {
                     File.Copy(originPath, backupPath);
-                }
             }
             catch (Exception e)
             {

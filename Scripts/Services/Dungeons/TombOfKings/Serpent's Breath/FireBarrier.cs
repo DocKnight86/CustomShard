@@ -59,9 +59,7 @@ namespace Server.Items
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
             if (!Active || !m.Alive || !m.IsPlayer())
-            {
                 return;
-            }
 
             if (m.InRange(this, 1) && !m_DamageTable.ContainsKey(m))
             {

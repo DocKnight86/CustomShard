@@ -346,13 +346,9 @@ namespace Server.Mobiles
             m_LastLocation = reader.ReadRect2D();
 
             if (m_NextSpawn > DateTime.UtcNow)
-            {
                 m_Timer = new InternalTimer(this, m_NextSpawn - DateTime.UtcNow);
-            }
             else
-            {
                 Reset();
-            }
         }
     }
 }

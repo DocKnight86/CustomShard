@@ -56,6 +56,14 @@ namespace Server.Mobiles
             AddLoot(LootPack.ArcanistScrolls, 0, 1);
         }
 
+        public override void OnDeath(Container c)
+        {
+            base.OnDeath(c);
+
+            if (Utility.RandomDouble() < 0.1)
+                c.DropItem(new PrimitiveFetish());
+        }
+
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);

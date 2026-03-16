@@ -59,7 +59,8 @@ namespace Server.Mobiles
                 {
                     typeof(BraveKnightOfTheBritannia),
                     typeof(DetectiveBoots),
-                    typeof(EmbroideredOakLeafCloak)
+                    typeof(EmbroideredOakLeafCloak),
+                    typeof(LieutenantOfTheBritannianRoyalGuard)
                 };
         public override Type[] DecorativeList => new[] { typeof(Futon), typeof(SwampTile) };
         public override MonsterStatuetteType[] StatueTypes => Array.Empty<MonsterStatuetteType>();
@@ -122,9 +123,7 @@ namespace Server.Mobiles
         private void DoCounter(Mobile attacker)
         {
             if (Map == null || attacker is BaseCreature creature && creature.BardProvoked)
-            {
                 return;
-            }
 
             if (0.2 > Utility.RandomDouble())
             {
@@ -141,15 +140,11 @@ namespace Server.Mobiles
                     Mobile m = baseCreature.GetMaster();
 
                     if (m != null)
-                    {
                         target = m;
-                    }
                 }
 
                 if (target == null || !target.InRange(this, 25))
-                {
                     target = attacker;
-                }
 
                 Animate(10, 4, 1, true, false, 0);
 
@@ -159,18 +154,12 @@ namespace Server.Mobiles
                 foreach (Mobile m in eable)
                 {
                     if (m == this || !CanBeHarmful(m))
-                    {
                         continue;
-                    }
 
                     if (m is BaseCreature bc && (bc.Controlled || bc.Summoned || bc.Team != Team))
-                    {
                         targets.Add(m);
-                    }
                     else if (m.Player)
-                    {
                         targets.Add(m);
-                    }
                 }
                 eable.Free();
                 for (int i = 0; i < targets.Count; ++i)

@@ -14,9 +14,7 @@ namespace Server
         protected override void OnTick()
         {
             if (m_Collection != null && m_Collection.DailyDecay > 0)
-            {
                 m_Collection.Points -= m_Collection.DailyDecay;
-            }
         }
     }
 }

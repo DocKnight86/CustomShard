@@ -71,9 +71,7 @@ namespace Server.Items
         public virtual bool CanUse(Mobile from)
         {
             if (Deleted)
-            {
                 return false;
-            }
 
             if (!IsChildOf(from.Backpack))
             {
@@ -91,9 +89,7 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!CanUse(from))
-            {
                 return;
-            }
 
             from.CloseGump(typeof(InternalGump));
             from.SendGump(new InternalGump(from, this));
@@ -129,26 +125,16 @@ namespace Server.Items
                         m_InheritsItem = true;
 
                         if (!(this is StatCapScroll))
-                        {
                             m_Skill = (SkillName)reader.ReadInt();
-                        }
                         else
-                        {
                             m_Skill = SkillName.Alchemy;
-                        }
 
                         if (this is ScrollOfAlacrity)
-                        {
                             m_Value = 0.0;
-                        }
                         else if (this is StatCapScroll)
-                        {
                             m_Value = reader.ReadInt();
-                        }
                         else
-                        {
                             m_Value = reader.ReadDouble();
-                        }
 
                         break;
                     }
@@ -189,30 +175,20 @@ namespace Server.Items
                 AddHtmlLocalized(310, 172, 120, 20, 1046363, 0xFFFFFF, false, false); // No
 
                 if (m_Scroll.Title != 0)
-                {
                     AddHtmlLocalized(40, 20, 260, 20, m_Scroll.Title, 0xFFFFFF, false, false);
-                }
                 else
-                {
                     AddHtml(40, 20, 260, 20, m_Scroll.DefaultTitle, false, false);
-                }
 
                 if (m_Scroll is StatCapScroll)
-                {
                     AddHtmlLocalized(310, 20, 120, 20, 1038019, 0xFFFFFF, false, false); // Power
-                }
                 else
-                {
                     AddHtmlLocalized(310, 20, 120, 20, AosSkillBonuses.GetLabel(m_Scroll.Skill), 0xFFFFFF, false, false);
-                }
             }
 
             public override void OnResponse(NetState state, RelayInfo info)
             {
                 if (info.ButtonID == 1)
-                {
                     m_Scroll.Use(m_Mobile);
-                }
             }
         }
     }

@@ -116,11 +116,11 @@ namespace Server.Spells.SkillMasteries
             /* As One - Requires multiple pets to active */
             if (type == TrainingType.AsOne && Caster is PlayerMobile pm)
             {
-                List<Mobile> list = new List<Mobile>();
+                var list = new List<Mobile>();
 
-                for (int index = 0; index < pm.AllFollowers.Count; index++)
+                for (var index = 0; index < pm.AllFollowers.Count; index++)
                 {
-                    Mobile x = pm.AllFollowers[index];
+                    var x = pm.AllFollowers[index];
 
                     if (x.Map != Map.Internal && x.InRange(Caster, 100) && x != target)
                     {
@@ -130,9 +130,9 @@ namespace Server.Spells.SkillMasteries
 
                 if (list.Count > 0)
                 {
-                    for (int index = 0; index < list.Count; index++)
+                    for (var index = 0; index < list.Count; index++)
                     {
-                        Mobile x = list[index];
+                        var x = list[index];
 
                         Effects.SendPacket(x.Location, x.Map, new ParticleEffect(EffectType.FixedFrom, x.Serial, Serial.Zero, 0x376A, x.Location,
                                 x.Location, 1, 32, false, false, 1262, 0, 0, 9502, 1, x.Serial, 199, 0));
@@ -217,16 +217,11 @@ namespace Server.Spells.SkillMasteries
             get
             {
                 if (Target == null || SpellType == TrainingType.AsOne)
-                {
                     return 0.0;
-                }
 
                 double dam = _DamageTaken / (Target.HitsMax * .66);
 
-                if (dam > 1.0)
-                {
-                    dam = 1.0;
-                }
+                if (dam > 1.0) dam = 1.0;
 
                 return dam;
             }
@@ -235,9 +230,7 @@ namespace Server.Spells.SkillMasteries
         private void EndPhase1()
         {
             if (_Expired)
-            {
                 return;
-            }
 
             _Phase = 2;
 
@@ -247,9 +240,7 @@ namespace Server.Spells.SkillMasteries
         private void EndPhase2()
         {
             if (_Expired)
-            {
                 return;
-            }
 
             _DamageTaken = 0;
             _Phase = 0;
@@ -302,9 +293,9 @@ namespace Server.Spells.SkillMasteries
 
                                 if (pm != null)
                                 {
-                                    for (int index = 0; index < pm.AllFollowers.Count; index++)
+                                    for (var index = 0; index < pm.AllFollowers.Count; index++)
                                     {
-                                        Mobile m = pm.AllFollowers[index];
+                                        var m = pm.AllFollowers[index];
 
                                         if (m.Map != Map.Internal && m.InRange(pm, 15) && m.CanBeHarmful(attacker))
                                         {
@@ -317,7 +308,7 @@ namespace Server.Spells.SkillMasteries
                                 {
                                     damage /= list.Count;
 
-                                    for (int index = 0; index < list.Count; index++)
+                                    for (var index = 0; index < list.Count; index++)
                                     {
                                         Mobile m = list[index];
 
@@ -350,9 +341,7 @@ namespace Server.Spells.SkillMasteries
                         }
 
                         if (spell.DamageTaken == 0)
-                        {
                             bc.FixedEffect(0x3779, 10, 30, 1743, 0);
-                        }
 
                         spell.DamageTaken += storedDamage;
                     }
@@ -451,6 +440,11 @@ namespace Server.Spells.SkillMasteries
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (targeted is Engines.Despise.DespiseCreature)
+                {
+                    return;
+                }
+
                 if (targeted is BaseCreature bc && bc.GetMaster() == from && from.Spell == Spell)
                 {
                     from.SendSound(0x64E);
@@ -477,9 +471,7 @@ namespace Server.Spells.SkillMasteries
         public static void AddRageCooldown(Mobile m)
         {
             if (_RageCooldown == null)
-            {
                 _RageCooldown = new Dictionary<Mobile, Timer>();
-            }
 
             _RageCooldown[m] = Server.Timer.DelayCall(TimeSpan.FromSeconds(60), EndRageCooldown, m);
         }

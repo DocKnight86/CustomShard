@@ -64,9 +64,7 @@ namespace Server.Mobiles
         public override void DoTimer(TimeSpan delay)
         {
             if (!Running)
-            {
                 return;
-            }
 
             End = DateTime.UtcNow + delay;
         }
@@ -83,9 +81,7 @@ namespace Server.Mobiles
             for (int i = 0; i < SpawnObjectCount; ++i)
             {
                 for (int j = 0; j < MaxCount; ++j)
-                {
                     Spawn(SpawnObjects[i]);
-                }
             }
         }
 
@@ -99,9 +95,7 @@ namespace Server.Mobiles
             if (m is BaseCreature bc)
             {
                 if (!bc.Controlled && !bc.Summoned)
-                {
                     return false;
-                }
             }
             else if (!m.Player)
             {
@@ -114,9 +108,7 @@ namespace Server.Mobiles
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
             if (!Running)
-            {
                 return;
-            }
 
             if (IsEmpty && End <= DateTime.UtcNow && m.InRange(GetWorldLocation(), TriggerRange) &&
                 m.Location != oldLocation && ValidTrigger(m))
@@ -131,9 +123,7 @@ namespace Server.Mobiles
                     foreach (ISpawnable spawned in GetSpawn())
                     {
                         if (spawned is Mobile mobile)
-                        {
                             mobile.Combatant = m;
-                        }
                     }
                 }
             }

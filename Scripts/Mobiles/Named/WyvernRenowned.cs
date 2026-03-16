@@ -1,3 +1,4 @@
+﻿using Server.Items;
 using System;
 
 namespace Server.Mobiles
@@ -50,9 +51,9 @@ namespace Server.Mobiles
         {
         }
 
-        public override Type[] UniqueSAList => [];
+        public override Type[] UniqueSAList => Array.Empty<Type>();
 
-        public override Type[] SharedSAList => [];
+        public override Type[] SharedSAList => new[] { typeof(AnimatedLegsoftheInsaneTinker), typeof(PillarOfStrength), typeof(StormCaller) };
 
         public override bool ReacquireOnMovement => true;
 

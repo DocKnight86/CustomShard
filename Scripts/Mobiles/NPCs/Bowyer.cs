@@ -43,9 +43,7 @@ namespace Server.Mobiles
             m_SBInfos.Add(new SBRangedWeapon());
 
             if (IsTokunoVendor)
-            {
                 m_SBInfos.Add(new SBSEBowyer());
-            }
         }
 
         #region Bulk Orders
@@ -64,9 +62,7 @@ namespace Server.Mobiles
         public override void OnSuccessfulBulkOrderReceive(Mobile from)
         {
             if (from is PlayerMobile mobile)
-            {
                 mobile.NextFletchingBulkOrder = TimeSpan.Zero;
-            }
         }
 
         #endregion

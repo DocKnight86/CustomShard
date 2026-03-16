@@ -23,9 +23,7 @@ namespace Server.Engines.VeteranRewards
         public virtual bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
-            {
                 return false;
-            }
 
             Hue = sender.DyedHue;
             return true;
@@ -130,9 +128,7 @@ namespace Server.Engines.VeteranRewards
         public void StartTimer()
         {
             if (Timer == null)
-            {
                 Timer = new InternalTimer(this);
-            }
 
             Timer.Start();
         }
@@ -171,16 +167,12 @@ namespace Server.Engines.VeteranRewards
         public bool CheckAccessible(Mobile from, Item item)
         {
             if (from.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return true; // Staff can access anything
-            }
 
             BaseHouse house = BaseHouse.FindHouseAt(item);
 
             if (house == null)
-            {
                 return false;
-            }
 
             switch (Level)
             {
@@ -319,9 +311,7 @@ namespace Server.Engines.VeteranRewards
             base.GetProperties(list);
 
             if (m_IsRewardItem)
-            {
                 list.Add(1076222); // 6th Year Veteran Reward
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -348,9 +338,7 @@ namespace Server.Engines.VeteranRewards
             _Direction = (DirectionType)choice;
 
             if (!Deleted)
-            {
                 base.OnDoubleClick(from);
-            }
         }
 
         public EnchantedGraniteCartAddonDeed(Serial serial)

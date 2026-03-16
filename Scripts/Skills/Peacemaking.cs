@@ -75,9 +75,7 @@ namespace Server.SkillHandlers
                     int masteryBonus = 0;
 
                     if (from is PlayerMobile mobile)
-                    {
                         masteryBonus = Spells.SkillMasteries.BardSpell.GetMasteryBonus(mobile, SkillName.Peacemaking);
-                    }
 
                     if (targeted == from)
                     {
@@ -182,9 +180,7 @@ namespace Server.SkillHandlers
                             }
 
                             if (masteryBonus > 0)
-                            {
                                 diff -= diff * ((double)masteryBonus / 100);
-                            }
 
                             if (!from.CheckTargetSkill(SkillName.Peacemaking, targ, diff - 25.0, diff + 25.0))
                             {

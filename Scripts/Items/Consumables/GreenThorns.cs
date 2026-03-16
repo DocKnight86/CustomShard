@@ -74,9 +74,7 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Thorn.Deleted)
-                {
                     return;
-                }
 
                 if (!m_Thorn.IsChildOf(from.Backpack))
                 {
@@ -266,9 +264,7 @@ namespace Server.Items
         public static GreenThornsEffect Create(Mobile from, LandTarget land)
         {
             if (!from.Map.CanSpawnMobile(land.Location))
-            {
                 return null;
-            }
 
             int tileID = land.TileID;
 
@@ -477,9 +473,7 @@ namespace Server.Items
             }
 
             if (!SpawnItem(reagents))
-            {
                 reagents.Delete();
-            }
         }
     }
 
@@ -523,9 +517,7 @@ namespace Server.Items
 
                         BaseCreature spawn = new VorpalBunny();
                         if (!SpawnCreature(spawn))
-                        {
                             spawn.Delete();
-                        }
 
                         return TimeSpan.Zero;
                     }
@@ -571,9 +563,7 @@ namespace Server.Items
 
                         BaseCreature spawn = new WhippingVine();
                         if (!SpawnCreature(spawn))
-                        {
                             spawn.Delete();
-                        }
 
                         return TimeSpan.Zero;
                     }
@@ -618,17 +608,13 @@ namespace Server.Items
 
                         BaseCreature spawn = new GiantIceWorm();
                         if (!SpawnCreature(spawn))
-                        {
                             spawn.Delete();
-                        }
 
                         for (int i = 0; i < 3; i++)
                         {
                             BaseCreature snake = new IceSnake();
                             if (!SpawnCreature(snake))
-                            {
                                 snake.Delete();
-                            }
                         }
 
                         return TimeSpan.Zero;

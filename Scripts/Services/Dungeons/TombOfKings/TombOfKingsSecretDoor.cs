@@ -33,9 +33,7 @@ namespace Server.Items
         public void Open(Mobile from)
         {
             if (!from.InRange(this, 1))
-            {
                 return;
-            }
 
             if (ItemID == ClosedId)
             {

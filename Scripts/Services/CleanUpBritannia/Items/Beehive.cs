@@ -40,13 +40,9 @@ namespace Server.Items
                 else
                 {
                     if (value <= 0)
-                    {
                         m_Honeypots = 0;
-                    }
                     else
-                    {
                         m_Honeypots = value;
-                    }
 
                     StartSpawnTimer(m_SpawnTime);
                 }
@@ -195,9 +191,7 @@ namespace Server.Items
             }
 
             if (m_Honeypots < 10)
-            {
                 StartSpawnTimer(m_NextSpawnTime - DateTime.UtcNow);
-            }
         }
     }
 }

@@ -85,9 +85,7 @@ namespace Server.Items
             for (int i = 0; i < m_Types.Length; ++i)
             {
                 if (m_Types[i].IsAssignableFrom(t))
-                {
                     return true;
-                }
             }
 
             return false;

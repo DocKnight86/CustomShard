@@ -44,9 +44,7 @@ namespace Server.Mobiles
             foreach (Vertex v in list)
             {
                 if (v.ID == id)
-                {
                     return v;
-                }
             }
 
             return null;
@@ -55,9 +53,7 @@ namespace Server.Mobiles
         public static int FindShopName(int id)
         {
             if (id < 0 || id > m_ShopDefinitions.Count)
-            {
                 return -1;
-            }
 
             return m_ShopDefinitions[id];
         }
@@ -133,13 +129,9 @@ namespace Server.Mobiles
                                             num = int.Parse(split[i]);
 
                                             if (num >= 0 && num < m_ShopDefinitions.Count)
-                                            {
                                                 current.Shops.Add(num);
-                                            }
                                             else
-                                            {
                                                 throw new Exception($"Invalid shop ID: {num}");
-                                            }
                                         }
                                     }
                                 }
@@ -151,9 +143,7 @@ namespace Server.Mobiles
                                         neighbour = FindVertex(list, num);
 
                                         if (neighbour != null)
-                                        {
                                             current = neighbour;
-                                        }
                                         else
                                         {
                                             current = new Vertex(num);
@@ -170,9 +160,7 @@ namespace Server.Mobiles
                                         current.Teleporter = bool.Parse(split[5]);
                                     }
                                     else
-                                    {
                                         throw new Exception("Incomplete vertex definition!");
-                                    }
                                 }
                             }
                         }
@@ -197,26 +185,18 @@ namespace Server.Mobiles
                 Vertex closest = ClosestVetrex(m.Region.Name, m.Location);
 
                 if (closest != null)
-                {
                     m.SendGump(new GuideVertexEditGump(closest, m.Map, m.Region.Name));
-                }
                 else
-                {
                     m.SendLocalizedMessage(1076113); // There are no shops nearby.  Please try again when you get to a town or city.
-                }
             }
             else
-            {
                 m.SendLocalizedMessage(1076113); // There are no shops nearby.  Please try again when you get to a town or city.
-            }
         }
 
         public static Vertex ClosestVetrex(string town, Point3D location)
         {
             if (town == null || !m_GraphDefinitions.ContainsKey(town))
-            {
                 return null;
-            }
 
             List<Vertex> vertices = m_GraphDefinitions[town];
 
@@ -241,9 +221,7 @@ namespace Server.Mobiles
         public static Dictionary<int, Vertex> FindShops(string town, Point3D location)
         {
             if (town == null || !m_GraphDefinitions.ContainsKey(town))
-            {
                 return null;
-            }
 
             List<Vertex> vertices = m_GraphDefinitions[town];
             Dictionary<int, Vertex> shops = new Dictionary<int, Vertex>();
@@ -257,21 +235,15 @@ namespace Server.Mobiles
                         Vertex d = shops[shop];
 
                         if (v.DistanceTo(location) < d.DistanceTo(location))
-                        {
                             shops[shop] = v;
-                        }
                     }
                     else
-                    {
                         shops.Add(shop, v);
-                    }
                 }
             }
 
             if (shops.Count > 0)
-            {
                 return shops;
-            }
 
             return null;
         }
@@ -279,9 +251,7 @@ namespace Server.Mobiles
         public static List<Vertex> Dijkstra(string town, Vertex source, Vertex destination)
         {
             if (town == null || !m_GraphDefinitions.ContainsKey(town))
-            {
                 return null;
-            }
 
             Heap<Vertex> heap = new Heap<Vertex>();
             List<Vertex> path = new List<Vertex>();
@@ -328,13 +298,9 @@ namespace Server.Mobiles
                             v.Previous = from;
 
                             if (!v.Visited)
-                            {
                                 heap.Push(v);
-                            }
                             else
-                            {
                                 heap.Fix(v);
-                            }
                         }
                     }
                 }
@@ -394,13 +360,9 @@ namespace Server.Mobiles
                 if (info.ButtonID > 0)
                 {
                     if (m_Vertex.Shops.Contains(info.ButtonID - 1))
-                    {
                         m_Vertex.Shops.Remove(info.ButtonID - 1);
-                    }
                     else
-                    {
                         m_Vertex.Shops.Add(info.ButtonID - 1);
-                    }
 
                     sender.Mobile.SendGump(new GuideVertexEditGump(m_Vertex, m_Map, m_Town));
                 }
@@ -414,9 +376,7 @@ namespace Server.Mobiles
             private void Save(string town)
             {
                 if (!m_GraphDefinitions.ContainsKey(town))
-                {
                     return;
-                }
 
                 List<Vertex> list = m_GraphDefinitions[town];
                 string path = Core.BaseDirectory + $@"\Data\Guide\{town}.graph";
@@ -533,9 +493,7 @@ namespace Server.Mobiles
             public int CompareTo(Vertex o)
             {
                 if (o != null)
-                {
                     return m_Distance - o.Distance;
-                }
 
                 return 0;
             }
@@ -699,18 +657,14 @@ namespace Server.Mobiles
                     from.SendGump(new InternalGump(this, m_Shops));
                 }
                 else
-                {
                     from.SendLocalizedMessage(1076113); // There are no shops nearby.  Please try again when you get to a town or city.
-                }
             }
         }
 
         public override void AddCustomContextEntries(Mobile from, List<ContextMenuEntry> list)
         {
             if (from.Alive && IsOwner(from))
-            {
                 list.Add(new AttendantUseEntry(this, 6249));
-            }
 
             base.AddCustomContextEntries(from, list);
         }
@@ -727,13 +681,9 @@ namespace Server.Mobiles
                 if (m.NetState != null)
                 {
                     if (Math.Abs(v.DistanceTo(m.Location) - v.DistanceTo(Location)) > 10)
-                    {
                         Frozen = true;
-                    }
                     else
-                    {
                         Frozen = false;
-                    }
 
                     if (CurrentWayPoint == null)
                     {
@@ -750,9 +700,7 @@ namespace Server.Mobiles
                         if (m_Path.Count > 0)
                         {
                             if (CurrentWayPoint == null)
-                            {
                                 CurrentWayPoint = new WayPoint();
-                            }
 
                             CurrentWayPoint.MoveToWorld(m_Path[m_Path.Count - 1].Location, Map);
                         }
@@ -798,14 +746,10 @@ namespace Server.Mobiles
             CurrentSpeed = PassiveSpeed;
 
             if (CurrentWayPoint != null)
-            {
                 CurrentWayPoint.Delete();
-            }
 
             if (m_Path != null)
-            {
                 m_Path.Clear();
-            }
 
             Controlled = true;
             m_Path = null;
@@ -818,14 +762,10 @@ namespace Server.Mobiles
             if (ControlMaster != null && m_Path != null && m_Path.Count > 0)
             {
                 if (m_Path.Count > 1)
-                {
                     m_Path.RemoveAt(m_Path.Count - 1);
-                }
 
                 if (CurrentWayPoint == null)
-                {
                     CurrentWayPoint = new WayPoint();
-                }
 
                 CurrentWayPoint.MoveToWorld(m_Path[m_Path.Count - 1].Location, Map);
 
@@ -898,9 +838,7 @@ namespace Server.Mobiles
                 int shop = info.ButtonID - 100;
 
                 if (m_Guide == null || m_Guide.Deleted || m_Guide.Region == null || info.ButtonID == 0)
-                {
                     return;
-                }
 
                 Vertex source = GuideHelper.ClosestVetrex(m_Guide.Region.Name, m_Guide.Location);
 

@@ -60,9 +60,7 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (Utility.RandomDouble() < 0.06)
-            {
                 c.DropItem(new JaggedCrystals());
-            }
         }
 
         public override int GetAngerSound()

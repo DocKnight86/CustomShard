@@ -27,9 +27,7 @@ namespace Server.Items
         public virtual bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
-            {
                 return false;
-            }
 
             Hue = sender.DyedHue;
             return true;
@@ -96,9 +94,7 @@ namespace Server.Items
             _Direction = (DirectionType)choice;
 
             if (!Deleted)
-            {
                 base.OnDoubleClick(from);
-            }
         }
 
         public override BaseAddon Addon => new GoldenTableAddon(_Direction);

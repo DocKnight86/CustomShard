@@ -1,3 +1,4 @@
+using Server.Items;
 using System;
 
 namespace Server.Mobiles
@@ -48,8 +49,8 @@ namespace Server.Mobiles
         {
         }
 
-        public override Type[] UniqueSAList => [];
-        public override Type[] SharedSAList => [];
+        public override Type[] UniqueSAList => new Type[] { typeof(SpinedBloodwormBracers), typeof(DefenderOfTheMagus) };
+        public override Type[] SharedSAList => new Type[] { typeof(SummonersKilt) };
 
         public override bool Unprovokable => true;
         public override bool BleedImmune => true;

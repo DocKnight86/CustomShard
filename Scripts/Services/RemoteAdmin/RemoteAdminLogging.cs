@@ -21,23 +21,16 @@ namespace Server.RemoteAdmin
         public static void LazyInitialize()
         {
             if (Initialized || !m_Enabled)
-            {
                 return;
-            }
-
             Initialized = true;
 
             if (!Directory.Exists(LogBaseDirectory))
-            {
                 Directory.CreateDirectory(LogBaseDirectory);
-            }
 
             string directory = Path.Combine(LogBaseDirectory, LogSubDirectory);
 
             if (!Directory.Exists(directory))
-            {
                 Directory.CreateDirectory(directory);
-            }
 
             try
             {
@@ -62,9 +55,7 @@ namespace Server.RemoteAdmin
         {
             o = Commands.CommandLogging.Format(o);
             if (o == null)
-            {
                 return "(null)";
-            }
 
             return o;
         }
@@ -72,9 +63,7 @@ namespace Server.RemoteAdmin
         public static void WriteLine(NetState state, string format, params object[] args)
         {
             for (int i = 0; i < args.Length; i++)
-            {
                 args[i] = Commands.CommandLogging.Format(args[i]);
-            }
 
             WriteLine(state, string.Format(format, args));
         }

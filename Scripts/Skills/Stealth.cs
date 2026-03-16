@@ -39,22 +39,16 @@ namespace Server.SkillHandlers
                 BaseArmor armor = m.Items[i] as BaseArmor;
 
                 if (armor == null)
-                {
                     continue;
-                }
 
                 int materialType = (int)armor.MaterialType;
                 int bodyPosition = (int)armor.BodyPosition;
 
                 if (materialType >= m_ArmorTable.GetLength(0) || bodyPosition >= m_ArmorTable.GetLength(1))
-                {
                     continue;
-                }
 
                 if (armor.ArmorAttributes.MageArmor == 0)
-                {
                     ar += m_ArmorTable[materialType, bodyPosition];
-                }
             }
 
             return ar;
@@ -99,9 +93,7 @@ namespace Server.SkillHandlers
                     int steps = (int)(m.Skills[SkillName.Stealth].Value / 5.0);
 
                     if (steps < 1)
-                    {
                         steps = 1;
-                    }
 
                     m.AllowedStealthSteps = steps;
 

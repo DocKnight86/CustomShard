@@ -25,9 +25,7 @@ namespace Server.Engines.BulkOrders
             m_Entries = new BOBLargeSubEntry[bod.Entries.Length];
 
             for (int i = 0; i < m_Entries.Length; ++i)
-            {
                 m_Entries[i] = new BOBLargeSubEntry(bod.Entries[i]);
-            }
 
             if (bod is LargeTinkerBOD tinkerBod)
             {
@@ -59,9 +57,7 @@ namespace Server.Engines.BulkOrders
                         m_Entries = new BOBLargeSubEntry[reader.ReadEncodedInt()];
 
                         for (int i = 0; i < m_Entries.Length; ++i)
-                        {
                             m_Entries[i] = new BOBLargeSubEntry(reader);
-                        }
 
                         break;
                     }
@@ -104,9 +100,7 @@ namespace Server.Engines.BulkOrders
             }
 
             for (int i = 0; bod != null && i < bod.Entries.Length; ++i)
-            {
                 bod.Entries[i].Owner = bod;
-            }
 
             return bod;
         }
@@ -127,9 +121,7 @@ namespace Server.Engines.BulkOrders
             writer.WriteEncodedInt(m_Entries.Length);
 
             for (int i = 0; i < m_Entries.Length; ++i)
-            {
                 m_Entries[i].Serialize(writer);
-            }
         }
 
         private LargeBulkEntry[] ReconstructEntries()

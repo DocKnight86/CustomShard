@@ -39,9 +39,7 @@ namespace Server.Gumps
             Item item = m_Addon as Item;
 
             if (item == null || item.Deleted)
-            {
                 return;
-            }
 
             if (info.ButtonID == (int)Buttons.Confirm)
             {
@@ -62,14 +60,10 @@ namespace Server.Gumps
                         }
                     }
                     else
-                    {
                         m.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
-                    }
                 }
                 else
-                {
                     m.SendLocalizedMessage(1049784); // You can only re-deed this decoration if you are the house owner or originally placed the decoration.
-                }
             }
         }
     }

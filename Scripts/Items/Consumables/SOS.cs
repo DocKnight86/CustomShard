@@ -164,13 +164,9 @@ namespace Server.Items
                 MessageEntry entry;
 
                 if (m_MessageIndex >= 0 && m_MessageIndex < MessageEntry.Entries.Length)
-                {
                     entry = MessageEntry.Entries[m_MessageIndex];
-                }
                 else
-                {
                     entry = MessageEntry.Entries[m_MessageIndex = Utility.Random(MessageEntry.Entries.Length)];
-                }
 
                 from.CloseGump(typeof(MessageGump));
                 from.SendGump(new MessageGump(entry, m_TargetMap, m_TargetLocation));
@@ -198,37 +194,23 @@ namespace Server.Items
         public static Point3D FindLocation(Map map)
         {
             if (map == null || map == Map.Internal)
-            {
                 return Point3D.Zero;
-            }
 
             Rectangle2D[] regions;
 
             if (map == Map.Felucca || map == Map.Trammel)
-            {
                 regions = m_BritRegions;
-            }
             else if (map == Map.Ilshenar)
-            {
                 regions = m_IlshRegions;
-            }
             else if (map == Map.Malas)
-            {
                 regions = m_MalasRegions;
-            }
             else if (map == Map.Tokuno)
-            {
                 regions = m_TokunoRegions;
-            }
             else
-            {
                 regions = new[] { new Rectangle2D(0, 0, map.Width, map.Height) };
-            }
 
             if (regions.Length == 0)
-            {
                 return Point3D.Zero;
-            }
 
             for (int i = 0; i < 50; ++i)
             {
@@ -237,36 +219,24 @@ namespace Server.Items
                 int y = Utility.Random(reg.Y, reg.Height);
 
                 if (!ValidateDeepWater(map, x, y))
-                {
                     continue;
-                }
 
                 bool valid = true;
 
                 for (int j = 1, offset = 5; valid && j <= 5; ++j, offset += 5)
                 {
                     if (!ValidateDeepWater(map, x + offset, y + offset))
-                    {
                         valid = false;
-                    }
                     else if (!ValidateDeepWater(map, x + offset, y - offset))
-                    {
                         valid = false;
-                    }
                     else if (!ValidateDeepWater(map, x - offset, y + offset))
-                    {
                         valid = false;
-                    }
                     else if (!ValidateDeepWater(map, x - offset, y - offset))
-                    {
                         valid = false;
-                    }
                 }
 
                 if (valid)
-                {
                     return new Point3D(x, y, 0);
-                }
             }
 
             return Point3D.Zero;

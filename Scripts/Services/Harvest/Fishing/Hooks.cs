@@ -45,29 +45,19 @@ namespace Server.Items
         public static int GetCondition(int uses)
         {
             if (uses < 10)
-            {
                 return 1149853; //worn
-            }
 
             if (uses < 20)
-            {
                 return 1149852; //fair
-            }
 
             if (uses < 30)
-            {
                 return 1149851; //very good
-            }
 
             if (uses < 40)
-            {
                 return 1149850; //good
-            }
 
             if (uses < 50)
-            {
                 return 1149849; //excellent
-            }
 
             return 1149848; //new
         }
@@ -121,9 +111,7 @@ namespace Server.Items
                         }
 
                         if (hook != null)
-                        {
                             from.AddToBackpack(hook);
-                        }
                     }
 
                     pole.HookType = m_Hook.HookType;

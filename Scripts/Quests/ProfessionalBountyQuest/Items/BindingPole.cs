@@ -28,14 +28,10 @@ namespace Server.Items
             base.Delete();
 
             if (m_Quest != null)
-            {
                 m_Quest.OnResign(false);
-            }
 
             if (m_Galleon != null)
-            {
                 m_Galleon.RemoveFixture(this);
-            }
         }
 
         public BindingPole(BaseQuest quest) : base(5696)

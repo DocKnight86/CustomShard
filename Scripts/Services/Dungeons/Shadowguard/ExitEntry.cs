@@ -21,9 +21,7 @@ namespace Server.Engines.Shadowguard
                 ShadowguardEncounter.MovePlayer(_From, ShadowguardController.Instance.KickLocation);
 
                 if (instance.Encounter != null)
-                {
                     instance.Encounter.CheckPlayerStatus(_From);
-                }
             }
         }
     }
@@ -47,9 +45,8 @@ namespace Server.Engines.Shadowguard
             if (_Controller != null && _Controller.IsInQueue(_From))
             {
                 if (_Controller.RemoveFromQueue(_From))
-                {
                     _From.SendLocalizedMessage(1156248); // You have been removed from all Shadowguard queues
-                }
+
             }
         }
     }

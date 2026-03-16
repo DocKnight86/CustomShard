@@ -80,9 +80,7 @@ namespace Server.Gumps
             x += EntryWidth + OffsetSize;
 
             if (SetGumpID != 0)
-            {
                 AddImageTiled(x, y, SetWidth, EntryHeight, SetGumpID);
-            }
 
             x = BorderSize + OffsetSize;
             y += EntryHeight + OffsetSize;
@@ -92,10 +90,7 @@ namespace Server.Gumps
             x += EntryWidth + OffsetSize;
 
             if (SetGumpID != 0)
-            {
                 AddImageTiled(x, y, SetWidth, EntryHeight, SetGumpID);
-            }
-
             AddButton(x + SetOffsetX, y + SetOffsetY, SetButtonID1, SetButtonID2, 1, GumpButtonType.Reply, 0);
 
             x = BorderSize + OffsetSize;
@@ -106,10 +101,7 @@ namespace Server.Gumps
             x += EntryWidth + OffsetSize;
 
             if (SetGumpID != 0)
-            {
                 AddImageTiled(x, y, SetWidth, EntryHeight, SetGumpID);
-            }
-
             AddButton(x + SetOffsetX, y + SetOffsetY, SetButtonID1, SetButtonID2, 2, GumpButtonType.Reply, 0);
 
             x = BorderSize + OffsetSize;
@@ -126,10 +118,7 @@ namespace Server.Gumps
             x += CoordWidth + OffsetSize;
 
             if (SetGumpID != 0)
-            {
                 AddImageTiled(x, y, SetWidth, EntryHeight, SetGumpID);
-            }
-
             AddButton(x + SetOffsetX, y + SetOffsetY, SetButtonID1, SetButtonID2, 3, GumpButtonType.Reply, 0);
         }
 
@@ -242,9 +231,7 @@ namespace Server.Gumps
             }
 
             if (shouldSend)
-            {
                 m_Mobile.SendGump(new XmlPropertiesGump(m_Mobile, m_Object, m_Stack, m_List, m_Page));
-            }
         }
     }
 }

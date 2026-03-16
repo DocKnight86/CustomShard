@@ -58,34 +58,17 @@ namespace Server.Gumps
         public static int GetMapHue(Map map)
         {
             if (map == Map.Trammel)
-            {
                 return 10;
-            }
-
             if (map == Map.Felucca)
-            {
                 return 81;
-            }
-
             if (map == Map.Ilshenar)
-            {
                 return 1102;
-            }
-
             if (map == Map.Malas)
-            {
                 return 1102;
-            }
-
             if (map == Map.Tokuno)
-            {
                 return 1154;
-            }
-
             if (map == Map.TerMur)
-            {
                 return 1645;
-            }
 
             return 0;
         }
@@ -93,9 +76,7 @@ namespace Server.Gumps
         public static string GetName(string name)
         {
             if (name == null || (name = name.Trim()).Length <= 0)
-            {
                 return "(indescript)";
-            }
 
             return name;
         }
@@ -268,9 +249,7 @@ namespace Server.Gumps
                     AddButton(125, 14, 2205, 2205, 0, GumpButtonType.Page, 1 + page);
 
                     if (page < 7)
-                    {
                         AddButton(393, 14, 2206, 2206, 0, GumpButtonType.Page, 3 + page);
-                    }
 
                     for (int half = 0; half < 2; ++half)
                         AddDetails((page * 2) + half, half);
@@ -299,9 +278,7 @@ namespace Server.Gumps
             public override void OnResponse(Mobile from, string text)
             {
                 if (m_Book.Deleted || !from.InRange(m_Book.GetWorldLocation(), 3))
-                {
                     return;
-                }
 
                 if (m_Book.CheckAccess(from))
                 {
@@ -335,9 +312,7 @@ namespace Server.Gumps
         public void SendLocationMessage(RunebookEntry e, Mobile from)
         {
             if (e.Type == RecallRuneType.Ship)
-            {
                 return;
-            }
 
             int xLong = 0, yLat = 0;
             int xMins = 0, yMins = 0;
@@ -384,9 +359,7 @@ namespace Server.Gumps
                 int type = buttonID / 25;
 
                 if (type == 0 || type == 1)
-                {
                     index = buttonID - 10;
-                }
 
                 if (index >= 0 && index < Book.Entries.Count)
                 {

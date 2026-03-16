@@ -75,14 +75,10 @@ namespace Server.Items
             base.AddWeightProperty(list);
 
             if (ShowCrafterName && m_Crafter != null)
-            {
                 list.Add(1050043, m_Crafter.TitleName); // crafted by ~1_NAME~
-            }
 
             if (m_Quality == ItemQuality.Exceptional)
-            {
                 list.Add(1060636); // exceptional
-            }
         }
 
         public override void AddCraftedProperties(ObjectPropertyList list)
@@ -90,9 +86,7 @@ namespace Server.Items
             CraftResourceInfo info = CraftResources.IsStandard(m_Resource) ? null : CraftResources.GetInfo(m_Resource);
 
             if (info != null && info.Number > 0)
-            {
                 list.Add(info.Number);
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -154,16 +148,12 @@ namespace Server.Items
             Quality = (ItemQuality)quality;
 
             if (makersMark)
-            {
                 Crafter = from;
-            }
 
             Type resourceType = typeRes;
 
             if (resourceType == null)
-            {
                 resourceType = craftItem.Resources.GetAt(0).ItemType;
-            }
 
             Resource = CraftResources.GetFromType(resourceType);
 

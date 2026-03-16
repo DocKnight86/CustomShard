@@ -55,7 +55,7 @@ namespace Server.Mobiles
 
         public override ChampionSkullType SkullType => ChampionSkullType.Pain;
         public override Type[] UniqueList => new[] { typeof(GladiatorsCollar) };
-        public override Type[] SharedList => [];
+        public override Type[] SharedList => new[] { typeof(RoyalGuardSurvivalKnife), typeof(TheMostKnowledgePerson), typeof(LieutenantOfTheBritannianRoyalGuard) };
         public override Type[] DecorativeList => new[] { typeof(LavaTile), typeof(DemonSkull) };
         public override MonsterStatuetteType[] StatueTypes => Array.Empty<MonsterStatuetteType>();
         public override Poison PoisonImmune => Poison.Lethal;
@@ -69,9 +69,7 @@ namespace Server.Mobiles
         public override void CheckReflect(Mobile caster, ref bool reflect)
         {
             if (!caster.Female && !caster.IsBodyMod)
-            {
                 reflect = true; // Always reflect if caster isn't female
-            }
         }
 
         public override void Serialize(GenericWriter writer)

@@ -31,9 +31,7 @@ namespace Server.Items
                 m_DyeType = value;
 
                 if (m_DyeType != old)
-                {
                     ValidateHue();
-                }
             }
         }
 
@@ -100,9 +98,7 @@ namespace Server.Items
             list.Add(1060584, m_UsesRemaining.ToString()); // uses remaining: ~1_val~
 
             if (m_BooksOnly)
-            {
                 list.Add(1157205); // Spellbook Only Dye
-            }
         }
 
         public override void AddNameProperty(ObjectPropertyList list)
@@ -160,9 +156,7 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Item.Deleted)
-                {
                     return;
-                }
 
                 Item item = targeted as Item;
                 bool valid = false;
@@ -224,13 +218,9 @@ namespace Server.Items
                         from.PlaySound(0x23E);
 
                         if (--m_Item.UsesRemaining > 0)
-                        {
                             m_Item.InvalidateProperties();
-                        }
                         else
-                        {
                             m_Item.Delete();
-                        }
 
                         return;
                     }

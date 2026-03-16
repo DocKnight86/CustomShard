@@ -45,18 +45,14 @@ namespace Server.Engines.CannedEvil
             {
                 m_Skull = value;
                 if (m_Platform != null)
-                {
                     m_Platform.Validate();
-                }
             }
         }
         public override int LabelNumber => 1049489 + (int)m_Type;
         public override void OnDoubleClick(Mobile from)
         {
             if (m_Platform != null)
-            {
                 m_Platform.Validate();
-            }
 
             BeginSacrifice(from);
         }
@@ -64,14 +60,10 @@ namespace Server.Engines.CannedEvil
         public void BeginSacrifice(Mobile from)
         {
             if (Deleted)
-            {
                 return;
-            }
 
             if (m_Skull != null && m_Skull.Deleted)
-            {
                 Skull = null;
-            }
 
             if (from.Map != Map || !from.InRange(GetWorldLocation(), 3))
             {
@@ -95,14 +87,10 @@ namespace Server.Engines.CannedEvil
         public void EndSacrifice(Mobile from, ChampionSkull skull)
         {
             if (Deleted)
-            {
                 return;
-            }
 
             if (m_Skull != null && m_Skull.Deleted)
-            {
                 Skull = null;
-            }
 
             if (from.Map != Map || !from.InRange(GetWorldLocation(), 3))
             {
@@ -166,9 +154,7 @@ namespace Server.Engines.CannedEvil
                         m_Skull = reader.ReadItem();
 
                         if (m_Platform == null)
-                        {
                             Delete();
-                        }
 
                         break;
                     }

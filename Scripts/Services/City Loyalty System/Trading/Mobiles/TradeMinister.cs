@@ -223,9 +223,7 @@ namespace Server.Engines.CityLoyalty
             int amount = 40;
 
             if (entry.Details.Count > 1)
-            {
                 amount = 40 + Utility.RandomMinMax(10, entry.Details.Count * 20);
-            }
 
             switch (Utility.Random(4))
             {
@@ -270,9 +268,7 @@ namespace Server.Engines.CityLoyalty
                     amount /= 10;
 
                     if (item != null && item.Stackable)
-                    {
                         item.Amount = amount;
-                    }
 
                     return item;
             }
@@ -372,9 +368,7 @@ namespace Server.Engines.CityLoyalty
 			Frozen = true;
 
             if (CitySystem != null)
-            {
                 CitySystem.Minister = this;
-            }
 
             Ministers.Add(this);
         }

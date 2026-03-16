@@ -43,13 +43,9 @@ namespace Server.Engines.Craft
             bool makersMark = info.ButtonID == 1;
 
             if (makersMark)
-            {
                 m_From.SendLocalizedMessage(501808); // You mark the item.
-            }
             else
-            {
                 m_From.SendLocalizedMessage(501809); // Cancelled mark.
-            }
 
             m_CraftItem.CompleteCraft(m_Quality, makersMark, m_From, m_CraftSystem, m_TypeRes, m_Tool, null);
         }

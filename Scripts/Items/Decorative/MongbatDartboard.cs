@@ -46,29 +46,17 @@ namespace Server.Items
 
             int message;
             if (rand < 0.05)
-            {
                 message = 500752; // BULLSEYE! 50 Points!
-            }
             else if (rand < 0.20)
-            {
                 message = 500753; // Just missed the center! 20 points.
-            }
             else if (rand < 0.45)
-            {
                 message = 500754; // 10 point shot.
-            }
             else if (rand < 0.70)
-            {
                 message = 500755; // 5 pointer.
-            }
             else if (rand < 0.85)
-            {
                 message = 500756; // 1 point.  Bad throw.
-            }
             else
-            {
                 message = 500757; // Missed.
-            }
 
             PublicOverheadMessage(MessageType.Regular, 0x3B2, message);
 
@@ -81,9 +69,7 @@ namespace Server.Items
         private void AnimateMongbat()
         {
             if (Deleted)
-            {
                 return;
-            }
 
             if (ItemID == 0x1950 || ItemID == 0x1953)
             {

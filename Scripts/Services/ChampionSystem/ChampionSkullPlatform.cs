@@ -68,9 +68,7 @@ namespace Server.Engines.CannedEvil
                 Mobile harrower = Harrower.Spawn(new Point3D(X, Y, Z + 6), Map);
 
                 if (harrower == null)
-                {
                     return;
-                }
 
                 Clear(m_Power);
                 Clear(m_Enlightenment);
@@ -88,9 +86,7 @@ namespace Server.Engines.CannedEvil
                 Effects.SendBoltEffect(brazier);
 
                 if (brazier.Skull != null)
-                {
                     brazier.Skull.Delete();
-                }
             }
         }
 

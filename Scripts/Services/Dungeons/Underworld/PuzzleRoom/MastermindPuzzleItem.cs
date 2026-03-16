@@ -37,9 +37,7 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (MazePuzzleItem.IsInPuzzleRoom(from))
-            {
                 base.OnDoubleClick(from);
-            }
         }
 
         /*public override void OnDoubleClick(Mobile from)
@@ -62,9 +60,7 @@ namespace Server.Items
             InvalidateProperties();
 
             if (m_Lifespan <= 0)
-            {
                 Decay();
-            }
         }
 
         public virtual void Decay()
@@ -74,13 +70,9 @@ namespace Server.Items
                 Mobile parent = mobile;
 
                 if (Name == null)
-                {
                     parent.SendLocalizedMessage(1072515, "#" + LabelNumber); // The ~1_name~ expired...
-                }
                 else
-                {
                     parent.SendLocalizedMessage(1072515, Name); // The ~1_name~ expired...
-                }
 
                 Effects.SendLocationParticles(EffectItem.Create(parent.Location, parent.Map, EffectItem.DefaultDuration), 0x3728, 8, 20, 5042);
                 Effects.PlaySound(parent.Location, parent.Map, 0x201);
@@ -95,9 +87,7 @@ namespace Server.Items
             }
 
             if (m_Timer != null)
-            {
                 m_Timer.Stop();
-            }
 
             Delete();
         }
@@ -109,9 +99,7 @@ namespace Server.Items
             Timer.DelayCall(TimeSpan.FromSeconds(3), Delete);
 
             if (m_Key != null)
-            {
                 m_Key.Decay();
-            }
 
             ExperimentalGem gem = new ExperimentalGem
             {

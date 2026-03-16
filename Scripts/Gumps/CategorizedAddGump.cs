@@ -24,19 +24,13 @@ namespace Server.Gumps
             m_Parent = parent;
 
             if (xml.MoveToAttribute("type"))
-            {
                 m_Type = ScriptCompiler.FindTypeByFullName(xml.Value, false);
-            }
 
             if (xml.MoveToAttribute("gfx"))
-            {
                 m_ItemID = XmlConvert.ToInt32(xml.Value);
-            }
 
             if (xml.MoveToAttribute("hue"))
-            {
                 m_Hue = XmlConvert.ToInt32(xml.Value);
-            }
         }
 
         public Type Type => m_Type;
@@ -70,18 +64,12 @@ namespace Server.Gumps
             m_Parent = parent;
 
             if (xml.MoveToAttribute("title"))
-            {
                 m_Title = xml.Value;
-            }
             else
-            {
                 m_Title = "empty";
-            }
 
             if (m_Title == "Docked")
-            {
                 m_Title = "Docked 2";
-            }
 
             if (xml.IsEmptyElement)
             {
@@ -94,20 +82,14 @@ namespace Server.Gumps
                 while (xml.Read() && xml.NodeType != XmlNodeType.EndElement)
                 {
                     if (xml.NodeType == XmlNodeType.Element && xml.Name == "object")
-                    {
                         nodes.Add(new CAGObject(this, xml));
-                    }
                     else if (xml.NodeType == XmlNodeType.Element && xml.Name == "category")
                     {
                         if (!xml.IsEmptyElement)
-                        {
                             nodes.Add(new CAGCategory(this, xml));
-                        }
                     }
                     else
-                    {
                         xml.Skip();
-                    }
                 }
 
                 m_Nodes = (CAGNode[])nodes.ToArray(typeof(CAGNode));
@@ -125,9 +107,7 @@ namespace Server.Gumps
             get
             {
                 if (m_Root == null)
-                {
                     m_Root = Load("Data/objects.xml");
-                }
 
                 return m_Root;
             }
@@ -234,13 +214,9 @@ namespace Server.Gumps
             int count = nodes.Length - (page * EntryCount);
 
             if (count < 0)
-            {
                 count = 0;
-            }
             else if (count > EntryCount)
-            {
                 count = EntryCount;
-            }
 
             int totalHeight = OffsetSize + ((EntryHeight + OffsetSize) * (count + 1));
 
@@ -253,22 +229,16 @@ namespace Server.Gumps
             int y = BorderSize + OffsetSize;
 
             if (OldStyle)
-            {
                 AddImageTiled(x, y, TotalWidth - (OffsetSize * 3) - SetWidth, EntryHeight, HeaderGumpID);
-            }
             else
-            {
                 AddImageTiled(x, y, PrevWidth, EntryHeight, HeaderGumpID);
-            }
 
             if (m_Category.Parent != null)
             {
                 AddButton(x + PrevOffsetX, y + PrevOffsetY, PrevButtonID1, PrevButtonID2, 1, GumpButtonType.Reply, 0);
 
                 if (PrevLabel)
-                {
                     AddLabel(x + PrevLabelOffsetX, y + PrevLabelOffsetY, TextHue, "Previous");
-                }
             }
 
             x += PrevWidth + OffsetSize;
@@ -276,48 +246,36 @@ namespace Server.Gumps
             int emptyWidth = TotalWidth - (PrevWidth * 2) - NextWidth - (OffsetSize * 5) - (OldStyle ? SetWidth + OffsetSize : 0);
 
             if (!OldStyle)
-            {
                 AddImageTiled(x - (OldStyle ? OffsetSize : 0), y, emptyWidth + (OldStyle ? OffsetSize * 2 : 0), EntryHeight, EntryGumpID);
-            }
 
             AddHtml(x + TextOffsetX, y + ((EntryHeight - 20) / 2), emptyWidth - TextOffsetX, EntryHeight, $"<center>{m_Category.Caption}</center>", false, false);
 
             x += emptyWidth + OffsetSize;
 
             if (OldStyle)
-            {
                 AddImageTiled(x, y, TotalWidth - (OffsetSize * 3) - SetWidth, EntryHeight, HeaderGumpID);
-            }
             else
-            {
                 AddImageTiled(x, y, PrevWidth, EntryHeight, HeaderGumpID);
-            }
 
             if (page > 0)
             {
                 AddButton(x + PrevOffsetX, y + PrevOffsetY, PrevButtonID1, PrevButtonID2, 2, GumpButtonType.Reply, 0);
 
                 if (PrevLabel)
-                {
                     AddLabel(x + PrevLabelOffsetX, y + PrevLabelOffsetY, TextHue, "Previous");
-                }
             }
 
             x += PrevWidth + OffsetSize;
 
             if (!OldStyle)
-            {
                 AddImageTiled(x, y, NextWidth, EntryHeight, HeaderGumpID);
-            }
 
             if ((page + 1) * EntryCount < nodes.Length)
             {
                 AddButton(x + NextOffsetX, y + NextOffsetY, NextButtonID1, NextButtonID2, 3, GumpButtonType.Reply, 1);
 
                 if (NextLabel)
-                {
                     AddLabel(x + NextLabelOffsetX, y + NextLabelOffsetY, TextHue, "Next");
-                }
             }
 
             for (int i = 0, index = page * EntryCount; i < EntryCount && index < nodes.Length; ++i, ++index)
@@ -333,9 +291,7 @@ namespace Server.Gumps
                 x += EntryWidth + OffsetSize;
 
                 if (SetGumpID != 0)
-                {
                     AddImageTiled(x, y, SetWidth, EntryHeight, SetGumpID);
-                }
 
                 AddButton(x + SetOffsetX, y + SetOffsetY, SetButtonID1, SetButtonID2, i + 4, GumpButtonType.Reply, 0);
 
@@ -348,13 +304,9 @@ namespace Server.Gumps
                     if (itemID != 1 && bounds.Height < (EntryHeight * 2))
                     {
                         if (bounds.Height < EntryHeight)
-                        {
                             AddItem(x - OffsetSize - 22 - ((i % 2) * 44) - (bounds.Width / 2) - bounds.X, y + (EntryHeight / 2) - (bounds.Height / 2) - bounds.Y, itemID);
-                        }
                         else
-                        {
                             AddItem(x - OffsetSize - 22 - ((i % 2) * 44) - (bounds.Width / 2) - bounds.X, y + EntryHeight - 1 - bounds.Height - bounds.Y, itemID);
-                        }
                     }
                 }
             }
@@ -377,9 +329,7 @@ namespace Server.Gumps
                             int index = Array.IndexOf(m_Category.Parent.Nodes, m_Category) / EntryCount;
 
                             if (index < 0)
-                            {
                                 index = 0;
-                            }
 
                             from.SendGump(new CategorizedAddGump(from, m_Category.Parent, index));
                         }
@@ -389,18 +339,14 @@ namespace Server.Gumps
                 case 2: // Previous
                     {
                         if (m_Page > 0)
-                        {
                             from.SendGump(new CategorizedAddGump(from, m_Category, m_Page - 1));
-                        }
 
                         break;
                     }
                 case 3: // Next
                     {
                         if ((m_Page + 1) * EntryCount < m_Category.Nodes.Length)
-                        {
                             from.SendGump(new CategorizedAddGump(from, m_Category, m_Page + 1));
-                        }
 
                         break;
                     }
@@ -409,9 +355,7 @@ namespace Server.Gumps
                         int index = (m_Page * EntryCount) + (info.ButtonID - 4);
 
                         if (index >= 0 && index < m_Category.Nodes.Length)
-                        {
                             m_Category.Nodes[index].OnClick(from, m_Page);
-                        }
 
                         break;
                     }

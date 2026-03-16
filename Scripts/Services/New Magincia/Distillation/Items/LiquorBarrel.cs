@@ -107,41 +107,29 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_Crafter != null)
-            {
                 list.Add(1050043, m_Crafter.Name); // Crafted By: ~1_Name~
-            }
 
             if (m_Exceptional)
-            {
                 list.Add(1018303); // Exceptional
-            }
 
             if (!IsEmpty)
             {
                 if (IsMature)
-                {
                     list.Add(1060584, m_UsesRemaining.ToString()); // uses remaining: ~1_val~
-                }
 
                 list.Add(1150805, m_MaturationBegin.ToShortDateString()); // start date: ~1_NAME~
 
                 int cliloc = IsMature ? 1150804 : 1150812;  // maturing: ~1_NAME~ / // matured: ~1_NAME~
 
                 if (m_Label == null)
-                {
                     list.Add(cliloc, $"#{DistillationSystem.GetLabel(m_Liquor, m_IsStrong)}");
-                }
                 else
-                {
                     list.Add(cliloc, m_Label);
-                }
 
                 list.Add(1150454, $"#{DistillationSystem.GetLabel(m_Liquor, m_IsStrong)}"); // Liquor Type: ~1_TYPE~
 
                 if (m_Distiller != null)
-                {
                     list.Add(1150679, m_Distiller.Name); // Distiller: ~1_NAME~
-                }
             }
         }
 
@@ -150,13 +138,9 @@ namespace Server.Items
             TimeSpan ts;
 
             if (liquor == Liquor.Spirytus || liquor == Liquor.Akvavit)
-            {
                 ts = TimeSpan.MinValue;
-            }
             else
-            {
                 ts = DistillationSystem.MaturationPeriod;
-            }
 
             BeginDistillation(liquor, ts, m_Label, m_IsStrong, m_Distiller);
         }
@@ -181,15 +165,11 @@ namespace Server.Items
                 m_Exceptional = true;
 
                 if (makersMark)
-                {
                     m_Crafter = from;
-                }
             }
 
             if (typeRes == null)
-            {
                 typeRes = craftItem.Resources.GetAt(0).ItemType;
-            }
 
             CraftResource resource = CraftResources.GetFromType(typeRes);
             Hue = CraftResources.GetHue(resource);

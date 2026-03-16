@@ -30,9 +30,7 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!CityLoyaltySystem.Enabled || CitySystem == null)
-            {
                 return;
-            }
 
             if (CitySystem.IsCitizen(from))
             {

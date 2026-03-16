@@ -192,13 +192,9 @@ namespace Server.Misc
                                 lang = lang.ToUpper();
 
                                 if (!ht.ContainsKey(lang))
-                                {
                                     ht[lang] = new InternationalCodeCounter(lang);
-                                }
                                 else
-                                {
                                     ht[lang].Increase();
-                                }
 
                                 break;
                             }
@@ -219,13 +215,9 @@ namespace Server.Misc
                                 lang = lang.ToUpper();
 
                                 if (!ht.ContainsKey(lang))
-                                {
                                     ht[lang] = new InternationalCodeCounter(lang);
-                                }
                                 else
-                                {
                                     ht[lang].Increase();
-                                }
                             }
                         }
                     }
@@ -253,9 +245,7 @@ namespace Server.Misc
         private static string GetFormattedInfo(string code)
         {
             if (code == null || code.Length != 3)
-            {
                 return $"Unknown code {code}";
-            }
 
             for (int i = 0; i < InternationalCodes.Length; i++)
             {
@@ -306,9 +296,7 @@ namespace Server.Misc
                     s = $"{(DefaultLocalNames ? m_Language_LocalName : m_Language)}‎ - {(DefaultLocalNames ? m_Country_LocalName : m_Country)}";
 
                     if (ShowAlternatives)
-                    {
                         s += $"‎ 【{(DefaultLocalNames ? m_Language : m_Language_LocalName)}‎ - {(DefaultLocalNames ? m_Country : m_Country_LocalName)}‎】";
-                    }
                 }
                 else
                 {
@@ -352,29 +340,19 @@ namespace Server.Misc
                 cb = y.Count;
 
                 if (ca > cb)
-                {
                     return -1;
-                }
 
                 if (ca < cb)
-                {
                     return 1;
-                }
 
                 if (a == null && b == null)
-                {
                     return 0;
-                }
 
                 if (a == null)
-                {
                     return 1;
-                }
 
                 if (b == null)
-                {
                     return -1;
-                }
 
                 return a.CompareTo(b);
             }

@@ -62,13 +62,9 @@ namespace Server.Mobiles
                 m_Mobile.KarmaLocked = !m_Mobile.KarmaLocked;
 
                 if (m_Mobile.KarmaLocked)
-                {
                     m_Mobile.SendLocalizedMessage(1060192); // Your karma has been locked. Your karma can no longer be raised.
-                }
                 else
-                {
                     m_Mobile.SendLocalizedMessage(1060191); // Your karma has been unlocked. Your karma can be raised again.
-                }
             }
         }
 
@@ -87,9 +83,7 @@ namespace Server.Mobiles
             public override void OnClick()
             {
                 if (m_Mobile.CheckAlive())
-                {
                     m_Mobile.SendGump(new TithingGump(m_Mobile, 0));
-                }
             }
         }
 

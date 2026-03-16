@@ -45,9 +45,7 @@ namespace Server.Engines.ShameRevamped
         public override bool CanTeleport(Mobile m)
         {
             if (Deleted || Map == null || Map == Map.Internal)
-            {
                 return false;
-            }
 
             IPooledEnumerable eable = Map.GetItemsInRange(Location, 1);
             bool active = false;

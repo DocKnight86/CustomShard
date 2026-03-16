@@ -60,13 +60,9 @@ namespace Server.Engines.ArtisanFestival
                     double banked = 0.0;
 
                     if (bod is SmallBOD)
-                    {
                         BulkOrderSystem.ComputePoints((SmallBOD)dropped, out points, out banked);
-                    }
                     else
-                    {
                         BulkOrderSystem.ComputePoints((LargeBOD)dropped, out points, out banked);
-                    }
 
                     festival.OnBodTurnIn(pm, this, banked);
                     Say(1157204, pm.Name, 1150); // Ho! Ho! Thank ye ~1_PLAYER~ for giving me a Bulk Order Deed!

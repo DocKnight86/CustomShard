@@ -27,9 +27,7 @@ namespace Server.Engines.Help
                     writer.Write(ResponseEntry.Entries.Count);
 
                     foreach (ResponseEntry entry in ResponseEntry.Entries)
-                    {
                         entry.Serialize(writer);
-                    }
 
                     writer.Write(PageQueue.List.Count);
 

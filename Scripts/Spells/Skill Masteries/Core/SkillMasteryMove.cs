@@ -16,13 +16,9 @@ namespace Server.Spells.SkillMasteries
         public override void SendAbilityMessage(Mobile m)
         {
             if (AbilityMessage.Number > 0)
-            {
                 m.PrivateOverheadMessage(MessageType.Regular, 1150, AbilityMessage.Number, m.NetState);
-            }
             else
-            {
                 m.PrivateOverheadMessage(MessageType.Regular, 1150, false, AbilityMessage.String, m.NetState);
-            }
         }
 
         public override bool Validate(Mobile from)
@@ -30,9 +26,7 @@ namespace Server.Spells.SkillMasteries
             SkillMasteryMove move = GetCurrentMove(from) as SkillMasteryMove;
 
             if ((move == null || move.GetType() != GetType()) && !CheckCooldown(from))
-            {
                 return false;
-            }
 
             if (from.Player && from.Skills.CurrentMastery != MoveSkill)
             {
@@ -85,9 +79,7 @@ namespace Server.Spells.SkillMasteries
             if (CooldownPeriod > TimeSpan.MinValue)
             {
                 if (Cooldown == null)
-                {
                     Cooldown = new Dictionary<Mobile, DateTime>();
-                }
 
                 Cooldown[m] = DateTime.UtcNow + CooldownPeriod;
                 Timer.DelayCall(CooldownPeriod, () => RemoveCooldown(m));

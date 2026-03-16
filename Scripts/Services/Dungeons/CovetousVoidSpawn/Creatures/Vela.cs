@@ -33,6 +33,30 @@ namespace Server.Engines.VoidPool
                 Movable = false
             };
             PackItem(item);
+
+            item = new Hephaestus
+            {
+                Movable = false
+            };
+            PackItem(item);
+
+            item = new GargishHephaestus
+            {
+                Movable = false
+            };
+            PackItem(item);
+
+            item = new BlightOfTheTundra
+            {
+                Movable = false
+            };
+            PackItem(item);
+
+            item = new GargishBlightOfTheTundra
+            {
+                Movable = false
+            };
+            PackItem(item);
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -72,21 +96,15 @@ namespace Server.Engines.VoidPool
 
                 Item item = FindItemOnLayer(Layer.Shirt);
                 if (item != null)
-                {
                     item.Delete();
-                }
 
                 item = FindItemOnLayer(Layer.Pants);
                 if (item != null)
-                {
                     item.Delete();
-                }
 
                 item = FindItemOnLayer(Layer.Shoes);
                 if (item != null)
-                {
                     item.Delete();
-                }
 
                 SetWearable(new FancyShirt(), 1928);
                 SetWearable(new LeatherLegs(), 1928);

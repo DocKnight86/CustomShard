@@ -5,7 +5,7 @@ using System;
 namespace Server.Mobiles
 {
     [CorpseName("a solen queen corpse")]
-    public class RedSolenQueen : BaseCreature
+    public class RedSolenQueen : BaseCreature, IRedSolen
     {
         private bool m_BurstSac;
         private static bool m_Laid;
@@ -47,6 +47,7 @@ namespace Server.Mobiles
         {
             AddLoot(LootPack.Rich);
             AddLoot(LootPack.LootItem<ZoogiFungus>(0.05 > Utility.RandomDouble() ? 25 : 5));
+            AddLoot(LootPack.LootItemCallback(SolenHelper.PackPicnicBasket, 1.0, 1, false, false));
             AddLoot(LootPack.LootItem<BallOfSummoning>(5.0));
         }
 
@@ -86,9 +87,7 @@ namespace Server.Mobiles
 
             if (attacker.Weapon is BaseRanged)
 
-            {
                 BeginAcidBreath();
-            }
 
             else if (Map != null && attacker != this && m_Laid == false && 0.20 > Utility.RandomDouble()) //  if (m_Talked == false)
             {
@@ -110,9 +109,7 @@ namespace Server.Mobiles
             base.OnDamagedBySpell(attacker);
 
             if (0.80 >= Utility.RandomDouble())
-            {
                 BeginAcidBreath();
-            }
         }
 
         #region Acid Breath
@@ -124,9 +121,7 @@ namespace Server.Mobiles
             // Mobile m = Combatant;
 
             if (m == null || m.Deleted || !m.Alive || !Alive || m_NextAcidBreath > DateTime.Now || !CanBeHarmful(m))
-            {
                 return;
-            }
 
             PlaySound(0x118);
             MovingEffect(m, 0x36D4, 1, 0, false, false, 0x3F, 0);
@@ -140,14 +135,10 @@ namespace Server.Mobiles
         public void EndAcidBreath(Mobile m)
         {
             if (m == null || m.Deleted || !m.Alive || !Alive)
-            {
                 return;
-            }
 
             if (0.2 >= Utility.RandomDouble())
-            {
                 m.ApplyPoison(this, Poison.Greater);
-            }
 
             AOS.Damage(m, Utility.RandomMinMax(100, 120), 0, 0, 0, 100, 0);
         }
@@ -167,8 +158,20 @@ namespace Server.Mobiles
             }
         }
 
+        public override bool IsEnemy(Mobile m)
+        {
+            if (SolenHelper.CheckRedFriendship(m))
+            {
+                return false;
+            }
+
+            return base.IsEnemy(m);
+        }
+
         public override void OnDamage(int amount, Mobile from, bool willKill)
         {
+            SolenHelper.OnRedDamage(from);
+
             if (!willKill)
             {
                 if (!BurstSac)
@@ -280,9 +283,7 @@ namespace Server.Mobiles
             protected override void OnTick()
             {
                 if (m_Item.Deleted)
-                {
                     return;
-                }
 
                 Mobile spawn;
 

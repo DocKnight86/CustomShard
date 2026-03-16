@@ -68,6 +68,7 @@ namespace Server.Mobiles
             AddLoot(LootPack.Rich);
             AddLoot(LootPack.Average);
             AddLoot(LootPack.LootItem<DaemonBone>(15, true));
+            AddLoot(LootPack.LootItem<AncientPotteryFragments>(10.0));
         }
 
         public override void Serialize(GenericWriter writer)

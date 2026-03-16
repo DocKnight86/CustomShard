@@ -48,9 +48,7 @@ namespace Server.Items
             writer.Write(Altar);
 
             if (Altar != null && Altar.Map != Map)
-            {
                 Map = Altar.Map;
-            }
         }
 
         public override void Deserialize(GenericReader reader)

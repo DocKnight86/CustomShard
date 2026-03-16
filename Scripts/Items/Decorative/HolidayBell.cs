@@ -88,9 +88,7 @@ namespace Server.Items
                 from.SendLocalizedMessage(500446); // That is too far away.
             }
             else
-            {
                 from.PlaySound(m_SoundID);
-            }
         }
 
         public override void Serialize(GenericWriter writer)

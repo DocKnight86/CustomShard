@@ -99,9 +99,7 @@ namespace Server.Items
                 if (DateTime.UtcNow >= m_NextMessage)
                 {
                     if (Components.Count > 0)
-                    {
                         Components[0].SendLocalizedMessageTo(m, 1010061); // An overwhelming sense of peace fills you.
-                    }
 
                     m_NextMessage = DateTime.UtcNow + TimeSpan.FromSeconds(25.0);
                 }

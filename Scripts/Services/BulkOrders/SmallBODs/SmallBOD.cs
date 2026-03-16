@@ -124,9 +124,7 @@ namespace Server.Engines.BulkOrders
             for (int i = 0; i < chances.Length; ++i)
             {
                 if (random < chances[i])
-                {
                     return (i == 0 ? BulkMaterialType.None : start + (i - 1));
-                }
 
                 random -= chances[i];
             }
@@ -184,14 +182,10 @@ namespace Server.Engines.BulkOrders
             list.Add(1060654); // small bulk order
 
             if (m_RequireExceptional)
-            {
                 list.Add(1045141); // All items must be exceptional.
-            }
 
             if (m_Material != BulkMaterialType.None)
-            {
                 list.Add(SmallBODGump.GetMaterialNumberFor(m_Material)); // All items must be made with x material.
-            }
 
             list.Add(1060656, m_AmountMax.ToString()); // amount to make: ~1_val~
             list.Add(1060658, $"#{m_Number}\t{m_AmountCur}"); // ~1_val~: ~2_val~
@@ -222,13 +216,9 @@ namespace Server.Engines.BulkOrders
         public void BeginCombine(Mobile from)
         {
             if (m_AmountCur < m_AmountMax)
-            {
                 from.Target = new SmallBODTarget(this);
-            }
             else
-            {
                 from.SendLocalizedMessage(1045166); // The maximum amount of requested items have already been combined to this deed.
-            }
         }
 
         public abstract List<Item> ComputeRewards(bool full);
@@ -271,9 +261,7 @@ namespace Server.Engines.BulkOrders
                     BulkMaterialType material = BulkMaterialType.None;
 
                     if (item is IResource resource)
-                    {
                         material = GetMaterial(resource.Resource);
-                    }
 
                     if (material != m_Material && m_Material != BulkMaterialType.None)
                     {
@@ -284,9 +272,7 @@ namespace Server.Engines.BulkOrders
                         bool isExceptional = false;
 
                         if (item is IQuality quality)
-                        {
                             isExceptional = (quality.Quality == ItemQuality.Exceptional);
-                        }
 
                         if (m_RequireExceptional && !isExceptional)
                         {
@@ -316,9 +302,7 @@ namespace Server.Engines.BulkOrders
                             from.SendGump(new SmallBODGump(from, this));
 
                             if (m_AmountCur < m_AmountMax)
-                            {
                                 BeginCombine(from);
-                            }
                         }
                     }
                 }
@@ -425,9 +409,7 @@ namespace Server.Engines.BulkOrders
                         string type = reader.ReadString();
 
                         if (type != null)
-                        {
                             m_Type = ScriptCompiler.FindTypeByFullName(type);
-                        }
 
                         m_Number = reader.ReadInt();
                         m_Graphic = reader.ReadInt();
@@ -439,9 +421,7 @@ namespace Server.Engines.BulkOrders
             }
 
             if (Parent == null && Map == Map.Internal && Location == Point3D.Zero)
-            {
                 Delete();
-            }
         }
     }
 }

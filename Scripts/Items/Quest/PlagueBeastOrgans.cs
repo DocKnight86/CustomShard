@@ -82,9 +82,7 @@ namespace Server.Items
         public override void OnAfterDelete()
         {
             if (m_Timer != null && m_Timer.Running)
-            {
                 m_Timer.Stop();
-            }
         }
 
         public virtual bool OnLifted(Mobile from, PlagueBeastComponent c)
@@ -102,9 +100,7 @@ namespace Server.Items
             m_Opened = true;
 
             if (Owner != null)
-            {
                 Owner.PlaySound(0x50);
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -143,9 +139,7 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!Opened)
-            {
                 FinishOpening(from);
-            }
         }
 
         public override void FinishOpening(Mobile from)
@@ -153,18 +147,14 @@ namespace Server.Items
             ItemID = 0x1249;
 
             if (Owner != null)
-            {
                 Owner.PlaySound(0x187);
-            }
 
             AddComponent(new PlagueBeastComponent(0x1D0D, 0x0), 22, 3);
             AddComponent(new PlagueBeastComponent(0x1D12, 0x0), 15, 18);
             AddComponent(new PlagueBeastComponent(0x1DA3, 0x21), 26, 46);
 
             if (BrainHue > 0)
-            {
                 AddComponent(new PlagueBeastComponent(0x1CF0, BrainHue, true), 22, 29);
-            }
 
             Opened = true;
         }
@@ -199,9 +189,7 @@ namespace Server.Items
         public override bool Carve(Mobile from, Item with)
         {
             if (IsAccessibleTo(from))
-            {
                 with.PublicOverheadMessage(MessageType.Regular, 0x3B2, 1071896); // This is too crude an implement for such a procedure. 
-            }
 
             return false;
         }
@@ -227,13 +215,9 @@ namespace Server.Items
             AddComponent(new PlagueBeastComponent(0x1777, 0x1), 10, 14);
 
             if (BrainHue > 0)
-            {
                 AddComponent(new PlagueBeastComponent(0x1CF0, BrainHue, true), 1, 24); // 22, 29 
-            }
             else
-            {
                 AddComponent(new PlagueBeastBlood(), -7, 24);
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -300,13 +284,9 @@ namespace Server.Items
             AddComponent(new PlagueBeastComponent(0x1777, 0x1), 5, 14);
 
             if (BrainHue > 0)
-            {
                 AddComponent(new PlagueBeastComponent(0x1CF0, BrainHue, true), -5, 22);
-            }
             else
-            {
                 AddComponent(new PlagueBeastBlood(), -13, 25);
-            }
 
             Opened = true;
         }
@@ -316,9 +296,7 @@ namespace Server.Items
             if (vein.Hue != Hue)
             {
                 if (!Opened && m_Veins > 0 && --m_Veins == 0)
-                {
                     FinishOpening(from);
-                }
             }
             else
             {
@@ -357,9 +335,7 @@ namespace Server.Items
                 int hue = Utility.RandomList(m_Hues);
 
                 if (hue != exculde)
-                {
                     return hue;
-                }
             }
 
             return 0xD;
@@ -395,9 +371,7 @@ namespace Server.Items
         public override bool Carve(Mobile from, Item with)
         {
             if (IsAccessibleTo(from))
-            {
                 with.PublicOverheadMessage(MessageType.Regular, 0x3B2, 1071896); // This is too crude an implement for such a procedure. 
-            }
 
             return false;
         }
@@ -429,9 +403,7 @@ namespace Server.Items
                 item.Movable = false;
 
                 if (Owner != null)
-                {
                     Owner.PlaySound(0x20);
-                }
 
                 return true;
             }
@@ -464,9 +436,7 @@ namespace Server.Items
             AddComponent(new PlagueBeastComponent(0x1366, 0x1), 57, 66);
 
             if (BrainHue > 0)
-            {
                 AddComponent(new PlagueBeastComponent(0x1CF0, BrainHue, true), 55, 69);
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -528,9 +498,7 @@ namespace Server.Items
         public override bool OnLifted(Mobile from, PlagueBeastComponent c)
         {
             if (c.IsBrain)
-            {
                 m_Brains--;
-            }
 
             return true;
         }
@@ -555,9 +523,7 @@ namespace Server.Items
                 }
 
                 if (m_Brains == 4)
-                {
                     FinishOpening(from);
-                }
 
                 return true;
             }

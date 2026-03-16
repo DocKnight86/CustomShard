@@ -551,6 +551,11 @@ namespace Server.SkillHandlers
             int hiderSkill = hiding + stealth;
             int detectorSkill = tracking + detectHidden;
 
+            if (m.Race == Race.Elf)
+            {
+                detectorSkill /= 2; // From testing OSI Humans track at ~70%, elves at ~35%, which is half the total chance
+            }
+
             // Necromancy forms affect tracking difficulty 
             if (TransformationSpellHelper.UnderTransformation(m, typeof(HorrificBeastSpell)))
             {

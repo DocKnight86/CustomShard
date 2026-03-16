@@ -91,9 +91,7 @@ namespace Server.Engines.TreasuresOfKotlCity
         public override void OnComponentUsed(AddonComponent component, Mobile from)
         {
             if (_Complete || !from.InRange(component, 2))
-            {
                 return;
-            }
 
             if (_Order == null)
             {
@@ -174,9 +172,7 @@ namespace Server.Engines.TreasuresOfKotlCity
             Complete = reader.ReadBool();
 
             if (!_Complete)
-            {
                 Reset();
-            }
             else
             {
                 Timer.DelayCall(TimeSpan.FromMinutes(5), () =>

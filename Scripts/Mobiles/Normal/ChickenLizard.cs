@@ -59,9 +59,7 @@ namespace Server.Mobiles
         public override bool CheckFeed(Mobile from, Item dropped)
         {
             if (from.Map == null || from.Map == Map.Internal)
-            {
                 return false;
-            }
 
             bool isBonded = IsBonded;
             bool fed = base.CheckFeed(from, dropped);
@@ -78,9 +76,7 @@ namespace Server.Mobiles
                     ChickenLizardEgg egg = new ChickenLizardEgg();
 
                     if (from.Backpack == null || from.Backpack.TryDropItem(from, egg, false))
-                    {
                         egg.MoveToWorld(from.Location, from.Map);
-                    }
                 }
 
                 m_NextEgg = DateTime.UtcNow + TimeSpan.FromDays(7);

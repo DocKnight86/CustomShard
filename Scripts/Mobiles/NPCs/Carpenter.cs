@@ -29,9 +29,7 @@ namespace Server.Mobiles
             m_SBInfos.Add(new SBWoodenShields());
 
             if (IsTokunoVendor)
-            {
                 m_SBInfos.Add(new SBSECarpenter());
-            }
         }
 
         public override void InitOutfit()
@@ -57,9 +55,7 @@ namespace Server.Mobiles
         public override void OnSuccessfulBulkOrderReceive(Mobile from)
         {
             if (from is PlayerMobile mobile)
-            {
                 mobile.NextCarpentryBulkOrder = TimeSpan.Zero;
-            }
         }
 
         #endregion

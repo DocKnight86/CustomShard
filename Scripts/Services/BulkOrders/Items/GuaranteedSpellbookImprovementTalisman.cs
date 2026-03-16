@@ -24,9 +24,7 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (Charges > 0)
-            {
                 list.Add(1049116, Charges.ToString()); // [ Charges: ~1_CHARGES~ ]
-            }
 
             list.Add(1157212); // Crafting Failure Protection
         }
