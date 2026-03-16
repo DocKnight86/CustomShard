@@ -181,11 +181,11 @@ namespace Server.Items
             {
                 int equipment = 0;
 
-                for (var index = 0; index < mobile.Items.Count; index++)
+                for (int index = 0; index < mobile.Items.Count; index++)
                 {
-                    var i = mobile.Items[index];
+                    Item i = mobile.Items[index];
 
-                    if ((i is CanvassRobe || i is BootsOfBallast || i is NictitatingLens || i is AquaPendant || i is GargishNictitatingLens) && i.Parent is Mobile parent && parent.FindItemOnLayer(i.Layer) == i)
+                    if ((i is CanvassRobe || i is BootsOfBallast || i is NictitatingLens || i is AquaPendant) && i.Parent is Mobile parent && parent.FindItemOnLayer(i.Layer) == i)
                     {
                         equipment++;
                     }

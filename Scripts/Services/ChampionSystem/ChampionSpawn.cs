@@ -2,7 +2,6 @@ using Server.Gumps;
 using Server.Items;
 using Server.Mobiles;
 using Server.Regions;
-using Server.Services.Virtues;
 using Server.Spells.Necromancy;
 using System;
 using System.Collections.Generic;

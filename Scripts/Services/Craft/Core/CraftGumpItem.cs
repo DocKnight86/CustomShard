@@ -63,9 +63,13 @@ namespace Server.Engines.Craft
             AddHtmlLocalized(10, 302, 150, 22, 1044056, LabelColor, false, false); // <CENTER>OTHER</CENTER>
 
             if (craftSystem.GumpTitleNumber > 0)
+            {
                 AddHtmlLocalized(10, 12, 510, 20, craftSystem.GumpTitleNumber, LabelColor, false, false);
+            }
             else
+            {
                 AddHtml(10, 12, 510, 20, craftSystem.GumpTitleString, false, false);
+            }
 
             bool needsRecipe = craftItem.Recipe != null && from is PlayerMobile mobile && !mobile.HasRecipe(craftItem.Recipe);
 
@@ -90,19 +94,27 @@ namespace Server.Engines.Craft
             AddHtmlLocalized(50, 390, 150, 18, 1044150, LabelColor, false, false); // BACK
 
             if (craftItem.NameNumber > 0)
+            {
                 AddHtmlLocalized(330, 40, 180, 18, craftItem.NameNumber, LabelColor, false, false);
+            }
             else
+            {
                 AddLabel(330, 40, LabelHue, craftItem.NameString);
+            }
 
             if (craftItem.UseAllRes)
+            {
                 AddHtmlLocalized(170, 302 + (m_OtherCount++ * 20), 310, 18, 1048176, LabelColor, false, false); // Makes as many as possible at once
+            }
 
             DrawItem();
             DrawSkill();
             DrawResource();
 
             if (needsRecipe)
+            {
                 AddHtmlLocalized(170, 302 + (m_OtherCount++ * 20), 310, 18, 1073620, RedLabelColor, false, false); // You have not learned this recipe.
+            }
         }
 
         #endregion
@@ -144,7 +156,9 @@ namespace Server.Engines.Craft
                                 int resIndex = m_CraftItem.UseSubRes2 ? context.LastResourceIndex2 : context.LastResourceIndex;
 
                                 if (resIndex > -1)
+                                {
                                     type = res.GetAt(resIndex).ItemType;
+                                }
                             }
 
                             m_CraftSystem.CreateItem(m_From, m_CraftItem.ItemType, type, m_Tool, m_CraftItem);
@@ -152,13 +166,17 @@ namespace Server.Engines.Craft
                         break;
                     }
                 case 2: //Make Number
+                {
                     m_From.Prompt = new MakeNumberCraftPrompt(m_From, m_CraftSystem, m_CraftItem, m_Tool);
                     m_From.SendLocalizedMessage(1112576); //Please type the amount you wish to create(1 - 100): <Escape to cancel>
                     break;
+                }
                 case 3: //Make Max
+                {
                     AutoCraftTimer.EndTimer(m_From);
                     new AutoCraftTimer(m_From, m_CraftSystem, m_CraftItem, m_Tool, 9999, TimeSpan.FromSeconds(m_CraftSystem.Delay * m_CraftSystem.MaxCraftEffect + 1.0), TimeSpan.FromSeconds(m_CraftSystem.Delay * m_CraftSystem.MaxCraftEffect + 1.0));
                     break;
+                }
             }
         }
         #endregion
@@ -168,7 +186,11 @@ namespace Server.Engines.Craft
         {
             Type type = m_CraftItem.ItemType;
             int id = m_CraftItem.DisplayID;
-            if (id == 0) id = CraftItem.ItemIDOf(type);
+            if (id == 0)
+            {
+                id = CraftItem.ItemIDOf(type);
+            }
+
             Rectangle2D b = ItemBounds.Table[id];
             AddItem(90 - b.Width / 2 - b.X, 110 - b.Height / 2 - b.Y, id, m_CraftItem.ItemHue);
 
@@ -191,7 +213,9 @@ namespace Server.Engines.Craft
                 double minSkill = skill.MinSkill, maxSkill = skill.MaxSkill;
 
                 if (minSkill < 0)
+                {
                     minSkill = 0;
+                }
 
                 AddHtmlLocalized(170, 132 + (i * 20), 200, 18, AosSkillBonuses.GetLabel(skill.SkillToMake), LabelColor, false, false);
                 AddLabel(430, 132 + (i * 20), LabelHue, $"{minSkill:F1}");
@@ -203,16 +227,22 @@ namespace Server.Engines.Craft
             CraftContext context = m_CraftSystem.GetContext(m_From);
 
             if (context != null)
+            {
                 resIndex = m_CraftItem.UseSubRes2 ? context.LastResourceIndex2 : context.LastResourceIndex;
+            }
 
             bool allRequiredSkills = true;
             double chance = m_CraftItem.GetSuccessChance(m_From, resIndex > -1 ? res.GetAt(resIndex).ItemType : null, m_CraftSystem, false, ref allRequiredSkills);
             double excepChance = m_CraftItem.GetExceptionalChance(m_CraftSystem, chance, m_From);
 
             if (chance < 0.0)
+            {
                 chance = 0.0;
+            }
             else if (chance > 1.0)
+            {
                 chance = 1.0;
+            }
 
             AddHtmlLocalized(170, 80, 250, 18, 1044057, LabelColor, false, false); // Success Chance:
             AddLabel(430, 80, LabelHue, $"{chance * 100:F1}%");
@@ -220,9 +250,13 @@ namespace Server.Engines.Craft
             if (m_ShowExceptionalChance)
             {
                 if (excepChance < 0.0)
+                {
                     excepChance = 0.0;
+                }
                 else if (excepChance > 1.0)
+                {
                     excepChance = 1.0;
+                }
 
                 AddHtmlLocalized(170, 100, 250, 18, 1044058, 32767, false, false); // Exceptional Chance:
                 AddLabel(430, 100, LabelHue, $"{excepChance * 100:F1}%");
@@ -239,7 +273,9 @@ namespace Server.Engines.Craft
             int resIndex = -1;
 
             if (context != null)
+            {
                 resIndex = m_CraftItem.UseSubRes2 ? context.LastResourceIndex2 : context.LastResourceIndex;
+            }
 
             bool cropScroll = m_CraftItem.Resources.Count > 1 &&
                               m_CraftItem.Resources.GetAt(m_CraftItem.Resources.Count - 1).ItemType == typeofBlankScroll &&
@@ -270,7 +306,9 @@ namespace Server.Engines.Craft
                     nameNumber = subResource.GenericNameNumber;
 
                     if (nameNumber <= 0)
+                    {
                         nameNumber = subResource.NameNumber;
+                    }
                 }
                 // ******************
 
@@ -282,9 +320,13 @@ namespace Server.Engines.Craft
                 }
 
                 if (nameNumber > 0)
+                {
                     AddHtmlLocalized(170, 219 + (i * 20), 310, 18, nameNumber, LabelColor, false, false);
+                }
                 else
+                {
                     AddLabel(170, 219 + (i * 20), LabelHue, nameString);
+                }
 
                 var amount = craftResource.Amount;
 
@@ -303,7 +345,9 @@ namespace Server.Engines.Craft
             }
 
             if (cropScroll)
+            {
                 AddHtmlLocalized(170, 302 + (m_OtherCount++ * 20), 360, 18, 1044379, LabelColor, false, false); // Inscribing scrolls also requires a blank scroll and mana.
+            }
         } 
         #endregion
 

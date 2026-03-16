@@ -426,7 +426,6 @@ namespace Server.Engines.Points
             Entries[typeof(BloodwoodSpirit)] = 100.0;
             Entries[typeof(Bonesmasher)] = 100.0;
             Entries[typeof(Boomstick)] = 100.0;
-            Entries[typeof(BrightsightLenses)] = 100.0;
             Entries[typeof(FeyLeggings)] = 100.0;
             Entries[typeof(FleshRipper)] = 100.0;
             Entries[typeof(HelmOfSwiftness)] = 100.0;
@@ -442,7 +441,6 @@ namespace Server.Engines.Points
             Entries[typeof(TotemOfVoid)] = 100.0;
             Entries[typeof(WildfireBow)] = 100.0;
             Entries[typeof(Windsong)] = 100.0;
-            Entries[typeof(CrimsonCincture)] = 100.0;
             Entries[typeof(DreadFlute)] = 100.0;
             Entries[typeof(DreadsRevenge)] = 100.0;
             Entries[typeof(MelisandesCorrodedHatchet)] = 100.0;
@@ -480,27 +478,13 @@ namespace Server.Engines.Points
             Entries[typeof(TomeOfEnlightenment)] = 100.0;
 
             //Stygian Abyss Artifacts
-            Entries[typeof(BouraTailShield)] = 5000.0;
-            Entries[typeof(BreastplateOfTheBerserker)] = 5000.0;
-            Entries[typeof(DefenderOfTheMagus)] = 5000.0;
-            Entries[typeof(DemonHuntersStandard)] = 5000.0;
-            Entries[typeof(DragonJadeEarrings)] = 5000.0;
             Entries[typeof(EternalGuardianStaff)] = 5000.0;
             Entries[typeof(IronwoodCompositeBow)] = 5000.0;
             Entries[typeof(JadeWarAxe)] = 5000.0;
-            Entries[typeof(MantleOfTheFallen)] = 5000.0;
             Entries[typeof(NightEyes)] = 5000.0;
-            Entries[typeof(ObsidianEarrings)] = 5000.0;
             Entries[typeof(ProtectoroftheBattleMage)] = 5000.0;
-            Entries[typeof(RaptorClaw)] = 5000.0;
-            Entries[typeof(ResonantStaffofEnlightenment)] = 5000.0;
             Entries[typeof(ShroudOfTheCondemned)] = 500.0;
             Entries[typeof(Slither)] = 5000.0;
-            Entries[typeof(SpinedBloodwormBracers)] = 5000.0;
-            Entries[typeof(StoneDragonsTooth)] = 5000.0;
-            Entries[typeof(StoneSlithClaw)] = 5000.0;
-            Entries[typeof(Tangle1)] = 5000.0;
-            Entries[typeof(TheImpalersPick)] = 5000.0;
             Entries[typeof(Venom)] = 5000.0;
 
             //Tokuno Major Artifacts
@@ -560,7 +544,6 @@ namespace Server.Engines.Points
             Entries[typeof(DetectiveBoots)] = 5000.0;
             Entries[typeof(EmbroideredOakLeafCloak)] = 5000.0;
             Entries[typeof(JadeArmband)] = 5000.0;
-            Entries[typeof(LieutenantOfTheBritannianRoyalGuard)] = 5000.0;
             Entries[typeof(MagicalDoor)] = 5000.0;
             Entries[typeof(RoyalGuardInvestigatorsCloak)] = 5000.0;
             Entries[typeof(SamaritanRobe)] = 5000.0;
@@ -628,12 +611,9 @@ namespace Server.Engines.Points
 
             Entries[typeof(SwampTile)] = 5000.0;
             Entries[typeof(TastyTreat)] = 100.0;
-            Entries[typeof(TatteredAncientScroll)] = 200.0;
             Entries[typeof(ThorvaldsMedallion)] = 250.0;
             Entries[typeof(TribalBerry)] = 10.0;
             Entries[typeof(TunicOfGuarding)] = 2.0;
-            Entries[typeof(UndeadGargHorn)] = 1000.0;
-            Entries[typeof(UntranslatedAncientTome)] = 200.0;
             Entries[typeof(WallBlood)] = 5000.0;
             Entries[typeof(Whip)] = 200.0;
             Entries[typeof(BalmOfSwiftness)] = 100.0;

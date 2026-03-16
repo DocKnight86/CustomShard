@@ -116,8 +116,7 @@ namespace Server.Engines.Points
             new[] { typeof(HatOfTheMagi) },            new[] { typeof(StaffOfTheMagi) },      new[] { typeof(OrnamentOfTheMagician) },
             new[] { typeof(ShadowDancerLeggings) },    new[] {typeof(RingOfTheElements) },    new[] { typeof(GauntletsOfNobility) },
             new[] { typeof(LeggingsOfBane) },          new[] { typeof(MidnightBracers) },     new[] { typeof(Glenda) },
-            new[] { typeof(BowOfTheInfiniteSwarm) },   new[] { typeof(TheDeceiver) },         new[] { typeof(TheScholarsHalo) },
-            new[] { typeof(DoomRecipeScroll) },
+            new[] { typeof(BowOfTheInfiniteSwarm) },   new[] { typeof(TheDeceiver) },         new[] { typeof(DoomRecipeScroll) },
             new[]
             {
                 typeof(LegacyOfTheDreadLord),       typeof(TheTaskmaster),

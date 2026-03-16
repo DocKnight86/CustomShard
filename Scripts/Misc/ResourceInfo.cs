@@ -532,7 +532,9 @@ namespace Server.Items
             m_ResourceTypes = resourceTypes;
 
             for (int i = 0; i < resourceTypes.Length; ++i)
+            {
                 CraftResources.RegisterType(resourceTypes[i], resource);
+            }
         }
     }
 

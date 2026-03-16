@@ -48,7 +48,7 @@ namespace Server.Mobiles
         {
         }
 
-        public override Type[] UniqueSAList => new Type[] { typeof(BreastplateOfTheBerserker), typeof(TerathanWarriorCostume) };
+        public override Type[] UniqueSAList => [];
         public override Type[] SharedSAList => [];
 
         public override bool BleedImmune => true;

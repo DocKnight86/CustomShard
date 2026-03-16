@@ -354,7 +354,7 @@ namespace Server.Engines.Craft
             new[] {typeof(CheeseWheel), typeof(CheeseWedge)},
             new[] {typeof(Pumpkin), typeof(SmallPumpkin)},
             new[] {typeof(WoodenBowlOfPeas), typeof(PewterBowlOfPeas)},
-            new[] { typeof( CrystallineFragments ), typeof( BrokenCrystals ), typeof( ShatteredCrystals ), typeof( ScatteredCrystals ), typeof( CrushedCrystals ), typeof( JaggedCrystals ), typeof( AncientPotteryFragments ) },
+            new[] { typeof( CrystallineFragments ), typeof( BrokenCrystals ), typeof( ShatteredCrystals ), typeof( ScatteredCrystals ), typeof( CrushedCrystals ), typeof( JaggedCrystals ) },
             new[] { typeof( MedusaDarkScales ), typeof( MedusaLightScales ), typeof( RedScales ), typeof( BlueScales ), typeof( BlackScales ), typeof( YellowScales ), typeof( GreenScales ), typeof( WhiteScales ) },
             new[] { typeof(Sausage), typeof(CookableSausage) },
             new[] { typeof(Lettuce), typeof(FarmableLettuce) },
@@ -552,7 +552,9 @@ namespace Server.Engines.Craft
             Map map = m.Map;
 
             if (map == null)
+            {
                 return false;
+            }
 
             IPooledEnumerable eable = map.GetItemsInRange(m.Location, 2);
 
@@ -601,10 +603,14 @@ namespace Server.Engines.Craft
                 for (int j = 0; j < check.Length; ++j)
                 {
                     if (typeof(IPlantHue).IsAssignableFrom(check[j]))
+                    {
                         return true;
+                    }
 
                     if (typeof(IPigmentHue).IsAssignableFrom(check[j]))
+                    {
                         return true;
+                    }
                 }
             }
 
@@ -620,7 +626,9 @@ namespace Server.Engines.Craft
                 for (int j = 0; j < check.Length; ++j)
                 {
                     if (typeof(TreasureMap).IsAssignableFrom(check[j]))
+                    {
                         return true;
+                    }
                 }
             }
 
@@ -630,12 +638,16 @@ namespace Server.Engines.Craft
         public int ConsumeQuantityByPlantHue(Mobile from, CraftSystem craftSystem, Container cont, Type[][] types, int[] amounts)
         {
             if (types.Length != amounts.Length)
+            {
                 throw new ArgumentException();
+            }
 
             CraftContext context = craftSystem.GetContext(from);
 
             if (context == null)
+            {
                 return 0;
+            }
 
             Item[][] items = new Item[types.Length][];
             int[] totals = new int[types.Length];
@@ -680,10 +692,14 @@ namespace Server.Engines.Craft
                     int theirAmount = item.Amount;
 
                     if (ph != null && ph.PlantHue != context.RequiredPlantHue)
+                    {
                         continue;
+                    }
 
                     if (pigh != null && pigh.PigmentHue != context.RequiredPigmentHue)
+                    {
                         continue;
+                    }
 
                     if (theirAmount < need)
                     {
@@ -1025,7 +1041,9 @@ namespace Server.Engines.Craft
                 {
                     Type outType;
                     if (m_ResourceConversionTable.TryGetValue(typeRes, out outType))
+                    {
                         baseType = outType;
+                    }
                 }
 
                 // Resource Mutation
@@ -1377,7 +1395,9 @@ namespace Server.Engines.Craft
                 GetSuccessChance(from, null, system, false, ref allRequiredSkills);
 
                 if (allRequiredSkills)
+                {
                     return 100.0;
+                }
             }
 
             double bonus = 0.0;
@@ -1401,11 +1421,15 @@ namespace Server.Engines.Craft
             {
                 default:
                 case CraftECA.ChanceMinusSixty:
+                {
                     chance -= 0.6;
                     break;
+                }
                 case CraftECA.FiftyPercentChanceMinusTenPercent:
+                {
                     chance = chance * 0.5 - 0.1;
                     break;
+                }
                 case CraftECA.ChanceMinusSixtyToFourtyFive:
                     {
                         double offset = 0.60 - (from.Skills[system.MainSkill].Value - 95.0) * 0.03;
@@ -1837,26 +1861,40 @@ namespace Server.Engines.Craft
                         switch (thisResource)
                         {
                             case CraftResource.OakWood:
+                            {
                                 item = new OakBoard();
                                 break;
+                            }
                             case CraftResource.AshWood:
+                            {
                                 item = new AshBoard();
                                 break;
+                            }
                             case CraftResource.YewWood:
+                            {
                                 item = new YewBoard();
                                 break;
+                            }
                             case CraftResource.Heartwood:
+                            {
                                 item = new HeartwoodBoard();
                                 break;
+                            }
                             case CraftResource.Bloodwood:
+                            {
                                 item = new BloodwoodBoard();
                                 break;
+                            }
                             case CraftResource.Frostwood:
+                            {
                                 item = new FrostwoodBoard();
                                 break;
+                            }
                             default:
+                            {
                                 item = new Board();
                                 break;
+                            }
                         }
 
                         if (item != oldItem)
@@ -1909,9 +1947,13 @@ namespace Server.Engines.Craft
                     if (m_PlantHue != PlantHue.None)
                     {
                         if (item is IPlantHue plantHue)
+                        {
                             plantHue.PlantHue = m_PlantHue;
+                        }
                         else if (item is IPigmentHue pigHue)
+                        {
                             pigHue.PigmentHue = PlantPigmentHueInfo.HueFromPlantHue(m_PlantHue);
+                        }
                     }
                     else if (m_PlantPigmentHue != PlantPigmentHue.None && item is IPigmentHue pigmentHue)
                     {
@@ -1923,7 +1965,9 @@ namespace Server.Engines.Craft
                         PlayerMobile px = from as PlayerMobile;
 
                         if (!QuestHelper.CheckItem(px, item))
+                        {
                             from.SendLocalizedMessage(1072355, null, 0x23); // That item does not match any of your quest criteria	
+                        }
                     }
 
                     context.RequiredPigmentHue = PlantPigmentHue.None;
@@ -1945,9 +1989,13 @@ namespace Server.Engines.Craft
                         if (!cntnr.TryDropItem(from, item, false))
                         {
                             if (cntnr != from.Backpack)
+                            {
                                 from.AddToBackpack(item);
+                            }
                             else
+                            {
                                 item.MoveToWorld(from.Location, from.Map);
+                            }
                         }
                     }
                     else
@@ -2195,7 +2243,9 @@ namespace Server.Engines.Craft
         public static void AddResTarget(Mobile from)
         {
             if (!m_HasTarget.Contains(from))
+            {
                 m_HasTarget.Add(from);
+            }
         }
 
         public static bool HasResTarget(Mobile from)
@@ -2292,9 +2342,13 @@ namespace Server.Engines.Craft
                 CraftContext context = m_CraftSystem.GetContext(from);
 
                 if (context != null && targeted is IPlantHue plantHue)
+                {
                     context.RequiredPlantHue = plantHue.PlantHue;
+                }
                 else if (context != null && targeted is IPigmentHue pigmentHue)
+                {
                     context.RequiredPigmentHue = pigmentHue.PigmentHue;
+                }
 
                 from.EndAction(typeof(CraftSystem));
                 m_CraftItem.Craft(from, m_CraftSystem, ItemTypeRes, m_Tool);

@@ -46,7 +46,9 @@ namespace Server.Items
         public virtual void BeginSwing()
         {
             if (m_Timer != null)
+            {
                 m_Timer.Stop();
+            }
 
             m_Timer = new InternalTimer(this);
             m_Timer.Start();
@@ -55,7 +57,9 @@ namespace Server.Items
         public virtual void EndSwing()
         {
             if (m_Timer != null)
+            {
                 m_Timer.Stop();
+            }
 
             m_Timer = null;
 
@@ -83,17 +87,29 @@ namespace Server.Items
             BaseWeapon weapon = from.Weapon as BaseWeapon;
 
             if (weapon is BaseRanged)
+            {
                 SendLocalizedMessageTo(from, 501822); // You can't practice ranged weapons on this.
+            }
             else if (weapon == null || !from.InRange(GetWorldLocation(), weapon.MaxRange))
+            {
                 SendLocalizedMessageTo(from, 501816); // You are too far away to do that.
+            }
             else if (Swinging)
+            {
                 SendLocalizedMessageTo(from, 501815); // You have to wait until it stops swinging.
+            }
             else if (from.Skills[weapon.Skill].Base >= m_MaxSkill)
+            {
                 SendLocalizedMessageTo(from, 501828); // Your skill cannot improve any further by simply practicing with a dummy.
+            }
             else if (from.Mounted)
+            {
                 SendLocalizedMessageTo(from, 501829); // You can't practice on this while on a mount.
+            }
             else
+            {
                 Use(from, weapon);
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -145,9 +161,13 @@ namespace Server.Items
             protected override void OnTick()
             {
                 if (m_Delay)
+                {
                     m_Dummy.OnHit();
+                }
                 else
+                {
                     m_Dummy.EndSwing();
+                }
 
                 m_Delay = !m_Delay;
             }

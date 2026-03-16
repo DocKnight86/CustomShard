@@ -34,7 +34,9 @@ namespace Server.Items
             base.OnLocationChange(oldLocation);
 
             if (m_Parrot != null)
+            {
                 m_Parrot.Location = new Point3D(X, Y, Z + 12);
+            }
         }
 
         public override void OnMapChange()
@@ -42,7 +44,9 @@ namespace Server.Items
             base.OnMapChange();
 
             if (m_Parrot != null)
+            {
                 m_Parrot.Map = Map;
+            }
         }
 
         public override void OnAfterDelete()
@@ -50,7 +54,9 @@ namespace Server.Items
             base.OnAfterDelete();
 
             if (m_Parrot != null)
+            {
                 m_Parrot.Internalize();
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -113,16 +119,24 @@ namespace Server.Items
             if (m_Parrot != null)
             {
                 if (m_Parrot.Name != null)
+                {
                     list.Add(1072624, m_Parrot.Name); // Includes a pet Parrot named ~1_NAME~
+                }
                 else
+                {
                     list.Add(1072620); // Includes a pet Parrot
+                }
 
                 int weeks = PetParrot.GetWeeks(m_Parrot.Birth);
 
                 if (weeks == 1)
+                {
                     list.Add(1072626); // 1 week old
+                }
                 else if (weeks > 1)
+                {
                     list.Add(1072627, weeks.ToString()); // ~1_AGE~ weeks old
+                }
             }
         }
 
@@ -138,7 +152,9 @@ namespace Server.Items
             base.OnAfterDelete();
 
             if (!m_Safety && m_Parrot != null)
+            {
                 m_Parrot.Delete();
+            }
 
             m_Safety = false;
         }

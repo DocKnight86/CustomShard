@@ -47,7 +47,9 @@ namespace Server.Items
         public void AddLineToTopic(string line)
         {
             if (m_Topic.Length >= MaxTopicLines)
+            {
                 return;
+            }
 
             string[] newTopic = new string[m_Topic.Length + 1];
             m_Topic.CopyTo(newTopic, 0);
@@ -108,7 +110,9 @@ namespace Server.Items
         public void SendGumpTo(Mobile m)
         {
             if (IsOwner(m))
+            {
                 m.SendGump(new InternalGump(this, true));
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -162,9 +166,13 @@ namespace Server.Items
                 AddBackground(0, 0, 400, 350, 0xA28);
 
                 if (isOwner)
+                {
                     AddHtmlLocalized(0, 15, 400, 35, 1011000, false, false); // <center>Ballot Box Owner's Menu</center>
+                }
                 else
+                {
                     AddHtmlLocalized(0, 15, 400, 35, 1011001, false, false); // <center>Ballot Box -- Vote Here!</center>
+                }
 
                 AddHtmlLocalized(0, 50, 400, 35, 1011002, false, false); // <center>Topic</center>
 
@@ -176,7 +184,9 @@ namespace Server.Items
                     string line = box.Topic[i];
 
                     if (!string.IsNullOrEmpty(line))
+                    {
                         AddLabelCropped(30, 90 + i * 20, 340, 20, 0x3E3, line);
+                    }
                 }
 
                 int yesCount = box.Yes.Count;
@@ -186,12 +196,18 @@ namespace Server.Items
                 AddHtmlLocalized(0, 215, 400, 35, 1011003, false, false); // <center>votes</center>
 
                 if (!isOwner)
+                {
                     AddButton(20, 240, 0xFA5, 0xFA7, 3, GumpButtonType.Reply, 0);
+                }
+
                 AddHtmlLocalized(55, 242, 25, 35, 1011004, false, false); // aye:
                 AddLabel(78, 242, 0x0, $"[{yesCount}]");
 
                 if (!isOwner)
+                {
                     AddButton(20, 275, 0xFA5, 0xFA7, 4, GumpButtonType.Reply, 0);
+                }
+
                 AddHtmlLocalized(55, 277, 25, 35, 1011005, false, false); // nay:
                 AddLabel(78, 277, 0x0, $"[{noCount}]");
 
@@ -217,7 +233,9 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (m_Box.Deleted || info.ButtonID == 0)
+                {
                     return;
+                }
 
                 Mobile from = sender.Mobile;
 
@@ -307,7 +325,9 @@ namespace Server.Items
             public override void OnResponse(Mobile from, string text)
             {
                 if (m_Box.Deleted || !m_Box.IsOwner(from))
+                {
                     return;
+                }
 
                 if (from.Map != m_Box.Map || !from.InRange(m_Box.GetWorldLocation(), 2))
                 {
@@ -332,7 +352,9 @@ namespace Server.Items
             public override void OnCancel(Mobile from)
             {
                 if (m_Box.Deleted || !m_Box.IsOwner(from))
+                {
                     return;
+                }
 
                 if (from.Map != m_Box.Map || !from.InRange(m_Box.GetWorldLocation(), 2))
                 {

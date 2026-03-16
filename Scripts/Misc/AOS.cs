@@ -4,7 +4,6 @@ using Server.Items;
 using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
-using Server.Services.Virtues;
 using Server.SkillHandlers;
 using Server.Spells;
 using Server.Spells.Bushido;
@@ -2382,7 +2381,9 @@ namespace Server
                         m_Values = new int[reader.ReadEncodedInt()];
 
                         for (int i = 0; i < m_Values.Length; ++i)
+                        {
                             m_Values[i] = reader.ReadEncodedInt();
+                        }
 
                         break;
                     }
@@ -2392,7 +2393,9 @@ namespace Server
                         m_Values = new int[reader.ReadInt()];
 
                         for (int i = 0; i < m_Values.Length; ++i)
+                        {
                             m_Values[i] = reader.ReadInt();
+                        }
 
                         break;
                     }
@@ -2407,7 +2410,9 @@ namespace Server
             writer.WriteEncodedInt(m_Values.Length);
 
             for (int i = 0; i < m_Values.Length; ++i)
+            {
                 writer.WriteEncodedInt(m_Values[i]);
+            }
         }
 
         public int GetValue(int bitmask)
@@ -2454,12 +2459,16 @@ namespace Server
                         m_Values = new int[old.Length + 1];
 
                         for (int i = 0; i < index; ++i)
+                        {
                             m_Values[i] = old[i];
+                        }
 
                         m_Values[index] = value;
 
                         for (int i = index; i < old.Length; ++i)
+                        {
                             m_Values[i + 1] = old[i];
+                        }
 
                         m_Names |= mask;
                     }
@@ -2483,10 +2492,14 @@ namespace Server
                         m_Values = new int[old.Length - 1];
 
                         for (int i = 0; i < index; ++i)
+                        {
                             m_Values[i] = old[i];
+                        }
 
                         for (int i = index + 1; i < old.Length; ++i)
+                        {
                             m_Values[i - 1] = old[i];
+                        }
                     }
                 }
             }

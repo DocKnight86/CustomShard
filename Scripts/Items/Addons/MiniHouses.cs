@@ -120,7 +120,9 @@ namespace Server.Items
             for (int y = 0; y < size; ++y)
                 for (int x = 0; x < size; ++x)
                     if (info.Graphics[num] != 0x1) // Veteran Rewards Mod
+                    {
                         AddComponent(new MiniHouseAddonComponent(info.Graphics[num++]), size - x - 1, size - y - 1, 0);
+                    }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -147,7 +149,9 @@ namespace Server.Items
             }
 
             if (version == 0)
+            {
                 Timer.DelayCall(TimeSpan.FromSeconds(30.0), Construct);
+            }
         }
     }
 
@@ -293,7 +297,9 @@ namespace Server.Items
             int v = (int)type;
 
             if (v < 0 || v >= Info.Length)
+            {
                 v = 0;
+            }
 
             return Info[v];
         }

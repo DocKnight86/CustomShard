@@ -48,7 +48,9 @@ namespace Server.Items
                         ReforgingOption option = (ReforgingOption)reader.ReadInt();
 
                         if (tool != null)
+                        {
                             Contexts[tool] = new ReforgingInfo(option);
+                        }
                     }
                     break;
             }
@@ -124,7 +126,9 @@ namespace Server.Items
                         var context = new ReforgingContext(reader);
 
                         if (m != null)
+                        {
                             ReforgingContexts[m] = context;
+                        }
                     }
                 });
         }

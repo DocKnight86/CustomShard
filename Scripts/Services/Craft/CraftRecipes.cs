@@ -31,7 +31,6 @@ namespace Server.Engines.Craft
         WallMountedAquarium = 154,
         LargeElegantAquarium = 155,
         KotlBlackRod = 170,
-        KotlAutomaton = 171,
         PirateShield = 172,
 
         // DefBowFletching
@@ -50,34 +49,25 @@ namespace Server.Engines.Craft
         TheNightReaper = 254,
 
         // DefBlacksmithy
-        TrueSpellblade = 300,
-        IcySpellblade = 301,
         FierySpellblade = 302,
         SpellbladeOfDefense = 303,
-        TrueAssassinSpike = 304,
         ChargedAssassinSpike = 305,
         MagekillerAssassinSpike = 306,
         WoundingAssassinSpike = 307,
-        TrueLeafblade = 308,
         Luckblade = 309,
         MagekillerLeafblade = 310,
         LeafbladeOfEase = 311,
         KnightsWarCleaver = 312,
         ButchersWarCleaver = 313,
         SerratedWarCleaver = 314,
-        TrueWarCleaver = 315,
         AdventurersMachete = 316,
         OrcishMachete = 317,
         MacheteOfDefense = 318,
-        DiseasedMachete = 319,
         Runesabre = 320,
         MagesRuneBlade = 321,
         RuneBladeOfKnowledge = 322,
         CorruptedRuneBlade = 323,
-        TrueRadiantScimitar = 324,
         DarkglowScimitar = 325,
-        IcyScimitar = 326,
-        TwinklingScimitar = 327,
         GuardianAxe = 328,
         SingingAxe = 329,
         ThunderingAxe = 330,
@@ -92,9 +82,6 @@ namespace Server.Engines.Craft
         OverseerSunderedBlade = 352,
         LuminousRuneBlade = 353,
         ShardTrasher = 354, 
-        BritchesOfWarding = 355,
-        GlovesOfFeudalGrip = 356,
-        ShieldOrb = 357,  
 
         // DefTinkering
         InvisibilityPotion = 400,
@@ -104,7 +91,6 @@ namespace Server.Engines.Craft
         PendantOfTheMagi = 451,
         ResilientBracer = 452,
         ScrappersCompendium = 453,
-        HoveringWisp = 454, // Removed at OSI Publish 103
         KotlPowerCore = 455,
         BraceletOfPrimalConsumption = 456,
         DrSpectorLenses = 457,
@@ -113,7 +99,6 @@ namespace Server.Engines.Craft
         WeatheredBronzeFairySculpture = 460,
         WeatheredBronzeGlobeSculpture = 461,
         WeatheredBronzeManOnABench = 462,
-        KrampusMinionEarrings = 463,
         EnchantedPicnicBasket = 464,
         Telescope = 465,
         BarbedWhip = 466,
@@ -127,9 +112,6 @@ namespace Server.Engines.Craft
         QuiverOfIce = 503, // DefTailoring
         QuiverOfBlight = 504, // DefTailoring
         QuiverOfLightning = 505, // DefTailoring
-        SongWovenMantle = 550, // DefTailoring
-        SpellWovenBritches = 551, // DefTailoring
-        StitchersMittens = 552, // DefTailoring
         JesterShoes = 560, // DefTailoring
         ChefsToque = 561, // DefTailoring
         GuildedKilt = 562, // DefTailoring
@@ -137,20 +119,6 @@ namespace Server.Engines.Craft
         FancyKilt = 564, // DefTailoring
         FloweredDress = 565, // DefTailoring
         EveningGown = 566, // DefTailoring
-        TigerPeltChest = 570, // DefTailoring
-        TigerPeltCollar = 571, // DefTailoring
-        TigerPeltHelm = 572, // DefTailoring
-        TigerPeltLegs = 573, // DefTailoring
-        TigerPeltShorts = 574, // DefTailoring
-        TigerPeltBustier = 575, // DefTailoring
-        TigerPeltLongSkirt = 576, // DefTailoring
-        TigerPeltSkirt = 577, // DefTailoring
-        DragonTurtleHideArms = 580, // DefTailoring
-        DragonTurtleHideChest = 581, // DefTailoring
-        DragonTurtleHideHelm = 582, // DefTailoring
-        DragonTurtleHideLegs = 583, // DefTailoring
-        DragonTurtleHideBustier = 584, // DefTailoring
-        CuffsOfTheArchmage = 585, // DefTailoring
         KrampusMinionHat = 586, // DefTailoring
         KrampusMinionBoots = 587, // DefTailoring
         KrampusMinionTalons = 588, // DefTailoring

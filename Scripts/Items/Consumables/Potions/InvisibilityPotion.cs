@@ -96,13 +96,17 @@ namespace Server.Items
         private static void Hide_Callback(object obj)
         {
             if (obj is Mobile mobile)
+            {
                 Hide(mobile);
+            }
         }
 
         private static void EndHide_Callback(object obj)
         {
             if (obj is Mobile mobile)
+            {
                 EndHide(mobile);
+            }
         }
     }
 }

@@ -28,10 +28,14 @@ namespace Server.Items
             public bool Dye(Mobile from, DyeTub sender)
             {
                 if (Deleted)
+                {
                     return false;
+                }
 
                 if (Addon != null)
+                {
                     Addon.Hue = sender.DyedHue;
+                }
 
                 return true;
             }
@@ -110,9 +114,13 @@ namespace Server.Items
             LootType = LootType.Blessed;
 
             if (name == null)
+            {
                 _DisplayName = _Names[Utility.Random(_Names.Length)];
+            }
             else
+            {
                 _DisplayName = name;
+            }
         }
 
         public static string[] _Names =

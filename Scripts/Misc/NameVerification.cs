@@ -163,10 +163,12 @@ namespace Server.Misc
                         bool except = false;
 
                         for (int j = 0; !except && j < exceptions.Length; ++j)
+                        {
                             if (c == exceptions[j])
                             {
                                 except = true;
                             }
+                        }
 
                         if (!except || i == 0 && noExceptionsAtStart)
                         {
@@ -193,7 +195,9 @@ namespace Server.Misc
                 bool badPrefix = (indexOf == 0);
 
                 for (int j = 0; !badPrefix && j < exceptions.Length; ++j)
+                {
                     badPrefix = (name[indexOf - 1] == exceptions[j]);
+                }
 
                 if (!badPrefix)
                 {
@@ -203,7 +207,9 @@ namespace Server.Misc
                 bool badSuffix = indexOf + disallowed[i].Length >= name.Length;
 
                 for (int j = 0; !badSuffix && j < exceptions.Length; ++j)
+                {
                     badSuffix = name[indexOf + disallowed[i].Length] == exceptions[j];
+                }
 
                 if (badSuffix)
                 {

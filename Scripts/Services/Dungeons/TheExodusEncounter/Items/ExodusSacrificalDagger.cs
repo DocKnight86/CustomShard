@@ -6,7 +6,6 @@ using System;
 
 namespace Server.Items
 {
-    [Alterable(typeof(DefBlacksmithy), typeof(ExodusSacrificalGargishDagger))]
     [Flipable(0x2D21, 0x2D2D)]
     public class ExodusSacrificalDagger : BaseKnife
     {
@@ -214,33 +213,6 @@ namespace Server.Items
             m_Lifespan = reader.ReadInt();
 
             StartTimer();
-        }
-    }
-
-    [Flipable(0x0902, 0x406A)]
-    public class ExodusSacrificalGargishDagger : ExodusSacrificalDagger
-    {
-        [Constructable]
-        public ExodusSacrificalGargishDagger()
-        {
-            ItemID = 0x406A;
-            Weight = 4.0;
-        }
-
-        public ExodusSacrificalGargishDagger(Serial serial) : base(serial)
-        {
-        }
-
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-            writer.Write(0); // version
-        }
-
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-            reader.ReadInt();
         }
     }
 }

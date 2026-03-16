@@ -78,7 +78,9 @@ namespace Server.Items.MusicBox
         public virtual void OnTarget(Mobile from, object obj)
         {
             if (Deleted)
+            {
                 return;
+            }
 
             DawnsMusicBox mb = obj as DawnsMusicBox;
 
@@ -94,7 +96,9 @@ namespace Server.Items.MusicBox
                     Delete();
                 }
                 else
+                {
                     from.SendMessage("This gear is already present in this box.");
+                }
             }
         }
 

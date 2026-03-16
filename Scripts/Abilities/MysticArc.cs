@@ -16,12 +16,16 @@ namespace Server.Items
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
             if (!CheckMana(attacker, true) && defender != null)
+            {
                 return;
+            }
 
             BaseThrown weapon = attacker.Weapon as BaseThrown;
 
             if (weapon == null)
+            {
                 return;
+            }
 
             List<Mobile> targets = new List<Mobile>();
             IPooledEnumerable eable = attacker.GetMobilesInRange(weapon.MaxRange);
@@ -29,10 +33,14 @@ namespace Server.Items
             foreach (Mobile m in eable)
             {
                 if (m == defender)
+                {
                     continue;
+                }
 
                 if (m.Combatant != attacker)
+                {
                     continue;
+                }
 
                 targets.Add(m);
             }
@@ -40,7 +48,9 @@ namespace Server.Items
             eable.Free();
 
             if (targets.Count > 0)
+            {
                 m_Target = targets[Utility.Random(targets.Count)];
+            }
 
             AOS.Damage(defender, attacker, m_Damage, 0, 0, 0, 0, 0, 100);
 
@@ -65,10 +75,14 @@ namespace Server.Items
                 BaseThrown weapon = m_Mobile.Weapon as BaseThrown;
 
                 if (weapon == null)
+                {
                     return;
+                }
 
                 if (GetCurrentAbility(m_Mobile) is MysticArc)
+                {
                     ClearCurrentAbility(m_Mobile);
+                }
 
                 if (weapon.CheckHit(m_Mobile, m_Target))
                 {

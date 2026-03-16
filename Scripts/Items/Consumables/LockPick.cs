@@ -205,7 +205,9 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Item.Deleted)
+                {
                     return;
+                }
 
                 if (targeted is ILockpickable lockpickable)
                 {

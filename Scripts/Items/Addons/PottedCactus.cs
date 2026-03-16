@@ -93,7 +93,9 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (m_IsRewardItem && !RewardSystem.CheckIsUsableBy(from, this, null))
+            {
                 return;
+            }
 
             if (IsChildOf(from.Backpack))
             {
@@ -101,7 +103,9 @@ namespace Server.Items
                 from.SendGump(new InternalGump(this));
             }
             else
+            {
                 from.SendLocalizedMessage(1042038); // You must have the object in your backpack to use it.
+            }
         }
 
         public override void GetProperties(ObjectPropertyList list)
@@ -109,7 +113,9 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
+            {
                 list.Add(1076219); // 3rd Year Veteran Reward
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -171,7 +177,9 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (m_Cactus == null || m_Cactus.Deleted)
+                {
                     return;
+                }
 
                 Mobile m = sender.Mobile;
 
@@ -188,7 +196,9 @@ namespace Server.Items
                         m.SendLocalizedMessage(1078837); // Your backpack is full! Please make room and try again.
                     }
                     else
+                    {
                         m_Cactus.Delete();
+                    }
                 }
             }
         }

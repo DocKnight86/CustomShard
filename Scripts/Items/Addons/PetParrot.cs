@@ -41,15 +41,23 @@ namespace Server.Mobiles
             Blessed = true;
 
             if (birth != DateTime.MinValue)
+            {
                 m_Birth = birth;
+            }
             else
+            {
                 m_Birth = DateTime.UtcNow;
+            }
 
             if (name != null)
+            {
                 Name = name;
+            }
 
             if (hue > 0)
+            {
                 Hue = hue;
+            }
         }
 
         public PetParrot(Serial serial)
@@ -78,7 +86,9 @@ namespace Server.Mobiles
                 BaseHouse house = BaseHouse.FindHouseAt(this);
 
                 if (house != null && house.IsCoOwner(from) && from.AccessLevel == AccessLevel.Player)
+                {
                     from.SendLocalizedMessage(1072625); // As the house owner, you may rename this Parrot.
+                }
 
                 from.Send(new Network.MobileStatus(from, this));
             }
@@ -91,15 +101,21 @@ namespace Server.Mobiles
             int weeks = GetWeeks(m_Birth);
 
             if (weeks == 1)
+            {
                 list.Add(1072626); // 1 week old
+            }
             else if (weeks > 1)
+            {
                 list.Add(1072627, weeks.ToString()); // ~1_AGE~ weeks old
+            }
         }
 
         public override bool CanBeRenamedBy(Mobile from)
         {
             if (from.AccessLevel > (int)AccessLevel.Player)
+            {
                 return true;
+            }
 
             BaseHouse house = BaseHouse.FindHouseAt(this);
 

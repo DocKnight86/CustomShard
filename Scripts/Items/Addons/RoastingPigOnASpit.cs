@@ -31,7 +31,9 @@ namespace Server.Items
         public override void OnComponentUsed(AddonComponent c, Mobile from)
         {
             if (c.LabelNumber != 1123329)
+            {
                 return;
+            }
 
             if (from.InRange(c.Location, 3))
             {
@@ -42,9 +44,13 @@ namespace Server.Items
                     if (DateTime.UtcNow > NextEatTime)
                     {
                         if (0.6 >= Utility.RandomDouble())
+                        {
                             from.AddToBackpack(new PulledPorkPlatter());
+                        }
                         else
+                        {
                             from.AddToBackpack(new PulledPorkSandwich());
+                        }
 
                         from.LocalOverheadMessage(MessageType.Regular, 0x35, 1154556); // *You cut some meat from the roasting pig. It smells delicious!*
 
@@ -146,7 +152,9 @@ namespace Server.Items
             _Direction = (DirectionType)choice;
 
             if (!Deleted)
+            {
                 base.OnDoubleClick(from);
+            }
         }
 
         public override void OnDoubleClick(Mobile from)

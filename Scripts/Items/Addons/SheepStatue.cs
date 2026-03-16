@@ -63,9 +63,13 @@ namespace Server.Items
                 if (Components.Count > 0)
                 {
                     if (m_ResourceCount == 0 && Components[0].ItemID != 0x4A95)
+                    {
                         Components[0].ItemID = 0x4A95;
+                    }
                     else if (m_ResourceCount > 0 && Components[0].ItemID != 0x4A94)
+                    {
                         Components[0].ItemID = 0x4A94;
+                    }
                 }
 
                 UpdateProperties();
@@ -133,10 +137,14 @@ namespace Server.Items
                     }
                 }
                 else
+                {
                     from.SendLocalizedMessage(1094725); // There are no more ResourceCounts available at this time.
+                }
             }
             else
+            {
                 from.SendLocalizedMessage(1061637); // You are not allowed to access 
+            }
         }
 
         private class InternalAddonComponent : AddonComponent
@@ -271,20 +279,26 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
+            {
                 list.Add(1076223); // 7th Year Veteran Reward
+            }
         }
 
         public override void OnDoubleClick(Mobile from)
         {
             if (m_IsRewardItem && !RewardSystem.CheckIsUsableBy(from, this, null))
+            {
                 return;
+            }
 
             if (!IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.
             }
             else
+            {
                 base.OnDoubleClick(from);
+            }
         }
 
         public override void Serialize(GenericWriter writer)

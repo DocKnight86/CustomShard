@@ -6,7 +6,6 @@ using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
 using Server.Network.Packets;
-using Server.Services.Virtues;
 using Server.Spells;
 using Server.Spells.Bushido;
 using Server.Spells.Chivalry;

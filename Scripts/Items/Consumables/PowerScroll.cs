@@ -56,7 +56,9 @@ namespace Server.Items
             Hue = 0x481;
 
             if (Value == 105.0 || skill == SkillName.Blacksmith || skill == SkillName.Tailoring)
+            {
                 LootType = LootType.Regular;
+            }
         }
 
         public PowerScroll(Serial serial)
@@ -86,10 +88,12 @@ namespace Server.Items
                 double level = (Value - 105.0) / 5.0;
 
                 if (level >= 0.0 && level <= 3.0 && Value % 5.0 == 0.0)
+                {
                     return 1049635 + (int)level;	/* Wonderous Scroll (105 Skill): OR
-                * Exalted Scroll (110 Skill): OR
-                * Mythical Scroll (115 Skill): OR
-                * Legendary Scroll (120 Skill): */
+                                                     * Exalted Scroll (110 Skill): OR
+                                                     * Mythical Scroll (115 Skill): OR
+                                                     * Legendary Scroll (120 Skill): */
+                }
 
                 return 0;
             }
@@ -126,23 +130,31 @@ namespace Server.Items
             double level = (Value - 105.0) / 5.0;
 
             if (level >= 0.0 && level <= 3.0 && Value % 5.0 == 0.0)
+            {
                 list.Add(1049639 + (int)level, GetNameLocalized());	/* a wonderous scroll of ~1_type~ (105 Skill) OR
-            * an exalted scroll of ~1_type~ (110 Skill) OR
-            * a mythical scroll of ~1_type~ (115 Skill) OR
-            * a legendary scroll of ~1_type~ (120 Skill) */
+                                                                     * an exalted scroll of ~1_type~ (110 Skill) OR
+                                                                     * a mythical scroll of ~1_type~ (115 Skill) OR
+                                                                     * a legendary scroll of ~1_type~ (120 Skill) */
+            }
             else
+            {
                 list.Add("a power scroll of {0} ({1} Skill)", GetName(), Value);
+            }
         }
 
         public override bool CanUse(Mobile from)
         {
             if (!base.CanUse(from))
+            {
                 return false;
+            }
 
             Skill skill = from.Skills[Skill];
 
             if (skill == null)
+            {
                 return false;
+            }
 
             if (skill.Cap >= Value)
             {
@@ -156,7 +168,9 @@ namespace Server.Items
         public override void Use(Mobile from)
         {
             if (!CanUse(from))
+            {
                 return;
+            }
 
             from.SendLocalizedMessage(1049513, GetNameLocalized()); // You feel a surge of magic as the scroll enhances your ~1_type~!
 

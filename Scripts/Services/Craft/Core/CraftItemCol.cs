@@ -32,7 +32,9 @@ namespace Server.Engines.Craft
                 CraftItem craftItem = (CraftItem)List[i];
 
                 if (craftItem.ItemType == type || type.IsSubclassOf(craftItem.ItemType))
+                {
                     return craftItem;
+                }
             }
 
             return null;

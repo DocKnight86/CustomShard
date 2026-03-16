@@ -192,7 +192,9 @@ namespace Server.Items
         public virtual bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
+            {
                 return false;
+            }
 
             Hue = sender.DyedHue;
             return true;
@@ -216,10 +218,14 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
+            {
                 list.Add(1076223); // 7th Year Veteran Reward
+            }
 
             if (m_ResourceCount > 0)
+            {
                 list.Add(1159590, m_ResourceCount.ToString()); // Essences: ~1_COUNT~	
+            }
         }
 
         public override void Serialize(GenericWriter writer)

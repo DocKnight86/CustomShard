@@ -1,4 +1,3 @@
-using Server.ContextMenus;
 using Server.Engines.Craft;
 using Server.Network;
 using Server.Misc;
@@ -28,7 +27,12 @@ namespace Server.Items
         public Mobile Owner
         {
             get => _Owner;
-            set { _Owner = value; if (_Owner != null) _OwnerName = _Owner.Name; InvalidateProperties(); }
+            set { _Owner = value; if (_Owner != null)
+                {
+                    _OwnerName = _Owner.Name;
+                }
+
+                InvalidateProperties(); }
         }
 
         public virtual string OwnerName { get => _OwnerName; set { _OwnerName = value; InvalidateProperties(); } }
@@ -120,7 +124,9 @@ namespace Server.Items
             BaseArmor armor = newItem as BaseArmor;
 
             if (armor == null)
+            {
                 return;
+            }
 
             armor.m_AosAttributes = new AosAttributes(newItem, m_AosAttributes);
             armor.m_AosArmorAttributes = new AosArmorAttributes(newItem, m_AosArmorAttributes);
@@ -334,41 +340,61 @@ namespace Server.Items
             if (PhysicalResistance != 0 || m_RefinedPhysical != 0)
             {
                 if (m_RefinedPhysical != 0)
+                {
                     list.Add(1153735, string.Format("{0}\t{1}\t{2}", PhysicalResistance.ToString(), "", m_RefinedPhysical.ToString()));// physical resist ~1_val~% / ~2_symb~~3_val~% Max
+                }
                 else
+                {
                     list.Add(1060448, PhysicalResistance.ToString()); // physical resist ~1_val~%
+                }
             }
 
             if (FireResistance != 0 || m_RefinedFire != 0)
             {
                 if (m_RefinedFire != 0)
+                {
                     list.Add(1153737, string.Format("{0}\t{1}\t{2}", FireResistance.ToString(), "", m_RefinedFire.ToString()));// physical resist ~1_val~% / ~2_symb~~3_val~% Max
+                }
                 else
+                {
                     list.Add(1060447, FireResistance.ToString()); // physical resist ~1_val~%
+                }
             }
 
             if (ColdResistance != 0 || m_RefinedCold != 0)
             {
                 if (m_RefinedCold != 0)
+                {
                     list.Add(1153739, string.Format("{0}\t{1}\t{2}", ColdResistance.ToString(), "", m_RefinedCold.ToString()));// physical resist ~1_val~% / ~2_symb~~3_val~% Max
+                }
                 else
+                {
                     list.Add(1060445, ColdResistance.ToString()); // physical resist ~1_val~%
+                }
             }
 
             if (PoisonResistance != 0 || m_RefinedPoison != 0)
             {
                 if (m_RefinedPoison != 0)
+                {
                     list.Add(1153736, string.Format("{0}\t{1}\t{2}", PoisonResistance.ToString(), "", m_RefinedPoison.ToString()));// physical resist ~1_val~% / ~2_symb~~3_val~% Max
+                }
                 else
+                {
                     list.Add(1060449, PoisonResistance.ToString()); // physical resist ~1_val~%
+                }
             }
 
             if (EnergyResistance != 0 || m_RefinedEnergy != 0)
             {
                 if (m_RefinedEnergy != 0)
+                {
                     list.Add(1153738, string.Format("{0}\t{1}\t{2}", EnergyResistance.ToString(), "", m_RefinedEnergy.ToString()));// physical resist ~1_val~% / ~2_symb~~3_val~% Max
+                }
                 else
+                {
                     list.Add(1060446, EnergyResistance.ToString()); // physical resist ~1_val~%
+                }
             }
 
             if (RefinedDefenseChance != 0)
@@ -388,7 +414,10 @@ namespace Server.Items
                 if (item is BaseArmor armor)
                 {
                     if (armor.ArmorAttributes.MageArmor > 0 || armor.MaterialType == AMT.Wood ||
-                        armor is BaseShield) continue;
+                        armor is BaseShield)
+                    {
+                        continue;
+                    }
 
                     switch (armor.MaterialType)
                     {
@@ -467,7 +496,12 @@ namespace Server.Items
         public int GorgonLenseCharges
         {
             get => m_GorgonLenseCharges;
-            set { m_GorgonLenseCharges = value; if (value == 0) m_GorgonLenseType = LenseType.None; InvalidateProperties(); }
+            set { m_GorgonLenseCharges = value; if (value == 0)
+                {
+                    m_GorgonLenseType = LenseType.None;
+                }
+
+                InvalidateProperties(); }
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -482,16 +516,24 @@ namespace Server.Items
             get
             {
                 if (TimesImbued >= 1 && !m_IsImbued)
+                {
                     m_IsImbued = true;
+                }
 
                 return m_IsImbued;
             }
             set
             {
                 if (TimesImbued >= 1)
+                {
                     m_IsImbued = true;
+                }
                 else
-                    m_IsImbued = value; InvalidateProperties();
+                {
+                    m_IsImbued = value;
+                }
+
+                InvalidateProperties();
             }
         }
 
@@ -664,7 +706,9 @@ namespace Server.Items
                 int pos = (int)BodyPosition;
 
                 if (pos >= 0 && pos < m_ArmorScalars.Length)
+                {
                     return m_ArmorScalars[pos];
+                }
 
                 return 1.0;
             }
@@ -692,9 +736,13 @@ namespace Server.Items
                     m_HitPoints = value;
 
                     if (m_HitPoints < 0)
+                    {
                         Delete();
+                    }
                     else if (m_HitPoints > MaxHitPoints)
+                    {
                         m_HitPoints = MaxHitPoints;
+                    }
 
                     InvalidateProperties();
                 }
@@ -733,7 +781,9 @@ namespace Server.Items
             get
             {
                 if (IsVvVItem)
+                {
                     return true;
+                }
 
                 return base.DisplayWeight;
             }
@@ -765,7 +815,9 @@ namespace Server.Items
             get
             {
                 if (NegativeAttributes == null || NegativeAttributes.Unwieldly == 0)
+                {
                     return base.DefaultWeight;
+                }
 
                 return 50;
             }
@@ -776,11 +828,17 @@ namespace Server.Items
             int v;
 
             if (type == StatType.Str)
+            {
                 v = StrRequirement;
+            }
             else if (type == StatType.Dex)
+            {
                 v = DexRequirement;
+            }
             else
+            {
                 v = IntRequirement;
+            }
 
             return AOS.Scale(v, 100 - GetLowerStatReq());
         }
@@ -920,10 +978,14 @@ namespace Server.Items
             m_MaxHitPoints = ((m_MaxHitPoints * scale) + 99) / 100;
 
             if (m_MaxHitPoints > 255)
+            {
                 m_MaxHitPoints = 255;
+            }
 
             if (m_HitPoints > 255)
+            {
                 m_HitPoints = 255;
+            }
 
             InvalidateProperties();
         }
@@ -932,22 +994,30 @@ namespace Server.Items
         {
             int bonus = 0;
 
-            if (m_Quality == ItemQuality.Exceptional && !(this is GargishLeatherWingArmor))
+            if (m_Quality == ItemQuality.Exceptional)
+            {
                 bonus += 20;
+            }
 
             bonus += m_AosArmorAttributes.DurabilityBonus;
 
             if (m_Resource == CraftResource.Heartwood)
+            {
                 return bonus;
+            }
 
             CraftResourceInfo resInfo = CraftResources.GetInfo(m_Resource);
             CraftAttributeInfo attrInfo = null;
 
             if (resInfo != null)
+            {
                 attrInfo = resInfo.AttributeInfo;
+            }
 
             if (attrInfo != null)
+            {
                 bonus += attrInfo.ArmorDurability;
+            }
 
             return bonus;
         }
@@ -994,7 +1064,9 @@ namespace Server.Items
             for (int i = m.Items.Count - 1; i >= 0; --i)
             {
                 if (i >= m.Items.Count)
+                {
                     continue;
+                }
 
                 Item item = m.Items[i];
 
@@ -1007,18 +1079,26 @@ namespace Server.Items
                     else if (!armor.AllowMaleWearer && !m.Female && m.AccessLevel < AccessLevel.GameMaster)
                     {
                         if (armor.AllowFemaleWearer)
+                        {
                             m.SendLocalizedMessage(1010388); // Only females can wear this.
+                        }
                         else
+                        {
                             m.SendMessage("You may not wear this.");
+                        }
 
                         m.AddToBackpack(armor);
                     }
                     else if (!armor.AllowFemaleWearer && m.Female && m.AccessLevel < AccessLevel.GameMaster)
                     {
                         if (armor.AllowMaleWearer)
+                        {
                             m.SendLocalizedMessage(1063343); // Only males can wear this.
+                        }
                         else
+                        {
                             m.SendMessage("You may not wear this.");
+                        }
 
                         m.AddToBackpack(armor);
                     }
@@ -1031,7 +1111,9 @@ namespace Server.Items
             int v = m_AosArmorAttributes.LowerStatReq;
 
             if (m_Resource == CraftResource.Heartwood)
+            {
                 return v;
+            }
 
             CraftResourceInfo info = CraftResources.GetInfo(m_Resource);
 
@@ -1040,11 +1122,15 @@ namespace Server.Items
                 CraftAttributeInfo attrInfo = info.AttributeInfo;
 
                 if (attrInfo != null)
+                {
                     v += attrInfo.ArmorLowerRequirements;
+                }
             }
 
             if (v > 100)
+            {
                 v = 100;
+            }
 
             return v;
         }
@@ -1098,7 +1184,9 @@ namespace Server.Items
         private static void SetSaveFlag(ref SaveFlag flags, SaveFlag toSet, bool setIf)
         {
             if (setIf)
+            {
                 flags |= toSet;
+            }
         }
 
         private static bool GetSaveFlag(SaveFlag flags, SaveFlag toGet)
@@ -1146,7 +1234,9 @@ namespace Server.Items
         private static void SetSaveFlag(ref SetFlag flags, SetFlag toSet, bool setIf)
         {
             if (setIf)
+            {
                 flags |= toSet;
+            }
         }
 
         private static bool GetSaveFlag(SetFlag flags, SetFlag toGet)
@@ -1177,12 +1267,18 @@ namespace Server.Items
             SaveFlag flags = (SaveFlag)reader.ReadInt();
 
             if (flags != SaveFlag.None)
+            {
                 flags = SaveFlag.xWeaponAttributes;
+            }
 
             if (GetSaveFlag(flags, SaveFlag.xWeaponAttributes))
+            {
                 m_AosWeaponAttributes = new AosWeaponAttributes(item, reader);
+            }
             else
+            {
                 m_AosWeaponAttributes = new AosWeaponAttributes(item);
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -1233,37 +1329,59 @@ namespace Server.Items
             writer.WriteEncodedInt((int)sflags);
 
             if (GetSaveFlag(sflags, SetFlag.Attributes))
+            {
                 m_SetAttributes.Serialize(writer);
+            }
 
             if (GetSaveFlag(sflags, SetFlag.SkillBonuses))
+            {
                 m_SetSkillBonuses.Serialize(writer);
+            }
 
             if (GetSaveFlag(sflags, SetFlag.PhysicalBonus))
+            {
                 writer.WriteEncodedInt(m_SetPhysicalBonus);
+            }
 
             if (GetSaveFlag(sflags, SetFlag.FireBonus))
+            {
                 writer.WriteEncodedInt(m_SetFireBonus);
+            }
 
             if (GetSaveFlag(sflags, SetFlag.ColdBonus))
+            {
                 writer.WriteEncodedInt(m_SetColdBonus);
+            }
 
             if (GetSaveFlag(sflags, SetFlag.PoisonBonus))
+            {
                 writer.WriteEncodedInt(m_SetPoisonBonus);
+            }
 
             if (GetSaveFlag(sflags, SetFlag.EnergyBonus))
+            {
                 writer.WriteEncodedInt(m_SetEnergyBonus);
+            }
 
             if (GetSaveFlag(sflags, SetFlag.Hue))
+            {
                 writer.WriteEncodedInt(m_SetHue);
+            }
 
             if (GetSaveFlag(sflags, SetFlag.LastEquipped))
+            {
                 writer.Write(m_LastEquipped);
+            }
 
             if (GetSaveFlag(sflags, SetFlag.SetEquipped))
+            {
                 writer.Write(m_SetEquipped);
+            }
 
             if (GetSaveFlag(sflags, SetFlag.SetSelfRepair))
+            {
                 writer.WriteEncodedInt(m_SetSelfRepair);
+            }
 
             // Version 7
             SaveFlag flags = SaveFlag.None;
@@ -1301,82 +1419,134 @@ namespace Server.Items
             writer.WriteEncodedInt((int)flags);
 
             if (GetSaveFlag(flags, SaveFlag.xWeaponAttributes))
+            {
                 m_AosWeaponAttributes.Serialize(writer);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.EngravedText))
+            {
                 writer.Write(_EngravedText);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.TalismanProtection))
+            {
                 m_TalismanProtection.Serialize(writer);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.NegativeAttributes))
+            {
                 m_NegativeAttributes.Serialize(writer);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.Attributes))
+            {
                 m_AosAttributes.Serialize(writer);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.ArmorAttributes))
+            {
                 m_AosArmorAttributes.Serialize(writer);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.PhysicalBonus))
+            {
                 writer.WriteEncodedInt(m_PhysicalBonus);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.FireBonus))
+            {
                 writer.WriteEncodedInt(m_FireBonus);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.ColdBonus))
+            {
                 writer.WriteEncodedInt(m_ColdBonus);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.PoisonBonus))
+            {
                 writer.WriteEncodedInt(m_PoisonBonus);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.EnergyBonus))
+            {
                 writer.WriteEncodedInt(m_EnergyBonus);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.MaxHitPoints))
+            {
                 writer.WriteEncodedInt(m_MaxHitPoints);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.HitPoints))
+            {
                 writer.WriteEncodedInt(m_HitPoints);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.Crafter))
+            {
                 writer.Write(m_Crafter);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.Quality))
+            {
                 writer.WriteEncodedInt((int)m_Quality);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.Resource))
+            {
                 writer.WriteEncodedInt((int)m_Resource);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.BaseArmor))
+            {
                 writer.WriteEncodedInt(m_ArmorBase);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.StrBonus))
+            {
                 writer.WriteEncodedInt(m_StrBonus);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.DexBonus))
+            {
                 writer.WriteEncodedInt(m_DexBonus);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.IntBonus))
+            {
                 writer.WriteEncodedInt(m_IntBonus);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.StrReq))
+            {
                 writer.WriteEncodedInt(m_StrReq);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.DexReq))
+            {
                 writer.WriteEncodedInt(m_DexReq);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.IntReq))
+            {
                 writer.WriteEncodedInt(m_IntReq);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.MedAllowance))
+            {
                 writer.WriteEncodedInt((int)m_Meditate);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.SkillBonuses))
+            {
                 m_AosSkillBonuses.Serialize(writer);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.xAbsorptionAttributes))
+            {
                 m_SAAbsorptionAttributes.Serialize(writer);
+            }
         }
 
         public override void Deserialize(GenericReader reader)
@@ -1433,44 +1603,72 @@ namespace Server.Items
                         SetFlag sflags = (SetFlag)reader.ReadEncodedInt();
 
                         if (GetSaveFlag(sflags, SetFlag.Attributes))
+                        {
                             m_SetAttributes = new AosAttributes(this, reader);
+                        }
                         else
+                        {
                             m_SetAttributes = new AosAttributes(this);
+                        }
 
                         if (GetSaveFlag(sflags, SetFlag.ArmorAttributes))
+                        {
                             m_SetSelfRepair = new AosArmorAttributes(this, reader).SelfRepair;
+                        }
 
                         if (GetSaveFlag(sflags, SetFlag.SkillBonuses))
+                        {
                             m_SetSkillBonuses = new AosSkillBonuses(this, reader);
+                        }
                         else
+                        {
                             m_SetSkillBonuses = new AosSkillBonuses(this);
+                        }
 
                         if (GetSaveFlag(sflags, SetFlag.PhysicalBonus))
+                        {
                             m_SetPhysicalBonus = reader.ReadEncodedInt();
+                        }
 
                         if (GetSaveFlag(sflags, SetFlag.FireBonus))
+                        {
                             m_SetFireBonus = reader.ReadEncodedInt();
+                        }
 
                         if (GetSaveFlag(sflags, SetFlag.ColdBonus))
+                        {
                             m_SetColdBonus = reader.ReadEncodedInt();
+                        }
 
                         if (GetSaveFlag(sflags, SetFlag.PoisonBonus))
+                        {
                             m_SetPoisonBonus = reader.ReadEncodedInt();
+                        }
 
                         if (GetSaveFlag(sflags, SetFlag.EnergyBonus))
+                        {
                             m_SetEnergyBonus = reader.ReadEncodedInt();
+                        }
 
                         if (GetSaveFlag(sflags, SetFlag.Hue))
+                        {
                             m_SetHue = reader.ReadEncodedInt();
+                        }
 
                         if (GetSaveFlag(sflags, SetFlag.LastEquipped))
+                        {
                             m_LastEquipped = reader.ReadBool();
+                        }
 
                         if (GetSaveFlag(sflags, SetFlag.SetEquipped))
+                        {
                             m_SetEquipped = reader.ReadBool();
+                        }
 
                         if (GetSaveFlag(sflags, SetFlag.SetSelfRepair))
+                        {
                             m_SetSelfRepair = reader.ReadEncodedInt();
+                        }
 
                         goto case 5;
                     }
@@ -1483,68 +1681,114 @@ namespace Server.Items
                         if (version > 14)
                         {
                             if (GetSaveFlag(flags, SaveFlag.xWeaponAttributes))
+                            {
                                 m_AosWeaponAttributes = new AosWeaponAttributes(this, reader);
+                            }
                             else
+                            {
                                 m_AosWeaponAttributes = new AosWeaponAttributes(this);
+                            }
                         }
 
                         if (GetSaveFlag(flags, SaveFlag.EngravedText))
+                        {
                             _EngravedText = reader.ReadString();
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.TalismanProtection))
+                        {
                             m_TalismanProtection = new TalismanAttribute(reader);
+                        }
                         else
+                        {
                             m_TalismanProtection = new TalismanAttribute();
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.NegativeAttributes))
+                        {
                             m_NegativeAttributes = new NegativeAttributes(this, reader);
+                        }
                         else
+                        {
                             m_NegativeAttributes = new NegativeAttributes(this);
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.Attributes))
+                        {
                             m_AosAttributes = new AosAttributes(this, reader);
+                        }
                         else
+                        {
                             m_AosAttributes = new AosAttributes(this);
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.ArmorAttributes))
+                        {
                             m_AosArmorAttributes = new AosArmorAttributes(this, reader);
+                        }
                         else
+                        {
                             m_AosArmorAttributes = new AosArmorAttributes(this);
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.PhysicalBonus))
+                        {
                             m_PhysicalBonus = reader.ReadEncodedInt();
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.FireBonus))
+                        {
                             m_FireBonus = reader.ReadEncodedInt();
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.ColdBonus))
+                        {
                             m_ColdBonus = reader.ReadEncodedInt();
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.PoisonBonus))
+                        {
                             m_PoisonBonus = reader.ReadEncodedInt();
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.EnergyBonus))
+                        {
                             m_EnergyBonus = reader.ReadEncodedInt();
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.Identified))
+                        {
                             m_Identified = version >= 7 || reader.ReadBool();
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.MaxHitPoints))
+                        {
                             m_MaxHitPoints = reader.ReadEncodedInt();
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.HitPoints))
+                        {
                             m_HitPoints = reader.ReadEncodedInt();
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.Crafter))
+                        {
                             m_Crafter = reader.ReadMobile();
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.Quality))
+                        {
                             m_Quality = (ItemQuality)reader.ReadEncodedInt();
+                        }
                         else
+                        {
                             m_Quality = ItemQuality.Normal;
+                        }
 
                         if (version == 5 && m_Quality == ItemQuality.Low)
+                        {
                             m_Quality = ItemQuality.Normal;
+                        }
 
                         if (version < 16 && GetSaveFlag(flags, SaveFlag.Empty1))
                         {
@@ -1557,85 +1801,143 @@ namespace Server.Items
                         }
 
                         if (GetSaveFlag(flags, SaveFlag.Resource))
+                        {
                             m_Resource = (CraftResource)reader.ReadEncodedInt();
+                        }
                         else
+                        {
                             m_Resource = DefaultResource;
+                        }
 
                         if (m_Resource == CraftResource.None)
+                        {
                             m_Resource = DefaultResource;
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.BaseArmor))
+                        {
                             m_ArmorBase = reader.ReadEncodedInt();
+                        }
                         else
+                        {
                             m_ArmorBase = -1;
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.StrBonus))
+                        {
                             m_StrBonus = reader.ReadEncodedInt();
+                        }
                         else
+                        {
                             m_StrBonus = -1;
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.DexBonus))
+                        {
                             m_DexBonus = reader.ReadEncodedInt();
+                        }
                         else
+                        {
                             m_DexBonus = -1;
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.IntBonus))
+                        {
                             m_IntBonus = reader.ReadEncodedInt();
+                        }
                         else
+                        {
                             m_IntBonus = -1;
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.StrReq))
+                        {
                             m_StrReq = reader.ReadEncodedInt();
+                        }
                         else
+                        {
                             m_StrReq = -1;
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.DexReq))
+                        {
                             m_DexReq = reader.ReadEncodedInt();
+                        }
                         else
+                        {
                             m_DexReq = -1;
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.IntReq))
+                        {
                             m_IntReq = reader.ReadEncodedInt();
+                        }
                         else
+                        {
                             m_IntReq = -1;
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.MedAllowance))
+                        {
                             m_Meditate = (AMA)reader.ReadEncodedInt();
+                        }
                         else
+                        {
                             m_Meditate = (AMA)(-1);
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.SkillBonuses))
+                        {
                             m_AosSkillBonuses = new AosSkillBonuses(this, reader);
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.PlayerConstructed))
+                        {
                             m_PlayerConstructed = true;
+                        }
 
                         if (version > 7 && GetSaveFlag(flags, SaveFlag.xAbsorptionAttributes))
+                        {
                             m_SAAbsorptionAttributes = new SAAbsorptionAttributes(this, reader);
+                        }
                         else
+                        {
                             m_SAAbsorptionAttributes = new SAAbsorptionAttributes(this);
+                        }
 
                         if (GetSaveFlag(flags, SaveFlag.Altered))
+                        {
                             m_Altered = true;
+                        }
 
                         break;
                     }
             }
 
             if (m_SetAttributes == null)
+            {
                 m_SetAttributes = new AosAttributes(this);
+            }
 
             if (m_SetSkillBonuses == null)
+            {
                 m_SetSkillBonuses = new AosSkillBonuses(this);
+            }
 
             if (m_AosSkillBonuses == null)
+            {
                 m_AosSkillBonuses = new AosSkillBonuses(this);
+            }
 
             if (m_AosWeaponAttributes == null)
+            {
                 m_AosWeaponAttributes = new AosWeaponAttributes(this);
+            }
 
             if (Parent is Mobile)
+            {
                 m_AosSkillBonuses.AddTo((Mobile)Parent);
+            }
 
             int strBonus = ComputeStatBonus(StatType.Str);
             int dexBonus = ComputeStatBonus(StatType.Dex);
@@ -1648,13 +1950,19 @@ namespace Server.Items
                 string modName = Serial.ToString();
 
                 if (strBonus != 0)
+                {
                     m.AddStatMod(new StatMod(StatType.Str, modName + "Str", strBonus, TimeSpan.Zero));
+                }
 
                 if (dexBonus != 0)
+                {
                     m.AddStatMod(new StatMod(StatType.Dex, modName + "Dex", dexBonus, TimeSpan.Zero));
+                }
 
                 if (intBonus != 0)
+                {
                     m.AddStatMod(new StatMod(StatType.Int, modName + "Int", intBonus, TimeSpan.Zero));
+                }
             }
 
             if (Parent is Mobile pMobile)
@@ -1727,9 +2035,13 @@ namespace Server.Items
                 if (!AllowMaleWearer && !from.Female)
                 {
                     if (AllowFemaleWearer)
+                    {
                         from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1010388); // Only females can wear this.
+                    }
                     else
+                    {
                         from.SendLocalizedMessage(1071936); // You cannot equip that.
+                    }
 
                     return false;
                 }
@@ -1737,9 +2049,13 @@ namespace Server.Items
                 if (!AllowFemaleWearer && from.Female)
                 {
                     if (AllowMaleWearer)
+                    {
                         from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1063343); // Only males can wear this.
+                    }
                     else
+                    {
                         from.SendLocalizedMessage(1071936); // You cannot equip that.
+                    }
 
                     return false;
                 }
@@ -1773,13 +2089,19 @@ namespace Server.Items
         public override bool CheckPropertyConfliction(Mobile m)
         {
             if (base.CheckPropertyConfliction(m))
+            {
                 return true;
+            }
 
             if (Layer == Layer.Pants)
+            {
                 return m.FindItemOnLayer(Layer.InnerLegs) != null;
+            }
 
             if (Layer == Layer.Shirt)
+            {
                 return m.FindItemOnLayer(Layer.InnerTorso) != null;
+            }
 
             return false;
         }
@@ -1797,13 +2119,19 @@ namespace Server.Items
                 string modName = Serial.ToString();
 
                 if (strBonus != 0)
+                {
                     from.AddStatMod(new StatMod(StatType.Str, modName + "Str", strBonus, TimeSpan.Zero));
+                }
 
                 if (dexBonus != 0)
+                {
                     from.AddStatMod(new StatMod(StatType.Dex, modName + "Dex", dexBonus, TimeSpan.Zero));
+                }
 
                 if (intBonus != 0)
+                {
                     from.AddStatMod(new StatMod(StatType.Int, modName + "Int", intBonus, TimeSpan.Zero));
+                }
             }
 
             return base.OnEquip(from);
@@ -1843,10 +2171,14 @@ namespace Server.Items
             damageTaken -= Absorbed;
 
             if (damageTaken < 0)
+            {
                 damageTaken = 0;
+            }
 
             if (Absorbed < 2)
+            {
                 Absorbed = 2;
+            }
 
             double chance = NegativeAttributes.Antique > 0 ? 80 : 25;
 
@@ -1865,7 +2197,9 @@ namespace Server.Items
                     int wear = 1;
 
                     if (weapon.Type == WeaponType.Bashing)
+                    {
                         wear = Absorbed / 2;
+                    }
 
                     if (m_MaxHitPoints > 0)
                     {
@@ -1887,7 +2221,9 @@ namespace Server.Items
                                 MaxHitPoints -= wear;
 
                                 if (Parent is Mobile mobile)
+                                {
                                     mobile.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1061121); // Your equipment is severely damaged.
+                                }
                             }
                             else
                             {
@@ -1906,7 +2242,9 @@ namespace Server.Items
             string name = Name;
 
             if (name == null)
+            {
                 name = string.Format("#{0}", LabelNumber);
+            }
 
             return name;
         }
@@ -1961,9 +2299,13 @@ namespace Server.Items
                     int prefix = RunicReforging.GetPrefixName(m_ReforgedPrefix);
 
                     if (m_ReforgedSuffix == ReforgedSuffix.None)
+                    {
                         list.Add(1151757, $"#{prefix}\t{GetNameString()}"); // ~1_PREFIX~ ~2_ITEM~
+                    }
                     else
+                    {
                         list.Add(1151756, $"#{prefix}\t{GetNameString()}\t#{RunicReforging.GetSuffixName(m_ReforgedSuffix)}"); // ~1_PREFIX~ ~2_ITEM~ of ~3_SUFFIX~
+                    }
                 }
                 else if (m_ReforgedSuffix != ReforgedSuffix.None)
                 {
@@ -1973,11 +2315,17 @@ namespace Server.Items
             else
             {
                 if (oreType != 0)
+                {
                     list.Add(1053099, $"#{oreType}\t{GetNameString()}"); // ~1_oretype~ ~2_armortype~
+                }
                 else if (Name == null)
+                {
                     list.Add(LabelNumber);
+                }
                 else
+                {
                     list.Add(Name);
+                }
             }
 
             if (!string.IsNullOrEmpty(_EngravedText))
@@ -1989,7 +2337,9 @@ namespace Server.Items
         public override bool AllowEquipedCast(Mobile from)
         {
             if (base.AllowEquipedCast(from))
+            {
                 return true;
+            }
 
             return m_AosAttributes.SpellChanneling != 0 || Enhancement.GetValue(from, AosAttribute.SpellChanneling) != 0;
         }
@@ -1999,7 +2349,9 @@ namespace Server.Items
             CraftAttributeInfo attrInfo = GetResourceAttrs(Resource);
 
             if (attrInfo == null || Resource == CraftResource.Heartwood)
+            {
                 return 0;
+            }
 
             return attrInfo.ArmorLuck;
         }
@@ -2007,19 +2359,29 @@ namespace Server.Items
         public override void AddCraftedProperties(ObjectPropertyList list)
         {
             if (OwnerName != null)
+            {
                 list.Add(1153213, OwnerName);
+            }
 
             if (m_Crafter != null)
+            {
                 list.Add(1050043, m_Crafter.TitleName); // crafted by ~1_NAME~
+            }
 
             if (m_Quality == ItemQuality.Exceptional)
+            {
                 list.Add(1060636); // Exceptional
+            }
 
             if (IsImbued)
+            {
                 list.Add(1080418); // (Imbued)
+            }
 
             if (m_Altered)
+            {
                 list.Add(1111880); // Altered
+            }
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)
@@ -2027,7 +2389,9 @@ namespace Server.Items
             base.AddWeightProperty(list);
 
             if (IsVvVItem)
+            {
                 list.Add(1154937); // VvV Item
+            }
         }
 
         public virtual void AddDamageTypeProperty(ObjectPropertyList list)
@@ -2039,27 +2403,41 @@ namespace Server.Items
             base.AddNameProperties(list);
 
             if (m_GorgonLenseCharges > 0)
+            {
                 list.Add(1112590, m_GorgonLenseCharges.ToString()); //Gorgon Lens Charges: ~1_val~         
+            }
 
             if (IsSetItem)
             {
                 if (MixedSet)
+                {
                     list.Add(1073491, Pieces.ToString()); // Part of a Weapon/Armor Set (~1_val~ pieces)
+                }
                 else
+                {
                     list.Add(1072376, Pieces.ToString()); // Part of an Armor Set (~1_val~ pieces)
+                }
 
                 if (SetID == SetItem.Bestial)
+                {
                     list.Add(1151541, BestialSetHelper.GetTotalBerserk(this).ToString()); // Berserk ~1_VAL~
+                }
 
                 if (BardMasteryBonus)
+                {
                     list.Add(1151553); // Activate: Bard Mastery Bonus x2<br>(Effect: 1 min. Cooldown: 30 min.)
+                }
 
                 if (m_SetEquipped)
                 {
                     if (MixedSet)
+                    {
                         list.Add(1073492); // Full Weapon/Armor Set Present
+                    }
                     else
+                    {
                         list.Add(1072377); // Full Armor Set Present
+                    }
 
                     GetSetProperties(list);
                 }
@@ -2087,192 +2465,316 @@ namespace Server.Items
             int prop;
 
             if ((prop = ArtifactRarity) > 0)
+            {
                 list.Add(1061078, prop.ToString()); // artifact rarity ~1_val~
+            }
 
             if ((prop = m_AosWeaponAttributes.HitColdArea) != 0)
+            {
                 list.Add(1060416, prop.ToString()); // hit cold area ~1_val~%
+            }
 
             if ((prop = m_AosWeaponAttributes.HitDispel) != 0)
+            {
                 list.Add(1060417, prop.ToString()); // hit dispel ~1_val~%
+            }
 
             if ((prop = m_AosWeaponAttributes.HitEnergyArea) != 0)
+            {
                 list.Add(1060418, prop.ToString()); // hit energy area ~1_val~%
+            }
 
             if ((prop = m_AosWeaponAttributes.HitFireArea) != 0)
+            {
                 list.Add(1060419, prop.ToString()); // hit fire area ~1_val~%
+            }
 
             if ((prop = m_AosWeaponAttributes.HitFireball) != 0)
+            {
                 list.Add(1060420, prop.ToString()); // hit fireball ~1_val~%
+            }
 
             if ((prop = m_AosWeaponAttributes.HitHarm) != 0)
+            {
                 list.Add(1060421, prop.ToString()); // hit harm ~1_val~%
+            }
 
             if ((prop = m_AosWeaponAttributes.HitLeechHits) != 0)
+            {
                 list.Add(1060422, prop.ToString()); // hit life leech ~1_val~%
+            }
 
             if ((prop = m_AosWeaponAttributes.HitLightning) != 0)
+            {
                 list.Add(1060423, prop.ToString()); // hit lightning ~1_val~%
+            }
 
             if ((prop = m_AosWeaponAttributes.HitLowerAttack) != 0)
+            {
                 list.Add(1060424, prop.ToString()); // hit lower attack ~1_val~%
+            }
 
             if ((prop = m_AosWeaponAttributes.HitLowerDefend) != 0)
+            {
                 list.Add(1060425, prop.ToString()); // hit lower defense ~1_val~%
+            }
 
             if ((prop = m_AosWeaponAttributes.HitMagicArrow) != 0)
+            {
                 list.Add(1060426, prop.ToString()); // hit magic arrow ~1_val~%
+            }
 
             if ((prop = m_AosWeaponAttributes.HitLeechMana) != 0)
+            {
                 list.Add(1060427, prop.ToString()); // hit mana leech ~1_val~%
+            }
 
             if ((prop = m_AosWeaponAttributes.HitPhysicalArea) != 0)
+            {
                 list.Add(1060428, prop.ToString()); // hit physical area ~1_val~%
+            }
 
             if ((prop = m_AosWeaponAttributes.HitPoisonArea) != 0)
+            {
                 list.Add(1060429, prop.ToString()); // hit poison area ~1_val~%
+            }
 
             if ((prop = m_AosWeaponAttributes.HitLeechStam) != 0)
+            {
                 list.Add(1060430, prop.ToString()); // hit stamina leech ~1_val~%
+            }
 
             if ((prop = m_AosArmorAttributes.DurabilityBonus) != 0)
+            {
                 list.Add(1151780, prop.ToString()); // durability +~1_VAL~%
+            }
 
             if (m_TalismanProtection != null && !m_TalismanProtection.IsEmpty && m_TalismanProtection.Amount > 0)
+            {
                 list.Add(1072387, $"{(m_TalismanProtection.Name != null ? m_TalismanProtection.Name.ToString() : "Unknown")}\t{m_TalismanProtection.Amount}"); // ~1_NAME~ Protection: +~2_val~%
+            }
 
             if ((prop = m_AosArmorAttributes.SoulCharge) != 0)
+            {
                 list.Add(1113630, prop.ToString()); // Soul Charge ~1_val~%
+            }
 
             if ((prop = m_AosArmorAttributes.ReactiveParalyze) != 0)
+            {
                 list.Add(1112364); // reactive paralyze
+            }
 
             if ((prop = m_SAAbsorptionAttributes.EaterFire) != 0)
+            {
                 list.Add(1113593, prop.ToString()); // Fire Eater ~1_Val~%
+            }
 
             if ((prop = m_SAAbsorptionAttributes.EaterCold) != 0)
+            {
                 list.Add(1113594, prop.ToString()); // Cold Eater ~1_Val~%
+            }
 
             if ((prop = m_SAAbsorptionAttributes.EaterPoison) != 0)
+            {
                 list.Add(1113595, prop.ToString()); // Poison Eater ~1_Val~%
+            }
 
             if ((prop = m_SAAbsorptionAttributes.EaterEnergy) != 0)
+            {
                 list.Add(1113596, prop.ToString()); // Energy Eater ~1_Val~%
+            }
 
             if ((prop = m_SAAbsorptionAttributes.EaterKinetic) != 0)
+            {
                 list.Add(1113597, prop.ToString()); // Kinetic Eater ~1_Val~%
+            }
 
             if ((prop = m_SAAbsorptionAttributes.EaterDamage) != 0)
+            {
                 list.Add(1113598, prop.ToString()); // Damage Eater ~1_Val~%
+            }
 
             if ((prop = m_SAAbsorptionAttributes.ResonanceFire) != 0)
+            {
                 list.Add(1113691, prop.ToString()); // Fire Resonance ~1_val~%
+            }
 
             if ((prop = m_SAAbsorptionAttributes.ResonanceCold) != 0)
+            {
                 list.Add(1113692, prop.ToString()); // Cold Resonance ~1_val~%
+            }
 
             if ((prop = m_SAAbsorptionAttributes.ResonancePoison) != 0)
+            {
                 list.Add(1113693, prop.ToString()); // Poison Resonance ~1_val~%
+            }
 
             if ((prop = m_SAAbsorptionAttributes.ResonanceEnergy) != 0)
+            {
                 list.Add(1113694, prop.ToString()); // Energy Resonance ~1_val~%
+            }
 
             if ((prop = m_SAAbsorptionAttributes.ResonanceKinetic) != 0)
+            {
                 list.Add(1113695, prop.ToString()); // Kinetic Resonance ~1_val~%
+            }
 
             if ((prop = m_SAAbsorptionAttributes.CastingFocus) != 0)
+            {
                 list.Add(1113696, prop.ToString()); // Casting Focus ~1_val~%
+            }
 
             if ((prop = m_AosAttributes.SpellChanneling) != 0)
+            {
                 list.Add(1060482); // spell channeling
+            }
 
             if ((prop = m_AosArmorAttributes.SelfRepair) != 0)
+            {
                 list.Add(1060450, prop.ToString()); // self repair ~1_val~
+            }
 
             if ((prop = m_AosAttributes.NightSight) != 0)
+            {
                 list.Add(1060441); // night sight
+            }
 
             if ((prop = m_AosAttributes.BonusStr) != 0)
+            {
                 list.Add(1060485, prop.ToString()); // strength bonus ~1_val~
+            }
 
             if ((prop = m_AosAttributes.BonusDex) != 0)
+            {
                 list.Add(1060409, prop.ToString()); // dexterity bonus ~1_val~
+            }
 
             if ((prop = m_AosAttributes.BonusInt) != 0)
+            {
                 list.Add(1060432, prop.ToString()); // intelligence bonus ~1_val~
+            }
 
             if ((prop = m_AosAttributes.BonusHits) != 0)
+            {
                 list.Add(1060431, prop.ToString()); // hit point increase ~1_val~
+            }
 
             if ((prop = m_AosAttributes.BonusStam) != 0)
+            {
                 list.Add(1060484, prop.ToString()); // stamina increase ~1_val~
+            }
 
             if ((prop = m_AosAttributes.BonusMana) != 0)
+            {
                 list.Add(1060439, prop.ToString()); // mana increase ~1_val~
+            }
 
             if ((prop = m_AosAttributes.RegenHits) != 0)
+            {
                 list.Add(1060444, prop.ToString()); // hit point regeneration ~1_val~
+            }
 
             if ((prop = m_AosAttributes.RegenStam) != 0)
+            {
                 list.Add(1060443, prop.ToString()); // stamina regeneration ~1_val~
+            }
 
             if ((prop = m_AosAttributes.RegenMana) != 0)
+            {
                 list.Add(1060440, prop.ToString()); // mana regeneration ~1_val~
+            }
 
             if ((prop = GetLuckBonus() + m_AosAttributes.Luck) != 0)
+            {
                 list.Add(1060436, prop.ToString()); // luck ~1_val~
+            }
 
             if ((prop = m_AosAttributes.EnhancePotions) != 0)
+            {
                 list.Add(1060411, prop.ToString()); // enhance potions ~1_val~%
+            }
 
             if ((prop = m_AosAttributes.ReflectPhysical) != 0)
+            {
                 list.Add(1060442, prop.ToString()); // reflect physical damage ~1_val~%
+            }
 
             if (this is SurgeShield && ((SurgeShield)this).Surge > SurgeType.None)
+            {
                 list.Add(1153098, ((SurgeShield)this).Charges.ToString());
+            }
 
             if ((prop = m_AosAttributes.AttackChance) != 0)
+            {
                 list.Add(1060415, prop.ToString()); // hit chance increase ~1_val~%
+            }
 
             if ((prop = m_AosAttributes.WeaponSpeed) != 0)
+            {
                 list.Add(1060486, prop.ToString()); // swing speed increase ~1_val~%
+            }
 
             if ((prop = m_AosAttributes.WeaponDamage) != 0)
+            {
                 list.Add(1060401, prop.ToString()); // damage increase ~1_val~%
+            }
 
             if ((prop = m_AosAttributes.DefendChance) != 0)
+            {
                 list.Add(1060408, prop.ToString()); // defense chance increase ~1_val~%
+            }
 
             if ((prop = m_AosAttributes.CastRecovery) != 0)
+            {
                 list.Add(1060412, prop.ToString()); // faster cast recovery ~1_val~
+            }
 
             if ((prop = m_AosAttributes.CastSpeed) != 0)
+            {
                 list.Add(1060413, prop.ToString()); // faster casting ~1_val~
+            }
 
             if ((prop = m_AosAttributes.SpellDamage) != 0)
+            {
                 list.Add(1060483, prop.ToString()); // spell damage increase ~1_val~%
+            }
 
             if ((prop = m_AosAttributes.LowerManaCost) != 0)
+            {
                 list.Add(1060433, prop.ToString()); // lower mana cost ~1_val~%
+            }
 
             if ((prop = m_AosAttributes.LowerRegCost) != 0)
+            {
                 list.Add(1060434, prop.ToString()); // lower reagent cost ~1_val~%
+            }
 
             if ((prop = m_AosAttributes.IncreasedKarmaLoss) != 0)
+            {
                 list.Add(1075210, prop.ToString()); // Increased Karma Loss ~1val~%
+            }
 
             AddResistanceProperties(list);
 
             if ((prop = m_AosArmorAttributes.MageArmor) != 0)
+            {
                 list.Add(1060437); // mage armor
+            }
 
             if ((prop = GetLowerStatReq()) != 0)
+            {
                 list.Add(1060435, prop.ToString()); // lower requirements ~1_val~%
+            }
 
             if ((prop = ComputeStatReq(StatType.Str)) > 0)
+            {
                 list.Add(1061170, prop.ToString()); // strength requirement ~1_val~
+            }
 
             if (m_HitPoints >= 0 && m_MaxHitPoints > 0)
+            {
                 list.Add(1060639, $"{m_HitPoints}\t{m_MaxHitPoints}"); // durability ~1_val~ / ~2_val~
+            }
 
             if (IsSetItem && !m_SetEquipped)
             {
@@ -2286,9 +2788,13 @@ namespace Server.Items
             if (m_ItemPower != ItemPower.None)
             {
                 if (m_ItemPower <= ItemPower.LegendaryArtifact)
+                {
                     list.Add(1151488 + ((int)m_ItemPower - 1));
+                }
                 else
+                {
                     list.Add(1152281 + ((int)m_ItemPower - 9));
+                }
             }
         }
 
@@ -2308,18 +2814,24 @@ namespace Server.Items
             Quality = (ItemQuality)quality;
 
             if (makersMark)
+            {
                 Crafter = from;
+            }
 
             if (!craftItem.ForceNonExceptional && MaterialType > AMT.Cloth)
             {
                 if (typeRes == null)
+                {
                     typeRes = craftItem.Resources.GetAt(0).ItemType;
+                }
 
                 Resource = CraftResources.GetFromType(typeRes);
             }
 
             if (typeRes == null || craftItem.ForceNonExceptional)
+            {
                 typeRes = craftItem.Resources.GetAt(0).ItemType;
+            }
 
             PlayerConstructed = true;
 
@@ -2338,12 +2850,16 @@ namespace Server.Items
                 CraftResourceInfo resInfo = CraftResources.GetInfo(m_Resource);
 
                 if (resInfo == null)
+                {
                     return quality;
+                }
 
                 CraftAttributeInfo attrInfo = resInfo.AttributeInfo;
 
                 if (attrInfo == null)
+                {
                     return quality;
+                }
 
                 DistributeMaterialBonus(attrInfo);
             }
@@ -2483,7 +2999,9 @@ namespace Server.Items
             CraftResourceInfo info = CraftResources.GetInfo(res);
 
             if (info == null)
+            {
                 return CraftAttributeInfo.Blank;
+            }
 
             return info.AttributeInfo;
         }
@@ -2519,7 +3037,9 @@ namespace Server.Items
             if (Parent is Mobile && from == Parent)
             {
                 if (IsSetItem && m_SetEquipped)
+                {
                     SetHelper.RemoveSetBonus(from, SetID, this);
+                }
             }
 
             return base.OnDragLift(from);
@@ -2639,61 +3159,93 @@ namespace Server.Items
             if (!m_SetEquipped)
             {
                 if (m_SetPhysicalBonus != 0)
+                {
                     list.Add(1072382, m_SetPhysicalBonus.ToString()); // physical resist +~1_val~%
+                }
 
                 if (m_SetFireBonus != 0)
+                {
                     list.Add(1072383, m_SetFireBonus.ToString()); // fire resist +~1_val~%
+                }
 
                 if (m_SetColdBonus != 0)
+                {
                     list.Add(1072384, m_SetColdBonus.ToString()); // cold resist +~1_val~%
+                }
 
                 if (m_SetPoisonBonus != 0)
+                {
                     list.Add(1072385, m_SetPoisonBonus.ToString()); // poison resist +~1_val~%
+                }
 
                 if (m_SetEnergyBonus != 0)
+                {
                     list.Add(1072386, m_SetEnergyBonus.ToString()); // energy resist +~1_val~%		
+                }
             }
             else if (m_SetEquipped && SetHelper.ResistsBonusPerPiece(this) && RootParent is Mobile mobile)
             {
                 Mobile m = mobile;
 
                 if (m_SetPhysicalBonus != 0)
+                {
                     list.Add(1080361, SetHelper.GetSetTotalResist(m, ResistanceType.Physical).ToString()); // physical resist ~1_val~% (total)
+                }
 
                 if (m_SetFireBonus != 0)
+                {
                     list.Add(1080362, SetHelper.GetSetTotalResist(m, ResistanceType.Fire).ToString()); // fire resist ~1_val~% (total)
+                }
 
                 if (m_SetColdBonus != 0)
+                {
                     list.Add(1080363, SetHelper.GetSetTotalResist(m, ResistanceType.Cold).ToString()); // cold resist ~1_val~% (total)
+                }
 
                 if (m_SetPoisonBonus != 0)
+                {
                     list.Add(1080364, SetHelper.GetSetTotalResist(m, ResistanceType.Poison).ToString()); // poison resist ~1_val~% (total)
+                }
 
                 if (m_SetEnergyBonus != 0)
+                {
                     list.Add(1080365, SetHelper.GetSetTotalResist(m, ResistanceType.Energy).ToString()); // energy resist ~1_val~% (total)
+                }
             }
             else
             {
                 if (m_SetPhysicalBonus != 0)
+                {
                     list.Add(1080361, (BasePhysicalResistance * Pieces + m_SetPhysicalBonus).ToString()); // physical resist ~1_val~% (total)
+                }
 
                 if (m_SetFireBonus != 0)
+                {
                     list.Add(1080362, (BaseFireResistance * Pieces + m_SetFireBonus).ToString()); // fire resist ~1_val~% (total)
+                }
 
                 if (m_SetColdBonus != 0)
+                {
                     list.Add(1080363, (BaseColdResistance * Pieces + m_SetColdBonus).ToString()); // cold resist ~1_val~% (total)
+                }
 
                 if (m_SetPoisonBonus != 0)
+                {
                     list.Add(1080364, (BasePoisonResistance * Pieces + m_SetPoisonBonus).ToString()); // poison resist ~1_val~% (total)
+                }
 
                 if (m_SetEnergyBonus != 0)
+                {
                     list.Add(1080365, (BaseEnergyResistance * Pieces + m_SetEnergyBonus).ToString()); // energy resist ~1_val~% (total)
+                }
             }
 
             int prop;
 
             if ((prop = m_SetSelfRepair) != 0 && m_AosArmorAttributes.SelfRepair == 0)
+            {
                 list.Add(1060450, prop.ToString()); // self repair ~1_val~
+            }
         }
 
         public int SetResistBonus(ResistanceType resist)

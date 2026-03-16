@@ -59,12 +59,14 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if ((from.Weapon is Boomerang || from.Weapon is Cyclone || from.Weapon is BaseThrown) && from.InRange(GetWorldLocation(), 1))
-                Fire(from);
             if ((m_Arrows > 0 || m_Bolts > 0) && from.InRange(GetWorldLocation(), 1))
+            {
                 Gather(from);
+            }
             else
+            {
                 Fire(from);
+            }
         }
 
         public void Gather(Mobile from)
@@ -72,10 +74,14 @@ namespace Server.Items
             from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 500592); // You gather the arrows and bolts.
 
             if (m_Arrows > 0)
+            {
                 from.AddToBackpack(new Arrow(m_Arrows));
+            }
 
             if (m_Bolts > 0)
+            {
                 from.AddToBackpack(new Bolt(m_Bolts));
+            }
 
             m_Arrows = 0;
             m_Bolts = 0;
@@ -94,7 +100,9 @@ namespace Server.Items
             }
 
             if (DateTime.UtcNow < m_LastUse + UseDelay)
+            {
                 return;
+            }
 
             Point3D worldLoc = GetWorldLocation();
 
@@ -144,11 +152,17 @@ namespace Server.Items
                 if (pack == null || ammoType == null || !pack.ConsumeTotal(ammoType, 1))
                 {
                     if (isArrow)
+                    {
                         from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 500594); // You do not have any arrows with which to practice.
+                    }
                     else if (isBolt)
+                    {
                         from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 500595); // You do not have any crossbow bolts with which to practice.
+                    }
                     else
+                    {
                         SendLocalizedMessageTo(from, 500593); // You must practice with ranged weapons on 
+                    }
 
                     return;
                 }
@@ -171,9 +185,13 @@ namespace Server.Items
                 se.Record(0);
 
                 if (se.Count == 1)
+                {
                     PublicOverheadMessage(MessageType.Regular, 0x3B2, 1062719, se.Total.ToString());
+                }
                 else
+                {
                     PublicOverheadMessage(MessageType.Regular, 0x3B2, 1042683, $"{se.Total}\t{se.Count}");
+                }
 
                 return;
             }
@@ -222,18 +240,26 @@ namespace Server.Items
                 if (ammoType != null)
                 {
                     if (isArrow)
+                    {
                         ++m_Arrows;
+                    }
                     else if (isBolt)
+                    {
                         ++m_Bolts;
+                    }
                 }
             }
 
             se.Record(split ? splitScore : score);
 
             if (se.Count == 1)
+            {
                 PublicOverheadMessage(MessageType.Regular, 0x3B2, 1062719, se.Total.ToString());
+            }
             else
+            {
                 PublicOverheadMessage(MessageType.Regular, 0x3B2, 1042683, $"{se.Total}\t{se.Count}");
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -261,12 +287,16 @@ namespace Server.Items
         private ScoreEntry GetEntryFor(Mobile from)
         {
             if (m_Entries == null)
+            {
                 m_Entries = new Hashtable();
+            }
 
             ScoreEntry e = (ScoreEntry)m_Entries[from];
 
             if (e == null)
+            {
                 m_Entries[from] = e = new ScoreEntry();
+            }
 
             return e;
         }
@@ -349,7 +379,9 @@ namespace Server.Items
                 from.SendGump(new RewardOptionGump(this));
             }
             else
+            {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.       	
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -375,7 +407,9 @@ namespace Server.Items
             Facing = (AddonFacing)choice;
 
             if (!Deleted)
+            {
                 base.OnDoubleClick(from);
+            }
         }
     }
 }

@@ -1,4 +1,3 @@
-using Server.Items;
 using System;
 
 namespace Server.Mobiles
@@ -49,7 +48,7 @@ namespace Server.Mobiles
         {
         }
 
-        public override Type[] UniqueSAList => new Type[] { typeof(DemonHuntersStandard), typeof(DragonJadeEarrings) };
+        public override Type[] UniqueSAList => [];
         public override Type[] SharedSAList => [];
 
         public override bool InitialInnocent => true;

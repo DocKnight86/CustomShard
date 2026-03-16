@@ -2,7 +2,6 @@ using Server.Engines.Craft;
 
 namespace Server.Items
 {
-    [Alterable(typeof(DefBlacksmithy), typeof(GargishWarFork))]
     [Flipable(0x1405, 0x1404)]
     public class WarFork : BaseSpear
     {

@@ -95,18 +95,26 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (targeted is BaseCreature creature)
+                {
                     m_Post.EndStable(from, creature);
+                }
                 else if (targeted == from)
+                {
                     from.SendLocalizedMessage(502672); // HA HA HA! Sorry, I am not an inn.
+                }
                 else
+                {
                     from.SendLocalizedMessage(1048053); // You can't stable that!
+                }
             }
         }
 
         public void BeginStable(Mobile from)
         {
             if (Deleted || !from.CheckAlive())
+            {
                 return;
+            }
 
             if ((from.Backpack == null || from.Backpack.GetAmount(typeof(Gold)) < 30) && Banker.GetBalance(from) < 30)
             {
@@ -193,7 +201,9 @@ namespace Server.Items
         public void Claim(Mobile from)
         {
             if (Deleted || !from.CheckAlive())
+            {
                 return;
+            }
 
             bool claimed = false;
             int stabled = 0;
@@ -221,7 +231,9 @@ namespace Server.Items
                         pet.SetControlMaster(from);
 
                         if (pet.Summoned)
+                        {
                             pet.SummonMaster = from;
+                        }
 
                         pet.FollowTarget = from;
                         pet.ControlOrder = LastOrderType.Follow;
@@ -250,13 +262,17 @@ namespace Server.Items
                 from.SendLocalizedMessage(1042559); // Here you go... and good day to you!
             }
             else if (stabled == 0)
+            {
                 from.SendLocalizedMessage(502671); // But I have no animals stabled with me at the moment!            
+            }
         }
 
         public void BeginClaimList(Mobile from)
         {
             if (Deleted || !from.CheckAlive())
+            {
                 return;
+            }
 
             List<BaseCreature> list = new List<BaseCreature>();
 
@@ -280,22 +296,30 @@ namespace Server.Items
             }
 
             if (list.Count > 0)
+            {
                 from.SendGump(new ClaimListGump(this, from, list));
+            }
             else
+            {
                 from.SendLocalizedMessage(502671); // But I have no animals stabled with me at the moment!
+            }
         }
 
         public void EndClaimList(Mobile from, BaseCreature pet)
         {
             if (pet == null || pet.Deleted || from.Map != Map || !from.InRange(this, 14) || !from.Stabled.Contains(pet) || !from.CheckAlive())
+            {
                 return;
+            }
 
             if (from.Followers + pet.ControlSlots <= from.FollowersMax)
             {
                 pet.SetControlMaster(from);
 
                 if (pet.Summoned)
+                {
                     pet.SummonMaster = from;
+                }
 
                 pet.FollowTarget = from;
                 pet.ControlOrder = LastOrderType.Follow;
@@ -327,9 +351,13 @@ namespace Server.Items
                 e.Handled = true;
 
                 if (!Insensitive.Equals(e.Speech, "claim"))
+                {
                     BeginClaimList(e.Mobile);
+                }
                 else
+                {
                     Claim(e.Mobile);
+                }
             }
             else
             {
@@ -364,7 +392,9 @@ namespace Server.Items
                     BaseCreature pet = list[i];
 
                     if (pet == null || pet.Deleted)
+                    {
                         continue;
+                    }
 
                     AddButton(15, 39 + i * 20, 10006, 10006, i + 1, GumpButtonType.Reply, 0);
                     AddHtml(32, 35 + i * 20, 275, 18, $"<BASEFONT COLOR=#C0C0EE>{pet.Name}</BASEFONT>", false, false);

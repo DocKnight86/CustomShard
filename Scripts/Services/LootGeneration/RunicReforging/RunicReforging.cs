@@ -111,23 +111,41 @@ namespace Server.Items
                 }
 
                 if (mods > maxmods)
+                {
                     goodtogo = false;
+                }
                 else if (item is IResource resource && !CraftResources.IsStandard(resource.Resource))
+                {
                     goodtogo = false;
+                }
                 else if (item.LootType == LootType.Blessed || item.LootType == LootType.Newbied)
+                {
                     goodtogo = false;
+                }
                 else if (item is BaseWeapon baseWeapon && Spells.Mysticism.EnchantSpell.IsUnderSpellEffects(from, baseWeapon))
+                {
                     goodtogo = false;
+                }
                 else if (item is BaseWeapon weapon1 && weapon1.FocusWeilder != null)
+                {
                     goodtogo = false;
+                }
                 else if (!allowableSpecial && item is IQuality quality && !quality.PlayerConstructed)
+                {
                     goodtogo = false;
+                }
                 else if (!allowableSpecial && item is BaseClothing && !(item is BaseHat))
+                {
                     goodtogo = false;
+                }
                 else if (!allowableSpecial && item is BaseJewel)
+                {
                     goodtogo = false;
+                }
                 else if (Imbuing.IsInNonImbueList(item.GetType()))
+                {
                     goodtogo = false;
+                }
 
                 if (!goodtogo)
                 {
@@ -189,7 +207,9 @@ namespace Server.Items
                 }
 
                 if (index == -1)
+                {
                     return;
+                }
 
                 List<NamedInfoCol> prefixCol = null;
                 List<NamedInfoCol> suffixCol = null;
@@ -344,7 +364,9 @@ namespace Server.Items
         {
             // No Vampire prefix/suffix for non-weapons
             if (index == 6 && !(toreforge is BaseWeapon))
+            {
                 return false;
+            }
 
             // Cannot choose same suffix/prefix
             //if (index != 0 && (index == prefix || index == suffix))
@@ -358,71 +380,136 @@ namespace Server.Items
                 {
                     case CraftResource.DullCopper:
                         if (index == 8 && HasOption(options, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.ShadowIron:
                         if (index == 8 && HasOption(options, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental))
+                        {
                             return false;
+                        }
                         else if (index >= 8 && index <= 10 && HasOption(options, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.Copper:
                         if (index == 8 && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental))
+                        {
                             return false;
+                        }
+
                         if (index >= 8 && index <= 10 && HasOption(options, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.Bronze:
                         if (index == 8)
+                        {
                             return false;
+                        }
+
                         if (index == 9 && HasOption(options, ReforgingOption.Powerful))
+                        {
                             return false;
+                        }
+
                         if (index >= 8 && index <= 10 && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.Gold:
                         if (index == 8)
+                        {
                             return false;
+                        }
+
                         if (index >= 8 && index <= 10 && HasOption(options, ReforgingOption.Powerful, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.Agapite:
                     case CraftResource.Verite:
                         if (index >= 8 && index <= 10)
+                        {
                             return false;
+                        }
+
                         if (index == 12 && HasOption(options, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.Valorite:
                         if (index >= 8 && index <= 10)
+                        {
                             return false;
+                        }
+
                         if (index == 12 && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
 
                     case CraftResource.OakWood:
                         if (index == 8 && HasOption(options, ReforgingOption.StructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         if (index >= 8 && index <= 10 && HasOption(options, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.AshWood:
                         if (index == 8)
+                        {
                             return false;
+                        }
+
                         if (index >= 8 && index <= 10 && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.YewWood:
                         if (index >= 8 && index <= 10)
+                        {
                             return false;
+                        }
+
                         if (index == 12 && HasOption(options, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.Heartwood:
                         if (index >= 8 && index <= 10)
+                        {
                             return false;
+                        }
+
                         if (index == 12 && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                 }
             }
@@ -432,118 +519,216 @@ namespace Server.Items
                 {
                     case CraftResource.OakWood:
                         if (index == 10 && HasOption(options, ReforgingOption.PowerfulAndStructural))
+                        {
                             return false;
+                        }
+
                         if ((index == 8 || index == 10) && HasOption(options, ReforgingOption.PowerfulAndFundamental))
+                        {
                             return false;
+                        }
+
                         if (index >= 8 && index <= 10 && (HasOption(options, ReforgingOption.PowerfulStructuralAndFundamental) || HasOption(options, ReforgingOption.StructuralAndFundamental)))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.AshWood:
                         if (index == 8 || index == 10)
+                        {
                             return false;
+                        }
+
                         if (index >= 8 && index <= 10 && HasOption(options, ReforgingOption.PowerfulAndStructural))
+                        {
                             return false;
+                        }
+
                         if (index >= 8 && index <= 11 && HasOption(options, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.YewWood:
                         if (index >= 8 && index <= 11)
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.Heartwood:
                         if (index >= 8 && index <= 11)
+                        {
                             return false;
+                        }
+
                         if (index == 12 && HasOption(options, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                 }
             }
             else if (type == ItemType.Shield)
             {
                 if (index == 10)
+                {
                     return false;
+                }
 
                 switch (tool.Resource)
                 {
                     case CraftResource.DullCopper:
                         if (index == 8 && HasOption(options, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.ShadowIron:
                         if (index == 8 && HasOption(options, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         if ((index == 8 || index == 9) && HasOption(options, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.Copper:
                         if (index == 8 && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental))
+                        {
                             return false;
+                        }
                         else if ((index == 8 || index == 9) && HasOption(options, ReforgingOption.StructuralAndFundamental))
+                        {
                             return false;
+                        }
                         else if ((index == 5 || index == 8 || index == 9) && HasOption(options, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.Bronze:
                         if (index == 8)
+                        {
                             return false;
+                        }
                         else if (index == 9 && HasOption(options, ReforgingOption.PowerfulAndStructural))
+                        {
                             return false;
+                        }
                         else if ((index == 9 || index == 5) && HasOption(options, ReforgingOption.PowerfulAndFundamental))
+                        {
                             return false;
+                        }
                         else if ((index == 9 || index == 5 || index == 11) && HasOption(options, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.Gold:
                         if (index == 8)
+                        {
                             return false;
+                        }
                         else if (index == 9 && HasOption(options, ReforgingOption.Powerful))
+                        {
                             return false;
+                        }
                         else if ((index == 5 || index == 9) && HasOption(options, ReforgingOption.PowerfulAndStructural))
+                        {
                             return false;
+                        }
                         else if ((index == 9 || index == 5 || index == 11) && HasOption(options, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.Agapite:
                         if (index == 8 || index == 9)
+                        {
                             return false;
+                        }
                         else if ((index == 5 || index == 11) && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.Verite:
                     case CraftResource.Valorite:
                         if (index == 8 || index == 9 || index == 11)
+                        {
                             return false;
+                        }
                         else if (index == 5 && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
 
                     case CraftResource.OakWood:
                         if (index == 8 && HasOption(options, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         if ((index == 8 || index == 9) && HasOption(options, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.AshWood:
                         if (index == 8)
+                        {
                             return false;
+                        }
                         else if (index == 9 && HasOption(options, ReforgingOption.PowerfulAndStructural))
+                        {
                             return false;
+                        }
                         else if ((index == 9 || index == 5) && HasOption(options, ReforgingOption.PowerfulAndFundamental))
+                        {
                             return false;
+                        }
                         else if ((index == 9 || index == 5 || index == 11) && HasOption(options, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.YewWood:
                         if (index == 8 || index == 9)
+                        {
                             return false;
+                        }
                         else if ((index == 5 || index == 11) && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.Heartwood:
                         if (index == 8 || index == 9 || index == 11)
+                        {
                             return false;
+                        }
                         else if (index == 5 && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                 }
             }
@@ -553,110 +738,200 @@ namespace Server.Items
                 {
                     case CraftResource.DullCopper:
                         if ((index == 10 || index == 11) && HasOption(options, ReforgingOption.PowerfulAndFundamental))
+                        {
                             return false;
+                        }
                         else if ((index == 5 || index == 10 || index == 11) && HasOption(options, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.ShadowIron:
                         if ((index == 10 || index == 11) && HasOption(options, ReforgingOption.PowerfulAndStructural))
+                        {
                             return false;
+                        }
                         else if ((index == 5 || index == 10 || index == 11) && HasOption(options, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental))
+                        {
                             return false;
+                        }
                         else if ((index == 5 || index == 9 || index == 10 || index == 11) && HasOption(options, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.Copper:
                         if (index == 10 || index == 11)
+                        {
                             return false;
+                        }
                         else if (index == 5 && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental))
+                        {
                             return false;
+                        }
                         else if ((index == 5 || index == 9) && HasOption(options, ReforgingOption.StructuralAndFundamental))
+                        {
                             return false;
+                        }
                         else if ((index == 5 || index == 9) && HasOption(options, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.Bronze:
                         if (index == 10 || index == 11)
+                        {
                             return false;
+                        }
                         else if ((index == 5 || index == 9) && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental))
+                        {
                             return false;
+                        }
                         else if ((index == 5 || index == 9 || index == 12) && HasOption(options, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.Gold:
                         if (index == 10 || index == 11)
+                        {
                             return false;
+                        }
                         else if (index == 9 && HasOption(options, ReforgingOption.Powerful))
+                        {
                             return false;
+                        }
                         else if ((index == 5 || index == 9 || index == 12) && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.Agapite:
                         if (index >= 9 && index <= 11)
+                        {
                             return false;
+                        }
                         else if (index == 12 && HasOption(options, ReforgingOption.Powerful))
+                        {
                             return false;
+                        }
                         else if ((index == 12 || index == 5) && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.Verite:
                     case CraftResource.Valorite:
                         if (index >= 9 && index <= 12)
+                        {
                             return false;
+                        }
                         else if (index == 5 && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
 
                     case CraftResource.SpinedLeather:
                         if ((index == 10 || index == 11) && HasOption(options, ReforgingOption.PowerfulAndStructural))
+                        {
                             return false;
+                        }
                         else if ((index == 10 || index == 11 || index == 5) && HasOption(options, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental))
+                        {
                             return false;
+                        }
                         else if ((index == 9 || index == 10 || index == 11 || index == 5) && HasOption(options, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.HornedLeather:
                         if (index == 10 || index == 11)
+                        {
                             return false;
+                        }
                         else if (index == 9 && HasOption(options, ReforgingOption.Powerful))
+                        {
                             return false;
+                        }
                         else if ((index == 5 || index == 9 || index == 12) && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.BarbedLeather:
                         if (index >= 9 && index <= 12)
+                        {
                             return false;
+                        }
                         else if (index == 5 && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
 
                     case CraftResource.OakWood:
                         if ((index == 10 || index == 11) && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental))
+                        {
                             return false;
+                        }
                         else if (index == 9 && HasOption(options, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.AshWood:
                         if (index == 10 || index == 11)
+                        {
                             return false;
+                        }
                         else if ((index == 5 || index == 9) && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental))
+                        {
                             return false;
+                        }
                         else if ((index == 5 || index == 9 || index == 12) && HasOption(options, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.YewWood:
                         if (index == 9 || index == 10 || index == 11)
+                        {
                             return false;
+                        }
                         else if (index == 12 && HasOption(options, ReforgingOption.Powerful))
+                        {
                             return false;
+                        }
                         else if ((index == 5 || index == 12) && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                     case CraftResource.Heartwood:
                         if (index >= 9 && index <= 12)
+                        {
                             return false;
+                        }
                         else if (index == 5 && HasOption(options, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndStructural, ReforgingOption.PowerfulAndFundamental, ReforgingOption.StructuralAndFundamental, ReforgingOption.PowerfulStructuralAndFundamental))
+                        {
                             return false;
+                        }
+
                         break;
                 }
             }
@@ -682,7 +957,9 @@ namespace Server.Items
         private static void ValidateAttributes(Item item, List<NamedInfoCol> list, bool reforged)
         {
             if (list == null || list.Count == 0)
+            {
                 return;
+            }
 
             list.IterateReverse(col =>
             {
@@ -740,16 +1017,24 @@ namespace Server.Items
                 }
 
                 if (prefixID > 0)
+                {
                     prefixCount = mods;
+                }
                 else
+                {
                     suffixCount = mods;
+                }
             }
 
             if (prefixCount > precolcount)
+            {
                 prefixCount = precolcount;
+            }
 
             if (suffixCount > suffixcolcount)
+            {
                 suffixCount = suffixcolcount;
+            }
         }
 
         public static int GetPropertyCount(BaseRunicTool tool)
@@ -942,7 +1227,10 @@ namespace Server.Items
         {
             decimal percent = Utility.RandomMinMax(perclow, perchigh);
             if (LootPack.CheckLuck(luckchance))
+            {
                 percent += 10;
+            }
+
             percent = percent > perchigh ? perchigh : percent;
 
             return Convert.ToInt32(Math.Round(((max - min) * percent / 100) + min));
@@ -978,7 +1266,9 @@ namespace Server.Items
                 if (value <= 0)
                 {
                     if (ItemPropertyInfo.GetTotalWeight(item, attribute, 3) > budget)
+                    {
                         budget = 0;
+                    }
 
                     return 0;
                 }
@@ -999,28 +1289,44 @@ namespace Server.Items
             int id = -1;
 
             if (attr is AosAttribute attribute)
+            {
                 id = ItemPropertyInfo.GetIDForAttribute(attribute);
+            }
 
             else if (attr is AosWeaponAttribute weaponAttribute)
+            {
                 id = ItemPropertyInfo.GetIDForAttribute(weaponAttribute);
+            }
 
             else if (attr is SkillName skillName)
+            {
                 id = ItemPropertyInfo.GetIDForAttribute(skillName);
+            }
 
             else if (attr is SlayerName slayerName)
+            {
                 id = ItemPropertyInfo.GetIDForAttribute(slayerName);
+            }
 
             else if (attr is SAAbsorptionAttribute absorptionAttribute)
+            {
                 id = ItemPropertyInfo.GetIDForAttribute(absorptionAttribute);
+            }
 
             else if (attr is AosArmorAttribute armorAttribute)
+            {
                 id = ItemPropertyInfo.GetIDForAttribute(armorAttribute);
+            }
 
             else if (attr is AosElementAttribute elementAttribute)
+            {
                 id = ItemPropertyInfo.GetIDForAttribute(elementAttribute);
+            }
 
             if (ItemPropertyInfo.Table.TryGetValue(id, out ItemPropertyInfo value))
+            {
                 return value;
+            }
 
             return null;
         }
@@ -1028,13 +1334,24 @@ namespace Server.Items
         private static int GetCollectionIndex(IEntity item)
         {
             if (item is BaseWeapon)
+            {
                 return 0;
+            }
+
             if (item is BaseShield)
+            {
                 return 2;
+            }
+
             if (item is BaseArmor || item is BaseClothing)
+            {
                 return 1;
+            }
+
             if (item is BaseJewel)
+            {
                 return 3;
+            }
 
             return -1;
         }
@@ -1070,24 +1387,36 @@ namespace Server.Items
             if ((option & ReforgingOption.Powerful) != 0 &&
                 (option & ReforgingOption.Structural) != 0 &&
                 (option & ReforgingOption.Fundamental) != 0)
+            {
                 return 6;
+            }
 
             if ((option & ReforgingOption.Structural) != 0 &&
                 (option & ReforgingOption.Fundamental) != 0)
+            {
                 return 5;
+            }
 
             if ((option & ReforgingOption.Powerful) != 0 &&
                 (option & ReforgingOption.Structural) != 0)
+            {
                 return 4;
+            }
 
             if ((option & ReforgingOption.Fundamental) != 0)
+            {
                 return 3;
+            }
 
             if ((option & ReforgingOption.Structural) != 0)
+            {
                 return 2;
+            }
 
             if ((option & ReforgingOption.Powerful) != 0)
+            {
                 return 1;
+            }
 
             return 0;
         }
@@ -1108,10 +1437,6 @@ namespace Server.Items
             m_AllowableTable[typeof(Cleaver)] = DefBlacksmithy.CraftSystem;
             m_AllowableTable[typeof(SkinningKnife)] = DefBlacksmithy.CraftSystem;
             m_AllowableTable[typeof(ButcherKnife)] = DefBlacksmithy.CraftSystem;
-            m_AllowableTable[typeof(GargishNecklace)] = DefBlacksmithy.CraftSystem;
-            m_AllowableTable[typeof(GargishEarrings)] = DefBlacksmithy.CraftSystem;
-            m_AllowableTable[typeof(GargishAmulet)] = DefBlacksmithy.CraftSystem;
-            m_AllowableTable[typeof(GargishStoneAmulet)] = DefMasonry.CraftSystem;
             m_AllowableTable[typeof(BarbedWhip)] = DefTailoring.CraftSystem;
             m_AllowableTable[typeof(SpikedWhip)] = DefTailoring.CraftSystem;
             m_AllowableTable[typeof(BladedWhip)] = DefTailoring.CraftSystem;
@@ -1503,7 +1828,9 @@ namespace Server.Items
             public int RandomRangedIntensity(Item item, int id, int resIndex, int preIndex)
             {
                 if (Info == null || HardCap == 1)
+                {
                     return HardCap;
+                }
 
                 int[] range = item is BaseRanged && SecondaryInfo != null ? SecondaryInfo[resIndex] : Info[resIndex];
 
@@ -1604,11 +1931,10 @@ namespace Server.Items
                 found = false;
                 sk = possibleSkills[Utility.Random(possibleSkills.Length)];
 
-                if ((item is GargishRing || item is GargishBracelet) && sk == SkillName.Archery)
-                    sk = SkillName.Throwing;
-
                 for (int i = 0; !found && i < 5; ++i)
+                {
                     found = skillbonuses.GetValues(i, out check, out bonus) && check == sk;
+                }
             } while (found);
 
             return sk;
@@ -1638,37 +1964,57 @@ namespace Server.Items
         public static void ApplyPrefixName(Item item, ReforgedPrefix prefix)
         {
             if (item is BaseWeapon weapon)
+            {
                 weapon.ReforgedPrefix = prefix;
+            }
 
             else if (item is BaseShield shield)
+            {
                 shield.ReforgedPrefix = prefix;
+            }
 
             else if (item is BaseArmor armor)
+            {
                 armor.ReforgedPrefix = prefix;
+            }
 
             else if (item is BaseJewel jewel)
+            {
                 jewel.ReforgedPrefix = prefix;
+            }
 
             else if (item is BaseClothing clothing)
+            {
                 clothing.ReforgedPrefix = prefix;
+            }
         }
 
         public static void ApplySuffixName(Item item, ReforgedSuffix suffix)
         {
             if (item is BaseWeapon weapon)
+            {
                 weapon.ReforgedSuffix = suffix;
+            }
 
             else if (item is BaseShield shield)
+            {
                 shield.ReforgedSuffix = suffix;
+            }
 
             else if (item is BaseArmor armor)
+            {
                 armor.ReforgedSuffix = suffix;
+            }
 
             else if (item is BaseJewel jewel)
+            {
                 jewel.ReforgedSuffix = suffix;
+            }
 
             else if (item is BaseClothing clothing)
+            {
                 clothing.ReforgedSuffix = suffix;
+            }
         }
 
         public static int GetPrefixName(ReforgedPrefix prefix)
@@ -1753,7 +2099,9 @@ namespace Server.Items
             Item item = Loot.RandomArmorOrShieldOrWeaponOrJewelry(LootPackEntry.IsInTokuno(e), LootPackEntry.IsMondain(e));
 
             if (item != null)
+            {
                 GenerateRandomItem(item, null, Utility.RandomMinMax(100, 700), 0, ReforgedPrefix.None, ReforgedSuffix.None);
+            }
 
             return item;
         }
@@ -1789,10 +2137,14 @@ namespace Server.Items
         public static bool GenerateRandomArtifactItem(Item item, int luck, int budget, ReforgedPrefix prefix = ReforgedPrefix.None, ReforgedSuffix suffix = ReforgedSuffix.None)
         {
             if (prefix == ReforgedPrefix.None)
+            {
                 prefix = ChooseRandomPrefix(item, budget);
+            }
 
             if (suffix == ReforgedSuffix.None)
+            {
                 suffix = ChooseRandomSuffix(item, budget);
+            }
 
             if (item is BaseWeapon || item is BaseArmor || item is BaseJewel || item is BaseHat)
             {
@@ -1807,7 +2159,9 @@ namespace Server.Items
             Item item = Loot.RandomArmorOrShieldOrWeaponOrJewelry(LootPackEntry.IsInTokuno(killer), LootPackEntry.IsMondain(killer));
 
             if (item != null)
+            {
                 GenerateRandomItem(item, killer, Math.Max(100, GetDifficultyFor(creature)), LootPack.GetLuckChance(GetLuckForKiller(creature)), ReforgedPrefix.None, ReforgedSuffix.None);
+            }
 
             return item;
         }
@@ -1949,16 +2303,24 @@ namespace Server.Items
                     budget = Math.Max(RandomItemGenerator.MinAdjustedBudget, budget);
 
                     if (!(item is BaseWeapon) && prefix == ReforgedPrefix.Vampiric)
+                    {
                         prefix = ReforgedPrefix.None;
+                    }
 
                     if (!(item is BaseWeapon) && suffix == ReforgedSuffix.Vampire)
+                    {
                         suffix = ReforgedSuffix.None;
+                    }
 
                     if (forcedprefix == ReforgedPrefix.None && budget >= Utility.Random(2700) && suffix < ReforgedSuffix.Minax)
+                    {
                         prefix = ChooseRandomPrefix(item, budget);
+                    }
 
                     if (forcedsuffix == ReforgedSuffix.None && budget >= Utility.Random(2700))
+                    {
                         suffix = ChooseRandomSuffix(item, budget, prefix);
+                    }
 
                     if (!IsPowerful(budget))
                     {
@@ -1979,13 +2341,26 @@ namespace Server.Items
                         perclow = Convert.ToInt32(Utility.RandomMinMax(50, 70) * perc);
                     }
 
-                    if (perchigh > 100) perchigh = 100;
-                    if (perclow < 10) perclow = 10;
-                    if (perclow > 80) perclow = 80;
+                    if (perchigh > 100)
+                    {
+                        perchigh = 100;
+                    }
+
+                    if (perclow < 10)
+                    {
+                        perclow = 10;
+                    }
+
+                    if (perclow > 80)
+                    {
+                        perclow = 80;
+                    }
                 }
 
                 if (mods < RandomItemGenerator.MaxProps - 1 && LootPack.CheckLuck(luckchance))
+                {
                     mods++;
+                }
 
                 var props = new List<int>(ItemPropertyInfo.LookupLootTable(item));
                 bool powerful = IsPowerful(budget);
@@ -2006,7 +2381,9 @@ namespace Server.Items
                         ApplyRandomProperty(item, props, perclow, perchigh, ref addonbudget, luckchance, false, powerful);
 
                         if (addonbudget <= 0 || mods + i + 1 >= RandomItemGenerator.MaxProps)
+                        {
                             break;
+                        }
                     }
                 }
 
@@ -2175,13 +2552,19 @@ namespace Server.Items
         private static int GetDivisor(int basebudget)
         {
             if (basebudget < 400)
+            {
                 return 5;
+            }
 
             if (basebudget < 550)
+            {
                 return 4;
+            }
 
             if (basebudget < 650)
+            {
                 return 3;
+            }
 
             return 2;
         }
@@ -2351,7 +2734,9 @@ namespace Server.Items
             NegativeAttributes neg = GetNegativeAttributes(item);
 
             if (attrs == null || neg == null)
+            {
                 return 0;
+            }
 
             int max = Imbuing.GetMaxWeight(item);
             ItemPower power = GetItemPower(item, Imbuing.GetTotalWeight(item, -1, false, false), Imbuing.GetTotalMods(item), false);
@@ -2360,9 +2745,14 @@ namespace Server.Items
             if (item is BaseJewel && power >= ItemPower.MajorArtifact)
             {
                 if (chance > 0.25)
+                {
                     neg.Antique = 1;
+                }
                 else
+                {
                     item.LootType = LootType.Cursed;
+                }
+
                 return 100;
             }
 
@@ -2373,7 +2763,9 @@ namespace Server.Items
                 case ItemPower.Lesser: // lesser magic
                     {
                         if (0.95 >= chance)
+                        {
                             return 0;
+                        }
 
                         switch (Utility.Random(item is BaseJewel ? 3 : 5))
                         {
@@ -2389,7 +2781,9 @@ namespace Server.Items
                 case ItemPower.Greater:// greater magic
                     {
                         if (0.75 >= chance)
+                        {
                             return 0;
+                        }
 
                         chance = Utility.RandomDouble();
 
@@ -2416,9 +2810,13 @@ namespace Server.Items
                         if (0.85 > chance)
                         {
                             if (Utility.RandomBool() || item is BaseJewel)
+                            {
                                 neg.Antique = 1;
+                            }
                             else
+                            {
                                 neg.Brittle = 1;
+                            }
 
                             return 150;
                         }
@@ -2429,7 +2827,9 @@ namespace Server.Items
                 case ItemPower.Major: // major magic
                     {
                         if (0.50 >= chance)
+                        {
                             return 0;
+                        }
 
                         chance = Utility.RandomDouble();
 
@@ -2466,7 +2866,9 @@ namespace Server.Items
                 case ItemPower.GreaterArtifact: // greater arty
                     {
                         if (0.001 > chance)
+                        {
                             return 0;
+                        }
 
                         chance = Utility.RandomDouble();
 
@@ -2495,7 +2897,9 @@ namespace Server.Items
                 case ItemPower.LegendaryArtifact:
                     {
                         if (0.0001 > Utility.RandomDouble())
+                        {
                             return 0;
+                        }
 
                         if (0.85 > chance)
                         {
@@ -2535,28 +2939,44 @@ namespace Server.Items
             double arty = 1200 - preArty;
 
             if (totalMods == 0)
+            {
                 return ItemPower.None;
+            }
 
             if (weight < preArty * .4)
+            {
                 return reforged ? ItemPower.ReforgedMinor : ItemPower.Minor;
+            }
 
             if (weight < preArty * .6)
+            {
                 return reforged ? ItemPower.ReforgedLesser : ItemPower.Lesser;
+            }
 
             if (weight < preArty * .8)
+            {
                 return reforged ? ItemPower.ReforgedGreater : ItemPower.Greater;
+            }
 
             if (weight <= preArty)
+            {
                 return reforged ? ItemPower.ReforgedGreater : ItemPower.Major;
+            }
 
             if (weight < preArty + arty * .2)
+            {
                 return reforged ? ItemPower.ReforgedMajor : ItemPower.LesserArtifact;
+            }
 
             if (weight < preArty + arty * .4)
+            {
                 return reforged ? ItemPower.ReforgedMajor : ItemPower.GreaterArtifact;
+            }
 
             if (weight < preArty + arty * .7 || totalMods <= 5)
+            {
                 return ItemPower.MajorArtifact;
+            }
 
             return reforged ? ItemPower.ReforgedLegendary : ItemPower.LegendaryArtifact;
         }
@@ -2682,28 +3102,44 @@ namespace Server.Items
         public static AosAttributes GetAosAttributes(Item item)
         {
             if (item is BaseWeapon weapon)
+            {
                 return weapon.Attributes;
+            }
 
             if (item is BaseArmor armor)
+            {
                 return armor.Attributes;
+            }
 
             if (item is BaseClothing clothing)
+            {
                 return clothing.Attributes;
+            }
 
             if (item is BaseJewel jewel)
+            {
                 return jewel.Attributes;
+            }
 
             if (item is BaseTalisman talisman)
+            {
                 return talisman.Attributes;
+            }
 
             if (item is BaseQuiver quiver)
+            {
                 return quiver.Attributes;
+            }
 
             if (item is Spellbook book)
+            {
                 return book.Attributes;
+            }
 
             if (item is FishingPole pole)
+            {
                 return pole.Attributes;
+            }
 
             return null;
         }
@@ -2711,10 +3147,14 @@ namespace Server.Items
         public static AosArmorAttributes GetAosArmorAttributes(Item item)
         {
             if (item is BaseArmor armor)
+            {
                 return armor.ArmorAttributes;
+            }
 
             if (item is BaseClothing clothing)
+            {
                 return clothing.ClothingAttributes;
+            }
 
             return null;
         }
@@ -2722,22 +3162,29 @@ namespace Server.Items
         public static AosWeaponAttributes GetAosWeaponAttributes(Item item)
         {
             if (item is BaseWeapon weapon)
+            {
                 return weapon.WeaponAttributes;
+            }
 
             if (item is Glasses glasses)
+            {
                 return glasses.WeaponAttributes;
-
-            if (item is GargishGlasses gargishGlasses)
-                return gargishGlasses.WeaponAttributes;
+            }
 
             if (item is ElvenGlasses elvenGlasses)
+            {
                 return elvenGlasses.WeaponAttributes;
+            }
 
             if (item is BaseArmor armor)
+            {
                 return armor.WeaponAttributes;
+            }
 
             if(item is BaseClothing clothing)
+            {
                 return clothing.WeaponAttributes;
+            }
 
             return null;
         }
@@ -2745,7 +3192,9 @@ namespace Server.Items
         public static ExtendedWeaponAttributes GetExtendedWeaponAttributes(Item item)
         {
             if (item is BaseWeapon weapon)
+            {
                 return weapon.ExtendedWeaponAttributes;
+            }
 
             return null;
         }
@@ -2753,16 +3202,24 @@ namespace Server.Items
         public static AosElementAttributes GetElementalAttributes(Item item)
         {
             if (item is BaseClothing clothing)
+            {
                 return clothing.Resistances;
+            }
 
             if (item is BaseJewel jewel)
+            {
                 return jewel.Resistances;
+            }
 
             if (item is BaseWeapon weapon)
+            {
                 return weapon.AosElementDamages;
+            }
 
             if (item is BaseQuiver quiver)
+            {
                 return quiver.Resistances;
+            }
 
             return null;
         }
@@ -2770,16 +3227,24 @@ namespace Server.Items
         public static SAAbsorptionAttributes GetSAAbsorptionAttributes(Item item)
         {
             if (item is BaseArmor armor)
+            {
                 return armor.AbsorptionAttributes;
+            }
 
             if (item is BaseJewel jewel)
+            {
                 return jewel.AbsorptionAttributes;
+            }
 
             if (item is BaseWeapon weapon)
+            {
                 return weapon.AbsorptionAttributes;
+            }
 
             if (item is BaseClothing clothing)
+            {
                 return clothing.SAAbsorptionAttributes;
+            }
 
             return null;
         }
@@ -2787,25 +3252,39 @@ namespace Server.Items
         public static AosSkillBonuses GetAosSkillBonuses(Item item)
         {
             if (item is BaseJewel jewel)
+            {
                 return jewel.SkillBonuses;
+            }
 
             if (item is BaseWeapon weapon)
+            {
                 return weapon.SkillBonuses;
+            }
 
             if (item is BaseArmor armor)
+            {
                 return armor.SkillBonuses;
+            }
 
             if (item is BaseTalisman talisman)
+            {
                 return talisman.SkillBonuses;
+            }
 
             if (item is Spellbook book)
+            {
                 return book.SkillBonuses;
+            }
 
             if (item is BaseQuiver quiver)
+            {
                 return quiver.SkillBonuses;
+            }
 
             if (item is BaseClothing clothing)
+            {
                 return clothing.SkillBonuses;
+            }
 
             return null;
         }
@@ -2813,22 +3292,34 @@ namespace Server.Items
         public static NegativeAttributes GetNegativeAttributes(Item item)
         {
             if (item is BaseWeapon weapon)
+            {
                 return weapon.NegativeAttributes;
+            }
 
             if (item is BaseArmor armor)
+            {
                 return armor.NegativeAttributes;
+            }
 
             if (item is BaseClothing clothing)
+            {
                 return clothing.NegativeAttributes;
+            }
 
             if (item is BaseJewel jewel)
+            {
                 return jewel.NegativeAttributes;
+            }
 
             if (item is BaseTalisman talisman)
+            {
                 return talisman.NegativeAttributes;
+            }
 
             if (item is Spellbook book)
+            {
                 return book.NegativeAttributes;
+            }
 
             return null;
         }
@@ -3277,17 +3768,35 @@ namespace Server.Items
 
                     if (ItemPropertyInfo.HasEater(jewel) && attr != null)
                     {
-                        if (attr.EaterKinetic > 0) attr.EaterKinetic = 0;
+                        if (attr.EaterKinetic > 0)
+                        {
+                            attr.EaterKinetic = 0;
+                        }
 
-                        if (attr.EaterFire > 0) attr.EaterFire = 0;
+                        if (attr.EaterFire > 0)
+                        {
+                            attr.EaterFire = 0;
+                        }
 
-                        if (attr.EaterCold > 0) attr.EaterCold = 0;
+                        if (attr.EaterCold > 0)
+                        {
+                            attr.EaterCold = 0;
+                        }
 
-                        if (attr.EaterPoison > 0) attr.EaterPoison = 0;
+                        if (attr.EaterPoison > 0)
+                        {
+                            attr.EaterPoison = 0;
+                        }
 
-                        if (attr.EaterEnergy > 0) attr.EaterEnergy = 0;
+                        if (attr.EaterEnergy > 0)
+                        {
+                            attr.EaterEnergy = 0;
+                        }
 
-                        if (attr.EaterDamage > 0) attr.EaterDamage = 0;
+                        if (attr.EaterDamage > 0)
+                        {
+                            attr.EaterDamage = 0;
+                        }
 
                         eater++;
                     }
@@ -3331,15 +3840,25 @@ namespace Server.Items
                     if (tool.IsChildOf(from.Backpack))
                     {
                         if (item == m_Tool)
+                        {
                             from.SendLocalizedMessage(1010087); // You cannot use that!
+                        }
                         else if (item.HasSocket<Transmogrified>())
+                        {
                             from.SendLocalizedMessage(1159566); // You cannot reforge that transmogrified item.
+                        }
                         else if (tool.GetType() != m_Tool.GetType())
+                        {
                             from.SendLocalizedMessage(1152274); // You may only combine runic tools of the same type.
+                        }
                         else if (tool.Resource != m_Tool.Resource)
+                        {
                             from.SendLocalizedMessage(1152275); // You may only combine runic tools of the same material.
+                        }
                         else if (m_Tool.UsesRemaining + tool.UsesRemaining > 100)
+                        {
                             from.SendLocalizedMessage(1152276); // The combined charges of the two tools cannot exceed 100.
+                        }
                         else
                         {
                             m_Tool.UsesRemaining += tool.UsesRemaining;

@@ -84,14 +84,18 @@ namespace Server.Items
         public virtual bool CheckType(IEntity entity)
         {
             if (Engraves == null || entity == null)
+            {
                 return false;
+            }
 
             Type type = entity.GetType();
 
             for (int i = 0; i < Engraves.Length; i++)
             {
                 if (type == Engraves[i] || type.IsSubclassOf(Engraves[i]))
+                {
                     return true;
+                }
             }
 
             return false;
@@ -166,7 +170,9 @@ namespace Server.Items
             else if (entity is BaseCreature bc)
             {
                 if (bc.Controlled && bc.ControlMaster == m)
+                {
                     return true;
+                }
             }
 
             return false;
@@ -200,10 +206,14 @@ namespace Server.Items
                             guildmaster.Say(1076165); // Your weapon engraver should be good as new!
                         }
                         else
+                        {
                             guildmaster.Say(1076167); // You need a 100,000 gold and a blue diamond to recharge the weapon engraver.
+                        }
                     }
                     else
+                    {
                         guildmaster.Say(1076164); // I can only help with this if you are carrying an engraving tool that needs repair.
+                    }
                 }
                 else
                 {
@@ -219,10 +229,14 @@ namespace Server.Items
                                 from.SendLocalizedMessage(1076165); // Your engraver should be good as new!
                             }
                             else
+                            {
                                 from.SendLocalizedMessage(1076175); // You cracked the diamond attempting to fix the engraver.
+                            }
                         }
                         else
+                        {
                             from.SendLocalizedMessage(1076166); // You do not have a blue diamond needed to recharge the engraving tool.
+                        }
                     }
                 }
             }
@@ -233,7 +247,9 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
+            {
                 list.Add(VeteranRewardCliloc);
+            }
         }
 
         public override void AddUsesRemainingProperties(ObjectPropertyList list)
@@ -306,7 +322,9 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Tool == null || m_Tool.Deleted)
+                {
                     return;
+                }
 
                 if (targeted is IEntity entity)
                 {
@@ -318,13 +336,19 @@ namespace Server.Items
                             from.SendGump(new InternalGump(m_Tool, entity));
                         }
                         else
+                        {
                             from.SendLocalizedMessage(m_Tool.CannotEngraveMessage);
+                        }
                     }
                     else
+                    {
                         from.SendLocalizedMessage(m_Tool.CannotEngraveMessage);
+                    }
                 }
                 else
+                {
                     from.SendLocalizedMessage(m_Tool.CannotEngraveMessage);
+                }
             }
 
             protected override void OnTargetOutOfRange(Mobile from, object targeted)
@@ -368,10 +392,14 @@ namespace Server.Items
             public override void OnResponse(NetState state, RelayInfo info)
             {
                 if (Tool == null || Tool.Deleted)
+                {
                     return;
+                }
 
                 if (info.ButtonID == 1)
+                {
                     Tool.Recharge(state.Mobile, m_NPC);
+                }
             }
         }
 
@@ -408,7 +436,9 @@ namespace Server.Items
             public override void OnResponse(NetState state, RelayInfo info)
             {
                 if (m_Tool == null || m_Tool.Deleted || m_Target == null || m_Target.Deleted)
+                {
                     return;
+                }
 
                 Mobile from = state.Mobile;
 
@@ -447,9 +477,13 @@ namespace Server.Items
                                 string text;
 
                                 if (relay.Text.Length > 40)
+                                {
                                     text = relay.Text.Substring(0, 40);
+                                }
                                 else
+                                {
                                     text = relay.Text;
+                                }
 
                                 item.EngravedText = text;
 

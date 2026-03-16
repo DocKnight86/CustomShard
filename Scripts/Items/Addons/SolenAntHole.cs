@@ -30,7 +30,9 @@ namespace Server.Items
                 }
             }
             else
+            {
                 from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -78,7 +80,9 @@ namespace Server.Items
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
             if (!m.Player || !m.Alive || m.Hidden || !SpawnKilled())
+            {
                 return;
+            }
 
             if (Utility.InRange(Location, m.Location, 3) && !Utility.InRange(Location, oldLocation, 3))
             {
@@ -88,7 +92,9 @@ namespace Server.Items
                     SpawnAnt();
 
                 if (0.05 > Utility.RandomDouble())
+                {
                     SpawnAnt(new Beetle());
+                }
             }
         }
 
@@ -107,16 +113,24 @@ namespace Server.Items
             if (map == Map.Trammel)
             {
                 if (random < 2)
+                {
                     SpawnAnt(new RedSolenWorker());
+                }
                 else
+                {
                     SpawnAnt(new RedSolenWarrior());
+                }
             }
             else if (map == Map.Felucca)
             {
                 if (random < 2)
+                {
                     SpawnAnt(new BlackSolenWorker());
+                }
                 else
+                {
                     SpawnAnt(new BlackSolenWarrior());
+                }
             }
         }
 
@@ -129,7 +143,9 @@ namespace Server.Items
 
             for (int i = 0; i < 5; i++)
                 if (SpellHelper.FindValidSpawnLocation(map, ref p, false))
+                {
                     break;
+                }
 
             ant.MoveToWorld(p, map);
             ant.Home = Location;
@@ -141,7 +157,9 @@ namespace Server.Items
             for (int i = m_Spawned.Count - 1; i >= 0; i--)
             {
                 if (!m_Spawned[i].Alive || m_Spawned[i].Deleted)
+                {
                     m_Spawned.RemoveAt(i);
+                }
             }
 
             return m_Spawned.Count < 2;

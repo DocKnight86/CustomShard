@@ -43,7 +43,9 @@ namespace Server
             if (m != null)
             {
                 for (int i = 0; i < m_Queue.Count; ++i)
+                {
                     m.Invoke(m_Queue[i], null);
+                }
             }
 
             m_Queue.Clear();

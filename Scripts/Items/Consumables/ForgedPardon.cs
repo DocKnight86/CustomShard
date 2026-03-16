@@ -20,9 +20,13 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!IsChildOf(from.Backpack))
+            {
                 from.SendLocalizedMessage(1042004); //That must be in your pack for you to use it.
+            }
             else if (from.Kills <= 0)
+            {
                 from.SendMessage("You have no use for this item.");
+            }
             else if (CanUsePardon(from))
             {
                 from.Kills--;
@@ -110,7 +114,9 @@ namespace Server.Items
                 DateTime dt = reader.ReadDateTime();
 
                 if (mob != null && dt > DateTime.UtcNow)
+                {
                     m_Table.Add(mob, dt);
+                }
             }
         }
     }

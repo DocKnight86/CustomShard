@@ -14,7 +14,9 @@ namespace Server.Items
                 m_Pieces = value;
 
                 if (m_Pieces == 0)
+                {
                     Delete();
+                }
                 else if (oldAmt != m_Pieces)
                 {
                     OnChanged();
@@ -43,10 +45,14 @@ namespace Server.Items
                 Item piece = Piece;
 
                 if (piece == null)
+                {
                     return;
+                }
 
                 if (from.Backpack == null || !from.Backpack.TryDropItem(from, piece, false))
+                {
                     piece.MoveToWorld(from.Location, from.Map);
+                }
 
                 PiecesLeft--;
             }
@@ -103,7 +109,9 @@ namespace Server.Items
         public override void OnChanged()
         {
             if (PiecesLeft < Pieces && ItemID == 19469)
+            {
                 ItemID = 19458;
+            }
         }
 
         public SweetPotatoPie(Serial serial)

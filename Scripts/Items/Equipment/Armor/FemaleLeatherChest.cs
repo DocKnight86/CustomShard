@@ -1,5 +1,3 @@
-using Server.Engines.Craft;
-
 namespace Server.Items
 {
     [Flipable(0x1c06, 0x1c07)]

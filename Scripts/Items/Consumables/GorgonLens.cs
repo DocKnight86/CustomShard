@@ -40,7 +40,9 @@ namespace Server.Items
         public override void OnAfterDuped(Item newItem)
         {
             if (newItem is GorgonLense lense)
+            {
                 lense.LenseType = LenseType;
+            }
 
             base.OnAfterDuped(newItem);
         }
@@ -67,7 +69,9 @@ namespace Server.Items
                     if (armor.Layer == Layer.Neck || armor.Layer == Layer.Helm || armor is BaseShield || Race.Gargoyle.ValidateEquipment(armor) && armor.Layer == Layer.Earrings)
                     {
                         if (armor.GorgonLenseCharges > 0 && armor.GorgonLenseType != LenseType)
+                        {
                             from.SendGump(new GorgonLenseWarningGump(this, armor));
+                        }
                         else
                         {
                             armor.GorgonLenseCharges += Utility.RandomMinMax(28, 40);
@@ -77,14 +81,18 @@ namespace Server.Items
                         }
                     }
                     else
+                    {
                         from.SendLocalizedMessage(1112594); //You cannot place gorgon lenses on this.
+                    }
                 }
                 else if (item is BaseJewel j)
                 {
                     if (j.Layer == Layer.Neck || j.Layer == Layer.Earrings)
                     {
                         if (j.GorgonLenseCharges > 0 && j.GorgonLenseType != LenseType)
+                        {
                             from.SendGump(new GorgonLenseWarningGump(this, j));
+                        }
                         else
                         {
                             j.GorgonLenseCharges += Utility.RandomMinMax(28, 40);
@@ -94,14 +102,18 @@ namespace Server.Items
                         }
                     }
                     else
+                    {
                         from.SendLocalizedMessage(1112594); //You cannot place gorgon lenses on this.
+                    }
                 }
                 else if (item is BaseClothing c)
                 {
                     if (c.Layer == Layer.Neck || c.Layer == Layer.Helm)
                     {
                         if (c.GorgonLenseCharges > 0 && c.GorgonLenseType != LenseType)
+                        {
                             from.SendGump(new GorgonLenseWarningGump(this, c));
+                        }
                         else
                         {
                             c.GorgonLenseCharges += Utility.RandomMinMax(28, 40);
@@ -111,13 +123,19 @@ namespace Server.Items
                         }
                     }
                     else
+                    {
                         from.SendLocalizedMessage(1112594); //You cannot place gorgon lenses on this.
+                    }
                 }
                 else
+                {
                     from.SendLocalizedMessage(1112594); //You cannot place gorgon lenses on this.
+                }
             }
             else
+            {
                 from.SendLocalizedMessage(1112594); //You cannot place gorgon lenses on this.
+            }
         }
 
         private class InternalTarget : Targeting.Target
@@ -157,11 +175,17 @@ namespace Server.Items
             m.Items.ForEach(i =>
             {
                 if (i is BaseArmor armor)
+                {
                     charges += armor.GorgonLenseCharges;
+                }
                 else if (i is BaseJewel jewel)
+                {
                     charges += jewel.GorgonLenseCharges;
+                }
                 else if (i is BaseClothing clothing)
+                {
                     charges += clothing.GorgonLenseCharges;
+                }
             });
 
             return charges;
@@ -187,10 +211,14 @@ namespace Server.Items
             int version = reader.ReadInt();
 
             if (version >= 2)
+            {
                 m_LenseType = (LenseType)reader.ReadInt();
+            }
 
             if (version == 0)
+            {
                 reader.ReadInt();
+            }
         }
     }
 
@@ -239,7 +267,9 @@ namespace Server.Items
                 }
             }
             else
+            {
                 from.SendLocalizedMessage(1112594); //You cannot place gorgon lenses on this.
+            }
         }
     }
 }

@@ -105,9 +105,9 @@ namespace Server.Mobiles
 
             HashSet<Mobile> set = new HashSet<Mobile>();
 
-            for (var index = 0; index < rights.Count; index++)
+            for (int index = 0; index < rights.Count; index++)
             {
-                var x = rights[index];
+                DamageStore x = rights[index];
 
                 Mobile m = x.m_Mobile;
 

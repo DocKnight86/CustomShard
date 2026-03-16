@@ -2,7 +2,6 @@ using Server.Engines.Craft;
 
 namespace Server.Items
 {
-    [Alterable(typeof(DefBlacksmithy), typeof(DualShortAxes))]
     [Flipable(0x13FB, 0x13FA)]
     public class LargeBattleAxe : BaseAxe
     {

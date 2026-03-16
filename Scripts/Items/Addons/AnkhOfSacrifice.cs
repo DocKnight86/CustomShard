@@ -41,9 +41,13 @@ namespace Server.Items
                 TimeSpan delay = m.AnkhNextUse - DateTime.UtcNow;
 
                 if (delay.TotalMinutes > 0)
+                {
                     m.SendLocalizedMessage(1079265, Math.Round(delay.TotalMinutes).ToString()); // You must wait ~1_minutes~ minutes before you can use this item.
+                }
                 else
+                {
                     m.SendLocalizedMessage(1079263, Math.Round(delay.TotalSeconds).ToString()); // You must wait ~1_seconds~ seconds before you can use this item.		
+                }
             }
             else
             {
@@ -57,7 +61,9 @@ namespace Server.Items
             base.GetContextMenuEntries(from, list);
 
             if (from is PlayerMobile mobile)
+            {
                 list.Add(new LockKarmaEntry(mobile, Addon as AnkhOfSacrificeAddon));
+            }
 
             list.Add(new ResurrectEntry(from, Addon as AnkhOfSacrificeAddon));
         }
@@ -90,7 +96,9 @@ namespace Server.Items
             public override void OnClick()
             {
                 if (m_Ankh == null || m_Ankh.Deleted)
+                {
                     return;
+                }
 
                 Resurrect(m_Mobile as PlayerMobile, m_Ankh);
             }
@@ -110,15 +118,21 @@ namespace Server.Items
             public override void OnClick()
             {
                 if (!m_Mobile.InRange(m_Ankh.GetWorldLocation(), 2))
+                {
                     m_Mobile.SendLocalizedMessage(500446); // That is too far away.
+                }
                 else
                 {
                     m_Mobile.KarmaLocked = !m_Mobile.KarmaLocked;
 
                     if (m_Mobile.KarmaLocked)
+                    {
                         m_Mobile.SendLocalizedMessage(1060192); // Your karma has been locked. Your karma can no longer be raised.
+                    }
                     else
+                    {
                         m_Mobile.SendLocalizedMessage(1060191); // Your karma has been unlocked. Your karma can be raised again.
+                    }
                 }
             }
         }
@@ -213,7 +227,9 @@ namespace Server.Items
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
             if (!m.Alive && Utility.InRange(Location, m.Location, 1) && !Utility.InRange(Location, oldLocation, 1))
+            {
                 AnkhOfSacrificeComponent.Resurrect(m as PlayerMobile, this);
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -284,7 +300,9 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (m_IsRewardItem && !RewardSystem.CheckIsUsableBy(from, this, null))
+            {
                 return;
+            }
 
             if (IsChildOf(from.Backpack))
             {
@@ -292,7 +310,9 @@ namespace Server.Items
                 from.SendGump(new RewardOptionGump(this));
             }
             else
+            {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.   
+            }
         }
 
         public override void GetProperties(ObjectPropertyList list)
@@ -300,7 +320,9 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
+            {
                 list.Add(1080457); // 10th Year Veteran Reward
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -338,7 +360,9 @@ namespace Server.Items
             }
 
             if (!Deleted)
+            {
                 base.OnDoubleClick(from);
+            }
         }
     }
 }

@@ -539,7 +539,6 @@ namespace Server.Misc
             bag.DropItem(new DjinnisRing());
             bag.DropItem(new EmbroideredOakLeafCloak());
             bag.DropItem(new GladiatorsCollar());
-            bag.DropItem(new LieutenantOfTheBritannianRoyalGuard());
             bag.DropItem(new CaptainJohnsHat());
             bag.DropItem(new BraveKnightOfTheBritannia());
             bag.DropItem(new Pacify());
@@ -559,12 +558,8 @@ namespace Server.Misc
                 Name = "Doom Upgrade Arties"
             };
 
-            bag.DropItem(new BritchesOfWarding());
             bag.DropItem(new BowOfTheInfiniteSwarm());
-            bag.DropItem(new GlovesOfFeudalGrip());
             bag.DropItem(new Glenda());
-            bag.DropItem(new CuffsOfTheArchmage());
-            bag.DropItem(new TheScholarsHalo());
             bag.DropItem(new TheDeceiver());
             bag.DropItem(new BraceletOfPrimalConsumption());
 
@@ -772,7 +767,6 @@ namespace Server.Misc
                 Name = "Magery Items"
             };
 
-            PlaceItemIn(cont, 78, 88, new CrimsonCincture() { Hue = 232 });
             PlaceItemIn(cont, 102, 90, new CrystallineRing());
 
             var brac = new GoldBracelet

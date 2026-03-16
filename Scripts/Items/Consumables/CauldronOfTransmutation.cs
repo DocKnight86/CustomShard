@@ -63,9 +63,13 @@ namespace Server.Items
         public void CheckDecay()
         {
             if (Expires < DateTime.UtcNow)
+            {
                 Decay();
+            }
             else
+            {
                 InvalidateProperties();
+            }
         }
 
         public void Decay()
@@ -75,9 +79,13 @@ namespace Server.Items
                 Mobile parent = mobile;
 
                 if (Name == null)
+                {
                     parent.SendLocalizedMessage(1072515, "#" + LabelNumber); // The ~1_name~ expired...
+                }
                 else
+                {
                     parent.SendLocalizedMessage(1072515, Name); // The ~1_name~ expired...
+                }
 
                 Effects.SendLocationParticles(EffectItem.Create(parent.Location, parent.Map, EffectItem.DefaultDuration), 0x3728, 8, 20, 5042);
                 Effects.PlaySound(parent.Location, parent.Map, 0x201);
@@ -123,9 +131,13 @@ namespace Server.Items
                 if (res == Resource)
                 {
                     if (dropped.Amount < 3)
+                    {
                         from.SendLocalizedMessage(1152634); // There is not enough to transmute
+                    }
                     else if (Charges <= 0)
+                    {
                         from.SendLocalizedMessage(1152635); // The cauldron's magic is exhausted
+                    }
                     else
                     {
                         CraftResourceInfo info = CraftResources.GetInfo(Resource + 1);
@@ -140,9 +152,13 @@ namespace Server.Items
                             int newAmount = toDrop / 3;
 
                             if (toDrop < dropped.Amount)
+                            {
                                 dropped.Amount -= toDrop;
+                            }
                             else
+                            {
                                 dropped.Delete();
+                            }
 
                             Item item = Loot.Construct(info.ResourceTypes[0]);
 
@@ -162,13 +178,17 @@ namespace Server.Items
                             }
                         }
                         else
+                        {
                             from.SendLocalizedMessage(1152633); // The cauldron cannot transmute that
+                        }
                     }
                 }
 
             }
             else
+            {
                 from.SendLocalizedMessage(1152632); // That is not yours!
+            }
 
             return false;
         }
@@ -209,9 +229,13 @@ namespace Server.Items
             public override void AddNameProperty(ObjectPropertyList list)
             {
                 if (Addon != null && Addon.Resource != CraftResource.None)
+                {
                     list.Add(1152600, $"#{CraftResources.GetLocalizationNumber(Addon.Resource)}"); // ~1_RES~ Cauldron of Transmutation
+                }
                 else
+                {
                     base.AddNameProperty(list);
+                }
             }
 
             public override void GetProperties(ObjectPropertyList list)
@@ -219,11 +243,15 @@ namespace Server.Items
                 base.GetProperties(list);
 
                 if (Addon == null || !(Addon is CauldronOfTransmutation) || Addon.Resource == CraftResource.None)
+                {
                     return;
+                }
 
                 int left = 0;
                 if (DateTime.UtcNow < ((CauldronOfTransmutation)Addon).Expires)
+                {
                     left = (int)(((CauldronOfTransmutation)Addon).Expires - DateTime.UtcNow).TotalSeconds;
+                }
 
                 list.Add(1072517, left.ToString()); // Lifespan: ~1_val~ seconds
 
@@ -275,9 +303,13 @@ namespace Server.Items
             Expires = reader.ReadDateTime();
 
             if (Expires < DateTime.UtcNow)
+            {
                 Decay();
+            }
             else
+            {
                 BeginTimer();
+            }
         }
     }
 
@@ -304,9 +336,13 @@ namespace Server.Items
         public void CheckDecay()
         {
             if (Expires < DateTime.UtcNow)
+            {
                 Decay();
+            }
             else
+            {
                 InvalidateProperties();
+            }
         }
 
         public void Decay()
@@ -316,9 +352,13 @@ namespace Server.Items
                 Mobile parent = mobile;
 
                 if (Name == null)
+                {
                     parent.SendLocalizedMessage(1072515, "#" + LabelNumber); // The ~1_name~ expired...
+                }
                 else
+                {
                     parent.SendLocalizedMessage(1072515, Name); // The ~1_name~ expired...
+                }
 
                 Effects.SendLocationParticles(EffectItem.Create(parent.Location, parent.Map, EffectItem.DefaultDuration), 0x3728, 8, 20, 5042);
                 Effects.PlaySound(parent.Location, parent.Map, 0x201);
@@ -354,7 +394,9 @@ namespace Server.Items
 
             int left = 0;
             if (DateTime.UtcNow < Expires)
+            {
                 left = (int)(Expires - DateTime.UtcNow).TotalSeconds;
+            }
 
             list.Add(1072517, left.ToString()); // Lifespan: ~1_val~ seconds
             list.Add(1152628); // cannot re-deed
@@ -382,9 +424,13 @@ namespace Server.Items
             Expires = reader.ReadDateTime();
 
             if (Expires < DateTime.UtcNow)
+            {
                 Decay();
+            }
             else
+            {
                 m_Timer = Timer.DelayCall(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10), CheckDecay);
+            }
         }
     }
 }

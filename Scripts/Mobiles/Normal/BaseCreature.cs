@@ -9,7 +9,6 @@ using Server.Multis;
 using Server.Network;
 using Server.Prompts;
 using Server.Regions;
-using Server.Services.Virtues;
 using Server.SkillHandlers;
 using Server.Spells;
 using Server.Spells.Bushido;

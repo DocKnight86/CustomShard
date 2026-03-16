@@ -66,9 +66,6 @@ namespace Server.Mobiles
                 if (Utility.RandomDouble() < 0.10)
                     c.DropItem(new HumanFeyLeggings());
 
-                if (Utility.RandomDouble() < 0.025)
-                    c.DropItem(new CrimsonCincture());
-
                 if (0.05 > Utility.RandomDouble())
                 {
                     switch (Utility.Random(32))
