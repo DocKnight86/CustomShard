@@ -15,8 +15,7 @@ namespace Server.Mobiles
 
         private static readonly Type[] m_Artifact =
         {
-            typeof(NightEyes),
-            typeof(Tangle1)
+            typeof(NightEyes)
         };
 
         [Constructable]
@@ -119,19 +118,9 @@ namespace Server.Mobiles
                 m_Spawner.OnNavreyKilled();
             }
 
-            if (Utility.RandomBool())
-            {
-                c.AddItem(new UntranslatedAncientTome());
-            }
-
             if (0.1 >= Utility.RandomDouble())
             {
                 c.AddItem(ScrollOfTranscendence.CreateRandom(30, 30));
-            }
-
-            if (0.1 >= Utility.RandomDouble())
-            {
-                c.AddItem(new TatteredAncientScroll());
             }
 
             if (Utility.RandomDouble() < 0.10)

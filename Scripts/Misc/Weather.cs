@@ -86,7 +86,9 @@ namespace Server.Misc
             */
 
             for (int i = 0; i < 15; ++i)
+            {
                 AddDynamicWeather(+15, 100, 5, 8, 400, 400, new Rectangle2D(0, 0, 5120, 4096));
+            }
         }
 
         public static List<Weather> GetWeatherList(Map facet)
@@ -145,7 +147,9 @@ namespace Server.Misc
         public static void AddWeather(int temperature, int chanceOfPercipitation, int chanceOfExtremeTemperature, params Rectangle2D[] area)
         {
             for (int i = 0; i < m_Facets.Length; ++i)
+            {
                 new Weather(m_Facets[i], area, temperature, chanceOfPercipitation, chanceOfExtremeTemperature, TimeSpan.FromSeconds(30.0));
+            }
         }
 
         public static bool CheckWeatherConflict(Map facet, Weather exclude, Rectangle2D area)
@@ -383,7 +387,9 @@ namespace Server.Misc
                     bool contains = (m_Area.Length == 0);
 
                     for (int j = 0; !contains && j < m_Area.Length; ++j)
+                    {
                         contains = m_Area[j].Contains(mob.Location);
+                    }
 
                     if (!contains)
                     {
@@ -439,7 +445,9 @@ namespace Server.Misc
                 Weather w = list[i];
 
                 for (int j = 0; j < w.Area.Length; ++j)
+                {
                     AddWorldPin(w.Area[j].X + (w.Area[j].Width / 2), w.Area[j].Y + (w.Area[j].Height / 2));
+                }
             }
 
             base.OnDoubleClick(from);

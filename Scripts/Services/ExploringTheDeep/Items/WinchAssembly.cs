@@ -45,7 +45,7 @@ namespace Server.Items
             winch.MoveToWorld(new Point3D(6310, 1704, 0), Map.Trammel);
             hatch.MoveToWorld(new Point3D(6303, 1711, 10), Map.Trammel);
 
-            var tele = new ExitTeleporter(winch);
+            ExitTeleporter tele = new ExitTeleporter(winch);
             tele.MoveToWorld(new Point3D(6400, 1656, 0), Map.Trammel);
             WeakEntityCollection.Add(EntityName, tele);
 
@@ -63,7 +63,7 @@ namespace Server.Items
         {
             WeakEntityCollection.Delete(EntityName);
 
-            var ladder = Map.Trammel.FindItem<ShipLadder>(new Point3D(6400, 1656, 0));
+            ShipLadder ladder = Map.Trammel.FindItem<ShipLadder>(new Point3D(6400, 1656, 0));
 
             if (ladder != null)
             {
@@ -118,9 +118,9 @@ namespace Server.Items
 
             if (KeyValidation != null)
             {
-                for (var index = 0; index < KeyValidation.Count; index++)
+                for (int index = 0; index < KeyValidation.Count; index++)
                 {
-                    var x = KeyValidation[index];
+                    PeerlessKeyArray x = KeyValidation[index];
                     if (x.Key == typeof(FlyWheel) && x.Active)
                     {
                         flyWheel = true;
@@ -131,9 +131,9 @@ namespace Server.Items
 
             if (KeyValidation != null)
             {
-                for (var index = 0; index < KeyValidation.Count; index++)
+                for (int index = 0; index < KeyValidation.Count; index++)
                 {
-                    var x = KeyValidation[index];
+                    PeerlessKeyArray x = KeyValidation[index];
                     if (x.Key == typeof(WireSpool) && x.Active)
                     {
                         wireSpool = true;
@@ -144,9 +144,9 @@ namespace Server.Items
 
             if (KeyValidation != null)
             {
-                for (var index = 0; index < KeyValidation.Count; index++)
+                for (int index = 0; index < KeyValidation.Count; index++)
                 {
-                    var x = KeyValidation[index];
+                    PeerlessKeyArray x = KeyValidation[index];
                     if (x.Key == typeof(PowerCore) && x.Active)
                     {
                         powerCore = true;
@@ -157,9 +157,9 @@ namespace Server.Items
 
             if (KeyValidation != null)
             {
-                for (var index = 0; index < KeyValidation.Count; index++)
+                for (int index = 0; index < KeyValidation.Count; index++)
                 {
-                    var x = KeyValidation[index];
+                    PeerlessKeyArray x = KeyValidation[index];
                     if (x.Key == typeof(BearingAssembly) && x.Active)
                     {
                         bearingAssembly = true;
@@ -501,7 +501,7 @@ namespace Server.Items
         {
             if (Active && Addon is Hatch hatch)
             {
-                var winch = hatch.Winch;
+                WinchAssembly winch = hatch.Winch;
 
                 if (winch.CheckParty(m))
                 {

@@ -286,7 +286,9 @@ namespace Server.Misc
                 m_Keywords = value;
                 m_KeywordHash = new Dictionary<string, string>(m_Keywords.Length, StringComparer.OrdinalIgnoreCase);
                 for (int i = 0; i < m_Keywords.Length; ++i)
+                {
                     m_KeywordHash[m_Keywords[i]] = m_Keywords[i];
+                }
             }
         }
 
@@ -308,7 +310,9 @@ namespace Server.Misc
             string[] syllables = new string[syllableCount];
 
             for (int i = 0; i < syllableCount; ++i)
+            {
                 syllables[i] = GetRandomSyllable();
+            }
 
             return string.Concat(syllables);
         }

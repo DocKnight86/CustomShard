@@ -12,22 +12,30 @@ namespace Server.Items
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
             if (!Validate(attacker))
+            {
                 return;
+            }
 
             ClearCurrentAbility(attacker);
 
             Map map = attacker.Map;
 
             if (map == null)
+            {
                 return;
+            }
 
             BaseWeapon weapon = attacker.Weapon as BaseWeapon;
 
             if (weapon == null)
+            {
                 return;
+            }
 
             if (!CheckMana(attacker, true))
+            {
                 return;
+            }
 
             List<Mobile> targets = new List<Mobile>();
             IPooledEnumerable eable = defender.GetMobilesInRange(5);
@@ -37,10 +45,14 @@ namespace Server.Items
                 if (m != defender && m != attacker && SpellHelper.ValidIndirectTarget(attacker, m))
                 {
                     if (m == null || m.Deleted || m.Map != attacker.Map || !m.Alive || !attacker.CanSee(m) || !attacker.CanBeHarmful(m))
+                    {
                         continue;
+                    }
 
                     if (!attacker.InRange(m, weapon.MaxRange) || !attacker.InLOS(m))
+                    {
                         continue;
+                    }
 
                     targets.Add(m);
                 }

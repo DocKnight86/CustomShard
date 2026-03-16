@@ -93,7 +93,9 @@ namespace Server.Items
             }
 
             if (Map == Map.Internal && HeldBy == null)
+            {
                 return;
+            }
 
             switch (m_Ticks)
             {
@@ -192,7 +194,9 @@ namespace Server.Items
         private IEnumerable<Mobile> GetTargets()
         {
             if (Map == null)
+            {
                 yield break;
+            }
 
             IPooledEnumerable eable = Map.GetMobilesInRange(Location, 1);
 
@@ -210,12 +214,16 @@ namespace Server.Items
         private void OnFirebombTarget(Mobile from, object obj)
         {
             if (Deleted || Map == Map.Internal || !IsChildOf(from.Backpack))
+            {
                 return;
+            }
 
             IPoint3D p = obj as IPoint3D;
 
             if (p == null)
+            {
                 return;
+            }
 
             SpellHelper.GetSurfaceTop(ref p);
 
@@ -224,9 +232,13 @@ namespace Server.Items
             IEntity to;
 
             if (p is Mobile mobile)
+            {
                 to = mobile;
+            }
             else
+            {
                 to = new Entity(Serial.Zero, new Point3D(p), Map);
+            }
 
             Effects.SendMovingEffect(from, to, ItemID, 7, 0, false, false, Hue, 0);
 
@@ -237,7 +249,9 @@ namespace Server.Items
         private void FirebombReposition_OnTick(object state)
         {
             if (Deleted)
+            {
                 return;
+            }
 
             object[] states = (object[])state;
             IPoint3D p = (IPoint3D)states[0];
@@ -299,13 +313,17 @@ namespace Server.Items
             if (ItemID == 0x398C && m_LitBy == null || SpellHelper.ValidIndirectTarget(m_LitBy, m) && m_LitBy.CanBeHarmful(m, false))
             {
                 if (m_LitBy != null)
+                {
                     m_LitBy.DoHarmful(m);
+                }
 
                 AOS.Damage(m, m_LitBy, 2, 0, 100, 0, 0, 0);
                 m.PlaySound(0x208);
 
                 if (!m_Burning.Contains(m))
+                {
                     m_Burning.Add(m);
+                }
             }
 
             return true;
@@ -333,13 +351,17 @@ namespace Server.Items
                 if (victim.Location == Location && victim.Map == Map && (m_LitBy == null || SpellHelper.ValidIndirectTarget(m_LitBy, victim) && m_LitBy.CanBeHarmful(victim, false)))
                 {
                     if (m_LitBy != null)
+                    {
                         m_LitBy.DoHarmful(victim);
+                    }
 
                     AOS.Damage(victim, m_LitBy, Utility.Random(3) + 4, 0, 100, 0, 0, 0);
                     ++i;
                 }
                 else
+                {
                     m_Burning.RemoveAt(i);
+                }
             }
 
             if (DateTime.UtcNow >= m_Expire)

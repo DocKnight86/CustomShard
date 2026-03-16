@@ -19,7 +19,9 @@ namespace Server.Items
             BaseHouse house = BaseHouse.FindHouseAt(component);
 
             if (from.InRange(component.Location, 2) && (house == null || house.IsCoOwner(from)))
+            {
                 from.SendGump(new DistillationGump(from));
+            }
         }
 
         public DistilleryEastAddon(Serial serial)
@@ -88,7 +90,9 @@ namespace Server.Items
             BaseHouse house = BaseHouse.FindHouseAt(component);
 
             if (house == null || house.IsCoOwner(from))
+            {
                 from.SendGump(new DistillationGump(from));
+            }
         }
 
         public DistillerySouthAddon(Serial serial)

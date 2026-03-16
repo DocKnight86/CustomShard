@@ -26,7 +26,9 @@ namespace Server.Items
                 BaseGump.SendGump(new HairDyeConfirmGump(from as PlayerMobile, Hue, this));
             }
             else
+            {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
+            }
         }
 
         public override void Serialize(GenericWriter writer)

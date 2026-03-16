@@ -35,7 +35,9 @@ namespace Server.Items
             foreach (CrystalRechargeInfo info in Table)
             {
                 if (info.Type == type)
+                {
                     return info;
+                }
             }
 
             return null;
@@ -102,16 +104,22 @@ namespace Server.Items
             list.Add(1060741, Charges.ToString()); // charges: ~1_val~
 
             if (Receivers.Count > 0)
+            {
                 list.Add(1060746, Receivers.Count.ToString()); // links: ~1_val~
+            }
         }
 
         public override void OnSpeech(SpeechEventArgs e)
         {
             if (!Active || Receivers.Count == 0 || RootParent != null && !(RootParent is Mobile))
+            {
                 return;
+            }
 
             if (e.Type == MessageType.Emote)
+            {
                 return;
+            }
 
             Mobile from = e.Mobile;
             string speech = e.Speech;
@@ -176,7 +184,9 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (!m_Crystal.IsAccessibleTo(from))
+                {
                     return;
+                }
 
                 if (from.Map != m_Crystal.Map || !from.InRange(m_Crystal.GetWorldLocation(), 2))
                 {
@@ -329,7 +339,9 @@ namespace Server.Items
         public void TransmitMessage(Mobile from, string message)
         {
             if (!Active)
+            {
                 return;
+            }
 
             string text = $"{from.Name} says {message}";
 
@@ -386,7 +398,9 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (!m_Crystal.IsAccessibleTo(from))
+                {
                     return;
+                }
 
                 if (from.Map != m_Crystal.Map || !from.InRange(m_Crystal.GetWorldLocation(), 2))
                 {

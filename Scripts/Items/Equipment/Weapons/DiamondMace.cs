@@ -2,7 +2,6 @@ using Server.Engines.Craft;
 
 namespace Server.Items
 {
-    [Alterable(typeof(DefBlacksmithy), typeof(DiscMace))]
     [Flipable(0x2D24, 0x2D30)]
     public class DiamondMace : BaseBashing
     {

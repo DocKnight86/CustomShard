@@ -29,7 +29,9 @@ namespace Server.Items
             base.OnAfterDelete();
 
             if (Lighthouses.Contains(this))
+            {
                 Lighthouses.Remove(this);
+            }
         }
 
         public override AddonFitResult CouldFit(IPoint3D p, Map map, Mobile from, ref BaseHouse house)
@@ -65,7 +67,9 @@ namespace Server.Items
             foreach (IEntity entity in boat.GetEntitiesOnBoard())
             {
                 if (!(entity is Item) || entity == this || boat.IsComponentItem(entity) || entity is EffectItem || entity == boat.TillerMan)
+                {
                     continue;
+                }
 
                 Item item = entity as Item;
 
@@ -88,14 +92,18 @@ namespace Server.Items
                                 AddonComponent c = addon.Components[j];
 
                                 if (c.Hue != 0)
+                                {
                                     hue = c.Hue;
+                                }
                             }
                         }
 
                         if (deed != null)
                         {
                             if (retainDeedHue)
+                            {
                                 deed.Hue = hue;
+                            }
 
                             house.DropToMovingCrate(deed);
                         }
@@ -109,9 +117,13 @@ namespace Server.Items
                 Container cont;
 
                 if (boat is BaseGalleon galleon)
+                {
                     cont = galleon.GalleonHold;
+                }
                 else
+                {
                     cont = boat.Hold;
+                }
 
                 if (cont != null)
                 {
@@ -134,15 +146,21 @@ namespace Server.Items
             BaseDockedBoat model = boat.BoatItem;
 
             if (model == null || model.Deleted)
+            {
                 model = boat.DockedBoat;
+            }
 
             if (model == null)
+            {
                 return;
+            }
 
             model.BoatItem = boat;
 
             if (boat.IsClassicBoat && boat.Owner != null)
+            {
                 boat.RemoveKeys(boat.Owner);
+            }
 
             house.DropToMovingCrate(model);
 
@@ -162,7 +180,9 @@ namespace Server.Items
         public static LighthouseAddon GetLighthouse(Mobile m)
         {
             if (m == null)
+            {
                 return null;
+            }
 
             Account a = m.Account as Account;
 

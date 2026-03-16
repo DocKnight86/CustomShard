@@ -53,7 +53,9 @@ namespace Server.Items
         public void AddComponent(AddonComponent c, int x, int y, int z)
         {
             if (Deleted)
+            {
                 return;
+            }
 
             m_Components.Add(c);
 
@@ -113,7 +115,9 @@ namespace Server.Items
                         AddonComponent c = m_Components[i];
 
                         if (c.Hue != 0)
+                        {
                             hue = c.Hue;
+                        }
                     }
                 }
 
@@ -128,9 +132,13 @@ namespace Server.Items
                     if (!RetainComponentHue)
                     {
                         if (RetainDeedHue)
+                        {
                             deed.Hue = hue;
+                        }
                         else
+                        {
                             deed.Hue = 0;
+                        }
                     }
 
                     deed.IsReDeed = true;

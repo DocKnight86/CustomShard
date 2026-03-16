@@ -132,10 +132,14 @@ namespace Server.Misc
             m_Options = new ShardPollOption[old.Length - 1];
 
             for (int i = 0; i < index; ++i)
+            {
                 m_Options[i] = old[i];
+            }
 
             for (int i = index; i < m_Options.Length; ++i)
+            {
                 m_Options[i] = old[i + 1];
+            }
         }
 
         public void AddOption(ShardPollOption option)
@@ -144,7 +148,9 @@ namespace Server.Misc
             m_Options = new ShardPollOption[old.Length + 1];
 
             for (int i = 0; i < old.Length; ++i)
+            {
                 m_Options[i] = old[i];
+            }
 
             m_Options[old.Length] = option;
         }
@@ -180,7 +186,9 @@ namespace Server.Misc
             writer.Write(m_Options.Length);
 
             for (int i = 0; i < m_Options.Length; ++i)
+            {
                 m_Options[i].Serialize(writer);
+            }
         }
 
         public override void Deserialize(GenericReader reader)
@@ -201,7 +209,9 @@ namespace Server.Misc
                         m_Options = new ShardPollOption[reader.ReadInt()];
 
                         for (int i = 0; i < m_Options.Length; ++i)
+                        {
                             m_Options[i] = new ShardPollOption(reader);
+                        }
 
                         if (m_Active)
                         {
@@ -302,7 +312,9 @@ namespace Server.Misc
                         m_Voters = new IPAddress[reader.ReadInt()];
 
                         for (int i = 0; i < m_Voters.Length; ++i)
+                        {
                             m_Voters[i] = Utility.Intern(reader.ReadIPAddress());
+                        }
 
                         break;
                     }
@@ -354,7 +366,9 @@ namespace Server.Misc
             m_Voters = new IPAddress[old.Length + 1];
 
             for (int i = 0; i < old.Length; ++i)
+            {
                 m_Voters[i] = old[i];
+            }
 
             m_Voters[old.Length] = ns.Address;
         }
@@ -400,7 +414,9 @@ namespace Server.Misc
             writer.Write(m_Voters.Length);
 
             for (int i = 0; i < m_Voters.Length; ++i)
+            {
                 writer.Write(m_Voters[i]);
+            }
         }
     }
 

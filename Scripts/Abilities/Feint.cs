@@ -22,12 +22,16 @@ namespace Server.Items
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
             if (!Validate(attacker) || !CheckMana(attacker, true))
+            {
                 return;
+            }
 
             if (Registry.ContainsKey(attacker))
             {
                 if (m_Registry[attacker] != null)
+                {
                     m_Registry[attacker].Stop();
+                }
 
                 Registry.Remove(attacker);
             }
@@ -55,7 +59,9 @@ namespace Server.Items
             BuffInfo.AddBuff(attacker, new BuffInfo(BuffIcon.Feint, 1151308, 1151307, TimeSpan.FromSeconds(6), attacker, args));
 
             if (creature)
+            {
                 PetTrainingHelper.OnWeaponAbilityUsed((BaseCreature)attacker, SkillName.Bushido);
+            }
         }
 
         public class FeintTimer : Timer

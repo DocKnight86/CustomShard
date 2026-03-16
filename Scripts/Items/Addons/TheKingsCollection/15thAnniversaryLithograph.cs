@@ -83,7 +83,9 @@ namespace Server.Items
             _Direction = (DirectionType)choice;
 
             if (!Deleted)
+            {
                 base.OnDoubleClick(from);
+            }
         }
 
         public override BaseAddon Addon => new FifteenthAnniversaryLithographAddon(_Direction);

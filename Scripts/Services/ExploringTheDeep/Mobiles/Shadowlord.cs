@@ -21,9 +21,7 @@ namespace Server.Mobiles
 
         private readonly Type[] _ArtifactTypes =
         {
-            typeof(Abhorrence), typeof(Craven),
-            typeof(Equivocation), typeof(GargishEquivocation),
-            typeof(GargishPincer),      typeof(Pincer)
+            typeof(Abhorrence)
         };
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -119,9 +117,9 @@ namespace Server.Mobiles
         {
             reflect = false;
 
-            for (var index = 0; index < Wisps.Count; index++)
+            for (int index = 0; index < Wisps.Count; index++)
             {
-                var w = Wisps[index];
+                DarkWisp w = Wisps[index];
 
                 if (!w.Deleted && w.InRange(Location, 20))
                 {
@@ -138,7 +136,7 @@ namespace Server.Mobiles
                 return;
             }
 
-            var count = Altar == null ? 0 : Altar.Helpers.Count;
+            int count = Altar == null ? 0 : Altar.Helpers.Count;
 
             foreach (IDamageable target in SpellHelper.AcquireIndirectTargets(this, Location, Map, 20))
             {
@@ -183,7 +181,7 @@ namespace Server.Mobiles
         {
             List<DamageStore> rights = GetLootingRights();
 
-            for (var index = 0; index < rights.Count; index++)
+            for (int index = 0; index < rights.Count; index++)
             {
                 DamageStore ds = rights[index];
 

@@ -5,7 +5,6 @@ using Server.Misc;
 using Server.Mobiles;
 using Server.Multis;
 using Server.Regions;
-using Server.Services.Virtues;
 using Server.Spells.Fifth;
 using Server.Spells.Fourth;
 using Server.Spells.Necromancy;

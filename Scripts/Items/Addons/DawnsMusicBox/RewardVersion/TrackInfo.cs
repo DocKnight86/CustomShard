@@ -106,7 +106,9 @@ namespace Server.Items.MusicBox
             foreach (TrackInfo ti in m_Table)
             {
                 if (ti.Name == name)
+                {
                     return ti;
+                }
             }
 
             return m_Table[0];
@@ -121,7 +123,9 @@ namespace Server.Items.MusicBox
             foreach (TrackInfo ti in m_Table)
             {
                 if (ti.Label == label)
+                {
                     return ti;
+                }
             }
 
             return m_Table[0];
@@ -139,7 +143,9 @@ namespace Server.Items.MusicBox
             foreach (TrackInfo ti in m_Table)
             {
                 if (ti.Rarity == rarity)
+                {
                     list.Add(ti.Name);
+                }
             }
 
             int random = Utility.Random(list.Count);

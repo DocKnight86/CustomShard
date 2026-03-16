@@ -128,7 +128,9 @@ namespace Server.Items
                 from.SendGump(new InternalGump(this));
             }
             else
+            {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.
+            }
         }
 
         private void SendTarget(Mobile m)
@@ -182,7 +184,9 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (m_Deed == null || m_Deed.Deleted || info.ButtonID == 0)
+                {
                     return;
+                }
 
                 m_Deed.m_Size = (KoiPondSize)info.ButtonID;
                 m_Deed.SendTarget(sender.Mobile);

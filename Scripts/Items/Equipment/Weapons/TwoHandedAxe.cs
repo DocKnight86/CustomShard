@@ -2,7 +2,6 @@ using Server.Engines.Craft;
 
 namespace Server.Items
 {
-    [Alterable(typeof(DefBlacksmithy), typeof(DualShortAxes))]
     [Flipable(0x1443, 0x1442)]
     public class TwoHandedAxe : BaseAxe
     {

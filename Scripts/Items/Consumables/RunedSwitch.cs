@@ -25,7 +25,9 @@ namespace Server.Items
                 from.Target = new InternalTarget(this);
             }
             else
+            {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -52,7 +54,9 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object o)
             {
                 if (m_Item == null || m_Item.Deleted)
+                {
                     return;
+                }
 
                 if (o is BaseTalisman talisman)
                 {
@@ -64,24 +68,21 @@ namespace Server.Items
                         from.SendLocalizedMessage(1075100); // The item has been recharged.
                     }
                     else
+                    {
                         from.SendLocalizedMessage(1075099); // You cannot recharge that item until all of its current charges have been used.
+                    }
                 }
-                else if (o is HarvestersAxe || o is GargishHarvestersAxe)
+                else if (o is HarvestersAxe axe)
                 {
-                    if (o is HarvestersAxe axe)
-                    {
-                        axe.Charges = 1000;
-                    }
-                    else if (o is GargishHarvestersAxe)
-                    {
-                        ((GargishHarvestersAxe)o).Charges = 1000;
-                    }
+                    axe.Charges = 1000;
 
                     from.SendLocalizedMessage(1075100); // The item has been recharged.
                     m_Item.Delete();
                 }
                 else
+                {
                     from.SendLocalizedMessage(1046439); // That is not a valid target.
+                }
             }
         }
     }

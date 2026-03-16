@@ -128,13 +128,19 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (m_From == null || !m_From.Alive)
+                {
                     return;
+                }
 
                 if (m_Deed.Deleted)
+                {
                     return;
+                }
 
                 if (info.ButtonID < 1 || info.ButtonID > 10)
+                {
                     return;
+                }
 
                 int[][] RacialData = m_From.Race == Race.Human ? HumanArray : ElvenArray;
 

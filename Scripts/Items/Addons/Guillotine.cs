@@ -58,9 +58,13 @@ namespace Server.Items
             reader.ReadByte();
 
             if (ItemID == 4678 || ItemID == 4679)
+            {
                 ItemID = 4656;
+            }
             else if (ItemID == 4712 || ItemID == 4713)
+            {
                 ItemID = 4702;
+            }
         }
 
         private void Down1()
@@ -76,7 +80,9 @@ namespace Server.Items
             Map f = Map;
 
             if (f == null)
+            {
                 return;
+            }
 
             new Blood(4650).MoveToWorld(p, f);
 
@@ -91,7 +97,9 @@ namespace Server.Items
                     z = f.GetAverageZ(x, y);
 
                     if (!f.CanFit(x, y, z, 1, false, false, true))
+                    {
                         continue;
+                    }
                 }
 
                 new Blood().MoveToWorld(new Point3D(x, y, z), f);
@@ -101,9 +109,13 @@ namespace Server.Items
         private void BackUp()
         {
             if (ItemID == 4678 || ItemID == 4679)
+            {
                 ItemID = 4656;
+            }
             else if (ItemID == 4712 || ItemID == 4713)
+            {
                 ItemID = 4702;
+            }
         }
     }
 }

@@ -29,7 +29,9 @@ namespace Server.Items
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
             if (!Validate(attacker) || !CheckMana(attacker, true))
+            {
                 return;
+            }
 
             ClearCurrentAbility(attacker);
 
@@ -45,7 +47,9 @@ namespace Server.Items
             }
 
             if (attacker is BaseCreature bc)
+            {
                 PetTrainingHelper.OnWeaponAbilityUsed(bc, SkillName.Bushido);
+            }
 
             if (!immune)
             {

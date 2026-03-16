@@ -18,7 +18,7 @@ namespace Server.Engines.Craft
 
         private static readonly Type[] m_TailorClothNonColorables =
         {
-            typeof(DeerMask), typeof(BearMask), typeof(OrcMask), typeof(TribalMask), typeof(HornedTribalMask), typeof(CuffsOfTheArchmage)
+            typeof(DeerMask), typeof(BearMask), typeof(OrcMask), typeof(TribalMask), typeof(HornedTribalMask)
         };
 
         // singleton instance
@@ -199,21 +199,6 @@ namespace Server.Engines.Craft
             AddRes(index, typeof(Leather), 1044462, 5, 1044463);
             AddRes(index, typeof(VoidCore), 1113334, 5, 1044253);
             AddRecipe(index, (int)CraftRecipes.MagesHood);
-
-            index = AddCraft(typeof(CowlOfTheMaceAndShield), 1011375, 1159228, 120.0, 215.0, typeof(Cloth), 1044455, 5, 1044287);
-            AddRes(index, typeof(Leather), 1044462, 5, 1044463);
-            AddRes(index, typeof(MaceAndShieldGlasses), 1073381, 1, 1044253);
-            AddRes(index, typeof(VileTentacles), 1113333, 10, 1044253);
-            AddRecipe(index, (int)CraftRecipes.CowlOfTheMaceAndShield);
-            ForceExceptional(index);
-
-            index = AddCraft(typeof(MagesHoodOfScholarlyInsight), 1011375, 1159229, 120.0, 215.0, typeof(Cloth), 1044455, 5, 1044287);
-            AddRes(index, typeof(Leather), 1044462, 5, 1044463);
-            AddRes(index, typeof(TheScholarsHalo), 1157354, 1, 1044253);
-            AddRes(index, typeof(VoidCore), 1113334, 10, 1044253);
-            AddRecipe(index, (int)CraftRecipes.MagesHoodOfScholarlyInsight);
-            ForceExceptional(index);
-
             #endregion
 
             #region Shirts/Pants
@@ -266,10 +251,6 @@ namespace Server.Engines.Craft
             index = AddCraft(typeof(FemaleElvenRobe), 1111747, 1032660, 80.0, 105.0, typeof(Cloth), 1044455, 30, 1044287);
 
             index = AddCraft(typeof(WoodlandBelt), 1111747, 1032639, 80.0, 105.0, typeof(Cloth), 1044455, 10, 1044287);
-
-            index = AddCraft(typeof(GargishRobe), 1111747, 1095256, 53.9, 78.9, typeof(Cloth), 1044455, 16, 1044287);
-
-            index = AddCraft(typeof(GargishFancyRobe), 1111747, 1095258, 53.9, 78.9, typeof(Cloth), 1044455, 16, 1044287);
 
             index = AddCraft(typeof(RobeofRite), 1111747, 1153510, 101.5, 120.0, typeof(Leather), 1044462, 6, 1044253);
             AddRes(index, typeof(FireRuby), 1032695, 1, 1044253);
@@ -325,9 +306,6 @@ namespace Server.Engines.Craft
             AddRes(index, typeof(SpoolOfThread), 1073462, 2, 1073463);
             AddRes(index, typeof(Dyes), 1024009, 1, 1044253);
 
-            AddCraft(typeof(GargoyleHalfApron), 1015283, 1099568, 20.7, 45.7, typeof(Cloth), 1044455, 6, 1044287);
-            AddCraft(typeof(GargishSash), 1015283, 1115388, 4.1, 29.1, typeof(Cloth), 1044455, 4, 1044287);
-
             AddCraft(typeof(OilCloth), 1015283, 1041498, 74.6, 99.6, typeof(Cloth), 1044455, 1, 1044287);
             AddCraft(typeof(GozaMatEastDeed), 1015283, 1030404, 55.0, 80.0, typeof(Cloth), 1044455, 25, 1044287);
             AddCraft(typeof(GozaMatSouthDeed), 1015283, 1030405, 55.0, 80.0, typeof(Cloth), 1044455, 25, 1044287);
@@ -359,27 +337,6 @@ namespace Server.Engines.Craft
             AddRes(index, typeof(FeyWings), 1113332, 5, 1044253);
             AddRecipe(index, (int)CraftRecipes.ElegantCollar);
 
-            index = AddCraft(typeof(CrimsonMaceBelt), 1015283, 1159211, 120.0, 215.0, typeof(Cloth), 1044455, 5, 1044287);
-            AddRes(index, typeof(Leather), 1044462, 5, 1044463);
-            AddRes(index, typeof(CrimsonCincture), 1075043, 1, 1044253);
-            AddRes(index, typeof(Lodestone), 1113348, 10, 1044253);
-            AddRecipe(index, (int)CraftRecipes.CrimsonMaceBelt);
-            ForceExceptional(index);
-
-            index = AddCraft(typeof(CrimsonSwordBelt), 1015283, 1159212, 120.0, 215.0, typeof(Cloth), 1044455, 5, 1044287);
-            AddRes(index, typeof(Leather), 1044462, 5, 1044463);
-            AddRes(index, typeof(CrimsonCincture), 1075043, 1, 1044253);
-            AddRes(index, typeof(Lodestone), 1113348, 10, 1044253);
-            AddRecipe(index, (int)CraftRecipes.CrimsonSwordBelt);
-            ForceExceptional(index);
-
-            index = AddCraft(typeof(CrimsonDaggerBelt), 1015283, 1159213, 120.0, 215.0, typeof(Cloth), 1044455, 5, 1044287);
-            AddRes(index, typeof(Leather), 1044462, 5, 1044463);
-            AddRes(index, typeof(CrimsonCincture), 1075043, 1, 1044253);
-            AddRes(index, typeof(Lodestone), 1113348, 10, 1044253);
-            AddRecipe(index, (int)CraftRecipes.CrimsonDaggerBelt);
-            ForceExceptional(index);
-
             index = AddCraft(typeof(ElegantCollarOfFortune), 1015283, 1159225, 120.0, 215.0, typeof(Cloth), 1044455, 5, 1044287);
             AddRes(index, typeof(Leather), 1044462, 5, 1044463);
             AddRes(index, typeof(LeurociansMempoOfFortune), 1071460, 1, 1044253);
@@ -404,19 +361,12 @@ namespace Server.Engines.Craft
             AddCraft(typeof(Boots), 1015288, 1025899, 33.1, 58.1, typeof(Leather), 1044462, 8, 1044463);
             AddCraft(typeof(ThighBoots), 1015288, 1025906, 41.4, 66.4, typeof(Leather), 1044462, 10, 1044463);
 
-            AddCraft(typeof(LeatherTalons), 1015288, 1095728, 40.4, 65.4, typeof(Leather), 1044462, 6, 1044453);
-
             index = AddCraft(typeof(JesterShoes), 1015288, 1109617, 20.0, 35.0, typeof(Cloth), 1044455, 6, 1044287);
             AddRecipe(index, (int)CraftRecipes.JesterShoes);
 
             index = AddCraft(typeof(KrampusMinionBoots), 1015288, 1125637, 100.0, 500.0, typeof(Leather), 1044462, 6, 1044463);
             AddRes(index, typeof(Cloth), 1044455, 4, 1044287);
             AddRecipe(index, (int)CraftRecipes.KrampusMinionBoots);
-
-            index = AddCraft(typeof(KrampusMinionTalons), 1015288, 1125644, 100.0, 500.0, typeof(Leather), 1044462, 6, 1044463);
-            AddRes(index, typeof(Cloth), 1044455, 4, 1044287);
-            AddRecipe(index, (int)CraftRecipes.KrampusMinionTalons);
-
             #endregion
 
             #region Leather Armor
@@ -446,32 +396,6 @@ namespace Server.Engines.Craft
             AddCraft(typeof(LeafLegs), 1015293, 1032671, 75.0, 100.0, typeof(Leather), 1044462, 15, 1044463);
             AddCraft(typeof(LeafGorget), 1015293, 1032669, 65.0, 90.0, typeof(Leather), 1044462, 12, 1044463);
             AddCraft(typeof(LeafTonlet), 1015293, 1032672, 70.0, 95.0, typeof(Leather), 1044462, 12, 1044463);
-
-            AddCraft(typeof(GargishLeatherArms), 1015293, 1095327, 53.9, 78.9, typeof(Leather), 1044462, 8, 1044463);
-            AddCraft(typeof(GargishLeatherChest), 1015293, 1095329, 70.5, 95.5, typeof(Leather), 1044462, 8, 1044463);
-            AddCraft(typeof(GargishLeatherLegs), 1015293, 1095333, 66.3, 91.3, typeof(Leather), 1044462, 10, 1044463);
-            AddCraft(typeof(GargishLeatherKilt), 1015293, 1095331, 58.0, 83.0, typeof(Leather), 1044462, 6, 1044463);
-            AddCraft(typeof(GargishLeatherWingArmor), 1015293, 1096662, 65.0, 90.0, typeof(Leather), 1044462, 12, 1044463);
-            #endregion
-
-            #region Cloth Armor
-            index = AddCraft(typeof(GargishClothArmsArmor), 1111748, 1021027, 87.1, 137.1, typeof(Cloth), 1044455, 8, 1044287);
-
-            index = AddCraft(typeof(GargishClothChestArmor), 1111748, 1021029, 94.0, 144.0, typeof(Cloth), 1044455, 8, 1044287);
-
-            index = AddCraft(typeof(GargishClothLegsArmor), 1111748, 1021033, 91.2, 141.2, typeof(Cloth), 1044455, 10, 1044287);
-
-            index = AddCraft(typeof(GargishClothKiltArmor), 1111748, 1021031, 82.9, 132.9, typeof(Cloth), 1044455, 6, 1044287);
-
-            index = AddCraft(typeof(FemaleGargishClothArmsArmor), 1111748, 1021027, 87.1, 137.1, typeof(Cloth), 1044455, 8, 1044287);
-
-            index = AddCraft(typeof(FemaleGargishClothChestArmor), 1111748, 1021029, 94.0, 144.0, typeof(Cloth), 1044455, 8, 1044287);
-
-            index = AddCraft(typeof(FemaleGargishClothLegsArmor), 1111748, 1021033, 91.2, 141.2, typeof(Cloth), 1044455, 10, 1044287);
-
-            index = AddCraft(typeof(FemaleGargishClothKiltArmor), 1111748, 1021031, 82.9, 132.9, typeof(Cloth), 1044455, 6, 1044287);
-
-            index = AddCraft(typeof(GargishClothWingArmor), 1111748, 1115393, 65.0, 90.0, typeof(Cloth), 1044455, 12, 1044287);
             #endregion
 
             #region Studded Armor
@@ -530,13 +454,6 @@ namespace Server.Engines.Craft
 
             index = AddCraft(typeof(OrcHelm), 1049149, 1027947, 90.0, 115.0, typeof(Leather), 1044462, 6, 1044463);
             AddRes(index, typeof(Bone), 1049064, 4, 1049063);
-
-            index = AddCraft(typeof(CuffsOfTheArchmage), 1049149, 1157348, 120.0, 120.1, typeof(Cloth), 1044455, 8, 1044287);
-            AddRes(index, typeof(MidnightBracers), 1061093, 1, 1044253);
-            AddRes(index, typeof(BloodOfTheDarkFather), 1157343, 5, 1044253);
-            AddRes(index, typeof(DarkSapphire), 1032690, 4, 1044253);
-            ForceNonExceptional(index);
-            AddRecipe(index, (int)CraftRecipes.CuffsOfTheArchmage);
             #endregion
 
             // Set the overridable material
@@ -552,7 +469,6 @@ namespace Server.Engines.Craft
             MarkOption = true;
             Repair = true;
             CanEnhance = true;
-            CanAlter = true;
         } 
         #endregion
 

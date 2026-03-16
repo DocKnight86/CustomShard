@@ -92,12 +92,16 @@ namespace Server.Engines.VeteranRewards
         public bool CheckAccessible(Mobile from, Item item)
         {
             if (from.AccessLevel >= AccessLevel.GameMaster)
+            {
                 return true; // Staff can access anything
+            }
 
             BaseHouse house = BaseHouse.FindHouseAt(item);
 
             if (house == null)
+            {
                 return false;
+            }
 
             switch (Level)
             {
@@ -118,15 +122,25 @@ namespace Server.Engines.VeteranRewards
             double skill = m.Skills[SkillName.Tinkering].Value;
 
             if (skill >= 100.0)
+            {
                 scalar = 1.0;
+            }
             else if (skill >= 90.0)
+            {
                 scalar = 0.9;
+            }
             else if (skill >= 80.0)
+            {
                 scalar = 0.8;
+            }
             else if (skill >= 70.0)
+            {
                 scalar = 0.7;
+            }
             else
+            {
                 scalar = 0.6;
+            }
 
             return scalar;
         }
@@ -299,7 +313,9 @@ namespace Server.Engines.VeteranRewards
             base.GetProperties(list);
 
             if (m_IsRewardItem)
+            {
                 list.Add(1076224); // 8th Year Veteran Reward		
+            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -326,7 +342,9 @@ namespace Server.Engines.VeteranRewards
             _Direction = (DirectionType)choice;
 
             if (!Deleted)
+            {
                 base.OnDoubleClick(from);
+            }
         }
 
         public GadgetryTableAddonDeed(Serial serial)

@@ -110,7 +110,9 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (m_IsRewardItem && !RewardSystem.CheckIsUsableBy(from, this, new object[] { Type }))
+            {
                 return;
+            }
 
             base.OnDoubleClick(from);
         }
@@ -120,7 +122,9 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
+            {
                 list.Add(1076217); // 1st Year Veteran Reward
+            }
         }
 
         public override void Serialize(GenericWriter writer)

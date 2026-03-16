@@ -57,7 +57,9 @@ namespace Server.Items
         public void BeginSwing()
         {
             if (m_Timer != null)
+            {
                 m_Timer.Stop();
+            }
 
             m_Timer = new InternalTimer(this);
             m_Timer.Start();
@@ -68,7 +70,9 @@ namespace Server.Items
         public void EndSwing()
         {
             if (m_Timer != null)
+            {
                 m_Timer.Stop();
+            }
 
             m_Timer = null;
 
@@ -98,15 +102,25 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!from.InRange(GetWorldLocation(), 1))
+            {
                 SendLocalizedMessageTo(from, 501816); // You are too far away to do that.
+            }
             else if (Swinging)
+            {
                 SendLocalizedMessageTo(from, 501815); // You have to wait until it stops swinging.
+            }
             else if (from.Skills[SkillName.Stealing].Base >= m_MaxSkill)
+            {
                 SendLocalizedMessageTo(from, 501830); // Your ability to steal cannot improve any further by simply practicing on a dummy.
+            }
             else if (from.Mounted)
+            {
                 SendLocalizedMessageTo(from, 501829); // You can't practice on this while on a mount.
+            }
             else
+            {
                 Use(from);
+            }
         }
 
         public override void Serialize(GenericWriter writer)

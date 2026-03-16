@@ -27,14 +27,18 @@ namespace Server.Items
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
             if (!Validate(attacker))
+            {
                 return;
+            }
 
             ClearCurrentAbility(attacker);
 
             BaseWeapon weapon = attacker.Weapon as BaseWeapon;
 
             if (weapon == null)
+            {
                 return;
+            }
 
             Poison p = weapon.Poison;
 
@@ -45,15 +49,21 @@ namespace Server.Items
             }
 
             if (!CheckMana(attacker, true))
+            {
                 return;
+            }
 
             // Skill Masteries
             int noChargeChance = Spells.SkillMasteries.MasteryInfo.NonPoisonConsumeChance(attacker);
 
             if (noChargeChance == 0 || noChargeChance < Utility.Random(100))
+            {
                 --weapon.PoisonCharges;
+            }
             else
+            {
                 attacker.SendLocalizedMessage(1156095); // Your mastery of poisoning allows you to use your poison charge without consuming it.
+            }
 
             // Infectious strike special move now uses poisoning skill to help determine potency 
             int maxLevel = 0;
@@ -61,25 +71,36 @@ namespace Server.Items
             {
                 maxLevel = 10 + (attacker.Skills[SkillName.Poisoning].Fixed / 333);
                 if (maxLevel > 13)
+                {
                     maxLevel = 13;
+                }
             }
             else if (p == Poison.Parasitic)
             {
                 maxLevel = 14 + (attacker.Skills[SkillName.Poisoning].Fixed / 250);
                 if (maxLevel > 18)
+                {
                     maxLevel = 18;
+                }
             }
             else
             {
                 maxLevel = attacker.Skills[SkillName.Poisoning].Fixed / 200;
                 if (maxLevel > 5)
+                {
                     maxLevel = 5;
+                }
             }
 
             if (maxLevel < 0)
+            {
                 maxLevel = 0;
+            }
+
             if (p.Level > maxLevel) // If they don't have enough Poisoning Skill for the potion strength, lower it.
+            {
                 p = Poison.GetPoison(maxLevel);
+            }
 
             if ((attacker.Skills[SkillName.Poisoning].Value / 100.0) > Utility.RandomDouble())
             {

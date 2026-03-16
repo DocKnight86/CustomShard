@@ -98,7 +98,9 @@ namespace Server.Items
                 displayHue = SelectedHue != 0 ? SelectedHue : User.Hue ^ 0x8000;
 
                 if (elf)
+                {
                     displayHue--;
+                }
 
                 AddImage(240, 0, GetPaperdollImage(), displayHue);
 

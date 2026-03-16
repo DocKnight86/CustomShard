@@ -24,7 +24,9 @@ namespace Server.Items
         public override void OnComponentUsed(AddonComponent stew, Mobile from)
         {
             if (!from.InRange(GetWorldLocation(), 2))
+            {
                 from.SendMessage("You are too far away.");
+            }
             else
             {
                 {

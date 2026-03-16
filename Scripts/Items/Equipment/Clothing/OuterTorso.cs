@@ -1,6 +1,3 @@
-using Server.Engines.VeteranRewards;
-using System;
-
 namespace Server.Items
 {
     public abstract class BaseOuterTorso : BaseClothing

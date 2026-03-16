@@ -98,11 +98,11 @@ namespace Server.Regions
             {
                 int equipment = 0;
 
-                for (var index = 0; index < pm.Items.Count; index++)
+                for (int index = 0; index < pm.Items.Count; index++)
                 {
-                    var i = pm.Items[index];
+                    Item i = pm.Items[index];
 
-                    if ((i is CanvassRobe || i is BootsOfBallast || i is NictitatingLens || i is AquaPendant || i is GargishNictitatingLens) && i.Parent is Mobile mobile && mobile.FindItemOnLayer(i.Layer) == i)
+                    if ((i is CanvassRobe || i is BootsOfBallast || i is NictitatingLens || i is AquaPendant) && i.Parent is Mobile mobile && mobile.FindItemOnLayer(i.Layer) == i)
                     {
                         equipment++;
                     }
@@ -120,9 +120,9 @@ namespace Server.Regions
                     {
                         int count = 0;
 
-                        for (var index = 0; index < pm.AllFollowers.Count; index++)
+                        for (int index = 0; index < pm.AllFollowers.Count; index++)
                         {
-                            var x = pm.AllFollowers[index];
+                            Mobile x = pm.AllFollowers[index];
 
                             if (x is Paralithode)
                             {

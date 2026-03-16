@@ -52,9 +52,13 @@ namespace Server.Engines.Craft
                         DefBlacksmithy.CheckAnvilAndForge(from, 2, out anvil, out forge);
 
                         if (!anvil)
+                        {
                             num = 1044266; // You must be near an anvil
+                        }
                         else if (!forge)
+                        {
                             num = 1044265; // You must be near a forge.
+                        }
                     }
 
                     from.SendGump(new CraftGump(from, m_CraftSystem, m_Tool, num));
@@ -85,14 +89,20 @@ namespace Server.Engines.Craft
                     {
                         default:
                         case SmeltResult.Invalid:
+                        {
                             message = 1044272;
                             break; // You can't melt that down into ingots.
+                        }
                         case SmeltResult.NoSkill:
+                        {
                             message = 1044269;
                             break; // You have no idea how to work this metal.
+                        }
                         case SmeltResult.Success:
+                        {
                             message = isStoreBought ? 500418 : 1044270;
                             break; // You melt the item down into ingots.
+                        }
                     }
 
                     from.SendGump(new CraftGump(from, m_CraftSystem, m_Tool, message));
@@ -104,65 +114,95 @@ namespace Server.Engines.Craft
                 try
                 {
                     if (CraftResources.GetType(resource) != CraftResourceType.Metal)
+                    {
                         return SmeltResult.Invalid;
+                    }
 
                     CraftResourceInfo info = CraftResources.GetInfo(resource);
 
                     if (info == null || info.ResourceTypes.Length == 0)
+                    {
                         return SmeltResult.Invalid;
+                    }
 
                     CraftItem craftItem = m_CraftSystem.CraftItems.SearchFor(item.GetType());
 
                     if (craftItem == null || craftItem.Resources.Count == 0)
+                    {
                         return SmeltResult.Invalid;
+                    }
 
                     CraftRes craftResource = craftItem.Resources.GetAt(0);
 
                     if (craftResource.Amount < 2)
+                    {
                         return SmeltResult.Invalid; // Not enough metal to resmelt
+                    }
 
                     double difficulty = 0.0;
 
                     switch (resource)
                     {
                         case CraftResource.DullCopper:
+                        {
                             difficulty = 65.0;
                             break;
+                        }
                         case CraftResource.ShadowIron:
+                        {
                             difficulty = 70.0;
                             break;
+                        }
                         case CraftResource.Copper:
+                        {
                             difficulty = 75.0;
                             break;
+                        }
                         case CraftResource.Bronze:
+                        {
                             difficulty = 80.0;
                             break;
+                        }
                         case CraftResource.Gold:
+                        {
                             difficulty = 85.0;
                             break;
+                        }
                         case CraftResource.Agapite:
+                        {
                             difficulty = 90.0;
                             break;
+                        }
                         case CraftResource.Verite:
+                        {
                             difficulty = 95.0;
                             break;
+                        }
                         case CraftResource.Valorite:
+                        {
                             difficulty = 99.0;
                             break;
+                        }
                     }
 
                     double skill = Math.Max(from.Skills[SkillName.Mining].Value, from.Skills[SkillName.Blacksmith].Value);
 
                     if (difficulty > skill)
+                    {
                         return SmeltResult.NoSkill;
+                    }
 
                     Type resourceType = info.ResourceTypes[0];
                     Item ingot = (Item)Activator.CreateInstance(resourceType);
 
                     if (item is DragonBardingDeed || item is BaseArmor armor && armor.PlayerConstructed || item is BaseWeapon weapon && weapon.PlayerConstructed || item is BaseClothing clothing && clothing.PlayerConstructed)
+                    {
                         ingot.Amount = (int)(craftResource.Amount * .66);
+                    }
                     else
+                    {
                         ingot.Amount = 1;
+                    }
 
                     item.Delete();
                     from.AddToBackpack(ingot);

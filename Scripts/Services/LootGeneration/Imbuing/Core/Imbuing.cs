@@ -216,12 +216,12 @@ namespace Server.SkillHandlers
         private static readonly Type[] _SpecialImbuable =
         {
             typeof(ClockworkLeggings), typeof(OrcishKinMask), typeof(SavageMask),
-            typeof(VirtuososArmbands), typeof(VirtuososCap), typeof(VirtuososCollar), typeof(VirtuososEarpieces),
-            typeof(VirtuososKidGloves), typeof(VirtuososKilt), typeof(VirtuososNecklace), typeof(VirtuososTunic),
-            typeof(BestialArms), typeof(BestialEarrings), typeof(BestialGloves), typeof(BestialGorget), typeof(BestialHelm),
-            typeof(BestialKilt), typeof(BestialLegs), typeof(BestialNecklace), typeof(SkullGnarledStaff),
-            typeof(GargishSkullGnarledStaff), typeof(SkullLongsword), typeof(GargishSkullLongsword), typeof(JukaBow),
-            typeof(SlayerLongbow), typeof(JackOLanternHelm), typeof(BakeKitsuneHat), typeof(GargishOctopusNecklace)
+            typeof(VirtuososCap), typeof(VirtuososCollar), 
+            typeof(VirtuososKidGloves), typeof(VirtuososTunic),
+            typeof(BestialGloves), typeof(BestialGorget), typeof(BestialHelm),
+            typeof(BestialLegs), typeof(SkullGnarledStaff),
+            typeof(SkullLongsword), typeof(JukaBow),
+            typeof(SlayerLongbow), typeof(JackOLanternHelm), typeof(BakeKitsuneHat)
         };
 
         private static readonly Type[] _NonCraftables =
@@ -1832,7 +1832,7 @@ namespace Server.SkillHandlers
 
         private static readonly Type[] m_CannotImbue =
         {
-            typeof(GargishLeatherWingArmor), typeof(GargishClothWingArmor)
+            //typeof(GargishLeatherWingArmor), typeof(GargishClothWingArmor)
         };
 
         public static int GetValueForID(Item item, int id)

@@ -454,7 +454,9 @@ namespace Server
         public void Chain(Property prop)
         {
             for (int i = 0; i < prop.Chain.Length; ++i)
+            {
                 Call(prop.Chain[i].GetGetMethod());
+            }
         }
 
         public void Call(MethodInfo method)

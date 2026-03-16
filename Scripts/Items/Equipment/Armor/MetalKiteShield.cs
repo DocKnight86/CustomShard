@@ -1,5 +1,3 @@
-using Server.Engines.Craft;
-
 namespace Server.Items
 {
     public class MetalKiteShield : BaseShield, IDyable
@@ -27,7 +25,9 @@ namespace Server.Items
         public bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
+            {
                 return false;
+            }
 
             Hue = sender.DyedHue;
 

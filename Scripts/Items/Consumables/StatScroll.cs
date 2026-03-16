@@ -33,11 +33,13 @@ namespace Server.Items
                 int level = ((int)Value - (m_StatCap + 5)) / 5;
 
                 if (level >= 0 && level <= 4 && Value % 5 == 0)
+                {
                     return 1049458 + level; /* Wonderous Scroll (+5 Maximum Stats): OR
-                * Exalted Scroll (+10 Maximum Stats): OR
-                * Mythical Scroll (+15 Maximum Stats): OR
-                * Legendary Scroll (+20 Maximum Stats): OR
-                * Ultimate Scroll (+25 Maximum Stats): */
+                                             * Exalted Scroll (+10 Maximum Stats): OR
+                                             * Mythical Scroll (+15 Maximum Stats): OR
+                                             * Legendary Scroll (+20 Maximum Stats): OR
+                                             * Ultimate Scroll (+25 Maximum Stats): */
+                }
 
                 return 0;
             }
@@ -50,27 +52,37 @@ namespace Server.Items
             int level = ((int)Value - (m_StatCap + 5)) / 5;
 
             if (level >= 0 && level <= 4 && (int)Value % 5 == 0)
+            {
                 list.Add(1049463 + level, "#1049476");	/* a wonderous scroll of ~1_type~ (+5 Maximum Stats) OR
-            * an exalted scroll of ~1_type~ (+10 Maximum Stats) OR
-            * a mythical scroll of ~1_type~ (+15 Maximum Stats) OR
-            * a legendary scroll of ~1_type~ (+20 Maximum Stats) OR
-            * an ultimate scroll of ~1_type~ (+25 Maximum Stats) */
+                                                         * an exalted scroll of ~1_type~ (+10 Maximum Stats) OR
+                                                         * a mythical scroll of ~1_type~ (+15 Maximum Stats) OR
+                                                         * a legendary scroll of ~1_type~ (+20 Maximum Stats) OR
+                                                         * an ultimate scroll of ~1_type~ (+25 Maximum Stats) */
+            }
             else
+            {
                 list.Add("a scroll of power ({0}{1} Maximum Stats)", Value - m_StatCap >= 0 ? "+" : "", Value - m_StatCap);
+            }
         }
 
         public override bool CanUse(Mobile from)
         {
             if (!base.CanUse(from))
+            {
                 return false;
+            }
 
             int newValue = (int)Value;
 
             if (from is PlayerMobile mobile && mobile.HasStatReward)
+            {
                 newValue += 5;
+            }
 
             if (from is PlayerMobile playerMobile && playerMobile.HasValiantStatReward)
+            {
                 newValue += 5;
+            }
 
             if (from.StatCap >= newValue)
             {
@@ -84,7 +96,9 @@ namespace Server.Items
         public override void Use(Mobile from)
         {
             if (!CanUse(from))
+            {
                 return;
+            }
 
             from.SendLocalizedMessage(1049512); // You feel a surge of magic as the scroll enhances your powers!
 

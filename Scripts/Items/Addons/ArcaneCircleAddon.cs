@@ -36,7 +36,9 @@ namespace Server.Items
             int version = reader.ReadEncodedInt();
 
             if (version == 0)
+            {
                 ValidationQueue<ArcaneCircleAddon>.Add(this);
+            }
         }
 
         public void Validate()

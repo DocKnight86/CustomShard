@@ -39,7 +39,9 @@ namespace Server.Items
                 Effects.PlaySound(Location, Map, 0x3BE);
             }
             else
+            {
                 from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
+            }
         }
 
         public override void Serialize(GenericWriter writer)

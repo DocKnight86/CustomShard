@@ -68,9 +68,13 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (IsChildOf(from.Backpack) && Wrapped)
+            {
                 Unwrap(from);
+            }
             else
+            {
                 base.OnDoubleClick(from);
+            }
         }
 
         private void Unwrap(Mobile from)
@@ -93,7 +97,9 @@ namespace Server.Items
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
         {
             if (!_Wrapped)
+            {
                 base.GetContextMenuEntries(from, list);
+            }
         }
 
         public override int OnCraft(int quality, bool makersMark, Mobile from, CraftSystem craftSystem, Type typeRes, ITool tool, CraftItem craftItem, int resHue)

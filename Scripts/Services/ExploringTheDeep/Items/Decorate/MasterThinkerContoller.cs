@@ -144,9 +144,9 @@ namespace Server.Items
             {
                 int count = 0;
 
-                for (var index = 0; index < MasterThinkerContoller.Array.Count; index++)
+                for (int index = 0; index < MasterThinkerContoller.Array.Count; index++)
                 {
-                    var s = MasterThinkerContoller.Array[index];
+                    MasterThinkerContoller.MasterThinkerArray s = MasterThinkerContoller.Array[index];
 
                     if (s.Mobile == from)
                     {
@@ -187,9 +187,9 @@ namespace Server.Items
         {
             int count = 0;
 
-            for (var index = 0; index < MasterThinkerContoller.Array.Count; index++)
+            for (int index = 0; index < MasterThinkerContoller.Array.Count; index++)
             {
-                var s = MasterThinkerContoller.Array[index];
+                MasterThinkerContoller.MasterThinkerArray s = MasterThinkerContoller.Array[index];
 
                 if (s.Mobile == from && s.Pant && s.Book && s.Tunic)
                 {

@@ -22,7 +22,9 @@ namespace Server.Items
             DefenseMasteryInfo info = m_Table[targ] as DefenseMasteryInfo;
 
             if (info == null)
+            {
                 return false;
+            }
 
             damageMalus = info.m_DamageMalus;
             return true;
@@ -64,10 +66,14 @@ namespace Server.Items
             DefenseMasteryInfo info = (DefenseMasteryInfo)state;
 
             if (info.m_Mod != null)
+            {
                 info.m_From.RemoveResistanceMod(info.m_Mod);
+            }
 
             if (info.m_Timer != null)
+            {
                 info.m_Timer.Stop();
+            }
 
             // No message is sent to the player.
 

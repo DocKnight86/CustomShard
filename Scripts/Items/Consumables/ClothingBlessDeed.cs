@@ -14,7 +14,9 @@ namespace Server.Items
         protected override void OnTarget(Mobile from, object target) // Override the protected OnTarget() for our feature
         {
             if (m_Deed.Deleted || m_Deed.RootParent != from)
+            {
                 return;
+            }
 
             if (target is BaseClothing item)
             {
@@ -27,7 +29,7 @@ namespace Server.Items
                     }
                 }
 
-                if (item.LootType == LootType.Blessed || item.BlessedFor == from || Mobile.InsuranceEnabled && item.Insured) // Check if its already newbied (blessed)
+                if (item.LootType == LootType.Blessed || item.BlessedFor == from) // Check if its (blessed)
                 {
                     from.SendLocalizedMessage(1045113); // That item is already blessed
                 }

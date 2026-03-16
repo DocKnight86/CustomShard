@@ -38,9 +38,13 @@ namespace Server.Items
         public void CheckDecay()
         {
             if (Expires < DateTime.UtcNow)
+            {
                 Decay();
+            }
             else
+            {
                 InvalidateProperties();
+            }
         }
 
         public void Decay()
@@ -50,9 +54,13 @@ namespace Server.Items
                 Mobile parent = mobile;
 
                 if (Name == null)
+                {
                     parent.SendLocalizedMessage(1072515, "#" + LabelNumber); // The ~1_name~ expired...
+                }
                 else
+                {
                     parent.SendLocalizedMessage(1072515, Name); // The ~1_name~ expired...
+                }
 
                 Effects.SendLocationParticles(EffectItem.Create(parent.Location, parent.Map, EffectItem.DefaultDuration), 0x3728, 8, 20, 5042);
                 Effects.PlaySound(parent.Location, parent.Map, 0x201);
@@ -91,11 +99,15 @@ namespace Server.Items
                 base.GetProperties(list);
 
                 if (Addon == null || !(Addon is TemporaryForge))
+                {
                     return;
+                }
 
                 int left = 0;
                 if (DateTime.UtcNow < ((TemporaryForge)Addon).Expires)
+                {
                     left = (int)(((TemporaryForge)Addon).Expires - DateTime.UtcNow).TotalSeconds;
+                }
 
                 list.Add(1072517, left.ToString()); // Lifespan: ~1_val~ seconds
             }
@@ -141,9 +153,13 @@ namespace Server.Items
             Owner = reader.ReadMobile();
 
             if (Expires < DateTime.UtcNow)
+            {
                 Decay();
+            }
             else
+            {
                 m_Timer = Timer.DelayCall(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10), CheckDecay);
+            }
         }
     }
 
@@ -168,9 +184,13 @@ namespace Server.Items
         public void CheckDecay()
         {
             if (Expires < DateTime.UtcNow)
+            {
                 Decay();
+            }
             else
+            {
                 InvalidateProperties();
+            }
         }
 
         public void Decay()
@@ -180,9 +200,13 @@ namespace Server.Items
                 Mobile parent = mobile;
 
                 if (Name == null)
+                {
                     parent.SendLocalizedMessage(1072515, "#" + LabelNumber); // The ~1_name~ expired...
+                }
                 else
+                {
                     parent.SendLocalizedMessage(1072515, Name); // The ~1_name~ expired...
+                }
 
                 Effects.SendLocationParticles(EffectItem.Create(parent.Location, parent.Map, EffectItem.DefaultDuration), 0x3728, 8, 20, 5042);
                 Effects.PlaySound(parent.Location, parent.Map, 0x201);
@@ -218,7 +242,9 @@ namespace Server.Items
 
             int left = 0;
             if (DateTime.UtcNow < Expires)
+            {
                 left = (int)(Expires - DateTime.UtcNow).TotalSeconds;
+            }
 
             list.Add(1072517, left.ToString()); // Lifespan: ~1_val~ seconds
             list.Add(1152627); // no house required
@@ -230,13 +256,17 @@ namespace Server.Items
         {
             //TODO: Finish the ontaret stuff and clilocs.
             if (!IsChildOf(from.Backpack))
+            {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
+            }
             else
             {
                 BaseHouse house = BaseHouse.FindHouseAt(from);
 
                 if (house != null)
+                {
                     base.OnDoubleClick(from);
+                }
                 else
                 {
                     from.BeginTarget(10, true, Targeting.TargetFlags.None, (m, targeted) =>
@@ -247,17 +277,25 @@ namespace Server.Items
                             int dist = (int)from.GetDistanceToSqrt(p);
 
                             if (dist < 2 || dist > 5)
+                            {
                                 from.SendLocalizedMessage(1152736); // You must stand between 2 and 5 tiles away from the targeted location to attempt to build this.
+                            }
                             else if (!from.InLOS(p))
+                            {
                                 from.SendLocalizedMessage(500237); // Target cannot be seen.
+                            }
                             else if (!ValidateLocation(p, from.Map))
+                            {
                                 from.SendLocalizedMessage(1152735); // The targeted location has at least one impassable tile adjacent to the structure.
+                            }
                             else
                             {
                                 BaseHouse checkHouse = BaseHouse.FindHouseAt(from);
 
                                 if (checkHouse != null)
+                                {
                                     from.SendLocalizedMessage(500269); // You cannot build that there.
+                                }
                                 else
                                 {
                                     Spells.SpellHelper.GetSurfaceTop(ref point);
@@ -266,7 +304,9 @@ namespace Server.Items
                                     addon.MoveToWorld(new Point3D(point), m.Map);
 
                                     if (addon is TemporaryForge forge)
+                                    {
                                         forge.Owner = from;
+                                    }
 
                                     Delete();
                                 }
@@ -280,7 +320,9 @@ namespace Server.Items
         private bool ValidateLocation(Point3D p, Map map)
         {
             if (!TreasureMap.ValidateLocation(p.X, p.Y, map))
+            {
                 return false;
+            }
 
             for (int x = p.X - 1; x <= p.X + 1; x++)
             {
@@ -331,9 +373,13 @@ namespace Server.Items
             Expires = reader.ReadDateTime();
 
             if (Expires < DateTime.UtcNow)
+            {
                 Decay();
+            }
             else
+            {
                 m_Timer = Timer.DelayCall(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10), CheckDecay);
+            }
         }
     }
 }

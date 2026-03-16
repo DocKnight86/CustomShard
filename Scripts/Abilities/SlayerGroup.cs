@@ -604,7 +604,9 @@ namespace Server.Items
             int v = (int)name;
 
             if (v >= 0 && v < m_TotalEntries.Length)
+            {
                 return m_TotalEntries[v];
+            }
 
             return null;
         }
@@ -626,7 +628,9 @@ namespace Server.Items
                     int index = Utility.Random(1 + group.Entries.Length);
 
                     if (index == 0)
+                    {
                         return group.m_Super.Name;
+                    }
 
                     return group.Entries[index - 1].Name;
                 }
@@ -640,11 +644,15 @@ namespace Server.Items
             for (int i = 0; i < Opposition.Length; i++)
             {
                 if (Opposition[i].Super.Slays(m))
+                {
                     return true;
+                }
             }
 
             if (m_Super.Name == SlayerName.Eodon && !m_Super.Slays(m))
+            {
                 return true;
+            }
 
             return false;
         }

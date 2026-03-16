@@ -200,7 +200,9 @@ namespace Server.Items
                 base.Hue = value;
 
                 if (Addon != null && Addon.ShareHue)
+                {
                     Addon.Hue = value;
+                }
             }
         }
 
@@ -210,7 +212,9 @@ namespace Server.Items
         public static void ApplyLightTo(Item item)
         {
             if ((item.ItemData.Flags & TileFlag.LightSource) == 0)
+            {
                 return; // not a light source
+            }
 
             int itemID = item.ItemID;
 
@@ -233,27 +237,37 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (Addon != null)
+            {
                 Addon.OnComponentUsed(this, from);
+            }
         }
 
         public void OnChop(Mobile from)
         {
             if (Addon != null && from.InRange(GetWorldLocation(), 3))
+            {
                 Addon.OnChop(from);
+            }
             else
+            {
                 from.SendLocalizedMessage(500446); // That is too far away.
+            }
         }
 
         public override void OnLocationChange(Point3D old)
         {
             if (Addon != null)
+            {
                 Addon.Location = new Point3D(X - Offset.X, Y - Offset.Y, Z - Offset.Z);
+            }
         }
 
         public override void OnMapChange()
         {
             if (Addon != null)
+            {
                 Addon.Map = Map;
+            }
         }
 
         public override void OnAfterDelete()
@@ -261,7 +275,9 @@ namespace Server.Items
             base.OnAfterDelete();
 
             if (Addon != null)
+            {
                 Addon.Delete();
+            }
         }
 
         public override void GetProperties(ObjectPropertyList list)
@@ -323,7 +339,9 @@ namespace Server.Items
             }
 
             if (version < 1 && Weight == 0)
+            {
                 Weight = -1;
+            }
         }
 
         private class LightEntry

@@ -57,7 +57,7 @@ namespace Server.Items
         {
             if (from.Backpack.FindItemByType(typeof(SheetMusicForStones)) is SheetMusicForStones smfs && !smfs.Active)
             {
-                var box = from.Map.GetItemsInRange(from.Location, 3).FirstOrDefault(x => x.ItemID == 19724 && x.Hue == 1111);
+                Item box = from.Map.GetItemsInRange(from.Location, 3).FirstOrDefault(x => x.ItemID == 19724 && x.Hue == 1111);
 
                 if (box != null)
                 {
@@ -66,9 +66,9 @@ namespace Server.Items
                     
                     LuteTunedToStones = true;
 
-                    var neck = from.FindItemOnLayer(Layer.Neck);
+                    Item neck = from.FindItemOnLayer(Layer.Neck);
 
-                    if (neck != null && (neck is FellowshipMedallion || neck is GargishFellowshipMedallion))
+                    if (neck != null && neck is FellowshipMedallion)
                     {
                         neck.Hue = 1151;
                     }

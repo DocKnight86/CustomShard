@@ -36,11 +36,17 @@ namespace Server.Items
             list.Add(1113213); //* For Pets Only *
 
             if (Bonus == 0.10)
+            {
                 list.Add(1113215); //Stats Increased by 10%
+            }
             else if (Bonus == 0.15)
+            {
                 list.Add(1113216); //Stats Increased by 15%
+            }
             else
+            {
                 list.Add(1113214); //Stats Increased by 5%
+            }
 
             list.Add(1113212, Duration.TotalMinutes.ToString()); //Duration: ~1_val~ minutes
             list.Add(1113218, CoolDown.TotalMinutes.ToString()); //Cooldown: ~1_val~ minutes

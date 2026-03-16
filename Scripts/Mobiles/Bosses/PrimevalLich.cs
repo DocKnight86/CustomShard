@@ -77,7 +77,7 @@ namespace Server.Mobiles
         public override ChampionSkullType SkullType => ChampionSkullType.None;
 
         public override Type[] UniqueList => [];
-        public override Type[] SharedList => new[] { typeof(TheMostKnowledgePerson), typeof(LieutenantOfTheBritannianRoyalGuard), typeof(ProtectoroftheBattleMage) };
+        public override Type[] SharedList => [];
 
         public override Type[] DecorativeList => new[] { typeof(MummifiedCorpse) };
         public override MonsterStatuetteType[] StatueTypes => Array.Empty<MonsterStatuetteType>();

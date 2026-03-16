@@ -54,8 +54,8 @@ namespace Server.Mobiles
         {
         }
 
-        public override Type[] UniqueSAList => new Type[] { typeof(ResonantStaffofEnlightenment), typeof(MantleOfTheFallen) };
-        public override Type[] SharedSAList => Array.Empty<Type>();
+        public override Type[] UniqueSAList => [];
+        public override Type[] SharedSAList => [];
 
         public override void GenerateLoot()
         {

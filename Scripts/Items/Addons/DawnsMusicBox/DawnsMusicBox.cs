@@ -68,7 +68,9 @@ namespace Server.Items
                 MusicName name = RandomTrack(DawnsMusicRarity.Common);
 
                 if (!m_Tracks.Contains(name))
+                {
                     m_Tracks.Add(name);
+                }
             }
         }
 
@@ -180,7 +182,9 @@ namespace Server.Items
             DawnsMusicBox box = newItem as DawnsMusicBox;
 
             if (box == null)
+            {
                 return;
+            }
 
             box.m_Tracks = new List<MusicName>();
             box.m_Tracks.AddRange(m_Tracks);
@@ -215,11 +219,19 @@ namespace Server.Items
             }
 
             if (commonSongs > 0)
+            {
                 list.Add(1075234, commonSongs.ToString()); // ~1_NUMBER~ Common Tracks
+            }
+
             if (uncommonSongs > 0)
+            {
                 list.Add(1075235, uncommonSongs.ToString()); // ~1_NUMBER~ Uncommon Tracks
+            }
+
             if (rareSongs > 0)
+            {
                 list.Add(1075236, rareSongs.ToString()); // ~1_NUMBER~ Rare Tracks
+            }
         }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
@@ -232,9 +244,13 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!IsChildOf(from.Backpack) && !IsLockedDown)
+            {
                 from.SendLocalizedMessage(1061856); // You must have the item in your backpack or locked down in order to use it.
+            }
             else if (IsLockedDown && !HasAccces(from))
+            {
                 from.SendLocalizedMessage(502436); // That is not accessible.
+            }
             else
             {
                 from.CloseGump(typeof(DawnsMusicBoxGump));
@@ -245,7 +261,9 @@ namespace Server.Items
         public bool HasAccces(Mobile m)
         {
             if (m.AccessLevel >= AccessLevel.GameMaster)
+            {
                 return true;
+            }
 
             BaseHouse house = BaseHouse.FindHouseAt(this);
 
@@ -255,9 +273,13 @@ namespace Server.Items
         public void PlayMusic(Mobile m, MusicName music)
         {
             if (m_Timer != null && m_Timer.Running)
+            {
                 EndMusic(m);
+            }
             else
+            {
                 m_ItemID = ItemID;
+            }
 
             m.Send(new PlayMusic(music));
             m_Timer = Timer.DelayCall(TimeSpan.FromSeconds(0.5), TimeSpan.FromSeconds(0.5), 4, Animate);
@@ -266,12 +288,16 @@ namespace Server.Items
         public void EndMusic(Mobile m)
         {
             if (m_Timer != null && m_Timer.Running)
+            {
                 m_Timer.Stop();
+            }
 
             m.Send(StopMusic.Instance);
 
             if (m_Count > 0)
+            {
                 ItemID = m_ItemID;
+            }
 
             m_Count = 0;
         }
@@ -317,7 +343,9 @@ namespace Server.Items
                 ItemID = m_ItemID;
             }
             else
+            {
                 ItemID++;
+            }
         }
     }
 }

@@ -24,9 +24,9 @@ namespace Server.Items
         {
             if (m is PlayerMobile)
             {
-                var neck = m.FindItemOnLayer(Layer.Neck);
+                Item neck = m.FindItemOnLayer(Layer.Neck);
 
-                if (neck != null && neck.Hue == 1151 && (neck is FellowshipMedallion || neck is GargishFellowshipMedallion))
+                if (neck != null && neck.Hue == 1151 && neck is FellowshipMedallion)
                 {
                     BaseCreature.TeleportPets(m, m_Dest, Map.Ilshenar);
                     m.MoveToWorld(m_Dest, Map.Ilshenar);

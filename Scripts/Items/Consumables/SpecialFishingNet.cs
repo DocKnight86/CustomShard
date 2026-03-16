@@ -43,9 +43,13 @@ namespace Server.Items
             Weight = 15.0;
 
             if (0.01 > Utility.RandomDouble())
+            {
                 Hue = Utility.RandomList(m_Hues);
+            }
             else
+            {
                 Hue = 0x8A0;
+            }
         }
 
         public SpecialFishingNet(Serial serial)
@@ -67,13 +71,21 @@ namespace Server.Items
             for (int j = 1, offset = 5; valid && j <= 5; ++j, offset += 5)
             {
                 if (!ValidateDeepWater(map, x + offset, y + offset))
+                {
                     valid = false;
+                }
                 else if (!ValidateDeepWater(map, x + offset, y - offset))
+                {
                     valid = false;
+                }
                 else if (!ValidateDeepWater(map, x - offset, y + offset))
+                {
                     valid = false;
+                }
                 else if (!ValidateDeepWater(map, x - offset, y - offset))
+                {
                     valid = false;
+                }
             }
 
             return valid;
@@ -102,7 +114,9 @@ namespace Server.Items
             m_InUse = reader.ReadBool();
 
             if (m_InUse)
+            {
                 Delete();
+            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -125,17 +139,23 @@ namespace Server.Items
         public void OnTarget(Mobile from, object obj)
         {
             if (Deleted || m_InUse)
+            {
                 return;
+            }
 
             IPoint3D p3D = obj as IPoint3D;
 
             if (p3D == null)
+            {
                 return;
+            }
 
             Map map = from.Map;
 
             if (map == null || map == Map.Internal)
+            {
                 return;
+            }
 
             int x = p3D.X, y = p3D.Y, z = map.GetAverageZ(x, y); // OSI just takes the targeted Z
 
@@ -189,7 +209,9 @@ namespace Server.Items
             int count = Utility.RandomMinMax(3, 6);
 
             if (Hue != 0x8A0)
+            {
                 count += Utility.RandomMinMax(1, 2);
+            }
 
             return count;
         }
@@ -222,8 +244,9 @@ namespace Server.Items
             spawn.MoveToWorld(new Point3D(x, y, p.Z), map);
 
             if (spawn is Kraken && 0.35 < Utility.RandomDouble())
+            {
                 spawn.PackItem(new MessageInABottle(map == Map.Felucca ? Map.Felucca : Map.Trammel));
-
+            }
         }
 
         protected virtual void FinishEffect(Point3D p, Map map, Mobile from)
@@ -275,12 +298,16 @@ namespace Server.Items
         public static bool ValidateUndeepWater(Map map, object obj, ref int z)
         {
             if (!(obj is StaticTarget))
+            {
                 return false;
+            }
 
             StaticTarget target = (StaticTarget)obj;
 
             if (BaseHouse.FindHouseAt(target.Location, map, 0) != null)
+            {
                 return false;
+            }
 
             int itemID = target.ItemID;
 
@@ -299,7 +326,9 @@ namespace Server.Items
         private void DoEffect(object state)
         {
             if (Deleted)
+            {
                 return;
+            }
 
             object[] states = (object[])state;
 
@@ -368,12 +397,18 @@ namespace Server.Items
                 }
 
                 if (Utility.RandomBool())
+                {
                     Effects.PlaySound(p, Map, 0x364);
+                }
 
                 if (index == 14)
+                {
                     FinishEffect(p, Map, from);
+                }
                 else
+                {
                     Z -= 1;
+                }
             }
         }
     }
@@ -419,9 +454,13 @@ namespace Server.Items
             BaseCreature toSpawn;
 
             if (0.125 > Utility.RandomDouble())
+            {
                 toSpawn = new Osiredon(from);
+            }
             else
+            {
                 toSpawn = new Leviathan(from);
+            }
 
             Spawn(p, map, toSpawn);
 

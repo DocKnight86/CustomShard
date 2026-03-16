@@ -26,7 +26,9 @@ namespace Server.Items
                 Potion.EndEffects(m);
             }
             else
+            {
                 Potion.OnTick(m);
+            }
         }
 
         public void StopTimer()
@@ -100,10 +102,14 @@ namespace Server.Items
         public virtual void DoEffects(Mobile m)
         {
             if (Contexts == null)
+            {
                 Contexts = new Dictionary<Mobile, List<EodonPotionContext>>();
+            }
 
             if (!Contexts.ContainsKey(m) || Contexts[m] == null)
+            {
                 Contexts[m] = new List<EodonPotionContext>();
+            }
 
             AddBuff(m);
 
@@ -121,7 +127,9 @@ namespace Server.Items
             EodonPotionContext context = GetContext(m, PotionEffect);
 
             if (context != null)
+            {
                 RemoveContext(m, context);
+            }
         }
 
         public virtual void AddBuff(Mobile m)
@@ -205,10 +213,14 @@ namespace Server.Items
         public static void RemoveContext(Mobile m, EodonPotionContext context)
         {
             if (context == null)
+            {
                 return;
+            }
 
             if (context.Potion != null)
+            {
                 context.Potion.RemoveBuff(m);
+            }
 
             if (Contexts.ContainsKey(m))
             {
@@ -218,10 +230,14 @@ namespace Server.Items
                 }
 
                 if (Contexts[m] == null || Contexts[m].Count == 0)
+                {
                     Contexts.Remove(m);
+                }
 
                 if (Contexts.Count == 0)
+                {
                     EndTimer();
+                }
 
                 m.Delta(MobileDelta.WeaponDamage);
             }
@@ -248,7 +264,9 @@ namespace Server.Items
         public static void OnTick()
         {
             if (Contexts == null)
+            {
                 EndTimer();
+            }
             else
             {
                 Dictionary<Mobile, List<EodonPotionContext>> dictionary = new Dictionary<Mobile, List<EodonPotionContext>>(Contexts);
@@ -276,10 +294,14 @@ namespace Server.Items
             if (Contexts != null)
             {
                 if (m != null && Contexts.ContainsKey(m))
+                {
                     Contexts.Remove(m);
+                }
 
                 if (Contexts.Count == 0)
+                {
                     EndTimer();
+                }
             }
         }
 
@@ -338,7 +360,9 @@ namespace Server.Items
             EodonPotionContext c = GetContext(m, PotionEffect.Barrab);
 
             if (c != null && c.StartTime + TimeSpan.FromMinutes(5) > DateTime.UtcNow)
+            {
                 return 10;
+            }
 
             return 0;
         }
@@ -348,7 +372,9 @@ namespace Server.Items
             EodonPotionContext c = GetContext(m, PotionEffect.Barrab);
 
             if (c != null && c.StartTime + TimeSpan.FromMinutes(10) > DateTime.UtcNow)
+            {
                 return 100;
+            }
 
             return 0;
         }
@@ -400,7 +426,9 @@ namespace Server.Items
             EodonPotionContext c = GetContext(m, PotionEffect.Jukari);
 
             if (c != null && c.StartTime + TimeSpan.FromMinutes(5) > DateTime.UtcNow)
+            {
                 return 10;
+            }
 
             return 0;
         }
@@ -541,7 +569,9 @@ namespace Server.Items
             EodonPotionContext c = GetContext(m, PotionEffect.Urali);
 
             if (c != null && c.StartTime + TimeSpan.FromMinutes(5) > DateTime.UtcNow)
+            {
                 return 10;
+            }
 
             return 0;
         }
@@ -710,7 +740,9 @@ namespace Server.Items
                 Delete();
             }
             else
+            {
                 from.LocalOverheadMessage(Network.MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
+            }
         }
 
         public LavaBerryBush(Serial serial)
@@ -790,7 +822,9 @@ namespace Server.Items
                 Delete();
             }
             else
+            {
                 from.LocalOverheadMessage(Network.MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
+            }
         }
 
         public RiverMossDecorate(Serial serial)

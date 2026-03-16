@@ -91,14 +91,20 @@ namespace Server.Items
                 int absorbed = (int)(halfArmor + (halfArmor * Utility.RandomDouble()));
 
                 if (absorbed < 2)
+                {
                     absorbed = 2;
+                }
 
                 int wear;
 
                 if (weapon.Type == WeaponType.Bashing)
+                {
                     wear = absorbed / 2;
+                }
                 else
+                {
                     wear = Utility.Random(2);
+                }
 
                 if (wear > 0 && MaxHitPoints > 0)
                 {
@@ -145,7 +151,9 @@ namespace Server.Items
             CraftAttributeInfo attrInfo = GetResourceAttrs(Resource);
 
             if (attrInfo == null)
+            {
                 return 0;
+            }
 
             return attrInfo.ShieldLuck;
         }

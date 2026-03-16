@@ -79,7 +79,9 @@ namespace Server.Items
         public virtual void Explode(Mobile from, Point3D loc, Map map)
         {
             if (Deleted || map == null)
+            {
                 return;
+            }
 
             Consume();
 
@@ -103,7 +105,9 @@ namespace Server.Items
                     SpellHelper.AdjustField(ref p, map, 16, true);
 
                     if (SpellHelper.CheckField(p, map) && map.LineOfSight(new Point3D(loc.X, loc.Y, loc.Z + 14), p))
+                    {
                         new InternalItem(from, p, map, MinDamage, MaxDamage);
+                    }
                 }
             }
         }
@@ -165,12 +169,16 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Potion.Deleted || m_Potion.Map == Map.Internal)
+                {
                     return;
+                }
 
                 IPoint3D p = targeted as IPoint3D;
 
                 if (p == null || from.Map == null)
+                {
                     return;
+                }
 
                 // Add delay
                 if (from.AccessLevel == AccessLevel.Player)
@@ -185,9 +193,13 @@ namespace Server.Items
                 IEntity to;
 
                 if (p is Mobile mobile)
+                {
                     to = mobile;
+                }
                 else
+                {
                     to = new Entity(Serial.Zero, new Point3D(p), from.Map);
+                }
 
                 Effects.SendMovingEffect(from, to, 0xF0D, 7, 0, false, false, m_Potion.Hue, 0);
                 Timer.DelayCall(TimeSpan.FromSeconds(1.5), m_Potion.Explode_Callback, new object[] { from, new Point3D(p), from.Map });
@@ -228,7 +240,9 @@ namespace Server.Items
                 base.OnAfterDelete();
 
                 if (m_Timer != null)
+                {
                     m_Timer.Stop();
+                }
             }
 
             public InternalItem(Serial serial)
@@ -250,7 +264,9 @@ namespace Server.Items
                 m_MaxDamage = max;
 
                 if (m_From == null)
+                {
                     return;
+                }
 
                 int alchemySkill = m_From.Skills.Alchemy.Fixed;
                 int alchemyBonus = alchemySkill / 125 + alchemySkill / 250;

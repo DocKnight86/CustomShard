@@ -114,7 +114,9 @@ namespace Server.Items
             BaseHouse house = BaseHouse.FindHouseAt(this);
 
             if (house != null)
+            {
                 house.Addons.Remove(this);
+            }
 
             List<AddonContainerComponent> components = new List<AddonContainerComponent>(m_Components);
 
@@ -153,7 +155,9 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (!CraftResources.IsStandard(m_Resource))
+            {
                 list.Add(CraftResources.GetLocalizationNumber(m_Resource));
+            }
         }
 
         public override void OnAfterDelete()
@@ -199,7 +203,9 @@ namespace Server.Items
         public void AddComponent(AddonContainerComponent c, int x, int y, int z)
         {
             if (Deleted)
+            {
                 return;
+            }
 
             m_Components.Add(c);
 
@@ -335,7 +341,9 @@ namespace Server.Items
                             AddonContainerComponent c = m_Components[i];
 
                             if (c.Hue != 0)
+                            {
                                 hue = c.Hue;
+                            }
                         }
                     }
 
@@ -352,13 +360,17 @@ namespace Server.Items
                         deed.Resource = Resource;
 
                         if (RetainDeedHue)
+                        {
                             deed.Hue = hue;
+                        }
 
                         from.AddToBackpack(deed);
                     }
                 }
                 else
+                {
                     from.SendLocalizedMessage(1074870); // This item must be unlocked/unsecured before re-deeding it.
+                }
             }
         }
 

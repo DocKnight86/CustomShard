@@ -12,7 +12,9 @@ namespace Server.Items
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
             if (!Validate(attacker) || !CheckMana(attacker, true))
+            {
                 return;
+            }
 
             ClearCurrentAbility(attacker);
 
@@ -25,13 +27,21 @@ namespace Server.Items
                 int total = attacker.Skills.Poisoning.Fixed / 2;
 
                 if (total >= 1000)
+                {
                     level = 3;
+                }
                 else if (total > 850)
+                {
                     level = 2;
+                }
                 else if (total > 650)
+                {
                     level = 1;
+                }
                 else
+                {
                     level = 0;
+                }
             }
             else
             {

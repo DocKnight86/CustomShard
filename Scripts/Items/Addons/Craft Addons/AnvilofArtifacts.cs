@@ -63,7 +63,9 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (Addon == null)
+            {
                 return;
+            }
 
             list.Add(1060584, ((AnvilofArtifactsAddon)Addon).UsesRemaining.ToString()); // uses remaining: ~1_val~
         }
@@ -73,7 +75,9 @@ namespace Server.Items
             base.GetContextMenuEntries(from, list);
 
             if (Addon == null)
+            {
                 return;
+            }
 
             BaseHouse house = BaseHouse.FindHouseAt(this);
 
@@ -245,7 +249,9 @@ namespace Server.Items
             m_Direction = choice == 1;
 
             if (!Deleted)
+            {
                 base.OnDoubleClick(from);
+            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -287,7 +293,9 @@ namespace Server.Items
             : base(pm)
         {
             if (addon == null)
+            {
                 return;
+            }
 
             Addon = addon;
             Entry = CraftContext.GetAnvilEntry(User);
@@ -377,7 +385,9 @@ namespace Server.Items
         public override void OnResponse(RelayInfo info)
         {
             if (Addon == null || Addon.Deleted)
+            {
                 return;
+            }
 
             int armslorebonus = (int)Math.Floor(User.Skills[SkillName.ArmsLore].Base / 20);
             int maxexp = 15 + armslorebonus;

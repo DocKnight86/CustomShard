@@ -26,7 +26,9 @@ namespace Server.Items
             Timer t = (Timer)m_Table[m];
 
             if (t != null)
+            {
                 t.Stop();
+            }
 
             t = new InternalTimer(m, duration);
             m_Table[m] = t;
@@ -39,7 +41,9 @@ namespace Server.Items
             Timer t = (Timer)m_Table[m];
 
             if (t != null)
+            {
                 t.Stop();
+            }
 
             m_Table.Remove(m);
         }
@@ -49,7 +53,9 @@ namespace Server.Items
             BaseWeapon weapon = from.Weapon as BaseWeapon;
 
             if (weapon == null)
+            {
                 return true;
+            }
 
             return weapon.Skill != SkillName.Wrestling;
         }
@@ -57,7 +63,9 @@ namespace Server.Items
         public override bool OnBeforeSwing(Mobile attacker, Mobile defender)
         {
             if (defender == null)
+            {
                 return false;
+            }
 
             if (defender.Paralyzed)
             {
@@ -75,7 +83,9 @@ namespace Server.Items
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
             if (!Validate(attacker) || !CheckMana(attacker, true))
+            {
                 return;
+            }
 
             ClearCurrentAbility(attacker);
 

@@ -124,7 +124,9 @@ namespace Server.Misc
             }
 
             for (int i = 0; i < validItems.Count; ++i)
+            {
                 items.Remove(validItems[i]);
+            }
 
             if (items.Count > 0)
             {
@@ -149,7 +151,9 @@ namespace Server.Misc
                 Console.WriteLine("Cleanup: Detected {0} hair and facial hair items being worn, converting to their virtual counterparts..", hairCleanup.Count);
 
                 for (int i = 0; i < hairCleanup.Count; i++)
+                {
                     hairCleanup[i].ConvertHair();
+                }
             }
         }
 

@@ -169,21 +169,6 @@ namespace Server.Mobiles
             }
         }
 
-        public override void OnDeath(Container c)
-        {
-            base.OnDeath(c);
-
-            if (!Controlled && Utility.RandomDouble() < 0.25)
-            {
-                c.DropItem(new AncientPotteryFragments());
-            }
-
-            if (!Controlled && Utility.RandomDouble() <= 0.005)
-            {
-                c.DropItem(new RaptorClaw());
-            }
-        }
-
         public Raptor(Serial serial)
             : base(serial)
         {

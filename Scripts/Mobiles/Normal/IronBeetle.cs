@@ -68,11 +68,6 @@ namespace Server.Mobiles
             {
                 c.DropItem(new LuckyCoin());
             }
-
-            if (!Controlled && Utility.RandomDouble() < 0.1)
-            {
-                c.DropItem(new UndamagedIronBeetleScale());
-            }
         }
 
         public override bool SubdueBeforeTame => true;

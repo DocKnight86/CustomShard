@@ -60,7 +60,9 @@ namespace Server.Items
                         AddonComponent ac = Components[i];
 
                         if (ac != null && ac.Hue == 2118)
+                        {
                             ac.Hue = 1161;
+                        }
                     }
                 });
             }
@@ -74,7 +76,9 @@ namespace Server.Items
                         AddonComponent ac = Components[i];
 
                         if (ac != null)
+                        {
                             ac.Name = "jack-o-lantern";
+                        }
                     }
                 });
             }

@@ -155,16 +155,7 @@ namespace Server.Engines.Despise
 
         public static Type[] Artifacts => m_Artifacts;
 
-        private static readonly Type[] m_Artifacts =
-        {
-            typeof(CompassionsEye),
-            typeof(UnicornManeWovenSandals),
-            typeof(UnicornManeWovenTalons),
-            typeof(DespicableQuiver),
-            typeof(UnforgivenVeil),
-            typeof(HailstormHuman),
-            typeof(HailstormGargoyle)
-        };
+        private static readonly Type[] m_Artifacts = [];
 
         public DespiseBoss(Serial serial) : base(serial)
         {

@@ -104,7 +104,9 @@ namespace Server.Items
         public override bool Eat(Mobile from)
         {
             if (!base.Eat(from))
+            {
                 return false;
+            }
 
             from.AddToBackpack(new EmptyBentoBox());
             return true;

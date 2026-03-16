@@ -81,7 +81,9 @@ namespace Server.Items
         public virtual void Explode(Mobile from, Point3D loc, Map map)
         {
             if (Deleted || map == null)
+            {
                 return;
+            }
 
             Consume();
 
@@ -195,12 +197,16 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (Potion.Deleted || Potion.Map == Map.Internal)
+                {
                     return;
+                }
 
                 IPoint3D p = targeted as IPoint3D;
 
                 if (p == null || from.Map == null)
+                {
                     return;
+                }
 
                 // Add delay
                 AddDelay(from);
@@ -212,9 +218,13 @@ namespace Server.Items
                 IEntity to;
 
                 if (p is Mobile mobile)
+                {
                     to = mobile;
+                }
                 else
+                {
                     to = new Entity(Serial.Zero, new Point3D(p), from.Map);
+                }
 
                 Effects.SendMovingEffect(from, to, Potion.ItemID, 7, 0, false, false, Potion.Hue, 0);
                 Timer.DelayCall(TimeSpan.FromSeconds(1.0), Potion.Explode_Callback, new object[] { from, new Point3D(p), from.Map });
