@@ -454,69 +454,6 @@ namespace Server.Misc
 
             Container bag = new Bag
             {
-                Hue = 2075,
-                Name = "SA Major Artifacts Human"
-            };
-
-            bag.DropItem(new AnimatedLegsoftheInsaneTinker());
-            bag.DropItem(new ResonantStaffofEnlightenment());
-            bag.DropItem(new JadeWarAxe());
-            bag.DropItem(new DemonHuntersStandard());
-            bag.DropItem(new WallOfHungryMouths());
-            bag.DropItem(new HumanSignOfChaos());
-            bag.DropItem(new GargishSignOfChaos());
-            bag.DropItem(new IronwoodCompositeBow());
-            bag.DropItem(new ClawsOfTheBerserker());
-            bag.DropItem(new StandardOfChaos());
-            bag.DropItem(new DefenderOfTheMagus());
-            bag.DropItem(new TheImpalersPick());
-            bag.DropItem(new CavalrysFolly());
-            bag.DropItem(new AxeOfAbandon());
-            bag.DropItem(new ProtectoroftheBattleMage());
-            bag.DropItem(new FallenMysticsSpellbook());
-            bag.DropItem(new CrownOfArcaneTemperament());
-            bag.DropItem(new VampiricEssence());
-
-            PlaceItemIn(box, 17, 57, bag);
-
-            bag = new Bag
-            {
-                Hue = 1159,
-                Name = "Eodon Artifacts"
-            };
-
-            bag.DropItem(new AnonsBoots());
-            bag.DropItem(new AnonsBootsGargoyle());
-            bag.DropItem(new AnonsSpellbook());
-            bag.DropItem(new BalakaisShamanStaff());
-            bag.DropItem(new BalakaisShamanStaffGargoyle());
-            bag.DropItem(new EnchantressCameo());
-            bag.DropItem(new GrugorsShield());
-            bag.DropItem(new GrugorsShieldGargoyle());
-            bag.DropItem(new HalawasHuntingBow());
-            bag.DropItem(new HalawasHuntingBowGargoyle());
-            bag.DropItem(new HawkwindsRobe());
-            bag.DropItem(new JumusSacredHide());
-            bag.DropItem(new JumusSacredHideGargoyle());
-            bag.DropItem(new JuonarsGrimoire());
-            bag.DropItem(new LereisHuntingSpear());
-            bag.DropItem(new LereisHuntingSpearGargoyle());
-            bag.DropItem(new MinaxsSandles());
-            bag.DropItem(new MinaxsSandlesGargoyle());
-            bag.DropItem(new OzymandiasObi());
-            bag.DropItem(new OzymandiasObiGargoyle());
-            bag.DropItem(new ShantysWaders());
-            bag.DropItem(new ShantysWadersGargoyle());
-            bag.DropItem(new TotemOfTheTribe());
-            bag.DropItem(new WamapsBoneEarrings());
-            bag.DropItem(new WamapsBoneEarringsGargoyle());
-            bag.DropItem(new UnstableTimeRift());
-            bag.DropItem(new MocapotlsObsidianSword());
-
-            PlaceItemIn(box, 40, 57, bag);
-
-            bag = new Bag
-            {
                 Hue = 1266,
                 Name = "Major Artifacts"
             };
@@ -589,11 +526,9 @@ namespace Server.Misc
             };
 
             bag.DropItem(new RoyalGuardInvestigatorsCloak());
-            bag.DropItem(new TongueOfTheBeast());
             bag.DropItem(new TheMostKnowledgePerson());
             bag.DropItem(new ShroudOfDeceit());
             bag.DropItem(new ANecromancerShroud());
-            bag.DropItem(new LightsRampart());
             bag.DropItem(new AcidProofRobe());
             bag.DropItem(new ObiDiEnse());
             bag.DropItem(new TheRobeOfBritanniaAri());

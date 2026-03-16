@@ -32,7 +32,9 @@ namespace Server.Misc
                 if (item is CommodityDeed deed)
                 {
                     if (deed.Commodity != null)
+                    {
                         validItems.Add(deed.Commodity);
+                    }
 
                     continue;
                 }
@@ -99,16 +101,24 @@ namespace Server.Misc
                 }
 
                 if (item.Parent != null || item.Map != Map.Internal || item.HeldBy != null)
+                {
                     continue;
+                }
 
                 if (item.Location != Point3D.Zero)
+                {
                     continue;
+                }
 
                 if (!IsBuggable(item))
+                {
                     continue;
+                }
 
                 if (item is BaseBoat || item is BaseDockedBoat)
+                {
                     continue;
+                }
 
                 items.Add(item);
             }
@@ -119,9 +129,13 @@ namespace Server.Misc
             if (items.Count > 0)
             {
                 if (boxes > 0)
+                {
                     Console.WriteLine("Cleanup: Detected {0} inaccessible items, including {1} bank boxes, removing..", items.Count, boxes);
+                }
                 else
+                {
                     Console.WriteLine("Cleanup: Detected {0} inaccessible items, removing..", items.Count);
+                }
 
                 for (int i = 0; i < items.Count; ++i)
                 {
@@ -142,7 +156,9 @@ namespace Server.Misc
         public static bool IsBuggable(Item item)
         {
             if (item is Fists)
+            {
                 return false;
+            }
 
             if (item is ICommodity || item is BaseBoat ||
                 item is Fish || item is BigFish || item is Food ||
@@ -161,7 +177,9 @@ namespace Server.Misc
                 item is Web || item is WaterTile ||
                 item is WindSpirit || item is DirtPatch ||
                 item is Futon)
+            {
                 return true;
+            }
 
             return false;
         }

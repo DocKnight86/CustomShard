@@ -28,16 +28,24 @@ namespace Server.Engines.Mahjong
         public int GetHandArea()
         {
             if (m_Position.X + m_Width > 150 && m_Position.X < 520 && m_Position.Y < 35)
+            {
                 return 0;
+            }
 
             if (m_Position.X + m_Width > 635 && m_Position.Y + m_Height > 150 && m_Position.Y < 520)
+            {
                 return 1;
+            }
 
             if (m_Position.X + m_Width > 150 && m_Position.X < 520 && m_Position.Y + m_Height > 635)
+            {
                 return 2;
+            }
 
             if (m_Position.X < 35 && m_Position.Y + m_Height > 150 && m_Position.Y < 520)
+            {
                 return 3;
+            }
 
             return -1;
         }

@@ -183,7 +183,9 @@ namespace Server
                     m_Mobile.Poison = null;
 
                     if (m_Mobile is PlayerMobile mobile)
+                    {
                         BuffInfo.RemoveBuff(mobile, BuffIcon.Poison);
+                    }
 
                     Stop();
                     return;
@@ -192,9 +194,13 @@ namespace Server
                 int damage = 1 + (int)(m_Mobile.Hits * m_Poison.m_Scalar);
 
                 if (damage < m_Poison.m_Minimum)
+                {
                     damage = m_Poison.m_Minimum;
+                }
                 else if (damage > m_Poison.m_Maximum)
+                {
                     damage = m_Poison.m_Maximum;
+                }
 
                 m_LastDamage = damage;
 
@@ -208,11 +214,6 @@ namespace Server
                     {
                         m_From.DoHarmful(m_Mobile, true);
                     }
-                }
-
-                if (m_Mobile is IHonorTarget honorTarget && honorTarget.ReceivedHonorContext != null)
-                {
-                    honorTarget.ReceivedHonorContext.OnTargetPoisoned();
                 }
 
                 if (m_From != null && m_Mobile != m_From && !m_From.InRange(m_Mobile.Location, 1) && m_Poison.m_Level >= 10 && m_Poison.m_Level <= 13) // darkglow

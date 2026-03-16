@@ -85,13 +85,17 @@ namespace Server.Mobiles
         public override void AlterMeleeDamageFrom(Mobile from, ref int damage)
         {
             if (m_FieldActive)
+            {
                 damage = 0; // no melee damage when the field is up
+            }
         }
 
         public override void AlterSpellDamageFrom(Mobile caster, ref int damage)
         {
             if (!m_FieldActive)
+            {
                 damage = 0; // no spell damage when the field is down
+            }
         }
 
         public override void OnDamagedBySpell(Mobile from)
@@ -140,7 +144,9 @@ namespace Server.Mobiles
 
             // TODO: an OSI bug prevents to verify if the field can regenerate or not
             if (!m_FieldActive && !IsHurt())
+            {
                 m_FieldActive = true;
+            }
         }
 
         public override bool Move(Direction d)
@@ -148,7 +154,9 @@ namespace Server.Mobiles
             bool move = base.Move(d);
 
             if (move && m_FieldActive && Combatant != null)
+            {
                 FixedParticles(0, 10, 0, 0x2530, EffectLayer.Waist);
+            }
 
             return move;
         }

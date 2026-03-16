@@ -69,7 +69,9 @@ namespace Server.Mobiles
         public override void CheckReflect(Mobile caster, ref bool reflect)
         {
             if (!caster.Female && !caster.IsBodyMod)
+            {
                 reflect = true; // Always reflect if caster isn't female
+            }
         }
 
         public override void Serialize(GenericWriter writer)

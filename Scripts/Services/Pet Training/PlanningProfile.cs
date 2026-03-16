@@ -94,14 +94,38 @@ namespace Server.Mobiles
             {
                 switch (reader.ReadInt())
                 {
-                    case 0: break;
-                    case 1: Entries.Add(new PlanningEntry((MagicalAbility)reader.ReadInt(), reader.ReadInt(), reader.ReadInt())); break;
-                    case 2: Entries.Add(new PlanningEntry(SpecialAbility.Abilities[reader.ReadInt()], reader.ReadInt(), reader.ReadInt())); break;
-                    case 3: Entries.Add(new PlanningEntry(AreaEffect.Effects[reader.ReadInt()], reader.ReadInt(), reader.ReadInt())); break;
-                    case 4: Entries.Add(new PlanningEntry(WeaponAbility.Abilities[reader.ReadInt()], reader.ReadInt(), reader.ReadInt())); break;
-                    case 5: Entries.Add(new PlanningEntry((PetStat)reader.ReadInt(), reader.ReadInt(), reader.ReadInt())); break;
-                    case 6: Entries.Add(new PlanningEntry((ResistanceType)reader.ReadInt(), reader.ReadInt(), reader.ReadInt())); break;
-                    case 7: Entries.Add(new PlanningEntry((SkillName)reader.ReadInt(), reader.ReadInt(), reader.ReadInt())); break;
+                    case 0:
+                    {
+                        break;
+                    }
+                    case 1:
+                    {
+                        Entries.Add(new PlanningEntry((MagicalAbility)reader.ReadInt(), reader.ReadInt(), reader.ReadInt())); break;
+                    }
+                    case 2:
+                    {
+                        Entries.Add(new PlanningEntry(SpecialAbility.Abilities[reader.ReadInt()], reader.ReadInt(), reader.ReadInt())); break;
+                    }
+                    case 3:
+                    {
+                        Entries.Add(new PlanningEntry(AreaEffect.Effects[reader.ReadInt()], reader.ReadInt(), reader.ReadInt())); break;
+                    }
+                    case 4:
+                    {
+                        Entries.Add(new PlanningEntry(WeaponAbility.Abilities[reader.ReadInt()], reader.ReadInt(), reader.ReadInt())); break;
+                    }
+                    case 5:
+                    {
+                        Entries.Add(new PlanningEntry((PetStat)reader.ReadInt(), reader.ReadInt(), reader.ReadInt())); break;
+                    }
+                    case 6:
+                    {
+                        Entries.Add(new PlanningEntry((ResistanceType)reader.ReadInt(), reader.ReadInt(), reader.ReadInt())); break;
+                    }
+                    case 7:
+                    {
+                        Entries.Add(new PlanningEntry((SkillName)reader.ReadInt(), reader.ReadInt(), reader.ReadInt())); break;
+                    }
                 }
             }
         }

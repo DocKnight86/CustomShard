@@ -58,8 +58,8 @@ namespace Server.Services.Virtues
 
         public override void OnResponse(NetState state, RelayInfo info)
         {
-            if (info.ButtonID == 1 && m_Beholder == m_Beheld)
-                m_Beholder.SendGump(new VirtueStatusGump(m_Beholder));
+            /*if (info.ButtonID == 1 && m_Beholder == m_Beheld)
+                m_Beholder.SendGump(new VirtueStatusGump(m_Beholder));*/
         }
 
         public static void VirtueItemRequest(Mobile beholder, Mobile beheld, int buttonId)

@@ -52,7 +52,9 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (!Controlled && Utility.RandomDouble() < 0.03)
+            {
                 c.DropItem(new LuckyCoin());
+            }
         }
 
         public override FoodType FavoriteFood => FoodType.Meat;

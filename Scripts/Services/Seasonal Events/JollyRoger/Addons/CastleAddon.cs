@@ -683,7 +683,7 @@ namespace Server.Items
         [Constructable]
         public CastleAddon()
         {
-            for (var i = 0; i < m_AddOnSimpleComponents.Length / 4; i++)
+            for (int i = 0; i < m_AddOnSimpleComponents.Length / 4; i++)
                 AddComponent(new AddonComponent(m_AddOnSimpleComponents[i, 0]), m_AddOnSimpleComponents[i, 1], m_AddOnSimpleComponents[i, 2], m_AddOnSimpleComponents[i, 3]);
 
             AddComplexComponent(this, 13042, 8, 5, 5, 933, -1, "", 1);

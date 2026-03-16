@@ -28,7 +28,9 @@ namespace Server.Spells
 
                     for (int i = 0; i < m_Types.Length; ++i)
                         if (m_Types[i] != null)
+                        {
                             ++m_Count;
+                        }
                 }
 
                 return m_Count;
@@ -58,10 +60,14 @@ namespace Server.Spells
         public static void Register(int spellID, Type type)
         {
             if (spellID < 0 || spellID >= m_Types.Length)
+            {
                 return;
+            }
 
             if (m_Types[spellID] == null)
+            {
                 ++m_Count;
+            }
 
             m_Types[spellID] = type;
 
@@ -81,7 +87,9 @@ namespace Server.Spells
                 }
 
                 if (spm != null)
+                {
                     m_SpecialMoves.Add(spellID, spm);
+                }
             }
         }
 
@@ -107,7 +115,9 @@ namespace Server.Spells
         public static Spell NewSpell(int spellID, Mobile caster, Item scroll)
         {
             if (spellID < 0 || spellID >= m_Types.Length)
+            {
                 return null;
+            }
 
             Type t = m_Types[spellID];
 

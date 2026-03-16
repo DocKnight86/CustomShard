@@ -596,7 +596,9 @@ namespace Server.Items
         public static void RegisterType(Type resourceType, CraftResource resource)
         {
             if (m_TypeTable == null)
+            {
                 m_TypeTable = new Hashtable();
+            }
 
             m_TypeTable[resourceType] = resource;
         }
@@ -607,12 +609,16 @@ namespace Server.Items
         public static CraftResource GetFromType(Type resourceType)
         {
             if (m_TypeTable == null)
+            {
                 return CraftResource.None;
+            }
 
             object obj = m_TypeTable[resourceType];
 
             if (!(obj is CraftResource))
+            {
                 return CraftResource.None;
+            }
 
             return (CraftResource)obj;
         }
@@ -645,7 +651,9 @@ namespace Server.Items
                 int index = GetIndex(resource);
 
                 if (index >= 0 && index < list.Length)
+                {
                     return list[index];
+                }
             }
 
             return null;
@@ -657,16 +665,24 @@ namespace Server.Items
         public static CraftResourceType GetType(CraftResource resource)
         {
             if (resource >= CraftResource.Iron && resource <= CraftResource.Valorite)
+            {
                 return CraftResourceType.Metal;
+            }
 
             if (resource >= CraftResource.RegularLeather && resource <= CraftResource.BarbedLeather)
+            {
                 return CraftResourceType.Leather;
+            }
 
             if (resource >= CraftResource.RedScales && resource <= CraftResource.BlueScales)
+            {
                 return CraftResourceType.Scales;
+            }
 
             if (resource >= CraftResource.RegularWood && resource <= CraftResource.Frostwood)
+            {
                 return CraftResourceType.Wood;
+            }
 
             return CraftResourceType.None;
         }
@@ -699,7 +715,9 @@ namespace Server.Items
             CraftResource start = GetStart(resource);
 
             if (start == CraftResource.None)
+            {
                 return 0;
+            }
 
             return resource - start;
         }

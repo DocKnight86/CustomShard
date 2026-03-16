@@ -45,10 +45,14 @@ namespace Server.Mobiles
             base.OnThink();
 
             if (m_InDamageMode)
+            {
                 TryDamageBoat();
+            }
 
             else if (CanDamageBoats && DateTime.UtcNow >= NextBoatDamage)
+            {
                 m_InDamageMode = true;
+            }
         }
 
         public override bool OnBeforeDeath()
@@ -64,7 +68,9 @@ namespace Server.Mobiles
         public virtual void RegisterDamageTo(Mobile m)
         {
             if (m == null)
+            {
                 return;
+            }
 
             foreach (DamageEntry de in m.DamageEntries)
             {
@@ -73,7 +79,9 @@ namespace Server.Mobiles
                 Mobile master = damager.GetDamageMaster(m);
 
                 if (master != null)
+                {
                     damager = master;
+                }
 
                 RegisterDamage(damager, de.DamageGiven);
             }
@@ -82,18 +90,26 @@ namespace Server.Mobiles
         public void RegisterDamage(Mobile from, int amount)
         {
             if (from == null || !from.Player)
+            {
                 return;
+            }
 
             if (m_DamageEntries.ContainsKey(from))
+            {
                 m_DamageEntries[from] += amount;
+            }
             else
+            {
                 m_DamageEntries.Add(from, amount);
+            }
         }
 
         public void AwardArtifact(Item artifact)
         {
             if (artifact == null)
+            {
                 return;
+            }
 
             int totalDamage = 0;
 
@@ -129,14 +145,20 @@ namespace Server.Mobiles
         public void GiveArtifact(Mobile to, Item artifact)
         {
             if (to == null || artifact == null)
+            {
                 return;
+            }
 
             Container pack = to.Backpack;
 
             if (pack == null || !pack.TryDropItem(to, artifact, false))
+            {
                 artifact.Delete();
+            }
             else
+            {
                 to.SendLocalizedMessage(1062317); // For your valor in combating the fallen beast, a special artifact has been bestowed on you.
+            }
         }
 
         public bool IsEligible(Mobile m, Item Artifact)
@@ -149,10 +171,14 @@ namespace Server.Mobiles
             Mobile focusMob = m_Fisher;
 
             if (focusMob == null || !focusMob.Alive)
+            {
                 focusMob = Combatant as Mobile;
+            }
 
             if (focusMob == null || focusMob.AccessLevel > AccessLevel.Player || !InRange(focusMob.Location, DamageRange) || BaseBoat.FindBoatAt(focusMob, focusMob.Map) == null)
+            {
                 return;
+            }
 
             BaseBoat boat = BaseBoat.FindBoatAt(focusMob, focusMob.Map);
 
@@ -191,13 +217,21 @@ namespace Server.Mobiles
                     {
                         Direction toPush = Direction.North;
                         if (X < x && x - X > 1)
+                        {
                             toPush = Direction.West;
+                        }
                         else if (X > x && X - x > 1)
+                        {
                             toPush = Direction.East;
+                        }
                         else if (Y < y)
+                        {
                             toPush = Direction.South;
+                        }
                         else if (Y > y)
+                        {
                             toPush = Direction.North;
+                        }
 
                         boat.StartMove(toPush, 1, 0x2, boat.SlowDriftInterval, true, false);
                         //TODO: Message and Sound?
@@ -209,10 +243,19 @@ namespace Server.Mobiles
         public Point3D GetValidPoint(BaseBoat boat, Map map, int distance)
         {
             if (boat == null || map == null || map == Map.Internal)
+            {
                 return new Point3D(X + Utility.RandomMinMax(-1, 1), Y + Utility.RandomMinMax(-1, 1), Z);
+            }
 
-            if (distance < 5) distance = 5;
-            if (distance > 15) distance = 15;
+            if (distance < 5)
+            {
+                distance = 5;
+            }
+
+            if (distance > 15)
+            {
+                distance = 15;
+            }
 
             int x = boat.X;
             int y = boat.Y;

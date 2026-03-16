@@ -89,18 +89,26 @@ namespace Server.Mobiles
         public void Polymorph(Mobile m)
         {
             if (!m.CanBeginAction(typeof(PolymorphSpell)) || !m.CanBeginAction(typeof(IncognitoSpell)) || m.IsBodyMod)
+            {
                 return;
+            }
 
             IMount mount = m.Mount;
 
             if (mount != null)
+            {
                 mount.Rider = null;
+            }
 
             if (m.Flying)
+            {
                 m.ToggleFlying();
+            }
 
             if (m.Mounted)
+            {
                 return;
+            }
 
             if (m.BeginAction(typeof(PolymorphSpell)))
             {
@@ -121,7 +129,9 @@ namespace Server.Mobiles
             Map map = Map;
 
             if (map == null)
+            {
                 return;
+            }
 
             int rats = 0;
 
@@ -130,7 +140,9 @@ namespace Server.Mobiles
             foreach (Mobile m in eable)
             {
                 if (m is Ratman || m is RatmanArcher || m is RatmanMage)
+                {
                     ++rats;
+                }
             }
 
             eable.Free();
@@ -173,9 +185,13 @@ namespace Server.Mobiles
                         int z = map.GetAverageZ(x, y);
 
                         if (validLocation = map.CanFit(x, y, Z, 16, false, false))
+                        {
                             loc = new Point3D(x, y, Z);
+                        }
                         else if (validLocation = map.CanFit(x, y, z, 16, false, false))
+                        {
                             loc = new Point3D(x, y, z);
+                        }
                     }
 
                     rat.IsChampionSpawn = true;
@@ -188,16 +204,24 @@ namespace Server.Mobiles
         public void DoSpecialAbility(Mobile target)
         {
             if (target == null || target.Deleted) //sanity
+            {
                 return;
+            }
 
             if (target.Player && 0.6 >= Utility.RandomDouble()) // 60% chance to polymorph attacker into a ratman
+            {
                 Polymorph(target);
+            }
 
             if (0.1 >= Utility.RandomDouble()) // 10% chance to more ratmen
+            {
                 SpawnRatmen(target);
+            }
 
             if (0.05 >= Utility.RandomDouble() && !IsBodyMod) // 5% chance to polymorph into a ratman
+            {
                 Polymorph(this);
+            }
         }
 
         public override void OnGotMeleeAttack(Mobile attacker)

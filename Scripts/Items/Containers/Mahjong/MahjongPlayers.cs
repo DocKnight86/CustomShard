@@ -55,9 +55,13 @@ namespace Server.Engines.Mahjong
         public Mobile GetPlayer(int index)
         {
             if (index < 0 || index >= m_Players.Length)
+            {
                 return null;
+            }
             else
+            {
                 return m_Players[index];
+            }
         }
 
         public int GetPlayerIndex(Mobile mobile)
@@ -65,7 +69,9 @@ namespace Server.Engines.Mahjong
             for (int i = 0; i < m_Players.Length; i++)
             {
                 if (m_Players[i] == mobile)
+                {
                     return i;
+                }
             }
             return -1;
         }
@@ -73,17 +79,25 @@ namespace Server.Engines.Mahjong
         public bool IsInGameDealer(Mobile mobile)
         {
             if (Dealer != mobile)
+            {
                 return false;
+            }
             else
+            {
                 return m_InGame[m_DealerPosition];
+            }
         }
 
         public bool IsInGamePlayer(int index)
         {
             if (index < 0 || index >= m_Players.Length || m_Players[index] == null)
+            {
                 return false;
+            }
             else
+            {
                 return m_InGame[index];
+            }
         }
 
         public bool IsInGamePlayer(Mobile mobile)
@@ -101,30 +115,42 @@ namespace Server.Engines.Mahjong
         public int GetScore(int index)
         {
             if (index < 0 || index >= m_Scores.Length)
+            {
                 return 0;
+            }
             else
+            {
                 return m_Scores[index];
+            }
         }
 
         public bool IsPublic(int index)
         {
             if (index < 0 || index >= m_PublicHand.Length)
+            {
                 return false;
+            }
             else
+            {
                 return m_PublicHand[index];
+            }
         }
 
         public void SetPublic(int index, bool value)
         {
             if (index < 0 || index >= m_PublicHand.Length || m_PublicHand[index] == value)
+            {
                 return;
+            }
 
             m_PublicHand[index] = value;
 
             SendTilesPacket(true, !m_Game.SpectatorVision);
 
             if (IsInGamePlayer(index))
+            {
                 m_Players[index].SendLocalizedMessage(value ? 1062775 : 1062776); // Your hand is [not] publicly viewable.
+            }
         }
 
         public ArrayList GetInGameMobiles(bool players, bool spectators)
@@ -136,7 +162,9 @@ namespace Server.Engines.Mahjong
                 for (int i = 0; i < m_Players.Length; i++)
                 {
                     if (IsInGamePlayer(i))
+                    {
                         list.Add(m_Players[i]);
+                    }
                 }
             }
 
@@ -214,7 +242,9 @@ namespace Server.Engines.Mahjong
             }
 
             if (removed && !UpdateSpectators())
+            {
                 SendPlayersPacket(true, true);
+            }
         }
 
         public void Join(Mobile mobile)
@@ -276,7 +306,9 @@ namespace Server.Engines.Mahjong
             Mobile to = GetPlayer(toPosition);
 
             if (fromPosition < 0 || to == null || m_Scores[fromPosition] < amount)
+            {
                 return;
+            }
 
             m_Scores[fromPosition] -= amount;
             m_Scores[toPosition] += amount;
@@ -298,10 +330,14 @@ namespace Server.Engines.Mahjong
         {
             Mobile player = GetPlayer(index);
             if (player == null)
+            {
                 return;
+            }
 
             if (m_InGame[index])
+            {
                 player.Send(new MahjongRelieve(m_Game));
+            }
 
             m_Players[index] = null;
 
@@ -310,7 +346,9 @@ namespace Server.Engines.Mahjong
             UpdateDealer(true);
 
             if (!UpdateSpectators())
+            {
                 SendPlayersPacket(true, true);
+            }
         }
 
         public void AssignDealer(int index)
@@ -318,14 +356,18 @@ namespace Server.Engines.Mahjong
             Mobile to = GetPlayer(index);
 
             if (to == null || !m_InGame[index])
+            {
                 return;
+            }
 
             int oldDealer = m_DealerPosition;
 
             m_DealerPosition = index;
 
             if (IsInGamePlayer(oldDealer))
+            {
                 m_Players[oldDealer].Send(new MahjongPlayersInfo(m_Game, m_Players[oldDealer]));
+            }
 
             to.Send(new MahjongPlayersInfo(m_Game, to));
 
@@ -345,7 +387,9 @@ namespace Server.Engines.Mahjong
             ArrayList mobiles = GetInGameMobiles(players, spectators);
 
             if (mobiles.Count == 0)
+            {
                 return;
+            }
 
             MahjongGeneralInfo generalInfo = new MahjongGeneralInfo(m_Game);
 
@@ -380,7 +424,9 @@ namespace Server.Engines.Mahjong
             ArrayList mobiles = GetInGameMobiles(players, spectators);
 
             if (mobiles.Count == 0)
+            {
                 return;
+            }
 
             MahjongRelieve relieve = new MahjongRelieve(m_Game);
 
@@ -429,7 +475,9 @@ namespace Server.Engines.Mahjong
         private void UpdateDealer(bool message)
         {
             if (IsInGamePlayer(m_DealerPosition))
+            {
                 return;
+            }
 
             for (int i = m_DealerPosition + 1; i < m_Players.Length; i++)
             {
@@ -438,7 +486,9 @@ namespace Server.Engines.Mahjong
                     m_DealerPosition = i;
 
                     if (message)
+                    {
                         SendDealerChangedMessage();
+                    }
 
                     return;
                 }
@@ -451,7 +501,9 @@ namespace Server.Engines.Mahjong
                     m_DealerPosition = i;
 
                     if (message)
+                    {
                         SendDealerChangedMessage();
+                    }
 
                     return;
                 }
@@ -463,13 +515,17 @@ namespace Server.Engines.Mahjong
             for (int i = m_DealerPosition; i < m_Players.Length; i++)
             {
                 if (m_Players[i] == null)
+                {
                     return i;
+                }
             }
 
             for (int i = 0; i < m_DealerPosition; i++)
             {
                 if (m_Players[i] == null)
+                {
                     return i;
+                }
             }
 
             return -1;
@@ -478,7 +534,9 @@ namespace Server.Engines.Mahjong
         private bool UpdateSpectators()
         {
             if (m_Spectators.Count == 0)
+            {
                 return false;
+            }
 
             int nextSeat = GetNextSeat();
 
@@ -508,7 +566,9 @@ namespace Server.Engines.Mahjong
             UpdateDealer(false);
 
             if (sendJoinGame)
+            {
                 player.Send(new MahjongJoinGame(m_Game));
+            }
 
             SendPlayersPacket(true, true);
 
@@ -516,9 +576,13 @@ namespace Server.Engines.Mahjong
             player.Send(new MahjongTilesInfo(m_Game, player));
 
             if (m_DealerPosition == index)
+            {
                 SendLocalizedMessage(1062773, player.Name); // ~1_name~ has entered the game as the dealer.
+            }
             else
+            {
                 SendLocalizedMessage(1062772, player.Name); // ~1_name~ has entered the game as a player.
+            }
         }
 
         private void AddSpectator(Mobile mobile)
@@ -537,7 +601,9 @@ namespace Server.Engines.Mahjong
         private void SendDealerChangedMessage()
         {
             if (Dealer != null)
+            {
                 SendLocalizedMessage(1062698, Dealer.Name); // ~1_name~ is assigned the dealer.
+            }
         }
 
         private void SendPlayerExitMessage(Mobile who)

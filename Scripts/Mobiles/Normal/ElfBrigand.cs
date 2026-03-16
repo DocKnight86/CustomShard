@@ -69,12 +69,18 @@ namespace Server.Mobiles
             if (Female)
             {
                 if (Utility.RandomBool())
+                {
                     AddItem(new Skirt(Utility.RandomNeutralHue()));
+                }
                 else
+                {
                     AddItem(new Kilt(Utility.RandomNeutralHue()));
+                }
             }
             else
+            {
                 AddItem(new ShortPants(Utility.RandomNeutralHue()));
+            }
 
             // hair, facial hair			
             HairItemID = Race.RandomHair(Female);
@@ -86,7 +92,9 @@ namespace Server.Mobiles
             AddItem(weapon);
 
             if (weapon.Layer == Layer.OneHanded && Utility.RandomBool())
+            {
                 AddItem(Loot.RandomShield());
+            }
         }
 
         public ElfBrigand(Serial serial)

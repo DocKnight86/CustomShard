@@ -12,7 +12,9 @@ namespace Server.Items
             while (Items.Count < ItemAmount)
             {
                 if (0.05 > Utility.RandomDouble()) // check
+                {
                     DropItem(Loot.RandomTalisman());
+                }
                 else
                 {
                     switch (Utility.Random(4))

@@ -32,7 +32,9 @@ namespace Server.Mobiles
                     _HasYelled = value;
 
                     if (_HasYelled)
+                    {
                         Timer.DelayCall(TimeSpan.FromSeconds(Utility.RandomMinMax(180, 360)), () => _HasYelled = false);
+                    }
                 }
             }
         }
@@ -46,7 +48,9 @@ namespace Server.Mobiles
             get
             {
                 if (TribeType == EodonTribe.Barrab)
+                {
                     return Poison.Deadly;
+                }
 
                 return null;
             }
@@ -70,7 +74,10 @@ namespace Server.Mobiles
                 {
                     var i = MasteryInfo.Infos[index];
 
-                    if (i.MasterySkill == wep.DefSkill && !i.Passive) list.Add(i);
+                    if (i.MasterySkill == wep.DefSkill && !i.Passive)
+                    {
+                        list.Add(i);
+                    }
                 }
 
                 MasteryInfo[] infos = list.ToArray();
@@ -173,7 +180,9 @@ namespace Server.Mobiles
             base.AggressiveAction(aggressor, criminal);
 
             if (Map == null)
+            {
                 return;
+            }
 
             IPooledEnumerable eable = Map.GetMobilesInRange(Location, RangePerception);
 

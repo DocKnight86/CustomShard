@@ -42,10 +42,14 @@ namespace Server.Misc
         private static GuildStatus GetGuildStatus(Mobile m)
         {
             if (m.Guild == null)
+            {
                 return GuildStatus.None;
+            }
 
             if (((Guild)m.Guild).Enemies.Count == 0)
+            {
                 return GuildStatus.Peaceful;
+            }
 
             return GuildStatus.Warring;
         }
@@ -53,7 +57,9 @@ namespace Server.Misc
         private static bool CheckBeneficialStatus(GuildStatus from, GuildStatus target)
         {
             if (from == GuildStatus.Warring || target == GuildStatus.Warring)
+            {
                 return false;
+            }
 
             return true;
         }
@@ -146,28 +152,40 @@ namespace Server.Misc
             if (fromGuild != null && targetGuild != null)
             {
                 if (fromGuild == targetGuild || fromGuild.IsAlly(targetGuild) || fromGuild.IsEnemy(targetGuild))
+                {
                     return true; // Guild allies or enemies can be harmful
+                }
             }
 
             if (ViceVsVirtueSystem.Enabled && ViceVsVirtueSystem.EnhancedRules && ViceVsVirtueSystem.IsEnemy(from, damageable))
+            {
                 return true;
+            }
 
             if (target is BaseCreature creature)
             {
                 if (creature.Controlled)
+                {
                     return false; // Cannot harm other controlled mobiles
+                }
 
                 if (creature.Summoned && from != creature.SummonMaster)
+                {
                     return false; // Cannot harm other controlled mobiles
+                }
             }
 
             if (target.Player)
+            {
                 return false; // Cannot harm other players
+            }
 
             if (!(target is BaseCreature baseCreature && baseCreature.InitialInnocent))
             {
                 if (Notoriety.Compute(from, target) == Notoriety.Innocent)
+                {
                     return false; // Cannot harm innocent mobiles
+                }
             }
 
             return true;
@@ -230,22 +248,34 @@ namespace Server.Misc
                 }
 
                 if (ViceVsVirtueSystem.Enabled && ViceVsVirtueSystem.IsEnemy(source, creatureOwner) && (ViceVsVirtueSystem.EnhancedRules || source.Map == ViceVsVirtueSystem.Facet))
+                {
                     return Notoriety.Enemy;
+                }
 
                 if (CheckHouseFlag(source, creatureOwner, target.Location, target.Map))
+                {
                     return Notoriety.CanBeAttacked;
+                }
 
                 int actual = Notoriety.CanBeAttacked;
 
                 if (target.Murderer)
+                {
                     actual = Notoriety.Murderer;
+                }
                 else if (body.IsMonster && IsSummoned(creatureOwner))
+                {
                     actual = Notoriety.Murderer;
+                }
                 else if (creatureOwner.AlwaysMurderer || creatureOwner.IsAnimatedDead)
+                {
                     actual = Notoriety.Murderer;
+                }
 
                 if (DateTime.UtcNow >= target.TimeOfDeath + Corpse.MonsterLootRightSacrifice)
+                {
                     return actual;
+                }
 
                 Party sourceParty = Party.Get(source);
 
@@ -340,30 +370,46 @@ namespace Server.Misc
                 Mobile target = damageable as Mobile;
 
                 if (target == null)
+                {
                     return Notoriety.CanBeAttacked;
+                }
 
                 if (target.Blessed)
+                {
                     return Notoriety.Invulnerable;
+                }
 
                 if (target is BaseVendor vendor && vendor.IsInvulnerable)
+                {
                     return Notoriety.Invulnerable;
+                }
 
                 if (target is PlayerVendor || target is TownCrier)
+                {
                     return Notoriety.Invulnerable;
+                }
 
                 EnemyOfOneContext context = EnemyOfOneSpell.GetContext(source);
 
                 if (context != null && context.IsEnemy(target))
+                {
                     return Notoriety.Enemy;
+                }
 
                 if (PVPArenaSystem.IsEnemy(source, target))
+                {
                     return Notoriety.Enemy;
+                }
 
                 if (PVPArenaSystem.IsFriendly(source, target))
+                {
                     return Notoriety.Ally;
+                }
 
                 if (target.IsStaff())
+                {
                     return Notoriety.CanBeAttacked;
+                }
 
                 var bc = target as BaseCreature;
 
@@ -372,17 +418,23 @@ namespace Server.Misc
                     Mobile master = bc.GetMaster();
 
                     if (master != null && master.IsStaff())
+                    {
                         return Notoriety.CanBeAttacked;
+                    }
 
                     master = bc.ControlMaster;
 
                     if (master != null && !bc.ForceNotoriety)
                     {
                         if (source == master && CheckAggressor(target.Aggressors, source))
+                        {
                             return Notoriety.CanBeAttacked;
+                        }
 
                         if (CheckAggressor(source.Aggressors, bc))
+                        {
                             return Notoriety.CanBeAttacked;
+                        }
 
                         damageable = master;
                         continue;
@@ -418,20 +470,30 @@ namespace Server.Misc
                 if (sourceGuild != null && targetGuild != null)
                 {
                     if (sourceGuild == targetGuild)
+                    {
                         return Notoriety.Ally;
+                    }
 
                     if (sourceGuild.IsAlly(targetGuild))
+                    {
                         return Notoriety.Ally;
+                    }
 
                     if (sourceGuild.IsEnemy(targetGuild))
+                    {
                         return Notoriety.Enemy;
+                    }
                 }
 
                 if (ViceVsVirtueSystem.Enabled && ViceVsVirtueSystem.IsEnemy(source, target) && (ViceVsVirtueSystem.EnhancedRules || source.Map == ViceVsVirtueSystem.Facet))
+                {
                     return Notoriety.Enemy;
+                }
 
                 if (Stealing.ClassicMode && target is PlayerMobile mobile && mobile.PermaFlags.Contains(source))
+                {
                     return Notoriety.CanBeAttacked;
+                }
 
                 if (bc != null && bc.AlwaysAttackable)
                 {
@@ -439,26 +501,38 @@ namespace Server.Misc
                 }
 
                 if (CheckHouseFlag(source, target, target.Location, target.Map))
+                {
                     return Notoriety.CanBeAttacked;
+                }
 
                 //If Target is NOT A baseCreature, OR it's a BC and the BC is initial innocent...
                 if (!(bc != null && ((BaseCreature) target).InitialInnocent))
                 {
                     if (!target.Body.IsHuman && !target.Body.IsGhost && !IsPet(target as BaseCreature) && !(target is PlayerMobile))
+                    {
                         return Notoriety.CanBeAttacked;
+                    }
                 }
 
                 if (CheckAggressor(source.Aggressors, target))
+                {
                     return Notoriety.CanBeAttacked;
+                }
 
                 if (source is PlayerMobile pm && CheckPetAggressor(pm, target))
+                {
                     return Notoriety.CanBeAttacked;
+                }
 
                 if (CheckAggressed(source.Aggressed, target))
+                {
                     return Notoriety.CanBeAttacked;
+                }
 
                 if (source is PlayerMobile playerMobile && CheckPetAggressed(playerMobile, target))
+                {
                     return Notoriety.CanBeAttacked;
+                }
 
                 if (bc != null)
                 {

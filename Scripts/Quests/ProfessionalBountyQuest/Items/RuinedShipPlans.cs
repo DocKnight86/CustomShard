@@ -45,9 +45,13 @@ namespace Server.Items
             list.Add(1116747); //Orc Ship
 
             if (m_Joined.Count == 1)
+            {
                 list.Add(1116776, $"{(int)m_PlanType}\t8"); //Part ~1_val~ of ~2_val~
+            }
             else
+            {
                 list.Add(1116777, $"{m_Joined.Count}\t8"); //Parts ~1_val~ of ~2_val~
+            }
 
             if (m_Joined.Count > 1)
             {
@@ -75,7 +79,9 @@ namespace Server.Items
             foreach (PlanType type in plans.Joined)
             {
                 if (!m_Joined.Contains(type))
+                {
                     m_Joined.Add(type);
+                }
             }
 
             InvalidateProperties();
@@ -88,7 +94,10 @@ namespace Server.Items
                 Delete();
             }
             else
+            {
                 from.Target = new InternalTarget(this);
+            }
+
             return true;
         }
 
@@ -113,13 +122,17 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (targeted is Item item && !item.IsChildOf(from.Backpack))
+                {
                     from.SendMessage("That must be in your pack to combine.");
+                }
                 else if (targeted is RuinedShipPlans shipPlans)
                 {
                     m_Plans.TryCombine(from, shipPlans);
                 }
                 else
+                {
                     from.SendLocalizedMessage(1116786); //These do not fit together.
+                }
             }
         }
 

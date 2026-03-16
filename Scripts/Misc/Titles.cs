@@ -19,49 +19,77 @@ namespace Server.Misc
             if (offset > 0)
             {
                 if (fame >= MaxFame)
+                {
                     return;
+                }
 
                 offset -= fame / 100;
 
                 if (offset < 0)
+                {
                     offset = 0;
+                }
             }
             else if (offset < 0)
             {
                 if (fame <= MinFame)
+                {
                     return;
+                }
 
                 offset -= fame / 100;
 
                 if (offset > 0)
+                {
                     offset = 0;
+                }
             }
 
             if (fame + offset > MaxFame)
+            {
                 offset = MaxFame - fame;
+            }
             else if (fame + offset < MinFame)
+            {
                 offset = MinFame - fame;
+            }
 
             m.Fame += offset;
 
             if (message)
             {
                 if (offset > 40)
+                {
                     m.SendLocalizedMessage(1019054); // You have gained a lot of fame.
+                }
                 else if (offset > 20)
+                {
                     m.SendLocalizedMessage(1019053); // You have gained a good amount of fame.
+                }
                 else if (offset > 10)
+                {
                     m.SendLocalizedMessage(1019052); // You have gained some fame.
+                }
                 else if (offset > 0)
+                {
                     m.SendLocalizedMessage(1019051); // You have gained a little fame.
+                }
                 else if (offset < -40)
+                {
                     m.SendLocalizedMessage(1019058); // You have lost a lot of fame.
+                }
                 else if (offset < -20)
+                {
                     m.SendLocalizedMessage(1019057); // You have lost a good amount of fame.
+                }
                 else if (offset < -10)
+                {
                     m.SendLocalizedMessage(1019056); // You have lost some fame.
+                }
                 else if (offset < 0)
+                {
                     m.SendLocalizedMessage(1019055); // You have lost a little fame.
+                }
             }
         }
 
@@ -75,9 +103,13 @@ namespace Server.Misc
             if (m.Talisman is BaseTalisman talisman)
             {
                 if (talisman.KarmaLoss > 0)
+                {
                     offset *= 1 + (int)((double)talisman.KarmaLoss / 100);
+                }
                 else if (talisman.KarmaLoss < 0)
+                {
                     offset *= 1 - (int)((double)-talisman.KarmaLoss / 100);
+                }
             }
 
             int karmaLoss = AosAttributes.GetValue(m, AosAttribute.IncreasedKarmaLoss);
@@ -90,52 +122,82 @@ namespace Server.Misc
             if (offset > 0)
             {
                 if (m is PlayerMobile mobile && mobile.KarmaLocked)
+                {
                     return;
+                }
 
                 if (karma >= MaxKarma)
+                {
                     return;
+                }
 
                 offset -= karma / 100;
 
                 if (offset < 0)
+                {
                     offset = 0;
+                }
             }
             else if (offset < 0)
             {
                 if (karma <= MinKarma)
+                {
                     return;
+                }
 
                 offset -= karma / 100;
 
                 if (offset > 0)
+                {
                     offset = 0;
+                }
             }
 
             if (karma + offset > MaxKarma)
+            {
                 offset = MaxKarma - karma;
+            }
             else if (karma + offset < MinKarma)
+            {
                 offset = MinKarma - karma;
+            }
 
             m.Karma += offset;
 
             if (message)
             {
                 if (offset > 40)
+                {
                     m.SendLocalizedMessage(1019062); // You have gained a lot of karma.
+                }
                 else if (offset > 20)
+                {
                     m.SendLocalizedMessage(1019061); // You have gained a good amount of karma.
+                }
                 else if (offset > 10)
+                {
                     m.SendLocalizedMessage(1019060); // You have gained some karma.
+                }
                 else if (offset > 0)
+                {
                     m.SendLocalizedMessage(1019059); // You have gained a little karma.
+                }
                 else if (offset < -40)
+                {
                     m.SendLocalizedMessage(1019066); // You have lost a lot of karma.
+                }
                 else if (offset < -20)
+                {
                     m.SendLocalizedMessage(1019065); // You have lost a good amount of karma.
+                }
                 else if (offset < -10)
+                {
                     m.SendLocalizedMessage(1019064); // You have lost some karma.
+                }
                 else if (offset < 0)
+                {
                     m.SendLocalizedMessage(1019063); // You have lost a little karma.
+                }
             }
         }
 
@@ -246,7 +308,9 @@ namespace Server.Misc
                 string skillTitle = highest.Info.Title;
 
                 if (mob.Female && skillTitle.EndsWith("man"))
+                {
                     skillTitle = skillTitle.Substring(0, skillTitle.Length - 3) + "woman";
+                }
 
                 return string.Concat(skillLevel, " ", skillTitle);
             }
@@ -262,7 +326,9 @@ namespace Server.Misc
                 string skillTitle = skill.Info.Title;
 
                 if (mob.Female && skillTitle.EndsWith("man"))
+                {
                     skillTitle = skillTitle.Substring(0, skillTitle.Length - 3) + "woman";
+                }
 
                 return string.Concat(skillLevel, " ", skillTitle);
             }
@@ -279,9 +345,13 @@ namespace Server.Misc
                 Skill check = m.Skills[i];
 
                 if (highest == null || check.BaseFixedPoint > highest.BaseFixedPoint)
+                {
                     highest = check;
+                }
                 else if (highest.Lock != SkillLock.Up && check.Lock == SkillLock.Up && check.BaseFixedPoint == highest.BaseFixedPoint)
+                {
                     highest = check;
+                }
             }
 
             return highest;
@@ -419,13 +489,17 @@ namespace Server.Misc
             Account a = m.Account as Account;
 
             if (a == null)
+            {
                 return null;
+            }
 
             int years = (int)(DateTime.UtcNow - a.Created).TotalDays;
             years /= 365;
 
             if (years < 2)
+            {
                 return null;
+            }
 
             List<VeteranTitle> titles = new List<VeteranTitle>();
 

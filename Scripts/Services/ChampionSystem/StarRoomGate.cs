@@ -49,7 +49,9 @@ namespace Server.Items
         public override void OnAfterDelete()
         {
             if (m_Timer != null)
+            {
                 m_Timer.Stop();
+            }
 
             base.OnAfterDelete();
         }
@@ -62,7 +64,9 @@ namespace Server.Items
             writer.Write(m_Decays);
 
             if (m_Decays)
+            {
                 writer.WriteDeltaTime(m_DecayTime);
+            }
         }
 
         public override void Deserialize(GenericReader reader)

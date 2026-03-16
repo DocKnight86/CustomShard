@@ -143,16 +143,22 @@ namespace Server.Mobiles
             Mobile combatant = Combatant as Mobile;
 
             if (combatant == null || combatant.Deleted || combatant.Map != Map || !InRange(combatant, 12) || !CanBeHarmful(combatant) || !InLOS(combatant))
+            {
                 return;
+            }
 
             if (DateTime.UtcNow >= m_NextWaterBall)
             {
                 double damage = combatant.Hits * 0.3;
 
                 if (damage < 10.0)
+                {
                     damage = 10.0;
+                }
                 else if (damage > 40.0)
+                {
                     damage = 40.0;
+                }
 
                 DoHarmful(combatant);
                 MovingParticles(combatant, 0x36D4, 5, 0, false, false, 195, 0, 9502, 3006, 0, 0, 0);
@@ -172,13 +178,19 @@ namespace Server.Mobiles
             Item item = Loot.Construct(m_Artifacts);
 
             if (item == null)
+            {
                 return;
+            }
 
             // TODO: Confirm messages
             if (m.AddToBackpack(item))
+            {
                 m.SendMessage("As a reward for slaying the mighty leviathan, an artifact has been placed in your backpack.");
+            }
             else
+            {
                 m.SendMessage("As your backpack is full, your reward for destroying the legendary leviathan has been placed at your feet.");
+            }
         }
 
         public override void GenerateLoot()
@@ -211,7 +223,9 @@ namespace Server.Mobiles
                 GiveArtifactTo(mob);
 
                 if (mob == m_Fisher)
+                {
                     m_Fisher = null;
+                }
             }
         }
 
@@ -220,7 +234,9 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (m_Fisher != null && 25 > Utility.Random(100))
+            {
                 GiveArtifactTo(m_Fisher);
+            }
 
             m_Fisher = null;
         }

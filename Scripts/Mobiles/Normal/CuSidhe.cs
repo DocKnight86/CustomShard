@@ -21,11 +21,17 @@ namespace Server.Mobiles
             double chance = Utility.RandomDouble() * 23301;
 
             if (chance <= 1)
+            {
                 Hue = 0x489;
+            }
             else if (chance <= 301)
+            {
                 Hue = Utility.RandomList(0x657, 0x515, 0x4B1, 0x481, 0x482, 0x455);
+            }
             else if (chance <= 3301)
+            {
                 Hue = Utility.RandomList(0x97A, 0x978, 0x901, 0x8AC, 0x5A7, 0x527);
+            }
 
             SetStr(1200, 1225);
             SetDex(150, 170);
@@ -84,13 +90,19 @@ namespace Server.Mobiles
             if (Owners.Count == 0)
             {
                 if (RawStr > 0)
+                {
                     RawStr = (int)Math.Max(1, RawStr * 0.5);
+                }
 
                 if (RawDex > 0)
+                {
                     RawDex = (int)Math.Max(1, RawDex * 0.5);
+                }
 
                 if (HitsMaxSeed > 0)
+                {
                     HitsMaxSeed = (int)Math.Max(1, HitsMaxSeed * 0.5);
+                }
 
                 Hits = Math.Min(HitsMaxSeed, Hits);
                 Stam = Math.Min(RawDex, Stam);
@@ -108,7 +120,9 @@ namespace Server.Mobiles
                 Item pads = from.FindItemOnLayer(Layer.Shoes);
 
                 if (pads is PadsOfTheCuSidhe)
+                {
                     from.SendLocalizedMessage(1071981); // Your boots allow you to mount the Cu Sidhe.
+                }
                 else
                 {
                     from.SendLocalizedMessage(1072203); // Only Elves may use 
@@ -163,7 +177,9 @@ namespace Server.Mobiles
             }
 
             if (version < 1 && Name == "a Cu Sidhe")
+            {
                 Name = "a cu sidhe";
+            }
 
             if (version == 1)
             {

@@ -75,7 +75,9 @@ namespace Server.Misc
         public static void Initialize()
         {
             if (Enabled)
+            {
                 EventSink.Speech += EventSink_Speech;
+            }
         }
 
         private static bool OnProfanityDetected(Mobile from, string speech)
@@ -97,7 +99,9 @@ namespace Server.Misc
                         NetState ns = from.NetState;
 
                         if (ns != null)
+                        {
                             ns.Dispose();
+                        }
 
                         return false;
                     }
@@ -114,10 +118,14 @@ namespace Server.Misc
             Mobile from = e.Mobile;
 
             if (from.IsStaff())
+            {
                 return;
+            }
 
             if (!NameVerification.Validate(e.Speech, 0, int.MaxValue, true, true, false, int.MaxValue, m_Exceptions, m_Disallowed, m_StartDisallowed))
+            {
                 e.Blocked = !OnProfanityDetected(from, e.Speech);
+            }
         }
     }
 }

@@ -75,11 +75,15 @@ namespace Server.Engines.CannedEvil
                     int x = cx + Utility.Random(range * 2) - range;
                     int y = cy + Utility.Random(range * 2) - range;
                     if ((cx - x) * (cx - x) + (cy - y) * (cy - y) > range * range)
+                    {
                         continue;
+                    }
 
                     int z = map.GetAverageZ(x, y);
                     if (!map.CanFit(x, y, z, 6, false, false))
+                    {
                         continue;
+                    }
 
                     int topZ = z;
                     foreach (Item item in map.GetItemsInRange(new Point3D(x, y, z), 0))

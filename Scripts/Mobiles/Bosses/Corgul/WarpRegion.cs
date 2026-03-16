@@ -55,7 +55,7 @@ namespace Server.Regions
                 return;
             }
 
-            for (var index = 0; index < m_Markers.Count; index++)
+            for (int index = 0; index < m_Markers.Count; index++)
             {
                 Item i = m_Markers[index];
 

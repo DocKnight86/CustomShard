@@ -174,7 +174,9 @@ namespace Server.Mobiles
                             double dist = Math.Sqrt(x * x + y * y);
 
                             if (dist <= 12)
+                            {
                                 new GoodiesTimer(map, X + x, Y + y).Start();
+                            }
                         }
                     }
                 }
@@ -217,11 +219,15 @@ namespace Server.Mobiles
                     canFit = m_Map.CanFit(m_X, m_Y, z + i, 6, false, false);
 
                     if (canFit)
+                    {
                         z += i;
+                    }
                 }
 
                 if (!canFit)
+                {
                     return;
+                }
 
                 Gold g = new Gold(300, 500);
 

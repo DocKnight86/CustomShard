@@ -44,9 +44,13 @@ namespace Server.Items
             get
             {
                 if (m_House != null && m_Owner != null && !m_Owner.Deleted)
+                {
                     return !m_House.IsCoOwner(m_Owner);
+                }
                 else
+                {
                     return true;
+                }
             }
         }
         public override TimeSpan DecayTime => TimeSpan.FromMinutes(30.0);
@@ -83,15 +87,21 @@ namespace Server.Items
         public override void AddNameProperty(ObjectPropertyList list)
         {
             if (m_Owner != null)
+            {
                 list.Add(1042887, m_Owner.Name); // a strong box owned by ~1_OWNER_NAME~
+            }
             else
+            {
                 base.AddNameProperty(list);
+            }
         }
 
         public override bool IsAccessibleTo(Mobile m)
         {
             if (m_Owner == null || m_Owner.Deleted || m_House == null || m_House.Deleted || m.AccessLevel >= AccessLevel.GameMaster)
+            {
                 return true;
+            }
 
             return m == m_Owner && m_House.IsCoOwner(m) && base.IsAccessibleTo(m);
         }
@@ -101,7 +111,9 @@ namespace Server.Items
             if (m_House != null && !m_House.Deleted && m_Owner != null && !m_Owner.Deleted)
             {
                 if (from == m_Owner || m_House.IsOwner(from))
+                {
                     Chop(from);
+                }
             }
             else
             {

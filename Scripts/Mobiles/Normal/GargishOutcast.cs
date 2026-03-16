@@ -38,7 +38,9 @@ namespace Server.Mobiles
 
             Utility.AssignRandomHair(this, true);
             if (!Female)
+            {
                 Utility.AssignRandomFacialHair(this, true);
+            }
 
             Hue = Race.RandomSkinHue();
 
@@ -60,7 +62,9 @@ namespace Server.Mobiles
             AddImmovableItem(new GargishClothKilt(Utility.RandomNeutralHue()));
 
             if (Utility.RandomBool())
+            {
                 AddImmovableItem(new GargishRobe());
+            }
 
             SetDamageType(ResistanceType.Physical, 100);
 
@@ -138,7 +142,9 @@ namespace Server.Mobiles
             base.OnThink();
 
             if (Combatant == null || m_NextSummon > DateTime.UtcNow)
+            {
                 return;
+            }
 
             if (Mana > 40 && Followers + 4 <= FollowersMax)
             {

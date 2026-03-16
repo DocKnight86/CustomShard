@@ -49,7 +49,9 @@ namespace Server.Mobiles
         public override bool OnBeforeDeath()
         {
             if (!base.OnBeforeDeath())
+            {
                 return false;
+            }
 
             new TreasureSand().MoveToWorld(Location, Map);
 

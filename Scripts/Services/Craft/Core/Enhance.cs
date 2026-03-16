@@ -31,7 +31,6 @@ namespace Server.Engines.Craft
             _SpecialTable = new Dictionary<Type, CraftSystem>();
 
             _SpecialTable[typeof(ClockworkLeggings)] = DefBlacksmithy.CraftSystem;
-            _SpecialTable[typeof(GargishClockworkLeggings)] = DefBlacksmithy.CraftSystem;
             _SpecialTable[typeof(JukaBow)] = DefBowFletching.CraftSystem;
         }
 

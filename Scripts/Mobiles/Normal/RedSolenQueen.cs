@@ -87,7 +87,9 @@ namespace Server.Mobiles
 
             if (attacker.Weapon is BaseRanged)
 
+            {
                 BeginAcidBreath();
+            }
 
             else if (Map != null && attacker != this && m_Laid == false && 0.20 > Utility.RandomDouble()) //  if (m_Talked == false)
             {
@@ -109,7 +111,9 @@ namespace Server.Mobiles
             base.OnDamagedBySpell(attacker);
 
             if (0.80 >= Utility.RandomDouble())
+            {
                 BeginAcidBreath();
+            }
         }
 
         #region Acid Breath
@@ -121,7 +125,9 @@ namespace Server.Mobiles
             // Mobile m = Combatant;
 
             if (m == null || m.Deleted || !m.Alive || !Alive || m_NextAcidBreath > DateTime.Now || !CanBeHarmful(m))
+            {
                 return;
+            }
 
             PlaySound(0x118);
             MovingEffect(m, 0x36D4, 1, 0, false, false, 0x3F, 0);
@@ -135,10 +141,14 @@ namespace Server.Mobiles
         public void EndAcidBreath(Mobile m)
         {
             if (m == null || m.Deleted || !m.Alive || !Alive)
+            {
                 return;
+            }
 
             if (0.2 >= Utility.RandomDouble())
+            {
                 m.ApplyPoison(this, Poison.Greater);
+            }
 
             AOS.Damage(m, Utility.RandomMinMax(100, 120), 0, 0, 0, 100, 0);
         }
@@ -283,7 +293,9 @@ namespace Server.Mobiles
             protected override void OnTick()
             {
                 if (m_Item.Deleted)
+                {
                     return;
+                }
 
                 Mobile spawn;
 

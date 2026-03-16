@@ -28,9 +28,15 @@ namespace Server.Engines.Despise
             get
             {
                 if (Karma > 0)
+                {
                     return Alignment.Good;
+                }
+
                 if (Karma < 0)
+                {
                     return Alignment.Evil;
+                }
+
                 return Alignment.Neutral;
             }
         }
@@ -50,7 +56,9 @@ namespace Server.Engines.Despise
                 int oldPower = m_Power;
 
                 if (value > m_MaxPower)
+                {
                     m_Power = m_MaxPower;
+                }
 
                 if (oldPower < value)
                 {
@@ -60,7 +68,9 @@ namespace Server.Engines.Despise
                 }
 
                 if (m_Orb != null)
+                {
                     m_Orb.InvalidateProperties();
+                }
             }
         }
 
@@ -82,7 +92,9 @@ namespace Server.Engines.Despise
                 }
 
                 if (m_Orb != null)
+                {
                     m_Orb.InvalidateProperties();
+                }
             }
         }
 
@@ -198,10 +210,14 @@ namespace Server.Engines.Despise
             if (m is PlayerMobile)
             {
                 if (m.Karma <= 1000 && Alignment == Alignment.Good)
+                {
                     return true;
+                }
 
                 if (m.Karma >= 1000 && Alignment == Alignment.Evil)
+                {
                     return true;
+                }
             }
             else if (m is DespiseCreature creature)
             {
@@ -214,7 +230,9 @@ namespace Server.Engines.Despise
         public override bool CanBeRenamedBy(Mobile from)
         {
             if (from.AccessLevel > AccessLevel.Player)
+            {
                 return base.CanBeRenamedBy(from);
+            }
 
             return false;
         }
@@ -228,7 +246,9 @@ namespace Server.Engines.Despise
             base.GetProperties(list);
 
             if (ControlMaster != null)
+            {
                 list.Add(1153303, ControlMaster.Name); // Controller: ~1_NAME~
+            }
 
             list.Add(1153297, $"{m_Power}\t#{GetPowerLabel(m_Power)}"); // Power Level: ~1_LEVEL~: ~2_VAL~
         }
@@ -238,7 +258,9 @@ namespace Server.Engines.Despise
             base.OnCombatantChange();
 
             if (m_Orb != null)
+            {
                 m_Orb.InvalidateHue();
+            }
         }
 
         public override void OnKarmaChange(int oldValue)
@@ -269,13 +291,17 @@ namespace Server.Engines.Despise
             base.Delete();
 
             if (m_Orb != null && !m_Orb.Deleted)
+            {
                 m_Orb.Pet = null;
+            }
         }
 
         public int GetLeashLength()
         {
             if (m_Orb == null)
+            {
                 return RangePerception;
+            }
 
             switch (m_Orb.LeashLength)
             {
@@ -325,7 +351,9 @@ namespace Server.Engines.Despise
                     double toRaise = SkillMax / m_MaxPower * m_Power + Utility.RandomMinMax(-5, 5);
 
                     if (toRaise > skill.Base)
+                    {
                         skill.Base = Math.Min(SkillMax, toRaise);
+                    }
                 }
             }
 
@@ -334,26 +362,38 @@ namespace Server.Engines.Despise
             int intRaise = IntMax / 15 * m_Power + Utility.RandomMinMax(-5, 5);
 
             if (strRaise > RawStr)
+            {
                 SetStr(Math.Min(StrMax, strRaise));
+            }
 
             if (dexRaise > RawDex)
+            {
                 SetDex(Math.Min(DexMax, dexRaise));
+            }
 
             if (intRaise > RawInt)
+            {
                 SetInt(Math.Min(IntMax, intRaise));
+            }
 
             int hitsRaise = MaxHits / 15 * m_Power + Utility.RandomMinMax(-5, 5);
             int stamRaise = MaxStam / 15 * m_Power + Utility.RandomMinMax(-5, 5);
             int manaRaise = MaxMana / 15 * m_Power + Utility.RandomMinMax(-5, 5);
 
             if (hitsRaise > HitsMax)
+            {
                 SetHits(Math.Min(MaxHits, hitsRaise));
+            }
 
             if (stamRaise > StamMax)
+            {
                 SetStam(Math.Min(MaxStam, stamRaise));
+            }
 
             if (manaRaise > ManaMax)
+            {
                 SetMana(Math.Min(MaxMana, manaRaise));
+            }
 
             if (RaiseDamage && Utility.RandomDouble() < RaiseDamageFactor)
             {
@@ -424,7 +464,9 @@ namespace Server.Engines.Despise
             m_Progress = reader.ReadInt();
 
             if (!NoLootOnDeath)
+            {
                 NoLootOnDeath = true;
+            }
         }
     }
 }

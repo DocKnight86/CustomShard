@@ -95,12 +95,16 @@ namespace Server.Mobiles
         public void Summon(Mobile target, bool initial = false)
         {
             if (target == null || !initial && InitialSpawn != null && InitialSpawn.Count > 0)
+            {
                 return;
+            }
 
             Map map = Map;
 
             if (map == null || TotalSummons() > MaxSummons)
+            {
                 return;
+            }
 
             if (!initial)
             {
@@ -110,7 +114,9 @@ namespace Server.Mobiles
             Timer.DelayCall(TimeSpan.FromSeconds(initial ? 0.25 : 1.0), com =>
             {
                 if (!com.Alive)
+                {
                     return;
+                }
 
                 int count = Utility.RandomMinMax(3, 5);
 
@@ -143,8 +149,10 @@ namespace Server.Mobiles
                     {
                         if (spawn.Combatant != null)
                         {
-                            if (!(spawn.Combatant is PlayerMobile) || !((PlayerMobile)spawn.Combatant).HonorActive)
+                            if (spawn.Combatant is not PlayerMobile)
+                            {
                                 spawn.Combatant = com;
+                            }
                         }
                         else
                         {
@@ -169,18 +177,26 @@ namespace Server.Mobiles
             if (initial)
             {
                 if (InitialSpawn == null)
+                {
                     InitialSpawn = new List<BaseCreature>();
+                }
 
                 if (!InitialSpawn.Contains(bc))
+                {
                     InitialSpawn.Add(bc);
+                }
             }
             else
             {
                 if (SummonedHelpers == null)
+                {
                     SummonedHelpers = new List<BaseCreature>();
+                }
 
                 if (!SummonedHelpers.Contains(bc))
+                {
                     SummonedHelpers.Add(bc);
+                }
             }
         }
 

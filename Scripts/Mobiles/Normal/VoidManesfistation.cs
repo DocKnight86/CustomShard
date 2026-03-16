@@ -97,7 +97,9 @@ namespace Server.Mobiles
             base.OnThink();
 
             if (Combatant == null)
+            {
                 return;
+            }
 
             if (m_NextSummon < DateTime.UtcNow && Mana > 40 && Followers + 5 <= FollowersMax)
             {
@@ -111,9 +113,13 @@ namespace Server.Mobiles
             if (m_NextAIChange < DateTime.UtcNow)
             {
                 if (AIObject is MageAI)
+                {
                     ChangeAIType(AIType.AI_Mystic);
+                }
                 else
+                {
                     ChangeAIType(AIType.AI_Mage);
+                }
 
                 Combatant = combatant;
 

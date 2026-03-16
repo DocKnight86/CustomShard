@@ -12,7 +12,9 @@ namespace Server.Items
             int count = 1;
 
             if (0.015 > Utility.RandomDouble())
+            {
                 count = 2;
+            }
 
             bool equipment = false;
             bool jewlery = false;

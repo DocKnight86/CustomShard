@@ -111,18 +111,28 @@ namespace Server.Mobiles
                 rights.Sort();
 
                 if (rights.Count >= 5)
+                {
                     winner = rights[Utility.Random(5)].m_Mobile;
+                }
                 else if (rights.Count > 1)
+                {
                     winner = rights[Utility.Random(rights.Count)].m_Mobile;
+                }
                 else
+                {
                     winner = rights[0].m_Mobile;
+                }
             }
 
             if (winner != null)
+            {
                 GiveArtifact(winner, CreateArtifact(UniqueList));
+            }
 
             if (IsSoulboundEnemies)
+            {
                 EtherealSandShower.Do(Location, Map, 50, 100, 500);
+            }
 
             return base.OnBeforeDeath();
         }
@@ -132,16 +142,21 @@ namespace Server.Mobiles
             double random = Utility.RandomDouble();
 
             if (SharedChance >= random)
+            {
                 return CreateArtifact(SharedList);
+            }
+
             if (DecorativeChance >= random)
+            {
                 return CreateArtifact(DecorativeList);
+            }
 
             return null;
         }
 
         public void SpawnHelpers()
         {
-            for (var index = 0; index < _SpawnLocs.Length; index++)
+            for (int index = 0; index < _SpawnLocs.Length; index++)
             {
                 Point3D pnt = _SpawnLocs[index];
 
@@ -185,7 +200,10 @@ namespace Server.Mobiles
             if (Map == null || bc == null)
             {
                 if (bc != null)
+                {
                     bc.Delete();
+                }
+
                 return;
             }
 
@@ -195,7 +213,7 @@ namespace Server.Mobiles
             {
                 x = Utility.RandomMinMax(p.X - 4, p.X + 4);
                 y = Utility.RandomMinMax(p.Y - 4, p.Y + 4);
-                var z = Map.GetAverageZ(x, y);
+                int z = Map.GetAverageZ(x, y);
 
                 if (Map.CanSpawnMobile(x, y, z))
                 {
@@ -233,21 +251,27 @@ namespace Server.Mobiles
             }
 
             if (Combatant == null)
+            {
                 return;
+            }
 
             if (DateTime.UtcNow > m_NextDismount && 0.1 > Utility.RandomDouble())
+            {
                 DoDismount();
+            }
 
             else if (DateTime.UtcNow > m_NextArea && 0.1 > Utility.RandomDouble())
+            {
                 DoAreaAttack();
+            }
 
             if (!m_HasDone2ndSpawn && m_Helpers.Count > 0)
             {
                 int count = 0;
 
-                for (var index = 0; index < m_Helpers.Count; index++)
+                for (int index = 0; index < m_Helpers.Count; index++)
                 {
-                    var bc = m_Helpers[index];
+                    BaseCreature bc = m_Helpers[index];
 
                     if (bc.Alive && !bc.Deleted)
                     {
@@ -424,7 +448,7 @@ namespace Server.Mobiles
 
             if (m_Helpers != null)
             {
-                for (var index = 0; index < m_Helpers.Count; index++)
+                for (int index = 0; index < m_Helpers.Count; index++)
                 {
                     BaseCreature bc = m_Helpers[index];
 
@@ -445,7 +469,7 @@ namespace Server.Mobiles
                 return;
             }
 
-            var killer = bc.FindMostRecentDamager(false);
+            Mobile killer = bc.FindMostRecentDamager(false);
 
             if (killer is BaseCreature creature)
             {
@@ -471,7 +495,7 @@ namespace Server.Mobiles
             writer.Write(m_HasDone2ndSpawn);
             writer.Write(m_Altar);
             writer.Write(m_Helpers.Count);
-            for (var index = 0; index < m_Helpers.Count; index++)
+            for (int index = 0; index < m_Helpers.Count; index++)
             {
                 BaseCreature bc = m_Helpers[index];
 
@@ -496,7 +520,9 @@ namespace Server.Mobiles
                     for (int i = 0; i < cnt; i++)
                     {
                         if (reader.ReadMobile() is BaseCreature bc)
+                        {
                             m_Helpers.Add(bc);
+                        }
                     }
                     break;
             }
@@ -571,11 +597,15 @@ namespace Server.Mobiles
                     int x = cx + Utility.Random(range * 2) - range;
                     int y = cy + Utility.Random(range * 2) - range;
                     if ((cx - x) * (cx - x) + (cy - y) * (cy - y) > range * range)
+                    {
                         continue;
+                    }
 
                     int z = map.GetAverageZ(x, y);
                     if (!map.CanFit(x, y, z, 6, false, false))
+                    {
                         continue;
+                    }
 
                     int topZ = z;
                     foreach (Item item in map.GetItemsInRange(new Point3D(x, y, z), 0))

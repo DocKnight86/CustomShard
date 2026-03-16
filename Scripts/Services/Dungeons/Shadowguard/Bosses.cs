@@ -23,15 +23,7 @@ namespace Server.Engines.Shadowguard
 
         public virtual bool CanSummon => Hits <= HitsMax - (HitsMax / 4);
 
-        private readonly Type[] _ArtifactTypes =
-        {
-            typeof(AnonsBoots),                 typeof(AnonsSpellbook),         typeof(BalakaisShamanStaff),
-            typeof(EnchantressCameo),           typeof(GrugorsShield),          typeof(WamapsBoneEarrings),
-            typeof(HalawasHuntingBow),          typeof(HawkwindsRobe),          typeof(JumusSacredHide),
-            typeof(JuonarsGrimoire),            typeof(LereisHuntingSpear),     typeof(UnstableTimeRift),
-            typeof(MinaxsSandles),              typeof(MocapotlsObsidianSword), typeof(OzymandiasObi),
-            typeof(ShantysWaders),              typeof(TotemOfTheTribe),        typeof(BalakaisShamanStaffGargoyle)
-        };
+        private readonly Type[] _ArtifactTypes = [typeof(Katana)]; // placeholder
 
         public ShadowguardBoss(AIType ai) : base(ai, FightMode.Closest, 10, 1, .15, .3)
         {
@@ -277,14 +269,9 @@ namespace Server.Engines.Shadowguard
 
                     Timer.DelayCall(TimeSpan.FromSeconds(1), o =>
                     {
-                        BaseCreature s = o;
-
-                        if (s != null && s.Combatant != null)
+                        if (o != null && o.Combatant != null && o.Combatant is not PlayerMobile)
                         {
-                            if (!(s.Combatant is PlayerMobile) || !((PlayerMobile)s.Combatant).HonorActive)
-                            {
-                                s.Combatant = Combatant;
-                            }
+                            o.Combatant = Combatant;
                         }
 
                     }, spawn);

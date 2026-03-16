@@ -50,13 +50,17 @@ namespace Server.Misc
                 e.Mobile.SendMessage("Saves have been {0}.", SavesEnabled ? "enabled" : "disabled");
             }
             else
+            {
                 e.Mobile.SendMessage("Format: SetSaves <true | false>");
+            }
         }
 
         public static void Save(bool saveLegacyBackup = false)
         {
             if (AutoRestart.Restarting || CreateWorld.WorldCreating)
+            {
                 return;
+            }
 
             RunBackup("Backups");
             World.WaitForWriteCompletion();
@@ -81,7 +85,9 @@ namespace Server.Misc
             try
             {
                 if (!Backup(folder))
+                {
                     Console.WriteLine($"WARNING: Automatic backup FAILED to {folder}");
+                }
             }
             catch (Exception e)
             {
@@ -93,10 +99,14 @@ namespace Server.Misc
         private static void Tick()
         {
             if (!SavesEnabled || AutoRestart.Restarting || CreateWorld.WorldCreating)
+            {
                 return;
+            }
 
             if (m_Warning == TimeSpan.Zero)
+            {
                 Save();
+            }
             else
             {
                 int s = (int)m_Warning.TotalSeconds;
@@ -104,11 +114,17 @@ namespace Server.Misc
                 s %= 60;
 
                 if (m > 0 && s > 0)
+                {
                     World.Broadcast(0x35, false, "The world will save in {0} minute{1} and {2} second{3}.", m, m != 1 ? "s" : "", s, s != 1 ? "s" : "");
+                }
                 else if (m > 0)
+                {
                     World.Broadcast(0x35, false, "The world will save in {0} minute{1}.", m, m != 1 ? "s" : "");
+                }
                 else
+                {
                     World.Broadcast(0x35, false, "The world will save in {0} second{1}.", s, s != 1 ? "s" : "");
+                }
 
                 Timer.DelayCall(m_Warning, () => Save());
             }
@@ -117,17 +133,23 @@ namespace Server.Misc
         private static bool Backup(string rootFolder)
         {
             if (m_Backups.Length == 0)
+            {
                 return false;
+            }
 
             string root = Path.Combine(Core.BaseDirectory, $"{rootFolder}/Automatic");
 
             if (!Directory.Exists(root))
+            {
                 Directory.CreateDirectory(root);
+            }
 
             string tempRoot = Path.Combine(Core.BaseDirectory, $"{rootFolder}/Temp");
 
             if (Directory.Exists(tempRoot))
+            {
                 Directory.Delete(tempRoot, true);
+            }
 
             string[] existing = Directory.GetDirectories(root);
 
@@ -171,7 +193,9 @@ namespace Server.Misc
             string saves = Path.Combine(Core.BaseDirectory, "Saves");
 
             if (Directory.Exists(saves))
+            {
                 Directory.Move(saves, Path.Combine(root, m_Backups[m_Backups.Length - 1]));
+            }
 
             return anySuccess;
         }
@@ -183,7 +207,9 @@ namespace Server.Misc
                 DirectoryInfo info = new DirectoryInfo(paths[i]);
 
                 if (info.Name.StartsWith(match))
+                {
                     return info;
+                }
             }
 
             return null;

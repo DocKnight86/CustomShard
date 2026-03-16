@@ -59,7 +59,9 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (!Controlled && 0.2 > Utility.RandomDouble())
+            {
                 c.DropItem(new LeatherWolfSkin());
+            }
         }
 
         public override void OnCombatantChange()
@@ -88,7 +90,9 @@ namespace Server.Mobiles
                     Mobile friend = m_Fellows[i];
 
                     if (friend.Deleted)
+                    {
                         m_Fellows.Remove(friend);
+                    }
                 }
 
                 bool spawned = false;
@@ -101,7 +105,9 @@ namespace Server.Mobiles
                     friend.Combatant = Combatant;
 
                     if (friend.AIObject != null)
+                    {
                         friend.AIObject.Action = ActionType.Combat;
+                    }
 
                     m_Fellows.Add(friend);
 

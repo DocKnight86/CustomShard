@@ -46,16 +46,22 @@ namespace Server.Engines.Harvest
         public void SendMessageTo(Mobile from, object message)
         {
             if (message is int i)
+            {
                 from.SendLocalizedMessage(i);
+            }
 
             else if (message is string s)
+            {
                 from.SendMessage(s);
+            }
         }
 
         public HarvestBank GetBank(Map map, int x, int y)
         {
             if (map == null || map == Map.Internal)
+            {
                 return null;
+            }
 
             x /= BankWidth;
             y /= BankHeight;
@@ -63,13 +69,17 @@ namespace Server.Engines.Harvest
             Banks.TryGetValue(map, out Dictionary<Point2D, HarvestBank> banks);
 
             if (banks == null)
+            {
                 Banks[map] = banks = new Dictionary<Point2D, HarvestBank>();
+            }
 
             Point2D key = new Point2D(x, y);
             banks.TryGetValue(key, out HarvestBank bank);
 
             if (bank == null)
+            {
                 banks[key] = bank = new HarvestBank(this, GetVeinAt(map, x, y));
+            }
 
             return bank;
         }
@@ -77,7 +87,9 @@ namespace Server.Engines.Harvest
         public HarvestVein GetVeinAt(Map map, int x, int y)
         {
             if (Veins.Length == 1)
+            {
                 return Veins[0];
+            }
 
             double randomValue;
 
@@ -97,14 +109,18 @@ namespace Server.Engines.Harvest
         public HarvestVein GetVeinFrom(double randomValue)
         {
             if (Veins.Length == 1)
+            {
                 return Veins[0];
+            }
 
             randomValue *= 100;
 
             for (int i = 0; i < Veins.Length; ++i)
             {
                 if (randomValue <= Veins[i].VeinChance)
+                {
                     return Veins[i];
+                }
 
                 randomValue -= Veins[i].VeinChance;
             }
@@ -115,14 +131,18 @@ namespace Server.Engines.Harvest
         public BonusHarvestResource GetBonusResource()
         {
             if (BonusResources == null)
+            {
                 return null;
+            }
 
             double randomValue = Utility.RandomDouble() * 100;
 
             for (int i = 0; i < BonusResources.Length; ++i)
             {
                 if (randomValue <= BonusResources[i].Chance)
+                {
                     return BonusResources[i];
+                }
 
                 randomValue -= BonusResources[i].Chance;
             }
@@ -157,12 +177,16 @@ namespace Server.Engines.Harvest
         {
             //No Special tiles were initiated so always true
             if (SpecialTiles == null || SpecialTiles.Length == 0)
+            {
                 return true;
+            }
 
             for (int i = 0; i < SpecialTiles.Length; i++)
             {
                 if (tileID == SpecialTiles[i])
+                {
                     return true;
+                }
             }
 
             return false;

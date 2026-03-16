@@ -188,7 +188,9 @@ namespace Server.Mobiles
         public override void OnGotMeleeAttack(Mobile attacker)
         {
             if (attacker.Weapon is BaseRanged)
+            {
                 BeginAcidBreath();
+            }
 
             base.OnGotMeleeAttack(attacker);
         }
@@ -208,7 +210,9 @@ namespace Server.Mobiles
             PlayerMobile m = Combatant as PlayerMobile;
 
             if (m == null || m.Deleted || !m.Alive || !Alive || m_NextAcidBreath > DateTime.Now || !CanBeHarmful(m))
+            {
                 return;
+            }
 
             PlaySound(0x118);
             MovingEffect(m, 0x36D4, 1, 0, false, false, 0x3F, 0);
@@ -222,10 +226,14 @@ namespace Server.Mobiles
         public void EndAcidBreath(Mobile m)
         {
             if (m == null || m.Deleted || !m.Alive || !Alive)
+            {
                 return;
+            }
 
             if (0.2 >= Utility.RandomDouble())
+            {
                 m.ApplyPoison(this, Poison.Greater);
+            }
 
             AOS.Damage(m, Utility.RandomMinMax(100, 120), 0, 0, 0, 100, 0);
         }

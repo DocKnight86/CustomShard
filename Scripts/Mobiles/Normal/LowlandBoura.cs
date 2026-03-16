@@ -109,10 +109,14 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (Controlled)
+            {
                 return;
+            }
 
             if (!Controlled)
+            {
                 c.DropItem(new BouraSkin());
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -128,7 +132,9 @@ namespace Server.Mobiles
             int version = reader.ReadInt();
 
             if (version == 1)
+            {
                 reader.ReadDeltaTime();
+            }
             else
             {
                 GatheredFur = reader.ReadBool();

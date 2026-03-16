@@ -19,13 +19,17 @@ namespace Server.Engines.Quests
             Mobile quester = Quest.Quester as Mobile;
 
             if (from == null || captain == null)
+            {
                 return false;
+            }
 
             Container pack = from.Backpack;
             bool inRange = quester != null && quester.InRange(captain.Location, 75);
 
             if (m_Captured && inRange)
+            {
                 return true;
+            }
 
             Item item = pack.FindItemByType(typeof(DeathCertificate));
             if (item != null && Quest is ProfessionalBountyQuest && ((DeathCertificate)item).Owner != null)

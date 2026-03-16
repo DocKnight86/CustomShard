@@ -226,7 +226,9 @@ namespace Server
         public static void OnDropped(ContainerDroppedToEventArgs e)
         {
             if (!SiegeShard)
+            {
                 return;
+            }
 
             Item item = e.Dropped;
             Mobile from = e.Mobile;
@@ -255,7 +257,9 @@ namespace Server
         public static bool CheckTravel(Mobile m, Point3D p, Map map, TravelCheckType type)
         {
             if (m.AccessLevel > AccessLevel.Player)
+            {
                 return true;
+            }
 
             switch (type)
             {

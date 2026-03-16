@@ -42,21 +42,31 @@ namespace Server.Items
         public static bool ValidateDefault(Mobile from, BaseBoard board)
         {
             if (from.AccessLevel >= AccessLevel.GameMaster)
+            {
                 return true;
+            }
 
             if (!from.Alive)
+            {
                 return false;
+            }
 
             if (board.IsChildOf(from.Backpack))
+            {
                 return true;
+            }
 
             object root = board.RootParent;
 
             if (root is Mobile && root != from)
+            {
                 return false;
+            }
 
             if (board.Deleted || board.Map != from.Map || !from.InRange(board.GetWorldLocation(), 1))
+            {
                 return false;
+            }
 
             BaseHouse house = BaseHouse.FindHouseAt(board);
 
@@ -70,7 +80,9 @@ namespace Server.Items
             for (int i = Items.Count - 1; i >= 0; --i)
             {
                 if (i < Items.Count)
+                {
                     Items[i].Delete();
+                }
             }
 
             CreatePieces();
@@ -137,7 +149,9 @@ namespace Server.Items
             base.GetContextMenuEntries(from, list);
 
             if (ValidateDefault(from, this))
+            {
                 list.Add(new DefaultEntry(from, this));
+            }
 
             SetSecureLevelEntry.AddTo(from, this, list);
         }
@@ -156,7 +170,9 @@ namespace Server.Items
             public override void OnClick()
             {
                 if (ValidateDefault(m_From, m_Board))
+                {
                     m_Board.Reset();
+                }
             }
         }
     }

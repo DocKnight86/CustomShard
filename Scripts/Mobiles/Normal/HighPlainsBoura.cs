@@ -139,7 +139,9 @@ namespace Server.Mobiles
             int version = reader.ReadInt();
 
             if (version == 1)
+            {
                 reader.ReadDeltaTime();
+            }
             else
             {
                 GatheredFur = reader.ReadBool();

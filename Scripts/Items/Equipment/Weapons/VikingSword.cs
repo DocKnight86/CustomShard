@@ -2,7 +2,6 @@ using Server.Engines.Craft;
 
 namespace Server.Items
 {
-    [Alterable(typeof(DefBlacksmithy), typeof(StoneWarSword))]
     [Flipable(0x13B9, 0x13Ba)]
     public class VikingSword : BaseSword
     {

@@ -77,7 +77,9 @@ namespace Server.Mobiles
         public override bool DoMountAbility(int damage, Mobile attacker)
         {
             if (Rider == null || attacker == null)	//sanity
+            {
                 return false;
+            }
 
             if (Rider.Poisoned && Rider.Hits - damage < 40)
             {
@@ -118,7 +120,9 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (!Controlled && Utility.RandomDouble() < 0.3)
+            {
                 c.DropItem(new UnicornRibs());
+            }
         }
 
         public override void Serialize(GenericWriter writer)

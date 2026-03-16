@@ -69,7 +69,9 @@ namespace Server.Mobiles
         public override int GetIdleSound()
         {
             if (!Controlled)
+            {
                 return 542;
+            }
 
             return base.GetIdleSound();
         }
@@ -77,7 +79,9 @@ namespace Server.Mobiles
         public override int GetDeathSound()
         {
             if (!Controlled)
+            {
                 return 545;
+            }
 
             return base.GetDeathSound();
         }
@@ -90,7 +94,9 @@ namespace Server.Mobiles
         public override int GetHurtSound()
         {
             if (Controlled)
+            {
                 return 320;
+            }
 
             return base.GetHurtSound();
         }

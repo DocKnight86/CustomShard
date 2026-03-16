@@ -319,7 +319,9 @@ namespace Server.Items
             Region reg = from.Region;
 
             if (reg.Parent != null)
+            {
                 reg = reg.Parent;
+            }
 
             double skill = from.Skills[SkillName.Fishing].Value;
             bool deep = IsDeepWater(pnt, map, reg);
@@ -358,11 +360,17 @@ namespace Server.Items
                 if (fishing && chance >= Utility.RandomDouble())
                 {
                     if (dungeon && skill >= 106.0)
+                    {
                         item = BaseHighseasFish.DungeonFish[Utility.Random(BaseHighseasFish.DungeonFish.Length)];
+                    }
                     else if (deep && skill >= 80.0)
+                    {
                         item = BaseHighseasFish.DeepWaterFish[Utility.Random(BaseHighseasFish.DeepWaterFish.Length)];
+                    }
                     else if (shore && skill >= 50.0)
+                    {
                         item = BaseHighseasFish.ShoreFish[Utility.Random(BaseHighseasFish.ShoreFish.Length)];
+                    }
                 }
                 else if (!fishing && skill >= 50.0 && chance >= Utility.RandomDouble())
                 {
@@ -376,19 +384,29 @@ namespace Server.Items
         public static bool CheckFish(FishInfo info, Item harvestItem, double skill, bool deepwater)
         {
             if (skill < info.MinSkill)
+            {
                 return false;
+            }
 
             if (harvestItem is FishingPole && info.Type.IsSubclassOf(typeof(RareCrabAndLobster)))
+            {
                 return false;
+            }
 
             if (harvestItem is LobsterTrapMechanism && info.Type.IsSubclassOf(typeof(RareFish)))
+            {
                 return false;
+            }
 
             if (harvestItem is LobsterTrapMechanism trap && trap.IsLava && info.Type != typeof(VoidLobster))
+            {
                 return false;
+            }
 
             if (info.RequiresDeepWater != deepwater)
-                return false;            
+            {
+                return false;
+            }
 
             return true;
         }
@@ -408,46 +426,60 @@ namespace Server.Items
                     if (info.Location is string stringLoc)
                     {
                         if (stringLoc.ToLower() == "cannotfishup")
+                        {
                             continue;
+                        }
 
                         switch (stringLoc)
                         {
                             case "T2A":
+                            {
                                 if (SpellHelper.IsAnyT2A(fisherMap, fisherLoc))
                                 {
                                     list.Add(info);
                                 }
                                 break;
+                            }
                             case "TrammelAndFelucca":
+                            {
                                 if ((fisherMap == Map.Trammel || fisherMap == Map.Felucca) && SpellHelper.IsAnyT2A(fisherMap, fisherLoc))
                                 {
                                     list.Add(info);
                                 }
                                 break;
+                            }
                             case "AbyssAndUnderworld":
+                            {
                                 if (fisherMap == Map.TerMur && (Region.Find(fisherLoc, fisherMap).IsPartOf("Abyss") || Region.Find(fisherLoc, fisherMap).IsPartOf("Underworld")))
                                 {
                                     list.Add(info);
                                 }
                                 break;
+                            }
                             case "DoomAndGauntlet":
+                            {
                                 if (fisherMap == Map.Malas && (Region.Find(fisherLoc, fisherMap).IsPartOf("Doom") || Region.Find(fisherLoc, fisherMap).IsPartOf("Doom Gauntlet")))
                                 {
                                     list.Add(info);
                                 }
                                 break;
+                            }
                             case "Gravewater Lake":
+                            {
                                 if (IsGravewaterLake(fisherLoc, fisherMap))
                                 {
                                     list.Add(info);
                                 }
                                 break;
+                            }
                             default:
+                            {
                                 if (Region.Find(fisherLoc, fisherMap).IsPartOf(stringLoc))
                                 {
                                     list.Add(info);
                                 }
                                 break;
+                            }
                         }
                     }
                     else if (info.Location is Map map && fisherMap == map)
@@ -463,7 +495,9 @@ namespace Server.Items
         public double GetBaitStrength(Type baitType, Mobile from, bool enhanced)
         {
             if (baitType != Type)
+            {
                 return 1.0;
+            }
 
             double str = enhanced ? 3.0 : 2.0;
 
@@ -520,23 +554,50 @@ namespace Server.Items
         public static bool IsMondainDungeon(Region region)
         {
             if (region.IsPartOf("Twisted Weald"))
+            {
                 return true;
+            }
+
             if (region.IsPartOf("Sanctuary"))
+            {
                 return true;
+            }
+
             if (region.IsPartOf("Prism of Light"))
+            {
                 return true;
+            }
+
             if (region.IsPartOf("Citadel"))
+            {
                 return true;
+            }
+
             if (region.IsPartOf("Bedlam"))
+            {
                 return true;
+            }
+
             if (region.IsPartOf("Blighted Grove"))
+            {
                 return true;
+            }
+
             if (region.IsPartOf("Painted Caves"))
+            {
                 return true;
+            }
+
             if (region.IsPartOf("Palace of Paroxysmus"))
+            {
                 return true;
+            }
+
             if (region.IsPartOf("Labyrinth"))
+            {
                 return true;
+            }
+
             return false;
         }
 

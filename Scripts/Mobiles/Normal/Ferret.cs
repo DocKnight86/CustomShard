@@ -58,7 +58,9 @@ namespace Server.Mobiles
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
             if (m is Ferret ferret && ferret.InRange(this, 3) && ferret.Alive)
+            {
                 Talk(ferret);
+            }
         }
 
         public void Talk()

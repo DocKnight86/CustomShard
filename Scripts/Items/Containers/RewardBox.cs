@@ -30,7 +30,9 @@ namespace Server.Items
             }
 
             if (0.25 > Utility.RandomDouble()) // check
+            {
                 DropItem(Loot.RandomTalisman());
+            }
         }
 
         public RewardBox(Serial serial)

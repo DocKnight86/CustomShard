@@ -79,7 +79,9 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (!Controlled)
+            {
                 c.AddItem(Loot.Construct(typeof(GamanHorns)));
+            }
         }
 
         public override void Serialize(GenericWriter writer)

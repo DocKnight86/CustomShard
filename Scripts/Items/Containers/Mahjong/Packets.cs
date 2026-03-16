@@ -43,9 +43,13 @@ namespace Server.Engines.Mahjong
                     m_Stream.Write((byte)i);
 
                     if (game.ShowScores || mobile == to)
+                    {
                         m_Stream.Write(players.GetScore(i));
+                    }
                     else
+                    {
                         m_Stream.Write(0);
+                    }
 
                     m_Stream.Write((short)0);
                     m_Stream.Write((byte)0);
@@ -139,9 +143,13 @@ namespace Server.Engines.Mahjong
                     int hand = tile.Dimensions.GetHandArea();
 
                     if (hand < 0 || players.IsPublic(hand) || players.GetPlayer(hand) == to || (game.SpectatorVision && players.IsSpectator(to)))
+                    {
                         m_Stream.Write((byte)tile.Value);
+                    }
                     else
+                    {
                         m_Stream.Write((byte)0);
+                    }
                 }
                 else
                 {
@@ -179,9 +187,13 @@ namespace Server.Engines.Mahjong
                 int hand = tile.Dimensions.GetHandArea();
 
                 if (hand < 0 || players.IsPublic(hand) || players.GetPlayer(hand) == to || (game.SpectatorVision && players.IsSpectator(to)))
+                {
                     m_Stream.Write((byte)tile.Value);
+                }
                 else
+                {
                     m_Stream.Write((byte)0);
+                }
             }
             else
             {

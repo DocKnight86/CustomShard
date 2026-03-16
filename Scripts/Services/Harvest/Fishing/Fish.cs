@@ -20,7 +20,9 @@ namespace Server.Items
         public bool Carve(Mobile from, Item item)
         {
             if (Parent is ShippingCrate crate && !crate.CheckCarve(this))
+            {
                 return false;
+            }
 
             Item newItem = GetCarved;
 

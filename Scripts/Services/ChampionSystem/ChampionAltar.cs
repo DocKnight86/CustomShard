@@ -21,7 +21,9 @@ namespace Server.Engines.CannedEvil
             base.OnAfterDelete();
 
             if (m_Spawn != null)
+            {
                 m_Spawn.Delete();
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -46,11 +48,17 @@ namespace Server.Engines.CannedEvil
                         m_Spawn = reader.ReadItem() as ChampionSpawn;
 
                         if (m_Spawn == null)
+                        {
                             Delete();
+                        }
                         else if (!m_Spawn.Active)
+                        {
                             Hue = 0x455;
+                        }
                         else
+                        {
                             Hue = 0;
+                        }
 
                         break;
                     }

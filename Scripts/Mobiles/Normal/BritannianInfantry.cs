@@ -67,10 +67,14 @@ namespace Server.Mobiles
         public override bool IsEnemy(Mobile m)
         {
             if (MyrmidexInvasionSystem.Active && MyrmidexInvasionSystem.IsAlliedWithEodonTribes(m))
+            {
                 return false;
+            }
 
             if (MyrmidexInvasionSystem.Active && MyrmidexInvasionSystem.IsAlliedWithMyrmidex(m))
+            {
                 return true;
+            }
 
             return base.IsEnemy(m);
         }

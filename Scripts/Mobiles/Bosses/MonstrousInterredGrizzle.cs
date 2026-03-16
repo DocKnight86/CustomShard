@@ -112,7 +112,9 @@ namespace Server.Mobiles
         public override void OnDamage(int amount, Mobile from, bool willKill)
         {
             if (Utility.RandomDouble() < 0.06)
+            {
                 SpillAcid(null, Utility.RandomMinMax(1, 3));
+            }
 
             base.OnDamage(amount, from, willKill);
         }
@@ -172,7 +174,9 @@ namespace Server.Mobiles
             }
 
             if (m_Owner == null)
+            {
                 return;
+            }
 
             if (!Deleted && Map != Map.Internal && Map != null)
             {
@@ -189,7 +193,9 @@ namespace Server.Mobiles
         public override bool OnMoveOver(Mobile m)
         {
             if (Map == null)
+            {
                 return base.OnMoveOver(m);
+            }
 
             if (m is BaseCreature creature && creature.GetMaster() is PlayerMobile || m.Player)
             {

@@ -83,14 +83,18 @@ namespace Server.Mobiles
         public static void DistributeArtifact(Mobile to, Item artifact)
         {
             if (artifact == null)
+            {
                 return;
+            }
 
             if (to != null)
             {
                 Container pack = to.Backpack;
 
                 if (pack == null || !pack.TryDropItem(to, artifact, false))
+                {
                     to.BankBox.DropItem(artifact);
+                }
 
                 to.SendLocalizedMessage(502088); // A special gift has been placed in your backpack.
             }
@@ -111,22 +115,34 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (m_Spawner != null)
+            {
                 m_Spawner.OnNavreyKilled();
+            }
 
             if (Utility.RandomBool())
+            {
                 c.AddItem(new UntranslatedAncientTome());
+            }
 
             if (0.1 >= Utility.RandomDouble())
+            {
                 c.AddItem(ScrollOfTranscendence.CreateRandom(30, 30));
+            }
 
             if (0.1 >= Utility.RandomDouble())
+            {
                 c.AddItem(new TatteredAncientScroll());
+            }
 
             if (Utility.RandomDouble() < 0.10)
+            {
                 c.DropItem(new LuckyCoin());
+            }
 
             if (Utility.RandomDouble() < 0.025)
+            {
                 DistributeRandomArtifact(this, m_Artifact);
+            }
 
             // distribute quest items for the 'Green with Envy' quest given by Vernix
             List<DamageStore> rights = GetLootingRights();
@@ -134,17 +150,19 @@ namespace Server.Mobiles
             {
                 DamageStore ds = rights[i];
                 if (!ds.m_HasRight)
+                {
                     rights.RemoveAt(i);
+                }
             }
 
             // for each with looting rights... give an eye of navrey if they have the quest
-            for (var index = 0; index < rights.Count; index++)
+            for (int index = 0; index < rights.Count; index++)
             {
                 DamageStore d = rights[index];
 
                 if (d.m_Mobile is PlayerMobile pm)
                 {
-                    for (var i = 0; i < pm.Quests.Count; i++)
+                    for (int i = 0; i < pm.Quests.Count; i++)
                     {
                         BaseQuest quest = pm.Quests[i];
 

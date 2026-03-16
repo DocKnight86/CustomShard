@@ -60,13 +60,19 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (Controlled)
+            {
                 return;
+            }
 
             if (!Controlled && Utility.RandomDouble() < 0.03)
+            {
                 c.DropItem(new LuckyCoin());
+            }
 
             if (!Controlled && Utility.RandomDouble() < 0.1)
+            {
                 c.DropItem(new UndamagedIronBeetleScale());
+            }
         }
 
         public override bool SubdueBeforeTame => true;
@@ -119,7 +125,9 @@ namespace Server.Mobiles
             base.OnThink();
 
             if (Owners.Count > 0)
+            {
                 return;
+            }
 
             if (m_NextOreEat < DateTime.UtcNow && Utility.RandomBool())
             {
@@ -139,11 +147,15 @@ namespace Server.Mobiles
         public void DoMining()
         {
             if (Map == null || Map == Map.Internal)
+            {
                 return;
+            }
 
             // We may not mine while we are fighting
             if (Combatant != null)
+            {
                 return;
+            }
 
             HarvestSystem system = Mining.System;
             HarvestDefinition def = Mining.System.OreAndStone;
@@ -158,17 +170,23 @@ namespace Server.Mobiles
             int tileId = map.Tiles.GetLandTile(loc.X, loc.Y).ID & 0x3FFF;
 
             if (!def.Validate(tileId))
+            {
                 return;
+            }
 
             HarvestBank bank = def.GetBank(map, loc.X, loc.Y);
 
             if (bank == null || bank.Current < def.ConsumedPerHarvest)
+            {
                 return;
+            }
 
             HarvestVein vein = bank.Vein;
 
             if (vein == null)
+            {
                 return;
+            }
 
             HarvestResource primary = vein.PrimaryResource;
             HarvestResource fallback = def.Resources[0];
@@ -184,7 +202,9 @@ namespace Server.Mobiles
                 type = system.GetResourceType(this, null, def, map, loc, resource);
 
                 if (type != null)
+                {
                     type = system.MutateType(type, this, null, def, map, loc, resource);
+                }
 
                 if (type != null)
                 {
@@ -204,9 +224,13 @@ namespace Server.Mobiles
                             bool inFelucca = map == Map.Felucca;
 
                             if (inFelucca)
+                            {
                                 item.Amount = feluccaAmount;
+                            }
                             else
+                            {
                                 item.Amount = amount;
+                            }
                         }
 
                         bank.Consume(item.Amount, this);
@@ -258,7 +282,9 @@ namespace Server.Mobiles
                 PlayerMobile pm = from as PlayerMobile;
 
                 if (pm == null)
+                {
                     return;
+                }
 
                 ContextMenuEntry miningEntry = new ContextMenuEntry(pm.ToggleMiningStone ? 6179 : 6178)
                 {

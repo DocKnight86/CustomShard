@@ -155,14 +155,20 @@ namespace Server.Items
                 if (item is DragonBardingDeed || item is BaseArmor armor && armor.PlayerConstructed || item is BaseWeapon weapon && weapon.PlayerConstructed || item is BaseClothing clothing && clothing.PlayerConstructed)
                 {
                     if (skill > 100.0)
+                    {
                         skill = 100.0;
+                    }
 
                     double amount = (((4 + skill) * craftResource.Amount - 4) * 0.0068);
 
                     if (amount < 2)
+                    {
                         ingot.Amount = 2;
+                    }
                     else
+                    {
                         ingot.Amount = (int)amount;
+                    }
                 }
                 else
                 {
@@ -175,7 +181,9 @@ namespace Server.Items
                     ingot.Delete();
                 }
                 else
+                {
                     item.Delete();
+                }
 
                 from.AddToBackpack(ingot);
 
@@ -237,24 +245,36 @@ namespace Server.Items
                 if (item is BaseArmor armor)
                 {
                     if (Resmelt(from, armor, armor.Resource))
+                    {
                         salvaged++;
+                    }
                     else
+                    {
                         notSalvaged++;
+                    }
                 }
                 else if (item is BaseWeapon weapon)
                 {
                     if (Resmelt(from, weapon, weapon.Resource))
+                    {
                         salvaged++;
+                    }
                     else
+                    {
                         notSalvaged++;
+                    }
                 }
                 else if (item is DragonBardingDeed deed)
                 {
                     if (Resmelt(from, deed, deed.Resource))
+                    {
                         salvaged++;
+                    }
 
                     else
+                    {
                         notSalvaged++;
+                    }
                 }
             }
             if (m_Failure)
@@ -332,18 +352,24 @@ namespace Server.Items
                 m_Bag = bag;
 
                 if (!enabled)
+                {
                     Flags |= CMEFlags.Disabled;
+                }
             }
 
             public override void OnClick()
             {
                 if (m_Bag.Deleted)
+                {
                     return;
+                }
 
                 Mobile from = Owner.From;
 
                 if (from.CheckAlive())
+                {
                     m_Bag.SalvageAll(from);
+                }
             }
         }
 
@@ -357,18 +383,24 @@ namespace Server.Items
                 m_Bag = bag;
 
                 if (!enabled)
+                {
                     Flags |= CMEFlags.Disabled;
+                }
             }
 
             public override void OnClick()
             {
                 if (m_Bag.Deleted)
+                {
                     return;
+                }
 
                 Mobile from = Owner.From;
 
                 if (from.CheckAlive())
+                {
                     m_Bag.SalvageIngots(from);
+                }
             }
         }
 
@@ -382,18 +414,24 @@ namespace Server.Items
                 m_Bag = bag;
 
                 if (!enabled)
+                {
                     Flags |= CMEFlags.Disabled;
+                }
             }
 
             public override void OnClick()
             {
                 if (m_Bag.Deleted)
+                {
                     return;
+                }
 
                 Mobile from = Owner.From;
 
                 if (from.CheckAlive())
+                {
                     m_Bag.SalvageCloth(from);
+                }
             }
         }
 

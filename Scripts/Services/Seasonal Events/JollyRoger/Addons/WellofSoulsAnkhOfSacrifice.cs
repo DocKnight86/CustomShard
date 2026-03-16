@@ -21,21 +21,21 @@ namespace Server.Items
 
         public override void OnComponentUsed(AddonComponent c, Mobile from)
         {
-            var l = JollyRogerData.GetList(from);
+            RewardArray l = JollyRogerData.GetList(from);
 
             if (from is PlayerMobile pm && l != null && l.Shrine != null)
             {
-                var title = JollyRogerData.GetShrineTitle(pm);
+                int title = JollyRogerData.GetShrineTitle(pm);
 
                 if (title > 0)
                 {
-                    var shrine = JollyRogerData.GetShrine(title);
+                    Shrine shrine = JollyRogerData.GetShrine(title);
 
                     ShrineArray s = null;
 
-                    for (var index = 0; index < l.Shrine.Count; index++)
+                    for (int index = 0; index < l.Shrine.Count; index++)
                     {
-                        var y = l.Shrine[index];
+                        ShrineArray y = l.Shrine[index];
 
                         if (y.Shrine == shrine)
                         {
@@ -46,7 +46,7 @@ namespace Server.Items
 
                     if (s != null)
                     {
-                        var count = s.MasterDeath;
+                        int count = s.MasterDeath;
 
                         if (count >= 8)
                         {
@@ -142,7 +142,7 @@ namespace Server.Items
                     }
                 case 1:
                     {
-                        var l = JollyRogerData.GetList(from);
+                        RewardArray l = JollyRogerData.GetList(from);
 
                         if (l != null)
                         {
@@ -197,7 +197,7 @@ namespace Server.Items
             {
                 Mobile from = sender.Mobile;
 
-                var item = new Tabard(_Shrine);
+                Tabard item = new Tabard(_Shrine);
 
                 if (from.Backpack == null || !from.Backpack.TryDropItem(from, item, false))
                 {
@@ -238,11 +238,11 @@ namespace Server.Items
             {
                 Mobile from = sender.Mobile;
 
-                var robe = from.Backpack.FindItemByType(typeof(HawkwindsRobe));
+                Item robe = from.Backpack.FindItemByType(typeof(HoodedShroudOfShadows)); // placeholder
 
                 if (robe != null)
                 {
-                    var tabard = (Tabard)from.Backpack.FindItemByType(typeof(Tabard));
+                    Tabard tabard = (Tabard)from.Backpack.FindItemByType(typeof(Tabard));
 
                     if (tabard != null && !tabard.Converted)
                     {

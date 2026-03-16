@@ -136,58 +136,6 @@ namespace Server.Items
             base.OnAfterDuped(newItem);
         }
 
-        #region Personal Bless Deed
-        private Mobile m_BlessedBy;
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public Mobile BlessedBy
-        {
-            get => m_BlessedBy;
-            set
-            {
-                m_BlessedBy = value;
-                InvalidateProperties();
-            }
-        }
-
-        public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
-        {
-            base.GetContextMenuEntries(from, list);
-
-            if (BlessedFor == from && BlessedBy == from && RootParent == from)
-            {
-                list.Add(new UnBlessEntry(from, this));
-            }
-        }
-
-        private class UnBlessEntry : ContextMenuEntry
-        {
-            private readonly Mobile m_From;
-            private readonly BaseArmor m_Item;
-
-            public UnBlessEntry(Mobile from, BaseArmor item)
-                : base(6208, -1)
-            {
-                m_From = from;
-                m_Item = item;
-            }
-
-            public override void OnClick()
-            {
-                m_Item.BlessedFor = null;
-                m_Item.BlessedBy = null;
-
-                Container pack = m_From.Backpack;
-
-                if (pack != null)
-                {
-                    pack.DropItem(new PersonalBlessDeed(m_From));
-                    m_From.SendLocalizedMessage(1062200); // A personal bless deed has been placed in your backpack.
-                }
-            }
-        }
-        #endregion
-
         [CommandProperty(AccessLevel.GameMaster)]
         public AMA MeditationAllowance
         {
@@ -1240,33 +1188,23 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
             writer.Write(16); // version
-
-            // Version 16 - Removed Pre-AOS Armor Properties
-            // Version 14 - removed VvV Item (handled in VvV System) and BlockRepair (Handled as negative attribute)
 
             writer.Write(_Owner);
             writer.Write(_OwnerName);
 
-            //Version 11
             writer.Write(m_RefinedPhysical);
             writer.Write(m_RefinedFire);
             writer.Write(m_RefinedCold);
             writer.Write(m_RefinedPoison);
             writer.Write(m_RefinedEnergy);
 
-            //Version 10
             writer.Write(m_IsImbued);
 
-            // Version 9
-            #region Runic Reforging
             writer.Write((int)m_ReforgedPrefix);
             writer.Write((int)m_ReforgedSuffix);
             writer.Write((int)m_ItemPower);
-            #endregion
 
-            #region Stygian Abyss
             writer.Write(m_GorgonLenseCharges);
             writer.Write((int)m_GorgonLenseType);
 
@@ -1276,12 +1214,7 @@ namespace Server.Items
             writer.Write(m_PoisonNonImbuing);
             writer.Write(m_EnergyNonImbuing);
 
-            // Version 8
             writer.Write(m_TimesImbued);
-
-            #endregion
-
-            writer.Write(m_BlessedBy);
 
             SetFlag sflags = SetFlag.None;
 
@@ -1449,7 +1382,6 @@ namespace Server.Items
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-
             int version = reader.ReadInt();
 
             switch (version)
@@ -1460,9 +1392,6 @@ namespace Server.Items
                 case 13:
                 case 12:
                     {
-                        if (version == 13)
-                            reader.ReadBool();
-
                         _Owner = reader.ReadMobile();
                         _OwnerName = reader.ReadString();
                         goto case 11;
@@ -1483,21 +1412,10 @@ namespace Server.Items
                     }
                 case 9:
                     {
-                        #region Runic Reforging
                         m_ReforgedPrefix = (ReforgedPrefix)reader.ReadInt();
                         m_ReforgedSuffix = (ReforgedSuffix)reader.ReadInt();
                         m_ItemPower = (ItemPower)reader.ReadInt();
 
-                        if (version == 13 && reader.ReadBool())
-                        {
-                            Timer.DelayCall(TimeSpan.FromSeconds(1), () =>
-                            {
-                                m_NegativeAttributes.NoRepair = 1;
-                            });
-                        }
-                        #endregion
-
-                        #region Stygian Abyss
                         m_GorgonLenseCharges = reader.ReadInt();
                         m_GorgonLenseType = (LenseType)reader.ReadInt();
 
@@ -1511,10 +1429,6 @@ namespace Server.Items
                 case 8:
                     {
                         m_TimesImbued = reader.ReadInt();
-
-                        #endregion
-
-                        m_BlessedBy = reader.ReadMobile();
 
                         SetFlag sflags = (SetFlag)reader.ReadEncodedInt();
 
@@ -1826,13 +1740,6 @@ namespace Server.Items
                         from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1063343); // Only males can wear this.
                     else
                         from.SendLocalizedMessage(1071936); // You cannot equip that.
-
-                    return false;
-                }
-
-                if (BlessedBy != null && BlessedBy != from)
-                {
-                    from.SendLocalizedMessage(1075277); // That item is blessed by another player.
 
                     return false;
                 }

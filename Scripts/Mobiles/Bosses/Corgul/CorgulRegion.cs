@@ -12,7 +12,7 @@ namespace Server.Regions
         {
             Timer.DelayCall(TimeSpan.FromSeconds(30), () =>
             {
-                for (var index = 0; index < Regions.Count; index++)
+                for (int index = 0; index < Regions.Count; index++)
                 {
                     Region region = Regions[index];
 
@@ -25,7 +25,10 @@ namespace Server.Regions
 
                         foreach (BaseMulti multi in reg.GetEnumeratedMultis())
                         {
-                            if (multi is BaseBoat boat) reg.RemoveBoat(boat);
+                            if (multi is BaseBoat boat)
+                            {
+                                reg.RemoveBoat(boat);
+                            }
                         }
                     }
                 }
@@ -68,7 +71,9 @@ namespace Server.Regions
                             t = 0;
                         }
                         else
+                        {
                             t++;
+                        }
                     }
                 }
             }
@@ -81,7 +86,7 @@ namespace Server.Regions
                 return;
             }
 
-            for (var index = 0; index < m_Markers.Count; index++)
+            for (int index = 0; index < m_Markers.Count; index++)
             {
                 Item i = m_Markers[index];
 
@@ -97,7 +102,9 @@ namespace Server.Regions
             {
                 if (s is Spells.Sixth.MarkSpell || s is Spells.Fourth.RecallSpell || s is Spells.Seventh.GateTravelSpell
                 || s is Spells.Chivalry.SacredJourneySpell)
+                {
                     return false;
+                }
             }
 
             return true;
@@ -111,14 +118,16 @@ namespace Server.Regions
         public void CheckExit(BaseBoat boat)
         {
             if (boat != null)
+            {
                 Timer.DelayCall(TimeSpan.FromSeconds(1), RemoveBoat_Callback, boat);
+            }
         }
 
         public void RemovePlayers(bool message)
         {
             List<Mobile> list = GetMobiles();
 
-            for (var index = 0; index < list.Count; index++)
+            for (int index = 0; index < list.Count; index++)
             {
                 Mobile m = list[index];
 
@@ -152,13 +161,17 @@ namespace Server.Regions
         public void RemoveBoat_Callback(object o)
         {
             if (o is BaseBoat boat)
+            {
                 RemoveBoat(boat);
+            }
         }
 
         public void RemoveBoat(BaseBoat boat)
         {
             if (boat == null)
+            {
                 return;
+            }
 
             //First, we'll try and put the boat in the cooresponding location where it warped in
             if (boat.Map != null && boat.Map != Map.Internal && m_Altar != null && m_Altar.WarpRegion != null)
@@ -182,10 +195,15 @@ namespace Server.Regions
 
                     //int z = this.Map.GetAverageZ(boat.X, boat.Y);
                     if (boat.Z != -5)
+                    {
                         boat.Z = -5;
+                    }
 
                     if (boat.TillerMan != null)
+                    {
                         boat.TillerManSay(501425); //Ar, turbulent water!
+                    }
+
                     return;
                 }
             }
@@ -207,10 +225,15 @@ namespace Server.Regions
 
                     //int z = this.Map.GetAverageZ(boat.X, boat.Y);
                     if (boat.Z != -5)
+                    {
                         boat.Z = -5;
+                    }
 
                     if (boat.TillerMan != null)
+                    {
                         boat.TillerManSay(501425); //Ar, turbulent water!
+                    }
+
                     break;
                 }
             }

@@ -13,7 +13,9 @@ namespace Server.Engines.Harvest
             get
             {
                 if (m_System == null)
+                {
                     m_System = new Lumberjacking();
+                }
 
                 return m_System;
             }
@@ -121,19 +123,33 @@ namespace Server.Engines.Harvest
             if (tool is HarvestersAxe axe && axe.Charges > 0 || tool is GargishHarvestersAxe gaxe && gaxe.Charges > 0)
             {
                 if (type == typeof(Log))
+                {
                     newType = typeof(Board);
+                }
                 else if (type == typeof(OakLog))
+                {
                     newType = typeof(OakBoard);
+                }
                 else if (type == typeof(AshLog))
+                {
                     newType = typeof(AshBoard);
+                }
                 else if (type == typeof(YewLog))
+                {
                     newType = typeof(YewBoard);
+                }
                 else if (type == typeof(HeartwoodLog))
+                {
                     newType = typeof(HeartwoodBoard);
+                }
                 else if (type == typeof(BloodwoodLog))
+                {
                     newType = typeof(BloodwoodBoard);
+                }
                 else if (type == typeof(FrostwoodLog))
+                {
                     newType = typeof(FrostwoodBoard);
+                }
 
                 if (newType != type)
                 {
@@ -187,7 +203,9 @@ namespace Server.Engines.Harvest
         public override bool CheckHarvest(Mobile from, Item tool)
         {
             if (!base.CheckHarvest(from, tool))
+            {
                 return false;
+            }
 
             return true;
         }
@@ -195,7 +213,9 @@ namespace Server.Engines.Harvest
         public override bool CheckHarvest(Mobile from, Item tool, HarvestDefinition def, object toHarvest)
         {
             if (!base.CheckHarvest(from, tool, def, toHarvest))
+            {
                 return false;
+            }
 
             if (tool.Parent != from && from.Backpack != null && !tool.IsChildOf(from.Backpack))
             {
@@ -219,7 +239,9 @@ namespace Server.Engines.Harvest
                 CraftResourceInfo info = CraftResources.GetInfo(hmap.Resource);
 
                 if (info != null)
+                {
                     return info.ResourceTypes[0];
+                }
             }
             #endregion
 
@@ -229,7 +251,9 @@ namespace Server.Engines.Harvest
         public override bool CheckResources(Mobile from, Item tool, HarvestDefinition def, Map map, Point3D loc, bool timed)
         {
             if (HarvestMap.CheckMapOnHarvest(from, loc, def) == null)
+            {
                 return base.CheckResources(from, tool, def, map, loc, timed);
+            }
 
             return true;
         }
@@ -237,13 +261,21 @@ namespace Server.Engines.Harvest
         public override void OnBadHarvestTarget(Mobile from, Item tool, object toHarvest)
         {
             if (toHarvest is Mobile mobile)
+            {
                 mobile.PrivateOverheadMessage(MessageType.Regular, 0x3B2, 500450, from.NetState); // You can only skin dead creatures.
+            }
             else if (toHarvest is Item item)
+            {
                 item.LabelTo(from, 500464); // Use this on corpses to carve away meat and hide
+            }
             else if (toHarvest is Targeting.StaticTarget || toHarvest is Targeting.LandTarget)
+            {
                 from.SendLocalizedMessage(500489); // You can't use an axe on that.
+            }
             else
+            {
                 from.SendLocalizedMessage(1005213); // You can't do that
+            }
         }
 
         public override object GetLock(Mobile from, Item tool, HarvestDefinition def, object toHarvest) => this;

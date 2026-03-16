@@ -953,10 +953,16 @@ namespace Server.Mobiles
             {
                 case PetStat.Str:
                 case PetStat.Int:
-                case PetStat.Dex: return 2300;
+                case PetStat.Dex:
+                {
+                    return 2300;
+                }
                 case PetStat.Hits:
                 case PetStat.Stam:
-                case PetStat.Mana: return 3300;
+                case PetStat.Mana:
+                {
+                    return 3300;
+                }
             }
 
             return 0;
@@ -1021,10 +1027,22 @@ namespace Server.Mobiles
 
             switch (slots)
             {
-                case 2: return 8;
-                case 3: return 13;
-                case 4: return 17;
-                default: return 22;
+                case 2:
+                {
+                    return 8;
+                }
+                case 3:
+                {
+                    return 13;
+                }
+                case 4:
+                {
+                    return 17;
+                }
+                default:
+                {
+                    return 22;
+                }
             }
         }
 
@@ -1082,15 +1100,42 @@ namespace Server.Mobiles
 
                     switch (stat)
                     {
-                        case PetStat.Str: value = Math.Max(bc.RawStr, value); break;
-                        case PetStat.Dex: value = Math.Max(bc.RawDex, value); break;
-                        case PetStat.Int: value = Math.Max(bc.RawInt, value); break;
-                        case PetStat.Hits: value = Math.Max(bc.HitsMax, value); break;
-                        case PetStat.Stam: value = Math.Max(bc.StamMax, value); break;
-                        case PetStat.Mana: value = Math.Max(bc.ManaMax, value); break;
-                        case PetStat.RegenHits: value = Math.Max(profile.RegenHits, value); break;
-                        case PetStat.RegenStam: value = Math.Max(profile.RegenStam, value); break;
-                        case PetStat.RegenMana: value = Math.Max(profile.RegenMana, value); break;
+                        case PetStat.Str:
+                        {
+                            value = Math.Max(bc.RawStr, value); break;
+                        }
+                        case PetStat.Dex:
+                        {
+                            value = Math.Max(bc.RawDex, value); break;
+                        }
+                        case PetStat.Int:
+                        {
+                            value = Math.Max(bc.RawInt, value); break;
+                        }
+                        case PetStat.Hits:
+                        {
+                            value = Math.Max(bc.HitsMax, value); break;
+                        }
+                        case PetStat.Stam:
+                        {
+                            value = Math.Max(bc.StamMax, value); break;
+                        }
+                        case PetStat.Mana:
+                        {
+                            value = Math.Max(bc.ManaMax, value); break;
+                        }
+                        case PetStat.RegenHits:
+                        {
+                            value = Math.Max(profile.RegenHits, value); break;
+                        }
+                        case PetStat.RegenStam:
+                        {
+                            value = Math.Max(profile.RegenStam, value); break;
+                        }
+                        case PetStat.RegenMana:
+                        {
+                            value = Math.Max(profile.RegenMana, value); break;
+                        }
                         case PetStat.BaseDamage:
                             {
                                 if (profile.DamageIndex > -1)
@@ -1126,11 +1171,26 @@ namespace Server.Mobiles
                 {
                     switch (type)
                     {
-                        case ResistanceType.Physical: value = Math.Max(bc.PhysicalResistanceSeed, value); break;
-                        case ResistanceType.Fire: value = Math.Max(bc.FireResistSeed, value); break;
-                        case ResistanceType.Cold: value = Math.Max(bc.ColdResistSeed, value); break;
-                        case ResistanceType.Poison: value = Math.Max(bc.PoisonResistSeed, value); break;
-                        case ResistanceType.Energy: value = Math.Max(bc.EnergyResistSeed, value); break;
+                        case ResistanceType.Physical:
+                        {
+                            value = Math.Max(bc.PhysicalResistanceSeed, value); break;
+                        }
+                        case ResistanceType.Fire:
+                        {
+                            value = Math.Max(bc.FireResistSeed, value); break;
+                        }
+                        case ResistanceType.Cold:
+                        {
+                            value = Math.Max(bc.ColdResistSeed, value); break;
+                        }
+                        case ResistanceType.Poison:
+                        {
+                            value = Math.Max(bc.PoisonResistSeed, value); break;
+                        }
+                        case ResistanceType.Energy:
+                        {
+                            value = Math.Max(bc.EnergyResistSeed, value); break;
+                        }
                     }
                 }
                 else if (tp.TrainPoint is SkillName name)
@@ -1189,30 +1249,57 @@ namespace Server.Mobiles
                 switch (stat)
                 {
                     case PetStat.Str:
+                    {
                         if (bc.HitsMaxSeed == -1)
                         {
                             bc.HitsMaxSeed = bc.HitsMax;
                         }
                         bc.SetStr(value); break;
+                    }
                     case PetStat.Dex:
+                    {
                         if (bc.StamMaxSeed == -1)
                         {
                             bc.StamMaxSeed = bc.StamMax;
                         }
                         bc.SetDex(value); break;
+                    }
                     case PetStat.Int:
+                    {
                         if (bc.ManaMaxSeed == -1)
                         {
                             bc.ManaMaxSeed = bc.ManaMax;
                         }
                         bc.SetInt(value); break;
-                    case PetStat.Hits: bc.SetHits(value); break;
-                    case PetStat.Stam: bc.SetStam(value); break;
-                    case PetStat.Mana: bc.SetMana(value); break;
-                    case PetStat.RegenHits: profile.RegenHits = value; break;
-                    case PetStat.RegenStam: profile.RegenStam = value; break;
-                    case PetStat.RegenMana: profile.RegenMana = value; break;
-                    case PetStat.BaseDamage: return SetDamage(bc, value - 1);
+                    }
+                    case PetStat.Hits:
+                    {
+                        bc.SetHits(value); break;
+                    }
+                    case PetStat.Stam:
+                    {
+                        bc.SetStam(value); break;
+                    }
+                    case PetStat.Mana:
+                    {
+                        bc.SetMana(value); break;
+                    }
+                    case PetStat.RegenHits:
+                    {
+                        profile.RegenHits = value; break;
+                    }
+                    case PetStat.RegenStam:
+                    {
+                        profile.RegenStam = value; break;
+                    }
+                    case PetStat.RegenMana:
+                    {
+                        profile.RegenMana = value; break;
+                    }
+                    case PetStat.BaseDamage:
+                    {
+                        return SetDamage(bc, value - 1);
+                    }
                 }
 
                 return true;
@@ -1259,11 +1346,26 @@ namespace Server.Mobiles
             {
                 switch (type)
                 {
-                    case ResistanceType.Physical: bc.PhysicalResistanceSeed = value; break;
-                    case ResistanceType.Fire: bc.FireResistSeed = value; break;
-                    case ResistanceType.Cold: bc.ColdResistSeed = value; break;
-                    case ResistanceType.Poison: bc.PoisonResistSeed = value; break;
-                    case ResistanceType.Energy: bc.EnergyResistSeed = value; break;
+                    case ResistanceType.Physical:
+                    {
+                        bc.PhysicalResistanceSeed = value; break;
+                    }
+                    case ResistanceType.Fire:
+                    {
+                        bc.FireResistSeed = value; break;
+                    }
+                    case ResistanceType.Cold:
+                    {
+                        bc.ColdResistSeed = value; break;
+                    }
+                    case ResistanceType.Poison:
+                    {
+                        bc.PoisonResistSeed = value; break;
+                    }
+                    case ResistanceType.Energy:
+                    {
+                        bc.EnergyResistSeed = value; break;
+                    }
                 }
 
                 return true;
@@ -1578,22 +1680,70 @@ namespace Server.Mobiles
         {
             switch (ability)
             {
-                case MagicalAbility.Piercing: return _MagicalAbilityLocalizations[0];
-                case MagicalAbility.Bashing: return _MagicalAbilityLocalizations[1];
-                case MagicalAbility.Slashing: return _MagicalAbilityLocalizations[2];
-                case MagicalAbility.BattleDefense: return _MagicalAbilityLocalizations[3];
-                case MagicalAbility.WrestlingMastery: return _MagicalAbilityLocalizations[4];
-                case MagicalAbility.Poisoning: return _MagicalAbilityLocalizations[5];
-                case MagicalAbility.Bushido: return _MagicalAbilityLocalizations[6];
-                case MagicalAbility.Ninjitsu: return _MagicalAbilityLocalizations[7];
-                case MagicalAbility.Discordance: return _MagicalAbilityLocalizations[8];
-                case MagicalAbility.MageryMastery: return _MagicalAbilityLocalizations[9];
-                case MagicalAbility.Mysticism: return _MagicalAbilityLocalizations[10];
-                case MagicalAbility.Spellweaving: return _MagicalAbilityLocalizations[11];
-                case MagicalAbility.Chivalry: return _MagicalAbilityLocalizations[12];
-                case MagicalAbility.Necromage: return _MagicalAbilityLocalizations[13];
-                case MagicalAbility.Necromancy: return _MagicalAbilityLocalizations[14];
-                case MagicalAbility.Magery: return _MagicalAbilityLocalizations[15];
+                case MagicalAbility.Piercing:
+                {
+                    return _MagicalAbilityLocalizations[0];
+                }
+                case MagicalAbility.Bashing:
+                {
+                    return _MagicalAbilityLocalizations[1];
+                }
+                case MagicalAbility.Slashing:
+                {
+                    return _MagicalAbilityLocalizations[2];
+                }
+                case MagicalAbility.BattleDefense:
+                {
+                    return _MagicalAbilityLocalizations[3];
+                }
+                case MagicalAbility.WrestlingMastery:
+                {
+                    return _MagicalAbilityLocalizations[4];
+                }
+                case MagicalAbility.Poisoning:
+                {
+                    return _MagicalAbilityLocalizations[5];
+                }
+                case MagicalAbility.Bushido:
+                {
+                    return _MagicalAbilityLocalizations[6];
+                }
+                case MagicalAbility.Ninjitsu:
+                {
+                    return _MagicalAbilityLocalizations[7];
+                }
+                case MagicalAbility.Discordance:
+                {
+                    return _MagicalAbilityLocalizations[8];
+                }
+                case MagicalAbility.MageryMastery:
+                {
+                    return _MagicalAbilityLocalizations[9];
+                }
+                case MagicalAbility.Mysticism:
+                {
+                    return _MagicalAbilityLocalizations[10];
+                }
+                case MagicalAbility.Spellweaving:
+                {
+                    return _MagicalAbilityLocalizations[11];
+                }
+                case MagicalAbility.Chivalry:
+                {
+                    return _MagicalAbilityLocalizations[12];
+                }
+                case MagicalAbility.Necromage:
+                {
+                    return _MagicalAbilityLocalizations[13];
+                }
+                case MagicalAbility.Necromancy:
+                {
+                    return _MagicalAbilityLocalizations[14];
+                }
+                case MagicalAbility.Magery:
+                {
+                    return _MagicalAbilityLocalizations[15];
+                }
             }
 
             return new TextDefinition[] { null, null };

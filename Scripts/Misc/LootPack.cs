@@ -10,11 +10,6 @@ namespace Server
         {
             int luck = killer is PlayerMobile mobile ? mobile.RealLuck : killer.Luck;
 
-            if (killer is PlayerMobile pmKiller && pmKiller.SentHonorContext != null && pmKiller.SentHonorContext.Target == victim)
-            {
-                luck += pmKiller.SentHonorContext.PerfectionLuckBonus;
-            }
-
             if (luck < 0)
             {
                 return 0;
@@ -116,7 +111,9 @@ namespace Server
                 LootPackEntry entry = m_Entries[i];
 
                 if (!entry.CanGenerate(stage, hasBeenStolenFrom))
+                {
                     continue;
+                }
 
                 bool shouldAdd = entry.Chance > Utility.Random(10000);
 
@@ -711,7 +708,9 @@ namespace Server
         public static LootPack LootGold(int min, int max)
         {
             if (min > max)
+            {
                 min = max;
+            }
 
             if (min > 0)
             {
@@ -761,7 +760,9 @@ namespace Server
         public static bool IsMondain(IEntity e)
         {
             if (e == null)
+            {
                 return false;
+            }
 
             return MondainsLegacy.IsMLRegion(Region.Find(e.Location, e.Map));
         }
@@ -769,7 +770,9 @@ namespace Server
         public static bool IsStygian(IEntity e)
         {
             if (e == null)
+            {
                 return false;
+            }
 
             return e.Map == Map.TerMur || !IsInTokuno(e) && !IsMondain(e) && Utility.RandomBool();
         }
@@ -780,15 +783,24 @@ namespace Server
             {
                 case LootStage.Spawning:
                     if (!AtSpawnTime)
+                    {
                         return false;
+                    }
+
                     break;
                 case LootStage.Stolen:
                     if (!OnStolen)
+                    {
                         return false;
+                    }
+
                     break;
                 case LootStage.Death:
                     if (OnStolen && hasBeenStolenFrom)
+                    {
                         return false;
+                    }
+
                     break;
             }
 
@@ -943,7 +955,7 @@ namespace Server
                 }
                 else if (Type == typeof(BaseShield))
                 {
-                    item = Loot.RandomShield(isStygian);
+                    item = Loot.RandomShield();
                 }
                 else if (Type == typeof(BaseJewel))
                 {

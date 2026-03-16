@@ -64,7 +64,9 @@ namespace Server.Mobiles
             if (from is BaseCreature bc)
             {
                 if (bc.Controlled || bc.BardTarget == this)
+                {
                     damage = 0; // Immune to pets and provoked creatures
+                }
             }
             else
             {
@@ -77,7 +79,9 @@ namespace Server.Mobiles
         public override bool OnBeforeDeath()
         {
             if (Map == null)
+            {
                 return base.OnBeforeDeath();
+            }
 
             FixedParticles(0x36BD, 20, 10, 5044, EffectLayer.Head);
 

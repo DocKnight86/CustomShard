@@ -1,6 +1,7 @@
 using Server.Items;
 using System;
 using System.Collections.Generic;
+using Server.Engines.Craft;
 
 namespace Server.Mobiles
 {
@@ -160,7 +161,9 @@ namespace Server.Mobiles
             foreach (Mobile m in eable)
             {
                 if (m.Player && m.AccessLevel == AccessLevel.Player && m.Alive)
+                {
                     list.Add(m);
+                }
             }
 
             eable.Free();
@@ -182,7 +185,7 @@ namespace Server.Mobiles
             FacialHairItemID = attacker.FacialHairItemID;
             FacialHairHue = attacker.FacialHairHue;
 
-            for (var index = 0; index < attacker.Items.Count; index++)
+            for (int index = 0; index < attacker.Items.Count; index++)
             {
                 Item item = attacker.Items[index];
 
@@ -193,7 +196,7 @@ namespace Server.Mobiles
                     {
                         if (item is BaseWeapon)
                         {
-                            var crItem = Engines.Craft.CraftItem.GetCraftItem(item.GetType(), true);
+                            CraftItem crItem = Engines.Craft.CraftItem.GetCraftItem(item.GetType(), true);
 
                             if (crItem != null)
                             {
@@ -201,12 +204,16 @@ namespace Server.Mobiles
                                 Item i = FindItemOnLayer(Layer.TwoHanded);
 
                                 if (i != null)
+                                {
                                     i.Delete();
+                                }
 
                                 i = FindItemOnLayer(Layer.OneHanded);
 
                                 if (i != null)
+                                {
                                     i.Delete();
+                                }
 
                                 AddItem(Loot.Construct(crItem.ItemType));
                             }
@@ -224,31 +231,49 @@ namespace Server.Mobiles
             }
 
             if (attacker.Skills[SkillName.Swords].Value >= 50.0 || attacker.Skills[SkillName.Fencing].Value >= 50.0 || attacker.Skills[SkillName.Macing].Value >= 50.0)
+            {
                 ChangeAIType(AIType.AI_Melee);
+            }
 
             if (attacker.Skills[SkillName.Archery].Value >= 50.0)
+            {
                 ChangeAIType(AIType.AI_Archer);
+            }
 
             if (attacker.Skills[SkillName.Spellweaving].Value >= 50.0)
+            {
                 ChangeAIType(AIType.AI_Spellweaving);
+            }
 
             if (attacker.Skills[SkillName.Mysticism].Value >= 50.0)
+            {
                 ChangeAIType(AIType.AI_Mystic);
+            }
 
             if (attacker.Skills[SkillName.Magery].Value >= 50.0)
+            {
                 ChangeAIType(AIType.AI_Mage);
+            }
 
             if (attacker.Skills[SkillName.Necromancy].Value >= 50.0)
+            {
                 ChangeAIType(AIType.AI_Necro);
+            }
 
             if (attacker.Skills[SkillName.Ninjitsu].Value >= 50.0)
+            {
                 ChangeAIType(AIType.AI_Ninja);
+            }
 
             if (attacker.Skills[SkillName.Bushido].Value >= 50.0)
+            {
                 ChangeAIType(AIType.AI_Samurai);
+            }
 
             if (attacker.Skills[SkillName.Necromancy].Value >= 50.0 && attacker.Skills[SkillName.Magery].Value >= 50.0)
+            {
                 ChangeAIType(AIType.AI_NecroMage);
+            }
 
             PlaySound(0x511);
             FixedParticles(0x376A, 1, 14, 5045, EffectLayer.Waist);
@@ -276,7 +301,9 @@ namespace Server.Mobiles
             }
 
             if (m_Timer != null)
+            {
                 m_Timer.Stop();
+            }
 
             m_Timer = Timer.DelayCall(TimeSpan.FromMinutes(1.0), RestoreBody);
         }
@@ -329,7 +356,9 @@ namespace Server.Mobiles
         public override void OnAfterDelete()
         {
             if (m_Timer != null)
+            {
                 m_Timer.Stop();
+            }
 
             base.OnAfterDelete();
         }
@@ -341,7 +370,9 @@ namespace Server.Mobiles
         public override bool CanSpawnWave()
         {
             if (Hits > 2000)
+            {
                 m_SpawnedHelpers = false;
+            }
 
             return !m_SpawnedHelpers && Hits < 2000;
         }

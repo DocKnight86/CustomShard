@@ -78,7 +78,9 @@ namespace Server.Items
             base.OnDeath(c);
 
             if (0.25 > Utility.RandomDouble())
+            {
                 c.DropItem(new GoldFoil());
+            }
         }
 
         public override void Delete()
@@ -86,7 +88,9 @@ namespace Server.Items
             base.Delete();
 
             if (MacawSpawner != null)
+            {
                 MacawSpawner.Spawn.Remove(this);
+            }
         }
 
         public Macaw(Serial serial)

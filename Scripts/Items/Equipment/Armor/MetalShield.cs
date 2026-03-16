@@ -2,7 +2,6 @@ using Server.Engines.Craft;
 
 namespace Server.Items
 {
-    [Alterable(typeof(DefBlacksmithy), typeof(MediumPlateShield))]
     public class MetalShield : BaseShield
     {
         [Constructable]

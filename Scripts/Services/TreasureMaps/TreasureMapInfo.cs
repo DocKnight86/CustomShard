@@ -360,17 +360,6 @@ namespace Server.Items
             }
         }
 
-        public static int GetRefinementRolls(ChestQuality quality)
-        {
-            switch (quality)
-            {
-                default:
-                case ChestQuality.Rusty: return 2;
-                case ChestQuality.Standard: return 4;
-                case ChestQuality.Gold: return 6;
-            }
-        }
-
         public static int GetResourceAmount(TreasureLevel level)
         {
             switch (level)
@@ -692,13 +681,6 @@ namespace Server.Items
             {
                 chest.DropItem(new MysteriousFragment());
             }
-
-            #region Refinements
-            if (level == TreasureLevel.Stash)
-            {
-                RefinementComponent.Roll(chest, GetRefinementRolls(quality), 0.9);
-            }
-            #endregion
 
             #region TMaps
             bool dropMap = false;
