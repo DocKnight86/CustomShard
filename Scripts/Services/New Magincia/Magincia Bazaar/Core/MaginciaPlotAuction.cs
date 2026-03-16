@@ -175,16 +175,12 @@ namespace Server.Engines.NewMagincia
                 foreach (KeyValuePair<Mobile, BidEntry> kvp in combined)
                 {
                     if (kvp.Value.Amount >= highest)
-                    {
                         winners.Add(kvp.Value);
-                    }
                 }
 
                 // One winner!
                 if (winners.Count == 1)
-                {
                     winner = winners[0].Bidder;
-                }
                 else
                 {
                     // get a list of specific type (as opposed to next available)
@@ -264,17 +260,13 @@ namespace Server.Engines.NewMagincia
                         }
 
                         if (total > 0)
-                        {
                             m.Backpack.DropItem(new BankCheck(total));
-                        }
                     }
                 }
             }
             //Does actual changes to plots
             if (winner != null)
-            {
                 MaginciaBazaar.AwardPlot(this, winner, highest);
-            }
             else
             {
                 m_Plot.Reset(); // lease expires
@@ -285,9 +277,7 @@ namespace Server.Engines.NewMagincia
         public int GetBidAmount(Mobile from)
         {
             if (!m_Auctioners.ContainsKey(from))
-            {
                 return 0;
-            }
 
             return m_Auctioners[from].Amount;
         }
@@ -297,9 +287,7 @@ namespace Server.Engines.NewMagincia
             m_AuctionEnd = DateTime.UtcNow + ts;
 
             if (m_Plot != null && m_Plot.Sign != null)
-            {
                 m_Plot.Sign.InvalidateProperties();
-            }
         }
 
         public MaginciaPlotAuction(GenericReader reader, MaginciaBazaarPlot plot)
@@ -316,9 +304,7 @@ namespace Server.Engines.NewMagincia
                 BidEntry entry = new BidEntry(reader);
 
                 if (m != null)
-                {
                     m_Auctioners[m] = entry;
-                }
             }
         }
 

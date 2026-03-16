@@ -65,17 +65,11 @@ namespace Server.Gumps
             string initialText;
 
             if (val == null)
-            {
                 initialText = "";
-            }
             else if (val is TextDefinition definition)
-            {
                 initialText = definition.GetValue();
-            }
             else
-            {
                 initialText = val.ToString();
-            }
 
             AddPage(0);
 
@@ -100,9 +94,7 @@ namespace Server.Gumps
             x += EntryWidth + OffsetSize;
 
             if (SetGumpID != 0)
-            {
                 AddImageTiled(x, y, SetWidth, EntryHeight, SetGumpID);
-            }
 
             x = BorderSize + OffsetSize;
             y += EntryHeight + OffsetSize;
@@ -112,9 +104,7 @@ namespace Server.Gumps
             x += EntryWidth + OffsetSize;
 
             if (SetGumpID != 0)
-            {
                 AddImageTiled(x, y, SetWidth, EntryHeight, SetGumpID);
-            }
 
             AddButton(x + SetOffsetX, y + SetOffsetY, SetButtonID1, SetButtonID2, 1, GumpButtonType.Reply, 0);
 
@@ -128,9 +118,7 @@ namespace Server.Gumps
                 x += EntryWidth + OffsetSize;
 
                 if (SetGumpID != 0)
-                {
                     AddImageTiled(x, y, SetWidth, EntryHeight, SetGumpID);
-                }
 
                 AddButton(x + SetOffsetX, y + SetOffsetY, SetButtonID1, SetButtonID2, 2, GumpButtonType.Reply, 0);
             }
@@ -145,9 +133,7 @@ namespace Server.Gumps
                 x += EntryWidth + OffsetSize;
 
                 if (SetGumpID != 0)
-                {
                     AddImageTiled(x, y, SetWidth, EntryHeight, SetGumpID);
-                }
 
                 AddButton(x + SetOffsetX, y + SetOffsetY, SetButtonID1, SetButtonID2, 3, GumpButtonType.Reply, 0);
             }
@@ -227,9 +213,7 @@ namespace Server.Gumps
             }
 
             if (shouldSend)
-            {
                 m_Mobile.SendGump(new PropertiesGump(m_Mobile, m_Object, m_Stack, m_List, m_Page));
-            }
         }
 
         private class InternalPicker : HuePicker

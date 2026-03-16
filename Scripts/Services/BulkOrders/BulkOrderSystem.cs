@@ -65,9 +65,7 @@ namespace Server.Engines.BulkOrders
                 BODContext context = new BODContext(reader);
 
                 if (player != null)
-                {
                     BODPlayerData[player] = context;
-                }
             }
         }
 
@@ -543,7 +541,7 @@ namespace Server.Engines.BulkOrders
         {
             typeof(Arrow), typeof(Bolt), typeof(Kindling), typeof(Shaft),
 
-            typeof(EnchantedApple), typeof(GrapesOfWrath),
+            typeof(EnchantedApple), typeof(TribalPaint), typeof(GrapesOfWrath),
             typeof(EggBomb), typeof(CookedBird), typeof(FishSteak), typeof(FriedEggs),
             typeof(LambLeg), typeof(Ribs),
 
@@ -571,9 +569,7 @@ namespace Server.Engines.BulkOrders
             }
 
             if (picker.Count == 0)
-            {
                 return;
-            }
 
             switch (picker[Utility.Random(picker.Count)])
             {
@@ -797,9 +793,7 @@ namespace Server.Engines.BulkOrders
                 BODEntry entry = new BODEntry(reader);
 
                 if (Entries.ContainsKey(type))
-                {
                     Entries[type] = entry;
-                }
             }
         }
 
@@ -897,9 +891,7 @@ namespace Server.Engines.BulkOrders
             int version = reader.ReadInt();
 
             if (version < 2)
-            {
                 reader.ReadInt();
-            }
 
             _CachedDeeds = reader.ReadInt();
             LastBulkOrder = reader.ReadDateTime();

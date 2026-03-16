@@ -61,9 +61,7 @@ namespace Server.Engines.NewMagincia
                 m_CommodityTypes[type] -= amount;
 
                 if (m_CommodityTypes[type] <= 0)
-                {
                     m_CommodityTypes.Remove(type);
-                }
             }
         }
 
@@ -89,9 +87,7 @@ namespace Server.Engines.NewMagincia
                         int amount = reader.ReadInt();
 
                         if (cType != null)
-                        {
                             m_CommodityTypes[cType] = amount;
-                        }
                     }
 
                     count = reader.ReadInt();
@@ -120,9 +116,7 @@ namespace Server.Engines.NewMagincia
                                     int amount = reader.ReadInt();
 
                                     if (cType != null)
-                                    {
                                         m_CommodityTypes[cType] = amount;
-                                    }
                                 }
                                 break;
                             }

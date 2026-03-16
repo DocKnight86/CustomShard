@@ -86,9 +86,7 @@ namespace Server.Items
         public void DoDamage(Mobile m)
         {
             if (m_DamageTimer != null && m_DamageTimer.Running)
-            {
                 m_DamageTimer.Stop();
-            }
 
             m_DamageTimer = new InternalTimer(this, m);
             m_DamageTimer.Start();
@@ -99,9 +97,7 @@ namespace Server.Items
             if (m == null || !m.Alive || Deleted)
             {
                 if (m_DamageTimer != null)
-                {
                     m_DamageTimer.Stop();
-                }
             }
             else
             {
@@ -136,9 +132,7 @@ namespace Server.Items
                 m_Tick = 0;
 
                 if (item != null)
-                {
                     item.ApplyShock(from, 0);
-                }
             }
 
             protected override void OnTick()
@@ -158,26 +152,16 @@ namespace Server.Items
                     int delay;
 
                     if (m_Tick < 3)
-                    {
                         delay = 2;
-                    }
                     else if (m_Tick < 5)
-                    {
                         delay = 4;
-                    }
                     else
-                    {
                         delay = 6;
-                    }
 
                     if (m_Tick >= 10)
-                    {
                         Stop();
-                    }
                     else
-                    {
                         m_NextDamage = DateTime.UtcNow + TimeSpan.FromSeconds(delay);
-                    }
                 }
             }
         }
@@ -194,17 +178,11 @@ namespace Server.Items
                     Item goldKey = pack.FindItemByType(typeof(GoldPuzzleKey));
 
                     if (copperKey == null)
-                    {
                         pack.DropItem(new CopperPuzzleKey());
-                    }
                     else if (goldKey == null)
-                    {
                         pack.DropItem(new GoldPuzzleKey());
-                    }
                     else
-                    {
                         return;
-                    }
 
                     m.SendLocalizedMessage(1113382); // You've solved the puzzle!! An item has been placed in your bag.
                 }

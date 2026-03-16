@@ -116,9 +116,7 @@ namespace Server.Items
                 from.SendGump(new RewardOptionGump(this));
             }
             else
-            {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.       	
-            }
         }
 
         public DragonHeadAddonDeed(Serial serial)
@@ -150,9 +148,7 @@ namespace Server.Items
             Facing = (AddonFacing)choice;
 
             if (!Deleted)
-            {
                 base.OnDoubleClick(from);
-            }
         }
     }
 }

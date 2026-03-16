@@ -64,7 +64,7 @@ namespace Server.Mobiles
 
         private static Item DropWeapons(IEntity e)
         {
-            Backpack pack = new Backpack();
+            var pack = new Backpack();
 
             switch (Utility.Random(6))
             {
@@ -93,7 +93,7 @@ namespace Server.Mobiles
 
         private static Item DropRegs(IEntity e)
         {
-            Bag bag = new Bag();
+            var bag = new Bag();
 
             int count = Utility.RandomMinMax(10, 20);
 
@@ -139,9 +139,7 @@ namespace Server.Mobiles
                 foreach (Mobile m in eable)
                 {
                     if (m is MeerWarrior && IsFriend(m) && CanBeBeneficial(m) && m.Hits < m.HitsMax && !m.Poisoned && !MortalStrike.IsWounded(m))
-                    {
                         list.Add(m);
-                    }
                 }
                 eable.Free();
 

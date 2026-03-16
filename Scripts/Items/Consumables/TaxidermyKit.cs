@@ -133,9 +133,7 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Kit.Deleted)
-                {
                     return;
-                }
 
                 if (!(targeted is Corpse) && !(targeted is BigFish) && !(targeted is BaseHighseasFish) && !(targeted is HuntingPermit))
                 {
@@ -157,9 +155,7 @@ namespace Server.Items
                 else if (targeted is HuntingPermit lic)
                 {
                     if (from.Backpack == null || !lic.IsChildOf(from.Backpack))
-                    {
                         from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
-                    }
                     else if (!lic.CanUseTaxidermyOn)
                     {
                         //TODO: Message?
@@ -177,13 +173,9 @@ namespace Server.Items
                                 string name = lic.KillEntry.Owner != null ? lic.KillEntry.Owner.Name : from.Name;
 
                                 if (info.Complex)
-                                {
                                     from.AddToBackpack(new HuntTrophyAddonDeed(name, index, lic.KillEntry.Measurement, lic.KillEntry.DateKilled.ToShortDateString(), lic.KillEntry.Location));
-                                }
                                 else
-                                {
                                     from.AddToBackpack(new HuntTrophy(name, index, lic.KillEntry.Measurement, lic.KillEntry.DateKilled.ToShortDateString(), lic.KillEntry.Location));
-                                }
 
                                 lic.ProducedTrophy = true;
                                 m_Kit.Delete();
@@ -201,9 +193,7 @@ namespace Server.Items
                     object obj = targeted;
 
                     if (obj is Corpse oCorpse)
-                    {
                         obj = oCorpse.Owner;
-                    }
 
                     if (obj != null)
                     {
@@ -267,9 +257,7 @@ namespace Server.Items
                                     from.AddToBackpack(new TrophyDeed(m_Table[i], hunter, weight));
 
                                     if (targeted is Corpse tCorpse)
-                                    {
                                         tCorpse.VisitedByTaxidermist = true;
-                                    }
 
                                     m_Kit.Delete();
                                     return;
@@ -350,9 +338,7 @@ namespace Server.Items
             if (m_AnimalWeight >= 20)
             {
                 if (m_Hunter != null)
-                {
                     list.Add(1070857, m_Hunter.Name); // Caught by ~1_fisherman~
-                }
 
                 list.Add(1070858, m_AnimalWeight.ToString()); // ~1_weight~ stones
             }
@@ -370,9 +356,7 @@ namespace Server.Items
         public bool CouldFit(IPoint3D p, Map map)
         {
             if (!map.CanFit(p.X, p.Y, p.Z, ItemData.Height))
-            {
                 return false;
-            }
 
             if (ItemID == m_NorthID)
             {
@@ -434,9 +418,7 @@ namespace Server.Items
         private void FixMovingCrate()
         {
             if (Deleted)
-            {
                 return;
-            }
 
             if (Movable || IsLockedDown)
             {
@@ -549,9 +531,7 @@ namespace Server.Items
             if (m_AnimalWeight >= 20)
             {
                 if (m_Hunter != null)
-                {
                     list.Add(1070857, m_Hunter.Name); // Caught by ~1_fisherman~
-                }
 
                 list.Add(1070858, m_AnimalWeight.ToString()); // ~1_weight~ stones
             }
@@ -632,30 +612,20 @@ namespace Server.Items
                     int itemID = 0;
 
                     if (northWall)
-                    {
                         itemID = m_NorthID;
-                    }
                     else if (westWall)
-                    {
                         itemID = m_WestID;
-                    }
                     else
-                    {
                         from.SendLocalizedMessage(1042626); // The trophy must be placed next to a wall.
-                    }
 
                     if (itemID > 0)
                     {
                         Item trophy = new TrophyAddon(from, itemID, m_WestID, m_NorthID, m_DeedNumber, m_AddonNumber, m_Hunter, m_AnimalWeight, DateCaught);
 
                         if (m_DeedNumber == 1113567)
-                        {
                             trophy.Hue = 1645;
-                        }
                         else if (m_DeedNumber == 1113568)
-                        {
                             trophy.Hue = 1032;
-                        }
 
                         house.Addons[trophy] = from;
                         Delete();

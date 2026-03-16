@@ -1,6 +1,7 @@
 using Server.Engines.ArenaSystem;
 using Server.Engines.CityLoyalty;
 using Server.Engines.SorcerersDungeon;
+using Server.Engines.Fellowship;
 using Server.Engines.JollyRoger;
 using Server.Engines.VvV;
 using Server.Misc;
@@ -17,6 +18,7 @@ namespace Server.Engines.Points
 
         QueensLoyalty,
         VoidPool,
+        DespiseCrystals,
         ShameCrystals,
         CasinoData,
         CityTrading,
@@ -38,12 +40,14 @@ namespace Server.Engines.Points
         ViceVsVirtue,
         TreasuresOfKotlCity,
         PVPArena,
+        Khaldun,
         Doom,
         SorcerersDungeon,
         RisingTide,
         GauntletPoints,
         TOT,
         VAS,
+        FellowshipData,
         JollyRogerData
     }
 
@@ -71,9 +75,9 @@ namespace Server.Engines.Points
         {
             PointsSystem first = null;
 
-            for (int index = 0; index < Systems.Count; index++)
+            for (var index = 0; index < Systems.Count; index++)
             {
-                PointsSystem s = Systems[index];
+                var s = Systems[index];
 
                 if (s.Loyalty == system.Loyalty)
                 {
@@ -141,21 +145,15 @@ namespace Server.Engines.Points
             PointsEntry entry = GetEntry(pm);
 
             if (entry != null)
-            {
                 entry.Points = points;
-            }
         }
 
         public virtual void SendMessage(PlayerMobile from, double old, double points, bool quest)
         {
             if (quest)
-            {
                 from.SendLocalizedMessage(1113719, ((int)points).ToString(), 0x26); //You have received ~1_val~ loyalty points as a reward for completing the quest. 
-            }
             else
-            {
                 from.SendLocalizedMessage(1115920, $"{Name}\t{((int) points).ToString()}");  // Your loyalty to ~1_GROUP~ has increased by ~2_AMOUNT~;Original
-            }
         }
 
         public virtual bool DeductPoints(Mobile from, double points, bool message = false)
@@ -190,9 +188,7 @@ namespace Server.Engines.Points
                 PlayerTable.Add(entry);
 
                 if (!existed)
-                {
                     OnPlayerAdded(pm);
-                }
             }
 
             return entry;
@@ -203,9 +199,7 @@ namespace Server.Engines.Points
             PointsEntry entry = GetEntry(from);
 
             if (entry != null)
-            {
                 return entry.Points;
-            }
 
             return 0.0;
         }
@@ -226,9 +220,9 @@ namespace Server.Engines.Points
 
             PointsEntry entry = null;
 
-            for (int index = 0; index < PlayerTable.Count; index++)
+            for (var index = 0; index < PlayerTable.Count; index++)
             {
-                PointsEntry e = PlayerTable[index];
+                var e = PlayerTable[index];
 
                 if (e.Player == pm)
                 {
@@ -256,9 +250,9 @@ namespace Server.Engines.Points
 
             PointsEntry first = null;
 
-            for (int index = 0; index < PlayerTable.Count; index++)
+            for (var index = 0; index < PlayerTable.Count; index++)
             {
-                PointsEntry p = PlayerTable[index];
+                var p = PlayerTable[index];
 
                 if (p.Player == pm)
                 {
@@ -295,9 +289,9 @@ namespace Server.Engines.Points
 
             writer.Write(PlayerTable.Count);
 
-            for (int index = 0; index < PlayerTable.Count; index++)
+            for (var index = 0; index < PlayerTable.Count; index++)
             {
-                PointsEntry entry = PlayerTable[index];
+                var entry = PlayerTable[index];
 
                 writer.Write(entry.Player);
                 entry.Serialize(writer);
@@ -322,13 +316,9 @@ namespace Server.Engines.Points
                             PointsEntry entry = GetSystemEntry(player);
 
                             if (Version > 0)
-                            {
                                 entry.Deserialize(reader);
-                            }
                             else
-                            {
                                 entry.Points = reader.ReadDouble();
-                            }
 
                             if (player != null)
                             {
@@ -346,9 +336,9 @@ namespace Server.Engines.Points
         #region Static Methods and Accessors
         public static PointsSystem GetSystemInstance(PointsType t)
         {
-            for (int index = 0; index < Systems.Count; index++)
+            for (var index = 0; index < Systems.Count; index++)
             {
-                PointsSystem s = Systems[index];
+                var s = Systems[index];
 
                 if (s.Loyalty == t)
                 {
@@ -368,9 +358,9 @@ namespace Server.Engines.Points
                     writer.Write(2);
 
                     writer.Write(Systems.Count);
-                    for (int index = 0; index < Systems.Count; index++)
+                    for (var index = 0; index < Systems.Count; index++)
                     {
-                        PointsSystem s = Systems[index];
+                        var s = Systems[index];
 
                         writer.Write((int) s.Loyalty);
                         s.Serialize(writer);
@@ -387,9 +377,7 @@ namespace Server.Engines.Points
                     int version = reader.ReadInt();
 
                     if (version < 2)
-                    {
                         reader.ReadBool();
-                    }
 
                     PointsType loaded = PointsType.None;
 
@@ -416,6 +404,7 @@ namespace Server.Engines.Points
 
         public static QueensLoyalty QueensLoyalty { get; set; }
         public static VoidPool VoidPool { get; set; }
+        public static DespiseCrystals DespiseCrystals { get; set; }
         public static ShameCrystals ShameCrystals { get; set; }
         public static CasinoData CasinoData { get; set; }
         public static BlackthornData Blackthorn { get; set; }
@@ -423,12 +412,14 @@ namespace Server.Engines.Points
         public static ViceVsVirtueSystem ViceVsVirtue { get; set; }
         public static KotlCityData TreasuresOfKotlCity { get; set; }
         public static PVPArenaSystem ArenaSystem { get; set; }
+        public static KhaldunData Khaldun { get; set; }
         public static DoomData TreasuresOfDoom { get; set; }
         public static SorcerersDungeonData SorcerersDungeon { get; set; }
         public static RisingTide RisingTide { get; set; }
         public static DoomGauntlet DoomGauntlet { get; set; }
         public static TreasuresOfTokuno TreasuresOfTokuno { get; set; }
         public static VirtueArtifactsSystem VirtueArtifacts { get; set; }
+        public static FellowshipData FellowshipData { get; set; }
         public static JollyRogerData JollyRogerData { get; set; }
 
         public static void Configure()
@@ -440,6 +431,7 @@ namespace Server.Engines.Points
 
             QueensLoyalty = new QueensLoyalty();
             VoidPool = new VoidPool();
+            DespiseCrystals = new DespiseCrystals();
             ShameCrystals = new ShameCrystals();
             CasinoData = new CasinoData();
             Blackthorn = new BlackthornData();
@@ -449,20 +441,22 @@ namespace Server.Engines.Points
 
             CityLoyaltySystem.ConstructSystems();
             ArenaSystem = new PVPArenaSystem();
+            Khaldun = new KhaldunData();
             TreasuresOfDoom = new DoomData();
             SorcerersDungeon = new SorcerersDungeonData();
             RisingTide = new RisingTide();
             DoomGauntlet = new DoomGauntlet();
             TreasuresOfTokuno = new TreasuresOfTokuno();
             VirtueArtifacts = new VirtueArtifactsSystem();
+            FellowshipData = new FellowshipData();
             JollyRogerData = new JollyRogerData();
         }
 
         public static void OnKilledBy(BaseCreature killed, Mobile killer)
         {
-            for (int index = 0; index < Systems.Count; index++)
+            for (var index = 0; index < Systems.Count; index++)
             {
-                PointsSystem s = Systems[index];
+                var s = Systems[index];
 
                 s.ProcessKill(killed, killer);
             }
@@ -470,9 +464,9 @@ namespace Server.Engines.Points
 
         public static void CompleteQuest(PlayerMobile pm, Type type)
         {
-            for (int index = 0; index < Systems.Count; index++)
+            for (var index = 0; index < Systems.Count; index++)
             {
-                PointsSystem s = Systems[index];
+                var s = Systems[index];
 
                 s.ProcessQuest(pm, type);
             }

@@ -55,9 +55,7 @@ namespace Server.Items
                 Item toDrop = GetRandomDrop();
 
                 if (toDrop != null)
-                {
                     AddItemFor(toDrop, from);
-                }
 
                 base.OnDoubleClick(from);
             }
@@ -68,17 +66,13 @@ namespace Server.Items
         public void AddItemFor(Item item, Mobile mob)
         {
             if (item == null || mob == null)
-            {
                 return;
-            }
 
             DropItem(item);
             item.SetLastMoved();
 
             if (m_Instancing == null)
-            {
                 m_Instancing = new Dictionary<Item, Mobile>();
-            }
 
             m_Instancing[item] = mob;
         }
@@ -86,21 +80,15 @@ namespace Server.Items
         public override bool IsChildVisibleTo(Mobile m, Item child)
         {
             if (m.AccessLevel > AccessLevel.Player)
-            {
                 return true;
-            }
 
             if (m_Instancing != null)
             {
                 if (!m_Instancing.ContainsKey(child))
-                {
                     return true;
-                }
 
                 if (m_Instancing[child] == m)
-                {
                     return true;
-                }
             }
             else
             {
@@ -130,9 +118,7 @@ namespace Server.Items
         public override void RemoveItem(Item item)
         {
             if (m_Instancing != null && m_Instancing.ContainsKey(item))
-            {
                 m_Instancing.Remove(item);
-            }
 
             base.RemoveItem(item);
         }

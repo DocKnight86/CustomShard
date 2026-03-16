@@ -56,9 +56,7 @@ namespace Server.Mobiles
         public override void AlterDamageScalarFrom(Mobile caster, ref double scalar)
         {
             if (0.5 >= Utility.RandomDouble())
-            {
                 SpawnGreenGoo();
-            }
         }
 
         public override void OnGotMeleeAttack(Mobile attacker)
@@ -66,9 +64,7 @@ namespace Server.Mobiles
             base.OnGotMeleeAttack(attacker);
 
             if (0.5 >= Utility.RandomDouble())
-            {
                 SpawnGreenGoo();
-            }
         }
 
         public void SpawnGreenGoo()

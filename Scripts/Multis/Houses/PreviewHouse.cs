@@ -92,9 +92,7 @@ namespace Server.Multis
             base.OnLocationChange(oldLocation);
 
             if (m_Components == null)
-            {
                 return;
-            }
 
             int xOffset = X - oldLocation.X;
             int yOffset = Y - oldLocation.Y;
@@ -113,9 +111,7 @@ namespace Server.Multis
             base.OnMapChange();
 
             if (m_Components == null)
-            {
                 return;
-            }
 
             for (int i = 0; i < m_Components.Count; ++i)
             {
@@ -130,9 +126,7 @@ namespace Server.Multis
             base.OnDelete();
 
             if (m_Components == null)
-            {
                 return;
-            }
 
             for (int i = 0; i < m_Components.Count; ++i)
             {
@@ -145,9 +139,7 @@ namespace Server.Multis
         public override void OnAfterDelete()
         {
             if (m_Timer != null)
-            {
                 m_Timer.Stop();
-            }
 
             m_Timer = null;
 

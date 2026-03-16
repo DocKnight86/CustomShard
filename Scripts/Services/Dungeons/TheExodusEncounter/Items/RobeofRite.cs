@@ -54,34 +54,22 @@ namespace Server.Items
                 int minutes = t.Minutes;
 
                 if (weeks > 1)
-                {
                     list.Add(1153092, weeks.ToString()); // Lifespan: ~1_val~ weeks
-                }
                 else if (days > 1)
-                {
                     list.Add(1153091, days.ToString()); // Lifespan: ~1_val~ days
-                }
                 else if (hours > 1)
-                {
                     list.Add(1153090, hours.ToString()); // Lifespan: ~1_val~ hours
-                }
                 else if (minutes > 1)
-                {
                     list.Add(1153089, minutes.ToString()); // Lifespan: ~1_val~ minutes
-                }
                 else
-                {
                     list.Add(1072517, m_Lifespan.ToString()); // Lifespan: ~1_val~ seconds
-                }
             }
         }
 
         public virtual void StartTimer()
         {
             if (m_Timer != null)
-            {
                 return;
-            }
 
             m_Timer = Timer.DelayCall(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10), Slice);
         }
@@ -89,9 +77,7 @@ namespace Server.Items
         public virtual void StopTimer()
         {
             if (m_Timer != null)
-            {
                 m_Timer.Stop();
-            }
 
             m_Timer = null;
         }
@@ -103,9 +89,7 @@ namespace Server.Items
             InvalidateProperties();
 
             if (m_Lifespan <= 0)
-            {
                 Decay();
-            }
         }
 
         public virtual void Decay()
@@ -115,13 +99,9 @@ namespace Server.Items
                 Mobile parent = mobile;
 
                 if (Name == null)
-                {
                     parent.SendLocalizedMessage(1072515, "#" + LabelNumber); // The ~1_name~ expired...
-                }
                 else
-                {
                     parent.SendLocalizedMessage(1072515, Name); // The ~1_name~ expired...
-                }
 
                 Effects.SendLocationParticles(EffectItem.Create(parent.Location, parent.Map, EffectItem.DefaultDuration), 0x3728, 8, 20, 5042);
                 Effects.PlaySound(parent.Location, parent.Map, 0x201);

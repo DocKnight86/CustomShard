@@ -161,13 +161,9 @@ namespace Server.Engines.VeteranRewards
             {
                 DaviesLockerEntry entry = Entries[index];
                 if (entry is SOSEntry)
-                {
                     writer.Write(0);
-                }
                 else if (entry is TreasureMapEntry)
-                {
                     writer.Write(1);
-                }
                 else
                 {
                     writer.Write(2);
@@ -294,13 +290,9 @@ namespace Server.Engines.VeteranRewards
         public DaviesLockerAddonDeed(List<DaviesLockerEntry> list)
         {
             if (list == null)
-            {
                 Entries = new List<DaviesLockerEntry>();
-            }
             else
-            {
                 Entries = list;
-            }
 
             LootType = LootType.Blessed;
         }
@@ -323,9 +315,7 @@ namespace Server.Engines.VeteranRewards
             South = choice == 0;
 
             if (!Deleted)
-            {
                 base.OnDoubleClick(from);
-            }
         }
 
         public DaviesLockerAddonDeed(Serial serial)
@@ -345,13 +335,9 @@ namespace Server.Engines.VeteranRewards
             {
                 DaviesLockerEntry entry = Entries[index];
                 if (entry is SOSEntry)
-                {
                     writer.Write(0);
-                }
                 else if (entry is TreasureMapEntry)
-                {
                     writer.Write(1);
-                }
                 else
                 {
                     writer.Write(2);
@@ -445,9 +431,7 @@ namespace Server.Engines.VeteranRewards
             MessageIndex = -1;
 
             if (mib is SaltySeaMIB)
-            {
                 QuestItem = true;
-            }
         }
 
         public SOSEntry(SOS sos)
@@ -458,9 +442,7 @@ namespace Server.Engines.VeteranRewards
             MessageIndex = sos.MessageIndex;
 
             if (sos is SaltySeaSOS)
-            {
                 QuestItem = true;
-            }
         }
 
         public SOSEntry(GenericReader reader)
@@ -502,9 +484,7 @@ namespace Server.Engines.VeteranRewards
             Package = map.Package;
 
             if (map is HiddenTreasuresTreasureMap)
-            {
                 QuestItem = true;
-            }
         }
 
         public TreasureMapEntry(GenericReader reader) : base(reader)
@@ -563,9 +543,7 @@ namespace Server.Engines.VeteranRewards
             : base(100, 100)
         {
             if (addon == null || addon.Deleted)
-            {
                 return;
-            }
 
             AddImage(0, 0, 0x5C1);
             m_List = addon.Entries;
@@ -583,19 +561,13 @@ namespace Server.Engines.VeteranRewards
             int totalPages = (int)Math.Ceiling(m_List.Count / 10.0);
 
             if (totalPages < 1)
-            {
                 totalPages = 1;
-            }
 
             if (page < 0)
-            {
                 page = 0;
-            }
 
             if (page + 1 > totalPages)
-            {
                 page = totalPages - 1;
-            }
 
             m_Page = page;
 
@@ -664,9 +636,7 @@ namespace Server.Engines.VeteranRewards
             Mobile from = state.Mobile;
 
             if (!m_Addon.CanUse(from))
-            {
                 return;
-            }
 
             switch (info.ButtonID)
             {
@@ -698,9 +668,7 @@ namespace Server.Engines.VeteranRewards
                             DaviesLockerEntry entry = m_List[index];
 
                             if (entry != null)
-                            {
                                 ConstructEntry(from, entry);
-                            }
                         }
                     }
                     break;
@@ -753,34 +721,17 @@ namespace Server.Engines.VeteranRewards
             Map map = entry.Map;
 
             if (map == Map.Felucca)
-            {
                 return 1012001; // Felucca
-            }
-
             if (map == Map.Trammel)
-            {
                 return 1012000; // Trammel
-            }
-
             if (map == Map.Ilshenar)
-            {
                 return 1012002; // Ilshenar
-            }
-
             if (map == Map.Malas)
-            {
                 return 1060643; // Malas
-            }
-
             if (map == Map.Tokuno)
-            {
                 return 1063258; // Tokuno Islands
-            }
-
             if (map == Map.TerMur)
-            {
                 return 1112178; // Ter Mur
-            }
 
             return 1074235; // Unknown
         }
@@ -926,14 +877,9 @@ namespace Server.Engines.VeteranRewards
         private int GetLevel(DaviesLockerEntry entry)
         {
             if (entry is SOSEntry)
-            {
                 return 1153568; // S-O-S
-            }
-
             if (entry is TreasureMapEntry)
-            {
                 return 1153572 + entry.Level;
-            }
 
             return 1153569; // Unknown
         }

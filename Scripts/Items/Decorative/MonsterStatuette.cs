@@ -1,3 +1,4 @@
+using Server.Engines.VeteranRewards;
 using Server.Gumps;
 using Server.Multis;
 using Server.Network;
@@ -193,15 +194,13 @@ namespace Server.Items
             int v = (int)type;
 
             if (v < 0 || v >= m_Table.Length)
-            {
                 v = 0;
-            }
 
             return m_Table[v];
         }
     }
 
-    public class MonsterStatuette : Item, IEngravable
+    public class MonsterStatuette : Item, IRewardItem, IEngravable
     {
         private MonsterStatuetteType m_Type;
         private bool m_TurnedOn;
@@ -221,44 +220,26 @@ namespace Server.Items
             m_Type = type;
 
             if (m_Type == MonsterStatuetteType.Slime)
-            {
                 Hue = Utility.RandomSlimeHue();
-            }
             else if (m_Type == MonsterStatuetteType.RedDeath)
-            {
                 Hue = 0x21;
-            }
             else if (m_Type == MonsterStatuetteType.HalloweenGhoul)
-            {
                 Hue = 0xF4;
-            }
             else if (m_Type == MonsterStatuetteType.ArchDemon)
-            {
                 Hue = 2021;
-            }
             else if (m_Type == MonsterStatuetteType.SnowElemental)
-            {
                 Hue = 1150;
-            }
             else if (m_Type == MonsterStatuetteType.SakkhranBirdOfPrey)
             {
                 double ran = Utility.RandomDouble();
                 if (0.01 > ran)
-                {
                     Hue = 1907;
-                }
                 else if (0.1 > ran)
-                {
                     Hue = 2562;
-                }
                 else if (0.25 > ran)
-                {
                     Hue = 2525;
-                }
                 else
-                {
                     Hue = 2309;
-                }
             }
         }
 
@@ -266,6 +247,9 @@ namespace Server.Items
             : base(serial)
         {
         }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool IsRewardItem { get; set; }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public bool TurnedOn
@@ -286,41 +270,25 @@ namespace Server.Items
                 ItemID = MonsterStatuetteInfo.GetInfo(m_Type).ItemID;
 
                 if (m_Type == MonsterStatuetteType.Slime)
-                {
                     Hue = Utility.RandomSlimeHue();
-                }
                 else if (m_Type == MonsterStatuetteType.RedDeath)
-                {
                     Hue = 0x21;
-                }
                 else if (m_Type == MonsterStatuetteType.HalloweenGhoul)
-                {
                     Hue = 0xF4;
-                }
                 else if (m_Type != old && m_Type == MonsterStatuetteType.SakkhranBirdOfPrey)
                 {
                     double ran = Utility.RandomDouble();
                     if (0.01 > ran)
-                    {
                         Hue = 1907;
-                    }
                     else if (0.1 > ran)
-                    {
                         Hue = 2562;
-                    }
                     else if (0.25 > ran)
-                    {
                         Hue = 2525;
-                    }
                     else
-                    {
                         Hue = 2309;
-                    }
                 }
                 else
-                {
                     Hue = 0;
-                }
 
                 InvalidateProperties();
             }
@@ -342,13 +310,9 @@ namespace Server.Items
             set
             {
                 if (value != null)
-                {
                     m_EngravedText = value;
-                }
                 else
-                {
                     m_EngravedText = string.Empty;
-                }
 
                 InvalidateProperties();
             }
@@ -384,14 +348,13 @@ namespace Server.Items
         {
             base.GetProperties(list);
 
+            if (IsRewardItem)
+                list.Add(RewardSystem.GetRewardYearLabel(this, new object[] { m_Type })); // X Year Veteran Reward
+
             if (m_TurnedOn)
-            {
                 list.Add(502695); // turned on
-            }
             else
-            {
                 list.Add(502696); // turned off
-            }
         }
 
         public bool IsOwner(Mobile mob)
@@ -417,21 +380,33 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(0); // version
+            writer.Write(1); // version
 
             writer.Write(m_EngravedText);
+
             writer.WriteEncodedInt((int)m_Type);
             writer.Write(m_TurnedOn);
+            writer.Write(IsRewardItem);
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            reader.ReadInt();
+            int version = reader.ReadInt();
 
-            m_EngravedText = reader.ReadString();
-            m_Type = (MonsterStatuetteType)reader.ReadEncodedInt();
-            m_TurnedOn = reader.ReadBool();
+            switch (version)
+            {
+                case 1:
+                    m_EngravedText = reader.ReadString();
+                    goto case 0;
+                case 0:
+                    {
+                        m_Type = (MonsterStatuetteType)reader.ReadEncodedInt();
+                        m_TurnedOn = reader.ReadBool();
+                        IsRewardItem = reader.ReadBool();
+                        break;
+                    }
+            }
         }
 
         private class OnOffGump : Gump
@@ -464,9 +439,7 @@ namespace Server.Items
                     m_Statuette.TurnedOn = newValue;
 
                     if (newValue && !m_Statuette.IsLockedDown)
-                    {
                         from.SendLocalizedMessage(502693); // Remember, this only works when locked down.
-                    }
                 }
                 else
                 {

@@ -56,7 +56,9 @@ namespace Server.Mobiles
         {
             AddLoot(LootPack.UltraRich, 3);
             AddLoot(LootPack.ArcanistScrolls, 0, 1);
+            AddLoot(LootPack.LootItem<HydraScale>());
             AddLoot(LootPack.LootItem<ParrotItem>(10.0));
+            AddLoot(LootPack.LootItem<ThorvaldsMedallion>(5.0));
         }
 
         public override void Serialize(GenericWriter writer)

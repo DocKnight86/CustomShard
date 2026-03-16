@@ -47,11 +47,7 @@ namespace Server.Items
         public DateTime Deadline { get; set; }
 
         [CommandProperty(AccessLevel.Counselor)]
-        public bool ResetPeerless { get => false; set { if (value)
-            {
-                FinishSequence();
-            }
-        } }
+        public bool ResetPeerless { get => false; set { if (value) FinishSequence(); } }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int FighterCount => Fighters != null ? Fighters.Count : 0;
@@ -80,9 +76,7 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (from.AccessLevel > AccessLevel.Player)
-            {
                 base.OnDoubleClick(from);
-            }
         }
 
         public override bool CheckLift(Mobile from, Item item, ref LRReason reject)
@@ -123,13 +117,9 @@ namespace Server.Items
             if (Owner != null && Owner != from)
             {
                 if (Peerless != null && Peerless.CheckAlive())
-                {
                     from.SendLocalizedMessage(1075213); // The master of this realm has already been summoned and is engaged in combat.  Your opportunity will come after he has squashed the current batch of intruders!
-                }
                 else
-                {
                     from.SendLocalizedMessage(1072683, Owner.Name); // ~1_NAME~ has already activated the Prism, please wait...
-                }
 
                 return false;
             }
@@ -225,9 +215,7 @@ namespace Server.Items
                     key.PeerlessMap = Map;
 
                     if (!from.AddToBackpack(key))
-                    {
                         key.MoveToWorld(from.Location, from.Map);
-                    }
 
                     MasterKeys.Add(key);
                 }
@@ -336,9 +324,7 @@ namespace Server.Items
             writer.Write(m_Helpers != null);
 
             if (m_Helpers != null)
-            {
                 writer.WriteMobileList(m_Helpers);
-            }
 
             // version 0			
             writer.Write(Peerless);
@@ -457,9 +443,7 @@ namespace Server.Items
                 Peerless = Boss;
 
                 if (Peerless == null)
-                {
                     return;
-                }
 
                 Peerless.Home = BossLocation;
                 Peerless.RangeHome = 12;
@@ -522,14 +506,10 @@ namespace Server.Items
             if (Peerless != null)
             {
                 if (Peerless.Corpse != null && !Peerless.Corpse.Deleted)
-                {
                     Peerless.Corpse.Delete();
-                }
 
                 if (!Peerless.Deleted)
-                {
                     Peerless.Delete();
-                }
             }
 
             // teleport party to exit if not already there
@@ -576,9 +556,7 @@ namespace Server.Items
         public virtual void Exit(Mobile fighter)
         {
             if (fighter == null)
-            {
                 return;
-            }
 
             // teleport fighter
             if (fighter.NetState == null && MobileIsInBossArea(fighter.LogoutLocation))
@@ -662,14 +640,10 @@ namespace Server.Items
                 if (Peerless != null)
                 {
                     if (Peerless.Corpse != null && !Peerless.Corpse.Deleted)
-                    {
                         Peerless.Corpse.Delete();
-                    }
 
                     if (!Peerless.Deleted)
-                    {
                         Peerless.Delete();
-                    }
                 }
 
                 CleanupHelpers();
@@ -702,9 +676,7 @@ namespace Server.Items
         public virtual bool MobileIsInBossArea(Point3D loc)
         {
             if (BossBounds == null || BossBounds.Length == 0)
-            {
                 return true;
-            }
 
             for (var index = 0; index < BossBounds.Length; index++)
             {
@@ -807,9 +779,7 @@ namespace Server.Items
                 if (remove < Fighters.Count && Fighters[remove] is PlayerMobile player)
                 {
                     if (player.NetState == null && (now - player.LastOnline).TotalMinutes > 10)
-                    {
                         Exit(player);
-                    }
                 }
             }
         }
@@ -821,9 +791,7 @@ namespace Server.Items
         public void AddHelper(BaseCreature helper)
         {
             if (helper != null && helper.Alive && !helper.Deleted)
-            {
                 m_Helpers.Add(helper);
-            }
         }
 
         public bool AllHelpersDead()

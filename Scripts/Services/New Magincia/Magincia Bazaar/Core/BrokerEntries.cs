@@ -45,16 +45,12 @@ namespace Server.Engines.NewMagincia
             get
             {
                 if (m_Broker != null && m_Broker.BankBalance < m_BuyLimit * m_BuyPricePer && m_BuyPricePer > 0)
-                {
                     return m_Broker.BankBalance / m_BuyPricePer;
-                }
 
                 int limit = m_BuyLimit - m_Stock;
 
                 if (limit <= 0)
-                {
                     return 0;
-                }
 
                 return limit;
             }
@@ -165,9 +161,7 @@ namespace Server.Engines.NewMagincia
         public static string GetOriginalName(BaseCreature bc)
         {
             if (bc == null)
-            {
                 return null;
-            }
 
             Type t = bc.GetType();
 
@@ -197,9 +191,7 @@ namespace Server.Engines.NewMagincia
         public void Internalize()
         {
             if (m_Pet.Map == Map.Internal)
-            {
                 return;
-            }
 
             m_Pet.ControlTarget = null;
             m_Pet.ControlOrder = LastOrderType.Stay;

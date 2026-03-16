@@ -122,9 +122,7 @@ namespace Server.Items
         public virtual bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
-            {
                 return false;
-            }
 
             Hue = sender.DyedHue;
             return true;
@@ -133,16 +131,12 @@ namespace Server.Items
         public bool CheckAccessible(Mobile from, Item item)
         {
             if (from.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return true; // Staff can access anything
-            }
 
             BaseHouse house = BaseHouse.FindHouseAt(item);
 
             if (house == null)
-            {
                 return false;
-            }
 
             switch (Level)
             {
@@ -202,9 +196,7 @@ namespace Server.Items
             m_Topper = choice == 1;
 
             if (!Deleted)
-            {
                 base.OnDoubleClick(from);
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -215,9 +207,7 @@ namespace Server.Items
                 from.SendGump(new AddonOptionGump(this, 1159430, 300, 180)); // Choose an option:
             }
             else
-            {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.       	
-            }
         }
 
         public SpiralStaircaseDeed(Serial serial)

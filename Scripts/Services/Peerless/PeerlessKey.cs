@@ -35,25 +35,15 @@ namespace Server.Items
             if (PeerlessMap != null)
             {
                 if (PeerlessMap == Map.Felucca)
-                {
                     list.Add(1012001); // Felucca
-                }
                 else if (PeerlessMap == Map.Trammel)
-                {
                     list.Add(1012000); // Trammel
-                }
                 else if (PeerlessMap == Map.Ilshenar)
-                {
                     list.Add(1012002); // Ilshenar
-                }
                 else if (PeerlessMap == Map.Malas)
-                {
                     list.Add(1060643); // Malas
-                }
                 else if (PeerlessMap == Map.Tokuno)
-                {
                     list.Add(1063258); // Tokuno Islands
-                }
             }
 
             base.AddItemSocketProperties(list);

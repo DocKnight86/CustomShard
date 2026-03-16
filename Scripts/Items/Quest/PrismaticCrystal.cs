@@ -19,32 +19,22 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (from.Backpack == null)
-            {
                 return;
-            }
 
             if (from.InRange(Location, 2))
             {
                 if (from.Backpack.FindItemByType(typeof(PrismaticAmber), true) == null)
                 {
                     if (from.PlaceInBackpack(new PrismaticAmber()))
-                    {
                         Delete();
-                    }
                     else
-                    {
                         from.SendLocalizedMessage(1077971); // Make room in your backpack first!
-                    }
                 }
                 else
-                {
                     from.SendLocalizedMessage(1075464); // You already have as many of those as you need.
-                }
             }
             else
-            {
                 from.SendLocalizedMessage(1076766); // That is too far away.
-            }
         }
 
         public override void Serialize(GenericWriter writer)

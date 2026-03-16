@@ -37,13 +37,9 @@ namespace Server.Engines.NewMagincia
                 if (m_Enabled != value)
                 {
                     if (value)
-                    {
                         StartTimer();
-                    }
                     else
-                    {
                         EndTimer();
-                    }
                 }
 
                 m_Enabled = value;
@@ -98,9 +94,7 @@ namespace Server.Engines.NewMagincia
             AddPlotSigns();
 
             if (m_Enabled)
-            {
                 StartTimer();
-            }
 
             m_Phase = Phase.Phase1;
             ActivatePlots();
@@ -113,9 +107,7 @@ namespace Server.Engines.NewMagincia
                 int index = m_Plots.IndexOf(plot);
 
                 if (index == -1)
-                {
                     return false;
-                }
 
                 switch ((int)m_Instance.m_Phase)
                 {
@@ -157,18 +149,14 @@ namespace Server.Engines.NewMagincia
                 }
 
                 if (plot.Sign != null)
-                {
                     plot.Sign.InvalidateProperties();
-                }
             }
         }
 
         public void StartTimer()
         {
             if (m_Timer != null)
-            {
                 m_Timer.Stop();
-            }
 
             m_Timer = Timer.DelayCall(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1), OnTick);
             m_Timer.Start();
@@ -177,9 +165,7 @@ namespace Server.Engines.NewMagincia
         public void EndTimer()
         {
             if (m_Timer != null)
-            {
                 m_Timer.Stop();
-            }
 
             m_Timer = null;
         }
@@ -338,25 +324,19 @@ namespace Server.Engines.NewMagincia
             Account acct = from.Account as Account;
 
             if (acct == null)
-            {
                 return null;
-            }
 
             for (int i = 0; i < acct.Length; i++)
             {
                 Mobile m = acct[i];
 
                 if (m == null)
-                {
                     continue;
-                }
 
                 MaginciaBazaarPlot plot = GetBiddingPlotForAccount(m);
 
                 if (plot != null)
-                {
                     return plot;
-                }
             }
 
             return null;
@@ -487,9 +467,7 @@ namespace Server.Engines.NewMagincia
                     current.Owner = null;
 
                     if (current.Auction != null)
-                    {
                         current.Auction.EndAuction();
-                    }
                 }
 
                 plot.Owner = winner;
@@ -498,9 +476,7 @@ namespace Server.Engines.NewMagincia
             else if (plot != null)
             {
                 if (plot.Owner != null)
-                {
                     plot.NewAuction(GetLongAuctionTime);
-                }
                 else
                 {
                     plot.Reset();
@@ -522,9 +498,7 @@ namespace Server.Engines.NewMagincia
         public static bool IsSameAccount(Mobile check, Mobile checkAgainst, bool checkLink)
         {
             if (check == null || checkAgainst == null)
-            {
                 return false;
-            }
 
             Account acct2 = check.Account as Account;
 
@@ -611,9 +585,7 @@ namespace Server.Engines.NewMagincia
                     m_Reserve[m] -= amount;
 
                     if (m_Reserve[m] <= 0)
-                    {
                         m_Reserve.Remove(m);
-                    }
 
                     return;
                 }
@@ -625,9 +597,7 @@ namespace Server.Engines.NewMagincia
             foreach (Mobile m in m_Reserve.Keys)
             {
                 if (from == m || IsSameAccount(m, from))
-                {
                     return m_Reserve[m];
-                }
             }
 
             return 0;
@@ -695,9 +665,7 @@ namespace Server.Engines.NewMagincia
                 BidEntry entry = new BidEntry(reader);
 
                 if (m != null)
-                {
                     m_NextAvailable[m] = entry;
-                }
             }
 
             count = reader.ReadInt();
@@ -708,9 +676,7 @@ namespace Server.Engines.NewMagincia
                 StorageEntry entry = new StorageEntry(reader);
 
                 if (m != null)
-                {
                     m_WarehouseStorage[m] = entry;
-                }
             }
 
             count = reader.ReadInt();
@@ -720,17 +686,13 @@ namespace Server.Engines.NewMagincia
                 int amt = reader.ReadInt();
 
                 if (m != null && amt > 0)
-                {
                     m_Reserve[m] = amt;
-                }
             }
 
             m_Instance = this;
 
             if (m_Enabled)
-            {
                 StartTimer();
-            }
         }
 
         public static void LoadPlots()

@@ -14,9 +14,7 @@ namespace Server.Gumps
             : base(100, 100)
         {
             if (type == GumpType.Offer)
-            {
                 Closable = false;
-            }
 
             AddPage(0);
 
@@ -45,18 +43,12 @@ namespace Server.Gumps
             }
 
             if (type == GumpType.UnlockedContract || type == GumpType.LockedContract)
-            {
                 AddButton(30, 96, 0x15E1, 0x15E5, 0, GumpButtonType.Page, 2);
-            }
-
             AddHtmlLocalized(50, 95, 150, 20, 1062354, 0x1, false, false); // Contract Length
             AddHtmlLocalized(230, 95, 270, 20, duration.Name, 0x1, false, false);
 
             if (type == GumpType.UnlockedContract || type == GumpType.LockedContract)
-            {
                 AddButton(30, 116, 0x15E1, 0x15E5, 1, GumpButtonType.Reply, 0);
-            }
-
             AddHtmlLocalized(50, 115, 150, 20, 1062356, 0x1, false, false); // Price Per Rental
             AddLabel(230, 115, 0x64, price > 0 ? price.ToString() : "FREE");
 
@@ -76,18 +68,12 @@ namespace Server.Gumps
                 AddHtmlLocalized(60, 170, 250, 20, 1062355, 0x1, false, false); // Renew On Expiration?
 
                 if (type == GumpType.LockedContract || type == GumpType.UnlockedContract || type == GumpType.VendorLandlord)
-                {
                     AddButton(30, 192, 0x15E1, 0x15E5, 3, GumpButtonType.Reply, 0);
-                }
-
                 AddHtmlLocalized(85, 190, 250, 20, 1062359, 0x1, false, false); // Landlord:
                 AddHtmlLocalized(230, 190, 270, 20, landlordRenew ? 1049717 : 1049718, 0x1, false, false); // YES / NO
 
                 if (type == GumpType.VendorRenter)
-                {
                     AddButton(30, 212, 0x15E1, 0x15E5, 4, GumpButtonType.Reply, 0);
-                }
-
                 AddHtmlLocalized(85, 210, 250, 20, 1062360, 0x1, false, false); // Renter:
                 AddHtmlLocalized(230, 210, 270, 20, renterRenew ? 1049717 : 1049718, 0x1, false, false); // YES / NO
 
@@ -115,10 +101,7 @@ namespace Server.Gumps
             else if (type == GumpType.VendorLandlord || type == GumpType.VendorRenter)
             {
                 if (type == GumpType.VendorLandlord)
-                {
                     AddButton(30, 250, 0x15E1, 0x15E1, 6, GumpButtonType.Reply, 0);
-                }
-
                 AddHtmlLocalized(85, 250, 250, 20, 1062499, 0x1, false, false); // Renewal Price
                 AddLabel(230, 250, 0x64, renewalPrice.ToString());
 
@@ -153,9 +136,7 @@ namespace Server.Gumps
             Mobile from = sender.Mobile;
 
             if (!IsValidResponse(from))
-            {
                 return;
-            }
 
             if ((info.ButtonID & 0x10) != 0) // Contract duration
             {
@@ -287,18 +268,14 @@ namespace Server.Gumps
             public override void OnResponse(Mobile from, string text)
             {
                 if (!m_Contract.IsUsableBy(from, true, true, true, true))
-                {
                     return;
-                }
 
                 text = text.Trim();
 
                 int price;
 
                 if (!int.TryParse(text, out price))
-                {
                     price = -1;
-                }
 
                 if (price < 0)
                 {
@@ -320,9 +297,7 @@ namespace Server.Gumps
             public override void OnCancel(Mobile from)
             {
                 if (m_Contract.IsUsableBy(from, true, true, true, true))
-                {
                     from.SendGump(new VendorRentalContractGump(m_Contract, from));
-                }
             }
         }
 
@@ -338,9 +313,7 @@ namespace Server.Gumps
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (!m_Contract.IsUsableBy(from, true, false, true, true))
-                {
                     return;
-                }
 
                 Mobile mob = targeted as Mobile;
 
@@ -400,9 +373,7 @@ namespace Server.Gumps
 
             BaseHouse house = BaseHouse.FindHouseAt(m_Contract);
             if (house == null)
-            {
                 return;
-            }
 
             int price = m_Contract.Price;
             int goldToGive;
@@ -417,14 +388,10 @@ namespace Server.Gumps
                     goldToGive = price - depositedGold;
 
                     if (depositedGold > 0)
-                    {
                         m_Landlord.SendLocalizedMessage(1060397, price.ToString()); // ~1_AMOUNT~ gold has been deposited into your bank box.
-                    }
 
                     if (goldToGive > 0)
-                    {
                         m_Landlord.SendLocalizedMessage(500390); // Your bank box is full.
-                    }
                 }
                 else
                 {
@@ -523,18 +490,14 @@ namespace Server.Gumps
             public override void OnResponse(Mobile from, string text)
             {
                 if (!m_Vendor.CanInteractWith(from, false) || !m_Vendor.IsLandlord(from))
-                {
                     return;
-                }
 
                 text = text.Trim();
 
                 int price;
 
                 if (!int.TryParse(text, out price))
-                {
                     price = -1;
-                }
 
                 if (price < 0)
                 {
@@ -558,9 +521,7 @@ namespace Server.Gumps
             public override void OnCancel(Mobile from)
             {
                 if (m_Vendor.CanInteractWith(from, false) && m_Vendor.IsLandlord(from))
-                {
                     from.SendGump(new LandlordVendorRentalGump(m_Vendor));
-                }
             }
         }
     }
@@ -612,9 +573,7 @@ namespace Server.Gumps
             Mobile from = sender.Mobile;
 
             if (!m_Vendor.CanInteractWith(from, true) || !m_Vendor.CanInteractWith(m_Landlord, false) || !m_Vendor.IsLandlord(m_Landlord))
-            {
                 return;
-            }
 
             if (info.ButtonID == 1)
             {
@@ -625,9 +584,7 @@ namespace Server.Gumps
                     int depositedGold = Banker.DepositUpTo(from, m_RefundAmount);
 
                     if (depositedGold > 0)
-                    {
                         from.SendLocalizedMessage(1060397, depositedGold.ToString()); // ~1_AMOUNT~ gold has been deposited into your bank box.
-                    }
 
                     m_Vendor.HoldGold += m_RefundAmount - depositedGold;
 

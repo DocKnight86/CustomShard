@@ -55,9 +55,7 @@ namespace Server.Mobiles
             Mobile combatant = Combatant as Mobile;
 
             if (DateTime.UtcNow < _NextDrop || combatant == null || combatant.Deleted || combatant.Map != Map || !InRange(combatant, 12))
-            {
                 return;
-            }
 
             DropFire(combatant);
 

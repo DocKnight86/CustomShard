@@ -24,9 +24,7 @@ namespace Server.Items
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
             if (TurnedOn && IsLockedDown && (!m.Hidden || m.IsPlayer()) && Utility.InRange(m.Location, Location, 2) && !Utility.InRange(oldLocation, Location, 2))
-            {
                 Effects.PlaySound(Location, Map, m_Sounds[Utility.Random(m_Sounds.Length)]);
-            }
 
             base.OnMovement(m, oldLocation);
         }

@@ -36,14 +36,10 @@ namespace Server.Engines.Shadowguard
             int toSpawn = Math.Max(3, PartySize() * 3);
 
             for (int i = 0; i < toSpawn; i++)
-            {
                 SpawnRandomPirate();
-            }
 
             for (int i = 0; i < LiquorCount; i++)
-            {
                 SpawnRandomLiquor();
-            }
         }
 
         public override void CheckEncounter()
@@ -93,9 +89,7 @@ namespace Server.Engines.Shadowguard
         private void SpawnRandomPirate()
         {
             if (Pirates == null)
-            {
                 return;
-            }
 
             int row = Utility.Random(8);
             Point3D ranPnt = SpawnPoints[Utility.Random(SpawnPoints.Length)];
@@ -114,14 +108,10 @@ namespace Server.Engines.Shadowguard
         public override void OnCreatureKilled(BaseCreature bc)
         {
             if (!(bc is ShadowguardPirate) || Pirates == null)
-            {
                 return;
-            }
 
             if (Pirates.Contains(bc))
-            {
                 Pirates.Remove(bc);
-            }
 
             if (Pirates.Count <= 0)
             {
@@ -146,9 +136,7 @@ namespace Server.Engines.Shadowguard
                     Pirates.Add(pirate);
                 }
                 else
-                {
                     CompleteEncounter();
-                }
             }
         }
 
@@ -221,9 +209,7 @@ namespace Server.Engines.Shadowguard
             {
                 Mobile p = reader.ReadMobile();
                 if (p != null)
-                {
                     Pirates.Add(p);
-                }
             }
 
             count = reader.ReadInt();
@@ -366,9 +352,7 @@ namespace Server.Engines.Shadowguard
         public void AddSpawn(BaseCreature bc)
         {
             if (Spawn != null)
-            {
                 Spawn.Add(bc);
-            }
         }
 
         public override void ClearItems()
@@ -501,14 +485,10 @@ namespace Server.Engines.Shadowguard
                     for (int i = 0; i < count; i++)
                     {
                         if (Spawn == null)
-                        {
                             Spawn = new List<BaseCreature>();
-                        }
 
                         if (reader.ReadMobile() is BaseCreature bc)
-                        {
                             Spawn.Add(bc);
-                        }
                     }
 
                     Bones = reader.ReadItem();
@@ -733,9 +713,7 @@ namespace Server.Engines.Shadowguard
         private void SpawnRandom()
         {
             if (Spawn == null)
-            {
                 return;
-            }
 
             Rectangle2D rec = SpawnRecs[Utility.Random(SpawnRecs.Length)];
             ConvertOffset(ref rec);
@@ -833,9 +811,7 @@ namespace Server.Engines.Shadowguard
                 Item it = reader.ReadItem();
 
                 if (it != null)
-                {
                     DestroyedArmor.Add(it);
-                }
             }
 
             count = reader.ReadInt();
@@ -861,9 +837,7 @@ namespace Server.Engines.Shadowguard
             for (int i = 0; i < count; i++)
             {
                 if (Items == null)
-                {
                     Items = new List<Item>();
-                }
 
                 Item item = reader.ReadItem();
                 if (item != null)
@@ -878,9 +852,7 @@ namespace Server.Engines.Shadowguard
                 for (int i = 0; i < toSpawn; i++)
                 {
                     if (Spawn == null)
-                    {
                         Spawn = new List<BaseCreature>();
-                    }
 
                     SpawnRandom();
                 }
@@ -981,9 +953,7 @@ namespace Server.Engines.Shadowguard
             Timer.DelayCall(ShadowguardController.ReadyDuration + TimeSpan.FromSeconds(30), () =>
             {
                 for (int i = 0; i < toSpawn; i++)
-                {
                     SpawnRandomElemental();
-                }
             });
 
             for (int i = 0; i < 4; i++)
@@ -1065,9 +1035,7 @@ namespace Server.Engines.Shadowguard
         private void SpawnRandomElemental()
         {
             if (Elementals == null)
-            {
                 return;
-            }
 
             Rectangle2D rec = SpawnRecs[Utility.RandomMinMax(0, 3)];
             ConvertOffset(ref rec);
@@ -1104,9 +1072,7 @@ namespace Server.Engines.Shadowguard
         public void SpawnBaddie(Mobile m)
         {
             if (Elementals == null)
-            {
                 return;
-            }
 
             Point3D p = m.Location;
 
@@ -1133,9 +1099,7 @@ namespace Server.Engines.Shadowguard
         public void AddShadowguardCanal(Item canal)
         {
             if (ShadowguardCanals != null && !ShadowguardCanals.Contains(canal))
-            {
                 ShadowguardCanals.Add(canal);
-            }
         }
 
         public class FlowChecker
@@ -1157,9 +1121,7 @@ namespace Server.Engines.Shadowguard
             public void EndEncounter()
             {
                 if (_Spigot != null)
-                {
                     _Spigot.Delete();
-                }
 
                 if (_Checked != null)
                 {
@@ -1173,9 +1135,7 @@ namespace Server.Engines.Shadowguard
             public bool CheckUse(ShadowguardSpigot spigot, Mobile m)
             {
                 if (spigot != _Spigot)
-                {
                     return false;
-                }
 
                 Check(m);
                 return true;
@@ -1187,27 +1147,19 @@ namespace Server.Engines.Shadowguard
                 bool southFacing = _Spigot.ItemID == 39922;
 
                 if (_Checked != null)
-                {
                     _Checked.Clear();
-                }
 
                 if (southFacing)
-                {
                     p = new Point3D(_Spigot.X, _Spigot.Y + 1, -20);
-                }
                 else
-                {
                     p = new Point3D(_Spigot.X + 1, _Spigot.Y, -20);
-                }
 
                 Item item = FindItem(p);
 
                 if (item is ShadowguardCanal canal && (southFacing && (canal.Flow == Flow.NorthSouth || canal.Flow == Flow.SouthEastCorner || canal.Flow == Flow.SouthWestCorner) || !southFacing && (canal.Flow == Flow.EastWest || canal.Flow == Flow.SouthEastCorner || canal.Flow == Flow.NorthEastCorner)))
                 {
                     if (_Checked == null)
-                    {
                         _Checked = new List<ShadowguardCanal>();
-                    }
 
                     _Checked.Add(canal);
 
@@ -1220,9 +1172,7 @@ namespace Server.Engines.Shadowguard
                     Timer.DelayCall(TimeSpan.FromSeconds(2), () => _Encounter.CheckEncounter());
                 }
                 else
-                {
                     _Encounter.SpawnBaddie(m);
-                }
             }
 
             public void RecursiveCheck(Item item, Item last)
@@ -1339,9 +1289,7 @@ namespace Server.Engines.Shadowguard
                     canal.Fill();
 
                     if (_Checked.IndexOf(canal) == _Checked.Count - 1)
-                    {
                         _Drain.Hue = 0;
-                    }
                 }
             }
 
@@ -1365,14 +1313,10 @@ namespace Server.Engines.Shadowguard
                 for (int i = 0; i < count; i++)
                 {
                     if (_Checked == null)
-                    {
                         _Checked = new List<ShadowguardCanal>();
-                    }
 
                     if (reader.ReadItem() is ShadowguardCanal c)
-                    {
                         _Checked.Add(c);
-                    }
                 }
             }
 
@@ -1412,13 +1356,11 @@ namespace Server.Engines.Shadowguard
 
             writer.Write(ShadowguardCanals == null ? 0 : ShadowguardCanals.Count);
             if (ShadowguardCanals != null)
-            {
                 for (var index = 0; index < ShadowguardCanals.Count; index++)
                 {
                     var c = ShadowguardCanals[index];
                     writer.Write(c);
                 }
-            }
 
             writer.Write(FlowCheckers == null ? 0 : FlowCheckers.Count);
             if (FlowCheckers != null)
@@ -1451,25 +1393,19 @@ namespace Server.Engines.Shadowguard
             for (int i = 0; i < count; i++)
             {
                 if (ShadowguardCanals == null)
-                {
                     ShadowguardCanals = new List<Item>();
-                }
 
                 Item canal = reader.ReadItem();
 
                 if (canal != null)
-                {
                     ShadowguardCanals.Add(canal);
-                }
             }
 
             count = reader.ReadInt();
             for (int i = 0; i < count; i++)
             {
                 if (FlowCheckers == null)
-                {
                     FlowCheckers = new List<FlowChecker>();
-                }
 
                 FlowCheckers.Add(new FlowChecker(reader, this));
             }
@@ -1543,9 +1479,7 @@ namespace Server.Engines.Shadowguard
         public void SpawnDrake(Point3D p, Mobile from)
         {
             if (Drakes == null)
-            {
                 return;
-            }
 
             Rectangle2D rec = SpawnRecs[0];
             ConvertOffset(ref rec);
@@ -1637,9 +1571,7 @@ namespace Server.Engines.Shadowguard
             }
 
             if (Dragon != null && Dragon.Alive)
-            {
                 Dragon.Delete();
-            }
 
             Dragon = null;
         }
@@ -1687,9 +1619,7 @@ namespace Server.Engines.Shadowguard
             for (int i = 0; i < count; i++)
             {
                 if (reader.ReadMobile() is VileDrake d)
-                {
                     Drakes.Add(d);
-                }
             }
 
             count = reader.ReadInt();
@@ -1697,15 +1627,11 @@ namespace Server.Engines.Shadowguard
             for (int i = 0; i < count; i++)
             {
                 if (reader.ReadItem() is FeedingBell b)
-                {
                     Bells.Add(b);
-                }
             }
 
             if (Dragon == null || Dragon.Deleted)
-            {
                 Expire();
-            }
         }
     }
 
@@ -1785,15 +1711,11 @@ namespace Server.Engines.Shadowguard
             if (Bosses != null && bc is ShadowguardBoss && bc == CurrentBoss)
             {
                 if (Bosses.Count > 0)
-                {
                     SpawnBoss();
-                }
                 else
                 {
                     if (Minax != null && Minax.Alive)
-                    {
                         Minax.Say(1156257); // How...How could this happen! I shall nay be bested by mere mortals! We shall meet again vile heroes!
-                    }
 
                     GiveRewardTitle();
 
@@ -1823,9 +1745,7 @@ namespace Server.Engines.Shadowguard
         public override void ClearItems()
         {
             if (Minax != null)
-            {
                 Minax.Delete();
-            }
 
             if (Bosses != null)
             {
@@ -1836,9 +1756,7 @@ namespace Server.Engines.Shadowguard
             if (CurrentBoss != null)
             {
                 if (!CurrentBoss.Deleted)
-                {
                     CurrentBoss.Delete();
-                }
 
                 CurrentBoss = null;
             }
@@ -1847,9 +1765,7 @@ namespace Server.Engines.Shadowguard
         private void SpawnBoss()
         {
             if (Bosses == null)
-            {
                 return;
-            }
 
             Point3D p = SpawnPoints[0];
             ConvertOffset(ref p);
@@ -1870,21 +1786,13 @@ namespace Server.Engines.Shadowguard
             if (Minax != null && Minax.Alive)
             {
                 if (CurrentBoss is Juonar)
-                {
                     Minax.Say(1156258); // You shall burn as Trinsic burned at the hands of the Vile Lich Juo'nar!
-                }
                 else if (CurrentBoss is Anon)
-                {
                     Minax.Say(1156259); // Oh Anon my dear! Deal with these pesky intruders will you? Burn them to ASH!
-                }
                 else if (CurrentBoss is Virtuebane)
-                {
                     Minax.Say(1156260); // You didn't think that ridiculous pie trick would work twice in a row? Virtuebane I command thee destroy these vile creatures!
-                }
                 else
-                {
                     Minax.Say(1156261); // And now you shall bow to the King of Kings! Suffer at the hands of the Feudal Lord Ozymandias!
-                }
             }
         }
 
@@ -1924,9 +1832,7 @@ namespace Server.Engines.Shadowguard
                 Type boss = ScriptCompiler.FindTypeByName(reader.ReadString());
 
                 if (boss != null)
-                {
                     Bosses.Add(boss);
-                }
             }
 
             if (CurrentBoss == null && !Completed)

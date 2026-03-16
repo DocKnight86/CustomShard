@@ -50,9 +50,7 @@ namespace Server.Gumps
             for (int i = 0; i < EquipmentItem.Count; i++)
             {
                 if (EquipmentItem[i].LabelNumber == 1159280) // Medable Armor - not appear
-                {
                     continue;
-                }
 
                 if (EquipmentItem[i].IsSpriteGraph)
                 {
@@ -67,9 +65,7 @@ namespace Server.Gumps
                     AddTooltip(EquipmentItem[i].Description);
 
                     if (!EquipmentItem[i].IsBoolen)
-                    {
                         AddHtml(190, 94 + 18 * i, 100, 18, Color(EquipmentItem[i].Value, EquipmentItem[i].Cap), false, false);
-                    }
                 }
             }
 
@@ -248,10 +244,7 @@ namespace Server.Gumps
                     {
                         var x = _Mannequin.Items[index];
 
-                        if (x != _SameItem)
-                        {
-                            list.Add(x);
-                        }
+                        if (x != _SameItem) list.Add(x);
                     }
 
                     list.Add(_Item);
@@ -462,9 +455,7 @@ namespace Server.Gumps
         public override void OnResponse(NetState sender, RelayInfo info)
         {
             if (_Mannequin == null)
-            {
                 return;
-            }
 
             Mobile from = sender.Mobile;
 

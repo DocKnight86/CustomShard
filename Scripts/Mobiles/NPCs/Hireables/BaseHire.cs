@@ -282,16 +282,12 @@ namespace Server.Mobiles
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
         {
             if (Deleted)
-            {
                 return;
-            }
 
             if (!Controlled)
             {
                 if (CanPaperdollBeOpenedBy(from))
-                {
                     list.Add(new PaperdollEntry(this));
-                }
 
                 list.Add(new HireEntry(from, this));
             }

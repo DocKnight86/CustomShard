@@ -66,12 +66,8 @@ namespace Server.Engines.TombOfKings
         public bool IsEmpty()
         {
             for (int i = 0; i < m_Creatures.Count; i++)
-            {
                 if (m_Creatures[i].Alive)
-                {
                     return false;
-                }
-            }
 
             return true;
         }
@@ -79,9 +75,7 @@ namespace Server.Engines.TombOfKings
         public void CheckSpawn()
         {
             if (Utility.RandomBool() && IsEmpty())
-            {
                 Respawn();
-            }
         }
 
         public void Respawn()
@@ -111,9 +105,7 @@ namespace Server.Engines.TombOfKings
             base.OnAfterDelete();
 
             for (int i = 0; i < m_Creatures.Count; i++)
-            {
                 m_Creatures[i].Delete();
-            }
         }
 
         private void StartTimer()
@@ -134,9 +126,7 @@ namespace Server.Engines.TombOfKings
             writer.Write(m_Creatures.Count);
 
             for (int i = 0; i < m_Creatures.Count; i++)
-            {
                 writer.Write(m_Creatures[i]);
-            }
         }
 
         public override void Deserialize(GenericReader reader)
@@ -152,9 +142,7 @@ namespace Server.Engines.TombOfKings
                 Mobile m = reader.ReadMobile();
 
                 if (m != null)
-                {
                     m_Creatures.Add(m);
-                }
             }
 
             StartTimer();

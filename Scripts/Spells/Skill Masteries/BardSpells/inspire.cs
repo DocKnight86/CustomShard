@@ -63,7 +63,7 @@ namespace Server.Spells.SkillMasteries
         {
             if (PartyList != null)
             {
-                for (int index = 0; index < PartyList.Count; index++)
+                for (var index = 0; index < PartyList.Count; index++)
                 {
                     Mobile m = PartyList[index];
 

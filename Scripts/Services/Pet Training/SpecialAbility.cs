@@ -247,9 +247,7 @@ namespace Server.Mobiles
             if (CooldownDuration != TimeSpan.MinValue)
             {
                 if (_Cooldown == null)
-                {
                     _Cooldown = new List<Mobile>();
-                }
 
                 _Cooldown.Add(m);
                 Timer.DelayCall<Mobile>(CooldownDuration, RemoveFromCooldown, m);
@@ -405,9 +403,7 @@ namespace Server.Mobiles
                 defender.SendLocalizedMessage(1070828); // The creature continues to hinder your energy resistance!
             }
             else
-            {
                 defender.SendLocalizedMessage(1070827); // The creature's attack has made you more susceptible to energy attacks!
-            }
 
             int effect = -(defender.EnergyResistance / 2);
 
@@ -484,9 +480,7 @@ namespace Server.Mobiles
                 defender.SendLocalizedMessage(1070851); // The creature lands another blow in your weakened state.
             }
             else
-            {
                 defender.SendLocalizedMessage(1070850); // The creature's flurry of twigs has made you more susceptible to physical attacks!
-            }
 
             int effect = -(defender.PhysicalResistance * 15 / 100);
 
@@ -551,9 +545,7 @@ namespace Server.Mobiles
             if (CooldownDuration != TimeSpan.MinValue)
             {
                 if (_Cooldown == null)
-                {
                     _Cooldown = new List<Mobile>();
-                }
 
                 DragonBreathDefinition def = DragonBreathDefinition.GetDefinition(m);
 
@@ -850,6 +842,26 @@ namespace Server.Mobiles
                     false,
                     new[] { typeof(AntLion) }));
 
+                // Rend
+                Definitions.Add(new DragonBreathDefinition(
+                    0.06,
+                    1.0,
+                    1.3,
+                    1.0,
+                    0, 100, 0, 0, 0, 0, 0,
+                    30.0, 45.0,
+                    0x36D4,
+                    5,
+                    0,
+                    false,
+                    false,
+                    0,
+                    0,
+                    0x227,
+                    12,
+                    false,
+                    new[] { typeof(Rend) }));
+
                 // Crystal Sea Serpent
                 Definitions.Add(new DragonBreathDefinition(
                    0.55,
@@ -1068,9 +1080,7 @@ namespace Server.Mobiles
             }
 
             if (_Table == null)
-            {
                 _Table = new Dictionary<Mobile, InternalTimer>();
-            }
 
             _Table[defender] = new InternalTimer(defender);
 
@@ -1120,9 +1130,7 @@ namespace Server.Mobiles
         public override void DoEffects(BaseCreature creature, Mobile defender, ref int damage)
         {
             if (_Table == null)
-            {
                 _Table = new Dictionary<Mobile, ExpireTimer>();
-            }
 
             ExpireTimer timer = null;
 
@@ -1137,9 +1145,7 @@ namespace Server.Mobiles
                 defender.SendLocalizedMessage(1070837); // The creature lands another blow in your weakened state.
             }
             else
-            {
                 defender.SendLocalizedMessage(1070836); // The blow from the creature's claws has made you more susceptible to physical attacks.
-            }
 
             int effect = -(defender.PhysicalResistance * 15 / 100);
 
@@ -1200,9 +1206,7 @@ namespace Server.Mobiles
         public override void DoEffects(BaseCreature creature, Mobile defender, ref int damage)
         {
             if (_Table == null)
-            {
                 _Table = new Dictionary<Mobile, ExpireTimer>();
-            }
 
             ExpireTimer timer = null;
 
@@ -1289,9 +1293,7 @@ namespace Server.Mobiles
         public override void DoEffects(BaseCreature creature, Mobile defender, ref int damage)
         {
             if (creature.Map == null)
-            {
                 return;
-            }
 
             List<Mobile> list = new List<Mobile>();
             IPooledEnumerable eable = creature.GetMobilesInRange(8);
@@ -1299,9 +1301,7 @@ namespace Server.Mobiles
             foreach (Mobile m in eable)
             {
                 if (AreaEffect.ValidTarget(creature, m))
-                {
                     list.Add(m);
-                }
             }
 
             eable.Free();
@@ -1334,9 +1334,7 @@ namespace Server.Mobiles
         public override void DoEffects(BaseCreature creature, Mobile defender, ref int damage)
         {
             if (_Table == null)
-            {
                 _Table = new Dictionary<Mobile, InternalTimer>();
-            }
 
             InternalTimer timer = null;
 
@@ -1459,9 +1457,7 @@ namespace Server.Mobiles
             }
 
             if (_Table == null)
-            {
                 _Table = new Dictionary<Mobile, InternalTimer>();
-            }
 
             _Table[defender] = new InternalTimer(defender);
 
@@ -1560,18 +1556,14 @@ namespace Server.Mobiles
             foreach (Mobile m in eable)
             {
                 if (AreaEffect.ValidTarget(creature, m))
-                {
                     list.Add(m);
-                }
             }
 
             eable.Free();
             Poison p = creature.GetHitPoison();
 
             if (p == null)
-            {
                 return;
-            }
 
             for (var index = 0; index < list.Count; index++)
             {
@@ -1590,9 +1582,7 @@ namespace Server.Mobiles
                 AbilityProfile profile = PetTrainingHelper.GetAbilityProfile(creature);
 
                 if (profile != null && profile.HasAbility(MagicalAbility.Poisoning) || 0.2 > Utility.RandomDouble())
-                {
                     creature.CheckSkill(SkillName.Poisoning, 0, creature.Skills[SkillName.Poisoning].Cap);
-                }
             }
 
             ColUtility.Free(list);
@@ -1673,9 +1663,7 @@ namespace Server.Mobiles
         public override void DoEffects(BaseCreature creature, Mobile defender, ref int damage)
         {
             if (_Table == null)
-            {
                 _Table = new Dictionary<Mobile, ExpireTimer>();
-            }
 
             ExpireTimer timer = null;
 
@@ -1690,9 +1678,7 @@ namespace Server.Mobiles
                 defender.SendLocalizedMessage(1070845); // The creature continues to corrupt your armor!
             }
             else
-            {
                 defender.SendLocalizedMessage(1070846); // The creature magically corrupts your armor!
-            }
 
             List<ResistanceMod> mods = new List<ResistanceMod>();
 
@@ -1805,9 +1791,7 @@ namespace Server.Mobiles
         public override void DoEffects(BaseCreature creature, Mobile defender, ref int damage)
         {
             if (creature.Map == null)
-            {
                 return;
-            }
 
             List<Mobile> list = new List<Mobile>();
             IPooledEnumerable eable = creature.GetMobilesInRange(12);
@@ -1815,9 +1799,7 @@ namespace Server.Mobiles
             foreach (Mobile m in eable)
             {
                 if (AreaEffect.ValidTarget(creature, m))
-                {
                     list.Add(m);
-                }
             }
 
             eable.Free();
@@ -1848,9 +1830,7 @@ namespace Server.Mobiles
         public override void DoEffects(BaseCreature creature, Mobile defender, ref int damage)
         {
             if (_Table == null)
-            {
                 _Table = new Dictionary<Mobile, ExpireTimer>();
-            }
 
             if (_Table.ContainsKey(defender))
             {
@@ -1940,9 +1920,7 @@ namespace Server.Mobiles
         public override void DoEffects(BaseCreature creature, Mobile defender, ref int damage)
         {
             if (_Table == null)
-            {
                 _Table = new Dictionary<Mobile, ExpireTimer>();
-            }
 
             if (!_Table.ContainsKey(defender) && creature.InRange(defender, 1) && 0.25 > Utility.RandomDouble() && !FountainOfFortune.UnderProtection(defender))
             {
@@ -2013,9 +1991,7 @@ namespace Server.Mobiles
         {
             //TODO: Effects/Sound
             if (_Table == null)
-            {
                 _Table = new List<Mobile>();
-            }
 
             defender.SendLocalizedMessage(1153752); // Your attack speed has been slowed.
 
@@ -2083,9 +2059,7 @@ namespace Server.Mobiles
         public override void DoEffects(BaseCreature creature, Mobile defender, ref int damage)
         {
             if (_Table == null)
-            {
                 _Table = new Dictionary<Mobile, ExpireTimer>();
-            }
 
             ExpireTimer timer = null;
 
@@ -2100,9 +2074,7 @@ namespace Server.Mobiles
                 defender.SendLocalizedMessage(1070825); // The creature continues to rage!
             }
             else
-            {
                 defender.SendLocalizedMessage(1070826); // The creature goes into a rage, inflicting heavy damage!
-            }
 
             timer = new ExpireTimer(defender, creature);
             timer.Start();
@@ -2131,13 +2103,9 @@ namespace Server.Mobiles
             public void DrainLife()
             {
                 if (m_Mobile.Alive)
-                {
                     m_Mobile.Damage(2, m_From);
-                }
                 else
-                {
                     DoExpire();
-                }
             }
 
             protected override void OnTick()
@@ -2230,25 +2198,15 @@ namespace Server.Mobiles
             int number;
 
             if (seconds <= 2)
-            {
                 number = 1080339; // A sense of discomfort passes through you, but it fades quickly
-            }
             else if (seconds <= 4)
-            {
                 number = 1080340; // An unfamiliar fear washes over you, and for a moment you're unable to move
-            }
             else if (seconds <= 7)
-            {
                 number = 1080341; // Panic grips you! You're unable to move, to think, to feel anything but fear!
-            }
             else if (seconds <= 10)
-            {
                 number = 1080342; // Terror slices into your very being, destroying any chance of resisting ~1_name~ you might have had
-            }
             else
-            {
                 number = 1080343; // Everything around you dissolves into darkness as ~1_name~'s burning eyes fill your vision
-            }
 
             target.SendLocalizedMessage(number, creature.Name, 0x21);
             target.Frozen = true;

@@ -118,18 +118,14 @@ namespace Server.Items
                 Timer.DelayCall(TimeSpan.FromSeconds(Utility.RandomMinMax(1, 5)), delegate
                 {
                     if (!snake.Alive)
-                    {
                         return;
-                    }
 
                     snake.Frozen = false;
 
                     Mobile from = snake.CharmMaster;
 
                     if (from == null || Deleted)
-                    {
                         return;
-                    }
 
                     if (0.1 > Utility.RandomDouble())
                     {

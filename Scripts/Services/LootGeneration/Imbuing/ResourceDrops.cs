@@ -237,9 +237,7 @@ namespace Server.Items
                         Item drop = Loot.Construct(entry.Ingredients);
 
                         if (drop != null)
-                        {
                             drops.Add(drop);
-                        }
                     }
 
                     for (var i = 0; i < drops.Count; i++)

@@ -1,3 +1,4 @@
+using Server.Engines.Quests;
 using Server.Items;
 using System.Collections.Generic;
 
@@ -46,7 +47,16 @@ namespace Server.Mobiles
                 Add(new GenericBuyInfo(typeof(HeatingStand), 2, 100, 0x1849, 0));
                 Add(new GenericBuyInfo(typeof(SkinTingeingTincture), 1255, 20, 0xEFF, 90));
 
-                Add(new GenericBuyInfo(typeof(HairDye), 37, 10, 0xEFF, 0));
+                if (m.Map != Map.TerMur)
+                {
+                    Add(new GenericBuyInfo(typeof(HairDye), 37, 10, 0xEFF, 0));
+                }
+                else if (m is Zosilem)
+                {
+                    Add(new GenericBuyInfo(typeof(GlassblowingBook), 10637, 30, 0xFF4, 0));
+                    Add(new GenericBuyInfo(typeof(SandMiningBook), 10637, 30, 0xFF4, 0));
+                    Add(new GenericBuyInfo(typeof(Blowpipe), 21, 100, 0xE8A, 0x3B9));
+                }
             }
         }
 

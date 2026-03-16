@@ -36,9 +36,7 @@ namespace Server.Items
                 int index = CraftResources.GetIndex(Resource);
 
                 if (index >= 1 && index <= 8)
-                {
                     return 1049019 + index;
-                }
 
                 return 1045128; // runic smithy hammer
             }
@@ -50,22 +48,16 @@ namespace Server.Items
             int index = CraftResources.GetIndex(Resource);
 
             if (index >= 1 && index <= 8)
-            {
                 return;
-            }
 
             if (!CraftResources.IsStandard(Resource))
             {
                 int num = CraftResources.GetLocalizationNumber(Resource);
 
                 if (num > 0)
-                {
                     list.Add(num);
-                }
                 else
-                {
                     list.Add(CraftResources.GetName(Resource));
-                }
             }
         }
 

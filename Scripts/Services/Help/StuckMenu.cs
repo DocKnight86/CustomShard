@@ -178,9 +178,7 @@ namespace Server.Menus.Questions
         public void StopClose()
         {
             if (m_Timer != null)
-            {
                 m_Timer.Stop();
-            }
 
             m_Mobile.Frozen = false;
         }
@@ -192,9 +190,7 @@ namespace Server.Menus.Questions
             if (info.ButtonID == 0)
             {
                 if (m_Mobile == m_Sender)
-                {
                     m_Mobile.SendLocalizedMessage(1010588); // You choose not to go to any city.
-                }
             }
             else if (CityTradeSystem.HasTrade(m_Mobile))
             {
@@ -206,28 +202,20 @@ namespace Server.Menus.Questions
                 StuckMenuEntry[] entries = IsTerMur(m_Mobile) ? m_TerMurEntries : IsInSecondAgeArea(m_Mobile) ? m_T2AEntries : m_Entries;
 
                 if (index >= 0 && index < entries.Length)
-                {
                     Teleport(entries[index]);
-                }
             }
         }
 
         private static bool IsInSecondAgeArea(Mobile m)
         {
             if (m.Map != Map.Trammel && m.Map != Map.Felucca)
-            {
                 return false;
-            }
 
             if (m.X >= 5120 && m.Y >= 2304)
-            {
                 return true;
-            }
 
             if (m.Region.IsPartOf("Terathan Keep"))
-            {
                 return true;
-            }
 
             return false;
         }
@@ -336,30 +324,18 @@ namespace Server.Menus.Questions
 
                     Map destMap;
                     if (m_Mobile.Map == Map.Trammel || SpellHelper.IsEodon(m_Mobile.Map, m_Mobile.Location))
-                    {
                         destMap = Map.Trammel;
-                    }
                     else if (m_Mobile.Map == Map.Felucca)
-                    {
                         destMap = Map.Felucca;
-                    }
                     else if (m_Mobile.Map == Map.TerMur && !SpellHelper.IsEodon(m_Mobile.Map, m_Mobile.Location))
-                    {
                         destMap = Map.TerMur;
-                    }
                     else if (m_Mobile.Map == Map.Internal)
-                    {
                         destMap = m_Mobile.LogoutMap == Map.Felucca ? Map.Felucca : Map.Trammel;
-                    }
                     else
-                    {
                         destMap = m_Mobile.Murderer ? Map.Felucca : Map.Trammel;
-                    }
 
                     if (destMap == Map.Trammel && Siege.SiegeShard)
-                    {
                         destMap = Map.Felucca;
-                    }
 
                     if (m_Mobile.Map != Map.Internal)
                     {

@@ -670,6 +670,11 @@ namespace Server.Items
                     }
                 }
 
+                if (HasSocket<Caddellite>())
+                {
+                    Caddellite.UpdateBuff(from);
+                }
+
                 from.CheckStatTimers();
             }
         }
@@ -679,6 +684,11 @@ namespace Server.Items
             if (parent is Mobile from)
             {
                 m_AosSkillBonuses.Remove();
+
+                if (HasSocket<Caddellite>())
+                {
+                    Caddellite.UpdateBuff(from);
+                }
 
                 string modName = Serial.ToString();
 
@@ -778,6 +788,11 @@ namespace Server.Items
                 {
                     list.Add(entry.Title);
                 }
+            }
+
+            if (HasSocket<Caddellite>())
+            {
+                list.Add(1158662); // Caddellite Infused
             }
 
             int prop;
@@ -931,7 +946,7 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(0); // version
+            writer.Write(6); // version
 
             m_NegativeAttributes.Serialize(writer);
 
@@ -965,9 +980,10 @@ namespace Server.Items
 
             switch (version)
             {
-                case 0:
+                case 6:
                     {
                         m_NegativeAttributes = new NegativeAttributes(this, reader);
+
 
                         m_MaxHitPoints = reader.ReadInt();
                         m_HitPoints = reader.ReadInt();
@@ -976,18 +992,40 @@ namespace Server.Items
                         _Owner = reader.ReadMobile();
                         _OwnerName = reader.ReadString();
 
+                        goto case 5;
+                    }
+                case 5:
+                    {
                         m_Quality = (BookQuality)reader.ReadByte();
 
+                        goto case 4;
+                    }
+                case 4:
+                    {
                         m_EngravedText = reader.ReadString();
 
+                        goto case 3;
+                    }
+                case 3:
+                    {
                         m_Crafter = reader.ReadMobile();
-
+                        goto case 2;
+                    }
+                case 2:
+                    {
                         m_Slayer = (SlayerName)reader.ReadInt();
                         m_Slayer2 = (SlayerName)reader.ReadInt();
-
+                        goto case 1;
+                    }
+                case 1:
+                    {
                         m_AosAttributes = new AosAttributes(this, reader);
                         m_AosSkillBonuses = new AosSkillBonuses(this, reader);
 
+                        goto case 0;
+                    }
+                case 0:
+                    {
                         m_Content = reader.ReadULong();
                         m_Count = reader.ReadInt();
 

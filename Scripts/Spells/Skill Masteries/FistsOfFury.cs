@@ -32,9 +32,7 @@ namespace Server.Spells.SkillMasteries
             bool validate = base.Validate(from);
 
             if (!validate)
-            {
                 return false;
-            }
 
             return CheckMana(from, true);
         }
@@ -63,9 +61,7 @@ namespace Server.Spells.SkillMasteries
         public override void OnDamaged(Mobile attacker, Mobile defender, DamageType type, ref int damage)
         {
             if (defender == null || attacker == null)
-            {
                 return;
-            }
 
             BaseWeapon wep = defender.Weapon as BaseWeapon;
 
@@ -77,9 +73,7 @@ namespace Server.Spells.SkillMasteries
             else if (defender.InRange(attacker.Location, 2) && !UnderEffects(defender))
             {
                 if (_Table == null)
-                {
                     _Table = new Dictionary<Mobile, FistsOfFuryContext>();
-                }
 
                 _Table[defender] = new FistsOfFuryContext(attacker);
                 defender.NextCombatTime = Core.TickCount + (int)(wep.GetDelay(defender).TotalMilliseconds);
@@ -98,18 +92,14 @@ namespace Server.Spells.SkillMasteries
                 _Table.Remove(defender);
 
                 if (_Table.Count == 0)
-                {
                     _Table = null;
-                }
             }
         }
 
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
             if (!UnderEffects(attacker))
-            {
                 return;
-            }
 
             if (_Table[attacker].Target == defender)
             {

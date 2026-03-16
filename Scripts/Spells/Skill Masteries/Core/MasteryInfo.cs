@@ -128,9 +128,9 @@ namespace Server.Spells.SkillMasteries
 
         public static MasteryInfo GetInfo(Type spell, SkillName skill)
         {
-            for (int index = 0; index < Infos.Count; index++)
+            for (var index = 0; index < Infos.Count; index++)
             {
-                MasteryInfo info = Infos[index];
+                var info = Infos[index];
 
                 if (info.SpellType == spell && info.MasterySkill == skill)
                 {
@@ -143,9 +143,9 @@ namespace Server.Spells.SkillMasteries
 
         public static MasteryInfo GetInfo(int spellID)
         {
-            for (int index = 0; index < Infos.Count; index++)
+            for (var index = 0; index < Infos.Count; index++)
             {
-                MasteryInfo info = Infos[index];
+                var info = Infos[index];
 
                 if (info.SpellID == spellID)
                 {
@@ -158,9 +158,9 @@ namespace Server.Spells.SkillMasteries
 
         public static MasteryInfo GetInfo(int spellID, SkillName name)
         {
-            for (int index = 0; index < Infos.Count; index++)
+            for (var index = 0; index < Infos.Count; index++)
             {
-                MasteryInfo info = Infos[index];
+                var info = Infos[index];
 
                 if (info.SpellID == spellID && info.MasterySkill == name)
                 {
@@ -180,16 +180,11 @@ namespace Server.Spells.SkillMasteries
         public static int GetVolume(int spellID, SkillName skill)
         {
             if (IsPassiveMastery(spellID) || spellID == 733)
-            {
                 return 1;
-            }
-
             if (spellID <= 715)
             {
                 if (spellID % 2 == 0)
-                {
                     return 3;
-                }
 
                 return 2;
             }
@@ -197,22 +192,15 @@ namespace Server.Spells.SkillMasteries
             if (spellID <= 731 || (spellID >= 736 && spellID <= 743))
             {
                 if (spellID % 2 == 0)
-                {
                     return 2;
-                }
 
                 return 3;
             }
 
             if (spellID == 734)
-            {
                 return 2;
-            }
-
             if (spellID == 735)
-            {
                 return 3;
-            }
 
             return 1;
         }
@@ -222,9 +210,7 @@ namespace Server.Spells.SkillMasteries
             MasteryInfo info = GetInfo(spellID);
 
             if (info != null)
-            {
                 return info.MasterySkill;
-            }
 
             return SkillName.Archery;
         }
@@ -290,9 +276,9 @@ namespace Server.Spells.SkillMasteries
 
                 if (list != null)
                 {
-                    for (int index = 0; index < list.Count; index++)
+                    for (var index = 0; index < list.Count; index++)
                     {
-                        SkillMasterySpell spell = list[index];
+                        var spell = list[index];
 
                         spell.Expire();
                     }
@@ -314,9 +300,7 @@ namespace Server.Spells.SkillMasteries
                 SpecialMove move = SpecialMove.GetCurrentMove(m);
 
                 if (move is SkillMasteryMove)
-                {
                     SpecialMove.ClearCurrentMove(m);
-                }
 
                 m.RemoveStatMod("SavingThrow_Str");
 
@@ -368,16 +352,14 @@ namespace Server.Spells.SkillMasteries
                 m.UpdateResistances();
 
                 if (m.Mana > m.ManaMax)
-                {
                     m.Mana = m.ManaMax;
-                }
             }
 
             if (m.Backpack != null)
             {
-                Item[] type = m.Backpack.FindItemsByType(typeof(BookOfMasteries));
+                var type = m.Backpack.FindItemsByType(typeof(BookOfMasteries));
 
-                for (int index = 0; index < type.Length; index++)
+                for (var index = 0; index < type.Length; index++)
                 {
                     Item item = type[index];
                     BookOfMasteries book = item as BookOfMasteries;
@@ -386,7 +368,7 @@ namespace Server.Spells.SkillMasteries
                 }
             }
 
-            for (int index = 0; index < m.Items.Count; index++)
+            for (var index = 0; index < m.Items.Count; index++)
             {
                 Item item = m.Items[index];
 
@@ -408,9 +390,9 @@ namespace Server.Spells.SkillMasteries
 
             MasteryInfo info = null;
 
-            for (int index = 0; index < Infos.Count; index++)
+            for (var index = 0; index < Infos.Count; index++)
             {
-                MasteryInfo i = Infos[index];
+                var i = Infos[index];
 
                 if (i.Passive && i.MasterySkill == mastery && i.PassiveSpell != PassiveSpell.AnticipateHit)
                 {
@@ -430,9 +412,7 @@ namespace Server.Spells.SkillMasteries
         public static bool IsActivePassive(Mobile m, PassiveSpell spell)
         {
             if (spell == PassiveSpell.AnticipateHit)
-            {
                 return m.Skills.CurrentMastery == SkillName.Bushido;
-            }
 
             return GetActivePassive(m) == spell;
         }
@@ -476,9 +456,9 @@ namespace Server.Spells.SkillMasteries
         {
             MasteryInfo info = null;
 
-            for (int index = 0; index < Infos.Count; index++)
+            for (var index = 0; index < Infos.Count; index++)
             {
-                MasteryInfo i = Infos[index];
+                var i = Infos[index];
 
                 if (i.MasterySkill == name && i.Passive)
                 {
@@ -526,9 +506,7 @@ namespace Server.Spells.SkillMasteries
         public static int EnchantedSummoningBonus(BaseCreature bc)
         {
             if (bc.Summoned)
-            {
                 return EnchantedSummoningBonus(bc.SummonMaster);
-            }
 
             return 0;
         }
@@ -613,9 +591,7 @@ namespace Server.Spells.SkillMasteries
                 int level = GetMasteryLevel(m, m.Skills.CurrentMastery);
 
                 if (level <= 0)
-                {
                     return 0;
-                }
 
                 switch (attr)
                 {
@@ -709,9 +685,7 @@ namespace Server.Spells.SkillMasteries
             for (int i = 0; i < _Skills.Length; i++)
             {
                 if (_Skills[i] == sk)
-                {
                     return _Descriptions[i];
-                }
             }
 
             return -1;
@@ -724,9 +698,7 @@ namespace Server.Spells.SkillMasteries
             for (int i = 0; i < _Skills.Length; i++)
             {
                 if (_Skills[i] == sk)
-                {
                     return _Titles[i];
-                }
             }
 
             return null;

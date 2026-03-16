@@ -58,9 +58,7 @@ namespace Server.Mobiles
                 base.Hue = value;
 
                 if (InternalItem != null)
-                {
                     InternalItem.Hue = value;
-                }
             }
         }
 
@@ -79,9 +77,7 @@ namespace Server.Mobiles
             set
             {
                 if (InternalItem != null)
-                {
                     InternalItem.ItemID = value;
-                }
             }
         }
 
@@ -116,23 +112,17 @@ namespace Server.Mobiles
                         }
 
                         if (InternalItem != null)
-                        {
                             InternalItem.Internalize();
-                        }
                     }
                     else
                     {
                         if (m_Rider != null)
-                        {
                             Dismount(m_Rider);
-                        }
 
                         Dismount(value);
 
                         if (InternalItem != null)
-                        {
                             value.AddItem(InternalItem);
-                        }
 
                         value.Direction = Direction;
 
@@ -149,9 +139,7 @@ namespace Server.Mobiles
         public static bool OnFlightPath(Mobile m)
         {
             if (!m.Flying)
-            {
                 return false;
-            }
 
             StaticTile[] tiles = m.Map.Tiles.GetStaticTiles(m.X, m.Y, true);
             ItemData itemData;
@@ -179,9 +167,7 @@ namespace Server.Mobiles
         public static void Dismount(Mobile dismounter, Mobile dismounted, BlockMountType blockmounttype, TimeSpan delay, bool message)
         {
             if (!dismounted.Mounted && !Spells.Ninjitsu.AnimalForm.UnderTransformation(dismounted) && !dismounted.Flying)
-            {
                 return;
-            }
 
             if (dismounted is ChaosDragoonElite)
             {
@@ -195,9 +181,7 @@ namespace Server.Mobiles
                 mount.Rider = null;
 
                 if (message)
-                {
                     dismounted.SendLocalizedMessage(1040023); // You have been knocked off of your mount!
-                }
             }
             else if (Spells.Ninjitsu.AnimalForm.UnderTransformation(dismounted))
             {
@@ -232,9 +216,7 @@ namespace Server.Mobiles
         public static void SetMountPrevention(Mobile mob, IMount mount, BlockMountType type, TimeSpan duration)
         {
             if (mob == null)
-            {
                 return;
-            }
 
             DateTime expiration = DateTime.UtcNow + duration;
             BlockEntry entry = null;
@@ -273,9 +255,7 @@ namespace Server.Mobiles
         public static BlockMountType GetMountPrevention(Mobile mob, BaseMount mount)
         {
             if (mob == null)
-            {
                 return BlockMountType.None;
-            }
 
             BlockEntry entry = null;
 
@@ -285,9 +265,7 @@ namespace Server.Mobiles
             }
 
             if (entry == null)
-            {
                 return BlockMountType.None;
-            }
 
             if (entry.IsExpired(mount))
             {
@@ -317,9 +295,7 @@ namespace Server.Mobiles
             BlockMountType type = GetMountPrevention(mob, mount);
 
             if (type == BlockMountType.None)
-            {
                 return true;
-            }
 
             if (message && mob.NetState != null)
             {
@@ -389,9 +365,7 @@ namespace Server.Mobiles
         public override void OnAfterDelete()
         {
             if (InternalItem != null)
-            {
                 InternalItem.Delete();
-            }
 
             InternalItem = null;
 
@@ -443,9 +417,7 @@ namespace Server.Mobiles
         public override void OnDoubleClick(Mobile from)
         {
             if (IsDeadPet)
-            {
                 return;
-            }
 
             if (from.IsBodyMod && !from.Body.IsHuman)
             {
@@ -455,9 +427,7 @@ namespace Server.Mobiles
             }
 
             if (!CheckMountAllowed(from, this, true, false))
-            {
                 return;
-            }
 
             if (from.Mount is BaseBoat)
             {
@@ -470,6 +440,13 @@ namespace Server.Mobiles
                 return;
             }
 
+            if (from.Race == Race.Gargoyle && from.IsPlayer())
+            {
+                from.SendLocalizedMessage(1112281);
+                OnDisallowedRider(from);
+                return;
+            }
+
             if (from.Female ? !AllowFemaleRider : !AllowMaleRider)
             {
                 OnDisallowedRider(from);
@@ -477,9 +454,7 @@ namespace Server.Mobiles
             }
 
             if (!DesignContext.Check(from))
-            {
                 return;
-            }
 
             if (from.HasTrade)
             {
@@ -494,13 +469,9 @@ namespace Server.Mobiles
                 if (canAccess)
                 {
                     if (Poisoned)
-                    {
                         PrivateOverheadMessage(MessageType.Regular, 0x3B2, 1049692, from.NetState); // This mount is too ill to ride.
-                    }
                     else
-                    {
                         Rider = from;
-                    }
                 }
                 else if (!Controlled && !Summoned)
                 {
@@ -640,9 +611,7 @@ namespace Server.Mobiles
         public override void OnAfterDelete()
         {
             if (m_Mount != null)
-            {
                 m_Mount.Delete();
-            }
 
             m_Mount = null;
 
@@ -652,9 +621,7 @@ namespace Server.Mobiles
         public override DeathMoveResult OnParentDeath(Mobile parent)
         {
             if (m_Mount != null)
-            {
                 m_Mount.Rider = null;
-            }
 
             return DeathMoveResult.RemainEquiped;
         }

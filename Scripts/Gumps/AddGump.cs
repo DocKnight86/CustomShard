@@ -60,24 +60,16 @@ namespace Server.Gumps
             AddAlphaRegion(10, 250, 400, 20);
 
             if (m_Page > 0)
-            {
                 AddButton(10, 249, 4014, 4016, 2, GumpButtonType.Reply, 0);
-            }
             else
-            {
                 AddImage(10, 249, 4014);
-            }
 
             AddHtmlLocalized(44, 250, 170, 20, 1061028, m_Page > 0 ? 0x7FFF : 0x5EF7, false, false); // Previous page
 
             if (((m_Page + 1) * 10) < searchResults.Length)
-            {
                 AddButton(210, 249, 4005, 4007, 3, GumpButtonType.Reply, 0);
-            }
             else
-            {
                 AddImage(210, 249, 4005);
-            }
 
             AddHtmlLocalized(244, 250, 170, 20, 1061027, ((m_Page + 1) * 10) < searchResults.Length ? 0x7FFF : 0x5EF7, false, false); // Next page
         }
@@ -139,18 +131,14 @@ namespace Server.Gumps
                 case 2: // Previous page
                     {
                         if (m_Page > 0)
-                        {
                             from.SendGump(new AddGump(from, m_SearchString, m_Page - 1, m_SearchResults, true));
-                        }
 
                         break;
                     }
                 case 3: // Next page
                     {
                         if ((m_Page + 1) * 10 < m_SearchResults.Length)
-                        {
                             from.SendGump(new AddGump(from, m_SearchString, m_Page + 1, m_SearchResults, true));
-                        }
 
                         break;
                     }
@@ -198,9 +186,7 @@ namespace Server.Gumps
         private static void Match(string match, Type[] types, List<Type> results)
         {
             if (match.Length == 0)
-            {
                 return;
-            }
 
             match = match.ToLower();
 
@@ -244,13 +230,9 @@ namespace Server.Gumps
                 if (o is IPoint3D p)
                 {
                     if (p is Item item)
-                    {
                         p = item.GetWorldTop();
-                    }
                     else if (p is Mobile mobile)
-                    {
                         p = mobile.Location;
-                    }
 
                     Commands.Add.Invoke(from, new Point3D(p), new Point3D(p), new[] { m_Type.Name });
 
@@ -261,9 +243,7 @@ namespace Server.Gumps
             protected override void OnTargetCancel(Mobile from, TargetCancelType cancelType)
             {
                 if (cancelType == TargetCancelType.Canceled)
-                {
                     from.SendGump(new AddGump(from, m_SearchString, m_Page, m_SearchResults, true));
-                }
             }
         }
     }

@@ -58,9 +58,7 @@ namespace Server.Items
             {
                 if (ItemID == 0x1A03 || ItemID == 0x1A05 || ItemID == 0x1A09 ||
                     ItemID == 0x1B1E || ItemID == 0x1B7F)
-                {
                     return true;
-                }
 
                 return false;
             }
@@ -70,9 +68,7 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
-            {
                 list.Add(1076220); // 4th Year Veteran Reward
-            }
         }
 
         void IChopable.OnChop(Mobile user)
@@ -92,14 +88,10 @@ namespace Server.Items
                     from.SendGump(new RewardDemolitionGump(this, 1049783)); // Do you wish to re-deed this decoration?
                 }
                 else
-                {
                     from.SendLocalizedMessage(1049784); // You can only re-deed this decoration if you are the house owner or originally placed the decoration.
-                }
             }
             else
-            {
                 from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -123,9 +115,7 @@ namespace Server.Items
         public bool CouldFit(IPoint3D p, Map map)
         {
             if (map == null || !map.CanFit(p.X, p.Y, p.Z, ItemData.Height))
-            {
                 return false;
-            }
 
             if (FacingSouth)
             {
@@ -182,13 +172,14 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
-            {
                 list.Add(1076220); // 4th Year Veteran Reward
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (m_IsRewardItem && !RewardSystem.CheckIsUsableBy(from, this, null))
+                return;
+
             if (IsChildOf(from.Backpack))
             {
                 BaseHouse house = BaseHouse.FindHouseAt(from);
@@ -199,14 +190,10 @@ namespace Server.Items
                     from.SendGump(new InternalGump(this));
                 }
                 else
-                {
                     from.SendLocalizedMessage(502092); // You must be in your house to do this.
-                }
             }
             else
-            {
                 from.SendLocalizedMessage(1042038); // You must have the object in your backpack to use it.          	
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -265,9 +252,7 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (m_Skeleton == null || m_Skeleton.Deleted)
-                {
                     return;
-                }
 
                 Mobile m = sender.Mobile;
 
@@ -294,9 +279,7 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Skeleton == null || m_Skeleton.Deleted)
-                {
                     return;
-                }
 
                 if (m_Skeleton.IsChildOf(from.Backpack))
                 {
@@ -308,9 +291,7 @@ namespace Server.Items
                         Map map = from.Map;
 
                         if (p == null || map == null)
-                        {
                             return;
-                        }
 
                         Point3D p3d = new Point3D(p);
                         ItemData id = TileData.ItemTable[m_ItemID & TileData.MaxItemValue];
@@ -334,13 +315,9 @@ namespace Server.Items
                                     HangingSkeleton banner = null;
 
                                     if (north)
-                                    {
                                         banner = new HangingSkeleton(m_ItemID);
-                                    }
                                     else if (west)
-                                    {
                                         banner = new HangingSkeleton(GetWestItemID(m_ItemID));
-                                    }
 
                                     house.Addons[banner] = from;
 
@@ -350,29 +327,19 @@ namespace Server.Items
                                     m_Skeleton.Delete();
                                 }
                                 else
-                                {
                                     from.SendLocalizedMessage(1042039); // The banner must be placed next to a wall.								
-                                }
                             }
                             else
-                            {
                                 from.SendLocalizedMessage(1042036); // That location is not in your house.
-                            }
                         }
                         else
-                        {
                             from.SendLocalizedMessage(500269); // You cannot build that there.		
-                        }
                     }
                     else
-                    {
                         from.SendLocalizedMessage(502092); // You must be in your house to do this.
-                    }
                 }
                 else
-                {
                     from.SendLocalizedMessage(1042038); // You must have the object in your backpack to use it.       
-                }
             }
 
             private class FacingGump : Gump
@@ -414,21 +381,14 @@ namespace Server.Items
                 public override void OnResponse(NetState sender, RelayInfo info)
                 {
                     if (m_Skeleton == null || m_Skeleton.Deleted || m_House == null)
-                    {
                         return;
-                    }
 
                     HangingSkeleton banner = null;
 
                     if (info.ButtonID == (int)Buttons.East)
-                    {
                         banner = new HangingSkeleton(GetWestItemID(m_ItemID));
-                    }
-
                     if (info.ButtonID == (int)Buttons.South)
-                    {
                         banner = new HangingSkeleton(m_ItemID);
-                    }
 
                     if (banner != null)
                     {

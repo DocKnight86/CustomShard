@@ -10,9 +10,7 @@ namespace Server.Items
         public override bool CanTeleport(Mobile m)
         {
             if (m.Backpack == null)
-            {
                 return false;
-            }
 
             Item item = m.Backpack.FindItemByType(typeof(MagicKey));
 

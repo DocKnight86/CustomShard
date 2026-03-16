@@ -75,9 +75,7 @@ namespace Server.Engines.TreasuresOfDoom
         public override void SendRewardGump(Mobile m)
         {
             if (m.Player && m.CheckAlive())
-            {
                 m.SendGump(new DoomRewardGump(this, m as PlayerMobile));
-            }
         }
 
         public Carey(Serial serial)

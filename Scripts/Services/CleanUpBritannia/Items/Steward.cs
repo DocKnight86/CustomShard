@@ -31,14 +31,10 @@ namespace Server.Mobiles
             set
             {
                 if (m_House != null)
-                {
                     m_House.PlayerVendors.Remove(this);
-                }
 
                 if (value != null)
-                {
                     value.PlayerVendors.Add(this);
-                }
 
                 m_House = value;
             }
@@ -75,9 +71,7 @@ namespace Server.Mobiles
         public bool IsOwner(Mobile m)
         {
             if (m.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return true;
-            }
 
             return m == Owner;
         }
@@ -95,9 +89,7 @@ namespace Server.Mobiles
         public override bool AllowEquipFrom(Mobile from)
         {
             if (IsOwner(from))
-            {
                 return true;
-            }
 
             return base.AllowEquipFrom(from);
         }
@@ -105,9 +97,7 @@ namespace Server.Mobiles
         public override bool CheckNonlocalLift(Mobile from, Item item)
         {
             if (IsOwner(from))
-            {
                 return true;
-            }
 
             return base.CheckNonlocalLift(from, item);
         }
@@ -115,9 +105,7 @@ namespace Server.Mobiles
         public override bool CheckNonlocalDrop(Mobile from, Item item, Item target)
         {
             if (IsOwner(from))
-            {
                 return true;
-            }
 
             return false;
         }
@@ -147,9 +135,7 @@ namespace Server.Mobiles
             PlayerMobile m = e.Mobile as PlayerMobile;
 
             if (m == null || Keyword == "")
-            {
                 return;
-            }
 
             string keyword = Keyword.ToLower();
 
@@ -197,9 +183,7 @@ namespace Server.Mobiles
                         state.Mobile.ProcessDelta();
 
                         if (p == null)
-                        {
                             p = Packet.Acquire(new UpdateStatueAnimation(this, 1, 4, 0));
-                        }
 
                         state.Send(p);
                     }
@@ -218,9 +202,7 @@ namespace Server.Mobiles
             if (IsOwner(from))
             {
                 if (from.Alive && from.InRange(this, 4))
-                {
                     list.Add(new CustomizeBodyEntry(from, this));
-                }
 
                 if (from.Alive && from.InRange(this, 2))
                 {
@@ -228,7 +210,10 @@ namespace Server.Mobiles
                     list.Add(new SetKeywordEntry(from, this));
                     list.Add(new OpenBackpackEntry(from, this));
 
-                    list.Add(new SwitchClothesEntry(from, this));
+                    if (from.Race == Race || (from.Race == Race.Elf && Race == Race.Human || from.Race == Race.Human && Race == Race.Elf))
+                    {
+                        list.Add(new SwitchClothesEntry(from, this));
+                    }
 
                     list.Add(new RotateEntry(from, this));
                     list.Add(new RedeedEntry(from, this));
@@ -354,9 +339,7 @@ namespace Server.Mobiles
             public override void OnClick()
             {
                 if (_Mannequin.Backpack != null)
-                {
                     _Mannequin.Backpack.DisplayTo(_From);
-                }
             }
         }
 
@@ -502,9 +485,7 @@ namespace Server.Mobiles
                 direction++;
 
                 if (direction > 0x7)
-                {
                     direction = 0x0;
-                }
 
                 _Mannequin.Direction = (Direction)direction;
 
@@ -624,9 +605,7 @@ namespace Server.Mobiles
         public virtual bool IsOwner(Mobile m)
         {
             if (m.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return true;
-            }
 
             return m == _Owner;
         }
@@ -699,6 +678,12 @@ namespace Server.Mobiles
             AddHtmlLocalized(45, 52, 180, 18, 1072255, _Mannequin.Race == Race.Human ? 0x1CFF : 0x7FFF, false, false); // Human
             AddButton(10, 50, 0xFA5, 0xFA7, 1, GumpButtonType.Reply, 0);
 
+            AddHtmlLocalized(45, 72, 180, 18, 1072256, _Mannequin.Race == Race.Elf ? 0x1CFF : 0x7FFF, false, false); // Elf
+            AddButton(10, 70, 0xFA5, 0xFA7, 2, GumpButtonType.Reply, 0);
+
+            AddHtmlLocalized(45, 92, 180, 18, 1029613, _Mannequin.Race == Race.Gargoyle ? 0x1CFF : 0x7FFF, false, false); // Gargoyle 
+            AddButton(10, 90, 0xFA5, 0xFA7, 3, GumpButtonType.Reply, 0);
+
             AddHtmlLocalized(205, 52, 180, 18, 1015327, _Mannequin.Female ? 0x7FFF : 0x1CFF, false, false); // Male
             AddButton(170, 50, 0xFA6, 0xFA6, 4, GumpButtonType.Reply, 0);
 
@@ -754,9 +739,7 @@ namespace Server.Mobiles
         public override void OnResponse(NetState state, RelayInfo info)
         {
             if (_Mannequin == null)
-            {
                 return;
-            }
 
             Mobile from = state.Mobile;
 
@@ -781,15 +764,53 @@ namespace Server.Mobiles
                     }
                 case 2: // Elf
                     {
+                        if (_Mannequin.Female)
+                        {
+                            _Mannequin.Body = 0x25d;
+                        }
+                        else
+                        {
+                            _Mannequin.Body = 0x25e;
+                        }
+
+                        _Mannequin.Race = Race.Elf;
+
+                        ValidateItems(from, _Mannequin);
+
                         break;
                     }
                 case 3: // Gargoyle
                     {
+                        if (_Mannequin.Female)
+                        {
+                            _Mannequin.Body = 0x29a;
+                        }
+                        else
+                        {
+                            _Mannequin.Body = 0x29b;
+                        }
+
+                        _Mannequin.Race = Race.Gargoyle;
+
+                        ValidateItems(from, _Mannequin);
+
                         break;
                     }
                 case 4: // Male
                     {
-                        _Mannequin.Body = 0x190;
+                        if (_Mannequin.Race == Race.Human)
+                        {
+                            _Mannequin.Body = 0x190;
+                        }
+                        else if (_Mannequin.Race == Race.Elf)
+                        {
+                            _Mannequin.Body = 0x25d;
+                        }
+                        else if (_Mannequin.Race == Race.Gargoyle)
+                        {
+                            _Mannequin.Body = 0x29a;
+                        }
+
                         _Mannequin.Female = false;
 
                         ValidateItems(from, _Mannequin);
@@ -798,7 +819,19 @@ namespace Server.Mobiles
                     }
                 case 5: // Female
                     {
-                        _Mannequin.Body = 0x191;
+                        if (_Mannequin.Race == Race.Human)
+                        {
+                            _Mannequin.Body = 0x191;
+                        }
+                        else if (_Mannequin.Race == Race.Elf)
+                        {
+                            _Mannequin.Body = 0x25e;
+                        }
+                        else if (_Mannequin.Race == Race.Gargoyle)
+                        {
+                            _Mannequin.Body = 0x29b;
+                        }
+
                         _Mannequin.Female = true;
 
                         ValidateItems(from, _Mannequin);
@@ -927,9 +960,7 @@ namespace Server.Mobiles
             Map map = from.Map;
 
             if (p == null || map == null || _Deed == null || _Deed.Deleted)
-            {
                 return;
-            }
 
             if (_Deed.IsChildOf(from.Backpack))
             {

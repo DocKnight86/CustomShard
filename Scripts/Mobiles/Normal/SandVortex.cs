@@ -56,9 +56,7 @@ namespace Server.Mobiles
             Mobile combatant = Combatant as Mobile;
 
             if (combatant == null || combatant.Deleted || combatant.Map != Map || !InRange(combatant, 12) || !CanBeHarmful(combatant) || !InLOS(combatant))
-            {
                 return;
-            }
 
             if (DateTime.UtcNow >= m_NextAttack)
             {

@@ -1,7 +1,8 @@
 namespace Server.Items
 {
-    public class RunebookDyeTub : DyeTub
+    public class RunebookDyeTub : DyeTub, Engines.VeteranRewards.IRewardItem
     {
+        private bool m_IsRewardItem;
         [Constructable]
         public RunebookDyeTub()
         {
@@ -20,16 +21,48 @@ namespace Server.Items
         public override int LabelNumber => 1049740;// Runebook Dye Tub
         public override CustomHuePicker CustomHuePicker => CustomHuePicker.LeatherDyeTub;
 
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool IsRewardItem { get => m_IsRewardItem; set => m_IsRewardItem = value; }
+
+        public override void OnDoubleClick(Mobile from)
+        {
+            if (m_IsRewardItem && !Engines.VeteranRewards.RewardSystem.CheckIsUsableBy(from, this, null))
+                return;
+
+            base.OnDoubleClick(from);
+        }
+
+        public override void GetProperties(ObjectPropertyList list)
+        {
+            base.GetProperties(list);
+
+            if (m_IsRewardItem)
+                list.Add(1076220); // 4th Year Veteran Reward
+        }
+
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(0); // version
+
+            writer.Write(1); // version
+
+            writer.Write(m_IsRewardItem);
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            reader.ReadInt();
+
+            int version = reader.ReadInt();
+
+            switch (version)
+            {
+                case 1:
+                    {
+                        m_IsRewardItem = reader.ReadBool();
+                        break;
+                    }
+            }
         }
     }
 }

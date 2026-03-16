@@ -1,6 +1,8 @@
+using Server.Engines.Despise;
 using Server.Gumps;
 using Server.Mobiles;
 using Server.Network;
+using Server.Services.Virtues;
 using Server.Targeting;
 using System;
 using System.Collections.Generic;
@@ -222,6 +224,11 @@ namespace Server.Items
 
         public static SkillName GetPrimarySkill(Mobile healer, Mobile m)
         {
+            if (m is DespiseCreature)
+            {
+                return healer.Skills[SkillName.Healing].Value > healer.Skills[SkillName.Veterinary].Value ? SkillName.Healing : SkillName.Veterinary;
+            }
+
             if (!m.Player && (m.Body.IsMonster || m.Body.IsAnimal))
             {
                 return SkillName.Veterinary;
@@ -232,6 +239,11 @@ namespace Server.Items
 
         public static SkillName GetSecondarySkill(Mobile healer, Mobile m)
         {
+            if (m is DespiseCreature)
+            {
+                return healer.Skills[SkillName.Healing].Value > healer.Skills[SkillName.Veterinary].Value ? SkillName.Anatomy : SkillName.AnimalLore;
+            }
+
             if (!m.Player && (m.Body.IsMonster || m.Body.IsAnimal))
             {
                 return SkillName.AnimalLore;
@@ -462,7 +474,7 @@ namespace Server.Items
 
                 Item item = m_Healer.FindItemOnLayer(Layer.TwoHanded);
 
-                if (item is Asclepius)
+                if (item is Asclepius || item is GargishAsclepius)
                 {
                     m_HealingBonus += 15;
                 }
@@ -508,6 +520,10 @@ namespace Server.Items
                     {
                         toHeal = 1;
                         healerNumber = 500968; // You apply the bandages, but they barely help.
+                    }
+                    else if (m_Patient != m_Healer && m_Patient is PlayerMobile && m_Healer is PlayerMobile)
+                    {
+                        SpiritualityVirtue.OnHeal(m_Healer, Math.Min((int)toHeal, m_Patient.HitsMax - m_Patient.Hits));
                     }
 
                     m_Patient.Heal((int)toHeal, m_Healer, false);

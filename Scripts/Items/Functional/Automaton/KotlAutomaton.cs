@@ -17,9 +17,7 @@ namespace Server.Items
                 _Resource = value;
 
                 if (old != _Resource)
-                {
                     OnResourceChanged();
-                }
 
                 InvalidateProperties();
             }
@@ -33,9 +31,7 @@ namespace Server.Items
                 CraftResourceInfo resInfo = CraftResources.GetInfo(_Resource);
 
                 if (resInfo == null || resInfo.ResourceTypes.Length == 0)
-                {
                     return typeof(IronIngot);
-                }
 
                 return resInfo.ResourceTypes[0];
             }
@@ -94,16 +90,12 @@ namespace Server.Items
             CraftResourceInfo resInfo = CraftResources.GetInfo(_Resource);
 
             if (resInfo == null)
-            {
                 return;
-            }
 
             CraftAttributeInfo attrs = resInfo.AttributeInfo;
 
             if (attrs == null)
-            {
                 return;
-            }
 
             SetResistance(ResistanceType.Physical, Utility.RandomMinMax(45, 50) + attrs.ArmorPhysicalResist);
             SetResistance(ResistanceType.Fire, Utility.RandomMinMax(45, 50) + attrs.ArmorFireResist);

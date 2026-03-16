@@ -37,9 +37,9 @@ namespace Server.Engines.VvV
 
         public static readonly Map Facet = Map.Felucca;
 
-        public static bool Enabled = false; // Turn ON and OFF here
-        public static int StartSilver = 0;
-        public static bool EnhancedRules = false;
+        public static bool Enabled = Config.Get("VvV.Enabled", true);
+        public static int StartSilver = Config.Get("VvV.StartSilver", 2000);
+        public static bool EnhancedRules = Config.Get("VvV.EnhancedRules", false);
 
         public static ViceVsVirtueSystem Instance { get; set; }
 
@@ -95,9 +95,7 @@ namespace Server.Engines.VvV
                     Mobile dam = list[i].Damager;
 
                     if (dam == victim || dam == null)
-                    {
                         continue;
-                    }
 
                     if (dam is BaseCreature creature && creature.GetMaster() is PlayerMobile)
                     {
@@ -115,13 +113,9 @@ namespace Server.Engines.VvV
                             if (Battle.IsInActiveBattle(dam, victim))
                             {
                                 if (i == 0)
-                                {
                                     Battle.Update(ventry, kentry, UpdateType.Kill);
-                                }
                                 else
-                                {
                                     Battle.Update(ventry, kentry, UpdateType.Assist);
-                                }
                             }
 
                             handled.Add(dam);
@@ -194,18 +188,12 @@ namespace Server.Engines.VvV
             if (entry != null && entry.Active && !entry.Resigning)
             {
                 if (m.AccessLevel == AccessLevel.Player)
-                {
                     entry.ResignExpiration = DateTime.UtcNow + TimeSpan.FromDays(3);
-                }
                 else
-                {
                     entry.ResignExpiration = DateTime.UtcNow + TimeSpan.FromMinutes(1);
-                }
 
                 if (quitguild)
-                {
                     m.SendLocalizedMessage(1155580); // You have quit a guild while participating in Vice vs Virtue.  You will be freely attackable by members of Vice vs Virtue until your resignation period has ended!
-                }
             }
         }
 
@@ -227,9 +215,7 @@ namespace Server.Engines.VvV
         public void CheckBattleStatus()
         {
             if (Battle.OnGoing)
-            {
                 return;
-            }
 
             int count = EnemyGuildCount();
 
@@ -242,9 +228,7 @@ namespace Server.Engines.VvV
         public void CheckBattleStatus(PlayerMobile pm)
         {
             if (!IsVvV(pm) || !Enabled)
-            {
                 return;
-            }
 
             if (Battle.OnGoing)
             {
@@ -342,9 +326,7 @@ namespace Server.Engines.VvV
         public static void ApplySkillLoss(Mobile mob)
         {
             if (InSkillLoss(mob))
-            {
                 return;
-            }
 
             SkillLossContext context = new SkillLossContext();
             m_SkillLoss[mob] = context;
@@ -378,18 +360,14 @@ namespace Server.Engines.VvV
             SkillLossContext context;
 
             if (!m_SkillLoss.TryGetValue(mob, out context))
-            {
                 return false;
-            }
 
             m_SkillLoss.Remove(mob);
 
             List<SkillMod> mods = context.m_Mods;
 
             for (int i = 0; i < mods.Count; ++i)
-            {
                 mob.RemoveSkillMod(mods[i]);
-            }
 
             context.m_Timer.Stop();
 
@@ -461,24 +439,18 @@ namespace Server.Engines.VvV
         public static void Initialize()
         {
             if (!Enabled)
-            {
                 return;
-            }
 
             Commands.CommandSystem.Register("BattleProps", AccessLevel.GameMaster, e =>
                 {
                     if (Instance.Battle != null)
-                    {
                         e.Mobile.SendGump(new PropertiesGump(e.Mobile, Instance.Battle));
-                    }
                 });
 
             Commands.CommandSystem.Register("ForceStartBattle", AccessLevel.GameMaster, e =>
             {
                 if (Instance.Battle != null && !Instance.Battle.OnGoing)
-                {
                     Instance.Battle.Begin();
-                }
             });
 
             Commands.CommandSystem.Register("ExemptCities", AccessLevel.Administrator, e =>
@@ -566,9 +538,7 @@ namespace Server.Engines.VvV
         public static bool IsVvV(Mobile m, bool checkpet = true, bool guildedonly = false)
         {
             if (!Enabled)
-            {
                 return false;
-            }
 
             if (m is BaseCreature creature && checkpet && creature.GetMaster() is PlayerMobile)
             {
@@ -578,9 +548,7 @@ namespace Server.Engines.VvV
             VvVPlayerEntry entry = Instance.GetPlayerEntry<VvVPlayerEntry>(m as PlayerMobile);
 
             if (entry == null)
-            {
                 return false;
-            }
 
             return entry.Active && (!guildedonly || entry.Guild != null);
         }
@@ -601,9 +569,7 @@ namespace Server.Engines.VvV
             entry = Instance.GetPlayerEntry<VvVPlayerEntry>(m as PlayerMobile);
 
             if (entry != null && !entry.Active)
-            {
                 entry = null;
-            }
 
             return entry != null && entry.Active && (!guildedonly || entry.Guild != null);
         }
@@ -622,25 +588,17 @@ namespace Server.Engines.VvV
         public static bool IsEnemy(Mobile from, Mobile to)
         {
             if (!Enabled || from == to)
-            {
                 return false;
-            }
 
             if (from is BaseCreature creature && creature.GetMaster() is PlayerMobile)
-            {
                 from = creature.GetMaster();
-            }
 
             if (to is BaseCreature bc && bc.GetMaster() is PlayerMobile)
-            {
                 to = bc.GetMaster();
-            }
 
             // one or the other is not a combatant
             if (!IsVvVCombatant(to) || !IsVvVCombatant(from))
-            {
                 return false;
-            }
 
             return !IsAllied(from, to);
         }
@@ -863,9 +821,7 @@ namespace Server.Engines.VvV
         public static void RemoveTempCombatant(TemporaryCombatant tempCombatant)
         {
             if (TempCombatants == null)
-            {
                 return;
-            }
 
             TempCombatants.Remove(tempCombatant);
             tempCombatant.From.Delta(MobileDelta.Noto);
@@ -881,9 +837,7 @@ namespace Server.Engines.VvV
         public static bool HasBattleAggression(Mobile m)
         {
             if (!EnhancedRules || Instance == null || Instance.Battle == null || !Instance.Battle.OnGoing)
-            {
                 return false;
-            }
 
             return Instance.Battle.HasBattleAggression(m);
         }
@@ -1013,9 +967,7 @@ namespace Server.Engines.VvV
                             Item item = reader.ReadItem();
 
                             if (item != null)
-                            {
                                 AddVvVItem(item);
-                            }
                         }
 
                         count = reader.ReadInt();
@@ -1025,9 +977,7 @@ namespace Server.Engines.VvV
                             VvVGuildStats stats = new VvVGuildStats(g, reader);
 
                             if (g != null)
-                            {
                                 GuildStats[g] = stats;
-                            }
                         }
                     }
                     break;
@@ -1051,9 +1001,7 @@ namespace Server.Engines.VvV
         public static void CreateSilverTraders()
         {
             if (!Enabled)
-            {
                 return;
-            }
 
             Map map = Map.Felucca;
 

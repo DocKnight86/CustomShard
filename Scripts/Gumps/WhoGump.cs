@@ -76,9 +76,7 @@ namespace Server.Gumps
         public static List<Mobile> BuildList(Mobile owner, string filter)
         {
             if (filter != null && (filter = filter.Trim()).Length == 0)
-            {
                 filter = null;
-            }
             else
             {
                 filter = filter?.ToLower();
@@ -94,9 +92,7 @@ namespace Server.Gumps
                 if (m != null && (m == owner || !m.Hidden || owner.AccessLevel >= m.AccessLevel || m is PlayerMobile pm && pm.VisibilityList.Contains(owner)))
                 {
                     if (filter != null && (m.Name == null || m.Name.ToLower().IndexOf(filter) < 0))
-                    {
                         continue;
-                    }
 
                     list.Add(m);
                 }
@@ -114,13 +110,9 @@ namespace Server.Gumps
             int count = m_Mobiles.Count - (page * EntryCount);
 
             if (count < 0)
-            {
                 count = 0;
-            }
             else if (count > EntryCount)
-            {
                 count = EntryCount;
-            }
 
             int totalHeight = OffsetSize + ((EntryHeight + OffsetSize) * (count + 1));
 
@@ -135,48 +127,36 @@ namespace Server.Gumps
             int emptyWidth = TotalWidth - PrevWidth - NextWidth - (OffsetSize * 4) - (OldStyle ? SetWidth + OffsetSize : 0);
 
             if (!OldStyle)
-            {
                 AddImageTiled(x - (OldStyle ? OffsetSize : 0), y, emptyWidth + (OldStyle ? OffsetSize * 2 : 0), EntryHeight, EntryGumpID);
-            }
 
             AddLabel(x + TextOffsetX, y, TextHue, $"Page {page + 1} of {(m_Mobiles.Count + EntryCount - 1) / EntryCount} ({m_Mobiles.Count})");
 
             x += emptyWidth + OffsetSize;
 
             if (OldStyle)
-            {
                 AddImageTiled(x, y, TotalWidth - (OffsetSize * 3) - SetWidth, EntryHeight, HeaderGumpID);
-            }
             else
-            {
                 AddImageTiled(x, y, PrevWidth, EntryHeight, HeaderGumpID);
-            }
 
             if (page > 0)
             {
                 AddButton(x + PrevOffsetX, y + PrevOffsetY, PrevButtonID1, PrevButtonID2, 1, GumpButtonType.Reply, 0);
 
                 if (PrevLabel)
-                {
                     AddLabel(x + PrevLabelOffsetX, y + PrevLabelOffsetY, TextHue, "Previous");
-                }
             }
 
             x += PrevWidth + OffsetSize;
 
             if (!OldStyle)
-            {
                 AddImageTiled(x, y, NextWidth, EntryHeight, HeaderGumpID);
-            }
 
             if ((page + 1) * EntryCount < m_Mobiles.Count)
             {
                 AddButton(x + NextOffsetX, y + NextOffsetY, NextButtonID1, NextButtonID2, 2, GumpButtonType.Reply, 1);
 
                 if (NextLabel)
-                {
                     AddLabel(x + NextLabelOffsetX, y + NextLabelOffsetY, TextHue, "Next");
-                }
             }
 
             for (int i = 0, index = page * EntryCount; i < EntryCount && index < m_Mobiles.Count; ++i, ++index)
@@ -192,14 +172,10 @@ namespace Server.Gumps
                 x += EntryWidth + OffsetSize;
 
                 if (SetGumpID != 0)
-                {
                     AddImageTiled(x, y, SetWidth, EntryHeight, SetGumpID);
-                }
 
                 if (m.NetState != null && !m.Deleted)
-                {
                     AddButton(x + SetOffsetX, y + SetOffsetY, SetButtonID1, SetButtonID2, i + 3, GumpButtonType.Reply, 0);
-                }
             }
         }
 
@@ -216,18 +192,14 @@ namespace Server.Gumps
                 case 1: // Previous
                     {
                         if (m_Page > 0)
-                        {
                             from.SendGump(new WhoGump(from, m_Mobiles, m_Page - 1));
-                        }
 
                         break;
                     }
                 case 2: // Next
                     {
                         if ((m_Page + 1) * EntryCount < m_Mobiles.Count)
-                        {
                             from.SendGump(new WhoGump(from, m_Mobiles, m_Page + 1));
-                        }
 
                         break;
                     }
@@ -293,14 +265,9 @@ namespace Server.Gumps
                 default:
                     {
                         if (m.Murderer)
-                        {
                             return EC ? 0x20 : 0x21;
-                        }
-
                         if (m.Criminal)
-                        {
                             return EC ? 0x3AE : 0x3B1;
-                        }
 
                         return EC ? 0x5C : 0x58;
                     }

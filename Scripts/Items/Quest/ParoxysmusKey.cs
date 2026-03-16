@@ -56,9 +56,7 @@ namespace Server.Items
         public override bool CanOfferConfirmation(Mobile from)
         {
             if (from.Region != null && from.Region.IsPartOf("Palace of Paroxysmus"))
-            {
                 return base.CanOfferConfirmation(from);
-            }
 
             return false;
         }

@@ -28,9 +28,7 @@ namespace Server.Engines.PartySystem
             m_Stream.Write((byte)p.Count);
 
             for (int i = 0; i < p.Count; ++i)
-            {
                 m_Stream.Write(p[i].Mobile.Serial);
-            }
         }
     }
 
@@ -48,9 +46,7 @@ namespace Server.Engines.PartySystem
             m_Stream.Write(removed.Serial);
 
             for (int i = 0; i < p.Count; ++i)
-            {
                 m_Stream.Write(p[i].Mobile.Serial);
-            }
         }
     }
 
@@ -60,9 +56,7 @@ namespace Server.Engines.PartySystem
             : base(0xBF)
         {
             if (text == null)
-            {
                 text = "";
-            }
 
             EnsureCapacity(12 + text.Length * 2);
 

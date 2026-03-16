@@ -1,3 +1,4 @@
+using Server.Engines.Quests;
 using System;
 
 namespace Server.Mobiles
@@ -57,9 +58,7 @@ namespace Server.Mobiles
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
             if (m is Ferret ferret && ferret.InRange(this, 3) && ferret.Alive)
-            {
                 Talk(ferret);
-            }
         }
 
         public void Talk()
@@ -71,6 +70,11 @@ namespace Server.Mobiles
         {
             if (m_CanTalk)
             {
+                if (to != null)
+                {
+                    QuestSystem.FocusTo(this, to);
+                }
+
                 Say(m_Vocabulary[Utility.Random(m_Vocabulary.Length)]);
 
                 if (to != null && Utility.RandomBool())

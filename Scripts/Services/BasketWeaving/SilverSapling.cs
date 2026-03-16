@@ -27,9 +27,7 @@ namespace Server.Items
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
             if (Parent == null && Utility.InRange(Location, m.Location, 1) && !Utility.InRange(Location, oldLocation, 1))
-            {
                 Ankhs.Resurrect(m, this);
-            }
         }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
@@ -95,9 +93,7 @@ namespace Server.Items
             PlayerMobile pm = m as PlayerMobile;
 
             if (pm == null)
-            {
                 return;
-            }
 
             if (pm.Region.IsPartOf("Abyss"))
             {

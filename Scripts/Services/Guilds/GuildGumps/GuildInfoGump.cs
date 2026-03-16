@@ -48,29 +48,21 @@ namespace Server.Guilds
 
             string s = guild.Charter;
             if (string.IsNullOrEmpty(s))
-            {
                 s = "The guild leader has not yet set the guild charter.";
-            }
 
             AddHtml(65, 186, 480, 80, s, true, true);
             if (isLeader)
-            {
                 AddButton(40, 221, 0x4B9, 0x4BA, 4, GumpButtonType.Reply, 0);	//Charter Edit button
-            }
 
             s = guild.Website;
 
             if (string.IsNullOrEmpty(s))
-            {
                 s = "Guild website not yet set.";
-            }
 
             AddHtml(65, 276, 480, 30, s, true, false);
 
             if (isLeader)
-            {
                 AddButton(40, 283, 0x4B9, 0x4BA, 5, GumpButtonType.Reply, 0);	//Website Edit button
-            }
 
             AddBackground(65, 370, 170, 26, 0x2486);
 
@@ -104,9 +96,7 @@ namespace Server.Guilds
             PlayerMobile pm = (PlayerMobile) sender.Mobile;
 
             if (!IsMember(pm, guild))
-            {
                 return;
-            }
 
             switch (info.ButtonID)
             {
@@ -134,9 +124,7 @@ namespace Server.Guilds
                     {
                         //Alliance Roster
                         if (guild.Alliance != null && guild.Alliance.IsMember(guild))
-                        {
                             pm.SendGump(new AllianceInfo.AllianceRosterGump(pm, guild, guild.Alliance));
-                        }
 
                         break;
                     }
@@ -189,9 +177,7 @@ namespace Server.Guilds
         public void SetCharter_Callback(Mobile from, string text)
         {
             if (!IsLeader(from, guild))
-            {
                 return;
-            }
 
             string charter = Utility.FixHtml(text.Trim());
 
@@ -209,16 +195,12 @@ namespace Server.Guilds
         public void SetWebsite_Callback(Mobile from, string text)
         {
             if (!IsLeader(from, guild))
-            {
                 return;
-            }
 
             string site = Utility.FixHtml(text.Trim());
 
             if (site.Length > 50)
-            {
                 from.SendLocalizedMessage(1070777, "50"); // Your guild website cannot exceed ~1_val~ characters.
-            }
             else
             {
                 guild.Website = site;

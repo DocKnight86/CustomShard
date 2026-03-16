@@ -22,9 +22,7 @@ namespace Server.Items
 
             BlueKey1 bluekey = new BlueKey1();
             if (!from.AddToBackpack(bluekey))
-            {
                 bluekey.Delete();
-            }
         }
 
         public override void Serialize(GenericWriter writer)

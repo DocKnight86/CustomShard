@@ -52,9 +52,7 @@ namespace Server.Engines.Shadowguard
             set
             {
                 if (value)
-                {
                     Expire();
-                }
             }
         }
 
@@ -65,9 +63,7 @@ namespace Server.Engines.Shadowguard
             set
             {
                 if (value)
-                {
                     CompleteEncounter();
-                }
             }
         }
 
@@ -91,9 +87,7 @@ namespace Server.Engines.Shadowguard
             Instance = instance;
 
             if (instance != null)
-            {
                 instance.Encounter = this;
-            }
         }
 
         public override string ToString()
@@ -104,23 +98,17 @@ namespace Server.Engines.Shadowguard
         public int PartySize()
         {
             if (PartyLeader == null || Region == null)
-            {
                 return 0;
-            }
 
             int inRegion = Region.GetPlayerCount();
 
             if (inRegion > 0)
-            {
                 return inRegion;
-            }
 
             Party p = Party.Get(PartyLeader);
 
             if (p == null)
-            {
                 return 1;
-            }
 
             return p.Members.Count;
         }
@@ -232,9 +220,7 @@ namespace Server.Engines.Shadowguard
             else
             {
                 if (PartyLeader == null)
-                {
                     return;
-                }
 
                 Party p = Party.Get(PartyLeader);
 
@@ -268,20 +254,14 @@ namespace Server.Engines.Shadowguard
             else
             {
                 if (PartyLeader == null)
-                {
                     return;
-                }
 
                 Party p = Party.Get(PartyLeader);
 
                 if (p != null)
-                {
                     p.Members.ForEach(info => info.Mobile.SendMessage(hue, message));
-                }
                 else
-                {
                     PartyLeader.SendMessage(hue, message);
-                }
             }
         }
 
@@ -329,9 +309,7 @@ namespace Server.Engines.Shadowguard
         public virtual void CompleteEncounter()
         {
             if (Completed)
-            {
                 return;
-            }
 
             Timer.DelayCall(ResetDuration, () =>
                 {
@@ -339,13 +317,9 @@ namespace Server.Engines.Shadowguard
                 });
 
             if (this is RoofEncounter)
-            {
                 SendPartyMessage(1156250); // Congratulations! You have bested Shadowguard and prevented Minax from exploiting the Time Gate! You will be teleported out in a few minutes.
-            }
             else
-            {
                 SendPartyMessage(1156244); //You have bested this tower of Shadowguard! You will be teleported out of the tower in 60 seconds!
-            }
 
             Completed = true;
         }
@@ -353,9 +327,7 @@ namespace Server.Engines.Shadowguard
         public virtual void Reset(bool expired = false)
         {
             if (!Active)
-            {
                 return;
-            }
 
             Controller.OnEncounterComplete(this, expired);
 

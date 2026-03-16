@@ -49,24 +49,18 @@ namespace Server.Items
             list.Add(1076759, $"{GetName()}\t{Value:0.0} Skill Points");
 
             if (!string.IsNullOrEmpty(Account))
-            {
                 list.Add(1155526); // Account Bound
-            }
         }
 
         public override bool CanUse(Mobile from)
         {
             if (!base.CanUse(from))
-            {
                 return false;
-            }
 
             PlayerMobile pm = from as PlayerMobile;
 
             if (pm == null)
-            {
                 return false;
-            }
 
             #region Scroll of Alacrity
             if (pm.AcceleratedStart > DateTime.UtcNow)
@@ -93,9 +87,7 @@ namespace Server.Items
         public override void Use(Mobile from)
         {
             if (!CanUse(from))
-            {
                 return;
-            }
 
             double tskill = from.Skills[Skill].Base; // value of skill without item bonuses etc
             double tcap = from.Skills[Skill].Cap; // maximum value permitted
@@ -104,9 +96,7 @@ namespace Server.Items
             double newValue = Value;
 
             if (tskill + newValue > tcap)
-            {
                 newValue = tcap - tskill;
-            }
 
             if (tskill < tcap && from.Skills[Skill].Lock == SkillLock.Up)
             {
@@ -126,9 +116,7 @@ namespace Server.Items
                     }
                 }
                 else
-                {
                     canGain = true;
-                }
             }
 
             if (!canGain)

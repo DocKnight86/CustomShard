@@ -26,13 +26,9 @@ namespace Server.Items
             get
             {
                 if (ItemID == 0x24C6)
-                {
                     return 0x24C5;
-                }
                 else
-                {
                     return 0x24C7;
-                }
             }
         }
         public override int UnlitItemID
@@ -40,13 +36,9 @@ namespace Server.Items
             get
             {
                 if (ItemID == 0x24C5)
-                {
                     return 0x24C6;
-                }
                 else
-                {
                     return 0x24C8;
-                }
             }
         }
         public void Flip()

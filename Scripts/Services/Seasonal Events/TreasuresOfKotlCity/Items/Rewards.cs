@@ -347,6 +347,35 @@ namespace Server.Items
         }
     }
 
+    public class TalonsOfEscaping : LeatherTalons
+    {
+        public override bool IsArtifact => true;
+        public override int LabelNumber => 1155682;  // Talons of Escaping
+
+        public TalonsOfEscaping()
+        {
+            Attributes.BonusDex = 4;
+            Attributes.RegenStam = 1;
+        }
+
+        public TalonsOfEscaping(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write(0);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            reader.ReadInt();
+        }
+    }
+
     public class TribalBanner : Item, IFlipable
     {
         public override int LabelNumber => ItemID + 1084024;
@@ -368,9 +397,7 @@ namespace Server.Items
                 int id = GetTribeID(_Tribe);
 
                 if (ItemID != id)
-                {
                     ItemID = id;
-                }
 
                 InvalidateProperties();
             }
@@ -407,13 +434,9 @@ namespace Server.Items
             }
 
             if (id == WestID)
-            {
                 ItemID = NorthID;
-            }
             else
-            {
                 ItemID = WestID;
-            }
         }
 
         public TribalBanner(Serial serial)

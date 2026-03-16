@@ -175,30 +175,22 @@ namespace Server.Items
             writer.Write(m_Barriers.Count);
 
             for (int i = 0; i < m_Barriers.Count; i++)
-            {
                 writer.Write(m_Barriers[i]);
-            }
 
             writer.Write(m_Blockers.Count);
 
             for (int i = 0; i < m_Blockers.Count; i++)
-            {
                 writer.Write(m_Blockers[i]);
-            }
 
             writer.Write(m_LOSBlockers.Count);
 
             for (int i = 0; i < m_LOSBlockers.Count; i++)
-            {
                 writer.Write(m_LOSBlockers[i]);
-            }
 
             writer.Write(m_MsgTriggers.Count);
 
             for (int i = 0; i < m_MsgTriggers.Count; i++)
-            {
                 writer.Write(m_MsgTriggers[i]);
-            }
         }
 
         public override void Deserialize(GenericReader reader)
@@ -211,41 +203,31 @@ namespace Server.Items
             m_Barriers = new List<EnergyBarrier>(amount);
 
             for (int i = 0; i < amount; i++)
-            {
                 m_Barriers.Add(reader.ReadItem() as EnergyBarrier);
-            }
 
             amount = reader.ReadInt(); // blockers
 
             m_Blockers = new List<Blocker>(amount);
 
             for (int i = 0; i < amount; i++)
-            {
                 m_Blockers.Add(reader.ReadItem() as Blocker);
-            }
 
             amount = reader.ReadInt();
 
             m_LOSBlockers = new List<LOSBlocker>(amount);
 
             for (int i = 0; i < amount; i++)
-            {
                 m_LOSBlockers.Add(reader.ReadItem() as LOSBlocker);
-            }
 
             amount = reader.ReadInt(); // msg triggers
 
             m_MsgTriggers = new List<SBMessageTrigger>(amount);
 
             for (int i = 0; i < amount; i++)
-            {
                 m_MsgTriggers.Add(reader.ReadItem() as SBMessageTrigger);
-            }
 
             if (!Visible)
-            {
                 Timer.DelayCall(TimeSpan.Zero, RestoreBarrier);
-            }
         }
     }
 }

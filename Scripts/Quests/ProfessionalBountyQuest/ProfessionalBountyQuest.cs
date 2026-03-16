@@ -108,9 +108,7 @@ namespace Server.Engines.Quests
         private void CompileHelpersList(BaseCreature pirate)
         {
             if (Owner == null)
-            {
                 return;
-            }
 
             Party p = Party.Get(Owner);
             List<DamageStore> rights = pirate.GetLootingRights();
@@ -119,9 +117,7 @@ namespace Server.Engines.Quests
             foreach (Mobile mob in eable)
             {
                 if (mob == Owner || !(mob is PlayerMobile))
-                {
                     continue;
-                }
 
                 Party mobParty = Party.Get(mob);
 
@@ -150,9 +146,7 @@ namespace Server.Engines.Quests
         public void AddPole()
         {
             if (m_Galleon == null)
-            {
                 return;
-            }
 
             int dist = m_Galleon.CaptiveOffset;
             int xOffset = 0;
@@ -207,24 +201,18 @@ namespace Server.Engines.Quests
             }
 
             if (Owner == null)
-            {
                 return;
-            }
 
             m_Helpers.Add(Owner);
             int totalAward = 7523;
 
             if (m_Captain != null && BountyQuestSpawner.Bounties.ContainsKey(m_Captain))
-            {
                 totalAward = BountyQuestSpawner.Bounties[m_Captain];
-            }
 
             int eachAward = totalAward;
 
             if (m_Helpers.Count > 1)
-            {
                 eachAward = totalAward / m_Helpers.Count;
-            }
 
             for (var index = 0; index < m_Helpers.Count; index++)
             {
@@ -277,9 +265,7 @@ namespace Server.Engines.Quests
             }
 
             if (m_Captain != null && m_Captain.Alive)
-            {
                 m_Captain.Delete();
-            }
 
             base.GiveRewards();
         }
@@ -362,24 +348,16 @@ namespace Server.Engines.Quests
             {
                 Mobile mob = reader.ReadMobile();
                 if (mob != null)
-                {
                     m_Helpers.Add(mob);
-                }
             }
 
             if (m_Rope != null)
-            {
                 m_Rope.Quest = this;
-            }
 
             if (m_Pole != null)
-            {
                 m_Pole.Quest = this;
-            }
             else
-            {
                 AddPole();
-            }
 
             AddReward(new BaseReward(1116712)); //The gold listed on the bulletin board and a special reward from the officer if captured alive.
         }
@@ -387,9 +365,7 @@ namespace Server.Engines.Quests
         public bool HasQuest(PlayerMobile pm)
         {
             if (pm.Quests == null)
-            {
                 return false;
-            }
 
             for (int i = 0; i < pm.Quests.Count; i++)
             {
@@ -400,9 +376,7 @@ namespace Server.Engines.Quests
                     for (int j = 0; j < quest.Objectives.Count; j++)
                     {
                         if (quest.Objectives[j].Update(pm))
-                        {
                             quest.Objectives[j].Complete();
-                        }
                     }
 
                     if (quest.Completed)

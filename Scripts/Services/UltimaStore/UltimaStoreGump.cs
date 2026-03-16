@@ -206,13 +206,9 @@ namespace Server.Engines.UOStore
                         int index = UltimaStore.Entries.IndexOf(entry);
 
                         if (entry.Name[0].Number > 0)
-                        {
                             AddHtmlLocalized(175, 84 + 35 * i, 256, 25, entry.Name[0].Number, 0x6B55, false, false);
-                        }
                         else
-                        {
                             AddHtml(175, 84 + 35 * i, 256, 25, Color(C16232(0x6B55), entry.Name[0].String), false, false);
-                        }
 
                         AddButton(431, 81 + 35 * i, 0x9C52, 0x9C5C, index + 2000, GumpButtonType.Reply, 0);
 
@@ -287,13 +283,9 @@ namespace Server.Engines.UOStore
                     for (int j = 0; j < entry.Name.Length; j++)
                     {
                         if (entry.Name[j].Number > 0)
-                        {
                             AddHtmlLocalized(x, y + j * 14 + 4, 183, 25, 1114513, $"#{entry.Name[j].Number.ToString()}", 0x7FFF, false, false);
-                        }
                         else
-                        {
                             AddHtml(x, y + j * 14 + 4, 183, 25, ColorAndCenter("#FFFFFF", entry.Name[j].String), false, false);
-                        }
                     }
 
                     if (entry.ItemID > 0)

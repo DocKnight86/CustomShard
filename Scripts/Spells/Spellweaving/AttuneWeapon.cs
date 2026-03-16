@@ -1,3 +1,4 @@
+using Server.Services.Virtues;
 using System;
 using System.Collections.Generic;
 
@@ -68,6 +69,12 @@ namespace Server.Spells.Spellweaving
             if (!Caster.CanBeginAction(typeof(AttuneWeaponSpell)))
             {
                 Caster.SendLocalizedMessage(1075124); // You must wait before casting that spell again.
+                return false;
+            }
+
+            if (SpiritualityVirtue.IsEmbracee(Caster))
+            {
+                Caster.SendLocalizedMessage(1156040); // You may not cast Attunement whilst a Spirituality Shield is active!
                 return false;
             }
 

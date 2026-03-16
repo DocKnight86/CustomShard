@@ -224,9 +224,7 @@ namespace Server.Mobiles
             AbilityProfile profile = bc.AbilityProfile;
 
             if (profile == null && create)
-            {
                 bc.AbilityProfile = profile = new AbilityProfile(bc);
-            }
 
             return profile;
         }
@@ -236,9 +234,7 @@ namespace Server.Mobiles
             TrainingProfile profile = bc.TrainingProfile;
 
             if (profile == null && create)
-            {
                 bc.TrainingProfile = profile = new TrainingProfile(bc);
-            }
 
             return profile;
         }
@@ -715,6 +711,7 @@ namespace Server.Mobiles
                 new TrainingDefinition(typeof(Imp), Class.MagicalClawedTailedAndNecromantic, MagicalAbility.Variety2, specialAbilityImp, WepAbility2, AreaEffectArea2, 2, 4),
                 new TrainingDefinition(typeof(IronBeetle), Class.Insectoid, MagicalAbility.StandardClawedOrTailed, specialAbilityGiantBeetle, WepAbility1, AreaEffectNone, 2, 5),
                 new TrainingDefinition(typeof(JackRabbit), Class.None, MagicalAbility.StandardClawedOrTailed, specialAbilityAnimalStandard, WepAbility1, AreaEffectNone, 1, 2),
+                new TrainingDefinition(typeof(JuvenileUmbrascale), Class.MagicalClawedAndTailed, MagicalAbility.Triton, specialAbilityClawedTailedAndMagical2, WepAbility11, AreaEffectArea2, 3, 5),
                 new TrainingDefinition(typeof(Kirin), Class.MagicalClawedAndTailed, MagicalAbility.Dragon1, specialAbilityClawedTailedAndMagical2, WepAbility2, AreaEffectArea1, 2, 5),
                 new TrainingDefinition(typeof(Lasher), Class.Magical, MagicalAbility.None, SpecialAbilityNone, WepAbilityNone, AreaEffectNone, 2, 4),
                 new TrainingDefinition(typeof(LavaLizard), Class.ClawedTailedMagicalAndTokuno, MagicalAbility.LavaLizard, SpecialAbilityNone, WepAbility6, AreaEffectArea1, 1, 4),
@@ -902,9 +899,7 @@ namespace Server.Mobiles
             for (int i = 0; i < SpecialAbility.Abilities.Length; i++)
             {
                 if (i >= loc.Length)
-                {
                     break;
-                }
 
                 _TrainingPoints.Add(new TrainingPoint(SpecialAbility.Abilities[i], 1.0, 100, 100, loc[i][0], loc[i][1]));
             }
@@ -914,9 +909,7 @@ namespace Server.Mobiles
             for (int i = 0; i < AreaEffect.Effects.Length; i++)
             {
                 if (i >= loc.Length)
-                {
                     break;
-                }
 
                 _TrainingPoints.Add(new TrainingPoint(AreaEffect.Effects[i], 1.0, 100, 100, loc[i][0], loc[i][1]));
             }
@@ -929,29 +922,17 @@ namespace Server.Mobiles
                 TrainingPointRequirement requirement = null;
 
                 if (ability == WeaponAbility.NerveStrike)
-                {
                     requirement = new TrainingPointRequirement(SkillName.Bushido, 500, 1044112);
-                }
                 else if (ability == WeaponAbility.TalonStrike)
-                {
                     requirement = new TrainingPointRequirement(SkillName.Ninjitsu, 500, 1044113);
-                }
                 else if (ability == WeaponAbility.Feint)
-                {
                     requirement = new TrainingPointRequirement(SkillName.Bushido, 500, 1044112);
-                }
                 else if (ability == WeaponAbility.FrenziedWhirlwind)
-                {
                     requirement = new TrainingPointRequirement(SkillName.Ninjitsu, 500, 1044113);
-                }
                 else if (ability == WeaponAbility.Bladeweave)
-                {
                     requirement = new TrainingPointRequirement(SkillName.Bushido, 500, 1044112);
-                }
                 else if (ability == WeaponAbility.Block)
-                {
                     requirement = new TrainingPointRequirement(SkillName.Bushido, 500, 1044112);
-                }
 
                 _TrainingPoints.Add(new TrainingPoint(ability, 1.0, 100, 100, loc[i][0], loc[i][1], requirement));
             }
@@ -1158,21 +1139,13 @@ namespace Server.Mobiles
                     int cap = (int)skill.Cap;
 
                     if (cap < 105)
-                    {
                         value = 0;
-                    }
                     else if (cap < 110)
-                    {
                         value = 50;
-                    }
                     else if (cap < 115)
-                    {
                         value = 100;
-                    }
                     else if (cap < 120)
-                    {
                         value = 150;
-                    }
                 }
             }
         }
@@ -1447,16 +1420,12 @@ namespace Server.Mobiles
         public static bool CommonSkill(BaseCreature bc, SkillName skill)
         {
             if (bc.Skills[SkillName.Wrestling].Base >= 100 && skill == SkillName.Parry)
-            {
                 return true;
-            }
 
             AIType ai = bc.AI;
 
             if (skill == SkillName.Meditation && (ai == AIType.AI_Mage || ai == AIType.AI_NecroMage || ai == AIType.AI_Spellweaving || ai == AIType.AI_Mystic))
-            {
                 return true;
-            }
 
             return skill == SkillName.Focus || skill == SkillName.Tactics || skill == SkillName.Anatomy || skill == SkillName.MagicResist || skill == SkillName.Wrestling;
         }
@@ -1575,29 +1544,19 @@ namespace Server.Mobiles
             }
 
             if (o is MagicalAbility magicalAbility)
-            {
                 return GetLocalization(magicalAbility);
-            }
 
             if (o is SpecialAbility specialAbility)
-            {
                 return GetLocalization(specialAbility);
-            }
 
             if (o is AreaEffect areaEffect)
-            {
                 return GetLocalization(areaEffect);
-            }
 
             if (o is WeaponAbility weaponAbility)
-            {
                 return GetLocalization(weaponAbility);
-            }
 
             if (o is SkillName skillName)
-            {
                 return GetLocalization(skillName);
-            }
 
             return new TextDefinition[] { 0, 0 };
         }

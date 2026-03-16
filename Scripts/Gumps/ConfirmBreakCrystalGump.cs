@@ -17,9 +17,7 @@ namespace Server.Gumps
         public override void Confirm(Mobile from)
         {
             if (m_Item == null || m_Item.Deleted)
-            {
                 return;
-            }
 
             BaseCreature summon = m_Item.Summon;
 

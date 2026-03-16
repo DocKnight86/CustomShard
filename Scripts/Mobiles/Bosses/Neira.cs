@@ -100,14 +100,10 @@ namespace Server.Mobiles
             IMount mount = Mount;
 
             if (mount != null)
-            {
                 mount.Rider = null;
-            }
 
             if (mount is Mobile mobile)
-            {
                 mobile.Delete();
-            }
 
             return base.OnBeforeDeath();
         }
@@ -132,9 +128,7 @@ namespace Server.Mobiles
             base.OnGaveMeleeAttack(defender);
 
             if (0.1 >= Utility.RandomDouble()) // 10% chance to drop or throw an unholy bone
-            {
                 AddUnholyBone(defender, 0.25);
-            }
 
             CheckSpeedBoost();
         }
@@ -144,9 +138,7 @@ namespace Server.Mobiles
             base.OnGotMeleeAttack(attacker);
 
             if (0.1 >= Utility.RandomDouble()) // 10% chance to drop or throw an unholy bone
-            {
                 AddUnholyBone(attacker, 0.25);
-            }
         }
 
         public override void AlterDamageScalarFrom(Mobile caster, ref double scalar)
@@ -154,17 +146,13 @@ namespace Server.Mobiles
             base.AlterDamageScalarFrom(caster, ref scalar);
 
             if (0.1 >= Utility.RandomDouble()) // 10% chance to throw an unholy bone
-            {
                 AddUnholyBone(caster, 1.0);
-            }
         }
 
         public void AddUnholyBone(Mobile target, double chanceToThrow)
         {
             if (Map == null)
-            {
                 return;
-            }
 
             if (chanceToThrow >= Utility.RandomDouble())
             {
@@ -280,9 +268,7 @@ namespace Server.Mobiles
                 m_Rider = reader.ReadMobile();
 
                 if (m_Rider == null)
-                {
                     Delete();
-                }
             }
         }
 

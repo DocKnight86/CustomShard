@@ -61,13 +61,9 @@ namespace Server.Engines.Plants
         public void OnPlantPlanted(Mobile from)
         {
             if (from.AccessLevel == AccessLevel.Player)
-            {
                 PlantDelayTable[from] = DateTime.UtcNow + TimeSpan.FromDays(PlantDelay);
-            }
             else
-            {
                 from.SendMessage("As staff, you bypass the {0} day plant delay.", PlantDelay);
-            }
         }
 
         public override void Delete()
@@ -92,9 +88,7 @@ namespace Server.Engines.Plants
                 if (item is MaginciaPlantItem)
                 {
                     if (item.Location != p)
-                    {
                         plantCount++;
-                    }
                     else
                     {
                         from.SendLocalizedMessage(1150367); // This plot already has a plant!
@@ -135,13 +129,9 @@ namespace Server.Engines.Plants
             Map map = from.Map;
 
             if (map == Map.Trammel)
-            {
                 system = TramInstance;
-            }
             else if (map == Map.Felucca)
-            {
                 system = FelInstance;
-            }
 
             if (system == null)
             {
@@ -181,30 +171,20 @@ namespace Server.Engines.Plants
         public static void OnPlantDelete(Mobile owner, Map map)
         {
             if (owner == null || map == null)
-            {
                 return;
-            }
 
             if (map == Map.Trammel)
-            {
                 TramInstance.OnPlantDelete(owner);
-            }
             else if (map == Map.Felucca)
-            {
                 FelInstance.OnPlantDelete(owner);
-            }
         }
 
         public static void OnPlantPlanted(Mobile from, Map map)
         {
             if (map == Map.Felucca)
-            {
                 FelInstance.OnPlantPlanted(from);
-            }
             else if (map == Map.Trammel)
-            {
                 TramInstance.OnPlantPlanted(from);
-            }
         }
 
         public static Rectangle2D[] MagGrowBounds => m_MagGrowBounds;
@@ -232,9 +212,7 @@ namespace Server.Engines.Plants
             foreach (KeyValuePair<Mobile, DateTime> kvp in PlantDelayTable)
             {
                 if (kvp.Value < DateTime.UtcNow)
-                {
                     toRemove.Add(kvp.Key);
-                }
             }
 
             for (var index = 0; index < toRemove.Count; index++)
@@ -277,23 +255,15 @@ namespace Server.Engines.Plants
                 DateTime dt = reader.ReadDateTime();
 
                 if (m != null && dt > DateTime.UtcNow)
-                {
                     PlantDelayTable[m] = dt;
-                }
             }
 
             if (Map == Map.Felucca)
-            {
                 FelInstance = this;
-            }
             else if (Map == Map.Trammel)
-            {
                 TramInstance = this;
-            }
             else
-            {
                 Delete();
-            }
         }
     }
 }

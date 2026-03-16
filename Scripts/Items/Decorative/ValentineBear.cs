@@ -39,13 +39,9 @@ namespace Server.Items
         public void OnFlip(Mobile from)
         {
             if (ItemID == 0x48E0 || ItemID == 0x48E2)
-            {
                 ItemID = ItemID + 1;
-            }
             else
-            {
                 ItemID = ItemID - 1;
-            }
         }
 
         public override void OnDoubleClick(Mobile from)

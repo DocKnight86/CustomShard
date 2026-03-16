@@ -201,9 +201,7 @@ namespace Server.Items
                 // go to home location
                 m_Mobile.Location = m_Item.HomeLocation;
                 if (m_Item.HomeMap != null)
-                {
                     m_Mobile.Map = m_Item.HomeMap;
-                }
             }
         }
 

@@ -25,9 +25,7 @@ namespace Server.Engines.BulkOrders
             for (int i = 0; i < m_Types.Length; ++i)
             {
                 if (m_Types[i] == type)
-                {
                     return true;
-                }
             }
 
             return false;
@@ -76,7 +74,7 @@ namespace Server.Engines.BulkOrders
         public int RewardType { get; set; }
 
         public BODCollectionItem(int itemID, TextDefinition tooltip, int hue, double points, ConstructCallback constructor, int type = 0)
-            : base(null, itemID, tooltip, hue, points)
+            : base(null, itemID, tooltip, hue, points, false)
         {
             Constructor = constructor;
             RewardType = type;
@@ -100,21 +98,14 @@ namespace Server.Engines.BulkOrders
         public RewardItem AcquireItem()
         {
             if (m_Items.Length == 0)
-            {
                 return null;
-            }
-
             if (m_Items.Length == 1)
-            {
                 return m_Items[0];
-            }
 
             int totalWeight = 0;
 
             for (int i = 0; i < m_Items.Length; ++i)
-            {
                 totalWeight += m_Items[i].Weight;
-            }
 
             int randomWeight = Utility.Random(totalWeight);
 
@@ -123,9 +114,7 @@ namespace Server.Engines.BulkOrders
                 RewardItem item = m_Items[i];
 
                 if (randomWeight < item.Weight)
-                {
                     return item;
-                }
 
                 randomWeight -= item.Weight;
             }
@@ -193,9 +182,7 @@ namespace Server.Engines.BulkOrders
                 RewardGroup group = m_Groups[i];
 
                 if (points >= group.Points)
-                {
                     return group;
-                }
             }
 
             return m_Groups[0];
@@ -206,9 +193,7 @@ namespace Server.Engines.BulkOrders
             for (int i = 0; i < types.Length; ++i)
             {
                 if (type == null || types[i].Contains(type))
-                {
                     return types[i].Points;
-                }
             }
 
             return 0;
@@ -373,19 +358,11 @@ namespace Server.Engines.BulkOrders
         private static Item CreateMiningGloves(int type)
         {
             if (type == 1)
-            {
                 return new LeatherGlovesOfMining(1);
-            }
-
             if (type == 3)
-            {
                 return new StuddedGlovesOfMining(3);
-            }
-
             if (type == 5)
-            {
                 return new RingmailGlovesOfMining(5);
-            }
 
             throw new InvalidOperationException();
         }
@@ -408,9 +385,7 @@ namespace Server.Engines.BulkOrders
         private static Item CreateRunicHammer(int type)
         {
             if (type >= 1 && type <= 8)
-            {
                 return new RunicHammer(CraftResource.Iron + type, 55 - (type * 5));
-            }
 
             throw new InvalidOperationException();
         }
@@ -418,9 +393,7 @@ namespace Server.Engines.BulkOrders
         private static Item CreatePowerScroll(int type)
         {
             if (type == 5 || type == 10 || type == 15 || type == 20)
-            {
                 return new PowerScroll(SkillName.Blacksmith, 100 + type);
-            }
 
             throw new InvalidOperationException();
         }
@@ -433,9 +406,7 @@ namespace Server.Engines.BulkOrders
         private static Item CreateAncientHammer(int type)
         {
             if (type == 10 || type == 15 || type == 30 || type == 60)
-            {
                 return new AncientSmithyHammer(type);
-            }
 
             throw new InvalidOperationException();
         }
@@ -468,32 +439,20 @@ namespace Server.Engines.BulkOrders
             int points = 0;
 
             if (quantity == 10)
-            {
                 points += 10;
-            }
             else if (quantity == 15)
-            {
                 points += 25;
-            }
             else if (quantity == 20)
-            {
                 points += 50;
-            }
 
             if (exceptional)
-            {
                 points += 200;
-            }
 
             if (itemCount > 1)
-            {
                 points += LookupTypePoints(m_Types, type);
-            }
 
             if (material >= BulkMaterialType.DullCopper && material <= BulkMaterialType.Valorite)
-            {
                 points += 200 + (50 * (material - BulkMaterialType.DullCopper));
-            }
 
             return points;
         }
@@ -590,9 +549,7 @@ namespace Server.Engines.BulkOrders
         {
             // Item count of 1 means it's a small BOD.
             if (itemCount == 1)
-            {
                 return 0;
-            }
 
             int typeIdx;
 
@@ -600,16 +557,12 @@ namespace Server.Engines.BulkOrders
             for (typeIdx = 0; typeIdx < 7; ++typeIdx)
             {
                 if (m_Types[typeIdx].Contains(type))
-                {
                     break;
-                }
             }
 
             // Types 5, 6 and 7 are Large Weapon BODs with the same rewards.
             if (typeIdx > 5)
-            {
                 typeIdx = 5;
-            }
 
             return (typeIdx + 1) * 2;
         }
@@ -630,9 +583,7 @@ namespace Server.Engines.BulkOrders
             int mtrlIndex = (material >= BulkMaterialType.DullCopper && material <= BulkMaterialType.Valorite) ? 1 + (material - BulkMaterialType.DullCopper) : 0;
 
             if (exceptional)
-            {
                 typeIndex++;
-            }
 
             gold = goldTable[typeIndex][quanIndex][mtrlIndex];
 
@@ -790,9 +741,7 @@ namespace Server.Engines.BulkOrders
         private static Item CreateRunicKit(int type)
         {
             if (type >= 1 && type <= 3)
-            {
                 return new RunicSewingKit(CraftResource.RegularLeather + type, 60 - (type * 15));
-            }
 
             throw new InvalidOperationException();
         }
@@ -800,9 +749,7 @@ namespace Server.Engines.BulkOrders
         private static Item CreatePowerScroll(int type)
         {
             if (type == 5 || type == 10 || type == 15 || type == 20)
-            {
                 return new PowerScroll(SkillName.Tailoring, 100 + type);
-            }
 
             throw new InvalidOperationException();
         }
@@ -826,48 +773,28 @@ namespace Server.Engines.BulkOrders
             int points = 0;
 
             if (quantity == 10)
-            {
                 points += 10;
-            }
             else if (quantity == 15)
-            {
                 points += 25;
-            }
             else if (quantity == 20)
-            {
                 points += 50;
-            }
 
             if (exceptional)
-            {
                 points += 100;
-            }
 
             if (itemCount == 4)
-            {
                 points += 300;
-            }
             else if (itemCount == 5)
-            {
                 points += 400;
-            }
             else if (itemCount == 6)
-            {
                 points += 500;
-            }
 
             if (material == BulkMaterialType.Spined)
-            {
                 points += 50;
-            }
             else if (material == BulkMaterialType.Horned)
-            {
                 points += 100;
-            }
             else if (material == BulkMaterialType.Barbed)
-            {
                 points += 150;
-            }
 
             return points;
         }
@@ -1022,17 +949,11 @@ namespace Server.Engines.BulkOrders
             int points = 0;
 
             if (quantity == 10)
-            {
                 points += 10;
-            }
             else if (quantity == 15)
-            {
                 points += 25;
-            }
             else if (quantity == 20)
-            {
                 points += 50;
-            }
 
             switch (itemCount)
             {
@@ -1043,14 +964,10 @@ namespace Server.Engines.BulkOrders
             }
 
             if (material >= BulkMaterialType.DullCopper && material <= BulkMaterialType.Valorite)
-            {
                 points += 200 + (50 * (material - BulkMaterialType.DullCopper));
-            }
 
             if (exceptional)
-            {
                 points += 200;
-            }
 
             return points;
         }
@@ -1195,9 +1112,7 @@ namespace Server.Engines.BulkOrders
         private static Item RunicMalletAndChisel(int type)
         {
             if (type >= 1 && type <= 8)
-            {
                 return new RunicMalletAndChisel(CraftResource.Iron + type, 55 - (type * 5));
-            }
 
             return null;
         }
@@ -1227,22 +1142,14 @@ namespace Server.Engines.BulkOrders
             int points = 0;
 
             if (quantity == 10)
-            {
                 points += 10;
-            }
             else if (quantity == 15)
-            {
                 points += 25;
-            }
             else if (quantity == 20)
-            {
                 points += 50;
-            }
 
             if (exceptional)
-            {
                 points += 200;
-            }
 
             switch (material)
             {
@@ -1256,9 +1163,7 @@ namespace Server.Engines.BulkOrders
             }
 
             if (itemCount > 1)
-            {
                 points += LookupTypePoints(m_Types, type);
-            }
 
             return points;
         }
@@ -1268,7 +1173,7 @@ namespace Server.Engines.BulkOrders
             new RewardType(250, typeof(TallCabinet), typeof(ShortCabinet)),
             new RewardType(250, typeof(RedArmoire), typeof(ElegantArmoire), typeof(MapleArmoire), typeof(CherryArmoire)),
             new RewardType(300, typeof(PlainWoodenChest), typeof(OrnateWoodenChest), typeof(GildedWoodenChest), typeof(WoodenFootLocker), typeof(FinishedWoodenChest)),
-            new RewardType(350, typeof(WildStaff)),
+            new RewardType(350, typeof(WildStaff), typeof(ArcanistsWildStaff), typeof(AncientWildStaff), typeof(ThornedWildStaff), typeof(HardenedWildStaff)),
             new RewardType(250, typeof(LapHarp), typeof(Lute), typeof(Drums), typeof(Harp)),
             new RewardType(200, typeof(GnarledStaff), typeof(QuarterStaff), typeof(ShepherdsCrook), typeof(Tetsubo), typeof(Bokuto)),
             new RewardType(300, typeof(WoodenBox), typeof(EmptyBookcase), typeof(WoodenBench), typeof(WoodenThrone))
@@ -1405,22 +1310,14 @@ namespace Server.Engines.BulkOrders
             int points = 0;
 
             if (quantity == 10)
-            {
                 points += 10;
-            }
             else if (quantity == 15)
-            {
                 points += 25;
-            }
             else if (quantity == 20)
-            {
                 points += 50;
-            }
 
             if (itemCount > 1)
-            {
                 points += LookupTypePoints(m_Types, type);
-            }
 
             return points;
         }
@@ -1543,27 +1440,17 @@ namespace Server.Engines.BulkOrders
             int points = 0;
 
             if (quantity == 10)
-            {
                 points += 10;
-            }
             else if (quantity == 15)
-            {
                 points += 25;
-            }
             else if (quantity == 20)
-            {
                 points += 50;
-            }
 
             if (exceptional)
-            {
                 points += 200;
-            }
 
             if (itemCount > 1)
-            {
                 points += LookupTypePoints(m_Types, type);
-            }
 
             return points;
         }
@@ -1574,7 +1461,7 @@ namespace Server.Engines.BulkOrders
             new RewardType(250, typeof(UnbakedFruitPie), typeof(UnbakedPeachCobbler), typeof(UnbakedApplePie), typeof(UnbakedPumpkinPie)),
             new RewardType(300, typeof(CookedBird), typeof(FishSteak), typeof(FriedEggs), typeof(LambLeg), typeof(Ribs)),
             new RewardType(350, typeof(Cookies), typeof(Cake), typeof(Muffins), typeof(ThreeTieredCake)),
-            new RewardType(400, typeof(EnchantedApple), typeof(GrapesOfWrath), typeof(EggBomb)),
+            new RewardType(400, typeof(EnchantedApple), typeof(TribalPaint), typeof(GrapesOfWrath), typeof(EggBomb)),
             new RewardType(450, typeof(MisoSoup), typeof(WhiteMisoSoup), typeof(RedMisoSoup), typeof(AwaseMisoSoup)),
             new RewardType(500, typeof(WasabiClumps), typeof(SushiRolls), typeof(SushiPlatter), typeof(GreenTea))
         };
@@ -1691,22 +1578,14 @@ namespace Server.Engines.BulkOrders
             int points = 0;
 
             if (quantity == 10)
-            {
                 points += 10;
-            }
             else if (quantity == 15)
-            {
                 points += 25;
-            }
             else if (quantity == 20)
-            {
                 points += 50;
-            }
 
             if (exceptional)
-            {
                 points += 200;
-            }
 
             switch (material)
             {
@@ -1720,9 +1599,7 @@ namespace Server.Engines.BulkOrders
             }
 
             if (itemCount > 1)
-            {
                 points += LookupTypePoints(m_Types, type);
-            }
 
             return points;
         }
@@ -1732,8 +1609,8 @@ namespace Server.Engines.BulkOrders
             new RewardType(200, typeof(Arrow), typeof(Bolt)),
             new RewardType(300, typeof(Bow), typeof(CompositeBow), typeof(Yumi)),
             new RewardType(300, typeof(Crossbow), typeof(HeavyCrossbow), typeof(RepeatingCrossbow)),
-            new RewardType(350, typeof(MagicalShortbow)),
-            new RewardType(250, typeof(ElvenCompositeLongbow), typeof(SlayerLongbow))
+            new RewardType(350, typeof(MagicalShortbow), typeof(RangersShortbow), typeof(LightweightShortbow), typeof(MysticalShortbow), typeof(AssassinsShortbow)),
+            new RewardType(250, typeof(ElvenCompositeLongbow), typeof(BarbedLongbow), typeof(SlayerLongbow), typeof(FrozenLongbow), typeof(LongbowOfMight))
         };
 
         private static readonly int[][][] m_GoldTable =
@@ -1868,41 +1745,25 @@ namespace Server.Engines.BulkOrders
             int points = 0;
 
             if (quantity == 10)
-            {
                 points += 10;
-            }
             else if (quantity == 15)
-            {
                 points += 25;
-            }
             else if (quantity == 20)
-            {
                 points += 50;
-            }
 
             if (itemCount == 3)
             {
                 if (type == typeof(RefreshPotion) || type == typeof(HealPotion) || type == typeof(CurePotion))
-                {
                     points += 250;
-                }
                 else
-                {
                     points += 300;
-                }
             }
             else if (itemCount == 4)
-            {
                 points += 200;
-            }
             else if (itemCount == 5)
-            {
                 points += 400;
-            }
             else if (itemCount == 6)
-            {
                 points += 350;
-            }
 
             return points;
         }

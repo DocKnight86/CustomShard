@@ -46,9 +46,7 @@ namespace Server.Items
                     if (item != null)
                     {
                         if (from.Backpack == null || !from.Backpack.TryDropItem(from, item, false))
-                        {
                             item.MoveToWorld(from.Location, from.Map);
-                        }
 
                         NextUse = DateTime.UtcNow + TimeSpan.FromDays(1);
                     }

@@ -90,9 +90,7 @@ namespace Server.Items
             int version = reader.ReadInt();
 
             if (Weight == 4.0)
-            {
                 Weight = 1.0;
-            }
         }
     }
 
@@ -126,9 +124,7 @@ namespace Server.Items
             int version = reader.ReadInt();
 
             if (Weight == 4.0)
-            {
                 Weight = 1.0;
-            }
         }
     }
 
@@ -162,9 +158,7 @@ namespace Server.Items
             int version = reader.ReadInt();
 
             if (Weight == 4.0)
-            {
                 Weight = 1.0;
-            }
         }
     }
 

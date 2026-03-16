@@ -109,13 +109,9 @@ namespace Server.Misc
         public static void ValidateName_OnCommand(CommandEventArgs e)
         {
             if (Validate(e.ArgString, 2, 16, true, false, true, 1, SpaceDashPeriodQuote))
-            {
                 e.Mobile.SendMessage(0x59, "That name is considered valid.");
-            }
             else
-            {
                 e.Mobile.SendMessage(0x22, "That name is considered invalid.");
-            }
         }
 
         public static bool Validate(string name, int minLength, int maxLength, bool allowLetters, bool allowDigits, bool noExceptionsAtStart, int maxExceptions, char[] exceptions)
@@ -126,9 +122,7 @@ namespace Server.Misc
         public static bool Validate(string name, int minLength, int maxLength, bool allowLetters, bool allowDigits, bool noExceptionsAtStart, int maxExceptions, char[] exceptions, string[] disallowed, string[] startDisallowed)
         {
             if (name == null || name.Length < minLength || name.Length > maxLength)
-            {
                 return false;
-            }
 
             int exceptCount = 0;
 
@@ -143,18 +137,14 @@ namespace Server.Misc
                     if (c >= 'a' && c <= 'z')
                     {
                         if (!allowLetters)
-                        {
                             return false;
-                        }
 
                         exceptCount = 0;
                     }
                     else if (c >= '0' && c <= '9')
                     {
                         if (!allowDigits)
-                        {
                             return false;
-                        }
 
                         exceptCount = 0;
                     }
@@ -164,19 +154,13 @@ namespace Server.Misc
 
                         for (int j = 0; !except && j < exceptions.Length; ++j)
                             if (c == exceptions[j])
-                            {
                                 except = true;
-                            }
 
                         if (!except || i == 0 && noExceptionsAtStart)
-                        {
                             return false;
-                        }
 
                         if (exceptCount++ == maxExceptions)
-                        {
                             return false;
-                        }
                     }
                 }
             }
@@ -186,9 +170,7 @@ namespace Server.Misc
                 int indexOf = name.IndexOf(disallowed[i]);
 
                 if (indexOf == -1)
-                {
                     continue;
-                }
 
                 bool badPrefix = (indexOf == 0);
 
@@ -196,9 +178,7 @@ namespace Server.Misc
                     badPrefix = (name[indexOf - 1] == exceptions[j]);
 
                 if (!badPrefix)
-                {
                     continue;
-                }
 
                 bool badSuffix = indexOf + disallowed[i].Length >= name.Length;
 
@@ -206,17 +186,13 @@ namespace Server.Misc
                     badSuffix = name[indexOf + disallowed[i].Length] == exceptions[j];
 
                 if (badSuffix)
-                {
                     return false;
-                }
             }
 
             for (int i = 0; i < startDisallowed.Length; ++i)
             {
                 if (name.StartsWith(startDisallowed[i]))
-                {
                     return false;
-                }
             }
 
             return true;

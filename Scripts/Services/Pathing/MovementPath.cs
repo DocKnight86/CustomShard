@@ -29,14 +29,10 @@ namespace Server
             m_Goal = goal;
 
             if (map == null || map == Map.Internal)
-            {
                 return;
-            }
 
             if (Utility.InRange(start, goal, 1))
-            {
                 return;
-            }
 
             try
             {
@@ -50,9 +46,7 @@ namespace Server
                 }
 
                 if (alg != null && alg.CheckCondition(p, map, start, goal))
-                {
                     m_Directions = alg.Find(p, map, start, goal);
-                }
             }
             catch (Exception e)
             {
@@ -89,9 +83,7 @@ namespace Server
             IPoint3D p = obj as IPoint3D;
 
             if (p == null)
-            {
                 return;
-            }
 
             Spells.SpellHelper.GetSurfaceTop(ref p);
 

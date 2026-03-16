@@ -315,13 +315,9 @@ namespace Server.Engines.ArenaSystem
                 p = map.GetRandomSpawnPoint(rec);
 
                 if (m == null || m.Alive)
-                {
                     p.Z = Definition.StoneLocation.Z;
-                }
                 else
-                {
                     p.Z = Definition.ManagerLocation.Z;
-                }
             }
 
             return p;
@@ -435,9 +431,7 @@ namespace Server.Engines.ArenaSystem
                 ArenaStats stats = new ArenaStats(reader);
 
                 if (stats.Owner != null)
-                {
                     SurvivalRankings.Add(stats);
-                }
             }
 
             count = reader.ReadInt();
@@ -446,9 +440,7 @@ namespace Server.Engines.ArenaSystem
                 ArenaStats stats = new ArenaStats(reader);
 
                 if (stats.Owner != null)
-                {
                     TeamRankings.Add(stats);
-                }
             }
 
             count = reader.ReadInt();
@@ -457,9 +449,7 @@ namespace Server.Engines.ArenaSystem
                 Item blocker = reader.ReadItem();
 
                 if (blocker != null)
-                {
                     Blockers.Add(blocker);
-                }
             }
 
             Stone = reader.ReadItem() as ArenaStone;
@@ -488,24 +478,16 @@ namespace Server.Engines.ArenaSystem
             }
 
             if (Stone != null)
-            {
                 Stone.Arena = this;
-            }
 
             if (Manager != null)
-            {
                 Manager.Arena = this;
-            }
 
             if (Banner1 != null)
-            {
                 Banner1.Arena = this;
-            }
 
             if (Banner2 != null)
-            {
                 Banner2.Arena = this;
-            }
 
             if (version == 0)
             {
@@ -534,14 +516,10 @@ namespace Server.Engines.ArenaSystem
         public int CompareTo(ArenaStats stats)
         {
             if (Ranking > stats.Ranking)
-            {
                 return -1;
-            }
 
             if (Ranking < stats.Ranking)
-            {
                 return 1;
-            }
 
             return 0;
         }

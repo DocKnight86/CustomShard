@@ -161,9 +161,7 @@ namespace Server.Spells.SkillMasteries
         public static bool CheckEvasion(Mobile m)
         {
             if (IsActive(m))
-            {
                 return MasteryInfo.GetMasteryLevel(m, SkillName.Ninjitsu) + 2 > Utility.Random(100);
-            }
 
             return false;
         }
@@ -173,9 +171,7 @@ namespace Server.Spells.SkillMasteries
             AnimalFormContext context = AnimalForm.GetContext(m);
 
             if (context != null && context.Type == typeof(WildWhiteTiger))
-            {
                 return (int)(((m.Skills[SkillName.Ninjitsu].Value + m.Skills[SkillName.Stealth].Value + (MasteryInfo.GetMasteryLevel(m, SkillName.Ninjitsu) * 40)) / 3) / 10) / 2;
-            }
 
             return 0;
         }
@@ -192,9 +188,7 @@ namespace Server.Spells.SkillMasteries
             AnimalFormContext context = AnimalForm.GetContext(m);
 
             if (context != null && context.Type == typeof(WildWhiteTiger))
-            {
                 return 5;
-            }
 
             return 0;
         }
@@ -204,9 +198,7 @@ namespace Server.Spells.SkillMasteries
             CheckTable();
 
             if (!HasBleedMod(attacker, out _) || (_Table != null && _Table.ContainsKey(attacker)))
-            {
                 return;
-            }
 
             double bleedchance = (attacker.Skills.Ninjitsu.Value + attacker.Skills.Stealth.Value + (MasteryInfo.GetMasteryLevel(attacker, SkillName.Ninjitsu) * 40)) / 3.0 / 15.0;
 
@@ -215,9 +207,7 @@ namespace Server.Spells.SkillMasteries
                 BleedAttack.BeginBleed(defender, attacker, false);
 
                 if (_Table == null)
-                {
                     _Table = new Dictionary<Mobile, DateTime>();
-                }
 
                 _Table[attacker] = DateTime.UtcNow + TimeSpan.FromMinutes(1);
             }
@@ -237,16 +227,12 @@ namespace Server.Spells.SkillMasteries
         private static void CheckTable()
         {
             if (_Table == null)
-            {
                 return;
-            }
 
             ColUtility.ForEach(_Table, (mob, expires) =>
                 {
                     if (expires < DateTime.UtcNow)
-                    {
                         _Table.Remove(mob);
-                    }
                 });
         }
     }

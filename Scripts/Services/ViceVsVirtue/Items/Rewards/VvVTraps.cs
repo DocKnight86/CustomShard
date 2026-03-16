@@ -71,9 +71,7 @@ namespace Server.Engines.VvV
                     Point3D p = new Point3D(x, y, Map.GetAverageZ(x, y));
 
                     if (p == myLocation)
-                    {
                         continue;
-                    }
 
                     VvVTrap trap = deed.ConstructTrap(Owner);
                     Links.Add(trap);
@@ -99,9 +97,7 @@ namespace Server.Engines.VvV
         public bool CheckReveal(Mobile m)
         {
             if (!ViceVsVirtueSystem.IsVvV(m) || ItemID != HiddenID)
-            {
                 return false;
-            }
 
             return Utility.Random(100) <= m.Skills[SkillName.DetectHidden].Value;
         }
@@ -141,9 +137,7 @@ namespace Server.Engines.VvV
                 int skill = (int)m.Skills[SkillName.DetectHidden].Value;
 
                 if (skill >= 80 && Utility.Random(600) < skill)
-                {
                     PrivateOverheadMessage(Network.MessageType.Regular, 0x21, 500813, m.NetState); // [trapped]
-                }
             }
 
             return false;
@@ -162,9 +156,7 @@ namespace Server.Engines.VvV
         public bool IsEnemy(Mobile m)
         {
             if (Owner == null)
-            {
                 return true;
-            }
 
             return ViceVsVirtueSystem.IsVvV(m) && ViceVsVirtueSystem.IsVvV(Owner) && ViceVsVirtueSystem.IsEnemy(m, Owner);
         }
@@ -172,9 +164,7 @@ namespace Server.Engines.VvV
         public virtual void Detonate(Mobile m)
         {
             if (Owner != null)
-            {
                 Owner.DoHarmful(m);
-            }
 
             Delete();
         }
@@ -197,9 +187,7 @@ namespace Server.Engines.VvV
             }
 
             if (ParentTrap != null && !ParentTrap.Deleted)
-            {
                 ParentTrap.Delete();
-            }
         }
 
         public VvVTrap(Serial serial) : base(serial)
@@ -266,9 +254,7 @@ namespace Server.Engines.VvV
             int dam = Utility.RandomMinMax(MinDamage, MaxDamage);
 
             if (DeploymentType == DeploymentType.Tripwire)
-            {
                 dam *= 2;
-            }
 
             AOS.Damage(m, Owner, dam, 50, 50, 0, 0, 0);
 
@@ -312,9 +298,7 @@ namespace Server.Engines.VvV
             int dam = Utility.RandomMinMax(MinDamage, MaxDamage);
 
             if (DeploymentType == DeploymentType.Tripwire)
-            {
                 dam *= 2;
-            }
 
             AOS.Damage(m, Owner, dam, 0, 0, 0, 100, 0);
             m.ApplyPoison(Owner, Poison.Deadly);
@@ -358,9 +342,7 @@ namespace Server.Engines.VvV
             int dam = Utility.RandomMinMax(MinDamage, MaxDamage);
 
             if (DeploymentType == DeploymentType.Tripwire)
-            {
                 dam *= 2;
-            }
 
             AOS.Damage(m, Owner, dam, 0, 0, 100, 0, 0);
             m.FixedParticles(0x374A, 1, 15, 9502, 97, 3, (EffectLayer)255);
@@ -406,9 +388,7 @@ namespace Server.Engines.VvV
             int dam = Utility.RandomMinMax(MinDamage, MaxDamage);
 
             if (DeploymentType == DeploymentType.Tripwire)
-            {
                 dam *= 2;
-            }
 
             Effects.SendBoltEffect(m, true, 0);
             AOS.Damage(m, Owner, dam, 0, 0, 100, 0, 0);
@@ -451,9 +431,7 @@ namespace Server.Engines.VvV
             int dam = Utility.RandomMinMax(MinDamage, MaxDamage);
 
             if (DeploymentType == DeploymentType.Tripwire)
-            {
                 dam *= 2;
-            }
 
             AOS.Damage(m, Owner, dam, 100, 0, 0, 0, 0);
             Effects.SendLocationEffect(m.Location, m.Map, 0x11AD, 25, 10);

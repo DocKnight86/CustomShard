@@ -163,9 +163,7 @@ namespace Server.SkillHandlers
                         double music = from.Skills[SkillName.Musicianship].Value;
 
                         if (from is BaseCreature)
-                        {
                             music = 120.0;
-                        }
 
                         int masteryBonus = 0;
 
@@ -264,16 +262,12 @@ namespace Server.SkillHandlers
                         else
                         {
                             if (from is BaseCreature)
-                            {
                                 from.CheckSkill(SkillName.Discordance, 0, from.Skills[SkillName.Discordance].Cap);
-                            }
 
                             from.SendLocalizedMessage(1049540); // You attempt to disrupt your target, but fail.
 
                             if (targ.Player)
-                            {
                                 targ.SendLocalizedMessage(1072064); // You hear jarring music, but it fails to disrupt you.
-                            }
 
                             _Instrument.PlayInstrumentBadly(from);
                             _Instrument.ConsumeUse(from);

@@ -50,9 +50,7 @@ namespace Server.Items
             if (!Transformed)
             {
                 if (EnMask(from))
-                {
                     return true;
-                }
 
                 return false;
             }

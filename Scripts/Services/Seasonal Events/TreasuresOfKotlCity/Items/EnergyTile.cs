@@ -73,9 +73,7 @@ namespace Server.Engines.TreasuresOfKotlCity
             Timer.DelayCall(TimeSpan.FromSeconds(10), () =>
                 {
                     if (m_NextDeactivation < DateTime.UtcNow)
-                    {
                         DeactivateRandom();
-                    }
                 });
         }
 
@@ -104,9 +102,7 @@ namespace Server.Engines.TreasuresOfKotlCity
         public override bool OnMoveOver(Mobile m)
         {
             if (!m_Active)
-            {
                 return base.OnMoveOver(m);
-            }
 
             if (m is PlayerMobile || m is BaseCreature creature && creature.GetMaster() is PlayerMobile)
             {

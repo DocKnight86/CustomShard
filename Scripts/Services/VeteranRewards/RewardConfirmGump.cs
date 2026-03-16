@@ -23,13 +23,9 @@ namespace Server.Engines.VeteranRewards
             AddHtmlLocalized(30, 55, 300, 35, 1006000, 0x43FF, false, false); // You have selected:
 
             if (entry.NameString != null)
-            {
                 AddHtml(335, 55, 150, 35, $"<BASEFONT COLOR=#ffff84>{entry.NameString}</BASEFONT>", false, false);
-            }
             else
-            {
                 AddHtmlLocalized(335, 55, 150, 35, entry.Name, 0x7FF0, false, false);
-            }
 
             AddHtmlLocalized(30, 95, 300, 35, 1006001, 0x43FF, false, false); // This will be assigned to this character:
             AddLabel(335, 95, 0x37, from.Name);
@@ -48,21 +44,21 @@ namespace Server.Engines.VeteranRewards
             if (info.ButtonID == 1)
             {
                 if (!RewardSystem.HasAccess(m_From, m_Entry))
-                {
                     return;
-                }
 
                 Item item = m_Entry.Construct();
 
                 if (item != null)
                 {
+                    if (item is Items.RedSoulstone)
+                        ((Items.RedSoulstone)item).Account = m_From.Account.Username;
+
                     if (item is Items.LighthouseAddonDeed)
-                    {
                         ((Items.LighthouseAddonDeed)item).Account = m_From.Account.Username;
-                    }
 
                     if (RewardSystem.ConsumeRewardPoint(m_From))
                     {
+                        #region TOL
                         if (item is Auction.AuctionSafeDeed)
                         {
                             for (int i = 0; i < 2; i++)
@@ -71,13 +67,12 @@ namespace Server.Engines.VeteranRewards
                                 m_From.AddToBackpack(it);
                             }
                         }
+                        #endregion
 
                         m_From.AddToBackpack(item);
                     }
                     else
-                    {
                         item.Delete();
-                    }
                 }
             }
 
@@ -86,9 +81,7 @@ namespace Server.Engines.VeteranRewards
             RewardSystem.ComputeRewardInfo(m_From, out cur, out max);
 
             if (cur < max)
-            {
                 m_From.SendGump(new RewardNoticeGump(m_From));
-            }
         }
     }
 }

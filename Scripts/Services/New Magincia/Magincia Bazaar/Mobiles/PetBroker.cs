@@ -32,25 +32,17 @@ namespace Server.Engines.NewMagincia
                 }
             }
             else
-            {
                 base.OnDoubleClick(from);
-            }
         }
 
         public bool TryAddEntry(BaseCreature bc, Mobile from, int cost)
         {
             if (bc == null || HasEntry(bc) || !bc.Alive || !bc.IsStabled)
-            {
                 from.SendLocalizedMessage(1150342); // That pet is not in the stables. The pet must remain in the stables in order to be transferred to the broker's inventory.
-            }
             else if (m_BrokerEntries.Count >= MaxEntries)
-            {
                 from.SendLocalizedMessage(1150631); // You cannot add more pets to this animal broker's inventory at this time, because the shop inventory is full.
-            }
             else if (!from.Stabled.Contains(bc))
-            {
                 from.SendLocalizedMessage(1150344); // Transferring the pet from the stables to the animal broker's inventory failed for an unknown reason.
-            }
             else
             {
                 m_BrokerEntries.Add(new PetBrokerEntry(bc, cost));
@@ -224,9 +216,7 @@ namespace Server.Engines.NewMagincia
             if (m_ViewTimer.ContainsKey(bc))
             {
                 if (m_ViewTimer[bc] != null)
-                {
                     m_ViewTimer[bc].Stop();
-                }
             }
 
             m_ViewTimer[bc] = new InternalTimer(bc);
@@ -238,9 +228,7 @@ namespace Server.Engines.NewMagincia
             if (m_ViewTimer.ContainsKey(bc))
             {
                 if (m_ViewTimer[bc] != null)
-                {
                     m_ViewTimer[bc].Stop();
-                }
 
                 m_ViewTimer.Remove(bc);
             }

@@ -103,9 +103,7 @@ namespace Server.Engines.NewMagincia
                 Account acct = from.Account as Account;
 
                 if (acct == null)
-                {
                     return false;
-                }
 
                 return CheckAccount(acct);
             }
@@ -120,16 +118,12 @@ namespace Server.Engines.NewMagincia
                 Mobile m = acct[i];
 
                 if (m == null)
-                {
                     continue;
-                }
 
                 foreach (MaginciaHousingPlot plot in MaginciaLottoSystem.Plots)
                 {
                     if (plot.IsPrimeSpot && plot.Participants.ContainsKey(m))
-                    {
                         return false;
-                    }
                 }
             }
 
@@ -139,13 +133,9 @@ namespace Server.Engines.NewMagincia
         public void PurchaseLottoTicket(Mobile from, int toBuy)
         {
             if (m_Participants.ContainsKey(from))
-            {
                 m_Participants[from] += toBuy;
-            }
             else
-            {
                 m_Participants[from] = toBuy;
-            }
         }
 
         public void EndLotto()
@@ -161,26 +151,18 @@ namespace Server.Engines.NewMagincia
             foreach (KeyValuePair<Mobile, int> kvp in m_Participants)
             {
                 if (kvp.Value == 0)
-                {
                     continue;
-                }
 
                 for (int i = 0; i < kvp.Value; i++)
-                {
                     raffle.Add(kvp.Key);
-                }
             }
 
             Mobile winner = raffle[Utility.Random(raffle.Count)];
 
             if (winner != null)
-            {
                 OnLottoComplete(winner);
-            }
             else
-            {
                 ResetLotto();
-            }
 
             m_Participants.Clear();
         }
@@ -193,25 +175,19 @@ namespace Server.Engines.NewMagincia
             m_Expires = DateTime.UtcNow + TimeSpan.FromDays(MaginciaLottoSystem.WritExpirePeriod);
 
             if (winner.HasGump(typeof(PlotWinnerGump)))
-            {
                 return;
-            }
 
             Account acct = winner.Account as Account;
 
             if (acct == null)
-            {
                 return;
-            }
 
             for (int i = 0; i < acct.Length; i++)
             {
                 Mobile m = acct[i];
 
                 if (m == null)
-                {
                     continue;
-                }
 
                 if (m.NetState != null)
                 {
@@ -235,13 +211,9 @@ namespace Server.Engines.NewMagincia
         public void ResetLotto()
         {
             if (MaginciaLottoSystem.AutoResetLotto && MaginciaLottoSystem.Instance != null)
-            {
                 m_LottoEnds = DateTime.UtcNow + MaginciaLottoSystem.Instance.LottoDuration;
-            }
             else
-            {
                 m_LottoEnds = DateTime.MinValue;
-            }
         }
 
         public MaginciaHousingPlot(GenericReader reader)
@@ -266,24 +238,16 @@ namespace Server.Engines.NewMagincia
                 int amount = reader.ReadInt();
 
                 if (m != null)
-                {
                     m_Participants[m] = amount;
-                }
             }
 
             if ((m_Stone == null || m_Stone.Deleted) && LottoOngoing && MaginciaLottoSystem.IsRegisteredPlot(this))
-            {
                 AddPlotStone();
-            }
             else if (m_Stone != null)
-            {
                 m_Stone.Plot = this;
-            }
 
             if (m_Writ != null)
-            {
                 m_Writ.Plot = this;
-            }
         }
 
         public void Serialize(GenericWriter writer)

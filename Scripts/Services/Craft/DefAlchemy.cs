@@ -16,9 +16,7 @@ namespace Server.Engines.Craft
             get
             {
                 if (m_CraftSystem == null)
-                {
                     m_CraftSystem = new DefAlchemy();
-                }
 
                 return m_CraftSystem;
             }
@@ -39,14 +37,10 @@ namespace Server.Engines.Craft
             int num = 0;
 
             if (tool == null || tool.Deleted || tool.UsesRemaining <= 0)
-            {
                 return 1044038; // You have worn out your tool!
-            }
 
             if (!tool.CheckAccessible(from, ref num))
-            {
                 return num; // The tool must be on your person to use.
-            }
 
             return 0;
         }
@@ -66,9 +60,7 @@ namespace Server.Engines.Craft
         public override int PlayEndingEffect(Mobile from, bool failed, bool lostMaterial, bool toolBroken, int quality, bool makersMark, CraftItem item)
         {
             if (toolBroken)
-            {
                 from.SendLocalizedMessage(1044038); // You have worn out your tool
-            }
 
             if (failed)
             {
@@ -273,6 +265,14 @@ namespace Server.Engines.Craft
 
             index = AddCraft(typeof(CrystalGranules), 1044495, 1112329, 75.0, 100.0, typeof(ShimmeringCrystals), 1075095, 1, 1044253);
             SetItemHue(index, 2625);
+
+            index = AddCraft(typeof(CrystalDust), 1044495, 1112328, 75.0, 100.0, typeof(CrystallineFragments), 1153988, 4, 1044253);
+            SetItemHue(index, 2103);
+
+            index = AddCraft(typeof(SoftenedReeds), 1044495, 1112249, 75.0, 100.0, typeof(DryReeds), 1112248, 1, 1112250);
+            AddRes(index, typeof(ScouringToxin), 1112292, 2, 1112326);
+            SetRequireResTarget(index);
+            SetRequiresBasketWeaving(index);
 
             index = AddCraft(typeof(VialOfVitriol), 1044495, 1113331, 90.0, 100.0, typeof(ParasiticPotion), 1072848, 1, 1113754);
             AddRes(index, typeof(Nightshade), 1044358, 30, 1044366);

@@ -139,9 +139,7 @@ namespace Server.Mobiles
             foreach (Mobile m in eable)
             {
                 if (CanBeHarmful(m) && IsEnemy(m))
-                {
                     list.Add(m);
-                }
             }
             eable.Free();
 
@@ -154,17 +152,11 @@ namespace Server.Mobiles
                 double scalar;
 
                 if (list.Count == 1)
-                {
                     scalar = 0.75;
-                }
                 else if (list.Count == 2)
-                {
                     scalar = 0.50;
-                }
                 else
-                {
                     scalar = 0.25;
-                }
 
                 for (int i = 0; i < list.Count; ++i)
                 {
@@ -175,9 +167,7 @@ namespace Server.Mobiles
                     damage += Utility.RandomMinMax(-5, 5);
 
                     if (damage < 1)
-                    {
                         damage = 1;
-                    }
 
                     m.MovingParticles(this, 0x36F4, 1, 0, false, false, 32, 0, 9535, 1, 0, (EffectLayer)255, 0x100);
                     m.MovingParticles(this, 0x0001, 1, 0, false, true, 32, 0, 9535, 9536, 0, (EffectLayer)255, 0);

@@ -40,9 +40,7 @@ namespace Server.Engines.Plants
             foreach (PlantResourceInfo info in m_ResourceList)
             {
                 if (info.PlantType == plantType && info.PlantHue == plantHue)
-                {
                     return info;
-                }
             }
 
             return null;

@@ -43,7 +43,7 @@ namespace Server.Mobiles
                 return;
             }
 
-            for (int index = 0; index < m.DamageEntries.Count; index++)
+            for (var index = 0; index < m.DamageEntries.Count; index++)
             {
                 DamageEntry de = m.DamageEntries[index];
 
@@ -63,26 +63,18 @@ namespace Server.Mobiles
         public void RegisterDamage(Mobile from, int amount)
         {
             if (from == null || !from.Player)
-            {
                 return;
-            }
 
             if (m_DamageEntries.ContainsKey(from))
-            {
                 m_DamageEntries[from] += amount;
-            }
             else
-            {
                 m_DamageEntries.Add(from, amount);
-            }
         }
 
         public void AwardArtifact(Item artifact)
         {
             if (artifact == null)
-            {
                 return;
-            }
 
             int totalDamage = 0;
 
@@ -116,9 +108,7 @@ namespace Server.Mobiles
         public void GiveArtifact(Mobile to, Item artifact)
         {
             if (to == null || artifact == null)
-            {
                 return;
-            }
 
             Container pack = to.Backpack;
 
@@ -142,14 +132,9 @@ namespace Server.Mobiles
         {
             double random = Utility.RandomDouble();
             if (0.05 >= random)
-            {
                 return CreateArtifact(UniqueSAList);
-            }
-
             if (0.15 >= random)
-            {
                 return CreateArtifact(SharedSAList);
-            }
 
             return null;
         }
@@ -157,9 +142,7 @@ namespace Server.Mobiles
         public Item CreateArtifact(Type[] list)
         {
             if (list.Length == 0)
-            {
                 return null;
-            }
 
             int random = Utility.Random(list.Length);
 

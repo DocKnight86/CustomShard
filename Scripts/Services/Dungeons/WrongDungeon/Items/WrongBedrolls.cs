@@ -110,9 +110,7 @@ namespace Server.Items
         private void SendMessageTo(Mobile to, int number, int hue)
         {
             if (Deleted || !to.CanSee(this))
-            {
                 return;
-            }
 
             to.Send(new Network.MessageLocalized(Serial, ItemID, Network.MessageType.Regular, hue, 3, number, "", ""));
         }
@@ -120,9 +118,7 @@ namespace Server.Items
         private void SendMessageTo(Mobile to, string text, int hue)
         {
             if (Deleted || !to.CanSee(this))
-            {
                 return;
-            }
 
             to.Send(new Network.UnicodeMessage(Serial, ItemID, Network.MessageType.Regular, hue, 3, "ENU", "", text));
         }

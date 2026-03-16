@@ -156,9 +156,7 @@ namespace Server.Engines.NewMagincia
         public void TryWithdrawFunds(Mobile from, int amount)
         {
             if (m_BankBalance < amount || !Banker.Deposit(from, amount))
-            {
                 from.SendLocalizedMessage(1150214); // Transfer of funds from the broker to your bank box failed. Please check the amount to transfer is available in the broker's account, and make sure your bank box is able to hold the new funds without becoming overloaded.
-            }
             else
             {
                 m_BankBalance -= amount;

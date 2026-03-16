@@ -17,9 +17,7 @@ namespace Server.Mobiles
             foreach (Mobile mob in World.Mobiles.Values)
             {
                 if (mob != null && mob is PlayerMobile && mob.Murderer)
-                {
                     m_RedNames.Add(mob.Name);
-                }
             }
         }
 
@@ -58,9 +56,7 @@ namespace Server.Mobiles
             PickRandomName();
 
             if (m_PirateName > 0 && (m_PirateName == 1116679 || m_PirateName == 1116680 || m_PirateName == 1116683))
-            {
                 Female = true;
-            }
 
             SpeechHue = Utility.RandomDyedHue();
             Title = "the dread pirate";
@@ -92,13 +88,9 @@ namespace Server.Mobiles
             };
 
             if (Utility.RandomBool())
-            {
                 hat = new Bandana();
-            }
             else
-            {
                 hat = new TricorneHat();
-            }
 
             hat.Hue = Utility.RandomNeutralHue();
 
@@ -138,9 +130,7 @@ namespace Server.Mobiles
             m_Noun = Utility.RandomMinMax(1116651, 1116670);
 
             if (m_RedNames.Count == 0 || 0.90 > Utility.RandomDouble())
-            {
                 m_PirateName = Utility.RandomMinMax(1116671, 1116686);
-            }
             else
             {
                 m_PirateName = -1;
@@ -158,13 +148,9 @@ namespace Server.Mobiles
             string args;
 
             if (m_PirateName > 0)
-            {
                 args = $"#{m_Adjective}\t#{m_Noun}\t#{m_PirateName}";
-            }
             else
-            {
                 args = $"#{m_Adjective}\t#{m_Noun}\t{Name}";
-            }
 
             list.Add(1116690, args);
         }
@@ -174,9 +160,7 @@ namespace Server.Mobiles
             base.OnThink();
 
             if (!IsCaught || m_NextTalk > DateTime.UtcNow)
-            {
                 return;
-            }
 
             IPooledEnumerable eable = GetMobilesInRange(7);
             foreach (Mobile mob in eable)
@@ -200,9 +184,7 @@ namespace Server.Mobiles
         public bool TryBound(Mobile from, BaseQuest quest)
         {
             if (from == null || Galleon == null || !Galleon.Contains(this) || quest == null)
-            {
                 return false;
-            }
 
             if (m_IsCaught)
             {
@@ -219,9 +201,7 @@ namespace Server.Mobiles
         public void OnBound(ProfessionalBountyQuest quest)
         {
             if (quest == null || quest.Pole == null)
-            {
                 return;
-            }
 
             BindingPole pole = quest.Pole;
 
@@ -238,20 +218,14 @@ namespace Server.Mobiles
 
             Item toDisarm = FindItemOnLayer(Layer.OneHanded);
             if (toDisarm == null || !toDisarm.Movable)
-            {
                 toDisarm = FindItemOnLayer(Layer.TwoHanded);
-            }
 
             if (toDisarm != null)
             {
                 if (Backpack != null)
-                {
                     Backpack.DropItem(toDisarm);
-                }
                 else
-                {
                     toDisarm.Delete();
-                }
             }
 
             m_Quest = quest;
@@ -288,9 +262,7 @@ namespace Server.Mobiles
             for (int i = 0; i < rights.Count; i++)
             {
                 if (!rights[i].m_HasRight)
-                {
                     continue;
-                }
 
                 Mobile mob = rights[i].m_Mobile;
 
@@ -357,9 +329,7 @@ namespace Server.Mobiles
             m_PirateName = reader.ReadInt();
 
             if (IsCaught)
-            {
                 Frozen = true;
-            }
 
             m_NextTalk = DateTime.UtcNow;
         }

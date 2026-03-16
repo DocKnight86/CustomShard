@@ -23,9 +23,7 @@ namespace Server.Engines.CityLoyalty
             get
             {
                 if (Entry == null)
-                {
                     return false;
-                }
 
                 for (var index = 0; index < Entry.Details.Count; index++)
                 {
@@ -122,13 +120,9 @@ namespace Server.Engines.CityLoyalty
                 for (int i = 0; i < Entry.Details.Count; i++)
                 {
                     if (Utility.ToInt32(Entry.Details[i].Name) > 0)
-                    {
                         list.Add(1116453 + i, $"#{Entry.Details[i].Name}\t{Entry.Details[i].Count(this)}\t{Entry.Details[i].Amount}"); // ~1_val~: ~2_val~/~3_val~
-                    }
                     else
-                    {
                         list.Add(1116453 + i, $"{Entry.Details[i].Name}\t{Entry.Details[i].Count(this)}\t{Entry.Details[i].Amount}"); // ~1_val~: ~2_val~/~3_val~
-                    }
                 }
             }
 
@@ -149,14 +143,10 @@ namespace Server.Engines.CityLoyalty
         public override bool TryDropItem(Mobile from, Item item, bool message)
         {
             if (Entry == null)
-            {
                 return false;
-            }
 
             if (TryAddItem(from, item, message))
-            {
                 return base.TryDropItem(from, item, message);
-            }
 
             return false;
         }
@@ -169,7 +159,7 @@ namespace Server.Engines.CityLoyalty
             {
                 TradeEntry.TradeDetails details = Entry.Details[index];
 
-                if (details.Match(item.GetType()))
+                if (details.Match(item.GetType()) && !item.Insured)
                 {
                     int hasAmount = details.Count(this);
 
@@ -212,9 +202,7 @@ namespace Server.Engines.CityLoyalty
             int total = base.GetTotal(type);
 
             if (type == TotalType.Weight)
-            {
                 total -= total * 75 / 100;
-            }
 
             return total;
         }
@@ -319,9 +307,7 @@ namespace Server.Engines.CityLoyalty
         public override bool OnDroppedInto(Mobile from, Container target, Point3D p)
         {
             if (target == from.Backpack)
-            {
                 return base.OnDroppedInto(from, target, p);
-            }
 
             from.SendLocalizedMessage(1076254); // That item cannot be dropped.
             return false;

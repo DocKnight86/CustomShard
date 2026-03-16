@@ -70,9 +70,7 @@ namespace Server.Engines.Shadowguard
             CommandSystem.Register("CompleteAllRooms", AccessLevel.GameMaster, e =>
                 {
                     if (Instance.Table == null)
-                    {
                         Instance.Table = new Dictionary<Mobile, EncounterType>();
-                    }
 
                     Instance.Table[e.Mobile] = EncounterType.Bar | EncounterType.Orchard | EncounterType.Armory | EncounterType.Fountain | EncounterType.Belfry;
                 });
@@ -166,16 +164,12 @@ namespace Server.Engines.Shadowguard
         public void CompleteRoof(Mobile m)
         {
             if (Table == null)
-            {
                 return;
-            }
 
             Table.Remove(m);
 
             if (Table.Count == 0)
-            {
                 Table = null;
-            }
         }
 
         public void OnEncounterComplete(ShadowguardEncounter encounter, bool expired)
@@ -471,9 +465,7 @@ namespace Server.Engines.Shadowguard
         public void CheckQueue()
         {
             if (Queue.Count == 0)
-            {
                 return;
-            }
 
             bool message = false;
 
@@ -748,15 +740,11 @@ namespace Server.Engines.Shadowguard
             for (int i = 0; i < count; i++)
             {
                 if (Table == null)
-                {
                     Table = new Dictionary<Mobile, EncounterType>();
-                }
 
                 Mobile m = reader.ReadMobile();
                 if (m != null)
-                {
                     Table[m] = (EncounterType)reader.ReadInt();
-                }
             }
 
             count = reader.ReadInt();
@@ -784,9 +772,7 @@ namespace Server.Engines.Shadowguard
         public static void OnLogin(Mobile m)
         {
             if (m.AccessLevel > AccessLevel.GameMaster)
-            {
                 return;
-            }
 
             ShadowguardInstance inst = GetInstance(m.Location, m.Map);
 
@@ -814,9 +800,7 @@ namespace Server.Engines.Shadowguard
         public static void SetupShadowguard(Mobile from)
         {
             if (Instance != null)
-            {
                 return;
-            }
 
             ShadowguardController controller = new ShadowguardController();
             controller.MoveToWorld(new Point3D(501, 2192, 50), Map.TerMur);
@@ -952,9 +936,7 @@ namespace Server.Engines.Shadowguard
         public override bool CheckTravel(Mobile m, Point3D newlocation, TravelCheckType travelType)
         {
             if (Instance.InUse)
-            {
                 return travelType >= (TravelCheckType)5;
-            }
 
             return true;
         }
@@ -962,18 +944,14 @@ namespace Server.Engines.Shadowguard
         public override void OnDeath(Mobile m)
         {
             if (!Instance.InUse)
-            {
                 return;
-            }
 
             if (m is PlayerMobile)
             {
                 Timer.DelayCall(TimeSpan.FromSeconds(2), () =>
                 {
                     if (Instance.Encounter != null)
-                    {
                         Instance.Encounter.CheckPlayerStatus(m);
-                    }
                 });
             }
             else if (m is BaseCreature creature && Instance.Encounter != null)
@@ -985,19 +963,13 @@ namespace Server.Engines.Shadowguard
         public override bool OnTarget(Mobile m, Target t, object o)
         {
             if (m.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return true;
-            }
 
             if (o is AddonComponent component && component.ItemData.Height + component.Z > m.Z + 3)
-            {
                 return false;
-            }
 
             if (o is StaticTarget target && target.Z > m.Z + 3)
-            {
                 return false;
-            }
 
             if (t.Flags == TargetFlags.Harmful && (o is LadyMinax || o is ShadowguardGreaterDragon dragon && dragon.Z > m.Z))
             {
@@ -1014,13 +986,9 @@ namespace Server.Engines.Shadowguard
             if (m.AccessLevel >= AccessLevel.GameMaster && args.Speech != null && args.Speech.ToLower().Trim() == "getprops")
             {
                 if (Instance.Encounter != null)
-                {
                     m.SendGump(new PropertiesGump(m, Instance.Encounter));
-                }
                 else
-                {
                     m.SendMessage("There is no encounter for this instance at this time.");
-                }
             }
         }
     }

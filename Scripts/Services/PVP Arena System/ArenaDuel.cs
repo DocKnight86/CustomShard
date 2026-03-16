@@ -149,13 +149,9 @@ namespace Server.Engines.ArenaSystem
             PlayerStatsEntry entry = PVPArenaSystem.Instance.GetPlayerEntry<PlayerStatsEntry>(host);
 
             if (entry.Profile != null)
-            {
                 ConfigureFromProfile(entry.Profile);
-            }
             else
-            {
                 ConfigureDefault();
-            }
 
             Arena = arena;
 
@@ -217,9 +213,7 @@ namespace Server.Engines.ArenaSystem
         public IEnumerable<KeyValuePair<PlayerMobile, PlayerStatsEntry>> GetParticipants(bool inArena = false)
         {
             if (Teams == null || Teams.Count == 0)
-            {
                 yield break;
-            }
 
             for (var index = 0; index < Teams.Count; index++)
             {
@@ -250,9 +244,7 @@ namespace Server.Engines.ArenaSystem
         public bool InArena(Mobile m)
         {
             if (m == null)
-            {
                 return false;
-            }
 
             return Region.Find(m.Location, m.Map) == Arena.Region;
         }
@@ -262,9 +254,7 @@ namespace Server.Engines.ArenaSystem
             foreach (KeyValuePair<PlayerMobile, PlayerStatsEntry> kvp in GetParticipants())
             {
                 if (kvp.Key == check)
-                {
                     return kvp.Value;
-                }
             }
 
             return null;
@@ -273,9 +263,7 @@ namespace Server.Engines.ArenaSystem
         public bool SwapParticipant(PlayerMobile pm)
         {
             if (HasBegun)
-            {
                 return false;
-            }
 
             if (TeamOrder.RemoveParticipant(pm))
             {
@@ -797,9 +785,7 @@ namespace Server.Engines.ArenaSystem
             Mobile killer = victim.LastKiller;
 
             if (killer is BaseCreature creature)
-            {
                 killer = creature.GetMaster();
-            }
 
             if (victim is PlayerMobile mobile)
             {

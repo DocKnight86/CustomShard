@@ -75,9 +75,7 @@ namespace Server.Spells.SkillMasteries
         public bool HasShieldOrWeapon()
         {
             if (!Caster.Player)
-            {
                 return true;
-            }
 
             BaseShield shield = Caster.FindItemOnLayer(Layer.TwoHanded) as BaseShield;
 

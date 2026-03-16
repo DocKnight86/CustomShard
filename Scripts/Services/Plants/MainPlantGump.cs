@@ -83,9 +83,7 @@ namespace Server.Engines.Plants
         public static Item GetPotion(Mobile from, PotionEffect[] effects)
         {
             if (from.Backpack == null)
-            {
                 return null;
-            }
 
             Item[] items = from.Backpack.FindItemsByType(new[] { typeof(BasePotion), typeof(PotionKeg) });
 
@@ -94,18 +92,14 @@ namespace Server.Engines.Plants
                 if (item is BasePotion potion)
                 {
                     if (Array.IndexOf(effects, potion.PotionEffect) >= 0)
-                    {
                         return potion;
-                    }
                 }
                 else
                 {
                     PotionKeg keg = (PotionKeg)item;
 
                     if (keg.Held > 0 && Array.IndexOf(effects, keg.Type) >= 0)
-                    {
                         return keg;
-                    }
                 }
             }
 
@@ -117,9 +111,7 @@ namespace Server.Engines.Plants
             Mobile from = sender.Mobile;
 
             if (info.ButtonID == 0 || m_Plant.Deleted || m_Plant.PlantStatus >= PlantStatus.DecorativePlant)
-            {
                 return;
-            }
 
             if ((info.ButtonID >= 6 && info.ButtonID <= 10 || info.ButtonID == 12) && !from.InRange(m_Plant.GetWorldLocation(), 3))
             {
@@ -313,13 +305,9 @@ namespace Server.Engines.Plants
 
                 // The large images for these trees trigger a client crash, so use a smaller, generic tree.
                 if (m_Plant.PlantType == PlantType.CypressTwisted || m_Plant.PlantType == PlantType.CypressStraight)
-                {
                     AddItem(130 + typeInfo.OffsetX, 96 + typeInfo.OffsetY, 0x0CCA, hueInfo.Hue);
-                }
                 else
-                {
                     AddItem(130 + typeInfo.OffsetX, 96 + typeInfo.OffsetY, typeInfo.ItemID, hueInfo.Hue);
-                }
             }
 
             if (status != PlantStatus.BowlOfDirt)
@@ -408,9 +396,7 @@ namespace Server.Engines.Plants
         private void AddGrowthIndicator(int x, int y)
         {
             if (!m_Plant.IsGrowable)
-            {
                 return;
-            }
 
             switch (m_Plant.PlantSystem.GrowthIndicator)
             {

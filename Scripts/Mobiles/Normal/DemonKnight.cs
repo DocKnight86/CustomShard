@@ -84,17 +84,11 @@ namespace Server.Mobiles
             foreach (Mobile m in rights.Select(x => x.m_Mobile).Distinct().Take(3))
             {
                 if (top == 0)
-                {
                     blood = new BloodOfTheDarkFather(5);
-                }
                 else if (top == 1)
-                {
                     blood = new BloodOfTheDarkFather(3);
-                }
                 else if (top == 2)
-                {
                     blood = new BloodOfTheDarkFather(2);
-                }
 
                 top++;
 
@@ -126,9 +120,7 @@ namespace Server.Mobiles
                 PlaySound(0x491);
 
                 if (0.05 > Utility.RandomDouble())
-                {
                     Timer.DelayCall(TimeSpan.FromSeconds(1.0), CreateBones_Callback, from);
-                }
 
                 m_InHere = false;
             }
@@ -140,9 +132,7 @@ namespace Server.Mobiles
             Map map = from.Map;
 
             if (map == null)
-            {
                 return;
-            }
 
             int count = Utility.RandomMinMax(1, 3);
 
@@ -157,9 +147,7 @@ namespace Server.Mobiles
                     z = map.GetAverageZ(x, y);
 
                     if (z == from.Z || !map.CanFit(x, y, z, 16, false, true))
-                    {
                         continue;
-                    }
                 }
 
                 UnholyBone bone = new UnholyBone

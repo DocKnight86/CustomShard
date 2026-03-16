@@ -1,7 +1,9 @@
+using Server.Engines.Craft;
 using Server.Engines.Harvest;
 
 namespace Server.Items
 {
+    [Alterable(typeof(DefBlacksmithy), typeof(GargishScythe))]
     [Flipable(0x26BA, 0x26C4)]
     public class Scythe : BasePoleArm
     {

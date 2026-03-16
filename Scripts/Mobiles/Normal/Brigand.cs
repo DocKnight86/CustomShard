@@ -84,6 +84,14 @@ namespace Server.Mobiles
 
         public override bool ShowFameTitle => false;
 
+        public override void OnDeath(Container c)
+        {
+            base.OnDeath(c);
+
+            if (Utility.RandomDouble() < 0.75)
+                c.DropItem(new SeveredHumanEars());
+        }
+
         public override void GenerateLoot()
         {
             AddLoot(LootPack.Average);

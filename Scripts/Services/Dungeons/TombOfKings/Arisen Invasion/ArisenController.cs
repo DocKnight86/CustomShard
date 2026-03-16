@@ -88,13 +88,9 @@ namespace Server.Items
             Mobile from = args.Mobile;
 
             if (Create())
-            {
                 from.SendMessage("Arisen creatures spawner generated.");
-            }
             else
-            {
                 from.SendMessage("Arisen creatures spawner already present.");
-            }
         }
 
         [Usage("ArisenDelete")]
@@ -104,21 +100,15 @@ namespace Server.Items
             Mobile from = args.Mobile;
 
             if (Remove())
-            {
                 from.SendMessage("Arisen creatures spawner removed.");
-            }
             else
-            {
                 from.SendMessage("Arisen creatures spawner not present.");
-            }
         }
 
         public static bool Create()
         {
             if (m_Instance != null && !m_Instance.Deleted)
-            {
                 return false;
-            }
 
             m_Instance = new ArisenController();
             WeakEntityCollection.Add("sa", m_Instance);
@@ -128,9 +118,7 @@ namespace Server.Items
         public static bool Remove()
         {
             if (m_Instance == null)
-            {
                 return false;
-            }
 
             m_Instance.Delete();
             m_Instance = null;
@@ -246,9 +234,7 @@ namespace Server.Items
             writer.WriteEncodedInt(m_Spawners.Length);
 
             for (int i = 0; i < m_Spawners.Length; i++)
-            {
                 writer.WriteItem(m_Spawners[i]);
-            }
         }
 
         public override void Deserialize(GenericReader reader)

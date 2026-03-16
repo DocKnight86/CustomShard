@@ -108,9 +108,7 @@ namespace Server.Items
                         BaseHouse house = BaseHouse.FindHouseAt(AuctionSafe);
 
                         if (house != null)
-                        {
                             name = house.Sign.GetName();
-                        }
                     }
 
                     shop = SearchItem.LabelNumber != 0 ? $"#{SearchItem.LabelNumber}" : SearchItem.Name;
@@ -135,13 +133,9 @@ namespace Server.Items
             string[] coord = GetCoords();
 
             if (SetLocation == Point3D.Zero)
-            {
                 list.Add(1154639, $"{coord[0]}\t{coord[1]}"); //  Vendor Located at ~1_loc~ (~2_facet~)
-            }
             else
-            {
                 list.Add(1154638, $"{coord[0]}\t{coord[1]}"); //  Return to ~1_loc~ (~2_facet~)                
-            }
 
             if (!IsSale())
             {
@@ -222,13 +216,9 @@ namespace Server.Items
             list.Add(new OpenMapEntry(from, this));
 
             if (SetLocation == Point3D.Zero)
-            {
                 list.Add(new TeleportEntry(from, this));
-            }
             else
-            {
                 list.Add(new ReturnTeleportEntry(from, this));
-            }
 
             list.Add(new OpenContainerEntry(from, this));
         }
@@ -268,9 +258,7 @@ namespace Server.Items
         public Map GetMap()
         {
             if (SetLocation != Point3D.Zero)
-            {
                 return SetMap;
-            }
 
             Map map = null;
 
@@ -370,9 +358,7 @@ namespace Server.Items
                 Clicker = from;
 
                 if (VendorMap.SearchItem != null)
-                {
                     Container = VendorMap.SearchItem.ParentEntity as Container;
-                }
 
                 Enabled = IsAccessible();
             }
@@ -380,19 +366,13 @@ namespace Server.Items
             private bool IsAccessible()
             {
                 if (Container == null || VendorMap.IsAuction || VendorMap.Vendor == null || Container.RootParent != VendorMap.Vendor)
-                {
                     return false;
-                }
 
                 if (!Container.IsAccessibleTo(Clicker))
-                {
                     return false;
-                }
 
                 if (!Clicker.InRange(Container.GetWorldLocation(), 18))
-                {
                     return false;
-                }
 
                 return true;
             }
@@ -408,9 +388,7 @@ namespace Server.Items
             private static void RecurseOpen(Container c, Mobile from)
             {
                 if (c.Parent is Container parent)
-                {
                     RecurseOpen(parent, from);
-                }
 
                 c.DisplayTo(from);
             }

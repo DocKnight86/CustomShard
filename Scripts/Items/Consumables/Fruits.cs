@@ -85,9 +85,7 @@ namespace Server.Items
             }
 
             if (Deleted || !from.CheckAlive() || !CheckItemUse(from))
-            {
                 return false;
-            }
 
             return Eat(from);
         }

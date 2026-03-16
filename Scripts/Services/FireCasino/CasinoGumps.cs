@@ -280,14 +280,10 @@ namespace Server.Engines.ResortAndCasino
             AddBackground(0, 0, Width, Height, 1460);
 
             if (Title > 0)
-            {
                 AddHtmlLocalized(15, 20, Width - 30, 16, 1154645, "#" + Title, Yellow, false, false);
-            }
 
             if (PointsSystem.CasinoData.GetPoints(User) <= 0)
-            {
                 AddHtmlLocalized(15, 150, Width - 30, 40, 1154645, "#1153378", Yellow, false, false); // You have no chips to bet with. Please visit the Casino Cashier to buy chips.
-            }
             else
             {
                 switch (DiceGame.Stage)
@@ -449,9 +445,7 @@ namespace Server.Engines.ResortAndCasino
             AddItem(170, 210, RandomDyeID(Game.GetRoll(2)), _DiceHue);
 
             if (!Game.Winner)
-            {
                 AddHtmlLocalized(20, 250, 240, 32, 1153385, Game.CurrentBet.ToString(CultureInfo.GetCultureInfo("en-US")), Yellow, false, false); // The dice did not match your number. You lose your bet of ~1_AMT~.
-            }
             else
             {
                 int matches = Game.GetMatches();
@@ -678,9 +672,7 @@ namespace Server.Engines.ResortAndCasino
             base.AddGumpLayout();
 
             if (PointsSystem.CasinoData.GetPoints(User) <= 0)
-            {
                 return;
-            }
 
             AddHtmlLocalized(15, 50, Width - 30, 90, 1154645, "#1153614", Yellow, false, true);
             /*HOW TO PLAY<br><br>Place three equal-size bets. Enter the amount you want a single bet to be. Your initial bet will be 3x 
@@ -696,41 +688,31 @@ namespace Server.Engines.ResortAndCasino
             AddHtmlLocalized(370, 160, 100, 16, 1153627, "80\t1", Yellow, false, false);
 
             for (int i = 0; i < 5; i++)
-            {
                 AddImage(170 + (i * 40), 160, 1455);
-            }
 
             AddHtmlLocalized(0, 187, 160, 16, 1114514, "#1153617", Yellow, false, false); // FOUR OF A KIND
             AddHtmlLocalized(370, 187, 100, 16, 1153627, "3\t1", Yellow, false, false);
 
             for (int i = 0; i < 5; i++)
-            {
                 AddImage(170 + (i * 40), 187, i == 4 ? 1453 : 1454);
-            }
 
             AddHtmlLocalized(0, 214, 160, 16, 1114514, "#1153619", Yellow, false, false); // STRAIGHT
             AddHtmlLocalized(370, 214, 100, 16, 1153627, "3\t1", Yellow, false, false);
 
             for (int i = 0; i < 5; i++)
-            {
                 AddImage(170 + (i * 40), 214, 1455 - i);
-            }
 
             AddHtmlLocalized(0, 241, 160, 16, 1114514, "#1153621", Yellow, false, false); // FULL HOUSE
             AddHtmlLocalized(370, 241, 100, 16, 1153627, "3\t2", Yellow, false, false);
 
             for (int i = 0; i < 5; i++)
-            {
                 AddImage(170 + (i * 40), 241, i < 3 ? 1453 : 1452);
-            }
 
             AddHtmlLocalized(0, 268, 160, 16, 1114514, "#1153623", Yellow, false, false); // THREE OF A KIND
             AddHtmlLocalized(370, 268, 100, 16, 1153627, "1\t1", Yellow, false, false);
 
             for (int i = 0; i < 5; i++)
-            {
                 AddImage(170 + (i * 40), 268, i < 3 ? 1452 : i == 3 ? 1453 : 1455);
-            }
         }
 
         public override void BuildBetting()
@@ -765,9 +747,7 @@ namespace Server.Engines.ResortAndCasino
                 for (int i = 0; i < Game.Roll.Count; i++)
                 {
                     if (_DiceID[i] == 0)
-                    {
                         _DiceID[i] = RandomDyeID(Game.GetRoll(i));
-                    }
 
                     AddItem(180 + (i * 45), 345, _DiceID[i], _DiceHue);
                 }
@@ -791,9 +771,7 @@ namespace Server.Engines.ResortAndCasino
                 for (int i = 0; i < Game.Roll.Count; i++)
                 {
                     if (_DiceID[i] == 0)
-                    {
                         _DiceID[i] = RandomDyeID(Game.GetRoll(i));
-                    }
 
                     AddItem(180 + (i * 45), 345, _DiceID[i], _DiceHue);
                 }
@@ -903,29 +881,19 @@ namespace Server.Engines.ResortAndCasino
         private int WinningHand()
         {
             if (Game.IsFiveOfAKind())
-            {
                 return 1153616;
-            }
 
             if (Game.IsFourOfAKind())
-            {
                 return 1153618;
-            }
 
             if (Game.IsStraight())
-            {
                 return 1153620;
-            }
 
             if (Game.IsFullHouse())
-            {
                 return 1153622;
-            }
 
             if (Game.IsThreeOfAKind())
-            {
                 return 1153624;
-            }
 
             return 1153626;
         }

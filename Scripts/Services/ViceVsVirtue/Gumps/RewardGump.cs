@@ -68,9 +68,7 @@ namespace Server.Engines.VvV
                 item = ScrollOfTranscendence.CreateRandom(10, 10);
             }
             else
-            {
                 item = Activator.CreateInstance(citem.Type) as Item;
-            }
 
             if (item != null)
             {
@@ -84,9 +82,7 @@ namespace Server.Engines.VvV
                 else
                 {
                     if (User.AccessLevel == AccessLevel.Player)
-                    {
                         PointsSystem.ViceVsVirtue.DeductPoints(User, citem.Points);
-                    }
 
                     User.SendLocalizedMessage(1073621); // Your reward has been placed in your backpack.
                     User.PlaySound(0x5A7);

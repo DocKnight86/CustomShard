@@ -87,13 +87,9 @@ namespace Server.Items
                                 int damage;
 
                                 if (m_TrapLevel > 0)
-                                {
                                     damage = Utility.RandomMinMax(10, 30) * m_TrapLevel;
-                                }
                                 else
-                                {
                                     damage = m_TrapPower;
-                                }
 
                                 AOS.Damage(from, damage, 0, 100, 0, 0, 0);
 
@@ -109,9 +105,7 @@ namespace Server.Items
                     case TrapType.MagicTrap:
                         {
                             if (from.InRange(loc, 1))
-                            {
                                 from.Damage(m_TrapPower);
-                            }
                             //AOS.Damage( from, m_TrapPower, 0, 100, 0, 0, 0 );
 
                             Effects.PlaySound(loc, Map, 0x307);
@@ -135,13 +129,9 @@ namespace Server.Items
                                 int damage;
 
                                 if (m_TrapLevel > 0)
-                                {
                                     damage = Utility.RandomMinMax(5, 15) * m_TrapLevel;
-                                }
                                 else
-                                {
                                     damage = m_TrapPower;
-                                }
 
                                 AOS.Damage(from, damage, 100, 0, 0, 0, 0);
 
@@ -207,9 +197,7 @@ namespace Server.Items
         public override void Open(Mobile from)
         {
             if (from.AccessLevel > AccessLevel.Player || !TrapOnOpen || !ExecuteTrap(from))
-            {
                 base.Open(from);
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -253,9 +241,7 @@ namespace Server.Items
         private void SendMessageTo(Mobile to, int number, int hue)
         {
             if (Deleted || !to.CanSee(this))
-            {
                 return;
-            }
 
             to.Send(new Network.MessageLocalized(Serial, ItemID, Network.MessageType.Regular, hue, 3, number, "", ""));
         }
@@ -263,9 +249,7 @@ namespace Server.Items
         private void SendMessageTo(Mobile to, string text, int hue)
         {
             if (Deleted || !to.CanSee(this))
-            {
                 return;
-            }
 
             to.Send(new Network.UnicodeMessage(Serial, ItemID, Network.MessageType.Regular, hue, 3, "ENU", "", text));
         }

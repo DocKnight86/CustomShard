@@ -147,40 +147,24 @@ namespace Server.Engines.CreatureStealing
             int chance = 0;
 
             if (stealing == 120)
-            {
                 chance += 10;
-            }
             else if (stealing >= 110.1)
-            {
                 chance += 8;
-            }
             else if (stealing >= 100.1)
-            {
                 chance += 5;
-            }
             else if (stealing == 100)
-            {
                 chance += 2;
-            }
 
             int level = (int)(40.0 / 29999.0 * fame - 40.0 / 29999.0);
 
             if (level >= 40)
-            {
                 chance += 5;
-            }
             else if (level >= 35)
-            {
                 chance += 3;
-            }
             else if (level >= 30)
-            {
                 chance += 2;
-            }
             else if (level >= 25)
-            {
                 chance += 1;
-            }
 
             return chance;
         }

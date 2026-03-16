@@ -32,14 +32,10 @@ namespace Server
         private static void EventSink_SocketConnect(SocketConnectEventArgs e)
         {
             if (!e.AllowConnection)
-            {
                 return;
-            }
 
             if (!NagleEnabled)
-            {
                 e.Socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.NoDelay, 1); // RunUO uses its own algorithm
-            }
         }
     }
 }

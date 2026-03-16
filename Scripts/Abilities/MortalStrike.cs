@@ -48,16 +48,12 @@ namespace Server.Items
         public static void EndWound(Mobile m, bool natural = false)
         {
             if (!IsWounded(m))
-            {
                 return;
-            }
 
             Timer t = m_Table[m];
 
             if (t != null)
-            {
                 t.Stop();
-            }
 
             m_Table.Remove(m);
 
@@ -80,9 +76,7 @@ namespace Server.Items
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
             if (!Validate(attacker) || !CheckMana(attacker, true))
-            {
                 return;
-            }
 
             ClearCurrentAbility(attacker);
 
@@ -94,13 +88,9 @@ namespace Server.Items
 
             // Do not reset timer if one is already in place.
             if (Spells.SkillMasteries.ResilienceSpell.UnderEffects(defender)) //Halves time
-            {
                 BeginWound(defender, defender.Player ? TimeSpan.FromSeconds(3.0) : TimeSpan.FromSeconds(6));
-            }
             else
-            {
                 BeginWound(defender, defender.Player ? PlayerDuration : NPCDuration);
-            }
         }
 
         private class InternalTimer : Timer

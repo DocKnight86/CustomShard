@@ -15,14 +15,16 @@ namespace Server
         private readonly TextDefinition m_Tooltip;
         private readonly int m_Hue;
         private readonly double m_Points;
+        private readonly bool m_QuestItem;
 
-        public CollectionItem(Type type, int itemID, TextDefinition tooltip, int hue, double points)
+        public CollectionItem(Type type, int itemID, TextDefinition tooltip, int hue, double points, bool questitem = false)
         {
             m_Type = type;
             m_ItemID = itemID;
             m_Tooltip = tooltip;
             m_Hue = hue;
             m_Points = points;
+            m_QuestItem = questitem;
 
             Rectangle2D rec;
 
@@ -64,6 +66,7 @@ namespace Server
         public TextDefinition Tooltip => m_Tooltip;
         public int Hue => m_Hue;
         public double Points => m_Points;
+        public bool QuestItem => m_QuestItem;
 
         public virtual bool Validate(PlayerMobile from, Item item)
         {

@@ -71,9 +71,7 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (Utility.RandomDouble() < 0.03)
-            {
                 c.DropItem(new LuckyCoin());
-            }
         }
 
         public override void Serialize(GenericWriter writer)

@@ -43,9 +43,7 @@ namespace Server.Engines.HuntsmasterChallenge
         public static void Initialize()
         {
             if (m_Instance == null)
-            {
                 m_Instance = new HuntingSystem();
-            }
         }
 
         public HuntingSystem() : base(17603)
@@ -82,9 +80,7 @@ namespace Server.Engines.HuntsmasterChallenge
         public override void OnDoubleClick(Mobile m)
         {
             if (m.AccessLevel > AccessLevel.Player)
-            {
                 m.SendGump(new PropertiesGump(m, this));
-            }
         }
 
         private void CheckTimer()
@@ -92,9 +88,7 @@ namespace Server.Engines.HuntsmasterChallenge
             if (m_Active)
             {
                 if (m_Timer != null)
-                {
                     m_Timer.Stop();
-                }
 
                 m_Timer = Timer.DelayCall(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1), OnTick);
             }
@@ -193,9 +187,7 @@ namespace Server.Engines.HuntsmasterChallenge
         public void TrySubmitKill(HuntMaster master, Mobile from, HuntingPermit permit)
         {
             if (permit.KillEntry == null || permit.KillEntry.KillIndex < 0 || permit.KillEntry.KillIndex > HuntingTrophyInfo.Infos.Count)
-            {
                 master.SayTo(from, 1155706); // That is not a valid kill.
-            }
             else
             {
                 HuntingTrophyInfo info = HuntingTrophyInfo.Infos[permit.KillEntry.KillIndex];
@@ -203,18 +195,14 @@ namespace Server.Engines.HuntsmasterChallenge
                 if (info != null)
                 {
                     if (!m_Leaders.ContainsKey(info.HuntType))
-                    {
                         m_Leaders[info.HuntType] = new List<HuntingKillEntry>();
-                    }
 
                     List<HuntingKillEntry> leaders = m_Leaders[info.HuntType];
 
                     if (leaders.Count == 0 || permit.KillEntry.Measurement >= leaders[0].Measurement)
                     {
                         if (leaders.Count > 0 && permit.KillEntry.Measurement > leaders[0].Measurement)
-                        {
                             leaders.Clear();
-                        }
 
                         leaders.Add(new HuntingKillEntry(permit.Owner, permit.KillEntry.Measurement, permit.KillEntry.DateKilled, permit.KillEntry.KillIndex, permit.KillEntry.Location));
 
@@ -224,9 +212,7 @@ namespace Server.Engines.HuntsmasterChallenge
                         master.PlaySound(0x3D);
                     }
                     else
-                    {
                         master.SayTo(from, 1155721); // Begging thy pardon, but your permit has not broken the current record for this species!
-                    }
 
                     permit.HasSubmitted = true;
 
@@ -248,14 +234,10 @@ namespace Server.Engines.HuntsmasterChallenge
         private void CheckKill(HuntType type, HuntingKillEntry entry)
         {
             if (!m_Top10.ContainsKey(type))
-            {
                 m_Top10[type] = new List<HuntingKillEntry>();
-            }
 
             if (m_Top10[type].Count < 10)
-            {
                 m_Top10[type].Add(entry);
-            }
             else
             {
                 List<HuntingKillEntry> copy = new List<HuntingKillEntry>(m_Top10[type]);
@@ -413,9 +395,7 @@ namespace Server.Engines.HuntsmasterChallenge
                 }
 
                 if (m != null)
-                {
                     m_UnclaimedWinners[m] = c;
-                }
             }
 
             count = reader.ReadInt();
@@ -425,9 +405,7 @@ namespace Server.Engines.HuntsmasterChallenge
                 int c = reader.ReadInt();
 
                 if (!m_Top10.ContainsKey(type))
-                {
                     m_Top10[type] = new List<HuntingKillEntry>();
-                }
 
                 for (int j = 0; j < c; j++)
                 {
@@ -442,9 +420,7 @@ namespace Server.Engines.HuntsmasterChallenge
                 int c = reader.ReadInt();
 
                 if (!m_Leaders.ContainsKey(type))
-                {
                     m_Leaders[type] = new List<HuntingKillEntry>();
-                }
 
                 for (int j = 0; j < c; j++)
                 {

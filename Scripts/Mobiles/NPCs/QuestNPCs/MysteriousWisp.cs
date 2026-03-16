@@ -1,4 +1,5 @@
 using Server.ContextMenus;
+using Server.Engines.Quests;
 using Server.Items;
 using Server.SkillHandlers;
 using System;
@@ -14,11 +15,7 @@ namespace Server.Mobiles
         private const int _ItemCount = 10;
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public bool ForceRestock { get => false; set { if (value)
-            {
-                DoRestock(true);
-            }
-        } }
+        public bool ForceRestock { get => false; set { if (value) DoRestock(true); } }
 
         private readonly Dictionary<Mobile, int> _Conversation = new Dictionary<Mobile, int>();
 
@@ -85,6 +82,39 @@ namespace Server.Mobiles
                     Backpack.DisplayTo(from);
                 }
             }
+
+            if (from is PlayerMobile pm && QuestHelper.CheckDoneOnce(pm, typeof(WishesOfTheWispQuest), null, false))
+            {
+                WhisperingWithWispsQuest q = QuestHelper.GetQuest<WhisperingWithWispsQuest>(pm);
+
+                if (q == null)
+                {
+                    BaseQuest quest = QuestHelper.RandomQuest(pm, new[] { typeof(WhisperingWithWispsQuest) }, this);
+
+                    if (quest != null)
+                    {
+                        pm.CloseGump(typeof(MondainQuestGump));
+                        pm.SendGump(new MondainQuestGump(quest));
+                    }
+                }
+                else if (q.Completed)
+                {
+                    q.CompleteQuest();
+                }           
+            }
+        }
+
+        public override void OnMovement(Mobile m, Point3D oldLocation)
+        {
+            if (m is PlayerMobile mobile && InRange(mobile.Location, 5) && !InRange(oldLocation, 5))
+            {
+                WishesOfTheWispQuest quest = QuestHelper.GetQuest<WishesOfTheWispQuest>(mobile);
+
+                if (quest != null)
+                {
+                    quest.CompleteQuest();
+                }
+            }
         }
 
         public override void OnSpeech(SpeechEventArgs e)
@@ -109,13 +139,9 @@ namespace Server.Mobiles
                     SayTo(e.Mobile, _Responses[value]);
 
                     if (value + 1 >= _Keywords.Length)
-                    {
                         _Conversation.Remove(e.Mobile);
-                    }
                     else
-                    {
                         _Conversation[e.Mobile]++;
-                    }
 
                     break;
                 }
@@ -191,9 +217,9 @@ namespace Server.Mobiles
                     switch (Utility.Random(3))
                     {
                         default:
-                        case 0: item = Loot.RandomArmorOrShieldOrWeaponOrJewelry(); break;
-                        case 1: item = Loot.RandomArmorOrShieldOrWeaponOrJewelry(); break;
-                        case 2: item = Loot.RandomArmorOrShieldOrWeaponOrJewelry(); break;
+                        case 0: item = Loot.RandomArmorOrShieldOrWeaponOrJewelry(false, false, true); break;
+                        case 1: item = Loot.RandomArmorOrShieldOrWeaponOrJewelry(false, true, false); break;
+                        case 2: item = Loot.RandomArmorOrShieldOrWeaponOrJewelry(true, false, false); break;
                     }
 
                     var failSafe = 0;
@@ -235,10 +261,12 @@ namespace Server.Mobiles
                 return;
             }
 
+            int points = (int)Engines.Points.PointsSystem.DespiseCrystals.GetPoints(from);
             int cost = GetCostFor(item);
 
-            if (Banker.Withdraw(from, cost))
+            if (points >= cost)
             {
+                Engines.Points.PointsSystem.DespiseCrystals.DeductPoints(from, cost);
                 item.Movable = true;
 
                 if (from.Backpack == null || !from.Backpack.TryDropItem(from, item, false))

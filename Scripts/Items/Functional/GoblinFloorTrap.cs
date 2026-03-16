@@ -35,21 +35,15 @@ namespace Server.Items
         public override void OnTrigger(Mobile from)
         {
             if (from.AccessLevel > AccessLevel.Player || !from.Alive)
-            {
                 return;
-            }
 
             if (m_Owner != null)
             {
                 if (!m_Owner.CanBeHarmful(from) || m_Owner == from)
-                {
                     return;
-                }
 
                 if (m_Owner.Guild != null && m_Owner.Guild == from.Guild)
-                {
                     return;
-                }
             }
 
             from.SendSound(0x22B);
@@ -58,9 +52,7 @@ namespace Server.Items
             Spells.SpellHelper.Damage(TimeSpan.FromSeconds(0.30), from, from, Utility.RandomMinMax(50, 75), 100, 0, 0, 0, 0);
 
             if (m_Owner != null)
-            {
                 from.DoHarmful(m_Owner);
-            }
 
             Visible = true;
             Timer.DelayCall(TimeSpan.FromSeconds(10), Rehide_Callback);
@@ -203,9 +195,7 @@ namespace Server.Items
                         m_Kit.Consume();
                     }
                     else
-                    {
                         from.SendLocalizedMessage(500446); // That is too far away.
-                    }
                 }
             }
         }

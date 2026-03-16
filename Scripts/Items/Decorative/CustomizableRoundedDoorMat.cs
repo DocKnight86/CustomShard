@@ -28,9 +28,7 @@ namespace Server.Items
         public bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
-            {
                 return false;
-            }
 
             Hue = sender.DyedHue;
 
@@ -42,9 +40,7 @@ namespace Server.Items
             if (IsChildOf(from.Backpack))
             {
                 if (from is PlayerMobile mobile)
-                {
                     BaseGump.SendGump(new AddCustomizableMessageGump(mobile, this));
-                }
             }
             else
             {

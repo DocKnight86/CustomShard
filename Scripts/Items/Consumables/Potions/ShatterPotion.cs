@@ -49,9 +49,7 @@ namespace Server.Items
             from.RevealingAction();
 
             if (!m_Users.Contains(from))
-            {
                 m_Users.Add(from);
-            }
 
             from.Target = new ThrowTarget(this);
         }
@@ -80,9 +78,7 @@ namespace Server.Items
         public virtual void Explode(Mobile from, Mobile m, Map map)
         {
             if (Deleted || map == null)
-            {
                 return;
-            }
 
             Consume();
 
@@ -193,9 +189,7 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (Potion.Deleted || Potion.Map == Map.Internal)
-                {
                     return;
-                }
 
                 if (targeted is Mobile m)
                 {

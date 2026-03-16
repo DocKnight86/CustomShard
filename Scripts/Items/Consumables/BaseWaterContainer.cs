@@ -41,9 +41,7 @@ namespace Server.Items
                         IEntity rootParent = RootParentEntity;
 
                         if (rootParent != null && rootParent.Map != null && rootParent.Map != Map.Internal)
-                        {
                             MoveToWorld(rootParent.Location, rootParent.Map);
-                        }
                     }
 
                     InvalidateProperties();
@@ -67,13 +65,9 @@ namespace Server.Items
             else
             {
                 if (Name == null)
-                {
                     LabelTo(from, LabelNumber);
-                }
                 else
-                {
                     LabelTo(from, Name);
-                }
             }
         }
 

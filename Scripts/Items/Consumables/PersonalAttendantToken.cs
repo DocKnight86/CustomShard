@@ -27,9 +27,7 @@ namespace Server.Items
                 from.SendGump(new InternalGump(this));
             }
             else
-            {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.
-            }
         }
 
         public override void GetProperties(ObjectPropertyList list)
@@ -77,9 +75,7 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (m_Token == null || m_Token.Deleted)
-                {
                     return;
-                }
 
                 if (info.ButtonID == 1)
                 {

@@ -32,9 +32,7 @@ namespace Server.Engines.Points
             BaseCreature bc = victim as BaseCreature;
 
             if (!TreasuresOfDoomEvent.Instance.Running || bc == null || bc.Controlled || bc.Summoned || !damager.Alive || damager.Deleted || bc.IsChampionSpawn)
-            {
                 return;
-            }
 
             Region r = bc.Region;
 
@@ -54,7 +52,7 @@ namespace Server.Engines.Points
 
                 if (chance > Utility.RandomDouble())
                 {
-                    Item i = Loot.RandomArmorOrShieldOrWeaponOrJewelry();
+                    Item i = Loot.RandomArmorOrShieldOrWeaponOrJewelry(LootPackEntry.IsInTokuno(bc), LootPackEntry.IsMondain(bc), LootPackEntry.IsStygian(bc));
 
                     if (i != null)
                     {
@@ -66,9 +64,7 @@ namespace Server.Engines.Points
                         if (!mobile.PlaceInBackpack(i))
                         {
                             if (mobile.BankBox != null && mobile.BankBox.TryDropItem(mobile, i, false))
-                            {
                                 mobile.SendLocalizedMessage(1079730); // The item has been placed into your bank box.
-                            }
                             else
                             {
                                 mobile.SendLocalizedMessage(1072523); // You find an artifact, but your backpack and bank are too full to hold it.
@@ -115,9 +111,7 @@ namespace Server.Engines.Points
                 int points = reader.ReadInt();
 
                 if (m != null && points > 0)
-                {
                     DungeonPoints[m] = points;
-                }
             }
         }
     }

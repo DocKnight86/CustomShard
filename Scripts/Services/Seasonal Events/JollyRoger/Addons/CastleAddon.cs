@@ -684,9 +684,7 @@ namespace Server.Items
         public CastleAddon()
         {
             for (var i = 0; i < m_AddOnSimpleComponents.Length / 4; i++)
-            {
                 AddComponent(new AddonComponent(m_AddOnSimpleComponents[i, 0]), m_AddOnSimpleComponents[i, 1], m_AddOnSimpleComponents[i, 2], m_AddOnSimpleComponents[i, 3]);
-            }
 
             AddComplexComponent(this, 13042, 8, 5, 5, 933, -1, "", 1);
             AddComplexComponent(this, 13042, 11, 5, 5, 933, -1, "", 1);
@@ -855,25 +853,16 @@ namespace Server.Items
             AddonComponent ac;
             ac = new AddonComponent(item);
             if (!string.IsNullOrEmpty(name))
-            {
                 ac.Name = name;
-            }
-
             if (hue != 0)
-            {
                 ac.Hue = hue;
-            }
-
             if (amount > 1)
             {
                 ac.Stackable = true;
                 ac.Amount = amount;
             }
             if (lightsource != -1)
-            {
                 ac.Light = (LightType)lightsource;
-            }
-
             addon.AddComponent(ac, xoffset, yoffset, zoffset);
         }
 
@@ -1887,25 +1876,16 @@ namespace Server.Items
             AddonComponent ac;
             ac = new AddonComponent(item);
             if (!string.IsNullOrEmpty(name))
-            {
                 ac.Name = name;
-            }
-
             if (hue != 0)
-            {
                 ac.Hue = hue;
-            }
-
             if (amount > 1)
             {
                 ac.Stackable = true;
                 ac.Amount = amount;
             }
             if (lightsource != -1)
-            {
                 ac.Light = (LightType)lightsource;
-            }
-
             addon.AddComponent(ac, xoffset, yoffset, zoffset);
         }
 
@@ -1985,9 +1965,7 @@ namespace Server.Items
         {
 
             for (int i = 0; i < m_AddOnSimpleComponents.Length / 4; i++)
-            {
                 AddComponent(new AddonComponent(m_AddOnSimpleComponents[i, 0]), m_AddOnSimpleComponents[i, 1], m_AddOnSimpleComponents[i, 2], m_AddOnSimpleComponents[i, 3]);
-            }
 
             AddComplexComponent(this, 2567, 5, 12, 14, 0, 8, "", 1);
             AddComplexComponent(this, 2567, 5, 17, 15, 0, 8, "", 1);
@@ -2027,25 +2005,16 @@ namespace Server.Items
             AddonComponent ac;
             ac = new AddonComponent(item);
             if (!string.IsNullOrEmpty(name))
-            {
                 ac.Name = name;
-            }
-
             if (hue != 0)
-            {
                 ac.Hue = hue;
-            }
-
             if (amount > 1)
             {
                 ac.Stackable = true;
                 ac.Amount = amount;
             }
             if (lightsource != -1)
-            {
                 ac.Light = (LightType)lightsource;
-            }
-
             addon.AddComponent(ac, xoffset, yoffset, zoffset);
         }
 
@@ -2102,9 +2071,7 @@ namespace Server.Items
         public NightDecorationAddon()
         {
             for (int i = 0; i < m_AddOnSimpleComponents.Length / 4; i++)
-            {
                 AddComponent(new AddonComponent(m_AddOnSimpleComponents[i, 0]), m_AddOnSimpleComponents[i, 1], m_AddOnSimpleComponents[i, 2], m_AddOnSimpleComponents[i, 3]);
-            }
 
             AddComplexComponent(this, 11748, 14, 15, 2, 2548, -1, "", 1);
             AddComplexComponent(this, 11749, 15, 16, 2, 2548, -1, "", 1);
@@ -2246,25 +2213,16 @@ namespace Server.Items
             AddonComponent ac;
             ac = new AddonComponent(item);
             if (!string.IsNullOrEmpty(name))
-            {
                 ac.Name = name;
-            }
-
             if (hue != 0)
-            {
                 ac.Hue = hue;
-            }
-
             if (amount > 1)
             {
                 ac.Stackable = true;
                 ac.Amount = amount;
             }
             if (lightsource != -1)
-            {
                 ac.Light = (LightType)lightsource;
-            }
-
             addon.AddComponent(ac, xoffset, yoffset, zoffset);
         }
 

@@ -123,9 +123,7 @@ namespace Server.Gumps
                         int modint = context.Imbue_ModInt;
 
                         if (modint < 0)
-                        {
                             modint = 0;
-                        }
 
                         if (mod < 0)
                         {
@@ -224,9 +222,7 @@ namespace Server.Gumps
                     User.EndAction(typeof(Imbuing));
 
                     if (info.ButtonID == 0 || m_Item.Deleted)
-                    {
                         return;
-                    }
 
                     if (Imbuing.CanUnravelItem(User, m_Item) && Imbuing.UnravelItem(User, m_Item))
                     {
@@ -252,9 +248,7 @@ namespace Server.Gumps
                 Container cont = o as Container;
 
                 if (cont == null)
-                {
                     return;
-                }
 
                 if (!cont.IsChildOf(m.Backpack))
                 {
@@ -348,9 +342,7 @@ namespace Server.Gumps
                     User.EndAction(typeof(Imbuing));
 
                     if (m_Container == null || m_List == null)
-                    {
                         return;
-                    }
 
                     if (info.ButtonID == 0)
                     {
@@ -428,9 +420,7 @@ namespace Server.Gumps
                 context.LastImbued = item;
 
                 if (context.ImbMenu_Cat == 0)
-                {
                     context.ImbMenu_Cat = 1;
-                }
 
                 pm.CloseGump(typeof(ImbuingGump));
                 SendGump(new ImbueSelectGump(pm, item));

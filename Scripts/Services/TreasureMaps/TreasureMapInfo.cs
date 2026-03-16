@@ -55,9 +55,7 @@ namespace Server.Items
         public static int ConvertLevel(int level)
         {
             if (level == -1)
-            {
                 return level;
-            }
 
             switch (level)
             {
@@ -227,9 +225,7 @@ namespace Server.Items
         public static SkillName[] GetPowerScrollList(TreasureLevel level, TreasurePackage package, TreasureFacet facet)
         {
             if (facet != TreasureFacet.Felucca)
-            {
                 return null;
-            }
 
             if (level >= TreasureLevel.Cache)
             {
@@ -283,9 +279,7 @@ namespace Server.Items
         public static Type[] GetReagentList(TreasureLevel level, TreasurePackage package, TreasureFacet facet)
         {
             if (level != TreasureLevel.Stash || package != TreasurePackage.Mage)
-            {
                 return null;
-            }
 
             switch (facet)
             {
@@ -318,9 +312,7 @@ namespace Server.Items
         public static Type[] GetSpecialLootList(TreasureLevel level, TreasurePackage package)
         {
             if (level == TreasureLevel.Stash)
-            {
                 return null;
-            }
 
             Type[] list;
 
@@ -365,6 +357,17 @@ namespace Server.Items
                 case TreasureLevel.Cache: return Utility.RandomMinMax(30000, 60000);
                 case TreasureLevel.Hoard: return Utility.RandomMinMax(40000, 70000);
                 case TreasureLevel.Trove: return Utility.RandomMinMax(50000, 70000);
+            }
+        }
+
+        public static int GetRefinementRolls(ChestQuality quality)
+        {
+            switch (quality)
+            {
+                default:
+                case ChestQuality.Rusty: return 2;
+                case ChestQuality.Standard: return 4;
+                case ChestQuality.Gold: return 6;
             }
         }
 
@@ -455,7 +458,7 @@ namespace Server.Items
                 null, // Ilshenar
                 null, // Malas
                 null, // Tokuno
-                new[] { typeof(HammerPick), typeof(SledgeHammerWeapon), typeof(SmithyHammer), typeof(WarAxe), typeof(WarHammer), typeof(Axe), typeof(BattleAxe), typeof(DoubleAxe), typeof(ExecutionersAxe), typeof(Hatchet), typeof(LargeBattleAxe), typeof(OrnateAxe), typeof(TwoHandedAxe), typeof(Pickaxe) },  // TerMur
+                new[] { typeof(HammerPick), typeof(SledgeHammerWeapon), typeof(SmithyHammer), typeof(WarAxe), typeof(WarHammer), typeof(Axe), typeof(BattleAxe), typeof(DoubleAxe), typeof(ExecutionersAxe), typeof(Hatchet), typeof(LargeBattleAxe), typeof(OrnateAxe), typeof(TwoHandedAxe), typeof(Pickaxe), typeof(DualShortAxes) },  // TerMur
                 Array.Empty<Type>()  // Eodon
             },
             new[] // Assassin
@@ -479,10 +482,10 @@ namespace Server.Items
             new[] // Ranger
             {
                 new[] { typeof(Bow), typeof(Crossbow), typeof(HeavyCrossbow), typeof(CompositeBow), typeof(ButcherKnife), typeof(SkinningKnife) },
-                new[] { typeof(Bow), typeof(Crossbow), typeof(HeavyCrossbow), typeof(CompositeBow), typeof(ButcherKnife), typeof(SkinningKnife) },
+                new[] { typeof(Bow), typeof(Crossbow), typeof(HeavyCrossbow), typeof(CompositeBow), typeof(ButcherKnife), typeof(SkinningKnife), typeof(SoulGlaive) },
                 new[] { typeof(Bow), typeof(Crossbow), typeof(HeavyCrossbow), typeof(CompositeBow), typeof(ButcherKnife), typeof(SkinningKnife), typeof(ElvenCompositeLongbow) },
                 null,
-                new[] { typeof(Bow), typeof(Crossbow), typeof(HeavyCrossbow), typeof(CompositeBow), typeof(ButcherKnife), typeof(SkinningKnife) },
+                new[] { typeof(Bow), typeof(Crossbow), typeof(HeavyCrossbow), typeof(CompositeBow), typeof(ButcherKnife), typeof(SkinningKnife), typeof(GargishButcherKnife), typeof(Cyclone), typeof(SoulGlaive) },
                 null
             },
             new[] // Warrior
@@ -531,7 +534,7 @@ namespace Server.Items
                 null, // Ilshenar
                 null, // Malas
                 new[] { typeof(StuddedLegs), typeof(StuddedGorget), typeof(StuddedGloves), typeof(StuddedChest), typeof(StuddedBustierArms), typeof(StuddedArms) }, // Tokuno
-                new[] { typeof(HidePants), typeof(HidePauldrons), typeof(HideGorget), typeof(HideFemaleChest), typeof(HideChest), typeof(HideGloves), typeof(StuddedLegs), typeof(StuddedGorget), typeof(StuddedGloves), typeof(StuddedChest), typeof(StuddedBustierArms), typeof(StuddedArms) }, // TerMur
+                new[] { typeof(HidePants), typeof(HidePauldrons), typeof(HideGorget), typeof(HideFemaleChest), typeof(HideChest), typeof(HideGloves), typeof(StuddedLegs), typeof(StuddedGorget), typeof(StuddedGloves), typeof(StuddedChest), typeof(StuddedBustierArms), typeof(StuddedArms), typeof(GargishLeatherKilt), typeof(GargishLeatherLegs), typeof(GargishLeatherArms), typeof(GargishLeatherChest) }, // TerMur
                 new[] { typeof(StuddedLegs), typeof(StuddedGorget), typeof(StuddedGloves), typeof(StuddedChest), typeof(StuddedBustierArms), typeof(StuddedArms), typeof(TigerPeltSkirt), typeof(TigerPeltShorts), typeof(TigerPeltLegs), typeof(TigerPeltLongSkirt), typeof(TigerPeltHelm), typeof(TigerPeltChest), typeof(TigerPeltCollar), typeof(TigerPeltBustier), typeof(VultureHelm), typeof(TribalMask) } // Eodon
             },
             new[] // Warrior
@@ -540,7 +543,7 @@ namespace Server.Items
                 null, // Ilshenar
                 new[] { typeof(PlateLegs), typeof(PlateHelm), typeof(PlateGorget), typeof(PlateGloves), typeof(PlateChest), typeof(PlateArms), typeof(Bascinet), typeof(CloseHelm), typeof(Helmet), typeof(LeatherCap), typeof(NorseHelm), typeof(TricorneHat), typeof(BronzeShield), typeof(Buckler), typeof(ChaosShield), typeof(HeaterShield), typeof(MetalKiteShield), typeof(MetalShield), typeof(OrderShield), typeof(WoodenKiteShield), typeof(DragonHelm), typeof(DragonGloves), typeof(DragonChest), typeof(DragonArms), typeof(DragonLegs) }, // Malas
                 new[] { typeof(PlateLegs), typeof(PlateHelm), typeof(PlateGorget), typeof(PlateGloves), typeof(PlateChest), typeof(PlateArms), typeof(Bascinet), typeof(CloseHelm), typeof(Helmet), typeof(LeatherCap), typeof(NorseHelm), typeof(TricorneHat), typeof(BronzeShield), typeof(Buckler), typeof(ChaosShield), typeof(HeaterShield), typeof(MetalKiteShield), typeof(MetalShield), typeof(OrderShield), typeof(WoodenKiteShield), typeof(PlateSuneate), typeof(PlateMempo), typeof(PlateHiroSode), typeof(PlateHatsuburi), typeof(PlateHaidate), typeof(PlateDo), typeof(PlateBattleKabuto), typeof(DecorativePlateKabuto), typeof(LightPlateJingasa), typeof(SmallPlateJingasa)  }, // Tokuno
-                new[] { typeof(PlateLegs), typeof(PlateHelm), typeof(PlateGorget), typeof(PlateGloves), typeof(PlateChest), typeof(PlateArms), typeof(Bascinet), typeof(CloseHelm), typeof(Helmet), typeof(LeatherCap), typeof(NorseHelm), typeof(TricorneHat), typeof(BronzeShield), typeof(Buckler), typeof(ChaosShield), typeof(HeaterShield), typeof(MetalKiteShield), typeof(MetalShield), typeof(OrderShield), typeof(WoodenKiteShield) }, // TerMur
+                new[] { typeof(PlateLegs), typeof(PlateHelm), typeof(PlateGorget), typeof(PlateGloves), typeof(PlateChest), typeof(PlateArms), typeof(Bascinet), typeof(CloseHelm), typeof(Helmet), typeof(LeatherCap), typeof(NorseHelm), typeof(TricorneHat), typeof(BronzeShield), typeof(Buckler), typeof(ChaosShield), typeof(HeaterShield), typeof(MetalKiteShield), typeof(MetalShield), typeof(OrderShield), typeof(WoodenKiteShield), typeof(GargishPlateArms), typeof(GargishPlateChest), typeof(GargishPlateKilt), typeof(GargishPlateLegs), typeof(GargishStoneKilt), typeof(GargishStoneLegs), typeof(GargishStoneArms), typeof(GargishStoneChest) }, // TerMur
                 new[] { typeof(PlateLegs), typeof(PlateHelm), typeof(PlateGorget), typeof(PlateGloves), typeof(PlateChest), typeof(PlateArms), typeof(Bascinet), typeof(CloseHelm), typeof(Helmet), typeof(LeatherCap), typeof(NorseHelm), typeof(TricorneHat), typeof(BronzeShield), typeof(Buckler), typeof(ChaosShield), typeof(HeaterShield), typeof(MetalKiteShield), typeof(MetalShield), typeof(OrderShield), typeof(WoodenKiteShield), typeof(DragonTurtleHideHelm), typeof(DragonTurtleHideLegs), typeof(DragonTurtleHideChest), typeof(DragonTurtleHideBustier), typeof(DragonTurtleHideArms) } // Eodon
             }
         };
@@ -555,7 +558,7 @@ namespace Server.Items
         private static readonly Type[][] _JewelTable =
         {
             new[] { typeof(GoldRing), typeof(GoldBracelet), typeof(SilverRing), typeof(SilverBracelet) }, // standard
-            new[] { typeof(GoldRing), typeof(GoldBracelet), typeof(SilverRing), typeof(SilverBracelet) } // Ranger/TerMur
+            new[] { typeof(GoldRing), typeof(GoldBracelet), typeof(SilverRing), typeof(SilverBracelet), typeof(GargishBracelet) } // Ranger/TerMur
         };
 
         private static readonly Type[][] _DecorativeTable =
@@ -581,7 +584,7 @@ namespace Server.Items
         private static readonly Type[][] _SpecialSupplyLoot =
         {
             new[] { typeof(LegendaryMapmakersGlasses), typeof(ManaPhasingOrb), typeof(RunedSashOfWarding), typeof(ShieldEngravingTool), null },
-            new[] { typeof(LegendaryMapmakersGlasses), typeof(ManaPhasingOrb), typeof(RunedSashOfWarding), typeof(Skeletonkey), typeof(MasterSkeletonKey), typeof(SurgeShield) },
+            new[] { typeof(ForgedPardon), typeof(LegendaryMapmakersGlasses), typeof(ManaPhasingOrb), typeof(RunedSashOfWarding), typeof(Skeletonkey), typeof(MasterSkeletonKey), typeof(SurgeShield) },
             new[] { typeof(LegendaryMapmakersGlasses), typeof(ManaPhasingOrb), typeof(RunedSashOfWarding) },
             new[] { typeof(LegendaryMapmakersGlasses), typeof(ManaPhasingOrb), typeof(RunedSashOfWarding), typeof(TastyTreat) },
             new[] { typeof(LegendaryMapmakersGlasses), typeof(ManaPhasingOrb), typeof(RunedSashOfWarding) }
@@ -589,7 +592,7 @@ namespace Server.Items
 
         private static readonly Type[] _SpecialCacheHordeAndTrove =
         {
-            typeof(OctopusNecklace), typeof(SkullGnarledStaff), typeof(SkullLongsword)
+            typeof(OctopusNecklace), typeof(GargishOctopusNecklace), typeof(SkullGnarledStaff), typeof(GargishSkullGnarledStaff), typeof(SkullLongsword), typeof(GargishSkullLongsword)
         };
 
         private static readonly Type[] _DecorativeMinorArtifacts =
@@ -604,10 +607,12 @@ namespace Server.Items
 
         private static readonly Type[] _FunctionalMinorArtifacts =
         {
-            typeof(BurglarsBandana), typeof(DreadPirateHat), typeof(GwennosHarp),
-            typeof(IolosLute), typeof(LunaLance), typeof(NightsKiss), 
+            typeof(ArcticDeathDealer), typeof(BlazeOfDeath), typeof(BurglarsBandana),
+            typeof(CavortingClub), typeof(DreadPirateHat),
+            typeof(EnchantedTitanLegBone), typeof(GwennosHarp), typeof(IolosLute),
+            typeof(LunaLance), typeof(NightsKiss), typeof(NoxRangersHeavyCrossbow),
             typeof(PolarBearMask), typeof(VioletCourage), typeof(HeartOfTheLion),
-            typeof(AlchemistsBauble), typeof(CaptainQuacklebushsCutlass),
+            typeof(ColdBlood), typeof(AlchemistsBauble), typeof(CaptainQuacklebushsCutlass),
             typeof(ShieldOfInvulnerability)
         };
 
@@ -687,6 +692,13 @@ namespace Server.Items
             {
                 chest.DropItem(new MysteriousFragment());
             }
+
+            #region Refinements
+            if (level == TreasureLevel.Stash)
+            {
+                RefinementComponent.Roll(chest, GetRefinementRolls(quality), 0.9);
+            }
+            #endregion
 
             #region TMaps
             bool dropMap = false;
@@ -950,7 +962,7 @@ namespace Server.Items
                             deco = Loot.Construct(type);
                         }
 
-                        if (deco is SkullGnarledStaff || deco is SkullLongsword)
+                        if (deco is SkullGnarledStaff || deco is GargishSkullGnarledStaff || deco is SkullLongsword || deco is GargishSkullLongsword)
                         {
                             if (package == TreasurePackage.Artisan)
                             {

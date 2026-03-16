@@ -42,9 +42,7 @@ namespace Server.Items
                     Item fruit = FruitItem;
 
                     if (fruit == null)
-                    {
                         return;
-                    }
 
                     if (!from.PlaceInBackpack(fruit))
                     {

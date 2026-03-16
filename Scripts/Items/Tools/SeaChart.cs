@@ -16,29 +16,19 @@ namespace Server.Items
             int dist = 64 + (int)(skillValue * 10);
 
             if (dist < 200)
-            {
                 dist = 200;
-            }
 
             int size = 24 + (int)(skillValue * 3.3);
 
             if (size < 200)
-            {
                 size = 200;
-            }
             else if (size > 400)
-            {
                 size = 400;
-            }
 
             if (Facet == Map.Trammel || Facet == Map.Felucca)
-            {
                 SetDisplay(from.X - dist, from.Y - dist, from.X + dist, from.Y + dist, size, size);
-            }
             else
-            {
                 SetDisplayByFacet();
-            }
         }
 
         public override int LabelNumber => 1015232;  // sea chart

@@ -63,7 +63,7 @@ namespace Server.Mobiles
 
         private Item SpawnOre(IEntity e)
         {
-            IronOre ore = new IronOre(5)
+            var ore = new IronOre(5)
             {
                 ItemID = 0x19B7
             };
@@ -76,9 +76,7 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (Utility.RandomDouble() < 0.03)
-            {
                 c.DropItem(new LuckyCoin());
-            }
         }
 
         public override void Serialize(GenericWriter writer)

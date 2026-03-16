@@ -32,31 +32,19 @@ namespace Server.Engines.VvV
             AddHtmlLocalized(425, 55, 95, 20, 1155575, Filter == Filter.ReturnedSigils ? Quests.BaseQuestGump.C32216(0x00FA9A) : 0xFFFF, false, false); // <DIV ALIGN=RIGHT>Returned Sigil:</DIV>
 
             if (Filter != Filter.Score)
-            {
                 AddButton(330, 55, 2437, 2438, 1, GumpButtonType.Reply, 0);
-            }
             else
-            {
                 AddImage(330, 55, 10006);
-            }
 
             if (Filter != Filter.Kills)
-            {
                 AddButton(415, 55, 2437, 2438, 2, GumpButtonType.Reply, 0);
-            }
             else
-            {
                 AddImage(415, 55, 10006);
-            }
 
             if (Filter != Filter.ReturnedSigils)
-            {
                 AddButton(520, 55, 2437, 2438, 3, GumpButtonType.Reply, 0);
-            }
             else
-            {
                 AddImage(520, 55, 10006);
-            }
 
             AddButton(280, 290, 4005, 4007, 4, GumpButtonType.Reply, 0);
             AddHtmlLocalized(315, 290, 150, 20, 1114924, 0xFFFF, false, false); // Guild Rankings
@@ -68,27 +56,15 @@ namespace Server.Engines.VvV
                 default:
                 case Filter.Score:
                     list = new List<VvVGuildStats>();
-                    foreach (var stats in list.OrderBy(e => -e.Score))
-                    {
-                        list.Add(stats);
-                    }
-
+                    foreach (var stats in list.OrderBy(e => -e.Score)) list.Add(stats);
                     break;
                 case Filter.Kills:
                     list = new List<VvVGuildStats>();
-                    foreach (var stats in list.OrderBy(e => -e.Kills))
-                    {
-                        list.Add(stats);
-                    }
-
+                    foreach (var stats in list.OrderBy(e => -e.Kills)) list.Add(stats);
                     break;
                 case Filter.ReturnedSigils:
                     list = new List<VvVGuildStats>();
-                    foreach (var stats in list.OrderBy(e => -e.ReturnedSigils))
-                    {
-                        list.Add(stats);
-                    }
-
+                    foreach (var stats in list.OrderBy(e => -e.ReturnedSigils)) list.Add(stats);
                     break;
             }
 
@@ -98,9 +74,7 @@ namespace Server.Engines.VvV
             int pageindex = 0;
 
             if (pages < 1)
-            {
                 pages = 1;
-            }
 
             AddPage(page);
             AddHtmlLocalized(60, 290, 150, 20, 1153561, string.Format("{0}\t{1}", page.ToString(), pages.ToString()), 0xFFFF, false, false); // Page ~1_CUR~ of ~2_MAX~

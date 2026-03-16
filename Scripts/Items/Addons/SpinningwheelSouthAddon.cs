@@ -67,9 +67,7 @@ namespace Server.Items
         public void EndSpin(SpinCallback callback, Mobile from, int hue)
         {
             if (m_Timer != null)
-            {
                 m_Timer.Stop();
-            }
 
             m_Timer = null;
 
@@ -87,9 +85,7 @@ namespace Server.Items
             }
 
             if (callback != null)
-            {
                 callback(this, from, hue);
-            }
         }
 
         private class SpinTimer : Timer

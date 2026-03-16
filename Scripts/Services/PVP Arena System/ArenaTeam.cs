@@ -31,9 +31,7 @@ namespace Server.Engines.ArenaSystem
         public void AddParticipant(PlayerMobile pm)
         {
             if (Players.Count == 0)
-            {
                 PlayerZero = pm;
-            }
 
             Players[pm] = PVPArenaSystem.Instance.GetPlayerEntry<PlayerStatsEntry>(pm);
         }

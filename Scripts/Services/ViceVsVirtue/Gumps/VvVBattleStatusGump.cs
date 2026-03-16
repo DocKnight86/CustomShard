@@ -26,9 +26,7 @@ namespace Server.Engines.VvV
             AddImage(0, 0, 30566);
 
             if (DateTime.UtcNow >= Battle.NextSigilSpawn && Battle.Sigil != null && !Battle.Sigil.Deleted)
-            {
                 AddImage(200, 300, 30583);
-            }
 
             List<BattleTeam> teams = new List<BattleTeam>(Battle.Teams);
             teams.Sort();
@@ -40,16 +38,12 @@ namespace Server.Engines.VvV
                 BattleTeam team = teams[i];
 
                 if (team.Guild != null)
-                {
                     AddHtml(87, 115 + (31 * i), 50, 20, string.Format("<basefont color=#FFFFFF>{0}", team.Guild.Abbreviation), false, false);
-                }
 
                 AddBackground(145, 120 + (31 * i), (int)Math.Min(216, (team.Score * offset)), 12, 30584);
 
                 if (i == 2)  // stupid gump only allows 3 to be shown
-                {
                     break;
-                }
             }
 
             int count = Battle.Messages.Count - 1;
@@ -58,9 +52,7 @@ namespace Server.Engines.VvV
             for (int i = count; i >= 0; i--)
             {
                 if (i <= count - 3)
-                {
                     break;
-                }
 
                 AddHtml(98, y, 250, 16, string.Format("<basefont color=#80BFFF>{0}", Battle.Messages[i]), false, false);
 

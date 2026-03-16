@@ -67,9 +67,7 @@ namespace Server.Engines.ShameRevamped
             base.OnComponentUsed(component, from);
 
             if (Troll == null || Troll.Deleted || !Troll.Alive)
-            {
                 Reset();
-            }
         }
 
         public static void AddTeleporters(ShameWall wall)
@@ -77,9 +75,7 @@ namespace Server.Engines.ShameRevamped
             Map map = wall.Map;
 
             if (map == null || map == Map.Internal)
-            {
                 return;
-            }
 
             for (var index = 0; index < wall.Components.Count; index++)
             {
@@ -151,19 +147,13 @@ namespace Server.Engines.ShameRevamped
             TrollSpawnLoc = reader.ReadPoint3D();
 
             if (Troll != null)
-            {
                 Troll.Wall = this;
-            }
 
             if (Location != StartSpot || Troll == null || Troll.Deleted || !Troll.Alive)
-            {
                 Reset();
-            }
 
             if (version == 2)
-            {
                 Timer.DelayCall(() => AddTeleporters(this));
-            }
 
             if (version == 1 && StartSpot == new Point3D(5619, 57, 0) && StartMap == Map.Felucca)
             {

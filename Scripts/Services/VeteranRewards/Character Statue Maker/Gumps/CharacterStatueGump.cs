@@ -16,9 +16,7 @@ namespace Server.Gumps
             m_Owner = owner;
 
             if (m_Statue == null)
-            {
                 return;
-            }
 
             Closable = true;
             Disposable = true;
@@ -84,9 +82,7 @@ namespace Server.Gumps
         public override void OnResponse(NetState state, RelayInfo info)
         {
             if (m_Statue == null || m_Statue.Deleted)
-            {
                 return;
-            }
 
             bool sendGump = false;
 
@@ -97,15 +93,11 @@ namespace Server.Gumps
                     CharacterStatue backup = deed.Statue;
 
                     if (backup != null)
-                    {
                         backup.Delete();
-                    }
                 }
 
                 if (m_Maker != null)
-                {
                     m_Maker.Delete();
-                }
 
                 m_Statue.Sculpt(state.Mobile);
             }
@@ -161,9 +153,7 @@ namespace Server.Gumps
             }
 
             if (sendGump)
-            {
                 state.Mobile.SendGump(new CharacterStatueGump(m_Maker, m_Statue, m_Owner));
-            }
         }
 
         private int GetMaterialNumber(StatueType type, StatueMaterial material)
@@ -186,9 +176,7 @@ namespace Server.Gumps
                 case StatueMaterial.Dark:
 
                     if (type == StatueType.Marble)
-                    {
                         return 1076183;
-                    }
 
                     return 1076182;
                 case StatueMaterial.Medium:

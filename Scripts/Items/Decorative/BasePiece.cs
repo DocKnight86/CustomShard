@@ -48,9 +48,7 @@ namespace Server.Items
                         m_Board = (BaseBoard)reader.ReadItem();
 
                         if (m_Board == null || Parent == null)
-                        {
                             Delete();
-                        }
 
                         break;
                     }

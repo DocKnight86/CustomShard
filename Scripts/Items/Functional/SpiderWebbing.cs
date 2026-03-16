@@ -87,9 +87,7 @@ namespace Server.Items
         public override bool OnMoveOver(Mobile m)
         {
             if (m is BaseCreature creature && creature.IsMonster)
-            {
                 return true;
-            }
 
             if (m.AccessLevel == AccessLevel.Player && m.Alive)
             {

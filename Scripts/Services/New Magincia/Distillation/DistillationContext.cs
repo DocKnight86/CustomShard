@@ -116,9 +116,7 @@ namespace Server.Engines.Distillation
                         DistillationContext context = new DistillationContext(reader);
 
                         if (m != null)
-                        {
                             DistillationSystem.Contexts[m] = context;
-                        }
                     }
                 });
         }

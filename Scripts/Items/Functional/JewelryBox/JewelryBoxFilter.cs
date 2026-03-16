@@ -21,9 +21,7 @@ namespace Server.Items
             set
             {
                 if (value)
-                {
                     Clear();
-                }
 
                 m_Ring = value;
             }
@@ -36,9 +34,7 @@ namespace Server.Items
             set
             {
                 if (value)
-                {
                     Clear();
-                }
 
                 m_Bracelet = value;
             }
@@ -51,9 +47,7 @@ namespace Server.Items
             set
             {
                 if (value)
-                {
                     Clear();
-                }
 
                 m_Earrings = value;
             }
@@ -66,9 +60,7 @@ namespace Server.Items
             set
             {
                 if (value)
-                {
                     Clear();
-                }
 
                 m_Necklace = value;
             }
@@ -81,9 +73,7 @@ namespace Server.Items
             set
             {
                 if (value)
-                {
                     Clear();
-                }
 
                 m_Talisman = value;
             }

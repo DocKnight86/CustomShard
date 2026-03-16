@@ -83,9 +83,7 @@ namespace Server.Items
                 }
 
                 if (from.Backpack == null || !from.Backpack.TryDropItem(from, item, false))
-                {
                     item.MoveToWorld(from.Location, from.Map);
-                }
             }
             else
             {
@@ -125,13 +123,9 @@ namespace Server.Items
             m_RewardCooldown[from] = DateTime.UtcNow + TimeSpan.FromHours(24);
 
             if (coin.Amount <= 1)
-            {
                 coin.Delete();
-            }
             else
-            {
                 coin.Amount--;
-            }
 
             return false;
         }
@@ -154,9 +148,7 @@ namespace Server.Items
         public static int GetLuckBonus(Mobile from)
         {
             if (m_LuckTable.ContainsKey(from))
-            {
                 return LuckBonus;
-            }
 
             return 0;
         }
@@ -164,9 +156,7 @@ namespace Server.Items
         public static bool UnderProtection(Mobile m)
         {
             if (m_SpecialProtection.ContainsKey(m))
-            {
                 return true;
-            }
 
             return false;
         }
@@ -174,9 +164,7 @@ namespace Server.Items
         public bool CanRes(Mobile m)
         {
             if (!m_ResCooldown.ContainsKey(m))
-            {
                 return true;
-            }
 
             if (m_ResCooldown[m] < DateTime.UtcNow)
             {
@@ -192,9 +180,7 @@ namespace Server.Items
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
             if (m.Player && CanRes(m) && !m.Alive && m.InRange(Location, 5))
-            {
-                m.SendGump(new ResurrectGump(m, m, ResurrectMessage.Generic, 0.0, Resurrect_Callback));
-            }
+                m.SendGump(new ResurrectGump(m, m, ResurrectMessage.Generic, false, 0.0, Resurrect_Callback));
         }
 
         public void Resurrect_Callback(Mobile m)
@@ -301,14 +287,10 @@ namespace Server.Items
             RemoveFountain(this);
 
             if (m_ResCooldown != null)
-            {
                 m_ResCooldown.Clear();
-            }
 
             if (m_RewardCooldown != null)
-            {
                 m_RewardCooldown.Clear();
-            }
         }
 
         public static void AddFountain(FountainOfFortune fountain)
@@ -334,9 +316,7 @@ namespace Server.Items
         public static void StartTimer()
         {
             if (m_Timer != null && m_Timer.Running)
-            {
                 return;
-            }
 
             m_Timer = Timer.DelayCall(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1), DefragTables);
             m_Timer.Start();

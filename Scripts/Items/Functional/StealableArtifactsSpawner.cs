@@ -130,6 +130,10 @@ namespace Server.Items
             // Abyss - Artifact rarity 5
 	        new StealableEntry(Map.TerMur, new Point3D(717, 416, 50), 1152, 1728, typeof(DyingPlantArtifact)),
             new StealableEntry(Map.TerMur, new Point3D(951, 542, -14), 1152, 1728, typeof(LargePewterBowlArtifact)),
+            new StealableEntry(Map.TerMur, new Point3D(877, 527, -13), 1152, 1728, typeof(CrownOfArcaneTemperament)),
+            new StealableEntry(Map.TerMur, new Point3D(345, 621, 26), 1152, 1728, typeof(LightInTheVoid)),
+            new StealableEntry(Map.TerMur, new Point3D(585, 853, -45), 1152, 1728, typeof(StaffOfResonance)),
+            new StealableEntry(Map.TerMur, new Point3D(843, 665, 27), 1152, 1728, typeof(ValkyriesGlaive)),
 	        // Abyss - Artifact rarity 6
 	        new StealableEntry(Map.TerMur, new Point3D(785, 442, -15), 2304, 3456, typeof(LargeDyingPlantArtifact)),
             new StealableEntry(Map.TerMur, new Point3D(849, 281, -6), 2304, 3456, typeof(GargishLuckTotemArtifact)),
@@ -154,6 +158,7 @@ namespace Server.Items
 	        new StealableEntry(Map.TerMur, new Point3D(1094, 990, -23), 576, 864, typeof(NaverysWeb2Artifact)), // [2]
 	        // UnderWorld - Artifact rarity 5
 	        new StealableEntry(Map.TerMur, new Point3D(1049, 1109, -65), 1152, 1728, typeof(BloodySpoonArtifact)),
+            new StealableEntry(Map.TerMur, new Point3D(1047, 1108, -65), 1152, 1728, typeof(MysticsGuard)),
             new StealableEntry(Map.TerMur, new Point3D(1137, 1134, -38), 1152, 1728, typeof(RemnantsOfMeatLoafArtifact)),
             new StealableEntry(Map.TerMur, new Point3D(1134, 1204, 7), 1152, 1728, typeof(HalfEatenSupperArtifact)),
             new StealableEntry(Map.TerMur, new Point3D(1083, 983, -19), 1152, 1728, typeof(NaverysWeb3Artifact)), // [3]
@@ -286,9 +291,7 @@ namespace Server.Items
         public static bool Create()
         {
             if (m_Instance != null && !m_Instance.Deleted)
-            {
                 return false;
-            }
 
             m_Instance = new StealableArtifactsSpawner();
             return true;
@@ -297,9 +300,7 @@ namespace Server.Items
         public static bool Remove()
         {
             if (m_Instance == null)
-            {
                 return false;
-            }
 
             m_Instance.Delete();
             m_Instance = null;
@@ -309,9 +310,7 @@ namespace Server.Items
         public static StealableInstance GetStealableInstance(Item item)
         {
             if (Instance == null)
-            {
                 return null;
-            }
 
             return (StealableInstance)Instance.m_Table[item];
         }
@@ -386,9 +385,7 @@ namespace Server.Items
                     m_Artifacts[i] = si;
 
                     if (si.Item != null)
-                    {
                         m_Table[si.Item] = si;
-                    }
                 }
             }
 
@@ -403,9 +400,7 @@ namespace Server.Items
         private static int GetLampPostHue()
         {
             if (0.9 > Utility.RandomDouble())
-            {
                 return 0;
-            }
 
             return Utility.RandomList(0x455, 0x47E, 0x482, 0x486, 0x48F, 0x4F2, 0x58C, 0x66C);
         }
@@ -417,13 +412,9 @@ namespace Server.Items
             Mobile from = args.Mobile;
 
             if (Create())
-            {
                 from.SendMessage("Stealable artifacts spawner generated.");
-            }
             else
-            {
                 from.SendMessage("Stealable artifacts spawner already present.");
-            }
         }
 
         [Usage("RemoveStealArties")]
@@ -433,13 +424,9 @@ namespace Server.Items
             Mobile from = args.Mobile;
 
             if (Remove())
-            {
                 from.SendMessage("Stealable artifacts spawner removed.");
-            }
             else
-            {
                 from.SendMessage("Stealable artifacts spawner not present.");
-            }
         }
 
         public class StealableEntry
@@ -476,9 +463,7 @@ namespace Server.Items
                 Item item = (Item)Activator.CreateInstance(m_Type);
 
                 if (m_Hue > 0)
-                {
                     item.Hue = m_Hue;
-                }
 
                 item.Movable = false;
                 item.MoveToWorld(Location, Map);
@@ -519,14 +504,10 @@ namespace Server.Items
                     if (Instance != null)
                     {
                         if (m_Item != null)
-                        {
                             Instance.m_Table.Remove(m_Item);
-                        }
 
                         if (value != null)
-                        {
                             Instance.m_Table[value] = this;
-                        }
                     }
 
                     m_Item = value;
@@ -542,9 +523,7 @@ namespace Server.Items
             public void CheckRespawn()
             {
                 if (Item != null && (Item.Deleted || Item.Movable || Item.Parent != null))
-                {
                     Item = null;
-                }
 
                 if (Item == null && DateTime.UtcNow >= NextRespawn)
                 {
@@ -555,9 +534,7 @@ namespace Server.Items
             public void ForceRespawn()
             {
                 if (Item != null && (Item.Deleted || Item.Movable || Item.Parent != null))
-                {
                     Item = null;
-                }
 
                 if (Item == null)
                 {

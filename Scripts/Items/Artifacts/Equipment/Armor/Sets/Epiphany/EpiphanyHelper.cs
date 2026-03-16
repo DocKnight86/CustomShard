@@ -1,4 +1,5 @@
 using Server.Misc;
+using Server.Mobiles;
 using System;
 using System.Collections.Generic;
 
@@ -10,13 +11,6 @@ namespace Server.Items
         SurgeType Type { get; }
         int Frequency { get; }
         int Bonus { get; }
-    }
-
-    public enum Alignment
-    {
-        Neutral,
-        Good,
-        Evil
     }
 
     public static class EpiphanyHelper

@@ -13,24 +13,16 @@ namespace Server.SkillHandlers
         public static bool CheckOkayHolding(Item item)
         {
             if (item == null)
-            {
                 return true;
-            }
 
             if (item is Spellbook || item is Runebook)
-            {
                 return true;
-            }
 
             if (item is BaseWeapon weapon && weapon.Attributes.SpellChanneling != 0)
-            {
                 return true;
-            }
 
             if (item is BaseArmor armor && armor.Attributes.SpellChanneling != 0)
-            {
                 return true;
-            }
 
             return false;
         }
@@ -66,14 +58,10 @@ namespace Server.SkillHandlers
             if (m.Player)
             {
                 if (!CheckOkayHolding(oneHanded))
-                {
                     m.AddToBackpack(oneHanded);
-                }
 
                 if (!CheckOkayHolding(twoHanded))
-                {
                     m.AddToBackpack(twoHanded);
-                }
             }
             else if (!CheckOkayHolding(oneHanded) || !CheckOkayHolding(twoHanded))
             {
@@ -97,9 +85,7 @@ namespace Server.SkillHandlers
                 BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.ActiveMeditation, 1075657));
 
                 if (m.Player || m.Body.IsHuman)
-                {
                     m.PlaySound(0xF9);
-                }
 
                 m.ResetStatTimers();
             }

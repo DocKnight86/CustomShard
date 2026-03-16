@@ -48,21 +48,12 @@ namespace Server.Items
             public BestKillGump(int filter) : base(20, 20)
             {
                 if (HuntingSystem.Instance == null)
-                {
                     return;
-                }
 
                 m_Filter = filter;
 
-                if (m_Filter < -1)
-                {
-                    m_Filter = 23;
-                }
-
-                if (m_Filter > 23)
-                {
-                    m_Filter = -1;
-                }
+                if (m_Filter < -1) m_Filter = 23;
+                if (m_Filter > 23) m_Filter = -1;
 
                 List<HuntingKillEntry> useList = new List<HuntingKillEntry>();
 
@@ -71,9 +62,7 @@ namespace Server.Items
                     foreach (KeyValuePair<HuntType, List<HuntingKillEntry>> kvp in HuntingSystem.Instance.Top10)
                     {
                         if (kvp.Value.Count > 0)
-                        {
                             useList.AddRange(kvp.Value);
-                        }
                     }
                 }
                 else if (HuntingSystem.Instance.Top10.ContainsKey((HuntType)m_Filter))

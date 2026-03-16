@@ -80,9 +80,7 @@ namespace Server.Gumps
             {
                 if (m_Stack == null)
 #if (NEWTIMERS)
-                {
                     m_Stack = new Stack<PropertiesGump.StackEntry>();
-                }
 #else
 					m_Stack = new Stack();
 #endif
@@ -114,20 +112,14 @@ namespace Server.Gumps
             int count = m_List.Count - (page * EntryCount);
 
             if (count < 0)
-            {
                 count = 0;
-            }
             else if (count > EntryCount)
-            {
                 count = EntryCount;
-            }
 
             int lastIndex = (page * EntryCount) + count - 1;
 
             if (lastIndex >= 0 && lastIndex < m_List.Count && m_List[lastIndex] == null)
-            {
                 --count;
-            }
 
             int totalHeight = OffsetSize + ((EntryHeight + OffsetSize) * (ColumnEntryCount + 1));
 
@@ -140,20 +132,14 @@ namespace Server.Gumps
             int y = BorderSize;
 
             if (m_Object is Item item)
-            {
                 AddLabelCropped(x + TextOffsetX, y, TypeWidth - TextOffsetX, EntryHeight, TextHue, item.Name);
-            }
-
             int propcount = 0;
             for (int i = 0, index = page * EntryCount; i <= count && index < m_List.Count; ++i, ++index)
             {
                 // do the multi column display
                 int column = propcount / ColumnEntryCount;
                 if (propcount % ColumnEntryCount == 0)
-                {
                     y = BorderSize;
-                }
-
                 x = BorderSize + OffsetSize + column * (ValueWidth + NameWidth + OffsetSize * 2 + SetOffsetX + SetWidth);
                 y += EntryHeight + OffsetSize;
 
@@ -194,16 +180,12 @@ namespace Server.Gumps
                     x += ValueWidth + OffsetSize;
 
                     if (SetGumpID != 0)
-                    {
                         AddImageTiled(x, y, SetWidth, EntryHeight, SetGumpID);
-                    }
 
                     CPA cpa = GetCPA(prop);
 
                     if (prop.CanWrite && cpa != null && m_Mobile.AccessLevel >= cpa.WriteLevel)
-                    {
                         AddButton(x + SetOffsetX, y + SetOffsetY, SetButtonID1, SetButtonID2, i + 3, GumpButtonType.Reply, 0);
-                    }
                 }
             }
         }
@@ -246,18 +228,14 @@ namespace Server.Gumps
                 case 1: // Previous
                     {
                         if (m_Page > 0)
-                        {
                             from.SendGump(new XmlPropertiesGump(from, m_Object, m_Stack, m_List, m_Page - 1));
-                        }
 
                         break;
                     }
                 case 2: // Next
                     {
                         if ((m_Page + 1) * EntryCount < m_List.Count)
-                        {
                             from.SendGump(new XmlPropertiesGump(from, m_Object, m_Stack, m_List, m_Page + 1));
-                        }
 
                         break;
                     }
@@ -270,63 +248,37 @@ namespace Server.Gumps
                             PropertyInfo prop = m_List[index] as PropertyInfo;
 
                             if (prop == null)
-                            {
                                 return;
-                            }
 
                             CPA attr = GetCPA(prop);
 
                             if (!prop.CanWrite || attr == null || from.AccessLevel < attr.WriteLevel)
-                            {
                                 return;
-                            }
 
                             Type type = prop.PropertyType;
 
                             if (IsType(type, typeofMobile) || IsType(type, typeofItem))
-                            {
                                 from.SendGump(new XmlSetObjectGump(prop, from, m_Object, m_Stack, type, m_Page, m_List));
-                            }
                             else if (IsType(type, typeofType))
-                            {
                                 from.Target = new XmlSetObjectTarget(prop, from, m_Object, m_Stack, type, m_Page, m_List);
-                            }
                             else if (IsType(type, typeofPoint3D))
-                            {
                                 from.SendGump(new XmlSetPoint3DGump(prop, from, m_Object, m_Stack, m_Page, m_List));
-                            }
                             else if (IsType(type, typeofPoint2D))
-                            {
                                 from.SendGump(new XmlSetPoint2DGump(prop, from, m_Object, m_Stack, m_Page, m_List));
-                            }
                             else if (IsType(type, typeofTimeSpan))
-                            {
                                 from.SendGump(new XmlSetTimeSpanGump(prop, from, m_Object, m_Stack, m_Page, m_List));
-                            }
                             else if (IsCustomEnum(type))
-                            {
                                 from.SendGump(new XmlSetCustomEnumGump(prop, from, m_Object, m_Stack, m_Page, m_List, GetCustomEnumNames(type)));
-                            }
                             else if (IsType(type, typeofEnum))
-                            {
                                 from.SendGump(new XmlSetListOptionGump(prop, from, m_Object, m_Stack, m_Page, m_List, Enum.GetNames(type), GetObjects(Enum.GetValues(type))));
-                            }
                             else if (IsType(type, typeofBool))
-                            {
                                 from.SendGump(new XmlSetListOptionGump(prop, from, m_Object, m_Stack, m_Page, m_List, m_BoolNames, m_BoolValues));
-                            }
                             else if (IsType(type, typeofString) || IsType(type, typeofReal) || IsType(type, typeofNumeric))
-                            {
                                 from.SendGump(new XmlSetGump(prop, from, m_Object, m_Stack, m_Page, m_List));
-                            }
                             else if (IsType(type, typeofPoison))
-                            {
                                 from.SendGump(new XmlSetListOptionGump(prop, from, m_Object, m_Stack, m_Page, m_List, m_PoisonNames, m_PoisonValues));
-                            }
                             else if (IsType(type, typeofMap))
-                            {
                                 from.SendGump(new XmlSetListOptionGump(prop, from, m_Object, m_Stack, m_Page, m_List, Map.GetMapNames(), Map.GetMapValues()));
-                            }
                             else if (IsType(type, typeofSkills) && m_Object is Mobile mobile)
                             {
                                 from.SendGump(new XmlPropertiesGump(from, mobile, m_Stack, m_List, m_Page));
@@ -357,9 +309,7 @@ namespace Server.Gumps
             object[] list = new object[a.Length];
 
             for (int i = 0; i < list.Length; ++i)
-            {
                 list[i] = a.GetValue(i);
-            }
 
             return list;
         }
@@ -374,16 +324,12 @@ namespace Server.Gumps
             object[] attrs = type.GetCustomAttributes(typeofCustomEnum, false);
 
             if (attrs.Length == 0)
-            {
                 return Array.Empty<string>();
-            }
 
             CustomEnumAttribute ce = attrs[0] as CustomEnumAttribute;
 
             if (ce == null)
-            {
                 return Array.Empty<string>();
-            }
 
             return ce.Names;
         }
@@ -403,12 +349,8 @@ namespace Server.Gumps
         private static bool IsType(Type type, Type[] check)
         {
             for (int i = 0; i < check.Length; ++i)
-            {
                 if (IsType(type, check[i]))
-                {
                     return true;
-                }
-            }
 
             return false;
         }
@@ -546,14 +488,10 @@ namespace Server.Gumps
                 ArrayList groupList = (ArrayList)de.Value;
 
                 if (!HasAttribute((Type)de.Key, typeofNoSort, false))
-                {
                     groupList.Sort(PropertySorter.Instance);
-                }
 
                 if (i != 0)
-                {
                     list.Add(null);
-                }
 
                 list.Add(de.Key);
                 list.AddRange(groupList);
@@ -570,9 +508,7 @@ namespace Server.Gumps
             object[] attrs = prop.GetCustomAttributes(typeofCPA, false);
 
             if (attrs.Length > 0)
-            {
                 return attrs[0] as CPA;
-            }
 
             return null;
         }
@@ -681,27 +617,17 @@ namespace Server.Gumps
             public int Compare(object x, object y)
             {
                 if (x == null && y == null)
-                {
                     return 0;
-                }
-
                 if (x == null)
-                {
                     return -1;
-                }
-
                 if (y == null)
-                {
                     return 1;
-                }
 
                 PropertyInfo a = x as PropertyInfo;
                 PropertyInfo b = y as PropertyInfo;
 
                 if (a == null || b == null)
-                {
                     throw new ArgumentException();
-                }
 
                 return a.Name.CompareTo(b.Name);
             }
@@ -725,9 +651,7 @@ namespace Server.Gumps
                 int dist;
 
                 for (dist = 0; current != null && current != typeofObject && current != type; ++dist)
-                {
                     current = current.BaseType;
-                }
 
                 return dist;
             }
@@ -735,24 +659,14 @@ namespace Server.Gumps
             public int Compare(object x, object y)
             {
                 if (x == null && y == null)
-                {
                     return 0;
-                }
-
                 if (x == null)
-                {
                     return -1;
-                }
-
                 if (y == null)
-                {
                     return 1;
-                }
 
                 if (!(x is DictionaryEntry) || !(y is DictionaryEntry))
-                {
                     throw new ArgumentException();
-                }
 
                 DictionaryEntry de1 = (DictionaryEntry)x;
                 DictionaryEntry de2 = (DictionaryEntry)y;

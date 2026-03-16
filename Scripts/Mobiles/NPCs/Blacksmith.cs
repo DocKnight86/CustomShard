@@ -26,11 +26,20 @@ namespace Server.Mobiles
 
         public override void InitSBInfo()
         {
-            m_SBInfos.Add(new SBBlacksmith());
-            if (IsTokunoVendor)
+            if (!IsStygianVendor)
             {
-                m_SBInfos.Add(new SBSEArmor());
-                m_SBInfos.Add(new SBSEWeapons());
+                m_SBInfos.Add(new SBBlacksmith());
+                if (IsTokunoVendor)
+                {
+                    m_SBInfos.Add(new SBSEArmor());
+                    m_SBInfos.Add(new SBSEWeapons());
+                }
+            }
+            else
+            {
+                m_SBInfos.Add(new SBSABlacksmith());
+                m_SBInfos.Add(new SBSAArmor());
+                m_SBInfos.Add(new SBSAWeapons());
             }
         }
 
@@ -47,9 +56,7 @@ namespace Server.Mobiles
             }
 
             if (item == null)
-            {
                 AddItem(new Items.FullApron());
-            }
 
             AddItem(new Items.Bascinet());
             AddItem(new Items.SmithHammer());
@@ -67,22 +74,14 @@ namespace Server.Mobiles
                 double theirSkill = pm.Skills[SkillName.Blacksmith].Base;
 
                 if (theirSkill >= 70.1)
-                {
                     pm.NextSmithBulkOrder = TimeSpan.FromHours(6.0);
-                }
                 else if (theirSkill >= 50.1)
-                {
                     pm.NextSmithBulkOrder = TimeSpan.FromHours(2.0);
-                }
                 else
-                {
                     pm.NextSmithBulkOrder = TimeSpan.FromHours(1.0);
-                }
 
                 if (theirSkill >= 70.1 && (theirSkill - 40.0) / 300.0 > Utility.RandomDouble())
-                {
                     return new LargeSmithBOD();
-                }
 
                 return SmallSmithBOD.CreateRandomFor(from);
             }
@@ -103,9 +102,7 @@ namespace Server.Mobiles
         public override TimeSpan GetNextBulkOrder(Mobile from)
         {
             if (from is PlayerMobile mobile)
-            {
                 return mobile.NextSmithBulkOrder;
-            }
 
             return TimeSpan.Zero;
         }
@@ -113,9 +110,7 @@ namespace Server.Mobiles
         public override void OnSuccessfulBulkOrderReceive(Mobile from)
         {
             if (from is PlayerMobile mobile)
-            {
                 mobile.NextSmithBulkOrder = TimeSpan.Zero;
-            }
         }
 
         #endregion

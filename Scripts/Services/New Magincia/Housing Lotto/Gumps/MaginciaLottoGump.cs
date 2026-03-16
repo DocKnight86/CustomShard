@@ -52,9 +52,7 @@ namespace Server.Engines.NewMagincia
             AddHtml(170, 160, 100, 20, string.Format("<BASEFONT COLOR=#{0:X6}>{1}</BASEFONT>", EntryColor, ticketsBought.ToString()), false, false);
 
             if (ticketsBought == 0)
-            {
                 AddHtmlLocalized(10, 175, 320, 40, 1150467, LabelColor, false, false); // You have not bought a ticket, so you have no chance of winning this plot.
-            }
             else
             {
                 int odds = totalTicketsSold / ticketsBought;
@@ -82,28 +80,20 @@ namespace Server.Engines.NewMagincia
                         AddHtmlLocalized(165, 242, 100, 20, 1150469, BlueColor, false, false); // Buy Ticket
                     }
                     else
-                    {
                         AddHtmlLocalized(10, 240, 320, 40, 1150475, LabelColor, false, false); // You may not purchase another ticket for this plot's lottery.
-                    }
                 }
             }
             else
-            {
                 AddHtml(10, 240, 320, 40, "<BASEFONT COLOR=#{0:X6}>The lottery on this plot is currently disabled.</BASEFONT>", false, false);
-            }
 
             TimeSpan ts = plot.LottoEnds - DateTime.UtcNow;
 
             AddHtmlLocalized(10, 300, 320, 40, 1150476, LabelColor, false, false); // Ticket purchases are NONREFUNDABLE. Odds of winning may vary.
 
             if (ts.Days > 0)
-            {
                 AddHtmlLocalized(10, 340, 320, 20, 1150504, ts.Days.ToString(), LabelColor, false, false); // There are ~1_DAYS~ days left before the drawing.
-            }
             else
-            {
                 AddHtmlLocalized(10, 340, 320, 20, 1150503, LabelColor, false, false); // The lottery drawing will happen in less than 1 day.
-            }
         }
 
         public override void OnResponse(NetState state, RelayInfo info)
@@ -140,9 +130,7 @@ namespace Server.Engines.NewMagincia
                 }
 
                 if (toBuy <= 0)
-                {
                     return;
-                }
             }
 
             if (toBuy > 1)
@@ -157,9 +145,7 @@ namespace Server.Engines.NewMagincia
                 m_Plot.PurchaseLottoTicket(m_From, toBuy);
             }
             else
-            {
                 m_From.SendLocalizedMessage(1150479, string.Format("{0}\t{1}\t{2}", toBuy.ToString(), pricePer.ToString(), total.ToString())); // Purchase of ~1_COUNT~ ticket(s) at ~2_PRICE~gp each costs a total of ~3_TOTAL~. You do not have the required funds in your bank box to make the purchase.
-            }
         }
     }
 }

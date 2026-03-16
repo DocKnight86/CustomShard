@@ -77,14 +77,10 @@ namespace Server.Items
                 SetSecureLevelEntry.AddTo(from, this, list);
 
                 if (m_Stored.Count < MaxStables)
-                {
                     list.Add(new StableEntry(this, from));
-                }
 
                 if (m_Stored.Count > 0)
-                {
                     list.Add(new ClaimEntry(this, from));
-                }
             }
         }
 
@@ -169,9 +165,7 @@ namespace Server.Items
                 int index = info.ButtonID - 1;
 
                 if (index >= 0 && index < m_List.Count)
-                {
                     m_Coop.EndClaimList(m_From, m_List[index]);
-                }
             }
         }
 
@@ -188,35 +182,25 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (targeted is ChickenLizard || targeted is Chicken || targeted is BattleChickenLizard)
-                {
                     m_Post.EndStable(from, (BaseCreature)targeted);
-                }
                 else if (targeted == from)
-                {
                     from.SendLocalizedMessage(502672); // HA HA HA! Sorry, I am not an inn.
-                }
                 else
-                {
                     from.SendLocalizedMessage(1112558); // You may only stable chickens in the chicken coop.
-                }
             }
         }
 
         public void EndClaimList(Mobile from, BaseCreature pet)
         {
             if (Deleted || !from.CheckAlive() || !CanUse(from))
-            {
                 return;
-            }
 
             if ((from.Followers + pet.ControlSlots) <= from.FollowersMax)
             {
                 pet.SetControlMaster(from);
 
                 if (pet.Summoned)
-                {
                     pet.SummonMaster = from;
-                }
 
                 pet.FollowTarget = from;
                 pet.ControlOrder = LastOrderType.Follow;
@@ -239,9 +223,7 @@ namespace Server.Items
         public void BeginStable(Mobile from)
         {
             if (Deleted || !from.CheckAlive() || !CanUse(from) || !CheckAccess(from))
-            {
                 return;
-            }
 
             if (m_Stored.Count >= MaxStables)
             {
@@ -265,9 +247,7 @@ namespace Server.Items
             for (int i = 0; i < m_ChickenTypes.Length; i++)
             {
                 if (type == m_ChickenTypes[i])
-                {
                     return true;
-                }
             }
 
             return false;
@@ -276,9 +256,7 @@ namespace Server.Items
         public void EndStable(Mobile from, BaseCreature pet)
         {
             if (Deleted || !from.CheckAlive() || !CanUse(from) || !CheckAccess(from))
-            {
                 return;
-            }
 
             if (!pet.Controlled || pet.ControlMaster != from)
             {
@@ -326,9 +304,7 @@ namespace Server.Items
                 pet.Loyalty = BaseCreature.MaxLoyalty; // Wonderfully happy
 
                 if (!m_Stored.Contains(pet))
-                {
                     m_Stored.Add(pet);
-                }
 
                 from.SendLocalizedMessage(1049677); // Your pet has been stabled.
             }

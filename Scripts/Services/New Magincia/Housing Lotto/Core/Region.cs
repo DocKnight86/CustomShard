@@ -22,14 +22,10 @@ namespace Server.Engines.NewMagincia
                 Item[] bankItems = from.BankBox.FindItemsByType(typeof(WritOfLease));
 
                 if (packItems != null && packItems.Length > 0)
-                {
                     items.AddRange(packItems);
-                }
 
                 if (bankItems != null && bankItems.Length > 0)
-                {
                     items.AddRange(bankItems);
-                }
 
                 for (var index = 0; index < items.Count; index++)
                 {

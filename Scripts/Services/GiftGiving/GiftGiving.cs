@@ -23,9 +23,7 @@ namespace Server.Misc
             Account acct = m.Account as Account;
 
             if (acct == null)
-            {
                 return;
-            }
 
             DateTime now = DateTime.UtcNow;
 
@@ -34,19 +32,13 @@ namespace Server.Misc
                 GiftGiver giver = m_Givers[i];
 
                 if (now < giver.Start || now >= giver.Finish)
-                {
                     continue; // not in the correct timefream
-                }
 
                 if (acct.Created > (giver.Start - giver.MinimumAge))
-                {
                     continue; // newly created account
-                }
 
                 if (acct.LastLogin >= giver.Start)
-                {
                     continue; // already got one
-                }
 
                 giver.DelayGiveGift(TimeSpan.FromSeconds(5.0), m);
             }
@@ -72,9 +64,7 @@ namespace Server.Misc
             if (mob.PlaceInBackpack(item))
             {
                 if (!WeightOverloading.IsOverloaded(mob))
-                {
                     return GiftResult.Backpack;
-                }
             }
 
             mob.BankBox.DropItem(item);

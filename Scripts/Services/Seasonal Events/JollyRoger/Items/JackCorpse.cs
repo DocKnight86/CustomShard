@@ -24,9 +24,7 @@ namespace Server.Items
         public void OnForensicEval(Mobile m)
         {
             if (!m.Player)
-            {
                 return;
-            }
 
             m.PrivateOverheadMessage(MessageType.Regular, 0x47E, 1157722, "Forensics", m.NetState); // *Your proficiency in ~1_SKILL~ reveals more about the item*
             m.SendSound(m.Female ? 0x30B : 0x41A);

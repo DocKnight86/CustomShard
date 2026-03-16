@@ -71,46 +71,28 @@ namespace Server.Gumps
             LocationTree tree;
 
             if (from.Map == Map.Ilshenar)
-            {
                 tree = Ilshenar;
-            }
             else if (from.Map == Map.Felucca)
-            {
                 tree = Felucca;
-            }
             else if (from.Map == Map.Trammel)
-            {
                 tree = Trammel;
-            }
             else if (from.Map == Map.Malas)
-            {
                 tree = Malas;
-            }
-
             #region SA
             else if (from.Map == Map.Tokuno)
-            {
                 tree = Tokuno;
-            }
             else
-            {
                 tree = TerMur;
-            }
-
             #endregion
 
             ParentNode branch = null;
             tree.LastBranch.TryGetValue(from, out branch);
 
             if (branch == null)
-            {
                 branch = tree.Root;
-            }
 
             if (branch != null)
-            {
                 from.SendGump(new GoGump(0, from, tree, branch));
-            }
         }
 
         private readonly LocationTree m_Tree;
@@ -134,13 +116,9 @@ namespace Server.Gumps
             int count = node.Children.Length - (page * EntryCount);
 
             if (count < 0)
-            {
                 count = 0;
-            }
             else if (count > EntryCount)
-            {
                 count = EntryCount;
-            }
 
             int totalHeight = OffsetSize + ((EntryHeight + OffsetSize) * (count + 1));
 
@@ -150,22 +128,16 @@ namespace Server.Gumps
             AddImageTiled(BorderSize, BorderSize, TotalWidth - (OldStyle ? SetWidth + OffsetSize : 0), totalHeight, OffsetGumpID);
 
             if (OldStyle)
-            {
                 AddImageTiled(x, y, TotalWidth - (OffsetSize * 3) - SetWidth, EntryHeight, HeaderGumpID);
-            }
             else
-            {
                 AddImageTiled(x, y, PrevWidth, EntryHeight, HeaderGumpID);
-            }
 
             if (node.Parent != null)
             {
                 AddButton(x + PrevOffsetX, y + PrevOffsetY, PrevButtonID1, PrevButtonID2, 1, GumpButtonType.Reply, 0);
 
                 if (PrevLabel)
-                {
                     AddLabel(x + PrevLabelOffsetX, y + PrevLabelOffsetY, TextHue, "Previous");
-                }
             }
 
             x += PrevWidth + OffsetSize;
@@ -173,48 +145,36 @@ namespace Server.Gumps
             int emptyWidth = TotalWidth - (PrevWidth * 2) - NextWidth - (OffsetSize * 5) - (OldStyle ? SetWidth + OffsetSize : 0);
 
             if (!OldStyle)
-            {
                 AddImageTiled(x - (OldStyle ? OffsetSize : 0), y, emptyWidth + (OldStyle ? OffsetSize * 2 : 0), EntryHeight, EntryGumpID);
-            }
 
             AddHtml(x + TextOffsetX, y, emptyWidth - TextOffsetX, EntryHeight, $"<center>{node.Name}</center>", false, false);
 
             x += emptyWidth + OffsetSize;
 
             if (OldStyle)
-            {
                 AddImageTiled(x, y, TotalWidth - (OffsetSize * 3) - SetWidth, EntryHeight, HeaderGumpID);
-            }
             else
-            {
                 AddImageTiled(x, y, PrevWidth, EntryHeight, HeaderGumpID);
-            }
 
             if (page > 0)
             {
                 AddButton(x + PrevOffsetX, y + PrevOffsetY, PrevButtonID1, PrevButtonID2, 2, GumpButtonType.Reply, 0);
 
                 if (PrevLabel)
-                {
                     AddLabel(x + PrevLabelOffsetX, y + PrevLabelOffsetY, TextHue, "Previous");
-                }
             }
 
             x += PrevWidth + OffsetSize;
 
             if (!OldStyle)
-            {
                 AddImageTiled(x, y, NextWidth, EntryHeight, HeaderGumpID);
-            }
 
             if ((page + 1) * EntryCount < node.Children.Length)
             {
                 AddButton(x + NextOffsetX, y + NextOffsetY, NextButtonID1, NextButtonID2, 3, GumpButtonType.Reply, 1);
 
                 if (NextLabel)
-                {
                     AddLabel(x + NextLabelOffsetX, y + NextLabelOffsetY, TextHue, "Next");
-                }
             }
 
             for (int i = 0, index = page * EntryCount; i < EntryCount && index < node.Children.Length; ++i, ++index)
@@ -226,13 +186,9 @@ namespace Server.Gumps
                 string name = "";
 
                 if (child is ParentNode parentNode)
-                {
                     name = parentNode.Name;
-                }
                 else if (child is ChildNode childNode)
-                {
                     name = childNode.Name;
-                }
 
                 AddImageTiled(x, y, EntryWidth, EntryHeight, EntryGumpID);
                 AddLabelCropped(x + TextOffsetX, y, EntryWidth - TextOffsetX, EntryHeight, TextHue, name);
@@ -240,9 +196,7 @@ namespace Server.Gumps
                 x += EntryWidth + OffsetSize;
 
                 if (SetGumpID != 0)
-                {
                     AddImageTiled(x, y, SetWidth, EntryHeight, SetGumpID);
-                }
 
                 AddButton(x + SetOffsetX, y + SetOffsetY, SetButtonID1, SetButtonID2, index + 4, GumpButtonType.Reply, 0);
             }
@@ -257,27 +211,21 @@ namespace Server.Gumps
                 case 1:
                     {
                         if (m_Node.Parent != null)
-                        {
                             from.SendGump(new GoGump(0, from, m_Tree, m_Node.Parent));
-                        }
 
                         break;
                     }
                 case 2:
                     {
                         if (m_Page > 0)
-                        {
                             from.SendGump(new GoGump(m_Page - 1, from, m_Tree, m_Node));
-                        }
 
                         break;
                     }
                 case 3:
                     {
                         if ((m_Page + 1) * EntryCount < m_Node.Children.Length)
-                        {
                             from.SendGump(new GoGump(m_Page + 1, from, m_Tree, m_Node));
-                        }
 
                         break;
                     }

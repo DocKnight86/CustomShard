@@ -33,7 +33,11 @@ namespace Server.Spells.SkillMasteries
         public override bool CheckCast()
         {
             if (!base.CheckCast())
+                return false;
+
+            if (Caster is PlayerMobile pm && !pm.Spellweaving)
             {
+                Caster.SendLocalizedMessage(1073220); // You must have completed the epic arcanist quest to use this ability.
                 return false;
             }
 

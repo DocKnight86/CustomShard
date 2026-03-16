@@ -95,14 +95,10 @@ namespace Server.Mobiles
             int amount = 1;
 
             if (Altar != null)
-            {
                 amount = Altar.Fighters.Count;
-            }
 
             if (amount > 5)
-            {
                 amount = 5;
-            }
 
             for (int i = 0; i < amount; i++)
             {

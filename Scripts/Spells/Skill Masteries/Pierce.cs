@@ -47,9 +47,7 @@ namespace Server.Spells.SkillMasteries
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
             if (!Validate(attacker) || !CheckMana(attacker, true))
-            {
                 return;
-            }
 
             ClearCurrentMove(attacker);
 
@@ -61,9 +59,7 @@ namespace Server.Spells.SkillMasteries
                 Timer t;
 
                 if (_Table == null)
-                {
                     _Table = new Dictionary<Mobile, Timer>();
-                }
 
                 _Table[attacker] = t = new InternalTimer(this, attacker, defender, toDrain);
                 t.Start();

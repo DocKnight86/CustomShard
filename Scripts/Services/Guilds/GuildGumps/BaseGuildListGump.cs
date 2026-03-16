@@ -55,9 +55,7 @@ namespace Server.Guilds
                 for (int i = 0; i < list.Count; i++)
                 {
                     if (!IsFiltered(list[i], m_Filter))
-                    {
                         m_List.Add(list[i]);
-                    }
                 }
             }
             else
@@ -91,22 +89,14 @@ namespace Server.Guilds
             }
 
             if (m_StartNumber <= 0)
-            {
                 AddButton(65, 80, 0x15E3, 0x15E7, 0, GumpButtonType.Page, 0);
-            }
             else
-            {
                 AddButton(65, 80, 0x15E3, 0x15E7, 6, GumpButtonType.Reply, 0);	// Back
-            }
 
             if (m_StartNumber + itemsPerPage > m_List.Count)
-            {
                 AddButton(95, 80, 0x15E1, 0x15E5, 0, GumpButtonType.Page, 0);
-            }
             else
-            {
                 AddButton(95, 80, 0x15E1, 0x15E5, 7, GumpButtonType.Reply, 0);	// Forward
-            }
 
             int itemNumber = 0;
 
@@ -152,13 +142,9 @@ namespace Server.Guilds
             }
 
             if (HasRelationship(o))
-            {
                 AddButton(40, 143 + itemNumber * 28, 0x8AF, 0x8AF, 200 + index, GumpButtonType.Reply, 0);	//Info Button
-            }
             else
-            {
                 AddButton(40, 143 + itemNumber * 28, 0x4B9, 0x4BA, 200 + index, GumpButtonType.Reply, 0);	//Info Button
-            }
         }
 
         public override void OnResponse(NetState sender, RelayInfo info)
@@ -168,9 +154,7 @@ namespace Server.Guilds
             PlayerMobile pm = sender.Mobile as PlayerMobile;
 
             if (pm == null || !IsMember(pm, guild))
-            {
                 return;
-            }
 
             int id = info.ButtonID;
 
@@ -199,9 +183,7 @@ namespace Server.Guilds
                 IComparer<T> comparer = m_Fields[id - 100].Comparer;
 
                 if (m_Comparer.GetType() == comparer.GetType())
-                {
                     m_Ascending = !m_Ascending;
-                }
 
                 pm.SendGump(GetResentGump(player, guild, comparer, m_Ascending, m_Filter, 0));
             }

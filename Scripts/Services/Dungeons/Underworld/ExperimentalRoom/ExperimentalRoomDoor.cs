@@ -54,15 +54,11 @@ namespace Server.Items
                     }
                 }
                 else
-                {
                     from.SendLocalizedMessage(1113410); // You must have an active Experimental Gem to enter that room.
-                }
             }
 
             if (hasGem)
-            {
                 from.SendLocalizedMessage(1113411); // You have not yet earned access to that room!
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -110,9 +106,7 @@ namespace Server.Items
         public override bool OnMoveOver(Mobile from)
         {
             if (from.AccessLevel > AccessLevel.Player)
-            {
                 return true;
-            }
 
             Container pack = from.Backpack;
 
@@ -127,9 +121,7 @@ namespace Server.Items
                         ExperimentalGem gem = (ExperimentalGem)item;
 
                         if (gem.Active && (gem.CurrentRoom > m_Room || m_Room == Room.RoomZero))
-                        {
                             return true;
-                        }
                     }
                 }
             }

@@ -1,5 +1,8 @@
+using Server.Engines.Craft;
+
 namespace Server.Items
 {
+    [Alterable(typeof(DefBlacksmithy), typeof(GargishTalwar))]
     [Flipable(0x27A2, 0x27ED)]
     public class NoDachi : BaseSword
     {

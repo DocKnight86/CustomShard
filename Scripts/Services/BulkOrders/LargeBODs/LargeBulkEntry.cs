@@ -93,32 +93,24 @@ namespace Server.Engines.BulkOrders
             {
                 m_Amount = value;
                 if (m_Owner != null)
-                {
                     m_Owner.InvalidateProperties();
-                }
             }
         }
         public SmallBulkEntry Details => m_Details;
         public static SmallBulkEntry[] GetEntries(string type, string name)
         {
             if (m_Cache == null)
-            {
                 m_Cache = new Hashtable();
-            }
 
             Hashtable table = (Hashtable)m_Cache[type];
 
             if (table == null)
-            {
                 m_Cache[type] = table = new Hashtable();
-            }
 
             SmallBulkEntry[] entries = (SmallBulkEntry[])table[name];
 
             if (entries == null)
-            {
                 table[name] = entries = SmallBulkEntry.LoadEntries(type, name);
-            }
 
             return entries;
         }
@@ -128,9 +120,7 @@ namespace Server.Engines.BulkOrders
             LargeBulkEntry[] large = new LargeBulkEntry[small.Length];
 
             for (int i = 0; i < small.Length; ++i)
-            {
                 large[i] = new LargeBulkEntry(owner, small[i]);
-            }
 
             return large;
         }
@@ -145,9 +135,7 @@ namespace Server.Engines.BulkOrders
             string type = reader.ReadString();
 
             if (type != null)
-            {
                 realType = ScriptCompiler.FindTypeByFullName(type);
-            }
 
             m_Details = new SmallBulkEntry(realType, reader.ReadInt(), reader.ReadInt(), version == 0 ? 0 : reader.ReadInt());
         }

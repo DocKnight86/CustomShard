@@ -70,9 +70,7 @@ namespace Server.Mobiles
         public override void GenerateLoot(bool spawning)
         {
             if (spawning)
-            {
                 return; // No loot/backpack on spawn
-            }
 
             base.GenerateLoot(true);
             base.GenerateLoot(false);
@@ -81,6 +79,14 @@ namespace Server.Mobiles
         public override void GenerateLoot()
         {
             AddLoot(LootPack.FilthyRich);
+        }
+
+        public override void OnDeath(Container c)
+        {
+            base.OnDeath(c);
+
+            if (Utility.RandomDouble() < 0.4)
+                c.DropItem(new ProtectorsEssence());
         }
 
         public override void Serialize(GenericWriter writer)

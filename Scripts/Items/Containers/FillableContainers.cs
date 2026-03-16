@@ -156,18 +156,14 @@ namespace Server.Items
             set
             {
                 if (m_Content == value)
-                {
                     return;
-                }
 
                 m_Content = value;
 
                 for (int i = Items.Count - 1; i >= 0; --i)
                 {
                     if (i < Items.Count)
-                    {
                         Items[i].Delete();
-                    }
                 }
 
                 Respawn(true);
@@ -199,16 +195,12 @@ namespace Server.Items
         public virtual void AcquireContent()
         {
             if (m_Content != null)
-            {
                 return;
-            }
 
             m_Content = FillableContent.Acquire(GetWorldLocation(), Map);
 
             if (m_Content != null)
-            {
                 Respawn();
-            }
         }
 
         public override void OnItemRemoved(Item item)
@@ -255,9 +247,7 @@ namespace Server.Items
         public void Respawn(bool all)
         {
             if (m_Content == null || Deleted)
-            {
                 return;
-            }
 
             GenerateContent(all);
 
@@ -298,17 +288,28 @@ namespace Server.Items
             CheckRespawn();
         }
 
+        public virtual bool CanSpawnRefinement()
+        {
+            return Map == Map.Felucca && (ContentType == FillableContentType.Clothier || ContentType == FillableContentType.Blacksmith || ContentType == FillableContentType.Carpenter);
+        }
+
         public virtual void GenerateContent(bool all)
         {
             if (m_Content == null || Deleted)
-            {
                 return;
-            }
 
             int toSpawn = GetSpawnCount(all);
 
+            bool canspawnRefinement = GetAmount(typeof(RefinementComponent)) == 0 && CanSpawnRefinement();
+
             for (int i = 0; i < toSpawn; ++i)
             {
+                if (canspawnRefinement && RefinementComponent.Roll(this, 1, 0.08))
+                {
+                    canspawnRefinement = false;
+                    continue;
+                }
+
                 Item item = m_Content.Construct();
 
                 if (item != null)
@@ -348,13 +349,9 @@ namespace Server.Items
         public void ResetTrap()
         {
             if (m_Content.Level > Utility.Random(5))
-            {
                 TrapType = TrapType.PoisonTrap;
-            }
             else
-            {
                 TrapType = TrapType.ExplosionTrap;
-            }
 
             TrapPower = m_Content.Level * Utility.RandomMinMax(10, 30);
             TrapLevel = m_Content.Level;
@@ -422,9 +419,7 @@ namespace Server.Items
             int itemsCount = GetItemsCount();
 
             if (itemsCount >= MaxSpawnCount)
-            {
                 return 0;
-            }
 
             return all ? MaxSpawnCount - itemsCount : AmountPerSpawn;
         }
@@ -452,16 +447,12 @@ namespace Server.Items
         public override void AcquireContent()
         {
             if (m_Content != null)
-            {
                 return;
-            }
 
             m_Content = FillableContent.Library;
 
             if (m_Content != null)
-            {
                 Respawn();
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -833,17 +824,11 @@ namespace Server.Items
             Item item = Loot.Construct(m_Types);
 
             if (item is Key key)
-            {
                 key.ItemID = Utility.RandomList((int)KeyType.Copper, (int)KeyType.Gold, (int)KeyType.Iron, (int)KeyType.Rusty);
-            }
             else if (item is Arrow || item is Bolt)
-            {
                 item.Amount = Utility.RandomMinMax(2, 6);
-            }
             else if (item is Bandage || item is Lockpick)
-            {
                 item.Amount = Utility.RandomMinMax(1, 3);
-            }
 
             return item;
         }
@@ -1581,9 +1566,7 @@ namespace Server.Items
             int v = (int)type;
 
             if (v >= 0 && v < m_ContentTypes.Length)
-            {
                 return m_ContentTypes[v];
-            }
 
             return null;
         }
@@ -1591,9 +1574,7 @@ namespace Server.Items
         public static FillableContentType Lookup(FillableContent content)
         {
             if (content == null)
-            {
                 return FillableContentType.None;
-            }
 
             return (FillableContentType)Array.IndexOf(m_ContentTypes, content);
         }
@@ -1601,9 +1582,7 @@ namespace Server.Items
         public static FillableContent Acquire(Point3D loc, Map map)
         {
             if (map == null || map == Map.Internal)
-            {
                 return null;
-            }
 
             if (m_AcquireTable == null)
             {
@@ -1651,9 +1630,7 @@ namespace Server.Items
                 FillableEntry entry = m_Entries[i];
 
                 if (index < entry.Weight)
-                {
                     return entry.Construct();
-                }
 
                 index -= entry.Weight;
             }

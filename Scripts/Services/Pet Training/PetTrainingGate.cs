@@ -34,13 +34,9 @@ namespace Server.Items
                         NewAnimalLoreGump gump = mobile.FindGump<NewAnimalLoreGump>();
 
                         if (gump != null)
-                        {
                             gump.Refresh();
-                        }
                         else
-                        {
                             BaseGump.SendGump(new NewAnimalLoreGump(mobile, bc));
-                        }
                     }
                 }
             }

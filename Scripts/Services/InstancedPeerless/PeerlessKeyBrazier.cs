@@ -56,9 +56,7 @@ namespace Server.Engines.InstancedPeerless
             Item targeted = state as Item;
 
             if (targeted == null || targeted.Deleted)
-            {
                 return;
-            }
 
             if (from.Map != Map || !from.InRange(Location, 2))
             {
@@ -95,9 +93,7 @@ namespace Server.Engines.InstancedPeerless
         public override void OnAfterDelete()
         {
             if (m_Key != null)
-            {
                 m_Key.Delete();
-            }
 
             base.OnAfterDelete();
         }
@@ -124,9 +120,7 @@ namespace Server.Engines.InstancedPeerless
                         m_Key = reader.ReadItem();
 
                         if (m_Platform == null)
-                        {
                             Delete();
-                        }
 
                         if (m_Key != null)
                         {

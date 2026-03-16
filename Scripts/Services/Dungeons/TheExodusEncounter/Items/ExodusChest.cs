@@ -49,9 +49,7 @@ namespace Server.Items
         public bool CheckReveal(Mobile m)
         {
             if (!m.InRange(Location, 3))
-            {
                 return false;
-            }
 
             return m.Skills[SkillName.DetectHidden].Value >= 98.0;
         }
@@ -69,9 +67,7 @@ namespace Server.Items
                 int skill = (int)m.Skills[SkillName.DetectHidden].Value;
 
                 if (skill >= 80 && Utility.Random(300) < skill)
-                {
                     return true;
-                }
             }
 
             return false;
@@ -92,9 +88,7 @@ namespace Server.Items
         public override void OnLocationChange(Point3D oldLoc)
         {
             if (Deleted)
-            {
                 return;
-            }
 
             UpdateRegion();
         }
@@ -102,9 +96,7 @@ namespace Server.Items
         public override void OnMapChange()
         {
             if (Deleted)
-            {
                 return;
-            }
 
             UpdateRegion();
         }
@@ -112,9 +104,7 @@ namespace Server.Items
         public void UpdateRegion()
         {
             if (m_Region != null)
-            {
                 m_Region.Unregister();
-            }
 
             if (!Deleted && Map != Map.Internal)
             {
@@ -126,9 +116,7 @@ namespace Server.Items
         public override void OnAfterDelete()
         {
             if (m_Timer != null)
-            {
                 m_Timer.Stop();
-            }
 
             m_Timer = null;
 
@@ -199,9 +187,7 @@ namespace Server.Items
             m.PlaySound(0x5B4);
 
             if (item == null)
-            {
                 return;
-            }
 
             m.AddToBackpack(item);
             m.SendLocalizedMessage(1072223); // An item has been placed in your backpack.           
@@ -219,9 +205,7 @@ namespace Server.Items
             reader.ReadInt();
 
             if (!Locked)
-            {
                 Delete();
-            }
 
             Timer.DelayCall(TimeSpan.Zero, UpdateRegion);
         }

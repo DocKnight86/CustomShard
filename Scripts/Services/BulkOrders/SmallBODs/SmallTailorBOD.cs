@@ -23,13 +23,9 @@ namespace Server.Engines.BulkOrders
             bool useMaterials;
 
             if (useMaterials = Utility.RandomBool())
-            {
                 entries = SmallBulkEntry.TailorLeather;
-            }
             else
-            {
                 entries = SmallBulkEntry.TailorCloth;
-            }
 
             if (entries.Length > 0)
             {
@@ -39,13 +35,9 @@ namespace Server.Engines.BulkOrders
                 BulkMaterialType material;
 
                 if (useMaterials)
-                {
                     material = GetRandomMaterial(BulkMaterialType.Spined, m_TailoringMaterialChances);
-                }
                 else
-                {
                     material = BulkMaterialType.None;
-                }
 
                 bool reqExceptional = Utility.RandomBool() || material == BulkMaterialType.None;
 
@@ -98,30 +90,20 @@ namespace Server.Engines.BulkOrders
 
             double theirSkill = BulkOrderSystem.GetBODSkill(m, SkillName.Tailoring);
             if (useMaterials && theirSkill >= 6.2) // Ugly, but the easiest leather BOD is Leather Cap which requires at least 6.2 skill.
-            {
                 entries = SmallBulkEntry.TailorLeather;
-            }
             else
-            {
                 entries = SmallBulkEntry.TailorCloth;
-            }
 
             if (entries.Length > 0)
             {
                 int amountMax;
 
                 if (theirSkill >= 70.1)
-                {
                     amountMax = Utility.RandomList(10, 15, 20, 20);
-                }
                 else if (theirSkill >= 50.1)
-                {
                     amountMax = Utility.RandomList(10, 15, 15, 20);
-                }
                 else
-                {
                     amountMax = Utility.RandomList(10, 10, 15, 20);
-                }
 
                 BulkMaterialType material = BulkMaterialType.None;
 
@@ -143,9 +125,7 @@ namespace Server.Engines.BulkOrders
                 double excChance = 0.0;
 
                 if (theirSkill >= 70.1)
-                {
                     excChance = (theirSkill + 80.0) / 200.0;
-                }
 
                 bool reqExceptional = (excChance > Utility.RandomDouble());
 
@@ -165,14 +145,10 @@ namespace Server.Engines.BulkOrders
                         if (allRequiredSkills && chance >= 0.0)
                         {
                             if (reqExceptional)
-                            {
                                 chance = item.GetExceptionalChance(system, chance, m);
-                            }
 
                             if (chance > 0.0)
-                            {
                                 validEntries.Add(entries[i]);
-                            }
                         }
                     }
                 }
@@ -212,9 +188,7 @@ namespace Server.Engines.BulkOrders
                         Item item = rewardGroup.Items[i].Construct();
 
                         if (item != null)
-                        {
                             list.Add(item);
-                        }
                     }
                 }
                 else
@@ -226,9 +200,7 @@ namespace Server.Engines.BulkOrders
                         Item item = rewardItem.Construct();
 
                         if (item != null)
-                        {
                             list.Add(item);
-                        }
                     }
                 }
             }

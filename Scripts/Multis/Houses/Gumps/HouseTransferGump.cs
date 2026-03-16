@@ -57,9 +57,7 @@ namespace Server.Gumps
         public override void OnResponse(NetState state, RelayInfo info)
         {
             if (info.ButtonID == 1 && !m_House.Deleted)
-            {
                 m_House.EndConfirmTransfer(m_From, m_To);
-            }
         }
     }
 }

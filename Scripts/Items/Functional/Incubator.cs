@@ -42,9 +42,7 @@ namespace Server.Items
             if (canDrop && item is ChickenLizardEgg egg)
             {
                 if (egg.TotalIncubationTime > TimeSpan.FromHours(120))
-                {
                     egg.BurnEgg();
-                }
                 else
                 {
                     egg.IncubationStart = DateTime.UtcNow;
@@ -62,9 +60,7 @@ namespace Server.Items
             if (canDrop && item is ChickenLizardEgg egg)
             {
                 if (egg.TotalIncubationTime > TimeSpan.FromHours(120))
-                {
                     egg.BurnEgg();
-                }
                 else
                 {
                     egg.IncubationStart = DateTime.UtcNow;
@@ -88,9 +84,7 @@ namespace Server.Items
         public void CheckEggs_Callback()
         {
             if (!BaseHouse.CheckSecured(this))
-            {
                 return;
-            }
 
             List<Item> items = Items;
 
@@ -130,9 +124,7 @@ namespace Server.Items
             foreach (Incubator incubator in IncubatorInstances)
             {
                 if (incubator.Items.Count > 0)
-                {
                     Timer.DelayCall(TimeSpan.FromSeconds(10), incubator.CheckEggs_Callback);
-                }
             }
         }
 
@@ -172,9 +164,7 @@ namespace Server.Items
             m_Level = (SecureLevel)reader.ReadInt();
 
             if (Items.Count > 0)
-            {
                 Timer.DelayCall(TimeSpan.FromSeconds(60), CheckEggs_Callback);
-            }
 
             // Needed to add existing ones to new list. Do I need to keep this?
             IncubatorInstances.Add(this);

@@ -75,9 +75,7 @@ namespace Server.Engines.Blackthorn
             _InvasionType = type;
 
             if (_Specialty == SkillName.Bushido && Utility.RandomBool())
-            {
                 _Sampire = true;
-            }
 
             if (Female = Utility.RandomBool())
             {
@@ -106,9 +104,7 @@ namespace Server.Engines.Blackthorn
             {
                 title = string.Format("the {0}", Skills[specialty].Info.Title);
                 if (Female && title.EndsWith("man"))
-                {
                     title = title.Substring(0, title.Length - 3) + "woman";
-                }
             }
 
             Title = title;
@@ -120,17 +116,11 @@ namespace Server.Engines.Blackthorn
             SetHits(800, 1250);
 
             if (AI == AIType.AI_Melee)
-            {
                 SetDamage(15, 28);
-            }
             else if (!SpellCaster)
-            {
                 SetDamage(12, 22);
-            }
             else
-            {
                 SetDamage(8, 18);
-            }
 
             Fame = 8000;
             Karma = -8000;
@@ -155,7 +145,16 @@ namespace Server.Engines.Blackthorn
 
         public virtual void SetBody()
         {
-            Race = Race.Human;
+            switch (_Specialty)
+            {
+                default:
+                    if (0.75 > Utility.RandomDouble())
+                        Race = Race.Human;
+                    else
+                        Race = Race.Elf; break;
+                case SkillName.Archery:
+                case SkillName.Spellweaving: Race = Race.Elf; break;
+            }
 
             HairItemID = Race.RandomHair(Female);
             HairHue = Race.RandomHairHue();
@@ -193,9 +192,7 @@ namespace Server.Engines.Blackthorn
             }
 
             if (Skills[_Specialty].Base < MinSkill)
-            {
                 SetSkill(_Specialty, MinSkill, MaxSkill);
-            }
 
             if (_Sampire)
             {
@@ -370,11 +367,21 @@ namespace Server.Engines.Blackthorn
 
         public Item RandomSwordWeapon()
         {
+            if (Race == Race.Elf)
+            {
+                return Loot.Construct(new[] {typeof(ElvenMachete), typeof(RadiantScimitar)});
+            }
+
             return Loot.Construct(new[] { typeof(Broadsword), typeof(Longsword), typeof(Katana), typeof(Halberd), typeof(Bardiche), typeof(VikingSword) });
         }
 
         public Item RandomFencingWeapon()
         {
+            if (Race == Race.Elf)
+            {
+                return Loot.Construct(new[] {typeof(Leafblade), typeof(WarCleaver), typeof(AssassinSpike)});
+            }
+
             return Loot.Construct(new[] { typeof(Kryss), typeof(Spear), typeof(ShortSpear), typeof(Lance), typeof(Pike) });
         }
 
@@ -385,6 +392,11 @@ namespace Server.Engines.Blackthorn
 
         public Item RandomArhceryWeapon()
         {
+            if (Race == Race.Elf)
+            {
+                return Loot.Construct(new[] {typeof(MagicalShortbow), typeof(ElvenCompositeLongbow)});
+            }
+
             return Loot.Construct(new[] { typeof(Bow), typeof(Crossbow), typeof(HeavyCrossbow), typeof(CompositeBow), typeof(RepeatingCrossbow) });
         }
 
@@ -420,9 +432,7 @@ namespace Server.Engines.Blackthorn
             base.OnThink();
 
             if (Combatant == null)
-            {
                 return;
-            }
 
             if (CanDoSpecial && InRange(Combatant, 4) && 0.1 > Utility.RandomDouble() && _NextSpecial < DateTime.UtcNow)
             {
@@ -448,9 +458,7 @@ namespace Server.Engines.Blackthorn
         private void DoSpecial()
         {
             if (Map == null || Map == Map.Internal)
-            {
                 return;
-            }
 
             Map m = Map;
 
@@ -559,17 +567,11 @@ namespace Server.Engines.Blackthorn
             SetHits(8000, 12000);
 
             if (AI == AIType.AI_Melee)
-            {
                 SetDamage(22, 30);
-            }
             else if (!SpellCaster)
-            {
                 SetDamage(20, 28);
-            }
             else
-            {
                 SetDamage(10, 20);
-            }
 
             Fame = 48000;
             Karma = -48000;
@@ -603,13 +605,9 @@ namespace Server.Engines.Blackthorn
                     Item item = InvasionController.CreateItem(list[0]);
 
                     if (list.Count == 1 || i >= list.Count)
-                    {
                         drop = list[0];
-                    }
                     else
-                    {
                         drop = list[i];
-                    }
 
                     drop.SendLocalizedMessage(1154530); // You notice the crest of Minax on your fallen foe's equipment and decide it may be of some value...
 

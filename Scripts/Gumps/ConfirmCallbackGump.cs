@@ -42,9 +42,7 @@ namespace Server.Gumps
             CloseLocalization = closeLoc;
 
             if (!Open)
-            {
                 AddGumpLayout();
-            }
         }
 
         public override void AddGumpLayout()
@@ -110,9 +108,7 @@ namespace Server.Gumps
         public override void OnResponse(RelayInfo info)
         {
             if (info.ButtonID != 1)
-            {
                 return;
-            }
 
             bool confirm = info.IsSwitched(1);
 
@@ -169,9 +165,7 @@ namespace Server.Gumps
             CloseLocalization = closeLoc;
 
             if (!Open)
-            {
                 AddGumpLayout();
-            }
         }
 
         public override void AddGumpLayout()
@@ -234,9 +228,7 @@ namespace Server.Gumps
         public override void OnResponse(RelayInfo info)
         {
             if (info.ButtonID != 1)
-            {
                 return;
-            }
 
             bool confirm = info.IsSwitched(1);
 

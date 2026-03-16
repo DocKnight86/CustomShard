@@ -10,9 +10,7 @@ namespace Server.Items
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
             if (!Validate(attacker) || !CheckMana(attacker, true))
-            {
                 return;
-            }
 
             ClearCurrentAbility(attacker);
 
@@ -24,9 +22,7 @@ namespace Server.Items
             defender.FixedParticles(0x374A, 1, 17, 9502, 1108, 4, (EffectLayer)255);
 
             if (m_Table.ContainsKey(attacker))
-            {
                 Remove(attacker);
-            }
 
             ForceOfNatureTimer t = new ForceOfNatureTimer(attacker, defender);
             t.Start();

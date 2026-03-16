@@ -20,9 +20,7 @@ namespace Server.Items
         public override void OnAfterDelete()
         {
             if (m_Timer != null && m_Timer.Running)
-            {
                 m_Timer.Stop();
-            }
         }
 
         public override void Serialize(GenericWriter writer)

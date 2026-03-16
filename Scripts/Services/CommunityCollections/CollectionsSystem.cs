@@ -41,7 +41,7 @@ namespace Server.Services.Community_Collections
         {
             List<BaseCollectionMobile> newMobiles = new List<BaseCollectionMobile>();
 
-            for (int index = 0; index < m_Mobiles.Count; index++)
+            for (var index = 0; index < m_Mobiles.Count; index++)
             {
                 BaseCollectionMobile mob = m_Mobiles[index];
 
@@ -59,7 +59,7 @@ namespace Server.Services.Community_Collections
                 {
                     writer.WriteMobileList(m_Mobiles);
                     writer.Write(m_Mobiles.Count);
-                    for (int index = 0; index < m_Mobiles.Count; index++)
+                    for (var index = 0; index < m_Mobiles.Count; index++)
                     {
                         BaseCollectionMobile mob = m_Mobiles[index];
                         writer.Write((int) mob.CollectionID);
@@ -87,7 +87,7 @@ namespace Server.Services.Community_Collections
                         CollectionData data = new CollectionData();
                         data.Read(reader);
                         int toRemove = -1;
-                        for (int index = 0; index < mobs.Count; index++)
+                        for (var index = 0; index < mobs.Count; index++)
                         {
                             BaseCollectionMobile mob = mobs[index];
                             if (mob.CollectionID == (Collection) collection)
@@ -139,9 +139,7 @@ namespace Server.Services.Community_Collections
                 writer.Write(Tiers[i].Count);
 
                 for (int j = 0; j < Tiers[i].Count; j++)
-                {
                     QuestWriter.Object(writer, Tiers[i][j]);
-                }
             }
         }
 
@@ -163,9 +161,7 @@ namespace Server.Services.Community_Collections
                 List<object> list = new List<object>();
 
                 for (int j = reader.ReadInt(); j > 0; j--)
-                {
                     list.Add(QuestReader.Object(reader));
-                }
 
                 Tiers.Add(list);
             }

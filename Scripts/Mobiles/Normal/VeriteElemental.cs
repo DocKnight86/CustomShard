@@ -52,15 +52,13 @@ namespace Server.Mobiles
         {
             IWearableDurability dur = item as IWearableDurability;
 
-            if (dur == null || dur.MaxHitPoints == 0 || item.LootType == LootType.Blessed)
+            if (dur == null || dur.MaxHitPoints == 0 || item.LootType == LootType.Blessed || item.Insured)
             {
                 return;
             }
 
             if (damage < 10)
-            {
                 damage = 10;
-            }
 
             if (dur.HitPoints > 0)
             {

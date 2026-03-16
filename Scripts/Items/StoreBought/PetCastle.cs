@@ -101,16 +101,12 @@ namespace Server.Items
         public bool CheckAccessible(Mobile from, Item item)
         {
             if (from.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return true; // Staff can access anything
-            }
 
             BaseHouse house = BaseHouse.FindHouseAt(item);
 
             if (house == null)
-            {
                 return false;
-            }
 
             switch (Level)
             {
@@ -161,17 +157,13 @@ namespace Server.Items
                 m_From = from;
 
                 if (m_Post.UsesRemaining <= 0)
-                {
                     Flags |= CMEFlags.Disabled;
-                }
             }
 
             public override void OnClick()
             {
                 if (!m_Post.Check(m_From))
-                {
                     return;
-                }
 
                 m_Post.BeginStable(m_From);
             }
@@ -189,17 +181,13 @@ namespace Server.Items
                 m_From = from;
 
                 if (m_Post.UsesRemaining <= 0)
-                {
                     Flags |= CMEFlags.Disabled;
-                }
             }
 
             public override void OnClick()
             {
                 if (!m_Post.Check(m_From))
-                {
                     return;
-                }
 
                 if (m_Post.CheckAccessible(m_From, m_Post))
                 {
@@ -242,9 +230,7 @@ namespace Server.Items
         public void BeginStable(Mobile from)
         {
             if (Deleted || !from.CheckAlive())
-            {
                 return;
-            }
 
             if ((from.Backpack == null || from.Backpack.GetAmount(typeof(Gold)) < 30) && Banker.GetBalance(from) < 30)
             {
@@ -331,9 +317,7 @@ namespace Server.Items
         public void Claim(Mobile from)
         {
             if (Deleted || !from.CheckAlive())
-            {
                 return;
-            }
 
             bool claimed = false;
             int stabled = 0;
@@ -363,9 +347,7 @@ namespace Server.Items
                         pet.SetControlMaster(from);
 
                         if (pet.Summoned)
-                        {
                             pet.SummonMaster = from;
-                        }
 
                         pet.FollowTarget = from;
                         pet.ControlOrder = LastOrderType.Follow;
@@ -394,17 +376,13 @@ namespace Server.Items
                 from.SendLocalizedMessage(1042559); // Here you go... and good day to you!
             }
             else if (stabled == 0)
-            {
                 from.SendLocalizedMessage(502671); // But I have no animals stabled with me at the moment!            
-            }
         }
 
         public void BeginClaimList(Mobile from)
         {
             if (Deleted || !from.CheckAlive())
-            {
                 return;
-            }
 
             List<BaseCreature> list = new List<BaseCreature>();
 
@@ -428,21 +406,15 @@ namespace Server.Items
             }
 
             if (list.Count > 0)
-            {
                 from.SendGump(new ClaimListGump(this, from, list));
-            }
             else
-            {
                 from.SendLocalizedMessage(502671); // But I have no animals stabled with me at the moment!
-            }
         }
 
         public void EndClaimList(Mobile from, BaseCreature pet)
         {
             if (pet == null || pet.Deleted || from.Map != Map || !from.InRange(this, 14) || !from.Stabled.Contains(pet) || !from.CheckAlive() || !Check(from))
-            {
                 return;
-            }
 
             if (from.Followers + pet.ControlSlots <= from.FollowersMax)
             {
@@ -451,9 +423,7 @@ namespace Server.Items
                 pet.SetControlMaster(from);
 
                 if (pet.Summoned)
-                {
                     pet.SummonMaster = from;
-                }
 
                 pet.FollowTarget = from;
                 pet.ControlOrder = LastOrderType.Follow;
@@ -476,9 +446,7 @@ namespace Server.Items
         public override void OnSpeech(SpeechEventArgs e)
         {
             if (!e.Mobile.InRange(GetWorldLocation(), 2) || !Check(e.Mobile))
-            {
                 return;
-            }
 
             if (!e.Handled && e.HasKeyword(0x0008))
             {
@@ -492,13 +460,9 @@ namespace Server.Items
                 if (CheckAccessible(e.Mobile, this))
                 {
                     if (!Insensitive.Equals(e.Speech, "claim"))
-                    {
                         BeginClaimList(e.Mobile);
-                    }
                     else
-                    {
                         Claim(e.Mobile);
-                    }
                 }
                 else
                 {
@@ -538,9 +502,7 @@ namespace Server.Items
                     BaseCreature pet = list[i];
 
                     if (pet == null || pet.Deleted)
-                    {
                         continue;
-                    }
 
                     AddButton(15, 39 + i * 20, 10006, 10006, i + 1, GumpButtonType.Reply, 0);
                     AddHtml(32, 35 + i * 20, 275, 18, $"<BASEFONT COLOR=#C0C0EE>{pet.Name}</BASEFONT>", false, false);
@@ -613,9 +575,7 @@ namespace Server.Items
         public virtual bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
-            {
                 return false;
-            }
 
             Hue = sender.DyedHue;
             return true;
@@ -639,9 +599,7 @@ namespace Server.Items
             _Direction = (DirectionType)choice;
 
             if (!Deleted)
-            {
                 base.OnDoubleClick(from);
-            }
         }
 
         public override void OnDoubleClick(Mobile from)

@@ -12,9 +12,7 @@ namespace Server.Mobiles
             Item weapon = FindItemOnLayer(Layer.TwoHanded);
 
             if (weapon == null)
-            {
                 return null;
-            }
 
             if (weapon is BaseWeapon baseWeapon)
             {

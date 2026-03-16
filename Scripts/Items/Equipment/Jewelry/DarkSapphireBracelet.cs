@@ -11,13 +11,9 @@ namespace Server.Items
             BaseRunicTool.ApplyAttributesTo(this, true, 0, Utility.RandomMinMax(1, 4), 0, 100);
 
             if (Utility.Random(100) < 10)
-            {
                 Attributes.RegenMana += 2;
-            }
             else
-            {
                 Resistances.Cold += 10;
-            }
         }
 
         public DarkSapphireBracelet(Serial serial)

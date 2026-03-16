@@ -80,9 +80,7 @@ namespace Server.Items
         public int GetUsesScalar()
         {
             if (m_Quality == ItemQuality.Exceptional)
-            {
                 return 200;
-            }
 
             return 100;
         }
@@ -113,14 +111,10 @@ namespace Server.Items
         public override void AddCraftedProperties(ObjectPropertyList list)
         {
             if (m_Crafter != null)
-            {
                 list.Add(1050043, m_Crafter.TitleName); // crafted by ~1_NAME~
-            }
 
             if (m_Quality == ItemQuality.Exceptional)
-            {
                 list.Add(1060636); // exceptional
-            }
         }
 
         public override void AddUsesRemainingProperties(ObjectPropertyList list)
@@ -187,16 +181,12 @@ namespace Server.Items
             Item check = m.FindItemOnLayer(Layer.OneHanded);
 
             if (check is ITool && check != tool && !(check is AncientSmithyHammer))
-            {
                 return false;
-            }
 
             check = m.FindItemOnLayer(Layer.TwoHanded);
 
             if (check is ITool && check != tool && !(check is AncientSmithyHammer))
-            {
                 return false;
-            }
 
             return true;
         }
@@ -291,9 +281,7 @@ namespace Server.Items
             Quality = (ItemQuality)quality;
 
             if (makersMark)
-            {
                 Crafter = from;
-            }
 
             return quality;
         }

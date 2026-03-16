@@ -88,9 +88,7 @@ namespace Server
                 PlayerMobile pm = m as PlayerMobile;
 
                 if (pm == null)
-                {
                     return;
-                }
 
                 pm.RemoveBuff(this);
             });
@@ -425,9 +423,7 @@ namespace Server
             m_Stream.Write(0x0);
 
             if (length < TimeSpan.Zero)
-            {
                 length = TimeSpan.Zero;
-            }
 
             m_Stream.Write((short)Math.Round(length.TotalSeconds)); // Need this in TotalSeconds (rounded)
 

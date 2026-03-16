@@ -35,13 +35,9 @@ namespace Server.Items
                 int num = CraftResources.GetLocalizationNumber(Resource);
 
                 if (num > 0)
-                {
                     v = $"#{num}";
-                }
                 else
-                {
                     v = CraftResources.GetName(Resource);
-                }
             }
 
             list.Add(1061119, v); // ~1_LEATHER_TYPE~ runic sewing kit

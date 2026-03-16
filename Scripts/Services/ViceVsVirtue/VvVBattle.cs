@@ -51,9 +51,7 @@ namespace Server.Engines.VvV
             get
             {
                 if (!ViceVsVirtueSystem.EnhancedRules)
-                {
                     return 1.0;
-                }
 
                 return UnContested ? Penalty : 1.0;
             }
@@ -122,9 +120,7 @@ namespace Server.Engines.VvV
             set
             {
                 if (!OnGoing && value)
-                {
                     Begin();
-                }
             }
         }
 
@@ -135,9 +131,7 @@ namespace Server.Engines.VvV
             set
             {
                 if (OnGoing && value)
-                {
                     EndBattle();
-                }
             }
         }
 
@@ -220,9 +214,7 @@ namespace Server.Engines.VvV
             for (int i = 0; i < 8; i++)
             {
                 if (!System.ExemptCities.Contains((VvVCity)i) && (VvVCity)i != newCity)
-                {
                     cities.Add((VvVCity)i);
-                }
             }
 
             if (cities.Count > 0)
@@ -271,14 +263,10 @@ namespace Server.Engines.VvV
         public void SpawnPriests(bool movetoworld = true)
         {
             if (VicePriest == null || VicePriest.Deleted)
-            {
                 VicePriest = new VvVPriest(VvVType.Vice, this);
-            }
 
             if (VirtuePriest == null || VirtuePriest.Deleted)
-            {
                 VirtuePriest = new VvVPriest(VvVType.Virtue, this);
-            }
 
             if (movetoworld)
             {
@@ -322,9 +310,7 @@ namespace Server.Engines.VvV
         public void OnTick()
         {
             if (!OnGoing)
-            {
                 return;
-            }
 
             CheckParticipation();
             UpdateAllGumps();
@@ -459,9 +445,7 @@ namespace Server.Engines.VvV
         private void CheckBattleAggression()
         {
             if (BattleAggression == null)
-            {
                 return;
-            }
 
             List<Mobile> list = new List<Mobile>(BattleAggression.Keys);
 
@@ -645,9 +629,7 @@ namespace Server.Engines.VvV
                         added.Add(g);
 
                         if (!ViceVsVirtueSystem.Instance.GuildStats.ContainsKey(g))
-                        {
                             ViceVsVirtueSystem.Instance.GuildStats[g] = new VvVGuildStats(g);
-                        }
 
                         VvVGuildStats gstats = ViceVsVirtueSystem.Instance.GuildStats[g];
 
@@ -674,13 +656,9 @@ namespace Server.Engines.VvV
         public void ActivateAltar()
         {
             if (AltarIndex == 2)
-            {
                 AltarIndex = 0;
-            }
             else
-            {
                 AltarIndex++;
-            }
 
             Altars[AltarIndex].Activate();
             ActivateArrows();
@@ -710,9 +688,7 @@ namespace Server.Engines.VvV
         public void ActivateArrows()
         {
             if (Altars == null || Region == null)
-            {
                 return;
-            }
 
             foreach (Mobile mobile in Region.GetEnumeratedMobiles())
             {
@@ -803,9 +779,7 @@ namespace Server.Engines.VvV
         public void Update(VvVPlayerEntry victim, VvVPlayerEntry killer, UpdateType type)
         {
             if (killer == null || killer.Player == null || killer.Guild == null)
-            {
                 return;
-            }
 
             VvVPlayerBattleStats killerStats = GetPlayerStats(killer.Player);
             VvVPlayerBattleStats victimStats = victim == null ? null : GetPlayerStats(victim.Player);
@@ -814,32 +788,19 @@ namespace Server.Engines.VvV
             BattleTeam victimTeam = null;
 
             if (victim != null)
-            {
                 victimTeam = GetTeam(victim.Guild);
-            }
 
             switch (type)
             {
                 case UpdateType.Kill:
-                    if (killerStats != null)
-                    {
-                        killerStats.Kills++;
-                    }
-
-                    if (victimStats != null)
-                    {
-                        victimStats.Deaths++;
-                    }
+                    if (killerStats != null) killerStats.Kills++;
+                    if (victimStats != null) victimStats.Deaths++;
 
                     if (killerTeam != null)
-                    {
                         killerTeam.Kills++;
-                    }
 
                     if (victimTeam != null)
-                    {
                         victimTeam.Deaths++;
-                    }
 
                     if (victim != null && victim.Player != null)
                     {
@@ -859,14 +820,10 @@ namespace Server.Engines.VvV
                     break;
                 case UpdateType.Assist:
                     if (killerStats != null)
-                    {
                         killerStats.Assists++;
-                    }
 
                     if (killerTeam != null)
-                    {
                         killerTeam.Assists++;
-                    }
 
                     break;
                 case UpdateType.Steal:
@@ -877,9 +834,7 @@ namespace Server.Engines.VvV
                     }
 
                     if (killerTeam != null)
-                    {
                         killerTeam.Stolen++;
-                    }
 
                     break;
                 case UpdateType.TurnInVice:
@@ -939,14 +894,10 @@ namespace Server.Engines.VvV
             Timer.DelayCall(TimeSpan.FromSeconds(4), () =>
                 {
                     if (VicePriest != null)
-                    {
                         VicePriest.Internalize();
-                    }
 
                     if (VirtuePriest != null)
-                    {
                         VirtuePriest.Internalize();
-                    }
                 });
         }
 
@@ -1112,9 +1063,7 @@ namespace Server.Engines.VvV
         public bool IsInActiveBattle(Mobile m)
         {
             if (!OnGoing)
-            {
                 return false;
-            }
 
             Region r = Region.Find(m.Location, m.Map);
 
@@ -1126,9 +1075,7 @@ namespace Server.Engines.VvV
             if (m is PlayerMobile mobile && OnGoing)
             {
                 if (mobile.HasGump(typeof(VvVBattleStatusGump)))
-                {
                     mobile.CloseGump(typeof(VvVBattleStatusGump));
-                }
 
                 BaseGump.SendGump(new VvVBattleStatusGump(mobile, this));
             }
@@ -1153,10 +1100,7 @@ namespace Server.Engines.VvV
             {
                 if (mobile is PlayerMobile m)
                 {
-                    if (!ViceVsVirtueSystem.IsVvV(m) || m.NetState == null)
-                    {
-                        continue;
-                    }
+                    if (!ViceVsVirtueSystem.IsVvV(m) || m.NetState == null) continue;
 
                     VvVBattleStatusGump g = m.FindGump(typeof(VvVBattleStatusGump)) as VvVBattleStatusGump;
 
@@ -1236,19 +1180,13 @@ namespace Server.Engines.VvV
                 VirtuePriest = reader.ReadMobile() as VvVPriest;
 
                 if (Sigil != null)
-                {
                     Sigil.Battle = this;
-                }
 
                 if (VicePriest != null)
-                {
                     VicePriest.Battle = this;
-                }
 
                 if (VirtuePriest != null)
-                {
                     VirtuePriest.Battle = this;
-                }
 
                 int count = reader.ReadInt();
                 for (int i = 0; i < count; i++)

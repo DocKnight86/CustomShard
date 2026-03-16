@@ -32,13 +32,9 @@ namespace Server.Items
         public override bool OnWandTarget(Mobile from, object o)
         {
             if (o is BaseWeapon weapon)
-            {
                 weapon.Identified = true;
-            }
             else if (o is BaseArmor armor)
-            {
                 armor.Identified = true;
-            }
 
             return o is Item;
         }

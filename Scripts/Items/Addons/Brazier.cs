@@ -65,9 +65,7 @@ namespace Server.Items
         public void TurnOn()
         {
             if (m_Fire == null)
-            {
                 m_Fire = new Item();
-            }
 
             m_Fire.ItemID = 0x19AB;
             m_Fire.Movable = false;
@@ -87,31 +85,21 @@ namespace Server.Items
                 if (house != null && house.IsCoOwner(from))
                 {
                     if (m_Fire != null)
-                    {
                         TurnOff();
-                    }
                     else
-                    {
                         TurnOn();
-                    }
                 }
                 else
-                {
                     from.SendLocalizedMessage(502436); // That is not accessible.
-                }
             }
             else
-            {
                 from.SendLocalizedMessage(502692); // This must be in a house and be locked down to work.
-            }
         }
 
         public override void OnLocationChange(Point3D old)
         {
             if (m_Fire != null)
-            {
                 m_Fire.MoveToWorld(new Point3D(X, Y, Z + ItemData.Height), Map);
-            }
         }
 
         public override void GetProperties(ObjectPropertyList list)
@@ -119,9 +107,7 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
-            {
                 list.Add(1076222); // 6th Year Veteran Reward
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -174,15 +160,16 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (m_IsRewardItem && !RewardSystem.CheckIsUsableBy(from, this, null))
+                return;
+
             if (IsChildOf(from.Backpack))
             {
                 from.CloseGump(typeof(InternalGump));
                 from.SendGump(new InternalGump(this));
             }
             else
-            {
                 from.SendLocalizedMessage(1042038); // You must have the object in your backpack to use it.
-            }
         }
 
         public override void GetProperties(ObjectPropertyList list)
@@ -190,9 +177,7 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
-            {
                 list.Add(1076222); // 6th Year Veteran Reward
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -242,9 +227,7 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (m_Brazier == null || m_Brazier.Deleted)
-                {
                     return;
-                }
 
                 Mobile m = sender.Mobile;
 
@@ -261,9 +244,7 @@ namespace Server.Items
                         m.SendLocalizedMessage(1078837); // Your backpack is full! Please make room and try again.
                     }
                     else
-                    {
                         m_Brazier.Delete();
-                    }
                 }
             }
         }

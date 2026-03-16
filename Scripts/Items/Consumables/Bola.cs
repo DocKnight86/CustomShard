@@ -62,14 +62,10 @@ namespace Server.Items
                 Item two = from.FindItemOnLayer(Layer.TwoHanded);
 
                 if (one != null)
-                {
                     from.AddToBackpack(one);
-                }
 
                 if (two != null)
-                {
                     from.AddToBackpack(two);
-                }
 
                 from.Target = new BolaTarget(this);
                 from.LocalOverheadMessage(MessageType.Emote, 201, 1049632); // * You begin to swing the bola...*
@@ -139,13 +135,9 @@ namespace Server.Items
                         to.Damage(Utility.RandomMinMax(10, 20), from);
 
                         if (from.Flying)
-                        {
                             to.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1113590, from.Name); // You have been grounded by ~1_NAME~!
-                        }
                         else
-                        {
                             to.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1049623, from.Name); // You have been knocked off of your mount by ~1_NAME~!
-                        }
 
                         BaseMount.Dismount(to);
 
@@ -192,9 +184,7 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object obj)
             {
                 if (m_Bola.Deleted)
-                {
                     return;
-                }
 
                 if (obj is Item item)
                 {
@@ -241,14 +231,10 @@ namespace Server.Items
                         Item two = from.FindItemOnLayer(Layer.TwoHanded);
 
                         if (one != null)
-                        {
                             from.AddToBackpack(one);
-                        }
 
                         if (two != null)
-                        {
                             from.AddToBackpack(two);
-                        }
 
                         from.DoHarmful(to);
 

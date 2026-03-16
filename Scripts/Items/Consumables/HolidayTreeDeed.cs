@@ -39,9 +39,7 @@ namespace Server.Items
         public bool ValidatePlacement(Mobile from, Point3D loc)
         {
             if (from.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return true;
-            }
 
             if (!from.InRange(GetWorldLocation(), 1))
             {
@@ -58,9 +56,7 @@ namespace Server.Items
             Map map = from.Map;
 
             if (map == null)
-            {
                 return false;
-            }
 
             BaseHouse house = BaseHouse.FindHouseAt(loc, map, 20);
 
@@ -89,24 +85,18 @@ namespace Server.Items
             IPoint3D p = targeted as IPoint3D;
 
             if (p == null)
-            {
                 return;
-            }
 
             Point3D loc = new Point3D(p);
 
             if (p is StaticTarget target)
-            {
                 loc.Z -= TileData.ItemTable[target.ItemID].CalcHeight;	/* NOTE: OSI does not properly normalize Z positioning here.
-                                                                         * A side affect is that you can only place on floors (due to the CanFit call).
-                                                                         * That functionality may be desired. And so, it's included in this script.
-                                                                         */
-            }
+            * A side affect is that you can only place on floors (due to the CanFit call).
+            * That functionality may be desired. And so, it's included in this script.
+            */
 
             if (ValidatePlacement(from, loc))
-            {
                 EndPlace(from, (HolidayTreeType)state, loc);
-            }
         }
 
         public void EndPlace(Mobile from, HolidayTreeType type, Point3D loc)
@@ -115,9 +105,7 @@ namespace Server.Items
             HolidayTree tree = new HolidayTree(from, type, loc);
             BaseHouse house = BaseHouse.FindHouseAt(tree);
             if (house != null)
-            {
                 house.Addons[tree] = from;
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -152,9 +140,7 @@ namespace Server.Items
         public override void OnResponse(NetState sender, RelayInfo info)
         {
             if (m_Deed.Deleted)
-            {
                 return;
-            }
 
             switch (info.ButtonID)
             {

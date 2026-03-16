@@ -106,26 +106,18 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!IsChildOf(from.Backpack))
-            {
                 from.SendLocalizedMessage(1054107); // This item must be in your backpack.
-            }
             else if (ExperimentalRoomController.IsInCooldown(from))
-            {
                 from.SendLocalizedMessage(1113413); // You have recently participated in this challenge. You must wait 24 hours to try again.
-            }
             else if (!m_Active && m_Entrance.Contains(from.Location) && from.Map == Map.TerMur)
             {
                 if (from.HasGump(typeof(InternalGump)))
-                {
                     from.CloseGump(typeof(InternalGump));
-                }
 
                 from.SendGump(new InternalGump(this));
             }
             else if (m_Active)
-            {
                 from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1113408); // The gem is already active. You must clear the rooms before it is destroyed!
-            }
         }
 
         public override void Decay()
@@ -181,9 +173,7 @@ namespace Server.Items
             m_LastIndex = index;
 
             if (IsExtreme(list[index]))
-            {
                 m_IsExtremeHue = true;
-            }
 
             Hue = list[index];
             m_CurrentHue = Hue;
@@ -194,9 +184,7 @@ namespace Server.Items
         public void OnTick()
         {
             if (m_Holding || m_Expire > DateTime.UtcNow)
-            {
                 return;
-            }
 
             Mobile m = (Mobile)RootParent;
             int floorHue = GetFloorHue(m);
@@ -280,23 +268,17 @@ namespace Server.Items
             else if (m_IsExtremeHue) 							//Already extreme, failed
             {
                 if (m != null && m.AccessLevel == AccessLevel.Player)
-                {
                     OnPuzzleFailed(m);
-                }
                 else
                 {
                     if (m != null)
-                    {
                         m.SendMessage("As a GM, you get another chance!");
-                    }
 
                     m_Expire = DateTime.UtcNow + HueToLocDelay;
                 }
 
                 if (m != null)
-                {
                     m.LocalOverheadMessage(MessageType.Regular, 0x21, 1113400); // You fail to neutralize the gem in time and are expelled from the room!!
-                }
             }
             else if (Hue != -1)									                //set to extreme hue
             {
@@ -308,9 +290,7 @@ namespace Server.Items
                 m_LastIndex = GetIndexFor(hue);
 
                 if (m != null)
-                {
                     m.LocalOverheadMessage(MessageType.Regular, 0x21, 1113401); // The state of your gem worsens!!
-                }
 
                 m_Expire = DateTime.UtcNow + HueToLocDelay;
             }
@@ -403,14 +383,10 @@ namespace Server.Items
         public override void Delete()
         {
             if (m_Timer != null)
-            {
                 m_Timer.Stop();
-            }
 
             if (m_Owner != null)
-            {
                 ExperimentalRoomController.AddToTable(m_Owner);
-            }
 
             base.Delete();
         }
@@ -428,13 +404,9 @@ namespace Server.Items
             protected override void OnTick()
             {
                 if (m_Gem != null)
-                {
                     m_Gem.OnTick();
-                }
                 else
-                {
                     Stop();
-                }
             }
         }
 
@@ -473,9 +445,7 @@ namespace Server.Items
             for (int i = 0; i < hues.Length; i++)
             {
                 if (hue == hues[i])
-                {
                     return i;
-                }
             }
 
             return White; //Oops, something happened, this should never happened.
@@ -525,92 +495,52 @@ namespace Server.Items
         public int GetRevertedHue(Mobile from, int oldHue, int floorHue)
         {
             if (from == null)
-            {
                 return -1;
-            }
 
             if (!GetRoomRec().Contains(from.Location))
-            {
                 return -1;
-            }
 
             switch (oldHue)
             {
                 case 0x481:                         //White
                     if (floorHue == Pink || floorHue == Red)
-                    {
                         return Neutral;
-                    }
-
                     break;
                 case 0x4B2:                         //Pink
                     if (floorHue == White || floorHue == Blue)
-                    {
                         return Neutral;
-                    }
-
                     break;
                 case 0x30:                          //Orange
                     if (floorHue == LightGreen || floorHue == DarkGreen)
-                    {
                         return Neutral;
-                    }
-
                     break;
                 case 0x3D:                          //LightGreen
                     if (floorHue == Orange || floorHue == Brown)
-                    {
                         return Neutral;
-                    }
-
                     break;
                 case 0x26:                          //Red
                     if (floorHue == White)
-                    {
                         return Pink;
-                    }
-
                     if (floorHue == Blue)
-                    {
                         return Neutral;
-                    }
-
                     break;
                 case 0x4:                           //Blue
                     if (floorHue == Pink)
-                    {
                         return White;
-                    }
-
                     if (floorHue == Red)
-                    {
                         return Neutral;
-                    }
-
                     break;
                 case 0x557:                         //Dark Green
                     if (floorHue == Orange)
-                    {
                         return Orange;
-                    }
-
                     if (floorHue == Brown)
-                    {
                         return Neutral;
-                    }
-
                     break;
                 case 0x747:                         //Brown
                     if (floorHue == LightGreen)
-                    {
                         return Orange;
-                    }
-
                     if (floorHue == DarkGreen)
-                    {
                         return Neutral;
-                    }
-
                     break;
             }
 
@@ -620,16 +550,12 @@ namespace Server.Items
         public static int GetFloorHue(Mobile from)
         {
             if (from == null || from.Map != Map.TerMur)
-            {
                 return 0;
-            }
 
             for (int i = 0; i < m_FloorRecs.Length; i++)
             {
                 if (m_FloorRecs[i].Contains(from.Location))
-                {
                     return m_FloorHues[i];
-                }
             }
 
             return 0;
@@ -640,9 +566,7 @@ namespace Server.Items
             foreach (int i in ExtremeHues)
             {
                 if (i == hue)
-                {
                     return true;
-                }
             }
 
             return false;
@@ -792,9 +716,7 @@ namespace Server.Items
             public override void OnResponse(NetState state, RelayInfo info)
             {
                 if (info.ButtonID == 1)
-                {
                     m_Gem.Activate(state.Mobile);
-                }
             }
         }
     }

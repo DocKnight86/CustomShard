@@ -173,13 +173,9 @@ namespace Server.Gumps
             if (Category != TitleCategory.None)
             {
                 if (ShowingDescription)
-                {
                     AddHtmlLocalized(215, 50, 315, 16, 1115025, 0xFFFF, false, false); // <CENTER>DESCRIPTION</CENTER>
-                }
                 else
-                {
                     AddHtmlLocalized(215, 50, 315, 16, 1044011, 0xFFFF, false, false); // <CENTER>SELECTIONS</CENTER>
-                }
             }
 
             if (TitleCleared)
@@ -254,9 +250,7 @@ namespace Server.Gumps
                     string title = null;
 
                     if (fameKarma.Count == 0 || TitleSelected == 1500)
-                    {
                         AddHtmlLocalized(275, 240, 160, 32, 1154764, 0xFFFF, false, false); // (DEFAULT)
-                    }
                     else
                     {
                         if (TitleSelected >= 0 && TitleSelected < fameKarma.Count)
@@ -274,18 +268,12 @@ namespace Server.Gumps
                     AddCallbackButton(445, 275, 4005, 4007, 99, GumpButtonType.Reply, 0, b =>
                         {
                             if (TitleSelected >= 0 && TitleSelected < fameKarma.Count)
-                            {
                                 title = fameKarma[TitleSelected];
-                            }
 
                             if (title != null)
-                            {
                                 User.FameKarmaTitle = title;
-                            }
                             else
-                            {
                                 User.FameKarmaTitle = null;
-                            }
 
                             AddHtmlLocalized(225, 315, 200, 16, 1115036, 0xFFFF, false, false); // TITLE APPLIED
                             Refresh(false);
@@ -408,24 +396,16 @@ namespace Server.Gumps
                         int v = info.GetValue(i);
 
                         if (v == 0)
-                        {
                             continue;
-                        }
 
                         int offset = 0;
                         if (v > 800)
-                        {
                             offset = 3;
-                        }
                         else if (v > 300)
-                        {
                             offset = v / 300;
-                        }
 
                         if (offset <= 0)
-                        {
                             continue;
-                        }
 
                         ChampionSpawnInfo champInfo = ChampionSpawnInfo.GetInfo((ChampionSpawnType)i);
 
@@ -447,13 +427,9 @@ namespace Server.Gumps
                     object description = GetChampInfo();
 
                     if (description is int i)
-                    {
                         AddHtmlLocalized(225, 70, 270, 140, i, 0xFFFF, false, false);
-                    }
                     else if (description is string s)
-                    {
                         AddHtml(250, 70, 270, 140, Color("#FFFFFF", s), false, false);
-                    }
 
                     AddHtmlLocalized(225, 220, 160, 16, 1115027, 0xFFFF, false, false); // Paperdoll Name (Suffix)
                     AddHtml(275, 240, 245, 16, Color("#FFFFFF", str), false, false);
@@ -645,9 +621,7 @@ namespace Server.Gumps
                         int title = rewards[i];
 
                         if (title == 1154017)
-                        {
                             continue;
-                        }
 
                         AddHtmlLocalized(260, 70 + (index * 22), 245, 16, title, 0xFFFF, false, false);
 
@@ -668,26 +642,18 @@ namespace Server.Gumps
                     object description = GetRewardTitleInfo(title);
 
                     if (description is int i)
-                    {
                         AddHtmlLocalized(225, 70, 270, 140, i, 0xFFFF, false, false);
-                    }
                     else if (description is string s)
-                    {
                         AddHtml(225, 70, 270, 140, Color("#FFFFFF", s), false, false);
-                    }
 
                     AddHtmlLocalized(225, 220, 160, 16, 1115029, 0xFFFF, false, false); // Subtitle
 
                     string cust;
 
                     if (title == 1154017 && CityLoyaltySystem.HasCustomTitle(User, out cust))
-                    {
                         AddHtmlLocalized(275, 240, 245, 16, title, cust, 0xFFFF, false, false);
-                    }
                     else if (title != 1154017)
-                    {
                         AddHtmlLocalized(275, 240, 160, 32, title, 0xFFFF, false, false);
-                    }
 
                     AddHtmlLocalized(225, 275, 200, 16, 1115035, 0xFFFF, false, false); // Do you wish to apply this title?
 
@@ -885,14 +851,10 @@ namespace Server.Gumps
                                 AddHtmlLocalized(260, 70 + (index * 22), 245, 16, 1154017, cust, 0xFFFF, false, false);
                             }
                             else
-                            {
                                 AddHtmlLocalized(260, 70 + (index * 22), 245, 16, iTitle, 0xFFFF, false, false);
-                            }
                         }
                         else if (title is string sTitle)
-                        {
                             AddHtml(260, 70 + (index * 22), 245, 16, Color("#FFFFFF", sTitle), false, false);
-                        }
 
                         AddCallbackButton(225, 70 + (index * 22), 4005, 4007, i + 600, GumpButtonType.Reply, 0, b =>
                         {
@@ -911,13 +873,9 @@ namespace Server.Gumps
                     object description = GetRewardTitleInfo(title);
 
                     if (description is int iDesc)
-                    {
                         AddHtmlLocalized(225, 70, 270, 140, iDesc, 0xFFFF, false, false);
-                    }
                     else if (description is string sDesc)
-                    {
                         AddHtml(225, 70, 270, 140, Color("#FFFFFF", sDesc), false, false);
-                    }
 
                     AddHtmlLocalized(225, 220, 160, 16, 1115029, 0xFFFF, false, false); // Subtitle
 
@@ -930,14 +888,10 @@ namespace Server.Gumps
                             AddHtmlLocalized(275, 240, 245, 16, 1154017, cust, 0xFFFF, false, false);
                         }
                         else
-                        {
                             AddHtmlLocalized(275, 240, 160, 32, i, 0xFFFF, false, false);
-                        }
                     }
                     else
-                    {
                         AddHtml(275, 240, 245, 16, Color("#FFFFFF", (string)title), false, false);
-                    }
 
                     AddHtmlLocalized(225, 275, 200, 16, 1115035, 0xFFFF, false, false); // Do you wish to apply this title?
 
@@ -1091,9 +1045,7 @@ namespace Server.Gumps
                 v = info.Harrower;
 
                 if (v > 0)
-                {
                     str = $": {Titles.HarrowerTitles[Math.Min(Titles.HarrowerTitles.Length, info.Harrower) - 1]} of Evil";
-                }
             }
             else
             {
@@ -1103,13 +1055,9 @@ namespace Server.Gumps
 
                 int offset = 0;
                 if (v > 800)
-                {
                     offset = 3;
-                }
                 else if (v > 300)
-                {
                     offset = v / 300;
-                }
 
                 if (offset > 0)
                 {
@@ -1148,9 +1096,7 @@ namespace Server.Gumps
             if (!(title is int))
             {
                 if (title is string)
-                {
                     return title;
-                }
 
                 return null;
             }
@@ -1160,39 +1106,25 @@ namespace Server.Gumps
                 int id = (int)title;
 
                 if ((id >= 1152739 && id <= 1152893) || id == 1154017)
-                {
                     return 1152893; // This title is gained through city loyalty.
-                }
 
                 if ((id >= 1151739 && id <= 1151747) || id == 1155481 || id == 1154505)
-                {
                     return id + 1;
-                }
 
                 if (id >= 1157181 && id <= 1157203)
-                {
                     return 1157180; // This title is obtained from turning in Bulk Order Deeds.
-                }
 
                 if (id >= 1156985 && id <= 1156987)
-                {
                     return 1156984; // This title is obtained from the Halloween Treasures of the Kotl City Event.	
-                }
 
                 if (id >= 1152068 && id <= 1152073)
-                {
                     return 1152075; // This is a reward title given for your valorous fights in arenas.
-                }
 
                 if (id >= 1155600 && id <= 1155603)
-                {
                     return 1155601; // This title is obtained from the Halloween Treasures of Doom Event.
-                }
 
                 if (id >= 1157649 && id <= 1157651)
-                {
                     return 1157648; // This title is obtained from the Halloween Treasures of the Sorcerer's Dungeon Event.	
-                }
 
                 switch (id)
                 {

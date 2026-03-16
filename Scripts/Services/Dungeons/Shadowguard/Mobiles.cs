@@ -398,14 +398,10 @@ namespace Server.Engines.Shadowguard
         public override bool OnBeforeDeath()
         {
             if (!base.OnBeforeDeath())
-            {
                 return false;
-            }
 
             if (0.66 > Utility.RandomDouble() && Encounter != null)
-            {
                 new Phylactery().MoveToWorld(Location, Map);
-            }
 
             return true;
         }

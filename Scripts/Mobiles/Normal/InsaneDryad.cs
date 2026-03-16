@@ -75,9 +75,9 @@ namespace Server.Mobiles
 
             if (Peaced != null)
             {
-                List<Mobile> peaced = new List<Mobile>();
+                var peaced = new List<Mobile>();
 
-                foreach (Mobile key in Peaced.Keys)
+                foreach (var key in Peaced.Keys)
                 {
                     peaced.Add(key);
                 }
@@ -208,9 +208,7 @@ namespace Server.Mobiles
             Item item = m.FindItemOnLayer(layer);
 
             if (item != null && item.Movable)
-            {
                 m.PlaceInBackpack(item);
-            }
         }
 
         #endregion
@@ -255,9 +253,7 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (Utility.RandomDouble() < 0.1)
-            {
                 c.DropItem(new ParrotItem());
-            }
         }
 
         public override void Serialize(GenericWriter writer)

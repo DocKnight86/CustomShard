@@ -62,11 +62,11 @@ namespace Server.Mobiles
                     return true;
                 }
 
-                Type type = f.GetType();
+                var type = f.GetType();
 
-                for (int index = 0; index < _FeedTypes.Length; index++)
+                for (var index = 0; index < _FeedTypes.Length; index++)
                 {
-                    Type t = _FeedTypes[index];
+                    var t = _FeedTypes[index];
 
                     if (t == type || type.IsSubclassOf(t))
                     {

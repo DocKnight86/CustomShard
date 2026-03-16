@@ -87,16 +87,12 @@ namespace Server.Items
                 get
                 {
                     if (Selected == null)
-                    {
                         return false;
-                    }
 
                     foreach (Skill sk in Selected)
                     {
                         if (sk == null)
-                        {
                             return false;
-                        }
                     }
 
                     return true;
@@ -151,9 +147,7 @@ namespace Server.Items
                     Skill sk = Selected[i];
 
                     if (sk == null)
-                    {
                         continue;
-                    }
 
                     AddButton(12, 190 + (i * 20), 4017, 4018, 5000 + i, GumpButtonType.Reply, 0);
                     AddHtmlLocalized(45, 190 + (i * 20), 150, 20, sk.Info.Localization, Green, false, false);
@@ -219,16 +213,12 @@ namespace Server.Items
             public override void OnResponse(RelayInfo info)
             {
                 if (!Token.IsChildOf(User.Backpack) || !User.Alive || User.Skills.Total > 2000)
-                {
                     return;
-                }
 
                 int buttonID = info.ButtonID;
 
                 if (buttonID == 0)
-                {
                     return;
-                }
 
                 switch (buttonID)
                 {
@@ -301,19 +291,13 @@ namespace Server.Items
                 TextRelay entry3 = info.GetTextEntry(3);
 
                 if (entry1 != null)
-                {
                     Str = Math.Min(125, Math.Max(10, Utility.ToInt32(entry1.Text)));
-                }
 
                 if (entry2 != null)
-                {
                     Dex = Math.Min(125, Math.Max(10, Utility.ToInt32(entry2.Text)));
-                }
 
                 if (entry3 != null)
-                {
                     Int = Math.Min(125, Math.Max(10, Utility.ToInt32(entry3.Text)));
-                }
             }
 
             private bool CanSelect(SkillName skill)
@@ -321,15 +305,17 @@ namespace Server.Items
                 foreach (Skill sk in Selected)
                 {
                     if (User.Skills[skill] == sk)
-                    {
                         return false;
-                    }
                 }
 
-                if (skill == SkillName.Throwing)
-                {
+                if (skill == SkillName.Spellweaving && !User.Spellweaving)
                     return false;
-                }
+
+                if (skill == SkillName.Throwing && User.Race != Race.Gargoyle)
+                    return false;
+
+                if (skill == SkillName.Archery && User.Race == Race.Gargoyle)
+                    return false;
 
                 return true;
             }

@@ -55,9 +55,7 @@ namespace Server.Engines.CityLoyalty
             CityTradeEntry entry = GetPlayerEntry<CityTradeEntry>(m as PlayerMobile);
 
             if (entry == null)
-            {
                 return 1;
-            }
 
             return Math.Min(5, Math.Max(1, entry.Completed / 25 + 1));
         }
@@ -70,9 +68,7 @@ namespace Server.Engines.CityLoyalty
         public bool HasTurnIn(Mobile from, TradeMinister minister)
         {
             if (from == null || minister == null || !ActiveTrades.ContainsKey(from) || ActiveTrades[from] == null)
-            {
                 return false;
-            }
 
             TradeOrderCrate crate = ActiveTrades[from];
 
@@ -82,9 +78,7 @@ namespace Server.Engines.CityLoyalty
         public bool TryOfferTrade(Mobile from, TradeMinister minister)
         {
             if (from == null || from.Backpack == null)
-            {
                 return true;
-            }
 
             if (ActiveTrades.ContainsKey(from))
             {
@@ -210,16 +204,12 @@ namespace Server.Engines.CityLoyalty
         public bool TryTurnInToSlim(Mobile from, TradeOrderCrate order, SlimTheFence slim)
         {
             if (order == null || from == null || slim == null || order.Entry == null)
-            {
                 return false;
-            }
 
             TradeEntry entry = order.Entry;
 
             if (!order.Fulfilled)
-            {
                 slim.SayTo(from, 1151732); // This trade order has not been fulfilled.  Fill the trade order with all necessary items and try again.
-            }
             else
             {
                 CityLoyaltySystem.OnSlimTradeComplete(from, order.Entry);
@@ -254,9 +244,7 @@ namespace Server.Engines.CityLoyalty
             }
 
             if (entry.CompletedSlim == 50)
-            {
                 entry.Player.AddRewardTitle((int)TradeTitle.Smuggler);
-            }
         }
 
         public override void OnPlayerAdded(PlayerMobile m)
@@ -268,9 +256,7 @@ namespace Server.Engines.CityLoyalty
         public static void CancelTradeOrder(Mobile from, TradeOrderCrate crate)
         {
             if (from == null)
-            {
                 from = crate.Owner;
-            }
 
             if (from != null)
             {
@@ -570,19 +556,13 @@ namespace Server.Engines.CityLoyalty
                     bc.RawDex += (int)(bc.RawDex * difficulty);
 
                     if (bc.HitsMaxSeed == -1)
-                    {
                         bc.HitsMaxSeed = bc.RawStr;
-                    }
 
                     if (bc.StamMaxSeed == -1)
-                    {
                         bc.StamMaxSeed = bc.RawDex;
-                    }
 
                     if (bc.ManaMaxSeed == -1)
-                    {
                         bc.ManaMaxSeed = bc.RawInt;
-                    }
 
                     bc.HitsMaxSeed += (int)(bc.HitsMaxSeed * difficulty);
                     bc.StamMaxSeed += (int)(bc.StamMaxSeed * difficulty);
@@ -602,9 +582,7 @@ namespace Server.Engines.CityLoyalty
                     bc.Tamable = false;
 
                     if (Ambushers == null)
-                    {
                         Ambushers = new Dictionary<BaseCreature, DateTime>();
-                    }
 
                     Ambushers.Add(bc, DateTime.UtcNow + TimeSpan.FromMinutes(AmbusherDelete));
 
@@ -656,14 +634,10 @@ namespace Server.Engines.CityLoyalty
         public static bool CanFit(int x, int y, int z, Map map, Mobile mob, int height = 16, bool checkMobiles = true, bool requireSurface = true)
         {
             if (map == null || map == Map.Internal)
-            {
                 return false;
-            }
 
             if (x < 0 || y < 0 || x >= map.Width || y >= map.Height)
-            {
                 return false;
-            }
 
             bool hasSurface = false;
             bool canswim = mob.CanSwim;
@@ -692,14 +666,10 @@ namespace Server.Engines.CityLoyalty
             }
 
             if (impassable && avgZ > z && z + height > lowZ)
-            {
                 return false;
-            }
 
             if (!impassable && z == avgZ && !lt.Ignored)
-            {
                 hasSurface = true;
-            }
 
             StaticTile[] staticTiles = map.Tiles.GetStaticTiles(x, y, true);
 
@@ -722,14 +692,10 @@ namespace Server.Engines.CityLoyalty
                 }
 
                 if ((surface || impassable) && staticTiles[i].Z + id.CalcHeight > z && z + height > staticTiles[i].Z)
-                {
                     return false;
-                }
 
                 if (surface && !impassable && z == staticTiles[i].Z + id.CalcHeight)
-                {
                     hasSurface = true;
-                }
             }
 
             IPooledEnumerable eable = map.GetItemsInRange(new Point3D(x, y, z), 0);
@@ -849,15 +815,11 @@ namespace Server.Engines.CityLoyalty
                     if (bc != null)
                     {
                         if (dt < DateTime.UtcNow)
-                        {
                             bc.Delete();
-                        }
                         else
                         {
                             if (Ambushers == null)
-                            {
                                 Ambushers = new Dictionary<BaseCreature, DateTime>();
-                            }
 
                             bc.IsAmbusher = true;
 
@@ -871,9 +833,7 @@ namespace Server.Engines.CityLoyalty
                     Timer.DelayCall(() =>
                         {
                             if (Player.RemoveRewardTitle(2303807, true))
-                            {
                                 Player.AddRewardTitle(1151739);
-                            }
                         });
                 }
             }
@@ -911,9 +871,7 @@ namespace Server.Engines.CityLoyalty
                 TradeOrderCrate crate = reader.ReadItem() as TradeOrderCrate;
 
                 if (m != null && crate != null)
-                {
                     ActiveTrades[m] = crate;
-                }
             }
 
             _NameBuffer = new Dictionary<Type, string>();
@@ -925,9 +883,7 @@ namespace Server.Engines.CityLoyalty
                 string name = reader.ReadString();
 
                 if (t != null)
-                {
                     _NameBuffer[t] = name;
-                }
             }
         }
     }

@@ -14,16 +14,12 @@ namespace Server.Engines.Chat
         public static void Initialize()
         {
             if (!Directory.Exists("Logs"))
-            {
                 Directory.CreateDirectory("Logs");
-            }
 
             string directory = Path.Combine("Logs", "Chat");
 
             if (!Directory.Exists(directory))
-            {
                 Directory.CreateDirectory(directory);
-            }
 
             m_OutputPerChannel = new Dictionary<string, StreamWriter>();
 
@@ -52,9 +48,7 @@ namespace Server.Engines.Chat
         public static void WriteLine(string channel, string text)
         {
             if (!Enabled || m_Output == null)
-            {
                 return;
-            }
 
             try
             {
@@ -63,9 +57,7 @@ namespace Server.Engines.Chat
                 StreamWriter channelOutput;
 
                 if (m_OutputPerChannel.ContainsKey(channel) && m_OutputPerChannel[channel] != null)
-                {
                     channelOutput = m_OutputPerChannel[channel];
-                }
                 else
                 {
                     string path = "Logs";
@@ -95,9 +87,7 @@ namespace Server.Engines.Chat
             path = Path.Combine(path, toAppend);
 
             if (!Directory.Exists(path))
-            {
                 Directory.CreateDirectory(path);
-            }
         }
 
         public static void LogMessage(string channel, string username, string message)

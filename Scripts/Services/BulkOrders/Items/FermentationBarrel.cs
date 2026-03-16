@@ -102,9 +102,7 @@ namespace Server.Items
         public void StartTimer()
         {
             if (m_Timer != null && m_Timer.Running)
-            {
                 return;
-            }
 
             m_Timer = Timer.DelayCall(TimeSpan.FromMinutes(10), TimeSpan.FromMinutes(10), CheckFermente);
             m_Timer.Start();
@@ -113,9 +111,7 @@ namespace Server.Items
         public void StopTimer()
         {
             if (m_Timer != null)
-            {
                 m_Timer.Stop();
-            }
 
             m_Timer = null;
         }
@@ -318,9 +314,7 @@ namespace Server.Items
             if (from.Alive && InRange(from, 2))
             {
                 if ((IsLockedDown || IsSecure) && !IsAccessibleTo(from))
-                {
                     return;
-                }
 
                 list.Add(new BeginFermentation(from, this));
                 list.Add(new EmptyBarrel(from, this));
@@ -366,9 +360,7 @@ namespace Server.Items
         private void StartFermentation(Mobile m, object state)
         {
             if (m == null)
-            {
                 return;
-            }
 
             if (!Fermented && HasFruitAndYeast())
             {
@@ -534,9 +526,7 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (_Barrel == null || _Barrel.Deleted)
-                {
                     return;
-                }
 
                 if (info.ButtonID == 1)
                 {

@@ -131,15 +131,16 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (m_IsRewardItem && !RewardSystem.CheckIsUsableBy(from, this, null))
+                return;
+
             if (IsChildOf(from.Backpack))
             {
                 from.CloseGump(typeof(RewardOptionGump));
                 from.SendGump(new RewardOptionGump(this));
             }
             else
-            {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.    
-            }
         }
 
         public override void GetProperties(ObjectPropertyList list)
@@ -147,9 +148,7 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
-            {
                 list.Add(1076218); // 2nd Year Veteran Reward
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -181,9 +180,7 @@ namespace Server.Items
             m_StatueType = (MinotaurStatueType)option;
 
             if (!Deleted)
-            {
                 base.OnDoubleClick(from);
-            }
         }
     }
 }

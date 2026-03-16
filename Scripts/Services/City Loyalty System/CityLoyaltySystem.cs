@@ -169,16 +169,12 @@ namespace Server.Engines.CityLoyalty
             set
             {
                 if (value != null && Governor != null)
-                {
                     Governor = null;
-                }
 
                 _GovernorElect = value;
 
                 if (Stone != null)
-                {
                     Stone.InvalidateProperties();
-                }
             }
         }
 
@@ -189,27 +185,19 @@ namespace Server.Engines.CityLoyalty
             set
             {
                 if (_Governor != null && _Governor != value && _Governor.NetState != null)
-                {
                     _Governor.SendLocalizedMessage(1154071); // King Blackthorn thanks you for your service. You have been removed from the Office of the Governor.
-                }
 
                 if (value == _GovernorElect)
-                {
                     _GovernorElect = null;
-                }
 
                 if (value != null && value != _Governor)
-                {
                     HeraldMessage(1154070, value.Name); // Hear Ye! Hear Ye! ~1_NAME~ hath accepted the Office of Governor! King Blackthorn congratulates Governor ~1_NAME~! 
-                }
 
                 _PendingGovernor = false;
                 _Governor = value;
 
                 if (Stone != null)
-                {
                     Stone.InvalidateProperties();
-                }
             }
         }
 
@@ -220,16 +208,12 @@ namespace Server.Engines.CityLoyalty
             set
             {
                 if (value && _GovernorElect != null)
-                {
                     _GovernorElect = null;
-                }
 
                 _PendingGovernor = value;
 
                 if (Stone != null)
-                {
                     Stone.InvalidateProperties();
-                }
             }
         }
 
@@ -242,9 +226,7 @@ namespace Server.Engines.CityLoyalty
                 _Treasury = value;
 
                 if (Stone != null)
-                {
                     Stone.InvalidateProperties();
-                }
             }
         }
 
@@ -257,9 +239,7 @@ namespace Server.Engines.CityLoyalty
                 _ActiveTradeDeal = value;
 
                 if (Stone != null)
-                {
                     Stone.InvalidateProperties();
-                }
             }
         }
 
@@ -272,9 +252,7 @@ namespace Server.Engines.CityLoyalty
                 _CompletedTrades = value;
 
                 if (Stone != null)
-                {
                     Stone.InvalidateProperties();
-                }
             }
         }
 
@@ -349,9 +327,7 @@ namespace Server.Engines.CityLoyalty
                     _Governor = null;
 
                     if (Stone != null)
-                    {
                         Stone.InvalidateProperties();
-                    }
                 }
 
                 if (from == GovernorElect)
@@ -359,9 +335,7 @@ namespace Server.Engines.CityLoyalty
                     _GovernorElect = null;
 
                     if (Stone != null)
-                    {
                         Stone.InvalidateProperties();
-                    }
                 }
 
                 CitizenWait[from] = DateTime.UtcNow + TimeSpan.FromDays(CitizenJoinWait);
@@ -387,14 +361,10 @@ namespace Server.Engines.CityLoyalty
             }
 
             if (from == Governor && entry.LoyaltyRating < LoyaltyRating.Unknown)
-            {
                 Governor = null;
-            }
 
             if (from == GovernorElect && entry.LoyaltyRating < LoyaltyRating.Unknown)
-            {
                 GovernorElect = null;
-            }
         }
 
         public virtual void AwardLove(Mobile from, double love, bool message = true)
@@ -525,9 +495,7 @@ namespace Server.Engines.CityLoyalty
             CityLoyaltyEntry entry = GetPlayerEntry<CityLoyaltyEntry>(from);
 
             if (entry == null)
-            {
                 return false;
-            }
 
             return (entry.Titles & title) != 0;
         }
@@ -537,9 +505,7 @@ namespace Server.Engines.CityLoyalty
             CityLoyaltyEntry entry = GetPlayerEntry<CityLoyaltyEntry>(from);
 
             if (entry == null)
-            {
                 return;
-            }
 
             entry.AddTitle(title);
         }
@@ -565,9 +531,7 @@ namespace Server.Engines.CityLoyalty
             CityLoyaltyEntry entry = GetPlayerEntry<CityLoyaltyEntry>(from);
 
             if (entry == null)
-            {
                 return false;
-            }
 
             return entry.LoyaltyRating >= GetMinimumRating(title);
         }
@@ -662,9 +626,7 @@ namespace Server.Engines.CityLoyalty
         public void HeraldMessage(string message)
         {
             if (Herald != null)
-            {
                 Herald.Say(message);
-            }
         }
 
         public void HeraldMessage(int message, string args)
@@ -678,13 +640,9 @@ namespace Server.Engines.CityLoyalty
         public void HeraldMessage(Mobile to, int message)
         {
             if (Herald != null)
-            {
                 Herald.SayTo(to, message);
-            }
             else
-            {
                 to.SendLocalizedMessage(message);
-            }
         }
 
         public bool CanAdd(Mobile from)
@@ -853,9 +811,7 @@ namespace Server.Engines.CityLoyalty
         public static void OnSpawnCreatureKilled(BaseCreature killed, int spawnLevel)
         {
             if (!Enabled || killed == null)
-            {
                 return;
-            }
 
             List<DamageStore> rights = killed.GetLootingRights();
 
@@ -875,9 +831,7 @@ namespace Server.Engines.CityLoyalty
         public static bool CanAddCitizen(Mobile from)
         {
             if (from.AccessLevel > AccessLevel.Player)
-            {
                 return true;
-            }
 
             for (var index = 0; index < Cities.Count; index++)
             {
@@ -1391,9 +1345,7 @@ namespace Server.Engines.CityLoyalty
                 Election.Serialize(writer);
             }
             else
-            {
                 writer.Write(1);
-            }
         }
 
         public override void Deserialize(GenericReader reader)
@@ -1415,9 +1367,7 @@ namespace Server.Engines.CityLoyalty
                             DateTime dt = reader.ReadDateTime();
 
                             if (m != null && dt > DateTime.UtcNow)
-                            {
                                 CitizenWait[m] = dt;
-                            }
                         }
                     }
                     goto case 0;
@@ -1438,13 +1388,9 @@ namespace Server.Engines.CityLoyalty
                         PostedOn = reader.ReadDateTime();
 
                         if (reader.ReadInt() == 0)
-                        {
                             Election = new CityElection(this, reader);
-                        }
                         else
-                        {
                             Election = new CityElection(this);
-                        }
                     }
                     break;
             }
@@ -1458,9 +1404,7 @@ namespace Server.Engines.CityLoyalty
                     DateTime dt = reader.ReadDateTime();
 
                     if (m != null && dt > DateTime.UtcNow)
-                    {
                         CitizenWait[m] = dt;
-                    }
                 }
             }
 

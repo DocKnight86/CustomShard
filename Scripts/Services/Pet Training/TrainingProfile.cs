@@ -86,9 +86,7 @@ namespace Server.Mobiles
             get
             {
                 if (_Plan == null)
-                {
                     _Plan = new PlanningProfile(Creature);
-                }
 
                 return _Plan;
             }
@@ -260,9 +258,7 @@ namespace Server.Mobiles
         public void CheckProgress(BaseCreature bc)
         {
             if (ControlSlots >= ControlSlotsMax || !HasBegunTraining || TrainingProgress >= TrainingProgressMax || Creature.ControlMaster == null)
-            {
                 return;
-            }
 
             double ourDif = Creature.BardingDifficulty;
             double theirDif = bc.BardingDifficulty;
@@ -295,13 +291,9 @@ namespace Server.Mobiles
                         int cliloc = 1157574; // *The pet's battle experience has greatly increased!*
 
                         if (toGain < 1.3)
-                        {
                             cliloc = 1157565; // *The pet's battle experience has slightly increased!*
-                        }
                         else if (toGain < 2.5)
-                        {
                             cliloc = 1157573; // *The pet's battle experience has fairly increased!*
-                        }
 
                         if (mobile.HasGump(typeof(PetTrainingProgressGump)))
                         {
@@ -320,6 +312,8 @@ namespace Server.Mobiles
                         if (TrainingProgress >= TrainingProgressMax)
                         {
                             Creature.PrivateOverheadMessage(MessageType.Regular, 0x59, 1157543, mobile.NetState); // *The creature surges with battle experience and is ready to train!*
+
+                            Engines.Quests.LeadingIntoBattleQuest.CheckComplete(mobile);
                         }
                     }
                     else

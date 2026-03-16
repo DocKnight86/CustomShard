@@ -1,4 +1,4 @@
-#region References
+﻿#region References
 using Server.Items;
 #endregion
 
@@ -63,7 +63,13 @@ namespace Server.Mobiles
 
         public override void OnDeath(Container c)
         {
+
             base.OnDeath(c);
+
+            if (Utility.RandomDouble() <= 0.25)
+            {
+                c.DropItem(new FairyDragonWing());
+            }
 
             if (Utility.RandomDouble() < 0.10)
             {

@@ -84,9 +84,7 @@ namespace Server.Engines.Exodus
         public override bool CheckTravel(Mobile traveller, Point3D p, TravelCheckType type)
         {
             if (traveller.AccessLevel > AccessLevel.Player)
-            {
                 return true;
-            }
 
             return type > TravelCheckType.Mark;
         }

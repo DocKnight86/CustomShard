@@ -90,9 +90,7 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Item.Deleted)
-                {
                     return;
-                }
 
                 if (targeted is Eggs eggs)
                 {
@@ -210,9 +208,7 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Item.Deleted)
-                {
                     return;
-                }
 
                 if (targeted is BowlFlour flour)
                 {
@@ -253,9 +249,7 @@ namespace Server.Items
                     if (m_From.CheckSkill(SkillName.Cooking, 0, 10))
                     {
                         if (m_From.AddToBackpack(new Muffins()))
-                        {
                             m_From.PlaySound(0x57);
-                        }
                     }
                     else
                     {
@@ -306,9 +300,7 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Item.Deleted)
-                {
                     return;
-                }
 
                 if (targeted is Dough dough)
                 {
@@ -384,9 +376,7 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!Movable)
-            {
                 return;
-            }
 
             SackFlourOpen flour = new SackFlourOpen
             {
@@ -533,9 +523,7 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!Movable)
-            {
                 return;
-            }
 
             from.BeginTarget(4, false, TargetFlags.None, OnTarget);
         }

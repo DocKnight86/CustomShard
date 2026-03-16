@@ -58,9 +58,7 @@ namespace Server.Engines.NewMagincia
         public void TryTransfer(Mobile from, StorageEntry entry)
         {
             if (entry == null)
-            {
                 return;
-            }
 
             int fees = entry.Funds;
 
@@ -265,9 +263,7 @@ namespace Server.Engines.NewMagincia
                 m_Entry = MaginciaBazaar.GetStorageEntry(from);
 
                 if (m_Entry == null)
-                {
                     Flags |= CMEFlags.Disabled;
-                }
             }
 
             public override void OnClick()
@@ -275,9 +271,7 @@ namespace Server.Engines.NewMagincia
                 Mobile from = Owner.From;
 
                 if (from == null || m_Entry == null)
-                {
                     return;
-                }
 
                 m_Mobile.TryTransfer(from, m_Entry);
             }
@@ -294,9 +288,7 @@ namespace Server.Engines.NewMagincia
                 Mobile from = Owner.From;
 
                 if (from != null)
-                {
                     from.SendGump(new MatchBidGump(from, null));
-                }
             }
         }
 

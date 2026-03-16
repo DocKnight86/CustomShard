@@ -70,9 +70,7 @@ namespace Server.Mobiles
             Mobile lastKiller = m.LastKiller;
 
             if (lastKiller is BaseCreature creature)
-            {
                 lastKiller = creature.GetMaster();
-            }
 
             if (IsInsideKhaldun(m) && IsInsideKhaldun(lastKiller) && lastKiller.Player && !m_Table.Contains(lastKiller))
             {
@@ -135,9 +133,7 @@ namespace Server.Mobiles
             //FocusMob = m_Target;
 
             if (AIObject != null)
-            {
                 AIObject.Action = ActionType.Combat;
-            }
 
             base.OnThink();
         }
@@ -151,9 +147,7 @@ namespace Server.Mobiles
         public override void OnDelete()
         {
             if (m_Target != null)
-            {
                 m_Table.Remove(m_Target);
-            }
 
             base.OnDelete();
         }

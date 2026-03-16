@@ -56,9 +56,7 @@ namespace Server.Engines.NewMagincia
             list.Add(1150546, Misc.ServerList.ServerName); // Shard: ~1_SHARDNAME~
 
             if (m_Expired)
-            {
                 list.Add(1150487); // [Expired]
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -73,9 +71,7 @@ namespace Server.Engines.NewMagincia
         public void CheckExpired()
         {
             if (DateTime.UtcNow > m_Expires)
-            {
                 OnExpired();
-            }
         }
 
         public void OnExpired()
@@ -90,9 +86,7 @@ namespace Server.Engines.NewMagincia
         public override void Delete()
         {
             if (!m_Expired)
-            {
                 OnExpired();
-            }
 
             base.Delete();
         }

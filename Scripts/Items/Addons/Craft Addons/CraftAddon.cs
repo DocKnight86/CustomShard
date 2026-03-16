@@ -49,9 +49,7 @@ namespace Server.Items
         public void AddCraftComponent(AddonToolComponent tool, int x, int y, int z)
         {
             if (Deleted)
-            {
                 return;
-            }
 
             Tools.Add(tool);
             Level = SecureLevel.CoOwners;
@@ -100,9 +98,7 @@ namespace Server.Items
         public virtual void OnCraftComponentUsed(Mobile from, AddonToolComponent tool)
         {
             if (!tool.TurnedOn)
-            {
                 return;
-            }
 
             if (from.InRange(tool.Location, 2))
             {

@@ -29,17 +29,13 @@ namespace Server.Items
             Movable = false;
 
             if (bone)
-            {
                 Hue = 1102;
-            }
 
             m_AutoLock = locked;
             Locked = locked;
 
             if (locked)
-            {
                 LockLevel = -255;
-            }
         }
 
         public MarkContainer(Serial serial)
@@ -59,13 +55,9 @@ namespace Server.Items
                 m_AutoLock = value;
 
                 if (!m_AutoLock)
-                {
                     StopTimer();
-                }
                 else if (!Locked && m_RelockTimer == null)
-                {
                     m_RelockTimer = new InternalTimer(this);
-                }
             }
         }
         [CommandProperty(AccessLevel.GameMaster)]
@@ -134,9 +126,7 @@ namespace Server.Items
                     StopTimer();
 
                     if (!Locked)
-                    {
                         m_RelockTimer = new InternalTimer(this);
-                    }
                 }
             }
         }
@@ -175,9 +165,7 @@ namespace Server.Items
         public void StopTimer()
         {
             if (m_RelockTimer != null)
-            {
                 m_RelockTimer.Stop();
-            }
 
             m_RelockTimer = null;
         }
@@ -226,9 +214,7 @@ namespace Server.Items
             writer.Write(m_AutoLock);
 
             if (!Locked && m_AutoLock)
-            {
                 writer.WriteDeltaTime(m_RelockTimer.RelockTime);
-            }
 
             writer.Write(m_TargetMap);
             writer.Write(m_Target);
@@ -243,9 +229,7 @@ namespace Server.Items
             m_AutoLock = reader.ReadBool();
 
             if (!Locked && m_AutoLock)
-            {
                 m_RelockTimer = new InternalTimer(this, reader.ReadDeltaTime() - DateTime.UtcNow);
-            }
 
             m_TargetMap = reader.ReadMap();
             m_Target = reader.ReadPoint3D();
@@ -274,9 +258,7 @@ namespace Server.Items
             Point3D location = new Point3D(x, y, z);
 
             if (FindMarkContainer(location, Map.Malas))
-            {
                 return;
-            }
 
             MarkContainer cont = new MarkContainer(bone, locked);
             WeakEntityCollection.Add("malas", cont);

@@ -136,9 +136,7 @@ namespace Server.Mobiles
         public override void OnAfterDelete()
         {
             if (m_Timer != null)
-            {
                 m_Timer.Stop();
-            }
 
             m_Timer = null;
 
@@ -168,16 +166,12 @@ namespace Server.Mobiles
                 foreach (Mobile m in eable)
                 {
                     if (m == m_Owner || m == m_Owner.Harrower || !m_Owner.CanBeHarmful(m))
-                    {
                         continue;
-                    }
 
                     if (m is BaseCreature bc)
                     {
                         if (bc.Controlled || bc.Summoned)
-                        {
                             m_ToDrain.Add(m);
-                        }
                     }
                     else if (m.Player)
                     {
@@ -206,9 +200,7 @@ namespace Server.Mobiles
                     m_Owner.Hits += drain;
 
                     if (m_Owner.Harrower != null)
-                    {
                         m_Owner.Harrower.Hits += drain;
-                    }
 
                     m.Damage(drain, m_Owner);
                 }

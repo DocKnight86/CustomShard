@@ -30,9 +30,7 @@ namespace Server.Engines.NewMagincia
                 Console.WriteLine("Generated {0} New Magincia Bazaar Stalls.", MaginciaBazaar.Plots.Count);
             }
             else
-            {
                 Console.WriteLine("Magincia Bazaar System already exists!");
-            }
 
             Console.WriteLine("Generating New Magincia Housing Lotty System..");
 
@@ -44,9 +42,7 @@ namespace Server.Engines.NewMagincia
                 Console.WriteLine("Generated {0} New Magincia Housing Plots.", MaginciaLottoSystem.Plots.Count);
             }
             else
-            {
                 Console.WriteLine("Magincia Housing Lotto System already exists!");
-            }
         }
 
         public static void ViewLottos_OnCommand(CommandEventArgs e)

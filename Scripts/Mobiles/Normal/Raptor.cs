@@ -124,13 +124,9 @@ namespace Server.Mobiles
                     Mobile friend = m_Friends[i];
 
                     if (friend == null || friend.Deleted)
-                    {
                         m_Friends.Remove(friend);
-                    }
                     else
-                    {
                         count++;
-                    }
                 }
 
                 for (int i = count; i < MaxFriends; i++)
@@ -147,25 +143,34 @@ namespace Server.Mobiles
                         int z = Map.GetAverageZ(x, y);
 
                         if (validLocation = Map.CanFit(x, y, Z, 16, false, false))
-                        {
                             loc = new Point3D(x, y, Z);
-                        }
                         else if (validLocation = Map.CanFit(x, y, z, 16, false, false))
-                        {
                             loc = new Point3D(x, y, z);
-                        }
                     }
 
                     friend.MoveToWorld(loc, Map);
                     friend.Combatant = Combatant;
 
                     if (friend.AIObject != null)
-                    {
                         friend.AIObject.Action = ActionType.Combat;
-                    }
 
                     m_Friends.Add(friend);
                 }
+            }
+        }
+
+        public override void OnDeath(Container c)
+        {
+            base.OnDeath(c);
+
+            if (!Controlled && Utility.RandomDouble() < 0.25)
+            {
+                c.DropItem(new AncientPotteryFragments());
+            }
+
+            if (!Controlled && Utility.RandomDouble() <= 0.005)
+            {
+                c.DropItem(new RaptorClaw());
             }
         }
 
@@ -190,19 +195,13 @@ namespace Server.Mobiles
             int version = reader.ReadInt();
 
             if (version > 0)
-            {
                 m_IsFriend = reader.ReadBool();
-            }
 
             if (version == 1)
-            {
                 SetWeaponAbility(WeaponAbility.BleedAttack);
-            }
 
             if (m_IsFriend)
-            {
                 Delete();
-            }
         }
 
         private class InternalTimer : Timer

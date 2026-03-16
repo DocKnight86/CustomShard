@@ -41,9 +41,7 @@ namespace Server.Engines.Plants
             Mobile from = sender.Mobile;
 
             if (info.ButtonID == 0 || m_Plant.Deleted || m_Plant.PlantStatus != PlantStatus.Stage9)
-            {
                 return;
-            }
 
             if (info.ButtonID == 3 && !from.InRange(m_Plant.GetWorldLocation(), 3))
             {
@@ -83,14 +81,10 @@ namespace Server.Engines.Plants
                             m_Plant.Movable = true;
 
                             if (m_Plant is MaginciaPlantItem item)
-                            {
                                 item.SetToDecorative = DateTime.Now;
-                            }
 
                             if (from.Backpack != null)
-                            {
                                 from.Backpack.TryDropItem(from, m_Plant, false);
-                            }
 
                             if (m_Plant is GardenBedPlantItem rp && rp.Component != null)
                             {

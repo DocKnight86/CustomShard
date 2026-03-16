@@ -45,9 +45,7 @@ namespace Server.Engines.JollyRoger
         public override void OnAfterDelete()
         {
             if (_Timer != null)
-            {
                 _Timer.Stop();
-            }
 
             _Timer = null;
 

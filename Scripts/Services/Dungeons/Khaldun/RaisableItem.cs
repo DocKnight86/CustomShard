@@ -46,17 +46,11 @@ namespace Server.Items
             set
             {
                 if (value <= 0)
-                {
                     m_MaxElevation = 0;
-                }
                 else if (value >= 60)
-                {
                     m_MaxElevation = 60;
-                }
                 else
-                {
                     m_MaxElevation = value;
-                }
             }
         }
 
@@ -74,9 +68,7 @@ namespace Server.Items
         public void Raise()
         {
             if (!IsRaisable)
-            {
                 return;
-            }
 
             m_RaiseTimer = new RaiseTimer(this);
             m_RaiseTimer.Start();
@@ -142,9 +134,7 @@ namespace Server.Items
                             Stop();
 
                             if (m_Item.StopSound >= 0)
-                            {
                                 Effects.PlaySound(m_Item.Location, m_Item.Map, m_Item.StopSound);
-                            }
 
                             m_Up = false;
                             m_Step = 0;
@@ -164,9 +154,7 @@ namespace Server.Items
                             Stop();
 
                             if (m_Item.StopSound >= 0)
-                            {
                                 Effects.PlaySound(m_Item.Location, m_Item.Map, m_Item.StopSound);
-                            }
 
                             m_Item.m_RaiseTimer = null;
 
@@ -176,9 +164,7 @@ namespace Server.Items
                 }
 
                 if (m_Item.MoveSound >= 0)
-                {
                     Effects.PlaySound(m_Item.Location, m_Item.Map, m_Item.MoveSound);
-                }
             }
         }
     }

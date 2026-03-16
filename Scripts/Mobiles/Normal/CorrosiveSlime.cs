@@ -69,9 +69,7 @@ namespace Server.Mobiles
                 }
 
                 if (item != null)
-                {
                     c.DropItem(item);
-                }
             }
 
             base.OnDeath(c);

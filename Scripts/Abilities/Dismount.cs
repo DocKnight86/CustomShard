@@ -16,11 +16,9 @@ namespace Server.Items
         public override bool Validate(Mobile from)
         {
             if (!base.Validate(from))
-            {
                 return false;
-            }
 
-            if ((from.Mounted || from.Flying) && !(from.Weapon is Lance))
+            if ((from.Mounted || from.Flying) && !(from.Weapon is Lance) && !(from.Weapon is GargishLance))
             {
                 from.SendLocalizedMessage(1061283); // You cannot perform that attack while mounted or flying!
                 return false;
@@ -32,14 +30,10 @@ namespace Server.Items
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
             if (!Validate(attacker))
-            {
                 return;
-            }
 
             if (defender is ChaosDragoon || defender is ChaosDragoonElite)
-            {
                 return;
-            }
 
             if (attacker is BaseCreature bc && bc.ControlMaster != null && bc.ControlMaster.Mounted)
             {
@@ -124,11 +118,9 @@ namespace Server.Items
         private static bool CheckMountedNoLance(Mobile attacker, Mobile defender)
         {
             if (!attacker.Mounted && !attacker.Flying)
-            {
                 return false;
-            }
 
-            if (attacker.Weapon is Lance && defender.Weapon is Lance)
+            if ((attacker.Weapon is Lance || attacker.Weapon is GargishLance) && (defender.Weapon is Lance || defender.Weapon is GargishLance))
             {
                 return false;
             }

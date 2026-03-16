@@ -56,34 +56,82 @@ namespace Server.Services.Virtues
             {
                 case 1:
                     {
+                        m_Beholder.SendGump(
+                            new VirtueInfoGump(
+                                m_Beholder,
+                                VirtueName.Humility,
+                                1052051,
+                                @"http://uo.com/wiki/ultima-online-wiki/gameplay/npc-commercial-transactions/the-virtues/#humility"));
                         break;
                     }
                 case 2:
                     {
+                        m_Beholder.SendGump(
+                            new VirtueInfoGump(
+                                m_Beholder,
+                                VirtueName.Sacrifice,
+                                1052053,
+                                @"http://uo.com/wiki/ultima-online-wiki/gameplay/npc-commercial-transactions/the-virtues/#sacrafice"));
                         break;
                     }
                 case 3:
                     {
+                        m_Beholder.SendGump(
+                            new VirtueInfoGump(
+                                m_Beholder,
+                                VirtueName.Compassion,
+                                1053000,
+                                @"http://uo.com/wiki/ultima-online-wiki/gameplay/npc-commercial-transactions/the-virtues/#compassion"));
                         break;
                     }
                 case 4:
                     {
+                        m_Beholder.SendGump(
+                            new VirtueInfoGump(
+                                m_Beholder,
+                                VirtueName.Spirituality,
+                                1052056,
+                                @"http://uo.com/wiki/ultima-online-wiki/gameplay/npc-commercial-transactions/the-virtues/#spirituality"));
                         break;
                     }
                 case 5:
                     {
+                        m_Beholder.SendGump(
+                            new VirtueInfoGump(
+                                m_Beholder,
+                                VirtueName.Valor,
+                                1054033,
+                                @"http://uo.com/wiki/ultima-online-wiki/gameplay/npc-commercial-transactions/the-virtues/#valor"));
                         break;
                     }
                 case 6:
                     {
+                        m_Beholder.SendGump(
+                            new VirtueInfoGump(
+                                m_Beholder,
+                                VirtueName.Honor,
+                                1052058,
+                                @"http://uo.com/wiki/ultima-online-wiki/gameplay/npc-commercial-transactions/the-virtues/#honor"));
                         break;
                     }
                 case 7:
                     {
+                        m_Beholder.SendGump(
+                            new VirtueInfoGump(
+                                m_Beholder,
+                                VirtueName.Justice,
+                                1052059,
+                                @"http://uo.com/wiki/ultima-online-wiki/gameplay/npc-commercial-transactions/the-virtues/#justice"));
                         break;
                     }
                 case 8:
                     {
+                        m_Beholder.SendGump(
+                            new VirtueInfoGump(
+                                m_Beholder,
+                                VirtueName.Honesty,
+                                1052060,
+                                @"http://uo.com/wiki/ultima-online-wiki/gameplay/npc-commercial-transactions/the-virtues/#honesty"));
                         break;
                     }
                 case 9:

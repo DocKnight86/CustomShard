@@ -26,9 +26,7 @@ namespace Server.Misc
         public static void Initialize()
         {
             if (Enabled)
-            {
                 EventSink.Speech += EventSink_Speech;
-            }
         }
 
         private static void EventSink_Speech(SpeechEventArgs args)
@@ -49,21 +47,13 @@ namespace Server.Misc
                             double value = Convert.ToDouble(split[2]);
 
                             if (Insensitive.Equals(name, "str"))
-                            {
                                 ChangeStrength(from, (int)value);
-                            }
                             else if (Insensitive.Equals(name, "dex"))
-                            {
                                 ChangeDexterity(from, (int)value);
-                            }
                             else if (Insensitive.Equals(name, "int"))
-                            {
                                 ChangeIntelligence(from, (int)value);
-                            }
                             else
-                            {
                                 ChangeSkill(from, name, value);
-                            }
                         }
                         catch (Exception e)
                         {
@@ -464,6 +454,69 @@ namespace Server.Misc
 
             Container bag = new Bag
             {
+                Hue = 2075,
+                Name = "SA Major Artifacts Human"
+            };
+
+            bag.DropItem(new AnimatedLegsoftheInsaneTinker());
+            bag.DropItem(new ResonantStaffofEnlightenment());
+            bag.DropItem(new JadeWarAxe());
+            bag.DropItem(new DemonHuntersStandard());
+            bag.DropItem(new WallOfHungryMouths());
+            bag.DropItem(new HumanSignOfChaos());
+            bag.DropItem(new GargishSignOfChaos());
+            bag.DropItem(new IronwoodCompositeBow());
+            bag.DropItem(new ClawsOfTheBerserker());
+            bag.DropItem(new StandardOfChaos());
+            bag.DropItem(new DefenderOfTheMagus());
+            bag.DropItem(new TheImpalersPick());
+            bag.DropItem(new CavalrysFolly());
+            bag.DropItem(new AxeOfAbandon());
+            bag.DropItem(new ProtectoroftheBattleMage());
+            bag.DropItem(new FallenMysticsSpellbook());
+            bag.DropItem(new CrownOfArcaneTemperament());
+            bag.DropItem(new VampiricEssence());
+
+            PlaceItemIn(box, 17, 57, bag);
+
+            bag = new Bag
+            {
+                Hue = 1159,
+                Name = "Eodon Artifacts"
+            };
+
+            bag.DropItem(new AnonsBoots());
+            bag.DropItem(new AnonsBootsGargoyle());
+            bag.DropItem(new AnonsSpellbook());
+            bag.DropItem(new BalakaisShamanStaff());
+            bag.DropItem(new BalakaisShamanStaffGargoyle());
+            bag.DropItem(new EnchantressCameo());
+            bag.DropItem(new GrugorsShield());
+            bag.DropItem(new GrugorsShieldGargoyle());
+            bag.DropItem(new HalawasHuntingBow());
+            bag.DropItem(new HalawasHuntingBowGargoyle());
+            bag.DropItem(new HawkwindsRobe());
+            bag.DropItem(new JumusSacredHide());
+            bag.DropItem(new JumusSacredHideGargoyle());
+            bag.DropItem(new JuonarsGrimoire());
+            bag.DropItem(new LereisHuntingSpear());
+            bag.DropItem(new LereisHuntingSpearGargoyle());
+            bag.DropItem(new MinaxsSandles());
+            bag.DropItem(new MinaxsSandlesGargoyle());
+            bag.DropItem(new OzymandiasObi());
+            bag.DropItem(new OzymandiasObiGargoyle());
+            bag.DropItem(new ShantysWaders());
+            bag.DropItem(new ShantysWadersGargoyle());
+            bag.DropItem(new TotemOfTheTribe());
+            bag.DropItem(new WamapsBoneEarrings());
+            bag.DropItem(new WamapsBoneEarringsGargoyle());
+            bag.DropItem(new UnstableTimeRift());
+            bag.DropItem(new MocapotlsObsidianSword());
+
+            PlaceItemIn(box, 40, 57, bag);
+
+            bag = new Bag
+            {
                 Hue = 1266,
                 Name = "Major Artifacts"
             };
@@ -551,6 +604,7 @@ namespace Server.Misc
             bag.DropItem(new DjinnisRing());
             bag.DropItem(new EmbroideredOakLeafCloak());
             bag.DropItem(new GladiatorsCollar());
+            bag.DropItem(new LieutenantOfTheBritannianRoyalGuard());
             bag.DropItem(new CaptainJohnsHat());
             bag.DropItem(new BraveKnightOfTheBritannia());
             bag.DropItem(new Pacify());
@@ -570,8 +624,12 @@ namespace Server.Misc
                 Name = "Doom Upgrade Arties"
             };
 
+            bag.DropItem(new BritchesOfWarding());
             bag.DropItem(new BowOfTheInfiniteSwarm());
+            bag.DropItem(new GlovesOfFeudalGrip());
             bag.DropItem(new Glenda());
+            bag.DropItem(new CuffsOfTheArchmage());
+            bag.DropItem(new TheScholarsHalo());
             bag.DropItem(new TheDeceiver());
             bag.DropItem(new BraceletOfPrimalConsumption());
 
@@ -704,9 +762,7 @@ namespace Server.Misc
             BankBox bank = m.BankBox;
 
             for (int i = 0; i < PowerScroll.Skills.Count; ++i)
-            {
                 m.Skills[PowerScroll.Skills[i]].Cap = 120.0;
-            }
 
             m.StatCap = 250;
 
@@ -781,6 +837,7 @@ namespace Server.Misc
                 Name = "Magery Items"
             };
 
+            PlaceItemIn(cont, 78, 88, new CrimsonCincture() { Hue = 232 });
             PlaceItemIn(cont, 102, 90, new CrystallineRing());
 
             var brac = new GoldBracelet
@@ -829,9 +886,7 @@ namespace Server.Misc
             PlaceItemIn(bag, 141, 128, toHue);
 
             for (int i = 0; i < 9; ++i)
-            {
                 PlaceItemIn(bag, 45 + (i * 10), 74, new RecallRune());
-            }
 
             PlaceItemIn(cont, 47, 91, bag);
 
@@ -921,9 +976,7 @@ namespace Server.Misc
                             StringBuilder sb = new StringBuilder();
 
                             if (strings.Length > 0)
-                            {
                                 sb.Append(strings[0]);
-                            }
 
                             for (int i = 1; i < strings.Length; ++i)
                             {

@@ -195,9 +195,7 @@ namespace Server.Engines.Plants
                             AddEntry(entry, index);
                         }
                         else
-                        {
                             AddEntry(entry);
-                        }
                     }
 
                     from.SendLocalizedMessage(1151846); // You put the seed in the seedbox.
@@ -282,9 +280,7 @@ namespace Server.Engines.Plants
             }
 
             if (amount > entry.Seed.Amount)
-            {
                 amount = entry.Seed.Amount;
-            }
 
             Seed seed;
 
@@ -446,10 +442,7 @@ namespace Server.Engines.Plants
                         SeedEntry entry = new SeedEntry(reader);
 
                         if (entry.Seed != null)
-                        {
                             Entries.Add(entry);
-                        }
-
                         break;
                 }
             }

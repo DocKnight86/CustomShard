@@ -22,9 +22,7 @@ namespace Server.Items
 
             RedKey1 redkey = new RedKey1();
             if (!from.AddToBackpack(redkey))
-            {
                 redkey.Delete();
-            }
         }
 
         public override void Serialize(GenericWriter writer)

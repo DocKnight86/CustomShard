@@ -49,13 +49,9 @@ namespace Server.Items
                 if (_TurnedOn != value)
                 {
                     if (value)
-                    {
                         ItemID = ActiveID;
-                    }
                     else
-                    {
                         ItemID = InactiveID;
-                    }
                 }
 
                 _TurnedOn = value;
@@ -87,13 +83,9 @@ namespace Server.Items
         public void OnChop(Mobile from)
         {
             if (Addon != null && from.InRange(GetWorldLocation(), 3))
-            {
                 Addon.OnChop(from);
-            }
             else
-            {
                 from.SendLocalizedMessage(500446); // That is too far away.
-            }
         }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
@@ -101,9 +93,7 @@ namespace Server.Items
             base.GetContextMenuEntries(from, list);
 
             if (Addon == null)
-            {
                 return;
-            }
 
             BaseHouse house = BaseHouse.FindHouseAt(this);
 
@@ -116,9 +106,7 @@ namespace Server.Items
                         TurnedOn = false;
 
                         if (InactiveMessage != 0)
-                        {
                             PrivateOverheadMessage(MessageType.Regular, 0x3B2, InactiveMessage, from.NetState);
-                        }
                     }
                     else
                     {
@@ -160,9 +148,7 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (Addon != null)
-            {
                 Addon.OnCraftComponentUsed(from, this);
-            }
         }
 
         public void SetCraftSystem(CraftSystem system)
@@ -173,17 +159,13 @@ namespace Server.Items
         public override void OnLocationChange(Point3D old)
         {
             if (Addon != null)
-            {
                 Addon.Location = new Point3D(X - Offset.X, Y - Offset.Y, Z - Offset.Z);
-            }
         }
 
         public override void OnMapChange()
         {
             if (Addon != null)
-            {
                 Addon.Map = Map;
-            }
         }
 
         public override void OnAfterDelete()
@@ -191,9 +173,7 @@ namespace Server.Items
             base.OnAfterDelete();
 
             if (Addon != null)
-            {
                 Addon.Delete();
-            }
         }
 
         public override bool OnDragDrop(Mobile from, Item dropped)
@@ -218,9 +198,7 @@ namespace Server.Items
                             tool.UsesRemaining -= toadd;
 
                             if (tool.UsesRemaining <= 0 && !tool.Deleted)
-                            {
                                 tool.Delete();
-                            }
 
                             from.SendLocalizedMessage(1155741); // Charges have been added to the power tool.
 
@@ -291,9 +269,7 @@ namespace Server.Items
             }
 
             if (Addon != null)
-            {
                 Addon.OnCraftComponentLoaded(this);
-            }
         }
     }
 }

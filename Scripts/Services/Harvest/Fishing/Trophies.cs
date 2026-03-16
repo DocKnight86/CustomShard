@@ -80,17 +80,11 @@ namespace Server.Items
                     BaseAddon addon = null;
 
                     if (northWall)
-                    {
                         addon = ConstructTrophy(true);
-                    }
                     else if (westWall)
-                    {
                         addon = ConstructTrophy(false);
-                    }
                     else
-                    {
                         from.SendLocalizedMessage(1042626); // The trophy must be placed next to a wall.
-                    }
 
                     if (addon != null)
                     {
@@ -117,9 +111,7 @@ namespace Server.Items
             if (m_Weight >= 20)
             {
                 if (m_Fisher != null)
-                {
                     list.Add(1070857, m_Fisher.Name); // Caught by ~1_fisherman~
-                }
 
                 list.Add(1070858, m_Weight.ToString()); // ~1_weight~ stones
             }
@@ -246,14 +238,9 @@ namespace Server.Items
                 case TrophyStyle.Dragonfish:
                     {
                         if (north)
-                        {
                             AddComponent(new TrophyComponent(17639, label, hue), 0, 0, 0);
-                        }
                         else
-                        {
                             AddComponent(new TrophyComponent(17640, label, hue), 0, 0, 0);
-                        }
-
                         break;
                     }
                 case TrophyStyle.BoardMahi:

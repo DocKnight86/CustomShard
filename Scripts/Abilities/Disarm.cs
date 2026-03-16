@@ -19,9 +19,7 @@ namespace Server.Items
             BaseWeapon weapon = from.Weapon as BaseWeapon;
 
             if (weapon == null)
-            {
                 return false;
-            }
 
             return weapon.Skill != SkillName.Wrestling;
         }
@@ -29,9 +27,7 @@ namespace Server.Items
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
             if (!Validate(attacker))
-            {
                 return;
-            }
 
             ClearCurrentAbility(attacker);
 
@@ -45,9 +41,7 @@ namespace Server.Items
             Item toDisarm = defender.FindItemOnLayer(Layer.OneHanded);
 
             if (toDisarm == null || !toDisarm.Movable)
-            {
                 toDisarm = defender.FindItemOnLayer(Layer.TwoHanded);
-            }
 
             Container pack = defender.Backpack;
 
@@ -98,18 +92,14 @@ namespace Server.Items
         public static void AddImmunity(Mobile m, TimeSpan duration)
         {
             if (_Immunity == null)
-            {
                 _Immunity = new List<Mobile>();
-            }
 
             _Immunity.Add(m);
 
             Timer.DelayCall(duration, mob =>
                 {
                     if (_Immunity != null && _Immunity.Contains(mob))
-                    {
                         _Immunity.Remove(mob);
-                    }
                 }, m);
         }
     }

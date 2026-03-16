@@ -49,9 +49,7 @@ namespace Server.Engines.VoidPool
                 AddHtmlLocalized(10, 50, 200, 16, 1152916, Orange, false, false); // Next Battle:
 
                 if (Controller.NextStart > DateTime.UtcNow)
-                {
                     AddHtmlLocalized(180, 50, 200, 16, 1152917, ((int)(Controller.NextStart - DateTime.UtcNow).TotalMinutes).ToString(), Orange, false, false); // Starts in ~1_MIN~ min.
-                }
             }
 
             AddButton(140, 70, 4005, 4006, 1, GumpButtonType.Reply, 0);
@@ -96,10 +94,7 @@ namespace Server.Engines.VoidPool
                     break;
                 case 4:
                     if (stats.BestWave != null)
-                    {
                         User.SendGump(new ScoresGump(Controller, User, ScoreType.BestWave));
-                    }
-
                     break;
             }
         }
@@ -135,9 +130,7 @@ namespace Server.Engines.VoidPool
             VoidPoolStats stats = VoidPoolStats.GetStats(Controller);
 
             if (ScoreType == ScoreType.BestWave && stats.BestWave == null)
-            {
                 return;
-            }
 
             switch (ScoreType)
             {
@@ -152,13 +145,9 @@ namespace Server.Engines.VoidPool
             AddHtmlLocalized(10, 30, 200, 16, Controller.Map == Map.Felucca ? 1012001 : 1012000, Red, false, false); // FEl/Tram
 
             if (loc is int i)
-            {
                 AddHtmlLocalized(10, 50, 200, 16, i, Red, false, false);
-            }
             else
-            {
                 AddHtml(10, 50, 200, 16, $"<basefont color=#8B0000>{(string)loc}", false, false);
-            }
 
             if (ScoreType == ScoreType.BestWave)
             {
@@ -222,13 +211,9 @@ namespace Server.Engines.VoidPool
             int hue;
 
             if (i != null)
-            {
                 hue = Points >= item.Points ? i.Hue : 0x3E9;
-            }
             else
-            {
                 hue = Points >= item.Points ? CraftResources.GetHue((CraftResource)item.Hue) : 0x3E9;
-            }
 
             return hue;
         }
@@ -242,9 +227,7 @@ namespace Server.Engines.VoidPool
                 item = Activator.CreateInstance(citem.Type, (CraftResource)citem.Hue) as Item;
             }
             else
-            {
                 item = Activator.CreateInstance(citem.Type) as Item;
-            }
 
             if (item != null)
             {

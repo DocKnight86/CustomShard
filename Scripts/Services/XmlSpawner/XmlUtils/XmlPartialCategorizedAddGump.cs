@@ -84,24 +84,16 @@ namespace Server.Gumps
             AddAlphaRegion(10, 250, 400, 20);
 
             if (m_Page > 0)
-            {
                 AddButton(10, 249, 4014, 4016, 2, GumpButtonType.Reply, 0);
-            }
             else
-            {
                 AddImage(10, 249, 4014);
-            }
 
             AddHtmlLocalized(44, 250, 170, 20, 1061028, m_Page > 0 ? 0x7FFF : 0x5EF7, false, false); // Previous page
 
             if (((m_Page + 1) * 10) < searchResults.Count)
-            {
                 AddButton(210, 249, 4005, 4007, 3, GumpButtonType.Reply, 0);
-            }
             else
-            {
                 AddImage(210, 249, 4005);
-            }
 
             AddHtmlLocalized(244, 250, 170, 20, 1061027, ((m_Page + 1) * 10) < searchResults.Count ? 0x7FFF : 0x5EF7, false, false); // Next page
         }
@@ -116,9 +108,7 @@ namespace Server.Gumps
         private static void Match(string match, IReadOnlyList<Type> types, IList results)
         {
             if (match.Length == 0)
-            {
                 return;
-            }
 
             match = match.ToLower();
 
@@ -207,18 +197,14 @@ namespace Server.Gumps
                 case 2: // Previous page
                     {
                         if (m_Page > 0)
-                        {
                             from.SendGump(new XmlPartialCategorizedAddGump(from, m_SearchString, m_Page - 1, m_SearchResults, true, m_EntryIndex, m_Gump));
-                        }
 
                         break;
                     }
                 case 3: // Next page
                     {
                         if ((m_Page + 1) * 10 < m_SearchResults.Count)
-                        {
                             from.SendGump(new XmlPartialCategorizedAddGump(from, m_SearchString, m_Page + 1, m_SearchResults, true, m_EntryIndex, m_Gump));
-                        }
 
                         break;
                     }

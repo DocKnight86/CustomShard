@@ -92,13 +92,9 @@ namespace Server.Items
                 Effect = effect;
 
                 if (effect.Duration > TimeSpan.MinValue)
-                {
                     m_Expires = DateTime.UtcNow + effect.Duration;
-                }
                 else
-                {
                     m_Expires = DateTime.MinValue;
-                }
             }
 
             protected override void OnTick()
@@ -251,9 +247,7 @@ namespace Server.Items
         public void OnDamage(int damage, int phys, int fire, int cold, int poison, int energy, int direct)
         {
             if (m_Charges >= 20)
-            {
                 return;
-            }
 
             double pd = 0; double fd = 0;
             double cd = 0; double pod = 0;
@@ -271,13 +265,9 @@ namespace Server.Items
                 pd = damage * ((double)phys / 100);
 
                 if (k >= a)
-                {
                     DelayHeal(Math.Min(pd * k, pd * .3));
-                }
                 else
-                {
                     DelayHeal(Math.Min(pd * a, pd * .18));
-                }
 
                 m_Charges++;
             }
@@ -287,13 +277,9 @@ namespace Server.Items
                 fd = damage * ((double)fire / 100);
 
                 if (f >= a)
-                {
                     DelayHeal(Math.Min(fd * f, fd * .3));
-                }
                 else
-                {
                     DelayHeal(Math.Min(fd * a, fd * .18));
-                }
 
                 m_Charges++;
             }
@@ -303,13 +289,9 @@ namespace Server.Items
                 cd = damage * ((double)cold / 100);
 
                 if (c >= a)
-                {
                     DelayHeal(Math.Min(cd * c, cd * .3));
-                }
                 else
-                {
                     DelayHeal(Math.Min(cd * a, cd * .18));
-                }
 
                 m_Charges++;
             }
@@ -319,13 +301,9 @@ namespace Server.Items
                 pod = damage * ((double)poison / 100);
 
                 if (p >= a)
-                {
                     DelayHeal(Math.Min(pod * p, pod * .3));
-                }
                 else
-                {
                     DelayHeal(Math.Min(pod * a, pod * .18));
-                }
 
                 m_Charges++;
             }
@@ -335,13 +313,9 @@ namespace Server.Items
                 ed = damage * ((double)energy / 100);
 
                 if (e >= a)
-                {
                     DelayHeal(Math.Min(ed * e, ed * .3));
-                }
                 else
-                {
                     DelayHeal(Math.Min(ed * a, ed * .18));
-                }
 
                 m_Charges++;
             }
@@ -363,9 +337,7 @@ namespace Server.Items
         public void DoHeal(double dam)
         {
             if (dam < 0)
-            {
                 return;
-            }
 
             Attacker.Heal((int)dam, Attacker, false);
             Attacker.SendLocalizedMessage(1113617); // Some of the damage you received has been converted to heal you.
@@ -376,52 +348,30 @@ namespace Server.Items
         public override void OnTick()
         {
             if (m_Charges <= 0)
-            {
                 RemoveEffects();
-            }
         }
 
         public static bool HasValue(Mobile from)
         {
             if (GetValue(DamageType.Kinetic, from) > 0)
-            {
                 return true;
-            }
-
             if (GetValue(DamageType.Fire, from) > 0)
-            {
                 return true;
-            }
-
             if (GetValue(DamageType.Cold, from) > 0)
-            {
                 return true;
-            }
-
             if (GetValue(DamageType.Poison, from) > 0)
-            {
                 return true;
-            }
-
             if (GetValue(DamageType.Energy, from) > 0)
-            {
                 return true;
-            }
-
             if (GetValue(DamageType.AllTypes, from) > 0)
-            {
                 return true;
-            }
-
             return false;
         }
 
         public static int GetValue(DamageType type, Mobile from)
         {
             if (from == null)
-            {
                 return 0;
-            }
 
             switch (type)
             {
@@ -441,14 +391,10 @@ namespace Server.Items
             DamageEaterContext context = GetContextForVictim<DamageEaterContext>(from);
 
             if (context == null && HasValue(from))
-            {
                 AddEffects(context = new DamageEaterContext(from));
-            }
 
             if (context != null)
-            {
                 context.OnDamage(damage, phys, fire, cold, pois, ergy, direct);
-            }
         }
     }
 
@@ -506,9 +452,7 @@ namespace Server.Items
         public static bool CheckHit(Mobile attacker, Mobile defender, WeaponAbility ability, Item weapon)
         {
             if (defender == null || ability == WeaponAbility.Disarm || ability == WeaponAbility.InfectiousStrike || SkillMasterySpell.HasSpell(attacker, typeof(SkillMasterySpell)) || VictimIsUnderEffects<SplinteringWeaponContext>(defender))
-            {
                 return false;
-            }
 
             SplinteringWeaponContext context = GetContext<SplinteringWeaponContext>(attacker, defender);
 
@@ -529,9 +473,7 @@ namespace Server.Items
         public static void AddBleedImmunity(Mobile m)
         {
             if (!(m is PlayerMobile) || BleedImmune.Contains(m))
-            {
                 return;
-            }
 
             BleedImmune.Add(m);
             Timer.DelayCall(TimeSpan.FromSeconds(16), () => BleedImmune.Remove(m));
@@ -553,9 +495,7 @@ namespace Server.Items
             SearingWeaponContext context = GetContext<SearingWeaponContext>(attacker, defender);
 
             if (context == null)
-            {
                 AddEffects(new SearingWeaponContext(attacker, defender));
-            }
         }
 
         public static bool HasContext(Mobile defender)
@@ -581,13 +521,9 @@ namespace Server.Items
             int toReduce = Victim.StamMax / 10;
 
             if (Victim.Stam - toReduce >= 3)
-            {
                 Victim.Stam -= toReduce;
-            }
             else
-            {
                 Victim.Stam = Math.Max(1, Victim.Stam - 1);
-            }
         }
 
         public override void RemoveEffects()
@@ -661,9 +597,7 @@ namespace Server.Items
         public static void AddImmunity(Mobile m)
         {
             if (_Immunity == null)
-            {
                 _Immunity = new Dictionary<Mobile, DateTime>();
-            }
 
             _Immunity[m] = DateTime.UtcNow + _ImmunityDuration;
         }
@@ -717,9 +651,7 @@ namespace Server.Items
             if (Victim.FindItemOnLayer(Layer.OneHanded) is Torch)
             {
                 if (Victim.NetState != null)
-                {
                     Victim.LocalOverheadMessage(MessageType.Regular, 0x61, 1071925); // * The open flame begins to scatter the swarm of insects! *
-                }
             }
             else
             {
@@ -833,9 +765,7 @@ namespace Server.Items
                 Mobile mob = list[index];
 
                 if (_Immunity[mob] < DateTime.UtcNow)
-                {
                     _Immunity.Remove(mob);
-                }
             }
 
             ColUtility.Free(list);

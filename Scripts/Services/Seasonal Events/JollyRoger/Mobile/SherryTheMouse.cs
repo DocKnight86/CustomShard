@@ -495,9 +495,7 @@ namespace Server.Engines.JollyRoger
                 var l = reader.ReadItem();
 
                 if (l != null)
-                {
                     LuteList.Add(l);
-                }
             }
 
             if (Map == Map.Trammel)

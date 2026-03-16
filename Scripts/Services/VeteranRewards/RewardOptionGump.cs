@@ -25,9 +25,7 @@ namespace Server.Gumps
             m_Option = option;
 
             if (m_Option != null)
-            {
                 m_Option.GetOptions(m_Options);
-            }
 
             AddPage(0);
 
@@ -41,13 +39,9 @@ namespace Server.Gumps
             AddHtmlLocalized(45, 296, 450, 20, 1060051, 0x7FFF, false, false); // CANCEL
 
             if (title > 0)
-            {
                 AddHtmlLocalized(14, 12, 273, 20, title, 0x7FFF, false, false);
-            }
             else
-            {
                 AddHtmlLocalized(14, 12, 273, 20, 1080392, 0x7FFF, false, false); // Select your choice from the menu below.
-            }
 
             AddPage(1);
 
@@ -56,37 +50,27 @@ namespace Server.Gumps
                 AddButton(19, 49 + i * 24, 0x845, 0x846, m_Options[i].ID, GumpButtonType.Reply, 0);
 
                 if (m_Options[i].Cliloc.Number > 0)
-                {
                     AddHtmlLocalized(44, 47 + i * 24, 213, 20, m_Options[i].Cliloc.Number, 0x7FFF, false, false);
-                }
                 else
-                {
                     AddHtml(44, 47 + i * 24, 213, 20, $"<basefont color=#FFFFFF>{m_Options[i].Text}", false, false);
-                }
             }
         }
 
         public override void OnResponse(NetState sender, RelayInfo info)
         {
             if (m_Option != null && Contains(info.ButtonID))
-            {
                 m_Option.OnOptionSelected(sender.Mobile, info.ButtonID);
-            }
         }
 
         private bool Contains(int chosen)
         {
             if (m_Options == null)
-            {
                 return false;
-            }
 
             foreach (RewardOption option in m_Options)
             {
                 if (option.ID == chosen)
-                {
                     return true;
-                }
             }
 
             return false;
@@ -114,59 +98,43 @@ namespace Server.Gumps
             m_Option = option;
 
             if (m_Option != null)
-            {
                 m_Option.GetOptions(m_Options);
-            }
 
             AddPage(0);
 
             AddBackground(0, 0, bgw, bgh, 0xA28);
 
             if (title > 0)
-            {
                 AddHtmlLocalized(30, 30, 240, 20, 1113302, $"#{title}", 0x0, false, false); // <CENTER>~1_VAL~</CENTER>
-            }
             else
-            {
                 AddHtmlLocalized(30, 30, 240, 20, 1113302, "#1080392", 0x0, false, false); // Select your choice from the menu below.
-            }
 
             for (int i = 0; i < m_Options.Count; i++)
             {
                 AddButton(30, 70 + i * 20, 0xFA5, 0xFA7, m_Options[i].ID, GumpButtonType.Reply, 0);
 
                 if (m_Options[i].Cliloc.Number > 0)
-                {
                     AddHtmlLocalized(70, 70 + i * 20, 150, 20, m_Options[i].Cliloc.Number, 0x0, false, false);
-                }
                 else
-                {
                     AddHtml(70, 70 + i * 20, 150, 20, $"<basefont color=#000000>{m_Options[i].Text}", false, false);
-                }
             }
         }
 
         public override void OnResponse(NetState sender, RelayInfo info)
         {
             if (m_Option != null && Contains(info.ButtonID))
-            {
                 m_Option.OnOptionSelected(sender.Mobile, info.ButtonID);
-            }
         }
 
         private bool Contains(int chosen)
         {
             if (m_Options == null)
-            {
                 return false;
-            }
 
             foreach (RewardOption option in m_Options)
             {
                 if (option.ID == chosen)
-                {
                     return true;
-                }
             }
 
             return false;

@@ -2,6 +2,7 @@ using Server.Engines.Craft;
 
 namespace Server.Items
 {
+    [Alterable(typeof(DefTinkering), typeof(GargishGlasses), true)]
     public class Glasses : BaseArmor, IRepairable
     {
         public CraftSystem RepairSystem => DefTinkering.CraftSystem;

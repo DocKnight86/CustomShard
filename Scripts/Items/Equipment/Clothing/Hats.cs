@@ -961,9 +961,7 @@ namespace Server.Items
         public override bool CanEquip(Mobile m)
         {
             if (!base.CanEquip(m))
-            {
                 return false;
-            }
 
             if (m.BodyMod == 183 || m.BodyMod == 184)
             {
@@ -979,9 +977,7 @@ namespace Server.Items
             base.OnAdded(parent);
 
             if (parent is Mobile mobile)
-            {
                 Misc.Titles.AwardKarma(mobile, -20, true);
-            }
         }
 
         public OrcishKinMask(Serial serial)
@@ -1063,9 +1059,7 @@ namespace Server.Items
             int v = Utility.RandomBirdHue();
 
             if (v == 2101)
-            {
                 v = 0;
-            }
 
             return v;
         }

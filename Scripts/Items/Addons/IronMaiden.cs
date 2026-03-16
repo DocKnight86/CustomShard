@@ -29,14 +29,10 @@ namespace Server.Items
                     Timer.DelayCall(TimeSpan.FromSeconds(0.5), TimeSpan.FromSeconds(0.5), 3, Activate, new object[] { c, from });
                 }
                 else
-                {
                     from.LocalOverheadMessage(MessageType.Regular, 0, 501777); // Hmm... you suspect that if you used this again, it might hurt.
-                }
             }
             else
-            {
                 from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -73,9 +69,7 @@ namespace Server.Items
                         z = c.Map.GetAverageZ(x, y);
 
                         if (!c.Map.CanFit(x, y, z, 1, false, false, true))
-                        {
                             continue;
-                        }
                     }
 
                     Blood blood = new Blood(Utility.RandomMinMax(0x122C, 0x122F));
@@ -83,13 +77,9 @@ namespace Server.Items
                 }
 
                 if (from.Female)
-                {
                     from.PlaySound(Utility.RandomMinMax(0x150, 0x153));
-                }
                 else
-                {
                     from.PlaySound(Utility.RandomMinMax(0x15A, 0x15D));
-                }
 
                 from.LocalOverheadMessage(MessageType.Regular, 0, 501777); // Hmm... you suspect that if you used this again, it might hurt.
                 SpellHelper.Damage(TimeSpan.Zero, from, Utility.Dice(2, 10, 5));
@@ -103,17 +93,13 @@ namespace Server.Items
             object[] param = (object[])obj;
 
             if (param[0] is AddonComponent && param[1] is Mobile)
-            {
                 Activate((AddonComponent)param[0], (Mobile)param[1]);
-            }
         }
 
         private void Deactivate(object obj)
         {
             if (obj is AddonComponent component)
-            {
                 component.ItemID = 0x1249;
-            }
         }
     }
 

@@ -33,14 +33,10 @@ namespace Server.Spells.SkillMasteries
         public override bool CheckCast()
         {
             if (!HasShield())
-            {
                 return false;
-            }
 
             if (HasSpell(Caster, GetType()))
-            {
                 return false;
-            }
 
             return base.CheckCast();
         }
@@ -86,9 +82,7 @@ namespace Server.Spells.SkillMasteries
         private bool HasShield()
         {
             if (!Caster.Player)
-            {
                 return true;
-            }
 
             BaseShield shield = Caster.FindItemOnLayer(Layer.TwoHanded) as BaseShield;
 

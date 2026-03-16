@@ -14,9 +14,7 @@ namespace Server.Items
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
             if (!CheckMana(attacker, true))
-            {
                 return;
-            }
 
             ClearCurrentAbility(attacker);
 

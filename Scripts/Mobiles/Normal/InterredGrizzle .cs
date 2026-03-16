@@ -59,9 +59,7 @@ namespace Server.Mobiles
         public override void OnDamage(int amount, Mobile from, bool willKill)
         {
             if (Utility.RandomDouble() < 0.04)
-            {
                 SpillAcid(null, Utility.RandomMinMax(1, 3));
-            }
 
             base.OnDamage(amount, from, willKill);
         }

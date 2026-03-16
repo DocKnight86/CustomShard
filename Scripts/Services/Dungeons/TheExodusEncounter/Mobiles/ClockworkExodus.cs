@@ -21,7 +21,11 @@ namespace Server.Mobiles
             typeof(HygieiasAmulet),
             typeof(Asclepius),
             typeof(ClockworkLeggings),
-            typeof(DupresSword)
+            typeof(DupresSword),
+            typeof(GargishDupresSword),
+            typeof(GargishClockworkLeggings),
+            typeof(GargishBracersofAlchemicalDevastation),
+            typeof(GargishAsclepius)
         };
 
         private Point3D m_LastTarget;
@@ -72,9 +76,7 @@ namespace Server.Mobiles
             m_MinHits = Hits;
 
             if (Instances == null)
-            {
                 Instances = new List<ClockworkExodus>();
-            }
 
             Instances.Add(this);
 
@@ -96,9 +98,7 @@ namespace Server.Mobiles
                 Container pack = to.Backpack;
 
                 if (pack == null || !pack.TryDropItem(to, artifact, false))
-                {
                     to.BankBox.DropItem(artifact);
-                }
 
                 to.SendLocalizedMessage(502088); // A special gift has been placed in your backpack.
             }
@@ -111,9 +111,7 @@ namespace Server.Mobiles
         public override bool OnBeforeDeath()
         {
             if (Utility.RandomDouble() < 0.2)
-            {
                 DistributeRandomArtifact(this, m_Artifact);
-            }
 
             Map map = Map;
 
@@ -126,17 +124,13 @@ namespace Server.Mobiles
                         double dist = Math.Sqrt(x * x + y * y);
 
                         if (dist <= 8)
-                        {
                             new GoldTimer(map, X + x, Y + y).Start();
-                        }
                     }
                 }
             }
 
             if (Instances != null && Instances.Contains(this))
-            {
                 Instances.Remove(this);
-            }
 
             return base.OnBeforeDeath();
         }
@@ -158,9 +152,7 @@ namespace Server.Mobiles
             Map map = Map;
 
             if (map == null)
-            {
                 return;
-            }
 
             MovingParticles(target, 0x1AF6, 5, 0, false, false, 0x816, 0, 3006, 0, 0, 0);
 
@@ -215,14 +207,10 @@ namespace Server.Mobiles
             base.OnDamage(amount, from, willKill);
 
             if (Hits < m_MinHits && Hits < HitsMax * 0.60)
-            {
                 m_MinHits = Hits;
-            }
 
             if (Hits >= HitsMax * 0.75)
-            {
                 m_MinHits = HitsMax;
-            }
         }
 
         public ClockworkExodus(Serial serial)
@@ -246,9 +234,7 @@ namespace Server.Mobiles
             m_MinHits = reader.ReadInt();
 
             if (Instances == null)
-            {
                 Instances = new List<ClockworkExodus>();
-            }
 
             Instances.Add(this);
         }
@@ -275,15 +261,11 @@ namespace Server.Mobiles
                     canFit = m_Map.CanFit(m_X, m_Y, z + i, 6, false, false);
 
                     if (canFit)
-                    {
                         z += i;
-                    }
                 }
 
                 if (!canFit)
-                {
                     return;
-                }
 
                 Gold g = new Gold(500, 1000);
                 g.MoveToWorld(new Point3D(m_X, m_Y, z), m_Map);

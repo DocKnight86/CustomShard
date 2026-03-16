@@ -23,17 +23,11 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!IsChildOf(from.Backpack))
-            {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
-            }
             else if (from.Backpack.GetAmount(typeof(QuartzGrit)) == 0)
-            {
                 from.SendLocalizedMessage(1151813, "#1151808"); // You do not have a required component: ~1_val~
-            }
             else if (from.Backpack.GetAmount(typeof(CursedOilstone)) == 0)
-            {
                 from.SendLocalizedMessage(1151813, "#1151810"); // You do not have a required component: ~1_val~
-            }
             else
             {
                 from.Backpack.ConsumeTotal(new[] { typeof(CursedOilstone), typeof(QuartzGrit) }, new[] { 1, 1 });

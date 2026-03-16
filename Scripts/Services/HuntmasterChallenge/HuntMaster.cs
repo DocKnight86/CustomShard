@@ -63,26 +63,16 @@ namespace Server.Engines.HuntsmasterChallenge
                 HuntingSystem sys = HuntingSystem.Instance;
 
                 if (sys == null || !sys.Active)
-                {
                     return false;
-                }
 
                 if (!permit.HasDocumentedKill)
-                {
                     SayTo(from, "You can't submit a kill you haven't documented yet!");
-                }
                 else if (permit.KillEntry.DateKilled < sys.SeasonBegins)
-                {
                     SayTo(from, 1155720); // This permit was documented in a different month or year than the current month and year. I only accept permits documented in the current month and year.
-                }
                 else if (permit.HasSubmitted)
-                {
                     SayTo(from, 1155719); // This permit has already been submitted.
-                }
                 else
-                {
                     sys.TrySubmitKill(this, from, permit);
-                }
             }
 
             return false;
@@ -102,9 +92,7 @@ namespace Server.Engines.HuntsmasterChallenge
                 Mobile from = Owner.From;
 
                 if (HuntingPermit.HasPermit(from))
-                {
                     from.SendLocalizedMessage(1155702); // You already have a hunting permit.
-                }
                 else if (Banker.Withdraw(from, 5000, true))
                 {
                     HuntingPermit permit = new HuntingPermit(from);
@@ -117,9 +105,7 @@ namespace Server.Engines.HuntsmasterChallenge
                     //TODO: Message???
                 }
                 else
-                {
                     from.SendLocalizedMessage(500382); // Thou dost not have sufficient funds in thy account to withdraw that much.
-                }
             }
         }
 
@@ -144,21 +130,19 @@ namespace Server.Engines.HuntsmasterChallenge
         private void CheckItems()
         {
             if (Backpack == null)
-            {
                 AddItem(new Backpack());
-            }
 
             Item i = Backpack.FindItemByType(typeof(HuntmastersRewardTitleDeed));
             if (i == null)
-            {
                 Backpack.DropItem(new HuntmastersRewardTitleDeed());
-            }
 
             i = Backpack.FindItemByType(typeof(RangersGuildSash));
             if (i == null)
-            {
                 Backpack.DropItem(new RangersGuildSash());
-            }
+
+            i = Backpack.FindItemByType(typeof(GargishRangersGuildSash));
+            if (i == null)
+                Backpack.DropItem(new GargishRangersGuildSash());
         }
 
         public HuntMaster(Serial serial) : base(serial)

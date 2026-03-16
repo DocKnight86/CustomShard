@@ -9,14 +9,10 @@ namespace Server.Engines.VvV
             get
             {
                 if (Hue == ViceVsVirtueSystem.VirtueHue)
-                {
                     return 1155532;
-                }
 
                 if (Hue == ViceVsVirtueSystem.ViceHue)
-                {
                     return 1155533;
-                }
 
                 return base.LabelNumber;
             }
@@ -45,9 +41,7 @@ namespace Server.Engines.VvV
             int version = reader.ReadInt();
 
             if (version == 0)
-            {
                 Timer.DelayCall(() => ViceVsVirtueSystem.Instance.AddVvVItem(this));
-            }
         }
     }
 }

@@ -102,14 +102,10 @@ namespace Server.Mobiles
             base.OnThink();
 
             if (Combatant == null)
-            {
                 return;
-            }
 
             if (NextManaDrain < DateTime.UtcNow)
-            {
                 DoManaDrain();
-            }
         }
 
         public void DoManaDrain()
@@ -236,9 +232,7 @@ namespace Server.Mobiles
             public override void Delete()
             {
                 if (Static != null)
-                {
                     Static.Delete();
-                }
 
                 Static = null;
                 base.Delete();
@@ -297,9 +291,7 @@ namespace Server.Mobiles
                 Static = reader.ReadItem();
 
                 if (Static != null)
-                {
                     Static.Delete();
-                }
 
                 Delete();
             }
@@ -322,11 +314,42 @@ namespace Server.Mobiles
                         Container pack = m.Backpack;
 
                         if (pack == null || !pack.TryDropItem(m, artifact, false))
-                        {
                             m.BankBox.DropItem(artifact);
-                        }
 
                         m.SendLocalizedMessage(1062317); // For your valor in combating the fallen beast, a special artifact has been bestowed on you.
+                    }
+                }
+            }
+        }
+
+        public override void OnKilledBy(Mobile mob)
+        {
+            base.OnKilledBy(mob);
+
+            if (Siege.SiegeShard && mob is PlayerMobile mobile)
+            {
+                int chance = Engines.Despise.DespiseBoss.ArtifactChance + Math.Min(10, mobile.Luck / 180);
+
+                if (chance >= Utility.Random(100))
+                {
+                    Type t = Engines.Despise.DespiseBoss.Artifacts[Utility.Random(Engines.Despise.DespiseBoss.Artifacts.Length)];
+
+                    if (t != null)
+                    {
+                        Item arty = Loot.Construct(t);
+
+                        if (arty != null)
+                        {
+                            Container pack = mobile.Backpack;
+
+                            if (pack == null || !pack.TryDropItem(mobile, arty, false))
+                            {
+                                mobile.BankBox.DropItem(arty);
+                                mobile.SendMessage("An artifact has been placed in your bankbox!");
+                            }
+                            else
+                                mobile.SendLocalizedMessage(1153440); // An artifact has been placed in your backpack!
+                        }
                     }
                 }
             }

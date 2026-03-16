@@ -36,9 +36,7 @@ namespace Server.Items
                 Hue = 0;
             }
             else
-            {
                 Hue = info.Hue;
-            }
 
             InvalidateProperties();
         }
@@ -94,9 +92,7 @@ namespace Server.Items
             int v = reader.ReadInt();
 
             if (v > 0)
-            {
                 m_PlantHue = (PlantHue)reader.ReadInt();
-            }
         }
     }
 
@@ -133,9 +129,7 @@ namespace Server.Items
                 Hue = 0;
             }
             else
-            {
                 Hue = info.Hue;
-            }
 
             InvalidateProperties();
         }
@@ -198,9 +192,7 @@ namespace Server.Items
             int v = reader.ReadInt();
 
             if (v > 1)
-            {
                 m_PlantHue = (PlantHue)reader.ReadInt();
-            }
         }
     }
 

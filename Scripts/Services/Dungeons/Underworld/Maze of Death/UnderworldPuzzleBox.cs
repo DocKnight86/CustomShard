@@ -46,9 +46,7 @@ namespace Server.Items
                     puzzle.SendTimeRemainingMessage(from);
 
                     if (from.AccessLevel == AccessLevel.Player)
-                    {
                         m_Table[from] = DateTime.UtcNow + TimeSpan.FromHours(24);
-                    }
                 }
             }
         }
@@ -58,9 +56,7 @@ namespace Server.Items
             if (m_Table.ContainsKey(from))
             {
                 if (m_Table[from] < DateTime.UtcNow)
-                {
                     m_Table.Remove(from);
-                }
             }
 
             return m_Table.ContainsKey(from);

@@ -20,9 +20,7 @@ namespace Server.Engines.Craft
             m_CraftItem = item;
 
             if (m_Recipes.ContainsKey(id))
-            {
                 throw new Exception("Attempting to create recipe with preexisting ID.");
-            }
 
             m_Recipes.Add(id, this);
             m_LargestRecipeID = Math.Max(id, m_LargestRecipeID);
@@ -50,9 +48,7 @@ namespace Server.Engines.Craft
             get
             {
                 if (m_TD == null)
-                {
                     m_TD = new TextDefinition(m_CraftItem.NameNumber, m_CraftItem.NameString);
-                }
 
                 return m_TD;
             }
@@ -75,9 +71,7 @@ namespace Server.Engines.Craft
                 if (targeted is PlayerMobile mobile)
                 {
                     foreach (KeyValuePair<int, Recipe> kvp in m_Recipes)
-                    {
                         mobile.AcquireRecipe(kvp.Key);
-                    }
 
                     m.SendMessage("You teach them all of the recipies.");
                 }

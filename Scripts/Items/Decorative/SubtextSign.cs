@@ -41,9 +41,7 @@ namespace Server.Items
             base.AddNameProperties(list);
 
             if (!string.IsNullOrEmpty(m_Subtext))
-            {
                 list.Add(m_Subtext);
-            }
         }
 
         public override void Serialize(GenericWriter writer)

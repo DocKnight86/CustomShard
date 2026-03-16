@@ -104,9 +104,7 @@ namespace Server.Mobiles
                     from.SendLocalizedMessage(1070820);
 
                     if (Mana > 14)
-                    {
                         Mana -= 15;
-                    }
                 }
             }
             base.OnDamage(amount, from, willKill);

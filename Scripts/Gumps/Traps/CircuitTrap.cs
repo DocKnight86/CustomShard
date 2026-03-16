@@ -161,9 +161,7 @@ namespace Server.Gumps
                 int pick;
 
                 if (Progress.Count > 0 && Progress.Count < Path.Count)
-                {
                     next = Path[Progress.Count];
-                }
 
                 switch (id)
                 {

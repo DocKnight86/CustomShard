@@ -1,4 +1,5 @@
 using Server.Accounting;
+using Server.Engines.VeteranRewards;
 using System;
 using System.Collections.Generic;
 
@@ -138,7 +139,7 @@ namespace Server.Items
         {
             if (m_LuckTable.ContainsKey(from) && from.Account is Account account)
             {
-                return Math.Min(MaxLuckBonus, 200);
+                return Math.Min(MaxLuckBonus, 200 + RewardSystem.GetRewardLevel(account) * 50);
             }
 
             return 0;

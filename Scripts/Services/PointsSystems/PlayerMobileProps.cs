@@ -65,10 +65,24 @@ namespace Server.Mobiles
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
+        public double DespiseCrystals
+        {
+            get => (int)PointsSystem.DespiseCrystals.GetPoints(Player);
+            set => PointsSystem.DespiseCrystals.SetPoints(Player, value);
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
         public double ViceVsVirtue
         {
             get => (int)PointsSystem.ViceVsVirtue.GetPoints(Player);
             set => PointsSystem.ViceVsVirtue.SetPoints(Player, value);
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public double Khaldun
+        {
+            get => (int)PointsSystem.Khaldun.GetPoints(Player);
+            set => PointsSystem.Khaldun.SetPoints(Player, value);
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -83,6 +97,13 @@ namespace Server.Mobiles
         {
             get => (int)PointsSystem.RisingTide.GetPoints(Player);
             set => PointsSystem.RisingTide.SetPoints(Player, value);
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public double Fellowship
+        {
+            get => (int)PointsSystem.FellowshipData.GetPoints(Player);
+            set => PointsSystem.FellowshipData.SetPoints(Player, value);
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -121,9 +142,7 @@ namespace Server.Mobiles
             get
             {
                 if (_CityLoyaltyProps == null)
-                {
                     _CityLoyaltyProps = new CityLoyaltyProps(Player);
-                }
 
                 return _CityLoyaltyProps;
             }
@@ -139,9 +158,7 @@ namespace Server.Mobiles
         public override string ToString()
         {
             if (Player.Account == null)
-            {
                 return "...";
-            }
 
             return (Player.Account.TotalCurrency * Account.CurrencyThreshold).ToString("N0", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
         }
@@ -159,9 +176,7 @@ namespace Server.Mobiles
             get
             {
                 if (Player.Account == null)
-                {
                     return 0;
-                }
 
                 return Player.Account.TotalGold;
             }
@@ -173,9 +188,7 @@ namespace Server.Mobiles
             get
             {
                 if (Player.Account == null)
-                {
                     return 0;
-                }
 
                 return Player.Account.TotalPlat;
             }
@@ -187,9 +200,7 @@ namespace Server.Mobiles
             get
             {
                 if (Player.Account == null)
-                {
                     return 0;
-                }
 
                 return Player.Account.TotalCurrency * Account.CurrencyThreshold;
             }

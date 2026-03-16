@@ -265,9 +265,7 @@ namespace Server.Items
             public override void OnDoubleClick(Mobile from)
             {
                 if (m_Tree != null && !m_Tree.Deleted)
-                {
                     m_Tree.OnDoubleClick(from);
-                }
             }
 
             public override void Serialize(GenericWriter writer)
@@ -286,9 +284,7 @@ namespace Server.Items
                 m_Tree = reader.ReadItem() as HolidayTree;
 
                 if (m_Tree == null)
-                {
                     Delete();
-                }
             }
         }
     }

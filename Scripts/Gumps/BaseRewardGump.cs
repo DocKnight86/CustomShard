@@ -48,13 +48,9 @@ namespace Server.Gumps
             Page = 1;
 
             if (points == -1)
-            {
                 Points = GetPoints(user);
-            }
             else
-            {
                 Points = points;
-            }
 
             AddHtmlLocalized(70, 35, 270, 20, Title, 0x1, false, false);
             AddHtmlLocalized(50, 65, 150, 20, PointsName, 0x1, false, false);
@@ -98,29 +94,21 @@ namespace Server.Gumps
                 int y = offset - item.Y;
 
                 if (item.Height < 20)
-                {
                     y += (20 - item.Height) / 2;
-                }
 
                 Item i = null;
 
                 if (Owner.Backpack != null && item.Type != null)
-                {
                     i = Owner.Backpack.FindItemByType(item.Type);
-                }
 
                 int hue = GetItemHue(i, item);
 
                 AddItem(55 - item.X + max / 2 - item.Width / 2, y, item.ItemID, hue);
 
                 if (i != null)
-                {
                     AddItemProperty(i.Serial);
-                }
                 else
-                {
                     TextDefinition.AddTooltip(this, item.Tooltip);
-                }
 
                 AddLabel(80 + max, offset + height / 2 - 10, Points >= item.Points ? 0x64 : 0x21, item.Points.ToString("N0"));
 
@@ -128,13 +116,9 @@ namespace Server.Gumps
                 Index++;
 
                 if (Index < Collection.Count)
-                {
                     next = Math.Max(Collection[Index].Height, 20);
-                }
                 else
-                {
                     next = 0;
-                }
             }
 
             if (Page > 1)
@@ -167,9 +151,7 @@ namespace Server.Gumps
                     from.SendGump(new aConfirmRewardGump(Owner, item, info.ButtonID - 200, OnConfirmed));
                 }
                 else
-                {
                     from.SendLocalizedMessage(1073122); // You don't have enough points for that!
-                }
             }
         }
 
@@ -207,9 +189,7 @@ namespace Server.Gumps
             int hue = 0x3E9;
 
             if (Points >= item.Points)
-            {
                 hue = item.Hue;
-            }
 
             return hue;
         }
@@ -223,9 +203,7 @@ namespace Server.Gumps
                 for (int i = 0; i < Collection.Count; i++)
                 {
                     if (max < Collection[i].Width)
-                    {
                         max = Collection[i].Width;
-                    }
                 }
             }
 
@@ -258,9 +236,7 @@ namespace Server.Gumps
             if (from.InRange(Owner.Location, 5) && Item != null)
             {
                 if (ConfirmCallback != null)
-                {
                     ConfirmCallback(Item, Index);
-                }
             }
         }
     }

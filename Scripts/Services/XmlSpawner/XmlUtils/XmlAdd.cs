@@ -93,10 +93,7 @@ namespace Server.Mobiles
                 AccountName = account
             };
             if (DefaultEntryList == null)
-            {
                 DefaultEntryList = new ArrayList();
-            }
-
             DefaultEntryList.Add(newentry);
             return newentry;
         }

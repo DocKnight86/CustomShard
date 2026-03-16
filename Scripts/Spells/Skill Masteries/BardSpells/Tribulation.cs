@@ -97,9 +97,7 @@ namespace Server.Spells.SkillMasteries
         public override bool OnTick()
         {
             if (Target != null && Target.Alive && Target.Map != null)
-            {
                 Target.FixedEffect(0x376A, 1, 32);
-            }
 
             if (m_Rounds-- <= 0)
             {
@@ -119,9 +117,7 @@ namespace Server.Spells.SkillMasteries
         public override void OnTargetDamaged(Mobile attacker, Mobile victim, DamageType type, ref int damageTaken)
         {
             if (m_NextDamage > DateTime.UtcNow)
-            {
                 return;
-            }
 
             if (m_DamageChance / 100 > Utility.RandomDouble())
             {
@@ -153,9 +149,7 @@ namespace Server.Spells.SkillMasteries
             protected override void OnTarget(Mobile from, object o)
             {
                 if (o is Mobile mobile)
-                {
                     m_Owner.OnTarget(mobile);
-                }
             }
 
             protected override void OnTargetFinish(Mobile from)

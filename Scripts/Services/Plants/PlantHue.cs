@@ -83,9 +83,7 @@ namespace Server.Engines.Plants
             foreach (PlantHueInfo info in m_Table.Values)
             {
                 if (info.Hue == hue)
-                {
                     return info;
-                }
             }
             return m_Table[PlantHue.Plain];
         }
@@ -129,45 +127,31 @@ namespace Server.Engines.Plants
         public static PlantHue Cross(PlantHue first, PlantHue second)
         {
             if (!IsCrossable(first) || !IsCrossable(second))
-            {
                 return PlantHue.None;
-            }
 
             if (Utility.RandomDouble() < 0.01)
-            {
                 return Utility.RandomBool() ? PlantHue.Black : PlantHue.White;
-            }
 
             if (first == PlantHue.Plain || second == PlantHue.Plain)
-            {
                 return PlantHue.Plain;
-            }
 
             PlantHue notBrightFirst = GetNotBright(first);
             PlantHue notBrightSecond = GetNotBright(second);
 
             if (notBrightFirst == notBrightSecond)
-            {
                 return first | PlantHue.Bright;
-            }
 
             bool firstPrimary = IsPrimary(notBrightFirst);
             bool secondPrimary = IsPrimary(notBrightSecond);
 
             if (firstPrimary && secondPrimary)
-            {
                 return notBrightFirst | notBrightSecond;
-            }
 
             if (firstPrimary && !secondPrimary)
-            {
                 return notBrightFirst;
-            }
 
             if (!firstPrimary && secondPrimary)
-            {
                 return notBrightSecond;
-            }
 
             return notBrightFirst & notBrightSecond;
         }

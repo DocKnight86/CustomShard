@@ -113,33 +113,19 @@ namespace Server.Items
             int number;
 
             if (chance == 0.0)
-            {
                 number = 1078457; // ~1_skillname~ Difficulty: Too Challenging
-            }
             else if (chance <= 0.1)
-            {
                 number = 1078458; // ~1_skillname~ Difficulty: Very Challenging
-            }
             else if (chance <= 0.25)
-            {
                 number = 1078459; // ~1_skillname~ Difficulty: Challenging
-            }
             else if (chance <= 0.75)
-            {
                 number = 1078460; // ~1_skillname~ Difficulty: Optimal
-            }
             else if (chance <= 0.9)
-            {
                 number = 1078461; // ~1_skillname~ Difficulty: Easy
-            }
             else if (chance <= 1.0)
-            {
                 number = 1078462; // ~1_skillname~ Difficulty: Very Easy
-            }
             else
-            {
                 number = 1078463; // ~1_skillname~ Difficulty: Too Easy
-            }
 
             from.SendLocalizedMessage(number, SkillInfo.Table[(int)skill].Name);
         }
@@ -149,21 +135,15 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_Active)
-            {
                 list.Add(502695); // turned on
-            }
             else
-            {
                 list.Add(502696); // turned off
-            }
         }
 
         public override bool OnDragLift(Mobile from)
         {
             if (!base.OnDragLift(from))
-            {
                 return false;
-            }
 
             Active = false;
 
@@ -200,13 +180,9 @@ namespace Server.Items
                 AddBackground(0, 0, 300, 150, 0xA28);
 
                 if (m_Ball.Active)
-                {
                     AddHtmlLocalized(45, 20, 300, 35, 1011035, false, false); // Deactivate this item
-                }
                 else
-                {
                     AddHtmlLocalized(45, 20, 300, 35, 1011034, false, false); // Activate this item
-                }
 
                 AddButton(40, 53, 0xFA5, 0xFA7, 2, GumpButtonType.Reply, 0);
                 AddHtmlLocalized(80, 55, 65, 35, 1011036, false, false); // OKAY
@@ -226,13 +202,9 @@ namespace Server.Items
                         m_Ball.Active = !m_Ball.Active;
 
                         if (m_Ball.Active)
-                        {
                             from.SendLocalizedMessage(1078486); // I will now tell you skill difficulty.
-                        }
                         else
-                        {
                             from.SendLocalizedMessage(1078485); // I will no longer tell you skill difficulty.
-                        }
                     }
                 }
             }

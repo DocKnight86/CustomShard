@@ -53,24 +53,16 @@ namespace Server.Items
                 int MessageA = 0;
 
                 if (m_LocMessageA == 0)
-                {
                     MessageA = 500357 + Utility.Random(5);
-                }
                 else
-                {
                     MessageA = m_LocMessageA;
-                }
 
                 int MessageB = 0;
 
                 if (m_LocMessageB == 0)
-                {
                     MessageB = 500357 + Utility.Random(5);
-                }
                 else
-                {
                     MessageB = m_LocMessageB;
-                }
 
                 /*
                 500357 - If this lever ever did anything, it doesn't do it anymore.

@@ -10,6 +10,7 @@ using Server.Mobiles;
 using Server.Network;
 using Server.Network.Packets;
 using Server.Regions;
+using Server.Services.Virtues;
 using Server.Targeting;
 
 namespace Server.Mobiles
@@ -176,6 +177,7 @@ namespace Server.Mobiles
         public virtual bool IsActiveVendor => true;
         public virtual bool IsActiveBuyer => IsActiveVendor && !Siege.SiegeShard; // response to vendor SELL
         public virtual bool IsActiveSeller => IsActiveVendor; // repsonse to vendor BUY
+        public virtual bool HasHonestyDiscount => true;
 
         public virtual NpcGuild NpcGuild => NpcGuild.None;
 
@@ -300,9 +302,7 @@ namespace Server.Mobiles
             public override void OnClick()
             {
                 if (!m_From.InRange(m_Vendor.Location, 2) || !(m_From is PlayerMobile))
-                {
                     return;
-                }
 
                 if (m_Vendor.SupportsBulkOrders(m_From))
                 {
@@ -335,9 +335,7 @@ namespace Server.Mobiles
             public override void OnClick()
             {
                 if (!m_From.InRange(m_Vendor.Location, 3) || !(m_From is PlayerMobile))
-                {
                     return;
-                }
 
                 BODContext context = BulkOrderSystem.GetContext(m_From);
                 int pending = context.GetPendingRewardFor(m_Vendor.BODType);
@@ -446,6 +444,7 @@ namespace Server.Mobiles
         public abstract void InitSBInfo();
 
         public virtual bool IsTokunoVendor => Map == Map.Tokuno;
+        public virtual bool IsStygianVendor => Map == Map.TerMur;
 
         protected void LoadSBInfo()
         {
@@ -537,6 +536,9 @@ namespace Server.Mobiles
         public virtual void CheckMorph()
         {
             if (!ChangeRace)
+                return;
+
+            if (CheckTerMur())
             {
                 return;
             }
@@ -589,6 +591,21 @@ namespace Server.Mobiles
                 Name = NameList.RandomName("tokuno male");
             }
         }      
+
+        #region SA Change
+        public virtual bool CheckTerMur()
+        {
+            Map map = Map;
+
+            if (map != Map.TerMur || Spells.SpellHelper.IsEodon(map, Location))
+                return false;
+
+            if (Body != 0x29A && Body != 0x29B)
+                TurnToGargRace();
+
+            return true;
+        }
+        #endregion
 
         public virtual bool CheckNecromancer()
         {
@@ -655,6 +672,84 @@ namespace Server.Mobiles
             FacialHairHue = 0;
 
             Hue = 0x83E8;
+        }
+
+        #region SA
+        public virtual void TurnToGargRace()
+        {
+            for (int i = 0; i < Items.Count; ++i)
+            {
+                Item item = Items[i];
+
+                if (item is BaseClothing)
+                {
+                    item.Delete();
+                }
+            }
+
+            Race = Race.Gargoyle;
+
+            Hue = Race.RandomSkinHue();
+
+            HairItemID = Race.RandomHair(Female);
+            HairHue = Race.RandomHairHue();
+
+            FacialHairItemID = Race.RandomFacialHair(Female);
+            if (FacialHairItemID != 0)
+            {
+                FacialHairHue = Race.RandomHairHue();
+            }
+            else
+            {
+                FacialHairHue = 0;
+            }
+
+            InitGargOutfit();
+
+            if (Female = GetGender())
+            {
+                Body = 0x29B;
+                Name = NameList.RandomName("gargoyle female");
+            }
+            else
+            {
+                Body = 0x29A;
+                Name = NameList.RandomName("gargoyle male");
+            }
+
+            CapitalizeTitle();
+        }
+        #endregion
+
+        public virtual void CapitalizeTitle()
+        {
+            string title = Title;
+
+            if (title == null)
+            {
+                return;
+            }
+
+            string[] split = title.Split(' ');
+
+            for (int i = 0; i < split.Length; ++i)
+            {
+                if (Insensitive.Equals(split[i], "the"))
+                {
+                    continue;
+                }
+
+                if (split[i].Length > 1)
+                {
+                    split[i] = char.ToUpper(split[i][0]) + split[i].Substring(1);
+                }
+                else if (split[i].Length > 0)
+                {
+                    split[i] = char.ToUpper(split[i][0]).ToString();
+                }
+            }
+
+            Title = string.Join(" ", split);
         }
 
         public virtual int GetHairHue()
@@ -743,6 +838,34 @@ namespace Server.Mobiles
                 }
             }
         }
+
+        #region SA
+        public virtual void InitGargOutfit()
+        {
+            for (int i = 0; i < Items.Count; ++i)
+            {
+                Item item = Items[i];
+
+                if (item is BaseClothing)
+                {
+                    item.Delete();
+                }
+            }
+
+            switch (Utility.Random(2))
+            {
+                case 0:
+                    SetWearable(new GargishClothLegs(GetRandomHue()));
+                    SetWearable(new GargishClothKilt(GetRandomHue()));
+                    SetWearable(new GargishClothChest(GetRandomHue()));
+                    break;
+                case 1:
+                    SetWearable(new GargishClothKilt(GetRandomHue()));
+                    SetWearable(new GargishClothChest(GetRandomHue()));
+                    break;
+            }
+        }
+        #endregion
 
         [CommandProperty(AccessLevel.GameMaster)]
         public bool ForceRestock
@@ -1068,6 +1191,27 @@ namespace Server.Mobiles
 
         public override bool OnDragDrop(Mobile from, Item dropped)
         {
+            #region Honesty Item Check
+            HonestyItemSocket honestySocket = dropped.GetSocket<HonestyItemSocket>();
+
+            if (honestySocket != null)
+            {
+                bool gainedPath = false;
+
+                if (honestySocket.HonestyOwner == this)
+                {
+                    VirtueHelper.Award(from, VirtueName.Honesty, 120, ref gainedPath);
+                    from.SendMessage(gainedPath ? "You have gained a path in Honesty!" : "You have gained in Honesty.");
+                    SayTo(from, 1074582); //Ah!  You found my property.  Thank you for your honesty in returning it to me.
+                    dropped.Delete();
+                    return true;
+                }
+
+                SayTo(from, 501550, 0x3B2); // I am not interested in this.
+                return false;
+            }
+            #endregion
+
             if (ConvertsMageArmor && dropped is BaseArmor armor && CheckConvertArmor(from, armor))
             {
                 return false;
@@ -1135,13 +1279,9 @@ namespace Server.Mobiles
                     double banked = 0.0;
 
                     if (dropped is SmallBOD sBod)
-                    {
                         BulkOrderSystem.ComputePoints(sBod, out points, out banked);
-                    }
                     else
-                    {
                         BulkOrderSystem.ComputePoints((LargeBOD)dropped, out points, out banked);
-                    }
 
                     switch (context.PointsMode)
                     {
@@ -1268,9 +1408,7 @@ namespace Server.Mobiles
             int maxDays = Config.Get("Vendors.BribeDecayMaxTime", 30);
 
             if (force || NextMultiplierDecay > DateTime.UtcNow + TimeSpan.FromDays(maxDays))
-            {
                 NextMultiplierDecay = DateTime.UtcNow + TimeSpan.FromDays(Utility.RandomMinMax(minDays, maxDays));
-            }
         }
 
         public void TryBribe(Mobile m)
@@ -1635,6 +1773,30 @@ namespace Server.Mobiles
             bought = buyer.AccessLevel >= AccessLevel.GameMaster;
             cont = buyer.Backpack;
 
+            double discount = 0.0;
+
+            if (HasHonestyDiscount)
+            {
+                double discountPc = 0;
+                switch (VirtueHelper.GetLevel(buyer, VirtueName.Honesty))
+                {
+                    case VirtueLevel.Seeker:
+                        discountPc = .1;
+                        break;
+                    case VirtueLevel.Follower:
+                        discountPc = .2;
+                        break;
+                    case VirtueLevel.Knight:
+                        discountPc = .3; break;
+                    default:
+                        discountPc = 0;
+                        break;
+                }
+
+                discount = totalCost - totalCost * (1.0 - discountPc);
+                totalCost -= discount;
+            }
+
             if (!bought && cont != null && ConsumeGold(cont, totalCost))
             {
                 bought = true;
@@ -1766,6 +1928,11 @@ namespace Server.Mobiles
                         ProcessValidPurchase(amount, gbi, buyer, cont);
                     }
                 }
+            }
+
+            if (discount > 0)
+            {
+                SayTo(buyer, 1151517, discount.ToString(), 0x3B2);
             }
 
             if (fullPurchase)
@@ -2143,10 +2310,7 @@ namespace Server.Mobiles
                     Timer.DelayCall(TimeSpan.FromSeconds(10), () =>
                     {
                         if (vendor.BribeMultiplier > 0)
-                        {
                             vendor.BribeMultiplier /= 2;
-                        }
-
                         vendor.CheckNextMultiplierDecay();
                     });
                 }
@@ -2369,9 +2533,7 @@ namespace Server.Mobiles
             PendingConvert convert = GetConvert(from, armor);
 
             if (convert == null || !(from is PlayerMobile))
-            {
                 return false;
-            }
 
             object state = convert.Armor;
 
@@ -2450,13 +2612,9 @@ namespace Server.Mobiles
         public virtual void ConvertMageArmor(Mobile from, BaseArmor armor)
         {
             if (armor.ArmorAttributes.MageArmor > 0)
-            {
                 armor.ArmorAttributes.MageArmor = 0;
-            }
             else
-            {
                 armor.ArmorAttributes.MageArmor = 1;
-            }
 
             from.SendLocalizedMessage(1154118); // Your armor has been converted.
         }

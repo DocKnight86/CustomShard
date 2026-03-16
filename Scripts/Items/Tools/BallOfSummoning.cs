@@ -7,6 +7,7 @@ using Server.Spells.Ninjitsu;
 using Server.Targeting;
 using System;
 using System.Collections.Generic;
+using Server.Engines.Despise;
 
 namespace Server.Items
 {
@@ -42,17 +43,11 @@ namespace Server.Items
             set
             {
                 if (value > MaxCharges)
-                {
                     m_Charges = MaxCharges;
-                }
                 else if (value < 0)
-                {
                     m_Charges = 0;
-                }
                 else
-                {
                     m_Charges = value;
-                }
 
                 InvalidateProperties();
             }
@@ -64,17 +59,11 @@ namespace Server.Items
             set
             {
                 if (value > MaxRecharges)
-                {
                     m_Recharges = MaxRecharges;
-                }
                 else if (value < 0)
-                {
                     m_Recharges = 0;
-                }
                 else
-                {
                     m_Recharges = value;
-                }
 
                 InvalidateProperties();
             }
@@ -161,9 +150,7 @@ namespace Server.Items
             BaseCreature pet = Pet;
 
             if (Deleted || pet != null || RootParent != from)
-            {
                 return;
-            }
 
             from.SendLocalizedMessage(1054114); // Target your pet that you wish to link to this Crystal Ball of Pet Summoning.
             from.Target = new PetLinkTarget(this);
@@ -174,9 +161,7 @@ namespace Server.Items
             BaseCreature pet = Pet;
 
             if (Deleted || pet == null || RootParent != from)
-            {
                 return;
-            }
 
             if (Charges == 0)
             {
@@ -198,7 +183,7 @@ namespace Server.Items
             {
                 MessageHelper.SendLocalizedMessageTo(this, from, 1054127, 0x22); // The Crystal Ball fills with a red mist. You appear to have let your bond to your pet deteriorate.
             }
-            else if (from.Map == Map.Ilshenar || from.Region.IsPartOf<DungeonRegion>() || from.Region.IsPartOf<Jail>() || from.Region.IsPartOf<Underwater>() || from.Region.IsPartOf<NoTravelSpellsAllowed>())
+            else if (from.Map == Map.Ilshenar || from.Region.IsPartOf<DungeonRegion>() || from.Region.IsPartOf<Jail>() || from.Region.IsPartOf<DespiseRegion>() || from.Region.IsPartOf<Underwater>() || from.Region.IsPartOf<NoTravelSpellsAllowed>())
             {
                 from.Send(new AsciiMessage(Serial, ItemID, MessageType.Regular, 0x22, 3, "", "You cannot summon your pet to this location."));
             }
@@ -217,9 +202,7 @@ namespace Server.Items
             BaseCreature pet = Pet;
 
             if (pet == null)
-            {
                 return;
-            }
 
             Charges--;
 
@@ -228,9 +211,7 @@ namespace Server.Items
                 pet.SetControlMaster(from);
 
                 if (pet.Summoned)
-                {
                     pet.SummonMaster = from;
-                }
 
                 pet.FollowTarget = from;
                 pet.ControlOrder = LastOrderType.Follow;
@@ -311,13 +292,9 @@ namespace Server.Items
             BaseCreature pet = Pet;
 
             if (pet == null)
-            {
                 m_PetName = "";
-            }
             else
-            {
                 m_PetName = pet.Name;
-            }
 
             InvalidateProperties();
         }
@@ -336,9 +313,7 @@ namespace Server.Items
                 Mobile from = Owner.From;
 
                 if (from.CheckAlive())
-                {
                     m_Callback(from);
-                }
             }
         }
 
@@ -354,9 +329,7 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Ball.Deleted || m_Ball.Pet != null)
-                {
                     return;
-                }
 
                 if (m_Ball.RootParent != from)
                 {
@@ -430,9 +403,7 @@ namespace Server.Items
             public override bool CheckDisturb(DisturbType type, bool checkFirst, bool resistable)
             {
                 if (type == DisturbType.EquipRequest || type == DisturbType.UseRequest/* || type == DisturbType.Hurt*/)
-                {
                     return false;
-                }
 
                 return true;
             }
@@ -440,9 +411,7 @@ namespace Server.Items
             public override void OnDisturb(DisturbType type, bool message)
             {
                 if (message)
-                {
                     Caster.SendLocalizedMessage(1080074); // You have been disrupted while attempting to summon your pet!
-                }
             }
 
             public override void OnCast()

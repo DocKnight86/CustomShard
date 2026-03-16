@@ -29,9 +29,7 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!from.InRange(Location, 3))
-            {
                 from.SendLocalizedMessage(3000268); // that is too far away.
-            }
             else if (from.Backpack != null)
             {
                 Type needed;
@@ -76,30 +74,20 @@ namespace Server.Items
                 if (item != null && key is MagicKey magicKey)
                 {
                     if (m_PuzzleType == PuzzleType.NorthBox)
-                    {
                         puzzle = new MastermindPuzzleItem(magicKey);
-                    }
                     else
-                    {
                         puzzle = new MazePuzzleItem(magicKey);
-                    }
                 }
 
                 if (puzzle != null)
                 {
                     if (!from.Backpack.TryDropItem(from, puzzle, true))
-                    {
                         puzzle.Delete();
-                    }
                     else
-                    {
                         from.SendMessage("You recieve a puzzle board.");
-                    }
                 }
                 else
-                {
                     from.SendMessage("You do not have the required key to get that puzzle board.");
-                }
             }
         }
 

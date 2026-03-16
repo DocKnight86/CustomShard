@@ -42,9 +42,7 @@ namespace Server.Engines.CityLoyalty
         public override void OnResponse(RelayInfo info)
         {
             if (info.ButtonID == 500)
-            {
                 User.SendGump(new LoyaltyRatingGump(User));
-            }
 
             if (info.ButtonID == 501)
             {
@@ -81,9 +79,7 @@ namespace Server.Engines.CityLoyalty
         public override void AddGumpLayout()
         {
             if (!CityLoyaltySystem.Enabled || CityLoyaltySystem.Cities == null)
-            {
                 return;
-            }
 
             base.AddGumpLayout();
             int y = 40;
@@ -93,9 +89,7 @@ namespace Server.Engines.CityLoyalty
                 CityLoyaltySystem city = CityLoyaltySystem.Cities[i];
 
                 if (city.CanUtilize && Citizenship == null && CityLoyaltySystem.CanAddCitizen(User))
-                {
                     AddButton(30, y + 3, 2103, 2104, 100 + i, GumpButtonType.Reply, 0);
-                }
 
                 AddHtmlLocalized(50, y, 200, 16, CityLoyaltySystem.CityLocalization(city.City), false, false);
                 AddHtmlLocalized(200, y, 200, 16, CityLoyaltySystem.RatingLocalization(city.GetLoyaltyRating(User)), false, false);
@@ -147,9 +141,7 @@ namespace Server.Engines.CityLoyalty
             base.OnResponse(info);
 
             if (!CityLoyaltySystem.IsSetup())
-            {
                 return;
-            }
 
             switch (info.ButtonID)
             {
@@ -166,9 +158,7 @@ namespace Server.Engines.CityLoyalty
                     if (id >= 0 && id < CityLoyaltySystem.Cities.Count)
                     {
                         if (Citizenship == null)
-                        {
                             SendGump(new DeclareCitizenshipGump(CityLoyaltySystem.Cities[id], User));
-                        }
                     }
                     break;
             }
@@ -189,9 +179,7 @@ namespace Server.Engines.CityLoyalty
             base.AddGumpLayout();
 
             if (City == null)
-            {
                 return;
-            }
 
             AddHtmlLocalized(30, 40, 285, 200, 1152891, $"#{CityLoyaltySystem.GetCityLocalization(City.City).ToString()}", 1, false, true);
             /*If you choose to declare citizenship with ~1_CITY~, you will be granted the "Citizen" title.
@@ -221,9 +209,7 @@ namespace Server.Engines.CityLoyalty
                 }
             }
             else if (info.ButtonID == 2)
-            {
                 SendGump(new CityLoyaltyGump(User));
-            }
         }
     }
 
@@ -239,9 +225,7 @@ namespace Server.Engines.CityLoyalty
             base.AddGumpLayout();
 
             if (Citizenship == null)
-            {
                 return;
-            }
 
             AddHtmlLocalized(45, 40, 250, 16, 1152883, false, false); // Citizenship:
             AddHtmlLocalized(200, 40, 100, 16, CityLoyaltySystem.CityLocalization(Citizenship.City), false, false);
@@ -271,9 +255,7 @@ namespace Server.Engines.CityLoyalty
                 }
             }
             else if (info.ButtonID == 2)
-            {
                 SendGump(new CityLoyaltyGump(User));
-            }
         }
     }
 
@@ -295,9 +277,7 @@ namespace Server.Engines.CityLoyalty
                 CityTitle title = (CityTitle)i;
 
                 if (title == CityTitle.None)
-                {
                     continue;
-                }
 
                 if (Citizenship.HasTitle(User, title))
                 {
@@ -315,9 +295,7 @@ namespace Server.Engines.CityLoyalty
                 CityTitle title = (CityTitle)i;
 
                 if (title == CityTitle.None)
-                {
                     continue;
-                }
 
                 if (!Citizenship.HasTitle(User, title))
                 {
@@ -342,9 +320,7 @@ namespace Server.Engines.CityLoyalty
                 CityTitle t = (CityTitle)info.ButtonID - 1;
 
                 if (!Citizenship.HasTitle(User, t))
-                {
                     SendGump(new CityTitlesInfoGump(User, t));
-                }
             }
         }
     }
@@ -542,13 +518,9 @@ namespace Server.Engines.CityLoyalty
         public override void OnResponse(RelayInfo info)
         {
             if (info.ButtonID == 1)
-            {
                 SendGump(new CityStoneGump(User, City));
-            }
             else if (info.ButtonID == 2)
-            {
                 City.Election.TryWithdraw(User);
-            }
             else if (info.ButtonID >= 100)
             {
                 int id = info.ButtonID - 100;
@@ -640,13 +612,9 @@ namespace Server.Engines.CityLoyalty
         public override void OnResponse(RelayInfo info)
         {
             if (info.ButtonID == 1)
-            {
                 SendGump(new CityStoneGump(User, City));
-            }
             else if (info.ButtonID == 2)
-            {
                 City.Election.TryWithdraw(User);
-            }
             else if (info.ButtonID >= 100)
             {
                 int id = info.ButtonID - 100;
@@ -705,9 +673,7 @@ namespace Server.Engines.CityLoyalty
         public override void OnResponse(RelayInfo info)
         {
             if (info.ButtonID == 0)
-            {
                 return;
-            }
 
             int id = info.ButtonID - 100;
 
@@ -779,9 +745,7 @@ namespace Server.Engines.CityLoyalty
             CityLoyaltyEntry entry = City.GetPlayerEntry<CityLoyaltyEntry>(Citizen);
 
             if (entry == null)
-            {
                 return;
-            }
 
             if (relay == null || string.IsNullOrEmpty(relay.Text))
             {
@@ -818,9 +782,7 @@ namespace Server.Engines.CityLoyalty
                     }
                 }
                 else
-                {
                     User.SendLocalizedMessage(501179); // That title is disallowed.
-                }
             }
         }
     }
@@ -861,9 +823,7 @@ namespace Server.Engines.CityLoyalty
         public override void OnResponse(RelayInfo info)
         {
             if (!(User is PlayerMobile pm))
-            {
                 return;
-            }
 
             if (info.ButtonID == 1)
             {
@@ -912,9 +872,7 @@ namespace Server.Engines.CityLoyalty
                     string start = "";
 
                     if (CityLoyaltySystem.Britain.Election != null && CityLoyaltySystem.Britain.Election.StartTimes.Length >= i && CityLoyaltySystem.Britain.Election.StartTimes[i] != DateTime.MinValue)
-                    {
                         start = CityLoyaltySystem.Britain.Election.StartTimes[i].Month.ToString();
-                    }
 
                     AddLabel(15, 180 + (i * 25), 0, (i + 1) + ".");
                     AddImageTiled(150, 180 + (i * 25), 50, 20, 5058);
@@ -962,9 +920,7 @@ namespace Server.Engines.CityLoyalty
                 int time = Utility.ToInt32(relay1.Text);
 
                 if (time > 0 && time < 13)
-                {
                     times.Add(time);
-                }
             }
 
             if (relay2 != null)
@@ -972,9 +928,7 @@ namespace Server.Engines.CityLoyalty
                 int time = Utility.ToInt32(relay2.Text);
 
                 if (time > 0 && time < 13)
-                {
                     times.Add(time);
-                }
             }
 
             if (relay3 != null)
@@ -982,9 +936,7 @@ namespace Server.Engines.CityLoyalty
                 int time = Utility.ToInt32(relay3.Text);
 
                 if (time > 0 && time < 13)
-                {
                     times.Add(time);
-                }
             }
 
             if (relay4 != null)
@@ -992,9 +944,7 @@ namespace Server.Engines.CityLoyalty
                 int time = Utility.ToInt32(relay4.Text);
 
                 if (time > 0 && time < 13)
-                {
                     times.Add(time);
-                }
             }
 
             if (times.Count > 0)
@@ -1036,9 +986,7 @@ namespace Server.Engines.CityLoyalty
         public override void AddGumpLayout()
         {
             if (City == null || City.Stone == null || City.Stone.Boxes == null)
-            {
                 return;
-            }
 
             AddBackground(0, 0, 250, (City.Stone.Boxes.Count * 25) + 90, 5054);
             AddHtml(0, 15, 250, 20, $"<center>Inventory - {City.Definition.Name}</center>", false, false); // Inventory
@@ -1072,9 +1020,7 @@ namespace Server.Engines.CityLoyalty
             Mobile m = User;
 
             if (info.ButtonID == 0)
-            {
                 return;
-            }
 
             int id;
 
@@ -1142,16 +1088,12 @@ namespace Server.Engines.CityLoyalty
         public override void OnResponse(RelayInfo info)
         {
             if (info.ButtonID == 0)
-            {
                 return;
-            }
 
             int id = info.ButtonID - 100;
 
             if (id >= 0 && id < CityLoyaltySystem.Cities.Count)
-            {
                 SendGump(new CityMessageGump(User, CityLoyaltySystem.Cities[id]));
-            }
         }
     }
 
@@ -1212,9 +1154,7 @@ namespace Server.Engines.CityLoyalty
         public override void OnResponse(RelayInfo info)
         {
             if (info.ButtonID == 0)
-            {
                 return;
-            }
 
             int id = info.ButtonID - 100;
 
@@ -1261,9 +1201,7 @@ namespace Server.Engines.CityLoyalty
                 CityLoyaltyEntry entry = City.PlayerTable[i] as CityLoyaltyEntry;
 
                 if (entry == null)
-                {
                     continue;
-                }
 
                 pageIndex++;
                 AddHtml(10, 60 + pageIndex * 25, 140, 20, $"{(entry.Player != null ? entry.Player.Name : "Unknown")}{(entry.IsCitizen ? "(Citizen)" : "")}", false, false);
@@ -1291,9 +1229,7 @@ namespace Server.Engines.CityLoyalty
         public override void OnResponse(RelayInfo info)
         {
             if (info.ButtonID == 0)
-            {
                 return;
-            }
 
             if (info.ButtonID == 1)
             {

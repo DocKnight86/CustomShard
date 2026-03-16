@@ -111,9 +111,7 @@ namespace Server.Items
                 Duration = 28800;
 
                 if (m_Timer == null || !m_Timer.Running)
-                {
                     m_Timer = Timer.DelayCall(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1), delegate { Slice(from); });
-                }
 
                 BuffInfo.AddBuff(from, new BuffInfo(BuffIcon.MysticalPolymorphTotem, 1158780, 1158017, TimeSpan.FromSeconds(Duration), from, CostumeCreatureName));
 
@@ -127,17 +125,13 @@ namespace Server.Items
         public virtual void Slice(Mobile from)
         {
             if (Duration > 0)
-            {
                 Duration--;
-            }
             else
             {
                 DeMask(from);
 
                 if (m_Timer != null)
-                {
                     m_Timer.Stop();
-                }
 
                 m_Timer = null;
             }
@@ -167,9 +161,7 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Totem.Deleted)
-                {
                     return;
-                }
 
                 if (!m_Totem.IsChildOf(from.Backpack))
                 {

@@ -352,6 +352,11 @@ namespace Server.Items
                             BaseIngot ingot = m_Ore.GetIngot();
                             ingot.Amount = ingotAmount;
 
+                            if (m_Ore.HasSocket<Caddellite>())
+                            {
+                                ingot.AttachSocket(new Caddellite());
+                            }
+
                             m_Ore.Consume(toConsume);
                             from.AddToBackpack(ingot);
 

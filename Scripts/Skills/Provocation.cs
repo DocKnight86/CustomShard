@@ -138,14 +138,10 @@ namespace Server.SkillHandlers
                         int masteryBonus = 0;
 
                         if (from is PlayerMobile pm)
-                        {
                             masteryBonus = Spells.SkillMasteries.BardSpell.GetMasteryBonus(pm, SkillName.Provocation);
-                        }
 
                         if (masteryBonus > 0)
-                        {
                             diff -= diff * ((double)masteryBonus / 100);
-                        }
 
                         if (music > 100.0)
                         {
@@ -217,15 +213,11 @@ namespace Server.SkillHandlers
                     if (getmaster != null)
                     {
                         if (getmaster is PlayerMobile)
-                        {
                             return false;
-                        }
                     }
 
                     if (from is PlayerMobile && (m_Creature.GetType() == typeof(Rabbit) || m_Creature.GetType() == typeof(JackRabbit)) && (creature is WanderingHealer || creature is EvilWanderingHealer))
-                    {
                         return true;
-                    }
 
                     return false;
                 }

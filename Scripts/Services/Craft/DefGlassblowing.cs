@@ -17,23 +17,20 @@ namespace Server.Engines.Craft
             get
             {
                 if (m_CraftSystem == null)
-                {
                     m_CraftSystem = new DefGlassblowing();
-                }
 
                 return m_CraftSystem;
             }
         }
-
         public override SkillName MainSkill => SkillName.Alchemy;
         public override int GumpTitleNumber => 1044622;
-
         public override double GetChanceAtMin(CraftItem item)
         {
             if (item.ItemType == typeof(HollowPrism))
-            {
                 return 0.5; // 50%
-            }
+
+            if (item.ItemType == typeof(EtherealSoulbinder))
+                return 0.1; // 10%
 
             return 0.0; // 0%
         }
@@ -43,33 +40,23 @@ namespace Server.Engines.Craft
             int num = 0;
 
             if (tool == null || tool.Deleted || tool.UsesRemaining <= 0)
-            {
                 return 1044038; // You have worn out your tool!
-            }
 
             if (tool is Item item && !BaseTool.CheckTool(item, from))
-            {
                 return 1048146; // If you have a tool equipped, you must use that tool.
-            }
 
             if (!(from is PlayerMobile mobile && mobile.Glassblowing && mobile.Skills[SkillName.Alchemy].Base >= 100.0))
-            {
                 return 1044634; // You havent learned glassblowing.
-            }
 
             if (!tool.CheckAccessible(from, ref num))
-            {
                 return num; // The tool must be on your person to use.
-            }
 
             bool anvil, forge;
 
             DefBlacksmithy.CheckAnvilAndForge(from, 2, out anvil, out forge);
 
             if (forge)
-            {
                 return 0;
-            }
 
             return 1044628; // You must be near a forge to blow glass.
         }
@@ -85,9 +72,7 @@ namespace Server.Engines.Craft
         public override int PlayEndingEffect(Mobile from, bool failed, bool lostMaterial, bool toolBroken, int quality, bool makersMark, CraftItem item)
         {
             if (toolBroken)
-            {
                 from.SendLocalizedMessage(1044038); // You have worn out your tool
-            }
 
             if (failed)
             {
@@ -102,14 +87,10 @@ namespace Server.Engines.Craft
             from.PlaySound(0x41); // glass breaking
 
             if (quality == 0)
-            {
                 return 502785; // You were barely able to make this item.  It's quality is below average.
-            }
 
             if (makersMark && quality == 2)
-            {
                 return 1044156; // You create an exceptional quality item and affix your maker's mark.
-            }
 
             if (quality == 2)
             {
@@ -142,11 +123,23 @@ namespace Server.Engines.Craft
 
             AddCraft(typeof(GargoyleWallMirror), 1044050, 1095324, 70.0, 120.0, typeof(Sand), 1044625, 10, 1044627);
 
+            index = AddCraft(typeof(SoulstoneFragment), 1044050, 1071000, 70.0, 120.0, typeof(CrystalGranules), 1112329, 2, 1044253);
+            AddRes(index, typeof(VoidEssence), 1112327, 2, 1044253);
+            SetItemHue(index, 1150);
+
             AddCraft(typeof(EmptyVenomVial), 1044050, 1112215, 52.5, 102.5, typeof(Sand), 1044625, 1, 1044627);
 
             AddCraft(typeof(EmptyOilFlask), 1044050, 1150866, 60.0, 110.0, typeof(Sand), 1044625, 5, 1044627);
 
             AddCraft(typeof(WorkableGlass), 1044050, 1154170, 55.0, 105.0, typeof(Sand), 1044625, 10, 1044627);
+
+            index = AddCraft(typeof(EtherealSoulbinder), 1044050, 1159167, 100.0, 190.0, typeof(Sand), 1044625, 20, 1044627);
+            AddRes(index, typeof(EtherealSand), 1125984, 5, 1159169);
+
+            //Glass Weapons
+            AddCraft(typeof(GlassSword), 1111745, 1022316, 55.0, 105.0, typeof(Sand), 1044625, 14, 1044627);
+
+            AddCraft(typeof(GlassStaff), 1111745, 1095368, 53.6, 103.6, typeof(Sand), 1044625, 10, 1044627);
 
             Repair = true;
             MarkOption = true;

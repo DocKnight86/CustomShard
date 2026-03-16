@@ -53,13 +53,9 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_TurnedOn)
-            {
                 list.Add(502695); // turned on
-            }
             else
-            {
                 list.Add(502696); // turned off
-            }
         }
 
         public bool IsOwner(Mobile mob)
@@ -136,9 +132,7 @@ namespace Server.Items
                     m_Statuette.TurnedOn = newValue;
 
                     if (newValue && !m_Statuette.IsLockedDown)
-                    {
                         from.SendLocalizedMessage(502693); // Remember, this only works when locked down.
-                    }
                 }
                 else
                 {

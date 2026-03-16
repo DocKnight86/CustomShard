@@ -38,9 +38,7 @@ namespace Server.Gumps
         {
             if (m_Token == null || m_Token.Deleted ||
                 m_User == null || m_User.Deleted)
-            {
                 return;
-            }
 
             if (!m_Token.IsChildOf(m_User.Backpack))
             {

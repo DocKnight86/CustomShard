@@ -75,9 +75,7 @@ namespace Server.Mobiles
         public override int GetAngerSound()
         {
             if (!Controlled)
-            {
                 return 0x16A;
-            }
 
             return base.GetAngerSound();
         }
@@ -91,7 +89,7 @@ namespace Server.Mobiles
                 return;
             }
 
-            Mobile m = e.Mobile;
+            var m = e.Mobile;
 
             if (GetMaster() == m && e.Speech.ToLower() == "trick" && !IsDeadBondedPet && !Deleted && Map != null)
             {
@@ -114,7 +112,7 @@ namespace Server.Mobiles
 
                             if (idx == 3)
                             {
-                                int c = 0;
+                                var c = 0;
 
                                 for (int j = idx; j > 0; j--)
                                 {

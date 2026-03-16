@@ -185,124 +185,35 @@ namespace Server.Items
         public virtual TextDefinition GetName(Type type)
         {
             if (type == null)
-            {
                 return 0;
-            }
 
-            if (type == typeof(Tourmaline))
-            {
-                return 1023864;
-            }
+            if (type == typeof(Tourmaline)) return 1023864;
+            if (type == typeof(Ruby)) return 1023859;
+            if (type == typeof(Diamond)) return 1023878;
+            if (type == typeof(Sapphire)) return 1023857;
+            if (type == typeof(Citrine)) return 1023861;
+            if (type == typeof(Emerald)) return 1023856;
+            if (type == typeof(StarSapphire)) return 1023855;
+            if (type == typeof(Amethyst)) return 1023862;
 
-            if (type == typeof(Ruby))
-            {
-                return 1023859;
-            }
+            if (type == typeof(RelicFragment)) return 1031699;
+            if (type == typeof(EnchantedEssence)) return 1031698;
+            if (type == typeof(MagicalResidue)) return 1031697;
 
-            if (type == typeof(Diamond))
-            {
-                return 1023878;
-            }
+            if (type == typeof(DarkSapphire)) return 1032690;
+            if (type == typeof(Turquoise)) return 1032691;
+            if (type == typeof(PerfectEmerald)) return 1032692;
+            if (type == typeof(EcruCitrine)) return 1032693;
+            if (type == typeof(WhitePearl)) return 1032694;
+            if (type == typeof(FireRuby)) return 1032695;
+            if (type == typeof(BlueDiamond)) return 1032696;
+            if (type == typeof(BrilliantAmber)) return 1032697;
 
-            if (type == typeof(Sapphire))
-            {
-                return 1023857;
-            }
+            if (type == typeof(ParasiticPlant)) return 1032688;
+            if (type == typeof(LuminescentFungi)) return 1032689;
 
-            if (type == typeof(Citrine))
-            {
-                return 1023861;
-            }
-
-            if (type == typeof(Emerald))
-            {
-                return 1023856;
-            }
-
-            if (type == typeof(StarSapphire))
-            {
-                return 1023855;
-            }
-
-            if (type == typeof(Amethyst))
-            {
-                return 1023862;
-            }
-
-            if (type == typeof(RelicFragment))
-            {
-                return 1031699;
-            }
-
-            if (type == typeof(EnchantedEssence))
-            {
-                return 1031698;
-            }
-
-            if (type == typeof(MagicalResidue))
-            {
-                return 1031697;
-            }
-
-            if (type == typeof(DarkSapphire))
-            {
-                return 1032690;
-            }
-
-            if (type == typeof(Turquoise))
-            {
-                return 1032691;
-            }
-
-            if (type == typeof(PerfectEmerald))
-            {
-                return 1032692;
-            }
-
-            if (type == typeof(EcruCitrine))
-            {
-                return 1032693;
-            }
-
-            if (type == typeof(WhitePearl))
-            {
-                return 1032694;
-            }
-
-            if (type == typeof(FireRuby))
-            {
-                return 1032695;
-            }
-
-            if (type == typeof(BlueDiamond))
-            {
-                return 1032696;
-            }
-
-            if (type == typeof(BrilliantAmber))
-            {
-                return 1032697;
-            }
-
-            if (type == typeof(ParasiticPlant))
-            {
-                return 1032688;
-            }
-
-            if (type == typeof(LuminescentFungi))
-            {
-                return 1032689;
-            }
-
-            if (type == typeof(CrystallineBlackrock))
-            {
-                return 1077568;
-            }
-
-            if (type == typeof(BouraPelt))
-            {
-                return 1113355;
-            }
+            if (type == typeof(CrystallineBlackrock)) return 1077568;
+            if (type == typeof(BouraPelt)) return 1113355;
 
             if (LocBuffer.TryGetValue(type, out TextDefinition value))
             {
@@ -992,34 +903,17 @@ namespace Server.Items
         public static ItemType GetItemType(Item item)
         {
             if (item is BaseRanged)
-            {
                 return ItemType.Ranged;
-            }
-
             if (item is BaseWeapon)
-            {
                 return ItemType.Melee;
-            }
-
             if (item is BaseShield)
-            {
                 return ItemType.Shield;
-            }
-
             if (item is BaseArmor)
-            {
                 return ItemType.Armor;
-            }
-
             if (item is BaseHat)
-            {
                 return ItemType.Hat;
-            }
-
             if (item is BaseJewel)
-            {
                 return ItemType.Jewel;
-            }
 
             return ItemType.Invalid;
         }
@@ -1029,45 +923,25 @@ namespace Server.Items
             int id = -1;
 
             if (attr is AosAttribute aosAttribute)
-            {
                 id = GetIDForAttribute(aosAttribute);
-            }
             else if (attr is AosWeaponAttribute weaponAttribute)
-            {
                 id = GetIDForAttribute(weaponAttribute);
-            }
             else if (attr is ExtendedWeaponAttribute extendedWeaponAttribute)
-            {
                 id = GetIDForAttribute(extendedWeaponAttribute);
-            }
             else if (attr is SkillName skillName)
-            {
                 id = GetIDForAttribute(skillName);
-            }
             else if (attr is SlayerName slayerName)
-            {
                 id = GetIDForAttribute(slayerName);
-            }
             else if (attr is SAAbsorptionAttribute absorptionAttribute)
-            {
                 id = GetIDForAttribute(absorptionAttribute);
-            }
             else if (attr is AosArmorAttribute armorAttribute)
-            {
                 id = GetIDForAttribute(armorAttribute);
-            }
             else if (attr is AosElementAttribute elementAttribute)
-            {
                 id = GetIDForAttribute(elementAttribute);
-            }
             else if (attr is TalismanSlayerName name)
-            {
                 id = GetIDForAttribute(name);
-            }
             else if (attr is string s)
-            {
                 id = GetIDForAttribute(s);
-            }
 
             return id;
         }
@@ -1210,39 +1084,25 @@ namespace Server.Items
         public static int GetIDForAttribute(string str)
         {
             if (str == "WeaponVelocity")
-            {
                 return 60;
-            }
 
             if (str == "SearingWeapon")
-            {
                 return 62;
-            }
 
             if (str == "Slayer")
-            {
                 return 101;
-            }
 
             if (str == "ElementalDamage")
-            {
                 return 51;
-            }
 
             if (str == "HitSpell")
-            {
                 return 37;
-            }
 
             if (str == "HitArea")
-            {
                 return 30;
-            }
 
             if (str == "RandomEater")
-            {
                 return 208;
-            }
 
             return -1;
         }

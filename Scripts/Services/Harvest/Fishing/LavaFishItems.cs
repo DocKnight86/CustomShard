@@ -84,9 +84,7 @@ namespace Server.Items
                 Item item = from.FindItemOnLayer(Layer.Shoes);
 
                 if (item is StoneFootwear)
-                {
                     e.Blocked = true;
-                }
             }
         }
 

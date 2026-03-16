@@ -41,9 +41,7 @@ namespace Server.Gumps
         public override void OnResponse(NetState state, RelayInfo info)
         {
             if (m_Pet.Deleted || !m_Pet.IsBonded || !m_Pet.IsDeadPet)
-            {
                 return;
-            }
 
             Mobile from = state.Mobile;
 
@@ -68,21 +66,15 @@ namespace Server.Gumps
                 double decreaseAmount;
 
                 if (from == m_Pet.ControlMaster)
-                {
                     decreaseAmount = 0.1;
-                }
                 else
-                {
                     decreaseAmount = 0.2;
-                }
 
                 for (int i = 0; i < m_Pet.Skills.Length; ++i)	//Decrease all skills on pet.
                     m_Pet.Skills[i].Base -= decreaseAmount;
 
                 if (!m_Pet.IsDeadPet && m_HitsScalar > 0)
-                {
                     m_Pet.Hits = (int)(m_Pet.HitsMax * m_HitsScalar);
-                }
             }
         }
     }

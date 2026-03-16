@@ -47,23 +47,17 @@ namespace Server.Items
         public override void OnTrigger(Mobile from)
         {
             if (from.IsStaff())
-            {
                 return;
-            }
 
             if (WarningFlame)
-            {
                 DoEffect();
-            }
 
             if (from.Alive && CheckRange(from.Location, 0))
             {
                 Spells.SpellHelper.Damage(TimeSpan.FromSeconds(0.5), from, from, Utility.RandomMinMax(MinDamage, MaxDamage), 0, 100, 0, 0, 0);
 
                 if (!WarningFlame)
-                {
                     DoEffect();
-                }
             }
         }
 

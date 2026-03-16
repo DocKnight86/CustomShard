@@ -132,9 +132,7 @@ namespace Server.Misc
         protected override void OnTick()
         {
             if (Restarting || !Enabled)
-            {
                 return;
-            }
 
             if (WarningDelay > TimeSpan.Zero && !DoneWarning && RestartTime - WarningDelay < DateTime.Now)
             {

@@ -59,9 +59,7 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
-            {
                 list.Add(1076218); // 2nd Year Veteran Reward
-            }
         }
 
         void IChopable.OnChop(Mobile user)
@@ -81,14 +79,10 @@ namespace Server.Items
                     from.SendGump(new RewardDemolitionGump(this, 1018329)); // Do you wish to re-deed this skull?
                 }
                 else
-                {
                     from.SendLocalizedMessage(1018328); // You can only re-deed a skull if you placed it or you are the owner of the house.
-                }
             }
             else
-            {
                 from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -112,24 +106,14 @@ namespace Server.Items
         public bool CouldFit(IPoint3D p, Map map)
         {
             if (map == null || !map.CanFit(p.X, p.Y, p.Z, ItemData.Height))
-            {
                 return false;
-            }
 
             if (Type == StoneFaceTrapType.NorthWestWall)
-            {
                 return BaseAddon.IsWall(p.X, p.Y - 1, p.Z, map) && BaseAddon.IsWall(p.X - 1, p.Y, p.Z, map); // north and west wall
-            }
-
             if (Type == StoneFaceTrapType.NorthWall)
-            {
                 return BaseAddon.IsWall(p.X, p.Y - 1, p.Z, map); // north wall
-            }
-
             if (Type == StoneFaceTrapType.WestWall)
-            {
                 return BaseAddon.IsWall(p.X - 1, p.Y, p.Z, map); // west wall
-            }
 
             return false;
         }
@@ -169,13 +153,14 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
-            {
                 list.Add(1076218); // 2nd Year Veteran Reward
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (m_IsRewardItem && !RewardSystem.CheckIsUsableBy(from, this, null))
+                return;
+
             if (IsChildOf(from.Backpack))
             {
                 BaseHouse house = BaseHouse.FindHouseAt(from);
@@ -186,14 +171,10 @@ namespace Server.Items
                     from.Target = new InternalTarget(this);
                 }
                 else
-                {
                     from.SendLocalizedMessage(502115); // You must be in your house to do this.
-                }
             }
             else
-            {
                 from.SendLocalizedMessage(1042038); // You must have the object in your backpack to use it.          	
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -226,9 +207,7 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Head == null || m_Head.Deleted)
-                {
                     return;
-                }
 
                 if (m_Head.IsChildOf(from.Backpack))
                 {
@@ -240,9 +219,7 @@ namespace Server.Items
                         Map map = from.Map;
 
                         if (p == null || map == null)
-                        {
                             return;
-                        }
 
                         Point3D p3d = new Point3D(p);
                         ItemData id = TileData.ItemTable[0x10F5];
@@ -259,17 +236,11 @@ namespace Server.Items
                                 FlamingHead head = null;
 
                                 if (north && west)
-                                {
                                     head = new FlamingHead(StoneFaceTrapType.NorthWestWall);
-                                }
                                 else if (north)
-                                {
                                     head = new FlamingHead(StoneFaceTrapType.NorthWall);
-                                }
                                 else if (west)
-                                {
                                     head = new FlamingHead(StoneFaceTrapType.WestWall);
-                                }
 
                                 if (north || west)
                                 {
@@ -281,29 +252,19 @@ namespace Server.Items
                                     m_Head.Delete();
                                 }
                                 else
-                                {
                                     from.SendLocalizedMessage(1042266); // The head must be placed next to a wall.
-                                }
                             }
                             else
-                            {
                                 from.SendLocalizedMessage(1042266); // The head must be placed next to a wall.
-                            }
                         }
                         else
-                        {
                             from.SendLocalizedMessage(1042036); // That location is not in your house.			
-                        }
                     }
                     else
-                    {
                         from.SendLocalizedMessage(502115); // You must be in your house to do this.
-                    }
                 }
                 else
-                {
                     from.SendLocalizedMessage(1042038); // You must have the object in your backpack to use it.     
-                }
             }
         }
     }

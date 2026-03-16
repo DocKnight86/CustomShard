@@ -14,9 +14,7 @@ namespace Server.Engines.BulkOrders
         protected override void OnTarget(Mobile from, object targeted)
         {
             if (m_Deed.Deleted || !m_Deed.IsChildOf(from.Backpack))
-            {
                 return;
-            }
 
             m_Deed.EndCombine(from, targeted);
         }

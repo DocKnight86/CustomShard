@@ -25,19 +25,13 @@ namespace Server.Engines.BulkOrders
             int height = 0;
 
             if (deed.RequireExceptional || deed.Material != BulkMaterialType.None)
-            {
                 height += 24;
-            }
 
             if (deed.RequireExceptional)
-            {
                 height += 24;
-            }
 
             if (deed.Material != BulkMaterialType.None)
-            {
                 height += 24;
-            }
 
             AddBackground(50, 10, 455, 245 + height, 5054);
             AddImageTiled(58, 20, 438, 226 + height, 2624);
@@ -141,9 +135,7 @@ namespace Server.Engines.BulkOrders
         public override void OnResponse(NetState sender, RelayInfo info)
         {
             if (m_Deed.Deleted || !m_Deed.IsChildOf(m_From.Backpack))
-            {
                 return;
-            }
 
             switch (info.ButtonID)
             {

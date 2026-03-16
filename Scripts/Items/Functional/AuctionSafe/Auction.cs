@@ -101,9 +101,7 @@ namespace Server.Engines.Auction
         public bool AuctionItemOnDisplay()
         {
             if (AuctionItem == null || AuctionItem.Deleted || Safe == null)
-            {
                 return false;
-            }
 
             return !AuctionItem.Movable && AuctionItem.X == Safe.X && AuctionItem.Y == Safe.Y && AuctionItem.Z == Safe.Z + 7;
         }
@@ -111,9 +109,7 @@ namespace Server.Engines.Auction
         public void OnBegin()
         {
             if (Safe == null || Safe.Deleted)
-            {
                 return;
-            }
 
             if (!OnGoing)
             {
@@ -131,20 +127,14 @@ namespace Server.Engines.Auction
         public bool CheckModifyAuction(Mobile m, bool checkingItem = false)
         {
             if (Safe == null)
-            {
                 return false;
-            }
 
             if (AuctionItem != null && InClaimPeriod)
             {
                 if (!checkingItem)
-                {
                     m.SendLocalizedMessage(1156430); // You must wait for your auctioned item to be claimed before modifying this auction safe.
-                }
                 else
-                {
                     m.SendLocalizedMessage(1156429); // You must wait for your auctioned item to be claimed before adding a new item.
-                }
 
                 return false;
             }
@@ -287,9 +277,7 @@ namespace Server.Engines.Auction
         private void AddToHistory(Mobile m, long highBid)
         {
             if (BidHistory == null)
-            {
                 BidHistory = new List<HistoryEntry>();
-            }
 
             BidHistory.Add(new HistoryEntry(m, highBid));
         }
@@ -344,14 +332,10 @@ namespace Server.Engines.Auction
                 long dif = HighestBid.CurrentBid - CurrentBid;
 
                 if (a != null && dif > 0)
-                {
                     a.DepositGold(dif);
-                }
 
                 if (b != null)
-                {
                     b.DepositGold(HighestBid.CurrentBid);
-                }
 
                 if (!isPublic)
                 {
@@ -377,7 +361,6 @@ namespace Server.Engines.Auction
         private void CloseGumps()
         {
             if (Viewers != null)
-            {
                 for (var index = 0; index < Viewers.Count; index++)
                 {
                     var pm = Viewers[index];
@@ -385,7 +368,6 @@ namespace Server.Engines.Auction
                     pm.CloseGump(typeof(AuctionBidGump));
                     pm.CloseGump(typeof(AuctionOwnerGump));
                 }
-            }
         }
 
         public void HouseCollapse()
@@ -504,19 +486,13 @@ namespace Server.Engines.Auction
             try
             {
                 if (Bids != null)
-                {
                     ColUtility.Free(Bids);
-                }
 
                 if (BidHistory != null)
-                {
                     ColUtility.Free(BidHistory);
-                }
 
                 if (Viewers != null)
-                {
                     ColUtility.Free(Viewers);
-                }
 
                 Bids = null;
                 BidHistory = null;
@@ -528,44 +504,32 @@ namespace Server.Engines.Auction
         public void ResendGumps(PlayerMobile player)
         {
             if (Viewers == null)
-            {
                 return;
-            }
 
             ColUtility.ForEach(Viewers.Where(pm => pm != player), pm =>
                 {
                     AuctionBidGump g = pm.FindGump(typeof(AuctionBidGump)) as AuctionBidGump;
 
                     if (g == null)
-                    {
                         pm.SendGump(new AuctionOwnerGump(pm, Safe));
-                    }
                     else
-                    {
                         g.Refresh();
-                    }
                 });
         }
 
         public void AddViewer(PlayerMobile pm)
         {
             if (Viewers == null)
-            {
                 Viewers = new List<PlayerMobile>();
-            }
 
             if (!Viewers.Contains(pm))
-            {
                 Viewers.Add(pm);
-            }
         }
 
         public void RemoveViewer(PlayerMobile pm)
         {
             if (Viewers == null)
-            {
                 return;
-            }
 
             Viewers.Remove(pm);
 
@@ -612,18 +576,14 @@ namespace Server.Engines.Auction
                             Bids.Add(entry);
 
                             if (entry.CurrentBid > 0 && (HighestBid == null || entry.CurrentBid > HighestBid.CurrentBid))
-                            {
                                 HighestBid = entry;
-                            }
                         }
                     }
 
                     count = reader.ReadInt();
 
                     if (count > 0)
-                    {
                         BidHistory = new List<HistoryEntry>();
-                    }
 
                     for (int i = 0; i < count; i++)
                     {
@@ -634,9 +594,7 @@ namespace Server.Engines.Auction
             }
 
             if (HasBegun)
-            {
                 Auctions.Add(this);
-            }
         }
 
         public void Serialize(GenericWriter writer)
@@ -665,9 +623,7 @@ namespace Server.Engines.Auction
             writer.Write(BidHistory != null ? BidHistory.Count : 0);
 
             if (BidHistory != null)
-            {
                 BidHistory.ForEach(e => e.Serialize(writer));
-            }
         }
 
         #region static memebers

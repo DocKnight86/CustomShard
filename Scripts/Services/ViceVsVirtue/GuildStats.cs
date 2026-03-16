@@ -61,14 +61,10 @@ namespace Server.Engines.VvV
         public int CompareTo(BattleTeam team)
         {
             if (Score > team.Score)
-            {
                 return -1;
-            }
 
             if (Score == team.Score)
-            {
                 return 0;
-            }
 
             return 1;
         }
@@ -106,9 +102,7 @@ namespace Server.Engines.VvV
                 VvVPlayerBattleStats stats = new VvVPlayerBattleStats(reader, pm);
 
                 if (pm != null)
-                {
                     PlayerStats.Add(stats);
-                }
             }
         }
 
@@ -183,9 +177,7 @@ namespace Server.Engines.VvV
             Points = reader.ReadDouble();
 
             if (version == 0)
-            {
                 reader.ReadInt();
-            }
 
             Kills = reader.ReadInt();
             Assists = reader.ReadInt();
@@ -226,14 +218,10 @@ namespace Server.Engines.VvV
         public int CompareTo(VvVGuildBattleStats stats)
         {
             if (Points > stats.Points)
-            {
                 return 1;
-            }
 
             if (Points == stats.Points)
-            {
                 return 0;
-            }
 
             return -1;
         }

@@ -133,14 +133,10 @@ namespace Server.Mobiles
                         if (so != null)
                         {
                             if (so.SpawnName != name)
-                            {
                                 so.SpawnName = name;
-                            }
 
                             if (so.MaxCount != max)
-                            {
                                 so.MaxCount = max;
-                            }
                         }
                         else
                         {
@@ -154,9 +150,7 @@ namespace Server.Mobiles
         public override void OnResponse(RelayInfo info)
         {
             if (Spawner.Deleted || User.AccessLevel < AccessLevel.GameMaster)
-            {
                 return;
-            }
 
             switch (info.ButtonID)
             {
@@ -215,13 +209,9 @@ namespace Server.Mobiles
                         UpdateSpawnObjects(info, User);
 
                         if (type == 0) // Spawn creature
-                        {
                             Spawner.Spawn(index);
-                        }
                         else // Remove creatures
-                        {
                             Spawner.RemoveSpawned(index);
-                        }
                     }
 
                     break;

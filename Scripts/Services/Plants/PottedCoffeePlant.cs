@@ -125,16 +125,12 @@ namespace Server.Items
         public bool CheckAccessible(Mobile from, Item item)
         {
             if (from.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return true; // Staff can access anything
-            }
 
             BaseHouse house = BaseHouse.FindHouseAt(item);
 
             if (house == null)
-            {
                 return false;
-            }
 
             switch (Level)
             {
@@ -167,9 +163,7 @@ namespace Server.Items
         public void StopTimer()
         {
             if (m_Timer != null)
-            {
                 m_Timer.Stop();
-            }
 
             m_Timer = null;
         }
@@ -177,9 +171,7 @@ namespace Server.Items
         public void StartTimer()
         {
             if (m_Timer != null)
-            {
                 return;
-            }
 
             m_Timer = Timer.DelayCall(TimeSpan.FromHours(1.0), TimeSpan.FromHours(1.0), OnTick);
         }
@@ -234,9 +226,7 @@ namespace Server.Items
             NextGrowth = reader.ReadDateTime();
 
             if (PlantStatus < PlantStatus.Stage4)
-            {
                 StartTimer();
-            }
         }
     }
 }

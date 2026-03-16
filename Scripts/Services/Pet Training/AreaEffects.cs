@@ -390,21 +390,13 @@ namespace Server.Mobiles
             double total = bc.Skills[SkillName.Poisoning].Value;
 
             if (total >= 100)
-            {
                 level = 4;
-            }
             else if (total > 60)
-            {
                 level = 3;
-            }
             else if (total > 40)
-            {
                 level = 2;
-            }
             else if (total > 20)
-            {
                 level = 1;
-            }
 
             return Poison.GetPoison(level);
         }

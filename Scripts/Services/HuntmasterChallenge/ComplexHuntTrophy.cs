@@ -156,24 +156,16 @@ namespace Server.Items
                     list.Add(1155709, addon.DateKilled); // Date of Kill: ~1_DATE~
 
                     if (addon.KillLocation != null)
-                    {
                         list.Add(1061114, addon.KillLocation); // Location: ~1_val~
-                    }
 
                     list.Add(1155718, addon.Species.ToString());
 
                     if (addon.MeasuredBy == MeasuredBy.Length)
-                    {
                         list.Add(1155711, addon.Measurement.ToString()); // Length: ~1_VAL~
-                    }
                     else if (addon.MeasuredBy == MeasuredBy.Wingspan)
-                    {
                         list.Add(1155710, addon.Measurement.ToString());	// Wingspan: ~1_VAL~
-                    }
                     else
-                    {
                         list.Add(1072225, addon.Measurement.ToString()); // Weight: ~1_WEIGHT~ stones
-                    }
                 }
             }
 
@@ -322,24 +314,16 @@ namespace Server.Items
             list.Add(1155709, DateKilled); // Date of Kill: ~1_DATE~
 
             if (m_Location != null)
-            {
                 list.Add(1061114, m_Location); // Location: ~1_val~
-            }
 
             list.Add(1155718, Species.ToString());
 
             if (MeasuredBy == MeasuredBy.Length)
-            {
                 list.Add(1155711, m_Measurement.ToString()); // Length: ~1_VAL~
-            }
             else if (MeasuredBy == MeasuredBy.Wingspan)
-            {
                 list.Add(1155710, m_Measurement.ToString());	// Wingspan: ~1_VAL~
-            }
             else
-            {
                 list.Add(1072225, m_Measurement.ToString()); // Weight: ~1_WEIGHT~ stones
-            }
         }
 
         public HuntTrophyAddonDeed(Serial serial)

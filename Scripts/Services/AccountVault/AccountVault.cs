@@ -350,9 +350,7 @@ namespace Server.AccountVault
         internal void ClaimVault(Mobile m)
         {
             if (Account == null || m.Account == null || m.Account.Username != Account)
-            {
                 return;
-            }
 
             var cont = Container;
             var items = new List<Item>(Items.Where(i => i != cont && !i.IsChildOf(cont)));

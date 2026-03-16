@@ -17,9 +17,7 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!from.HasGump(typeof(BountyBoardGump)))
-            {
                 BaseGump.SendGump(new BountyBoardGump(from));
-            }
         }
 
         public ProfessionalBountyBoard(Serial serial) : base(serial) { }
@@ -64,21 +62,14 @@ namespace Server.Items
             AddHtmlLocalized(195, 190, 300, 16, 1116707, lightHue, false, false); //********
 
             if (Index < 0)
-            {
                 Index = 0;
-            }
-
             if (Index >= BountyQuestSpawner.Bounties.Count)
-            {
                 Index = BountyQuestSpawner.Bounties.Count - 1;
-            }
 
             List<Mobile> mobs = new List<Mobile>(BountyQuestSpawner.Bounties.Keys);
 
             if (mobs.Count == 0)
-            {
                 return;
-            }
 
             int y = 210;
             int idx = 0;
@@ -86,9 +77,7 @@ namespace Server.Items
             for (int i = Index; i < mobs.Count; i++)
             {
                 if (idx++ > 4)
-                {
                     break;
-                }
 
                 Mobile mob = mobs[i];
                 int toReward = 1000;
@@ -97,9 +86,7 @@ namespace Server.Items
                 PirateCaptain capt = mob as PirateCaptain;
 
                 if (capt == null)
-                {
                     continue;
-                }
 
                 string args;
 
@@ -114,13 +101,9 @@ namespace Server.Items
                 else
                 {
                     if (capt.PirateName > 0)
-                    {
                         args = $"#{capt.Adjective}\t#{capt.Noun}\t#{capt.PirateName}";
-                    }
                     else
-                    {
                         args = $"#{capt.Adjective}\t#{capt.Noun}\t{capt.Name}";
-                    }
 
                     AddHtmlLocalized(110, y, 400, 16, 1116690 + (idx - 1), args, lightHue, false, false); // ~1_val~ ~2_val~ ~3_val~
                 }
@@ -137,9 +120,7 @@ namespace Server.Items
         public override void OnResponse(RelayInfo info)
         {
             if (info.ButtonID == 0)
-            {
                 return;
-            }
 
             if (info.ButtonID < 500)
             {

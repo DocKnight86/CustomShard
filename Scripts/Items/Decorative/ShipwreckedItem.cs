@@ -116,9 +116,7 @@ namespace Server.Items
         public bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
-            {
                 return false;
-            }
 
             if (ItemID >= 0x13A4 && ItemID <= 0x13AE)
             {

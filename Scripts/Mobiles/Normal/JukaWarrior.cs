@@ -82,9 +82,7 @@ namespace Server.Mobiles
             base.OnGaveMeleeAttack(defender);
 
             if (0.2 < Utility.RandomDouble())
-            {
                 return;
-            }
 
             switch (Utility.Random(3))
             {

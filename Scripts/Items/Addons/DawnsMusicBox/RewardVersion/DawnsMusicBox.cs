@@ -85,19 +85,11 @@ namespace Server.Items.MusicBox
             }
 
             if (commonSongs > 0)
-            {
                 list.Add(1075234, commonSongs.ToString()); // ~1_NUMBER~ Common Tracks
-            }
-
             if (unCommonSongs > 0)
-            {
                 list.Add(1075235, unCommonSongs.ToString()); // ~1_NUMBER~ Uncommon Tracks
-            }
-
             if (rareSongs > 0)
-            {
                 list.Add(1075236, rareSongs.ToString()); // ~1_NUMBER~ Rare Tracks
-            }
         }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
@@ -116,15 +108,11 @@ namespace Server.Items.MusicBox
             else if (IsOwner(from))
             {
                 if (!IsLockedDown)
-                {
                     from.SendLocalizedMessage(502692); // This must be in a house and be locked down to work.
-                }
                 else
                 {
                     if (from.HasGump(typeof(MusicGump)))
-                    {
                         from.CloseGump(typeof(MusicGump));
-                    }
 
                     from.SendGump(new MusicGump(this));
                 }
@@ -176,9 +164,7 @@ namespace Server.Items.MusicBox
         public bool IsOwner(Mobile mob)
         {
             if (mob.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return true;
-            }
 
             BaseHouse house = BaseHouse.FindHouseAt(this);
 
@@ -192,9 +178,7 @@ namespace Server.Items.MusicBox
                 m.Send(PlayMusic.InvalidInstance); // Stop actual music
 
                 if (play)
-                {
                     m.Send(PlayMusic.GetInstance(m_ActualSong));
-                }
             }
         }
 
@@ -216,9 +200,7 @@ namespace Server.Items.MusicBox
                 foreach (Mobile m in mobsEable)
                 {
                     if (m is Mobiles.PlayerMobile)
-                    {
                         ToggleMusic(m, hasToStart);
-                    }
                 }
 
                 mobsEable.Free();
@@ -230,10 +212,7 @@ namespace Server.Items.MusicBox
             if (IsPlaying && !hasToStart)
             {
                 if (m_PlayingTimer != null && m_PlayingTimer.Running)	// remove correctly the timer...
-                {
                     m_PlayingTimer.Stop();
-                }
-
                 m_PlayingTimer = null;
             }
             else if (!IsPlaying && hasToStart)
@@ -296,9 +275,7 @@ namespace Server.Items.MusicBox
                 case 0:
                     {
                         if (m_Tracks == null)
-                        {
                             m_Tracks = new List<MusicName>();
-                        }
 
                         int numSongs = reader.ReadInt();
                         for (int i = 0; i < numSongs; i++)
@@ -330,18 +307,12 @@ namespace Server.Items.MusicBox
                 if (DateTime.UtcNow > m_Until)
                 {
                     if (m_Box != null && !m_Box.Deleted)
-                    {
                         m_Box.TogglePlaying(false);
-                    }
                     else
-                    {
                         Stop();
-                    }
                 }
                 else if (m_Box != null && !m_Box.Deleted)
-                {
                     m_Box.Animate();
-                }
             }
         }
 
@@ -376,9 +347,7 @@ namespace Server.Items.MusicBox
                 m_HasStopSongEntry = m_Box.IsPlaying;
 
                 if (m_Songs == null)
-                {
                     m_Songs = BuildList(box, m_HasStopSongEntry);
-                }
 
                 Initialize();
             }
@@ -402,14 +371,10 @@ namespace Server.Items.MusicBox
                 AddHtmlLocalized(14, 12, 255, 25, 1075130, m_HueTit, false, false); // Choose a track to play
 
                 if (m_Page > 1)
-                {
                     AddButton(225, 297, 5603, 5607, 200, GumpButtonType.Reply, 0); // Previous page
-                }
 
                 if (m_Page < Math.Ceiling(m_Songs.Count / (double)m_Fields))
-                {
                     AddButton(245, 297, 5601, 5605, 300, GumpButtonType.Reply, 0); // Next Page
-                }
 
                 int IndMax = m_Page * m_Fields - 1;
                 int IndMin = m_Page * m_Fields - m_Fields;
@@ -431,9 +396,7 @@ namespace Server.Items.MusicBox
                 Mobile from = sender.Mobile;
 
                 if (info.ButtonID == 0)
-                {
                     return;
-                }
 
                 if (info.ButtonID == 200) // Previous page
                 {
@@ -468,9 +431,7 @@ namespace Server.Items.MusicBox
                 }
 
                 if (hasStopSongEntry)
-                {
                     list.Add(1075207); // Stop Song
-                }
 
                 return list;
             }

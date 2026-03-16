@@ -79,9 +79,7 @@ namespace Server.Mobiles
                 from.SendGump(new OptionsGump(this));
             }
             else
-            {
                 base.OnDoubleClick(from);
-            }
         }
 
         public override void AddCustomContextEntries(Mobile from, List<ContextMenuEntry> list)
@@ -115,9 +113,7 @@ namespace Server.Mobiles
                     }
 
                     if (m_House != null && !m_House.IsInside(oldLocation, 16) && m_House.IsInside(m))
-                    {
                         m_Greeting.Say(this, m);
-                    }
                 }
             }
         }
@@ -141,16 +137,12 @@ namespace Server.Mobiles
             writer.Write(m_Announcement != null);
 
             if (m_Announcement != null)
-            {
                 m_Announcement.Serialize(writer);
-            }
 
             writer.Write(m_Greeting != null);
 
             if (m_Greeting != null)
-            {
                 m_Greeting.Serialize(writer);
-            }
         }
 
         public override void Deserialize(GenericReader reader)
@@ -226,21 +218,15 @@ namespace Server.Mobiles
                 set
                 {
                     if (value != null)
-                    {
                         m_Arguments = value.Split('|');
-                    }
                     else
-                    {
                         m_Arguments = null;
-                    }
                 }
             }
             public override string ToString()
             {
                 if (m_Message != null)
-                {
                     return m_Message.ToString();
-                }
 
                 return base.ToString();
             }
@@ -311,9 +297,7 @@ namespace Server.Mobiles
             public string Construct(AttendantHerald herald, Mobile visitor, string argument)
             {
                 if (herald == null || herald.Deleted || herald.ControlMaster == null)
-                {
                     return string.Empty;
-                }
 
                 Mobile m = herald.ControlMaster;
 
@@ -355,9 +339,7 @@ namespace Server.Mobiles
                     writer.Write(m_Message.String);
                 }
                 else
-                {
                     writer.Write((byte)0x0);
-                }
 
                 if (m_Arguments != null)
                 {
@@ -367,9 +349,7 @@ namespace Server.Mobiles
                         writer.Write(s);
                 }
                 else
-                {
                     writer.WriteEncodedInt(0);
-                }
             }
 
             public void Deserialize(GenericReader reader)
@@ -438,9 +418,7 @@ namespace Server.Mobiles
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (m_Herald == null || m_Herald.Deleted)
-                {
                     return;
-                }
 
                 Mobile m = sender.Mobile;
 
@@ -464,9 +442,7 @@ namespace Server.Mobiles
                                     m_Herald.ControlTarget = null;
                                 }
                                 else
-                                {
                                     m.SendLocalizedMessage(1076140); // You must be in a house you control to put your herald into greeting mode.
-                                }
                             }
 
                             break;
@@ -537,9 +513,7 @@ namespace Server.Mobiles
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (m_Herald == null || m_Herald.Deleted)
-                {
                     return;
-                }
 
                 int index = info.ButtonID - 100;
 
@@ -676,9 +650,7 @@ namespace Server.ContextMenus
         public override void OnClick()
         {
             if (m_Attendant == null || m_Attendant.Deleted)
-            {
                 return;
-            }
 
             m_Attendant.SetAnnouncementText(Owner.From);
         }
@@ -696,9 +668,7 @@ namespace Server.ContextMenus
         public override void OnClick()
         {
             if (m_Attendant == null || m_Attendant.Deleted)
-            {
                 return;
-            }
 
             m_Attendant.SetGreetingText(Owner.From);
         }

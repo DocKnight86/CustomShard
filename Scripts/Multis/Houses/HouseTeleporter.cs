@@ -79,9 +79,7 @@ namespace Server.Items
                 if (CheckAccess(m))
                 {
                     if (!m.Hidden || m.IsPlayer())
-                    {
                         new EffectTimer(Location, Map, 2023, 0x1F0, TimeSpan.FromSeconds(0.4)).Start();
-                    }
 
                     new DelayTimer(this, m).Start();
                 }
@@ -138,9 +136,7 @@ namespace Server.Items
                 Effects.SendLocationParticles(EffectItem.Create(m_Location, m_Map, EffectItem.DefaultDuration), 0x3728, 10, 10, m_EffectID, 0);
 
                 if (m_SoundID != -1)
-                {
                     Effects.PlaySound(m_Location, m_Map, m_SoundID);
-                }
             }
         }
 

@@ -221,9 +221,7 @@ namespace Server.Items
         public override void OnDelete()
         {
             if (Commodity != null)
-            {
                 Commodity.Delete();
-            }
 
             base.OnDelete();
         }
@@ -274,9 +272,7 @@ namespace Server.Items
                         Delete();
                     }
                     else
-                    {
                         number = 1080525; // The commodity deed box must be secured before you can use it.
-                    }
                 }
                 else if (hold != null)
                 {

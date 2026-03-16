@@ -40,9 +40,7 @@ namespace Server.Engines.BulkOrders
         public override double GetPoints(Mobile m)
         {
             if (Points > 0)
-            {
                 return Points;
-            }
 
             return BulkOrderSystem.GetPoints(m, BODType);
         }

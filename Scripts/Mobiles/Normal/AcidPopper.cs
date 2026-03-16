@@ -30,13 +30,9 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!IsChildOf(from.Backpack))
-            {
                 from.SendLocalizedMessage(1042664); // You must have the object in your backpack to use it.
-            }
             else
-            {
                 from.BeginTarget(1, false, TargetFlags.None, BurnWeb_Callback);
-            }
         }
 
         private void BurnWeb_Callback(Mobile from, object targeted)

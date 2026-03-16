@@ -68,7 +68,7 @@ namespace Server.Mobiles
 
         private Item RegBag(IEntity e)
         {
-            Bag bag = new Bag();
+            var bag = new Bag();
             int count = Utility.RandomMinMax(10, 20);
 
             for (int i = 0; i < count; ++i)
@@ -142,9 +142,7 @@ namespace Server.Mobiles
                         toScale = toBuff.RawStr;
 
                         if (toScale > 0)
-                        {
                             toBuff.RawStr += AOS.Scale(toScale, 50);
-                        }
 
                         toScale = toBuff.RawDex;
 
@@ -193,9 +191,7 @@ namespace Server.Mobiles
             toDebuff.EndAction(typeof(JukaMage));
 
             if (toDebuff.Deleted)
-            {
                 return;
-            }
 
             toDebuff.HitsMaxSeed = (int)states[1];
             toDebuff.RawStr = (int)states[2];

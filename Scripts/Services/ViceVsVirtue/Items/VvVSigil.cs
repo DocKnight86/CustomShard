@@ -36,9 +36,7 @@ namespace Server.Engines.VvV
         public static bool ExistsOn(Mobile mob, bool vvvOnly = false)
         {
             if (mob == null || mob.Backpack == null)
-            {
                 return false;
-            }
 
             Container pack = mob.Backpack;
 
@@ -73,14 +71,10 @@ namespace Server.Engines.VvV
         private Mobile FindOwner(object parent)
         {
             if (parent is Item item)
-            {
                 return item.RootParent as Mobile;
-            }
 
             if (parent is Mobile mobile)
-            {
                 return mobile;
-            }
 
             return null;
         }
@@ -112,9 +106,7 @@ namespace Server.Engines.VvV
         public bool CheckReveal(Mobile m)
         {
             if (!ViceVsVirtueSystem.IsVvV(m))
-            {
                 return false;
-            }
 
             return Utility.Random(100) <= m.Skills[SkillName.DetectHidden].Value;
         }
@@ -131,9 +123,7 @@ namespace Server.Engines.VvV
                 int skill = (int)m.Skills[SkillName.DetectHidden].Value;
 
                 if (skill >= 80 && Utility.Random(300) < skill)
-                {
                     return true;
-                }
             }
 
             return false;

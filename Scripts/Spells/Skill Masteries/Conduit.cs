@@ -55,9 +55,7 @@ namespace Server.Spells.SkillMasteries
                 return true;
             }
             else
-            {
                 return false;
-            }
         }
 
         protected override void OnTarget(object o)
@@ -108,18 +106,14 @@ namespace Server.Spells.SkillMasteries
         public static bool CheckAffected(Mobile caster, IDamageable victim, Action<Mobile, double> callback)
         {
             if (victim == null || victim.Map == null)
-            {
                 return false;
-            }
 
             foreach (SkillMasterySpell spell in EnumerateSpells(caster, typeof(ConduitSpell)))
             {
                 ConduitSpell conduit = spell as ConduitSpell;
 
                 if (conduit == null)
-                {
                     continue;
-                }
 
                 if (conduit.Zone.Contains(victim))
                 {
@@ -131,9 +125,7 @@ namespace Server.Spells.SkillMasteries
                         if (m != victim && conduit.Caster.CanBeHarmful(m))
                         {
                             if (toAffect == null)
-                            {
                                 toAffect = new List<Mobile>();
-                            }
 
                             toAffect.Add(m);
                         }
@@ -143,9 +135,9 @@ namespace Server.Spells.SkillMasteries
 
                     if (toAffect != null && callback != null)
                     {
-                        for (int index = 0; index < toAffect.Count; index++)
+                        for (var index = 0; index < toAffect.Count; index++)
                         {
-                            Mobile m = toAffect[index];
+                            var m = toAffect[index];
 
                             callback(m, conduit.Strength / 100.0);
                         }

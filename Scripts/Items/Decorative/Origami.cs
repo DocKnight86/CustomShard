@@ -40,9 +40,7 @@ namespace Server.Items
                 }
 
                 if (i != null)
-                {
                     from.AddToBackpack(i);
-                }
 
                 from.SendLocalizedMessage(1070822); // You fold the paper into an interesting shape.
             }

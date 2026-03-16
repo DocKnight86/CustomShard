@@ -32,9 +32,7 @@ namespace Server.Engines.NewMagincia
                 }
             }
             else
-            {
                 base.OnDoubleClick(from);
-            }
         }
 
         public override int GetWeeklyFee()
@@ -68,17 +66,13 @@ namespace Server.Engines.NewMagincia
             int amount = realItem.Amount;
 
             if (HasType(type))
-            {
                 return false;
-            }
 
             CommodityBrokerEntry entry = new CommodityBrokerEntry(realItem, this, amount);
             m_CommodityEntries.Add(entry);
 
             if (amount > 0)
-            {
                 from.SendLocalizedMessage(1150220, string.Format("{0}\t#{1}\t{2}", amount.ToString(), entry.Label, Plot.ShopName == null ? "an unnamed shop" : Plot.ShopName)); // You have added ~1_QUANTITY~ units of ~2_ITEMNAME~ to the inventory of "~3_SHOPNAME~"
-            }
 
             item.Delete();
 
@@ -90,10 +84,7 @@ namespace Server.Engines.NewMagincia
             if (m_CommodityEntries.Contains(entry))
             {
                 if (entry.Stock > 0)
-                {
                     WithdrawInventory(from, GetStock(entry), entry);
-                }
-
                 m_CommodityEntries.Remove(entry);
             }
         }
@@ -166,9 +157,7 @@ namespace Server.Engines.NewMagincia
         public void WithdrawInventory(Mobile from, int amount, CommodityBrokerEntry entry)
         {
             if (from == null || Plot == null || entry == null || !m_CommodityEntries.Contains(entry))
-            {
                 return;
-            }
 
             Container pack = from.Backpack;
 
@@ -194,9 +183,7 @@ namespace Server.Engines.NewMagincia
             }
 
             if (Plot != null && from == Plot.Owner)
-            {
                 from.SendLocalizedMessage(1150221, string.Format("{0}\t#{1}\t{2}", amount.ToString(), entry.Label, Plot.ShopName != null ? Plot.ShopName : "a shop with no name")); // You have removed ~1_QUANTITY~ units of ~2_ITEMNAME~ from the inventory of "~3_SHOPNAME~"
-            }
         }
 
         public int GetBuyCost(Mobile from, CommodityBrokerEntry entry, int amount)
@@ -237,9 +224,7 @@ namespace Server.Engines.NewMagincia
                 int commodityAmount = GetCommodityType(from.Backpack, type);
 
                 if (typeAmount + commodityAmount >= total)
-                {
                     return true;
-                }
             }
 
             return false;
@@ -262,25 +247,19 @@ namespace Server.Engines.NewMagincia
                 int commodityAmount = GetCommodityType(from.Backpack, type);
 
                 if (typeAmount + commodityAmount < total)
-                {
                     from.SendLocalizedMessage(1150667); // You do not have the requested amount of that commodity (either in item or deed form) in your backpack to trade. Note that commodities cannot be traded from your bank box.
-                }
                 else if (Banker.Deposit(from, totalCost))
                 {
                     TakeItems(from.Backpack, type, ref total);
 
                     if (total > 0)
-                    {
                         TakeCommodities(from.Backpack, type, ref total);
-                    }
 
                     BankBalance -= totalCost + (int)(totalCost * (ComissionFee / 100.0));
                     from.SendLocalizedMessage(1150668, string.Format("{0}\t#{1}", amount.ToString(), entry.Label)); // You have sold ~1_QUANTITY~ units of ~2_COMMODITY~ to the broker. These have been transferred from deeds and/or items in your backpack.
                 }
                 else
-                {
                     from.SendLocalizedMessage(1150265); // Your bank box cannot hold the proceeds from this transaction.
-                }
             }
         }
 
@@ -334,9 +313,7 @@ namespace Server.Engines.NewMagincia
         private void TakeItems(Container c, Type type, ref int amount)
         {
             if (c == null)
-            {
                 return;
-            }
 
             Item[] items = c.FindItemsByType(type);
             List<Item> toSell = new List<Item>();

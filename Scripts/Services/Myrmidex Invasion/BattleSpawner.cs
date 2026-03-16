@@ -148,23 +148,17 @@ namespace Server.Engines.MyrmidexInvasion
             CommandSystem.Register("CheckPoints", AccessLevel.GameMaster, e =>
             {
                 if (Instance != null)
-                {
                     CheckPoints(e);
-                }
             });
         }
 
         public void OnTick()
         {
             if (MyrmidexFlag == null || TribalFlag == null)
-            {
                 AssignFlags();
-            }
 
             if (!_Active)
-            {
                 return;
-            }
 
             CheckPlayers();
             CheckAdvance();
@@ -176,19 +170,13 @@ namespace Server.Engines.MyrmidexInvasion
             if (HasPlayers())
             {
                 if (LastPlayers != DateTime.MinValue)
-                {
                     LastPlayers = DateTime.MinValue;
-                }
 
                 if (LastMyrmidexWave + TimeSpan.FromSeconds(WaveDuration) < DateTime.UtcNow && MyrmidexTeam.Count < MaxWaves)
-                {
                     SpawnWave(Allegiance.Myrmidex);
-                }
 
                 if (LastTribeWave + TimeSpan.FromSeconds(WaveDuration) < DateTime.UtcNow && TribeTeam.Count < MaxWaves)
-                {
                     SpawnWave(Allegiance.Tribes);
-                }
             }
             else if (LastPlayers == DateTime.MinValue)
             {
@@ -287,9 +275,7 @@ namespace Server.Engines.MyrmidexInvasion
                         AllianceEntry entry = MyrmidexInvasionSystem.GetEntry(pm);
 
                         if (entry != null && !entry.CanRecieveQuest)
-                        {
                             entry.CanRecieveQuest = true;
-                        }
 
                         Players.Remove(pm);
                     }
@@ -303,9 +289,7 @@ namespace Server.Engines.MyrmidexInvasion
         private void ClearWave(Allegiance allegiance, int wave)
         {
             if (wave < 0)
-            {
                 return;
-            }
 
             Dictionary<int, List<BaseCreature>> list;
 
@@ -338,9 +322,7 @@ namespace Server.Engines.MyrmidexInvasion
         private void Reset()
         {
             if (BattleRegion == null)
-            {
                 return;
-            }
 
             IEnumerable<BaseCreature> list = BattleRegion.GetEnumeratedMobiles().OfType<BaseCreature>();
 
@@ -381,9 +363,7 @@ namespace Server.Engines.MyrmidexInvasion
                 List<BaseCreature> bcList = MyrmidexTeam[wave];
 
                 if (bcList == null)
-                {
                     continue;
-                }
 
                 bool all = true;
 
@@ -423,9 +403,7 @@ namespace Server.Engines.MyrmidexInvasion
                 List<BaseCreature> bcList = TribeTeam[wave];
 
                 if (bcList == null)
-                {
                     continue;
-                }
 
                 bool all = true;
 
@@ -551,9 +529,7 @@ namespace Server.Engines.MyrmidexInvasion
         public bool IsFrontLine(Mobile killer, BaseCreature bc)
         {
             if (bc == null)
-            {
                 return false;
-            }
 
             Map map = bc.Corpse != null ? bc.Corpse.Map : bc.Map;
             Point3D p = bc.Corpse != null ? bc.Corpse.Location : bc.Location;
@@ -638,9 +614,7 @@ namespace Server.Engines.MyrmidexInvasion
             foreach (KeyValuePair<int, List<BaseCreature>> kvp in list)
             {
                 if (kvp.Value.Contains(bc))
-                {
                     return kvp.Key;
-                }
             }
 
             return -1;
@@ -651,13 +625,9 @@ namespace Server.Engines.MyrmidexInvasion
             Dictionary<int, List<BaseCreature>> list;
 
             if (allegiance == Allegiance.Myrmidex)
-            {
                 list = MyrmidexTeam;
-            }
             else
-            {
                 list = TribeTeam;
-            }
 
             List<BaseCreature> bclist = new List<BaseCreature>();
 
@@ -803,9 +773,7 @@ namespace Server.Engines.MyrmidexInvasion
                 points.AddRange(uselist[lane][1]);
 
                 if (allegiance == Allegiance.Myrmidex)
-                {
                     points.Reverse();
-                }
 
                 bc.CurrentNavPoint = Array.IndexOf(points.ToArray(), nearest);
 
@@ -868,21 +836,13 @@ namespace Server.Engines.MyrmidexInvasion
             int div = rec.Width / 4;
 
             if (p.X <= rec.X + div)
-            {
                 lane = 0;
-            }
             else if (p.X <= rec.X + (div * 2))
-            {
                 lane = 1;
-            }
             else if (p.X <= rec.X + (div * 3))
-            {
                 lane = 2;
-            }
             else
-            {
                 lane = 3;
-            }
 
             return leg;
         }
@@ -1178,9 +1138,7 @@ namespace Server.Engines.MyrmidexInvasion
                 int score = reader.ReadInt();
 
                 if (pm != null)
-                {
                     Players[pm] = score;
-                }
             }
 
             if (_Active)
@@ -1192,9 +1150,7 @@ namespace Server.Engines.MyrmidexInvasion
             }
 
             if (v == 0)
-            {
                 Timer.DelayCall(TimeSpan.FromSeconds(20), FixFlags);
-            }
         }
 
         private void FixFlags()

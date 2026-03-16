@@ -29,32 +29,22 @@ namespace Server.Engines.NewMagincia
                 MaginciaHousingPlot plot = m_List[i];
 
                 if (plot == null)
-                {
                     continue;
-                }
 
                 int bids = 0;
                 foreach (int bid in plot.Participants.Values)
-                {
                     bids += bid;
-                }
 
                 AddButton(10 + x, y, 4005, 4007, i + 5, GumpButtonType.Reply, 0);
                 AddHtml(45 + x, y, 40, 22, Color(plot.Identifier, LabelColor), false, false);
                 AddHtml(85 + x, y, 60, 22, Color(plot.Map.ToString(), LabelColor), false, false);
 
                 if (plot.LottoOngoing)
-                {
                     AddHtml(145 + x, y, 40, 22, Color(bids.ToString(), LabelColor), false, false);
-                }
                 else if (plot.Complete)
-                {
                     AddHtml(145 + x, y, 40, 22, Color("Owned", "red"), false, false);
-                }
                 else
-                {
                     AddHtml(145 + x, y, 40, 22, Color("Expired", "red"), false, false);
-                }
 
                 if (i == 21)
                 {
@@ -66,9 +56,7 @@ namespace Server.Engines.NewMagincia
                     AddHtml(145 + x, 40, 40, 20, Color("#bids", LabelColor), false, false);
                 }
                 else
-                {
                     y += 22;
-                }
             }
         }
 
@@ -156,9 +144,7 @@ namespace Server.Engines.NewMagincia
                     AddHtml(154 + x, 40, 60, 20, Color("Total Gold", 0xFFFFFF), false, false);
                 }
                 else
-                {
                     y += 22;
-                }
             }
 
             AddHtml(10, 10, 150, 20, Color(string.Format("Gold Sink: {0}", goldSink.ToString()), 0xFFFFFF), false, false);
@@ -177,9 +163,7 @@ namespace Server.Engines.NewMagincia
             Mobile from = state.Mobile;
 
             if (info.ButtonID == 1)
-            {
                 from.SendGump(new LottoTrackingGump());
-            }
         }
     }
 }

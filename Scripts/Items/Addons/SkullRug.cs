@@ -165,9 +165,7 @@ namespace Server.Items
                         from.SendLocalizedMessage(1072224); // An item has been placed in your bank box.
                     }
                     else
-                    {
                         from.SendLocalizedMessage(1072223); // An item has been placed in your backpack.
-                    }
 
                     ResourceCount--;
                     NextResourceCount = DateTime.UtcNow + TimeSpan.FromDays(7);
@@ -361,9 +359,7 @@ namespace Server.Items
                 from.SendGump(new RewardOptionGump(this, 1076583)); // Please select your rug size
             }
             else
-            {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.       	
-            }
         }
 
         public void GetOptions(RewardOptionList list)
@@ -379,9 +375,7 @@ namespace Server.Items
             RugType = (RugType)choice - 1;
 
             if (!Deleted && IsChildOf(from.Backpack))
-            {
                 base.OnDoubleClick(from);
-            }
         }
 
         public override void GetProperties(ObjectPropertyList list)
@@ -389,9 +383,7 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
-            {
                 list.Add(1080457); // 10th Year Veteran Reward
-            }
         }
 
         public SkullRugAddonDeed(Serial serial)

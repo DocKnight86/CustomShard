@@ -35,14 +35,10 @@ namespace Server.Items
         public static int GetBonus(Mobile targ)
         {
             if (targ == null || _Table == null)
-            {
                 return 0;
-            }
 
             if (_Table.TryGetValue(targ, out BlockInfo value))
-            {
                 return value._DCIBonus;
-            }
 
             return 0;
         }
@@ -50,9 +46,7 @@ namespace Server.Items
         public static int GetSpellReduction(Mobile m)
         {
             if (m == null || _Table == null)
-            {
                 return 0;
-            }
 
             if (_Table.TryGetValue(m, out BlockInfo value))
             {
@@ -65,9 +59,7 @@ namespace Server.Items
         public static int GetMeleeReduction(Mobile m)
         {
             if (m == null || _Table == null)
-            {
                 return 0;
-            }
 
             if (_Table.TryGetValue(m, out BlockInfo value))
             {
@@ -82,9 +74,7 @@ namespace Server.Items
             EndBlock(m);
 
             if (_Table == null)
-            {
                 _Table = new Dictionary<Mobile, BlockInfo>();
-            }
 
             BlockInfo info = new BlockInfo(dciBonus, spellblock, meleeblock);
             _Table[m] = info;
@@ -97,9 +87,7 @@ namespace Server.Items
             Timer.DelayCall(TimeSpan.FromSeconds(6), () =>
             {
                 if (IsBlocking(m))
-                {
                     EndBlock(m);
-                }
             });
         }
 
@@ -121,9 +109,7 @@ namespace Server.Items
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
             if (!Validate(attacker) || !CheckMana(attacker, true))
-            {
                 return;
-            }
 
             ClearCurrentAbility(attacker);
 
@@ -145,9 +131,7 @@ namespace Server.Items
             BeginBlock(attacker, dcibonus, spellblock, meleeblock);
 
             if (creature)
-            {
                 PetTrainingHelper.OnWeaponAbilityUsed((BaseCreature)attacker, SkillName.Bushido);
-            }
         }
 
         private class BlockInfo

@@ -34,17 +34,13 @@ namespace Server.Mobiles
                 from.SendGump(new InternalGump(this));
             }
             else
-            {
                 base.OnDoubleClick(from);
-            }
         }
 
         public override void AddCustomContextEntries(Mobile from, List<ContextMenuEntry> list)
         {
             if (from.Alive && IsOwner(from))
-            {
                 list.Add(new AttendantUseEntry(this, 6245));
-            }
 
             base.AddCustomContextEntries(from, list);
         }
@@ -70,13 +66,9 @@ namespace Server.Mobiles
             AddItem(new SkullCap(Utility.RandomPinkHue()));
 
             if (Utility.RandomBool())
-            {
                 AddItem(new Kilt(Utility.RandomPinkHue()));
-            }
             else
-            {
                 AddItem(new Skirt(Utility.RandomPinkHue()));
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -124,9 +116,7 @@ namespace Server.Mobiles
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (m_Teller == null || m_Teller.Deleted)
-                {
                     return;
-                }
 
                 if (info.ButtonID == 1)
                 {
@@ -138,9 +128,7 @@ namespace Server.Mobiles
                         sender.Mobile.SendGump(new FortuneGump(text.Text));
                     }
                     else
-                    {
                         sender.Mobile.SendGump(this);
-                    }
                 }
             }
         }
@@ -176,9 +164,7 @@ namespace Server.Mobiles
             private int GetTooltip(int number)
             {
                 if (number > 9)
-                {
                     return 1076015 + number - 10;
-                }
 
                 switch (number)
                 {

@@ -77,9 +77,7 @@ namespace Server.Engines.BulkOrders
                         Item item = rewardGroup.Items[i].Construct();
 
                         if (item != null)
-                        {
                             list.Add(item);
-                        }
                     }
                 }
                 else
@@ -91,9 +89,7 @@ namespace Server.Engines.BulkOrders
                         Item item = rewardItem.Construct();
 
                         if (item != null)
-                        {
                             list.Add(item);
-                        }
                     }
                 }
             }

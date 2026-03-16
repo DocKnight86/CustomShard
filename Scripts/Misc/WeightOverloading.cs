@@ -59,9 +59,7 @@ namespace Server.Misc
             Mobile from = e.Mobile;
 
             if (!from.Alive || from.IsStaff())
-            {
                 return;
-            }
 
             if (!from.Player)
             {
@@ -106,14 +104,10 @@ namespace Server.Misc
             int loss = 5 + (overWeight / 25);
 
             if (from.Mounted)
-            {
                 loss /= 3;
-            }
 
             if (running)
-            {
                 loss *= 2;
-            }
 
             return loss;
         }
@@ -121,9 +115,7 @@ namespace Server.Misc
         public static bool IsOverloaded(Mobile m)
         {
             if (!m.Player || !m.Alive || m.IsStaff())
-            {
                 return false;
-            }
 
             return Mobile.BodyWeight + m.TotalWeight > m.MaxWeight + OverloadAllowance;
         }

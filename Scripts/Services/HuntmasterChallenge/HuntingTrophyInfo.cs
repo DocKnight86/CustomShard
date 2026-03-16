@@ -141,9 +141,7 @@ namespace Server.Engines.HuntsmasterChallenge
             foreach (HuntingTrophyInfo info in m_Infos)
             {
                 if (info.HuntType == type)
-                {
                     return info;
-                }
             }
 
             return null;

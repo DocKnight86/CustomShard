@@ -38,13 +38,9 @@ namespace Server.Spells.SkillMasteries
                 int duration = 360;            
 
                 if (level == 2)
-                {
                     duration = 240;
-                }
                 else if (level == 3)
-                {
                     duration = 120;
-                }
 
                 AddToCooldown(TimeSpan.FromMinutes(duration));
 

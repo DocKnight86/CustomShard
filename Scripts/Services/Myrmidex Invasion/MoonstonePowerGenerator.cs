@@ -117,9 +117,7 @@ namespace Server.Items
             Link = link;
 
             if (link)
-            {
                 Generators.Add(this);
-            }
         }
 
         public override void OnLocationChange(Point3D oldlocation)
@@ -170,14 +168,10 @@ namespace Server.Items
         private void Reset()
         {
             if (Activator1 != null)
-            {
                 Activator1.Active = false;
-            }
 
             if (Activator2 != null)
-            {
                 Activator2.Active = false;
-            }
 
             ActiveTimer = null;
         }
@@ -219,13 +213,9 @@ namespace Server.Items
                 InactiveID = itemid;
 
                 if (itemid == 40203)
-                {
                     ActiveID = 40158;
-                }
                 else
-                {
                     ActiveID = 40203;
-                }
             }
 
             public InternalComponent(Serial serial)
@@ -273,9 +263,7 @@ namespace Server.Items
             base.Delete();
 
             if (Generators.Contains(this))
-            {
                 Generators.Remove(this);
-            }
         }
 
         public static void Configure()
@@ -374,38 +362,22 @@ namespace Server.Items
             foreach (Item item in eable)
             {
                 if (item.ItemID == 40161)
-                {
                     item.ItemID = 40159;
-                }
                 else if (item.ItemID == 40142)
-                {
                     item.ItemID = 40173;
-                }
                 else if (item.ItemID == 40169)
-                {
                     item.ItemID = 40174;
-                }
                 else if (item.ItemID == 40165)
-                {
                     item.ItemID = 40160;
-                }
 
                 else if (item.ItemID == 40159)
-                {
                     item.ItemID = 40161;
-                }
                 else if (item.ItemID == 40173)
-                {
                     item.ItemID = 40142;
-                }
                 else if (item.ItemID == 40174)
-                {
                     item.ItemID = 40169;
-                }
                 else if (item.ItemID == 40160)
-                {
                     item.ItemID = 40165;
-                }
             }
             eable.Free();
         }
@@ -481,9 +453,7 @@ namespace Server.Items
             Generator = reader.ReadItem() as MoonstonePowerGenerator;
 
             if (Generator != null)
-            {
                 Generator.Addon = this;
-            }
         }
     }
 
@@ -548,9 +518,7 @@ namespace Server.Items
         public void OnTick()
         {
             if (Spawn.Count >= 7 || Deleted || Map == null)
-            {
                 return;
-            }
 
             IPooledEnumerable eable = Map.GetMobilesInRange(Location, 8);
 
@@ -568,9 +536,7 @@ namespace Server.Items
         private void DoSpawn()
         {
             if (Spawn.Count >= 7 || Deleted || Map == null)
-            {
                 return;
-            }
 
             BaseCreature bc = new IgnisFatalis();
 

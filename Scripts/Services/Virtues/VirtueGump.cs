@@ -59,17 +59,13 @@ namespace Server.Services.Virtues
         public override void OnResponse(NetState state, RelayInfo info)
         {
             if (info.ButtonID == 1 && m_Beholder == m_Beheld)
-            {
                 m_Beholder.SendGump(new VirtueStatusGump(m_Beholder));
-            }
         }
 
         public static void VirtueItemRequest(Mobile beholder, Mobile beheld, int buttonId)
         {
             if (beholder != beheld)
-            {
                 return;
-            }
 
             beholder.CloseGump(typeof(VirtueGump));
 
@@ -82,13 +78,9 @@ namespace Server.Services.Virtues
             OnVirtueUsed callback = (OnVirtueUsed)m_Callbacks[buttonId];
 
             if (callback != null)
-            {
                 callback(beholder);
-            }
             else
-            {
                 beholder.SendLocalizedMessage(1052066); // That virtue is not active yet.
-            }
         }
 
         public static void VirtueMacroRequest(Mobile beholder, int virtueId)
@@ -125,44 +117,28 @@ namespace Server.Services.Virtues
         private int GetHueFor(int index)
         {
             if (m_Beheld.Virtues.GetValue(index) == 0)
-            {
                 return 2402;
-            }
 
             int value = m_Beheld.Virtues.GetValue(index);
 
             if (value < 4000)
-            {
                 return 2402;
-            }
 
             if (value >= 30000)
-            {
                 value = 30000; //Sanity
-            }
 
             int vl;
 
             if (value < 10000)
-            {
                 vl = 0;
-            }
             else if (value >= 20000 && index == 5)
-            {
                 vl = 2;
-            }
             else if (value >= 21000 && index != 1)
-            {
                 vl = 2;
-            }
             else if (value >= 22000 && index == 1)
-            {
                 vl = 2;
-            }
             else
-            {
                 vl = 1;
-            }
 
             return m_Table[(index * 3) + vl];
         }

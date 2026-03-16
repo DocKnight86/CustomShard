@@ -78,9 +78,7 @@ namespace Server.Engines.Quests
         public bool CanBeSeenBy(PlayerMobile pm)
         {
             if (pm.AccessLevel > AccessLevel.Player)
-            {
                 return true;
-            }
 
             RightingWrongQuest4 quest = QuestHelper.GetQuest<RightingWrongQuest4>(pm);
 

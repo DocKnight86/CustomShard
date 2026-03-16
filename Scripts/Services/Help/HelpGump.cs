@@ -168,9 +168,7 @@ namespace Server.Engines.Help
                 AggressorInfo info = m.Aggressed[i];
 
                 if (DateTime.UtcNow - info.LastCombatTime < TimeSpan.FromSeconds(30.0))
-                {
                     return true;
-                }
             }
 
             return false;
@@ -283,9 +281,7 @@ namespace Server.Engines.Help
             }
 
             if (type != (PageType)(-1) && PageQueue.CheckAllowedToPage(from))
-            {
                 from.SendGump(new PagePromptGump(from, type));
-            }
         }
 
         public static void HelpRequest(Mobile m)
@@ -293,32 +289,22 @@ namespace Server.Engines.Help
             foreach (Gump g in m.NetState.Gumps)
             {
                 if (g is HelpGump)
-                {
                     return;
-                }
             }
 
             if (!PageQueue.CheckAllowedToPage(m))
-            {
                 return;
-            }
 
             if (PageQueue.Contains(m))
-            {
                 m.SendMenu(new ContainedMenu(m));
-            }
             else
-            {
                 m.SendGump(new HelpGump(m));
-            }
         }
 
         private static bool IsYoung(Mobile m)
         {
             if (m is PlayerMobile)
-            {
                 return ((PlayerMobile)m).Young;
-            }
 
             return false;
         }

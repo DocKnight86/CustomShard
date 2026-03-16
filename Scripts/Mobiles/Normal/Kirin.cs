@@ -1,3 +1,4 @@
+using Server.Items;
 using Server.Network;
 using System;
 
@@ -76,9 +77,7 @@ namespace Server.Mobiles
         public override bool DoMountAbility(int damage, Mobile attacker)
         {
             if (Rider == null || attacker == null)	//sanity
-            {
                 return false;
-            }
 
             if (Rider.Hits - damage < 30 && Rider.Map == attacker.Map && Rider.InRange(attacker, 18))	//Range and map checked here instead of other base fuction because of abiliites that don't need to check this
             {
@@ -102,10 +101,18 @@ namespace Server.Mobiles
             AddLoot(LootPack.Potions);
         }
 
+        public override void OnDeath(Container c)
+        {
+            base.OnDeath(c);
+
+            if (!Controlled && Utility.RandomDouble() < 0.3)
+                c.DropItem(new KirinBrains());
+        }
+
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(0); // version
+            writer.Write(1); // version
         }
 
         public override void Deserialize(GenericReader reader)

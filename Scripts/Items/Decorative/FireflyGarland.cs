@@ -32,13 +32,9 @@ namespace Server.Items
         public void OnFlip(Mobile m)
         {
             if (ItemID == NorthID)
-            {
                 ItemID = WestID;
-            }
             else if (ItemID == WestID)
-            {
                 ItemID = NorthID;
-            }
         }
 
         public override void GetProperties(ObjectPropertyList list)

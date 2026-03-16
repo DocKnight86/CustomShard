@@ -38,7 +38,6 @@ namespace Server.Engines.Points
                     }
                 }
                 else
-                {
                     for (var index = 0; index < CargoDropsTypes.Length; index++)
                     {
                         var type = CargoDropsTypes[index];
@@ -62,7 +61,6 @@ namespace Server.Engines.Points
                             break;
                         }
                     }
-                }
             }
         }
 

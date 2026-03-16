@@ -56,9 +56,7 @@ namespace Server.Items
             _Quality = (ItemQuality)reader.ReadInt();
 
             if (version < 3)
-            {
                 reader.ReadInt();
-            }
         }
     }
 

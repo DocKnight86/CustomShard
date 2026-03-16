@@ -53,9 +53,7 @@ namespace Server.Engines.TombOfKings
         public bool IsUsable()
         {
             if (m_Chamber == null)
-            {
                 return false;
-            }
 
             return !m_Chamber.IsOpened();
         }
@@ -75,33 +73,23 @@ namespace Server.Engines.TombOfKings
         public override void AddNameProperties(ObjectPropertyList list)
         {
             if (IsUsable())
-            {
                 list.Add(1112130); // a lever
-            }
             else
-            {
                 list.Add(1112129); // a lever (unusable)
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
         {
             if (IsUsable() && from.InRange(this, 1))
-            {
                 m_Chamber.Open();
-            }
         }
 
         public void Switch()
         {
             if (ItemID == 0x108C)
-            {
                 ItemID = 0x108E;
-            }
             else
-            {
                 ItemID = 0x108C;
-            }
 
             Effects.PlaySound(Location, Map, 0x3E8);
 

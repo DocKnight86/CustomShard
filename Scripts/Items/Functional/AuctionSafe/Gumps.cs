@@ -74,9 +74,7 @@ namespace Server.Engines.Auction
             AddHtml(200, 137, 175, 18, Color(HGray, acct != null ? acct.TotalPlat.ToString("N0", CultureInfo.GetCultureInfo("en-US")) : "0"), false, false);
 
             if (Auction != null)
-            {
                 Auction.AddViewer(User);
-            }
         }
 
         public override void OnResponse(NetState state, RelayInfo info)
@@ -89,9 +87,7 @@ namespace Server.Engines.Auction
             }
 
             if (Auction != null)
-            {
                 Auction.RemoveViewer(User);
-            }
         }
     }
 
@@ -118,13 +114,9 @@ namespace Server.Engines.Auction
             if (Auction == null)
             {
                 if (Safe.Auction != null)
-                {
                     Auction = Safe.Auction;
-                }
                 else
-                {
                     Safe.Auction = Auction = new Auction(User, Safe);
-                }
             }
 
             int y = 166;
@@ -417,9 +409,7 @@ namespace Server.Engines.Auction
                 case 3:
                     {
                         if (Auction.CheckModifyAuction(User))
-                        {
                             Auction.Duration = 60;
-                        }
 
                         Refresh();
                         break;
@@ -427,9 +417,7 @@ namespace Server.Engines.Auction
                 case 4:
                     {
                         if (Auction.CheckModifyAuction(User))
-                        {
                             Auction.Duration = 4320;
-                        }
 
                         Refresh();
                         break;
@@ -437,9 +425,7 @@ namespace Server.Engines.Auction
                 case 5:
                     {
                         if (Auction.CheckModifyAuction(User))
-                        {
                             Auction.Duration = 7200;
-                        }
 
                         Refresh();
                         break;
@@ -447,9 +433,7 @@ namespace Server.Engines.Auction
                 case 6:
                     {
                         if (Auction.CheckModifyAuction(User))
-                        {
                             Auction.Duration = 10080;
-                        }
 
                         Refresh();
                         break;
@@ -464,16 +448,12 @@ namespace Server.Engines.Auction
                             string gold1 = null;
 
                             if (relay1 != null)
-                            {
                                 plat1 = relay1.Text;
-                            }
 
                             relay1 = info.GetTextEntry(3);
 
                             if (relay1 != null)
-                            {
                                 gold1 = relay1.Text;
-                            }
 
                             long platAmnt = Utility.ToInt64(plat1);
                             long goldAmnt = Utility.ToInt64(gold1);
@@ -513,16 +493,12 @@ namespace Server.Engines.Auction
                             string gold2 = null;
 
                             if (relay2 != null)
-                            {
                                 plat2 = relay2.Text;
-                            }
 
                             relay2 = info.GetTextEntry(5);
 
                             if (relay2 != null)
-                            {
                                 gold2 = relay2.Text;
-                            }
 
                             long platAmnt2 = Utility.ToInt64(plat2);
                             long goldAmnt2 = Utility.ToInt64(gold2);
@@ -677,32 +653,22 @@ namespace Server.Engines.Auction
                         string plat = null;
 
                         if (relay != null)
-                        {
                             plat = relay.Text;
-                        }
 
                         relay = info.GetTextEntry(2);
 
                         if (relay != null)
-                        {
                             gold = relay.Text;
-                        }
 
                         long val = Utility.ToInt64(plat);
 
-                        if (val < 0)
-                        {
-                            val = 0;
-                        }
+                        if (val < 0) val = 0;
 
                         TempBid += val * Account.CurrencyThreshold;
 
                         val = Utility.ToInt64(gold);
 
-                        if (val < 0)
-                        {
-                            val = 0;
-                        }
+                        if (val < 0) val = 0;
 
                         TempBid += val;
 
@@ -775,18 +741,14 @@ namespace Server.Engines.Auction
             AddHtmlLocalized(372, 46, 176, 22, 1156425, Green, false, false); // Bid Time:
 
             if (Auction == null || Auction.BidHistory == null)
-            {
                 return;
-            }
 
             int y = 70;
 
             for (int i = Auction.BidHistory.Count - 1; i >= 0; i--)
             {
                 if (i < Auction.BidHistory.Count - 13)
-                {
                     break;
-                }
 
                 HistoryEntry h = Auction.BidHistory[i];
                 long bid = i != Auction.BidHistory.Count - 1 || h.ShowRealBid ? h.Bid : Auction.CurrentBid;

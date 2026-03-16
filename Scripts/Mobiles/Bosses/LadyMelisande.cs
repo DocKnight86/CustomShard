@@ -82,9 +82,7 @@ namespace Server.Mobiles
         public override void SetLocation(Point3D newLocation, bool isTeleport)
         {
             if (newLocation.Z > -10)
-            {
                 base.SetLocation(newLocation, isTeleport);
-            }
         }
 
         public override void OnDamage(int amount, Mobile from, bool willKill)
@@ -130,14 +128,10 @@ namespace Server.Mobiles
         public bool CanSmackTalk()
         {
             if (m_NextSmackTalk > DateTime.UtcNow)
-            {
                 return false;
-            }
 
             if (Combatant == null)
-            {
                 return false;
-            }
 
             return Hits > 0.5 * HitsMax;
         }
@@ -157,19 +151,13 @@ namespace Server.Mobiles
         public bool CanTakeLife(Mobile from)
         {
             if (m_NextTakeLife > DateTime.UtcNow)
-            {
                 return false;
-            }
 
             if (!CanBeHarmful(from))
-            {
                 return false;
-            }
 
             if (Hits > 0.1 * HitsMax || Hits < 0.025 * HitsMax)
-            {
                 return false;
-            }
 
             return true;
         }

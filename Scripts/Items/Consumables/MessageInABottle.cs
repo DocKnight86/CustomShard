@@ -46,9 +46,7 @@ namespace Server.Items
         public static int GetRandomLevel()
         {
             if (1 > Utility.Random(25))
-            {
                 return 4; // ancient
-            }
 
             return Utility.RandomMinMax(1, 3);
         }

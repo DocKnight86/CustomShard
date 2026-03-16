@@ -79,9 +79,7 @@ namespace Server.Mobiles
         public virtual void ParalyzeAttack(Mobile to)
         {
             if (m_Table == null)
-            {
                 m_Table = new Hashtable();
-            }
 
             if (to.Alive && to.Player && m_Table[to] == null)
             {
@@ -105,9 +103,7 @@ namespace Server.Mobiles
         public virtual void ParalyzeEnd(Mobile from)
         {
             if (m_Table == null)
-            {
                 m_Table = new Hashtable();
-            }
 
             m_Table[from] = null;
 
@@ -117,9 +113,7 @@ namespace Server.Mobiles
         public static bool UnderParalyzeAttack(Mobile from)
         {
             if (m_Table == null)
-            {
                 m_Table = new Hashtable();
-            }
 
             return m_Table[from] != null;
         }
@@ -135,10 +129,7 @@ namespace Server.Mobiles
         {
 
             if (UseSkill(SkillName.DetectHidden))
-            {
                 m.RevealingAction();
-            }
-
             base.OnMovement(m, oldLocation);
 
             if (m_NextTerror < DateTime.Now && m != null && InRange(m.Location, 3) && m.AccessLevel == AccessLevel.Player)

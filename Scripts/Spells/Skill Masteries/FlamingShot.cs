@@ -59,9 +59,7 @@ namespace Server.Spells.SkillMasteries
                 return true;
             }
             else
-            {
                 return false;
-            }
         }
 
         protected override void OnTarget(object o)
@@ -82,7 +80,7 @@ namespace Server.Spells.SkillMasteries
 
                 int count = targets.Count;
 
-                for (int index = 0; index < targets.Count; index++)
+                for (var index = 0; index < targets.Count; index++)
                 {
                     Mobile mob = targets[index];
 

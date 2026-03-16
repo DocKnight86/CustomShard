@@ -15,9 +15,7 @@ namespace Server.Engines.CleanUpBritannia
         public override int GetYOffset(int id)
         {
             if (Index > 80)
-            {
                 return 20;
-            }
 
             return base.GetYOffset(id);
         }

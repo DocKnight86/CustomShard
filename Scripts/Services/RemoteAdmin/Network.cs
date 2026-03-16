@@ -71,13 +71,9 @@ namespace Server.RemoteAdmin
             string outStr;
 
             if (m_NewLine)
-            {
                 outStr = $"[{DateTime.UtcNow.ToString(DateFormat)}]: {line}{Console.Out.NewLine}";
-            }
             else
-            {
                 outStr = $"{line}{Console.Out.NewLine}";
-            }
 
             m_ConsoleData.Append(outStr);
             RoughTrimConsoleData();
@@ -158,9 +154,7 @@ namespace Server.RemoteAdmin
             else
             {
                 if (!RemoteAdminHandlers.Handle(cmd, state, pvSrc))
-                {
                     Disconnect(state);
-                }
             }
         }
 
@@ -231,9 +225,7 @@ namespace Server.RemoteAdmin
             {
                 NetState ns = (NetState)m_Auth[i];
                 if (ns.Running)
-                {
                     list.Add(ns);
-                }
             }
 
             m_Auth = list;

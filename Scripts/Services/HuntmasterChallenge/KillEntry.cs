@@ -38,9 +38,7 @@ namespace Server.Engines.HuntsmasterChallenge
         public int CompareTo(object o)
         {
             if (((HuntingKillEntry)o).KillIndex == m_KillIndex || m_KillIndex < 0 || m_KillIndex >= HuntingTrophyInfo.Infos.Count)
-            {
                 return ((HuntingKillEntry)o).Measurement - m_Measurement;
-            }
 
             HuntingTrophyInfo info1 = HuntingTrophyInfo.Infos[((HuntingKillEntry)o).KillIndex];
             HuntingTrophyInfo info2 = HuntingTrophyInfo.Infos[m_KillIndex];

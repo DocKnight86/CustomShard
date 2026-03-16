@@ -79,9 +79,7 @@ namespace Server.Engines.NewMagincia
             Mobile from = state.Mobile;
 
             if (m_Broker == null || m_Broker.Plot == null)
-            {
                 return;
-            }
 
             switch (info.ButtonID)
             {
@@ -95,10 +93,7 @@ namespace Server.Engines.NewMagincia
                     string text = tr.Text;
 
                     if (!m_Broker.Plot.TrySetShopName(from, text))
-                    {
                         from.SendLocalizedMessage(1150775); // Shop names are limited to 40 characters in length. Shop names must pass an obscenity filter check. The text you have entered is not valid.
-                    }
-
                     break;
                 case 3: // Withdraw Funds
                     TextRelay tr1 = info.TextEntries[1];
@@ -181,9 +176,7 @@ namespace Server.Engines.NewMagincia
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (from.HasGump(typeof(CommodityTargetGump)))
-                {
                     from.CloseGump(typeof(CommodityTargetGump));
-                }
 
                 if (targeted is Item item && (item is ICommodity || item is CommodityDeed))
                 {
@@ -223,18 +216,12 @@ namespace Server.Engines.NewMagincia
             protected override void OnTargetCancel(Mobile from, TargetCancelType cancelType)
             {
                 if (from.HasGump(typeof(CommodityTargetGump)))
-                {
                     from.CloseGump(typeof(CommodityTargetGump));
-                }
 
                 if (m_HasPickedCommodity)
-                {
                     from.SendGump(new SetPricesAndLimitsGump(m_Broker));
-                }
                 else
-                {
                     from.SendGump(new CommodityBrokerGump(m_Broker, from));
-                }
             }
         }
     }
@@ -277,9 +264,7 @@ namespace Server.Engines.NewMagincia
             if (info.ButtonID == 1)
             {
                 if (from.Target is CommodityBrokerGump.InternalTarget)
-                {
                     Target.Cancel(from);
-                }
             }
         }
     }
@@ -315,9 +300,7 @@ namespace Server.Engines.NewMagincia
             int perPage = 10;
 
             if (index > -1)
-            {
                 m_Page = index <= 0 ? 0 : index / perPage;
-            }
 
             int start = page * perPage;
             int count = 1;
@@ -341,14 +324,10 @@ namespace Server.Engines.NewMagincia
             }
 
             if (m_Page > 0) // back
-            {
                 AddButton(162, 321, 4014, 4016, 400, GumpButtonType.Reply, 0);
-            }
 
             if (broker.CommodityEntries.Count - start > perPage) // forward
-            {
                 AddButton(390, 321, 4005, 4007, 401, GumpButtonType.Reply, 0);
-            }
 
             AddHtmlLocalized(124, 345, 100, 18, 1150204, BlueColor16, false, false); // BUY AT
             AddBackground(190, 345, 300, 18, 9350);
@@ -378,10 +357,7 @@ namespace Server.Engines.NewMagincia
             Mobile from = state.Mobile;
 
             if (info.ButtonID == 0)
-            {
                 return;
-            }
-
             if (info.ButtonID == 1)
             {
                 from.SendGump(new BazaarInformationGump(0, 1150644, new SetPricesAndLimitsGump(m_Broker, m_Index, m_Page)));
@@ -437,9 +413,7 @@ namespace Server.Engines.NewMagincia
                     catch (Exception e) { Diagnostics.ExceptionLogging.LogException(e); }
 
                     if (buyLmt < 0 || buyLmt > 60000 || sellLmt < 0 || sellLmt > 60000)
-                    {
                         from.SendLocalizedMessage(1150776); // You have entered an invalid numeric value. Negative values are not allowed. Trade quantities are limited to 60,000 per transaction.
-                    }
                     else
                     {
                         entry.BuyPricePer = buyAt;
@@ -449,9 +423,7 @@ namespace Server.Engines.NewMagincia
                     }
                 }
                 else
-                {
                     from.SendLocalizedMessage(1150642); // You did not select a commodity.
-                }
             }
             else if (info.ButtonID == 501) // Main Menu
             {
@@ -463,9 +435,7 @@ namespace Server.Engines.NewMagincia
                 int id = info.ButtonID - 2;
 
                 if (id >= 0 && id < m_Broker.CommodityEntries.Count)
-                {
                     m_Index = id;
-                }
             }
 
             from.SendGump(new SetPricesAndLimitsGump(m_Broker, m_Index, m_Page));
@@ -506,9 +476,7 @@ namespace Server.Engines.NewMagincia
             int perPage = 10;
 
             if (index > -1)
-            {
                 m_Page = index <= 0 ? 0 : index / perPage;
-            }
 
             int start = page * perPage;
             int count = 1;
@@ -525,28 +493,20 @@ namespace Server.Engines.NewMagincia
                 AddButton(440, y, 4014, 4016, 1000 + i, GumpButtonType.Reply, 0); // SELECT
 
                 if (i > 0)
-                {
                     AddButton(600, y, 250, 251, 1500 + i, GumpButtonType.Reply, 0); // UP
-                }
 
                 if (i < broker.CommodityEntries.Count - 1)
-                {
                     AddButton(540, y, 252, 253, 2000 + i, GumpButtonType.Reply, 0); // DOWN
-                }
 
                 y += 20;
                 count++;
             }
 
             if (m_Page > 0) // back
-            {
                 AddButton(162, 350, 4014, 4016, 400, GumpButtonType.Reply, 0);
-            }
 
             if (broker.CommodityEntries.Count - start > perPage) // forward
-            {
                 AddButton(390, 350, 4005, 4007, 401, GumpButtonType.Reply, 0);
-            }
 
             AddHtmlLocalized(160, 415, 150, 18, 1150202, OrangeColor16, false, false); // WITHDRAW
             AddBackground(250, 415, 360, 22, 9350);
@@ -585,19 +545,12 @@ namespace Server.Engines.NewMagincia
                         catch (Exception e) { Diagnostics.ExceptionLogging.LogException(e); }
 
                         if (amount <= 0 || amount > entry.Stock)
-                        {
                             from.SendLocalizedMessage(1150215); // You have entered an invalid value, or a non-numeric value. Please try again.
-                        }
                         else
-                        {
                             m_Broker.WithdrawInventory(from, amount, entry);
-                        }
                     }
                     else
-                    {
                         from.SendLocalizedMessage(1150642); // You did not select a commodity.
-                    }
-
                     break;
                 case 2: // Main Menu
                     from.SendGump(new CommodityBrokerGump(m_Broker, from));
@@ -609,10 +562,7 @@ namespace Server.Engines.NewMagincia
                         return;
                     }
                     else
-                    {
                         from.SendLocalizedMessage(1150642); // You did not select a commodity.
-                    }
-
                     break;
                 case 400:
                     from.SendGump(new ViewInventoryGump(m_Broker, -1, m_Page - 1));
@@ -753,9 +703,7 @@ namespace Server.Engines.NewMagincia
                     int perPage = 10;
 
                     if (index > -1)
-                    {
                         m_Page = index <= 0 ? 0 : index / perPage;
-                    }
 
                     int start = page * perPage;
                     int count = 0;
@@ -969,17 +917,13 @@ namespace Server.Engines.NewMagincia
             m_Index = index;
 
             if (index >= 0 && index < m_Broker.CommodityEntries.Count)
-            {
                 m_Entry = m_Broker.CommodityEntries[index];
-            }
         }
 
         public override void Confirm(Mobile from)
         {
             if (m_Entry != null && m_Broker.CommodityEntries.Contains(m_Entry))
-            {
                 m_Broker.RemoveEntry(from, m_Entry);
-            }
 
             from.SendGump(new ViewInventoryGump(m_Broker));
         }

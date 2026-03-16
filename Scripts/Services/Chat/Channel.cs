@@ -53,9 +53,7 @@ namespace Server.Engines.Chat
             else
             {
                 if (user.CurrentChannel != null)
-                {
                     user.CurrentChannel.RemoveUser(user); // Remove them from their current channel first
-                }
 
                 ChatSystem.SendCommandTo(user.Mobile, ChatCommand.JoinedChannel, m_Name);
 
@@ -85,9 +83,7 @@ namespace Server.Engines.Chat
                 ChatLogging.LogLeave(Name, user.Username);
 
                 if (m_Users.Count == 0 && !m_AlwaysAvailable)
-                {
                     RemoveChannel(this);
-                }
             }
         }
 
@@ -178,9 +174,7 @@ namespace Server.Engines.Chat
         public static void RemoveChannel(Channel channel)
         {
             if (channel == null)
-            {
                 return;
-            }
 
             if (m_Channels.Contains(channel) && channel.m_Users.Count == 0)
             {

@@ -41,9 +41,7 @@ namespace Server.Items
                     from.SendLocalizedMessage(1072790); // The wall becomes transparent, and you push your way through it.
                 }
                 else
-                {
                     from.Say(502684); // This door appears to be locked.
-                }
             }
         }
 
@@ -101,9 +99,7 @@ namespace Server.Items
             if (from.InRange(Location, 2) && Wall != null)
             {
                 if (TurnedOn)
-                {
                     ItemID -= 1;
-                }
                 else
                 {
                     ItemID += 1;
@@ -132,9 +128,7 @@ namespace Server.Items
             if (Wall != null)
             {
                 if (TurnedOn)
-                {
                     ItemID -= 1;
-                }
 
                 TurnedOn = false;
                 Wall.Locked = true;

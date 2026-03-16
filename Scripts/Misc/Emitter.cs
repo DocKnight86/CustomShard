@@ -87,14 +87,10 @@ namespace Server
             Queue<LocalBuilder> list;
 
             if (!m_Temps.TryGetValue(localType, out list))
-            {
                 m_Temps[localType] = list = new Queue<LocalBuilder>();
-            }
 
             if (list.Count > 0)
-            {
                 return list.Dequeue();
-            }
 
             return CreateLocal(localType);
         }
@@ -104,9 +100,7 @@ namespace Server
             Queue<LocalBuilder> list;
 
             if (!m_Temps.TryGetValue(local.LocalType, out list))
-            {
                 m_Temps[local.LocalType] = list = new Queue<LocalBuilder>();
-            }
 
             list.Enqueue(local);
         }
@@ -148,26 +142,18 @@ namespace Server
         public void Pop(Type expected)
         {
             if (expected == null)
-            {
                 throw new InvalidOperationException("Expected type cannot be null.");
-            }
 
             Type onStack = m_Stack.Pop();
 
             if (expected == typeof(bool))
-            {
                 expected = typeof(int);
-            }
 
             if (onStack == typeof(bool))
-            {
                 onStack = typeof(int);
-            }
 
             if (!expected.IsAssignableFrom(onStack))
-            {
                 throw new InvalidOperationException("Unexpected stack state.");
-            }
         }
 
         public void Push(Type type)
@@ -178,9 +164,7 @@ namespace Server
         public void Return()
         {
             if (m_Stack.Count != (m_Builder.ReturnType == typeof(void) ? 0 : 1))
-            {
                 throw new InvalidOperationException("Stack return mismatch.");
-            }
 
             m_Generator.Emit(OpCodes.Ret);
         }
@@ -202,13 +186,9 @@ namespace Server
             Push(typeof(string));
 
             if (value != null)
-            {
                 m_Generator.Emit(OpCodes.Ldstr, value);
-            }
             else
-            {
                 m_Generator.Emit(OpCodes.Ldnull);
-            }
         }
 
         public void Load(Enum value)
@@ -254,13 +234,9 @@ namespace Server
             Push(typeof(bool));
 
             if (value)
-            {
                 m_Generator.Emit(OpCodes.Ldc_I4_1);
-            }
             else
-            {
                 m_Generator.Emit(OpCodes.Ldc_I4_0);
-            }
         }
 
         public void Load(int value)
@@ -301,13 +277,9 @@ namespace Server
                     break;
                 default:
                     if (value >= sbyte.MinValue && value <= sbyte.MaxValue)
-                    {
                         m_Generator.Emit(OpCodes.Ldc_I4_S, (sbyte)value);
-                    }
                     else
-                    {
                         m_Generator.Emit(OpCodes.Ldc_I4, value);
-                    }
 
                     break;
             }
@@ -344,13 +316,9 @@ namespace Server
                     break;
                 default:
                     if (index >= byte.MinValue && index <= byte.MinValue)
-                    {
                         m_Generator.Emit(OpCodes.Ldloc_S, (byte)index);
-                    }
                     else
-                    {
                         m_Generator.Emit(OpCodes.Ldloc, (short)index);
-                    }
 
                     break;
             }
@@ -366,13 +334,9 @@ namespace Server
         public void LoadArgument(int index)
         {
             if (index > 0)
-            {
                 Push(m_ArgumentTypes[index - 1]);
-            }
             else
-            {
                 Push(m_TypeBuilder);
-            }
 
             switch (index)
             {
@@ -390,13 +354,9 @@ namespace Server
                     break;
                 default:
                     if (index >= byte.MinValue && index <= byte.MaxValue)
-                    {
                         m_Generator.Emit(OpCodes.Ldarg_S, (byte)index);
-                    }
                     else
-                    {
                         m_Generator.Emit(OpCodes.Ldarg, (short)index);
-                    }
 
                     break;
             }
@@ -464,9 +424,7 @@ namespace Server
             CallInfo call = m_Calls.Peek();
 
             if (call.parms.Length > 0)
-            {
                 throw new InvalidOperationException("Method requires parameters.");
-            }
 
             FinishCall();
         }
@@ -522,16 +480,12 @@ namespace Server
                     }, null);
 
                     if (ifaces.Length > 0)
-                    {
                         compareTo = ifaces[0].GetMethod("CompareTo", new[] { active });
-                    }
                 }
             }
 
             if (compareTo == null)
-            {
                 return false;
-            }
 
             if (!active.IsValueType)
             {
@@ -619,9 +573,7 @@ namespace Server
                         FinishCall();
 
                         if (sign == -1)
-                        {
                             Neg();
-                        }
                     }
                 }
 

@@ -44,9 +44,7 @@ namespace Server.Spells.SkillMasteries
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
             if (!Validate(attacker) || !CheckMana(attacker, true))
-            {
                 return;
-            }
 
             ClearCurrentMove(attacker);
 
@@ -72,14 +70,10 @@ namespace Server.Spells.SkillMasteries
         public static void AddToTable(Mobile defender, int amount)
         {
             if (_Table != null && _Table.ContainsKey(defender))
-            {
                 return;
-            }
 
             if (_Table == null)
-            {
                 _Table = new Dictionary<Mobile, int>();
-            }
 
             _Table[defender] = amount;
 

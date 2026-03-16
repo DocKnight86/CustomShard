@@ -59,22 +59,16 @@ namespace Server.Mobiles
             Mobile combatant = Combatant as Mobile;
 
             if (combatant == null || combatant.Deleted || combatant.Map != Map || !InRange(combatant, 12) || !CanBeHarmful(combatant) || !InLOS(combatant))
-            {
                 return;
-            }
 
             if (DateTime.UtcNow >= m_NextWaterBall)
             {
                 double damage = combatant.Hits * 0.3;
 
                 if (damage < 10.0)
-                {
                     damage = 10.0;
-                }
                 else if (damage > 40.0)
-                {
                     damage = 40.0;
-                }
 
                 DoHarmful(combatant);
                 MovingParticles(combatant, 0x36D4, 5, 0, false, false, 195, 0, 9502, 3006, 0, 0, 0);

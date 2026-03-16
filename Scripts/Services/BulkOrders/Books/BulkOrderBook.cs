@@ -60,17 +60,11 @@ namespace Server.Engines.BulkOrders
         public override void OnDoubleClick(Mobile from)
         {
             if (!from.InRange(GetWorldLocation(), 2))
-            {
                 from.LocalOverheadMessage(Network.MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
-            }
             else if (m_Entries.Count == 0)
-            {
                 from.SendLocalizedMessage(1062381); // The book is empty.
-            }
             else if (from is PlayerMobile mobile)
-            {
                 mobile.SendGump(new BOBGump(mobile, this));
-            }
         }
 
         public override void OnDoubleClickSecureTrade(Mobile from)
@@ -94,13 +88,9 @@ namespace Server.Engines.BulkOrders
                     SecureTrade trade = cont.Trade;
 
                     if (trade != null && trade.From.Mobile == from)
-                    {
                         trade.To.Mobile.SendGump(new BOBGump((PlayerMobile)(trade.To.Mobile), this));
-                    }
                     else if (trade != null && trade.To.Mobile == from)
-                    {
                         trade.From.Mobile.SendGump(new BOBGump((PlayerMobile)(trade.From.Mobile), this));
-                    }
                 }
             }
         }
@@ -116,20 +106,13 @@ namespace Server.Engines.BulkOrders
                 }
 
                 if (!from.Backpack.CheckHold(from, dropped, true, true))
-                {
                     return false;
-                }
-
                 if (m_Entries.Count < 500)
                 {
                     if (dropped is LargeBOD largeBod)
-                    {
                         m_Entries.Add(new BOBLargeEntry(largeBod));
-                    }
                     else if (dropped is SmallBOD) // Sanity
-                    {
                         m_Entries.Add(new BOBSmallEntry((SmallBOD)dropped));
-                    }
 
                     InvalidateProperties();
 
@@ -143,9 +126,7 @@ namespace Server.Engines.BulkOrders
                     from.SendLocalizedMessage(1062386); // Deed added to book.
 
                     if (from is PlayerMobile mobile)
-                    {
                         mobile.SendGump(new BOBGump(mobile, this));
-                    }
 
                     dropped.Delete();
 
@@ -165,9 +146,7 @@ namespace Server.Engines.BulkOrders
             int total = base.GetTotal(type);
 
             if (type == TotalType.Items)
-            {
                 total = m_ItemCount;
-            }
 
             return total;
         }
@@ -280,9 +259,7 @@ namespace Server.Engines.BulkOrders
             base.GetContextMenuEntries(from, list);
 
             if (from.CheckAlive() && IsChildOf(from.Backpack))
-            {
                 list.Add(new NameBookEntry(from, this));
-            }
 
             SetSecureLevelEntry.AddTo(from, this, list);
         }
@@ -320,9 +297,7 @@ namespace Server.Engines.BulkOrders
             public override void OnResponse(Mobile from, string text)
             {
                 if (text.Length > 40)
-                {
                     text = text.Substring(0, 40);
-                }
 
                 if (from.CheckAlive() && m_Book.IsChildOf(from.Backpack))
                 {

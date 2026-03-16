@@ -1,4 +1,4 @@
-namespace Server.Items
+﻿namespace Server.Items
 {
     public class MrPlainsCookies : Food
     {
@@ -32,9 +32,7 @@ namespace Server.Items
             int version = reader.ReadInt();
 
             if (version == 0)
-            {
                 Stackable = false;
-            }
         }
     }
 }

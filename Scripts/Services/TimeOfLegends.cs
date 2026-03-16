@@ -2,6 +2,9 @@ using Server.Commands;
 using Server.Engines.CannedEvil;
 using Server.Engines.Shadowguard;
 using Server.Items;
+using Server.Mobiles;
+using Server.Spells;
+using System;
 
 namespace Server
 {
@@ -74,5 +77,57 @@ namespace Server
 
             e.Mobile.SendMessage("Time Of Legends world generating complete.");
         }
+
+        public static void OnCreatureDeath(Mobile creature, Mobile killer, Container corpse)
+        {
+            BaseCreature bc = (BaseCreature)creature;
+
+            if (SpellHelper.IsEodon(corpse.Map, corpse.Location))
+            {
+                double chance = (double)bc.Fame / 1000000;
+                int luck = 0;
+
+                if (killer != null)
+                {
+                    luck = Math.Min(1800, killer is PlayerMobile mobile ? mobile.RealLuck : killer.Luck);
+                }
+
+                if (luck > 0)
+                    chance += (double)luck / 152000;
+
+                if (chance > Utility.RandomDouble())
+                {
+                    if (0.33 > Utility.RandomDouble())
+                    {
+                        Item item = Loot.Construct(_ArmorDropTypes[Utility.Random(_ArmorDropTypes.Length)]);
+
+                        if (item != null)
+                            corpse.DropItem(item);
+                    }
+                    else
+                    {
+                        Item scroll = new RecipeScroll(_RecipeTypes[Utility.Random(_RecipeTypes.Length)]);
+
+                        if (scroll != null)
+                            corpse.DropItem(scroll);
+                    }
+                }
+            }
+        }
+
+        public static Type[] ArmorDropTypes => _ArmorDropTypes;
+        private static readonly Type[] _ArmorDropTypes =
+        {
+            typeof(AloronsBustier), typeof(AloronsGorget), typeof(AloronsHelm), typeof(AloronsLegs), typeof(AloronsLongSkirt), typeof(AloronsSkirt), typeof(AloronsTunic), typeof(AloronsShorts),
+            typeof(DardensBustier), typeof(DardensHelm), typeof(DardensLegs), typeof(DardensSleeves), typeof(DardensTunic)
+        };
+
+        public static int[] RecipeTypes => _RecipeTypes;
+        private static readonly int[] _RecipeTypes =
+        {
+            560, 561, 562, 563, 564, 565, 566,
+            570, 571, 572, 573, 574, 575, 576, 577,
+            580, 581, 582, 583, 584
+        };
     }
 }

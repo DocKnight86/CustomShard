@@ -104,9 +104,7 @@ namespace Server.Engines.Quests
                 m_SpawnTime = value;
 
                 if (m_Timer != null)
-                {
                     m_Timer.Stop();
-                }
 
                 m_Timer = Timer.DelayCall(m_SpawnTime, m_SpawnTime, OnTick);
 
@@ -161,9 +159,7 @@ namespace Server.Engines.Quests
                     else
                     {
                         if (m_Timer != null)
-                        {
                             m_Timer.Stop();
-                        }
 
                         m_Timer = null;
 
@@ -212,14 +208,10 @@ namespace Server.Engines.Quests
         public void HandleDeath(BaseShipCaptain captain)
         {
             if (captain is PirateCaptain)
-            {
                 RemoveBounty(captain);
-            }
 
             else if (captain is MerchantCaptain)
-            {
                 RemoveMerchant(captain);
-            }
         }
 
         public void RemoveBounty(BaseShipCaptain pirate)
@@ -241,9 +233,7 @@ namespace Server.Engines.Quests
         public void OnTick()
         {
             if (m_Active)
-            {
                 SpawnRandom();
-            }
         }
 
         public void SpawnRandom()
@@ -256,73 +246,43 @@ namespace Server.Engines.Quests
                 {
                     case SpawnZone.TramJhelom:
                         if (m_ActiveZones[zone].Count < m_MaxTram)
-                        {
                             SpawnPirateAndGalleon(zone, Map.Trammel);
-                        }
-
                         break;
                     case SpawnZone.FelJhelom:
                         if (m_ActiveZones[zone].Count < m_MaxFel)
-                        {
                             SpawnPirateAndGalleon(zone, Map.Felucca);
-                        }
-
                         break;
                     case SpawnZone.TramMoonglow:
                         if (m_ActiveZones[zone].Count < m_MaxTram)
-                        {
                             SpawnPirateAndGalleon(zone, Map.Trammel);
-                        }
-
                         break;
                     case SpawnZone.FelMoonglow:
                         if (m_ActiveZones[zone].Count < m_MaxFel)
-                        {
                             SpawnPirateAndGalleon(zone, Map.Felucca);
-                        }
-
                         break;
                     case SpawnZone.TokunoPirate:
                         if (m_ActiveZones[zone].Count < m_MaxTokuno)
-                        {
                             SpawnPirateAndGalleon(zone, Map.Tokuno);
-                        }
-
                         break;
                     case SpawnZone.TramMerch1:
                         if (m_ActiveZones[zone].Count < m_MaxTram)
-                        {
                             SpawnMerchantAndGalleon(zone, Map.Trammel);
-                        }
-
                         break;
                     case SpawnZone.TramMerch2:
                         if (m_ActiveZones[zone].Count < m_MaxTram)
-                        {
                             SpawnMerchantAndGalleon(zone, Map.Trammel);
-                        }
-
                         break;
                     case SpawnZone.FelMerch1:
                         if (m_ActiveZones[zone].Count < m_MaxFel)
-                        {
                             SpawnMerchantAndGalleon(zone, Map.Felucca);
-                        }
-
                         break;
                     case SpawnZone.FelMerch2:
                         if (m_ActiveZones[zone].Count < m_MaxFel)
-                        {
                             SpawnMerchantAndGalleon(zone, Map.Felucca);
-                        }
-
                         break;
                     case SpawnZone.TokunoMerch:
                         if (m_ActiveZones[zone].Count < m_MaxTokuno)
-                        {
                             SpawnMerchantAndGalleon(zone, Map.Tokuno);
-                        }
-
                         break;
                 }
             }
@@ -397,9 +357,7 @@ namespace Server.Engines.Quests
                     Mobile crew = new PirateCrew();
 
                     if (i == 0)
-                    {
                         crew.Title = "the orc captain";
-                    }
 
                     pirate.AddToCrew(crew);
                     crew.MoveToWorld(new Point3D(gal.X + Utility.RandomList(-1, 1), gal.Y + Utility.RandomList(-1, 0, 1), gal.ZSurface), map);
@@ -431,13 +389,9 @@ namespace Server.Engines.Quests
                 bool spawned = false;
 
                 if (garg)
-                {
                     gal = new GargishGalleon(Direction.North);
-                }
                 else
-                {
                     gal = new TokunoGalleon(Direction.North);
-                }
 
                 MerchantCaptain captain = new MerchantCaptain(gal);
 
@@ -497,9 +451,7 @@ namespace Server.Engines.Quests
         public static void FillHold(BaseGalleon galleon)
         {
             if (galleon == null)
-            {
                 return;
-            }
 
             Container hold = galleon.GalleonHold;
 
@@ -512,9 +464,7 @@ namespace Server.Engines.Quests
                     Item item = RunicReforging.GenerateRandomItem(galleon);
 
                     if (item != null)
-                    {
                         hold.DropItem(item);
-                    }
                 }
 
                 hold.DropItem(new Ramrod());
@@ -524,9 +474,7 @@ namespace Server.Engines.Quests
                 hold.DropItem(new FuseCord(Utility.RandomMinMax(7, 10)));
 
                 if (.10 >= Utility.RandomDouble())
-                {
                     hold.DropItem(new SmugglersCache());
-                }
 
                 if (.10 >= Utility.RandomDouble())
                 {
@@ -580,91 +528,51 @@ namespace Server.Engines.Quests
                 {
                     case 0:
                         if (Utility.RandomBool())
-                        {
                             hold.DropItem(new IronOre(Utility.RandomMinMax(40, 50)));
-                        }
                         else
-                        {
                             hold.DropItem(new IronIngot(Utility.RandomMinMax(40, 50)));
-                        }
-
                         break;
                     case 1:
                         if (Utility.RandomBool())
-                        {
                             hold.DropItem(new DullCopperOre(Utility.RandomMinMax(40, 50)));
-                        }
                         else
-                        {
                             hold.DropItem(new DullCopperIngot(Utility.RandomMinMax(40, 50)));
-                        }
-
                         break;
                     case 2:
                         if (Utility.RandomBool())
-                        {
                             hold.DropItem(new ShadowIronOre(Utility.RandomMinMax(40, 50)));
-                        }
                         else
-                        {
                             hold.DropItem(new ShadowIronIngot(Utility.RandomMinMax(40, 50)));
-                        }
-
                         break;
                     case 3:
                         if (Utility.RandomBool())
-                        {
                             hold.DropItem(new CopperOre(Utility.RandomMinMax(40, 50)));
-                        }
                         else
-                        {
                             hold.DropItem(new CopperIngot(Utility.RandomMinMax(40, 50)));
-                        }
-
                         break;
                     case 4:
                         if (Utility.RandomBool())
-                        {
                             hold.DropItem(new BronzeOre(Utility.RandomMinMax(40, 50)));
-                        }
                         else
-                        {
                             hold.DropItem(new BronzeIngot(Utility.RandomMinMax(40, 50)));
-                        }
-
                         break;
                     case 5:
                         if (Utility.RandomBool())
-                        {
                             hold.DropItem(new AgapiteOre(Utility.RandomMinMax(40, 50)));
-                        }
                         else
-                        {
                             hold.DropItem(new AgapiteIngot(Utility.RandomMinMax(40, 50)));
-                        }
-
                         break;
                     case 6:
                         if (Utility.RandomBool())
-                        {
                             hold.DropItem(new VeriteOre(Utility.RandomMinMax(40, 50)));
-                        }
                         else
-                        {
                             hold.DropItem(new VeriteIngot(Utility.RandomMinMax(40, 50)));
-                        }
-
                         break;
                     case 7:
                         if (Utility.RandomBool())
-                        {
                             hold.DropItem(new ValoriteOre(Utility.RandomMinMax(40, 50)));
-                        }
                         else
-                        {
                             hold.DropItem(new ValoriteIngot(Utility.RandomMinMax(40, 50)));
-                        }
-
                         break;
                 }
 
@@ -672,58 +580,33 @@ namespace Server.Engines.Quests
                 {
                     case 0:
                         if (Utility.RandomBool())
-                        {
                             hold.DropItem(new Board(Utility.RandomMinMax(40, 50)));
-                        }
                         else
-                        {
                             hold.DropItem(new Log(Utility.RandomMinMax(40, 50)));
-                        }
-
                         break;
                     case 1:
                         if (Utility.RandomBool())
-                        {
                             hold.DropItem(new OakBoard(Utility.RandomMinMax(40, 50)));
-                        }
                         else
-                        {
                             hold.DropItem(new OakLog(Utility.RandomMinMax(40, 50)));
-                        }
-
                         break;
                     case 2:
                         if (Utility.RandomBool())
-                        {
                             hold.DropItem(new AshBoard(Utility.RandomMinMax(40, 50)));
-                        }
                         else
-                        {
                             hold.DropItem(new AshLog(Utility.RandomMinMax(40, 50)));
-                        }
-
                         break;
                     case 3:
                         if (Utility.RandomBool())
-                        {
                             hold.DropItem(new YewBoard(Utility.RandomMinMax(40, 50)));
-                        }
                         else
-                        {
                             hold.DropItem(new YewLog(Utility.RandomMinMax(40, 50)));
-                        }
-
                         break;
                     case 4:
                         if (Utility.RandomBool())
-                        {
                             hold.DropItem(new BloodwoodBoard(Utility.RandomMinMax(40, 50)));
-                        }
                         else
-                        {
                             hold.DropItem(new BloodwoodLog(Utility.RandomMinMax(40, 50)));
-                        }
-
                         break;
                 }
 
@@ -731,47 +614,27 @@ namespace Server.Engines.Quests
                 {
                     case 0:
                         if (Utility.RandomBool())
-                        {
                             hold.DropItem(new Leather(Utility.RandomMinMax(40, 50)));
-                        }
                         else
-                        {
                             hold.DropItem(new Hides(Utility.RandomMinMax(40, 50)));
-                        }
-
                         break;
                     case 1:
                         if (Utility.RandomBool())
-                        {
                             hold.DropItem(new SpinedLeather(Utility.RandomMinMax(40, 50)));
-                        }
                         else
-                        {
                             hold.DropItem(new SpinedHides(Utility.RandomMinMax(40, 50)));
-                        }
-
                         break;
                     case 2:
                         if (Utility.RandomBool())
-                        {
                             hold.DropItem(new HornedLeather(Utility.RandomMinMax(40, 50)));
-                        }
                         else
-                        {
                             hold.DropItem(new HornedHides(Utility.RandomMinMax(40, 50)));
-                        }
-
                         break;
                     case 3:
                         if (Utility.RandomBool())
-                        {
                             hold.DropItem(new BarbedLeather(Utility.RandomMinMax(40, 50)));
-                        }
                         else
-                        {
                             hold.DropItem(new BarbedHides(Utility.RandomMinMax(40, 50)));
-                        }
-
                         break;
                 }
 
@@ -802,14 +665,12 @@ namespace Server.Engines.Quests
                 if (0.025 > Utility.RandomDouble())
                 {
                     if (Utility.RandomBool())
-                    {
                         hold.DropItem(new WhiteClothDyeTub());
-                    }
                     else
-                    {
                         hold.DropItem(PermanentBoatPaint.DropRandom());
-                    }
                 }
+
+                RefinementComponent.Roll(hold, 3, 0.25);
 
                 if (RisingTideEvent.Instance.Running)
                 {
@@ -899,9 +760,7 @@ namespace Server.Engines.Quests
                 int amt = reader.ReadInt();
 
                 if (mob != null && !mob.Deleted)
-                {
                     m_Bounties.Add(mob, amt);
-                }
             }
 
             if (version == 0)
@@ -916,17 +775,13 @@ namespace Server.Engines.Quests
             m_Instance = this;
 
             if (m_Active)
-            {
                 m_Timer = Timer.DelayCall(m_SpawnTime, m_SpawnTime, OnTick);
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
         {
             if (from.AccessLevel > AccessLevel.Player)
-            {
                 from.SendGump(new PropertiesGump(from, this));
-            }
         }
 
         #region Command

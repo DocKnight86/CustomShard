@@ -63,19 +63,14 @@ namespace Server.RemoteAdmin
             foreach (Account a in Accounts.GetAccounts())
             {
                 if (!CanAccessAccount(state.Account, a))
-                {
                     continue;
-                }
 
                 switch (type)
                 {
                     case AcctSearchType.Username:
                         {
                             if (a.Username.ToUpper().IndexOf(term) != -1)
-                            {
                                 list.Add(a);
-                            }
-
                             break;
                         }
                     case AcctSearchType.IP:
@@ -96,13 +91,9 @@ namespace Server.RemoteAdmin
             if (list.Count > 0)
             {
                 if (list.Count <= 25)
-                {
                     state.Send(AdminNetwork.Compress(new AccountSearchResults(list)));
-                }
                 else
-                {
                     state.Send(new MessageBoxMessage("There were more than 25 matches to your search.\nNarrow the search parameters and try again.", "Too Many Results"));
-                }
             }
             else
             {
@@ -186,13 +177,9 @@ namespace Server.RemoteAdmin
                     if (a.AccessLevel != newAccessLevel)
                     {
                         if (newAccessLevel >= state.Account.AccessLevel)
-                        {
                             state.Send(new MessageBoxMessage("Warning: You may not set an access level greater than or equal to your own.", "Account Access Level update denied."));
-                        }
                         else
-                        {
                             a.AccessLevel = newAccessLevel;
-                        }
                     }
                     bool newBanned = pvSrc.ReadBoolean();
                     if (newBanned != a.Banned)
@@ -215,33 +202,21 @@ namespace Server.RemoteAdmin
                 {
                     string add = pvSrc.ReadString();
                     if (Utility.IsValidIP(add))
-                    {
                         list.Add(add);
-                    }
                     else
-                    {
                         invalid = true;
-                    }
                 }
 
                 if (list.Count > 0)
-                {
                     a.IPRestrictions = (string[])list.ToArray(typeof(string));
-                }
                 else
-                {
                     a.IPRestrictions = Array.Empty<string>();
-                }
 
                 if (invalid)
-                {
                     state.Send(new MessageBoxMessage("Warning: one or more of the IP Restrictions you specified was not valid.", "Invalid IP Restriction"));
-                }
 
                 if (CreatedAccount)
-                {
                     RemoteAdminLogging.WriteLine(state, "Created account {0} with Access Level {1}", a.Username, a.AccessLevel);
-                }
                 else
                 {
                     string changes = string.Empty;

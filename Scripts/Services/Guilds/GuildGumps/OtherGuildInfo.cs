@@ -90,9 +90,7 @@ namespace Server.Guilds
 
                 otherWar = m_Other.FindActiveWar(guild);
                 if (otherWar != null)
-                {
                     otherKills = $"{otherWar.Kills}/{otherWar.MaxKills}";
-                }
             }
             else if (PendingWar)
             {
@@ -102,9 +100,7 @@ namespace Server.Guilds
 
                 otherWar = m_Other.FindPendingWar(guild);
                 if (otherWar != null)
-                {
                     otherKills = Color($"{otherWar.Kills}/{otherWar.MaxKills}", 0x990000);
-                }
             }
 
             AddHtmlLocalized(280, 110, 120, 26, 1062966, 0x0, true, false); // <i>Your Kills</i>
@@ -458,9 +454,7 @@ namespace Server.Guilds
                 case 10:	//Show Alliance Roster
                     {
                         if (alliance != null && alliance == otherAlliance)
-                        {
                             pm.SendGump(new AllianceInfo.AllianceRosterGump(pm, guild, alliance));
-                        }
 
                         break;
                     }
@@ -602,17 +596,11 @@ namespace Server.Guilds
                 string name = Utility.FixHtml(text.Trim());
 
                 if (!CheckProfanity(name))
-                {
                     pm.SendLocalizedMessage(1070886); // That alliance name is not allowed.
-                }
                 else if (name.Length > Guild.NameLimit)
-                {
                     pm.SendLocalizedMessage(1070887, Guild.NameLimit.ToString()); // An alliance name cannot exceed ~1_val~ characters in length.
-                }
                 else if (AllianceInfo.Alliances.ContainsKey(name.ToLower()))
-                {
                     pm.SendLocalizedMessage(1063428); // That alliance name is not available.
-                }
                 else
                 {
                     pm.SendLocalizedMessage(1070750, m_Other.Name); // An invitation to join your alliance has been sent to ~1_val~.

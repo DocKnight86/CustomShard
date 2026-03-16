@@ -71,33 +71,23 @@ namespace Server.Engines.ShameRevamped
             base.OnMapChange();
 
             if (Teleporter != null)
-            {
                 Teleporter.Map = Map;
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
         {
             if (Active && from.InRange(Location, 3))
-            {
                 CheckSummon(from);
-            }
         }
 
         public void CheckSummon(Mobile from)
         {
             if (PointsSystem.ShameCrystals.GetPoints(from) < SummonCost)
-            {
                 from.SendLocalizedMessage(1151623); // You are not yet worthy of challenging the champion.
-            }
             else if (Guardian != null)
-            {
                 from.SendLocalizedMessage(1151621); // The champion for this dungeon level has already been summoned.
-            }
             else if (NextSummon > DateTime.UtcNow)
-            {
                 from.SendLocalizedMessage(1151622); // The champion has recently been defeated, and cannot be summoned again for a few minutes.
-            }
             else
             {
                 SpawnGuardian();
@@ -106,9 +96,7 @@ namespace Server.Engines.ShameRevamped
                 PointsSystem.ShameCrystals.DeductPoints(from, SummonCost);
 
                 if (Teleporter == null || Teleporter.Deleted)
-                {
                     SpawnTeleporter();
-                }
 
                 from.SendLocalizedMessage(1151620); // The champion accepts your challenge. You have one hour to find and defeat him!
                 from.SendLocalizedMessage(1151625, SummonCost.ToString()); // Summoning the dungeon level's champion costs you ~1_COST~ Crystals of Shame.
@@ -144,17 +132,13 @@ namespace Server.Engines.ShameRevamped
         public void CheckDeadLine()
         {
             if (DeadLine < DateTime.UtcNow)
-            {
                 EndDeadLineTimer();
-            }
         }
 
         public void StartDeadlineTimer()
         {
             if (DeadLineTimer != null)
-            {
                 DeadLineTimer.Stop();
-            }
 
             DeadLineTimer = Timer.DelayCall(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1), CheckDeadLine);
             DeadLineTimer.Start();
@@ -173,9 +157,7 @@ namespace Server.Engines.ShameRevamped
                 Guardian.Delete();
 
                 if (Summoner != null)
-                {
                     Summoner.SendLocalizedMessage(1151628); // You failed to defeat the champion in time.
-                }
 
                 NextSummon = DateTime.UtcNow;
             }
@@ -184,22 +166,16 @@ namespace Server.Engines.ShameRevamped
         private void SpawnTeleporter()
         {
             if (Teleporter != null)
-            {
                 Teleporter.Delete();
-            }
 
             if (Map == null || Map == Map.Internal)
-            {
                 return;
-            }
 
             IPooledEnumerable eable = Map.GetItemsInRange(TeleporterLocation, 0);
             foreach (Item item in eable)
             {
                 if (item is ShameTeleporter)
-                {
                     item.Delete();
-                }
             }
             eable.Free();
 
@@ -253,9 +229,7 @@ namespace Server.Engines.ShameRevamped
                     StartDeadlineTimer();
                 }
                 else
-                {
                     DeadLine = DateTime.MinValue;
-                }
             }
             else if (Guardian != null)
             {

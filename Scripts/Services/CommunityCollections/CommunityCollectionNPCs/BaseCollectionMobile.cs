@@ -43,9 +43,7 @@ namespace Server.Mobiles
                 m_Points = value;
 
                 if (m_Points < 0)
-                {
                     m_Points = 0;
-                }
 
                 while (m_Tier > 0 && m_Points < PreviousTier)
                     DecreaseTier();
@@ -67,9 +65,7 @@ namespace Server.Mobiles
                     long tier = m_StartTier * 2;
 
                     for (int i = 0; i < m_Tier - 2; i++)
-                    {
                         tier += (i + 3) * m_NextTier;
-                    }
 
                     return tier;
                 }
@@ -84,9 +80,7 @@ namespace Server.Mobiles
             get
             {
                 if (m_Tier > 1)
-                {
                     return PreviousTier + (m_Tier + 1) * m_NextTier;
-                }
 
                 return m_StartTier + m_StartTier * m_Tier;
             }
@@ -203,13 +197,9 @@ namespace Server.Mobiles
             list.Add(1072821, m_Tier > MaxTier ? 0.ToString() : CurrentTier.ToString()); // Points until next tier: ~1_POINTS~
 
             if (DonationLabel > 0)
-            {
                 list.Add(DonationLabel);
-            }
             else if (DonationString != null)
-            {
                 list.Add(DonationString);
-            }
         }
 
         public CollectionData GetData()
@@ -270,9 +260,7 @@ namespace Server.Mobiles
                     List<object> list = new List<object>();
 
                     for (int j = reader.ReadInt(); j > 0; j--)
-                    {
                         list.Add(QuestReader.Object(reader));
-                    }
 
                     m_Tiers.Add(list);
                 }
@@ -280,9 +268,7 @@ namespace Server.Mobiles
             }
 
             if (CantWalk)
-            {
                 Frozen = true;
-            }
         }
 
         #region IComunityCollection
@@ -308,13 +294,14 @@ namespace Server.Mobiles
             if (item != null && player.AddToBackpack(item))
             {
                 if (hue > 0)
-                {
                     item.Hue = hue;
-                }
 
                 player.AddCollectionPoints(CollectionID, (int)reward.Points * -1);
                 player.SendLocalizedMessage(1073621); // Your reward has been placed in your backpack.
                 player.PlaySound(0x5A7);
+
+                if (reward.QuestItem)
+                    CollectionsObtainObjective.CheckReward(player, item);
 
                 reward.OnGiveReward(player, item, this, hue);
             }
@@ -330,14 +317,12 @@ namespace Server.Mobiles
         public virtual void DonatePet(PlayerMobile player, BaseCreature pet)
         {
             for (int i = 0; i < m_Donations.Count; i++)
-            {
                 if (m_Donations[i].Type == pet.GetType())
                 {
                     pet.Delete();
                     Donate(player, m_Donations[i], 1);
                     return;
                 }
-            }
 
             player.SendLocalizedMessage(1073113); // This Collection is not accepting that type of creature.
         }
@@ -358,13 +343,9 @@ namespace Server.Mobiles
                 for (int i = 0; i < m_Tiers[m_Tiers.Count - 1].Count; i++)
                 {
                     if (m_Tiers[m_Tiers.Count - 1][i] is Item)
-                    {
                         ((Item)m_Tiers[m_Tiers.Count - 1][i]).Delete();
-                    }
                     else if (m_Tiers[m_Tiers.Count - 1][i] is Mobile)
-                    {
                         ((Mobile)m_Tiers[m_Tiers.Count - 1][i]).Delete();
-                    }
                 }
 
                 m_Tiers.RemoveAt(m_Tiers.Count - 1);
@@ -374,19 +355,13 @@ namespace Server.Mobiles
         public virtual void Init()
         {
             if (m_Donations == null)
-            {
                 m_Donations = new List<CollectionItem>();
-            }
 
             if (m_Rewards == null)
-            {
                 m_Rewards = new List<CollectionItem>();
-            }
 
             if (m_Tiers == null)
-            {
                 m_Tiers = new List<List<object>>();
-            }
 
             // start decay timer
             if (m_DailyDecay > 0)

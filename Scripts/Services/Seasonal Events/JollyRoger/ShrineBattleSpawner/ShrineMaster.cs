@@ -103,17 +103,11 @@ namespace Server.Engines.JollyRoger
             SetHits(20000, 25000);
 
             if (AI == AIType.AI_Melee)
-            {
                 SetDamage(22, 30);
-            }
             else if (!SpellCaster)
-            {
                 SetDamage(20, 28);
-            }
             else
-            {
                 SetDamage(10, 20);
-            }
 
             Fame = 48000;
             Karma = -48000;
@@ -242,7 +236,16 @@ namespace Server.Engines.JollyRoger
 
         public virtual void SetBody()
         {
-            Race = Race.Human;
+            switch (_Specialty)
+            {
+                default:
+                    if (0.75 > Utility.RandomDouble())
+                        Race = Race.Human;
+                    else
+                        Race = Race.Elf; break;
+                case MasterTitle.Mystic: Race = Race.Gargoyle;
+                    break;
+            }
 
             HairItemID = Race.RandomHair(Female);
             HairHue = Race.RandomHairHue();
@@ -337,10 +340,10 @@ namespace Server.Engines.JollyRoger
                     break;
                 case MasterTitle.Mystic:
                     SetWearable(new MysticBook((uint)0xFFF));
-                    SetWearable(new Robe());
-                    SetWearable(new GoldEarrings());
-                    SetWearable(new Cloak());
-                    SetWearable(new Sandals());
+                    SetWearable(new GargishFancyRobe());
+                    SetWearable(new GargishEarrings());
+                    SetWearable(new GargishClothWingArmor());
+                    SetWearable(new LeatherTalons());
                     break;
                 case MasterTitle.Sampire:
                     SetWearable(new DoubleAxe(), 1858);
@@ -488,9 +491,7 @@ namespace Server.Engines.JollyRoger
             }
 
             if (Combatant == null)
-            {
                 return;
-            }
 
             if (!Utility.InRange(Location, Home, 20))
             {
@@ -510,14 +511,9 @@ namespace Server.Engines.JollyRoger
                         break;
                     case MasterTitle.Wizard:
                         if (0.5 > Utility.RandomDouble())
-                        {
                             DoNuke(Location);
-                        }
                         else
-                        {
                             DoDismount((Mobile)Combatant);
-                        }
-
                         break;
 
                 }
@@ -542,16 +538,12 @@ namespace Server.Engines.JollyRoger
         private void ChangeWeapon()
         {
             if (Backpack == null)
-            {
                 return;
-            }
 
             Item item = FindItemOnLayer(Layer.OneHanded);
 
             if (item == null)
-            {
                 item = FindItemOnLayer(Layer.TwoHanded);
-            }
 
             List<BaseWeapon> weapons = new List<BaseWeapon>();
 
@@ -566,9 +558,7 @@ namespace Server.Engines.JollyRoger
             if (weapons.Count > 0)
             {
                 if (item != null)
-                {
                     Backpack.DropItem(item);
-                }
 
                 AddItem(weapons[Utility.Random(weapons.Count)]);
             }
@@ -759,13 +749,9 @@ namespace Server.Engines.JollyRoger
                     Item item = ShrineBattleController.CreateItem(list[0]);
 
                     if (list.Count == 1 || i >= list.Count)
-                    {
                         drop = list[0];
-                    }
                     else
-                    {
                         drop = list[i];
-                    }
 
                     if (_Controller != null)
                     {

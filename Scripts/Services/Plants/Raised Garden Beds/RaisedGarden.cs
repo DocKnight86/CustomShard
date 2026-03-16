@@ -149,9 +149,7 @@ namespace Server.Items
             m_Direction = (GardenBedDirection)choice;
 
             if (!Deleted)
-            {
                 base.OnDoubleClick(from);
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -162,9 +160,7 @@ namespace Server.Items
                 from.SendGump(new RewardOptionGump(this, 1076170)); // Choose Direction
             }
             else
-            {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.       	
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -192,9 +188,7 @@ namespace Server.Items
                 if (m_Plant != null)
                 {
                     if (m_Plant.X != X || m_Plant.Y != Y || m_Plant.Map != Map || m_Plant.Deleted)
-                    {
                         m_Plant = null;
-                    }
                 }
 
                 return m_Plant;
@@ -206,9 +200,7 @@ namespace Server.Items
                 if (m_Plant != null)
                 {
                     if (m_Plant.X != X || m_Plant.Y != Y || m_Plant.Map != Map || m_Plant.Deleted)
-                    {
                         m_Plant = null;
-                    }
                 }
             }
         }
@@ -230,9 +222,7 @@ namespace Server.Items
             base.Delete();
 
             if (Plant != null)
-            {
                 m_Plant.Z -= ZLocation();
-            }
         }
 
         public GardenAddonComponent(Serial serial)

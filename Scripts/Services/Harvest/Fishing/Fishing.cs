@@ -1,4 +1,5 @@
 using Server.Engines.Quests;
+using Server.Engines.Quests.Collector;
 using Server.Items;
 using Server.Mobiles;
 using Server.Targeting;
@@ -16,9 +17,7 @@ namespace Server.Engines.Harvest
             get
             {
                 if (m_System == null)
-                {
                     m_System = new Fishing();
-                }
 
                 return m_System;
             }
@@ -61,6 +60,7 @@ namespace Server.Engines.Harvest
 
                 // One fish per harvest action
                 ConsumedPerHarvest = 1,
+                ConsumedPerFeluccaHarvest = 1,
 
                 // The fishing
                 EffectActions = new[] { 6 },
@@ -159,6 +159,29 @@ namespace Server.Engines.Harvest
         {
             if (from is PlayerMobile player)
             {
+                QuestSystem qs = player.Quest;
+
+                if (qs is CollectorQuest)
+                {
+                    QuestObjective obj = qs.FindObjective(typeof(FishPearlsObjective));
+
+                    if (obj != null && !obj.Completed)
+                    {
+                        if (Utility.RandomDouble() < 0.5)
+                        {
+                            player.SendLocalizedMessage(1055086, "", 0x59); // You pull a shellfish out of the water, and find a rainbow pearl inside of it.
+
+                            obj.CurProgress++;
+                        }
+                        else
+                        {
+                            player.SendLocalizedMessage(1055087, "", 0x2C); // You pull a shellfish out of the water, but it doesn't have a rainbow pearl.
+                        }
+
+                        return true;
+                    }
+                }
+
                 if (from.Region.IsPartOf("Underworld"))
                 {
                     for (var index = 0; index < player.Quests.Count; index++)
@@ -244,28 +267,20 @@ namespace Server.Engines.Harvest
 
                 // RedHerring / MudPuppy
                 if (i == 6 && (from.Region == null || !from.Region.IsPartOf("Underworld")))
-                {
                     continue;
-                }
 
                 if (junkproof && i == 5 && 0.80 >= Utility.RandomDouble())
-                {
                     continue;
-                }
 
                 if (!deepWater && entry.m_DeepWater)
-                {
                     continue;
-                }
 
                 if (skillBase >= entry.m_ReqSkill)
                 {
                     double chance = (skillValue - entry.m_MinSkill) / (entry.m_MaxSkill - entry.m_MinSkill);
 
                     if (chance > Utility.RandomDouble())
-                    {
                         return entry.m_Types[Utility.Random(entry.m_Types.Length)];
-                    }
                 }
             }
 
@@ -290,9 +305,7 @@ namespace Server.Engines.Harvest
                     SOS sos = messages[i];
 
                     if ((from.Map == Map.Felucca || from.Map == Map.Trammel) && from.InRange(sos.TargetLocation, 60))
-                    {
                         return true;
-                    }
                 }
             }
 
@@ -303,9 +316,7 @@ namespace Server.Engines.Harvest
         {
             // Searing Weapon Support, handled elsewhere
             if (type == typeof(BaseWeapon))
-            {
                 return null;
-            }
 
             if (type == typeof(TreasureMap))
             {
@@ -402,13 +413,9 @@ namespace Server.Engines.Harvest
                             case 11:
                                 {
                                     if (Utility.RandomBool())
-                                    {
                                         preLoot = new SkullCap();
-                                    }
                                     else
-                                    {
                                         preLoot = new TricorneHat();
-                                    }
 
                                     break;
                                 }
@@ -465,18 +472,11 @@ namespace Server.Engines.Harvest
                                     double ran = Utility.RandomDouble();
 
                                     if (ran < 0.05)
-                                    {
                                         preLoot = new YellowPolkaDotBikini();
-                                    }
                                     else if (ran < 0.25)
-                                    {
                                         preLoot = new ShipwreckedItem(list[Utility.RandomMinMax(3, 7)], dredge);
-                                    }
                                     else
-                                    {
                                         preLoot = new ShipwreckedItem(list[Utility.Random(3)], dredge);
-                                    }
-
                                     break;
                                 }
                         }
@@ -488,9 +488,7 @@ namespace Server.Engines.Harvest
                                 item.IsShipwreckedItem = true;
 
                                 if (sos.IsAncient)
-                                {
                                     item.ShipwreckName = sos.ShipwreckName;
-                                }
                             }
 
                             return preLoot;
@@ -530,13 +528,9 @@ namespace Server.Engines.Harvest
                         sos.OnSOSComplete(chest);
 
                         if (sos.IsAncient)
-                        {
                             chest.DropItem(new FabledFishingNet());
-                        }
                         else
-                        {
                             chest.DropItem(new SpecialFishingNet());
-                        }
 
                         chest.Movable = true;
                         chest.Locked = false;
@@ -547,9 +541,7 @@ namespace Server.Engines.Harvest
                         chest.IsShipwreckedItem = true;
 
                         if (sos.IsAncient)
-                        {
                             chest.ShipwreckName = sos.ShipwreckName;
-                        }
 
                         sos.Delete();
 
@@ -568,13 +560,9 @@ namespace Server.Engines.Harvest
                 BaseCreature serpent;
 
                 if (0.25 > Utility.RandomDouble())
-                {
                     serpent = new DeepSeaSerpent();
-                }
                 else
-                {
                     serpent = new SeaSerpent();
-                }
 
                 int x = m.X, y = m.Y;
 
@@ -694,9 +682,7 @@ namespace Server.Engines.Harvest
                         from.SendLocalizedMessage(1043297, "a fish");
                     }
                     else
-                    {
                         from.SendLocalizedMessage(1043297, $"#{item.LabelNumber}");
-                    }
 
                     return;
                 }
@@ -710,17 +696,11 @@ namespace Server.Engines.Harvest
                     number = 1043297;
 
                     if ((item.ItemData.Flags & TileFlag.ArticleA) != 0)
-                    {
                         name = "a " + item.ItemData.Name;
-                    }
                     else if ((item.ItemData.Flags & TileFlag.ArticleAn) != 0)
-                    {
                         name = "an " + item.ItemData.Name;
-                    }
                     else
-                    {
                         name = item.ItemData.Name;
-                    }
                 }
 
                 from.SendLocalizedMessage(number, name);
@@ -735,14 +715,10 @@ namespace Server.Engines.Harvest
                 Item item2 = from.FindItemOnLayer(Layer.TwoHanded);
 
                 if (item != null)
-                {
                     from.AddToBackpack(item);
-                }
 
                 if (item2 != null)
-                {
                     from.AddToBackpack(item2);
-                }
 
                 Timer.DelayCall(TimeSpan.FromMilliseconds(250), () =>
                 {
@@ -762,7 +738,6 @@ namespace Server.Engines.Harvest
             Point3D loc;
 
             if (GetHarvestDetails(from, tool, toHarvest, out tileID, out map, out loc))
-            {
                 Timer.DelayCall(TimeSpan.FromSeconds(1.5),
                     delegate
                     {
@@ -780,7 +755,6 @@ namespace Server.Engines.Harvest
                         Effects.SendLocationEffect(loc, map, effect, 16, 4);
                         Effects.PlaySound(loc, map, sound);
                     });
-            }
         }
 
         public override void OnHarvestFinished(Mobile from, Item tool, HarvestDefinition def, HarvestVein vein, HarvestBank bank, HarvestResource resource, object harvested)
@@ -813,9 +787,7 @@ namespace Server.Engines.Harvest
         public override bool CheckHarvest(Mobile from, Item tool)
         {
             if (!base.CheckHarvest(from, tool))
-            {
                 return false;
-            }
 
             if (from.Mounted || from.Flying)
             {
@@ -829,9 +801,7 @@ namespace Server.Engines.Harvest
         public override bool CheckHarvest(Mobile from, Item tool, HarvestDefinition def, object toHarvest)
         {
             if (!base.CheckHarvest(from, tool, def, toHarvest))
-            {
                 return false;
-            }
 
             if (from.Mounted || from.Flying)
             {
@@ -876,13 +846,9 @@ namespace Server.Engines.Harvest
             if (toHarvest is Static obj && !obj.Movable)
             {
                 if (lava)
-                {
                     tileID = obj.ItemID;
-                }
                 else
-                {
                     tileID = (obj.ItemID & 0x3FFF) | 0x4000;
-                }
 
                 map = obj.Map;
                 loc = obj.GetWorldLocation();
@@ -890,13 +856,9 @@ namespace Server.Engines.Harvest
             else if (toHarvest is StaticTarget staticTarget)
             {
                 if (lava)
-                {
                     tileID = staticTarget.ItemID;
-                }
                 else
-                {
                     tileID = (staticTarget.ItemID & 0x3FFF) | 0x4000;
-                }
 
                 map = from.Map;
                 loc = staticTarget.Location;
@@ -917,9 +879,7 @@ namespace Server.Engines.Harvest
 
             //Lava tile, no lava hook
             if (ValidateSpecialTile(tileID) && !lava)
-            {
                 return false;
-            }
 
             return map != null && map != Map.Internal;
         }
@@ -959,22 +919,14 @@ namespace Server.Engines.Harvest
             int id = 0;
 
             if (!HasTypeHook(tool, HookType.Lava))
-            {
                 return false;
-            }
 
             if (toHarvest is StaticTarget staticTarget)
-            {
                 id = staticTarget.ItemID;
-            }
             else if (toHarvest is LandTarget landTarget)
-            {
                 id = landTarget.TileID;
-            }
             else if (toHarvest is Static staticItem && !staticItem.Movable)
-            {
                 id = staticItem.ItemID;
-            }
 
             return ValidateSpecialTile(id);
         }
@@ -1012,9 +964,7 @@ namespace Server.Engines.Harvest
             Type type = FishInfo.GetSpecialItem(from, tool, loc, false);
 
             if (type == null)
-            {
                 type = base.GetResourceType(from, tool, def, map, loc, resource);
-            }
 
             return type;
         }
@@ -1027,9 +977,7 @@ namespace Server.Engines.Harvest
                 from.EndAction(locked);
 
                 if (!CheckHarvest(from, tool))
-                {
                     return;
-                }
 
                 int tileID;
                 Map map;
@@ -1048,33 +996,23 @@ namespace Server.Engines.Harvest
                 }
 
                 if (!CheckRange(from, def, map, loc, true))
-                {
                     return;
-                }
 
                 if (!CheckResources(from, tool, def, map, loc, true))
-                {
                     return;
-                }
 
                 if (!CheckHarvest(from, tool, def, toHarvest))
-                {
                     return;
-                }
 
                 HarvestBank bank = def.GetBank(map, loc.X, loc.Y);
 
                 if (bank == null)
-                {
                     return;
-                }
 
                 HarvestVein vein = bank.Vein;
 
                 if (vein == null)
-                {
                     return;
-                }
 
                 Type type = null;
 
@@ -1087,9 +1025,7 @@ namespace Server.Engines.Harvest
 
                     //Special fish
                     if (type == null)
-                    {
                         type = FishInfo.GetSpecialItem(from, tool, loc, IsLavaHarvest(tool, tileID));
-                    }
 
                     if (type != null)
                     {
@@ -1102,9 +1038,7 @@ namespace Server.Engines.Harvest
                         else
                         {
                             if (from.AccessLevel == AccessLevel.Player)
-                            {
                                 bank.Consume(Convert.ToInt32(map != null && map.Rules == MapRules.FeluccaRules ? Math.Ceiling(item.Amount / 2.0) : item.Amount), from);
-                            }
 
                             if (Give(from, item, true))
                             {
@@ -1126,21 +1060,15 @@ namespace Server.Engines.Harvest
                     double skill = from.Skills[SkillName.Fishing].Value / 50;
 
                     if (0.5 / skill > Utility.RandomDouble())
-                    {
                         OnToolUsed(from, tool, false);
-                    }
                 }
                 else
-                {
                     OnToolUsed(from, tool, true);
-                }
 
                 OnHarvestFinished(from, tool, def, vein, bank, null, null);
             }
             else
-            {
                 base.FinishHarvesting(from, tool, def, toHarvest, locked);
-            }
         }
 
         public override bool CheckHarvestSkill(Map map, Point3D loc, Mobile from, HarvestResource res, HarvestDefinition def)
@@ -1149,14 +1077,10 @@ namespace Server.Engines.Harvest
             double value = from.Skills[SkillName.Fishing].Value;
 
             if (deepWater && value < 75.0) // can't fish here yet
-            {
                 return from.Skills[def.Skill].Value >= res.ReqSkill;
-            }
 
             if (!deepWater && value >= 75.0) // you can fish, but no gains!
-            {
                 return true;
-            }
 
             return base.CheckHarvestSkill(map, loc, from, res, def);
         }
@@ -1178,9 +1102,7 @@ namespace Server.Engines.Harvest
                     double chance = (skillValue - entry.m_MinSkill) / (entry.m_MaxSkill - entry.m_MinSkill);
 
                     if (map != null && map.Rules == MapRules.FeluccaRules)
-                    {
                         chance *= 1.5;
-                    }
 
                     if (chance > Utility.RandomDouble())
                     {

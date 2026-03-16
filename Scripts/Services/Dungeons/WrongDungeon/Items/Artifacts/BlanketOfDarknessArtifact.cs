@@ -26,9 +26,7 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (Parent != null || !VerifyMove(from))
-            {
                 return;
-            }
 
             if (!from.InRange(this, 2))
             {
@@ -41,13 +39,9 @@ namespace Server.Items
                 Direction dir = PlayerMobile.GetDirection4(from.Location, Location);
 
                 if (dir == Direction.North || dir == Direction.South)
-                {
                     ItemID = 0xA55;
-                }
                 else
-                {
                     ItemID = 0xA56;
-                }
             }
             else // unrolled
             {
@@ -58,9 +52,7 @@ namespace Server.Items
                     CampfireEntry entry = Campfire.GetEntry(from);
 
                     if (entry != null && entry.Safe)
-                    {
                         from.SendGump(new LogoutGump(entry, this));
-                    }
                 }
             }
         }

@@ -60,18 +60,12 @@ namespace Server.Items
             Mobile m = null;
 
             if (parent is Item item)
-            {
                 m = item.RootParent as Mobile;
-            }
             else if (parent is Mobile mobile)
-            {
                 m = mobile;
-            }
 
             if (m != null)
-            {
                 m.CloseGump(typeof(PromotionalTokenGump));
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -107,9 +101,7 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (info.ButtonID != 1)
-                {
                     return;
-                }
 
                 Mobile from = sender.Mobile;
 

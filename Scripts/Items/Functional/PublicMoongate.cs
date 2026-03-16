@@ -81,9 +81,7 @@ namespace Server.Items
             while (--index >= 0)
             {
                 if (index < Moongates.Count)
-                {
                     Moongates[index].Delete();
-                }
             }
 
             Moongates.Clear();
@@ -717,9 +715,7 @@ namespace Server.Items
             PMList list = m_Lists[index];
 
             if (Siege.SiegeShard && list.Number == 1012000) // Trammel
-            {
                 return;
-            }
 
             AddPage(index + 1);
 

@@ -88,13 +88,9 @@ namespace Server.SkillHandlers
             else if (item.GetType() == typeof(JukaBow))
             {
                 if (((JukaBow)item).IsModified)
-                {
                     from.SendLocalizedMessage(1079576); // You cannot imbue this item.
-                }
                 else
-                {
                     return true;
-                }
             }
             else if (item is BaseJewel && !(item is BaseRing) && !(item is BaseBracelet))
             {
@@ -139,37 +135,27 @@ namespace Server.SkillHandlers
             else if (!item.IsChildOf(from.Backpack))
             {
                 if (message)
-                {
                     from.SendLocalizedMessage(1080424);  // The item must be in your backpack to magically unravel it.
-                }
             }
             else if (item.LootType == LootType.Blessed || item.LootType == LootType.Newbied)
             {
                 if (message)
-                {
                     from.SendLocalizedMessage(1080421);  // You cannot unravel the magic of a blessed item.
-                }
             }
             else if (!(item is BaseWeapon || item is BaseArmor || item is BaseJewel || item is BaseHat))
             {
                 if (message)
-                {
                     from.SendLocalizedMessage(1080425); // You cannot magically unravel this item.
-                }
             }
             else if (item is BaseWeapon weapon && Spells.Mysticism.EnchantSpell.IsUnderSpellEffects(from, weapon))
             {
                 if (message)
-                {
                     from.SendLocalizedMessage(1080427);  // You cannot magically unravel an item that is currently enchanted.
-                }
             }
             else if (item is BaseWeapon baseWeapon && baseWeapon.FocusWeilder != null)
             {
                 if (message)
-                {
                     from.SendLocalizedMessage(1080445); //You cannot magically unravel an item that is under the effects of the ninjitsu focus attack ability.
-                }
             }
             else
             {
@@ -182,34 +168,22 @@ namespace Server.SkillHandlers
         public static bool IsSpecialItem(Item item)
         {
             if (item == null)
-            {
                 return true;
-            }
 
             if (IsSpecialImbuable(item))
-            {
                 return false;
-            }
 
             if (item.IsArtifact)
-            {
                 return true;
-            }
 
             if (RunicReforging.GetArtifactRarity(item) > 0)
-            {
                 return true;
-            }
 
             if (NonCraftableImbuable(item))
-            {
                 return false;
-            }
 
             if (CraftItem.GetCraftItem(item) != null)
-            {
                 return false;
-            }
 
             return true;
         }
@@ -241,13 +215,13 @@ namespace Server.SkillHandlers
 
         private static readonly Type[] _SpecialImbuable =
         {
-            typeof(ClockworkLeggings), typeof(OrcishKinMask), typeof(SavageMask),
-            typeof(VirtuososCap), typeof(VirtuososCollar), 
-            typeof(VirtuososKidGloves), typeof(VirtuososTunic),
-            typeof(BestialGloves), typeof(BestialGorget), typeof(BestialHelm),
-            typeof(BestialLegs), typeof(SkullGnarledStaff),
-            typeof(SkullLongsword), typeof(JukaBow),
-            typeof(SlayerLongbow), typeof(JackOLanternHelm), typeof(BakeKitsuneHat)
+            typeof(ClockworkLeggings), typeof(GargishClockworkLeggings), typeof(OrcishKinMask), typeof(SavageMask),
+            typeof(VirtuososArmbands), typeof(VirtuososCap), typeof(VirtuososCollar), typeof(VirtuososEarpieces),
+            typeof(VirtuososKidGloves), typeof(VirtuososKilt), typeof(VirtuososNecklace), typeof(VirtuososTunic),
+            typeof(BestialArms), typeof(BestialEarrings), typeof(BestialGloves), typeof(BestialGorget), typeof(BestialHelm),
+            typeof(BestialKilt), typeof(BestialLegs), typeof(BestialNecklace), typeof(SkullGnarledStaff),
+            typeof(GargishSkullGnarledStaff), typeof(SkullLongsword), typeof(GargishSkullLongsword), typeof(JukaBow),
+            typeof(SlayerLongbow), typeof(JackOLanternHelm), typeof(BakeKitsuneHat), typeof(GargishOctopusNecklace)
         };
 
         private static readonly Type[] _NonCraftables =
@@ -286,10 +260,21 @@ namespace Server.SkillHandlers
             double a, b, c, w;
             double i = item is BaseJewel ? 0.9162 : 1.0;
 
-            a = 1554.96118;
-            b = 53.81743328;
-            c = 230.0038452;
-            w = -1664.857794;
+            // - Racial Bonus - SA ONLY -
+            if (from.Race == Race.Gargoyle)
+            {
+                a = 1362.281555;
+                b = 66.32801518;
+                c = 235.2223147;
+                w = -1481.037561;
+            }
+            else
+            {
+                a = 1554.96118;
+                b = 53.81743328;
+                c = 230.0038452;
+                w = -1664.857794;
+            }
 
             return Math.Max(0, Math.Round(Math.Floor(20 * skill + 10 * a * Math.Pow(e, b / (resultWeight + c)) + 10 * w - 2400) / 1000 * i + bonus, 3) * 100);
         }
@@ -324,9 +309,7 @@ namespace Server.SkillHandlers
             double bonus = 0.0;
 
             if (!CheckSoulForge(from, 2, out bonus))
-            {
                 return;
-            }
 
             ImbuingContext context = GetContext(from);
 
@@ -337,9 +320,7 @@ namespace Server.SkillHandlers
             ItemPropertyInfo def = ItemPropertyInfo.GetInfo(id);
 
             if (def == null)
-            {
                 return;
-            }
 
             Type gem = def.GemRes;
             Type primary = def.PrimaryRes;
@@ -355,9 +336,7 @@ namespace Server.SkillHandlers
                 (from.Backpack == null || from.Backpack.GetAmount(gem) < gemAmount ||
                 from.Backpack.GetAmount(primary) < primResAmount ||
                 from.Backpack.GetAmount(special) < specResAmount))
-            {
                 from.SendLocalizedMessage(1079773); //You do not have enough resources to imbue this item.     
-            }
             else
             {
                 int maxWeight = GetMaxWeight(i);
@@ -402,9 +381,7 @@ namespace Server.SkillHandlers
                         from.Backpack.ConsumeTotal(primary, primResAmount);
 
                         if (specResAmount > 0)
-                        {
                             from.Backpack.ConsumeTotal(special, specResAmount);
-                        }
                     }
 
 
@@ -559,9 +536,7 @@ namespace Server.SkillHandlers
                         wep.Attributes.SpellChanneling = value;
 
                         if (value > 0 && wep.Attributes.CastSpeed >= 0)
-                        {
                             wep.Attributes.CastSpeed -= 1;
-                        }
                     }
                     else if (attr == AosAttribute.CastSpeed && wep.Attributes[AosAttribute.CastSpeed]<1)
                     {
@@ -615,9 +590,7 @@ namespace Server.SkillHandlers
                         shield.Attributes.SpellChanneling = value;
 
                         if (value > 0 && shield.Attributes.CastSpeed >= 0)
-                        {
                             shield.Attributes.CastSpeed -= 1;
-                        }
                     }
                     else if (aosAttribute == AosAttribute.CastSpeed && shield.Attributes[AosAttribute.CastSpeed] < 1)
                     {
@@ -743,9 +716,7 @@ namespace Server.SkillHandlers
             double bonus = 0.0;
 
             if (!CheckSoulForge(from, 2, out bonus))
-            {
                 return false;
-            }
 
             int weight = GetTotalWeight(item, -1, false, true);
 
@@ -882,17 +853,11 @@ namespace Server.SkillHandlers
             if (item is BaseWeapon itemToImbue)
             {
                 if (itemToImbue is BaseThrown)
-                {
                     maxWeight += 0;
-                }
                 else if (itemToImbue is BaseRanged)
-                {
                     maxWeight += 50;
-                }
                 else if (itemToImbue.Layer == Layer.TwoHanded)
-                {
                     maxWeight += 100;
-                }
             }
             else if (item is BaseJewel)
             {
@@ -913,21 +878,12 @@ namespace Server.SkillHandlers
             int inc = ItemPropertyInfo.GetScale(item, id, false);
 
             if (max == 1 && inc == 0)
-            {
                 return 10;
-            }
 
             double v = Math.Floor(value / ((double)max / 10));
 
-            if (v > 10)
-            {
-                v = 10;
-            }
-
-            if (v < 1)
-            {
-                v = 1;
-            }
+            if (v > 10) v = 10;
+            if (v < 1) v = 1;
 
             return (int)v;
         }
@@ -938,21 +894,12 @@ namespace Server.SkillHandlers
             int inc = ItemPropertyInfo.GetScale(item, id, false);
 
             if (max == 1 && inc == 0)
-            {
                 return 5;
-            }
 
             double v = Math.Floor(value / (max / 5.0));
 
-            if (v > 5)
-            {
-                v = 5;
-            }
-
-            if (v < 1)
-            {
-                v = 1;
-            }
+            if (v > 5) v = 5;
+            if (v < 1) v = 1;
 
             return (int)v;
         }
@@ -1010,23 +957,17 @@ namespace Server.SkillHandlers
                     AosAttribute attr = (AosAttribute)i;
 
                     if (!ItemPropertyInfo.ValidateProperty(attr))
-                    {
                         continue;
-                    }
 
                     if (wep.Attributes[attr] > 0)
                     {
                         if (!(prop is AosAttribute) || (AosAttribute)prop != attr)
-                        {
                             total++;
-                        }
                     }
                     else if (wep.Attributes[attr] == 0 && attr == AosAttribute.CastSpeed && wep.Attributes[AosAttribute.SpellChanneling] > 0)
                     {
                         if (!(prop is AosAttribute) || (AosAttribute)prop != attr)
-                        {
                             total++;
-                        }
                     }
                 }
 
@@ -1037,21 +978,15 @@ namespace Server.SkillHandlers
                     AosWeaponAttribute attr = (AosWeaponAttribute)i;
 
                     if (!ItemPropertyInfo.ValidateProperty(attr))
-                    {
                         continue;
-                    }
 
                     if (wep.WeaponAttributes[attr] > 0)
                     {
                         if (IsHitAreaOrSpell(attr, id))
-                        {
                             continue;
-                        }
 
                         if (!(prop is AosWeaponAttribute) || (AosWeaponAttribute)prop != attr)
-                        {
                             total++;
-                        }
                     }
                 }
 
@@ -1060,9 +995,7 @@ namespace Server.SkillHandlers
                     ExtendedWeaponAttribute attr = (ExtendedWeaponAttribute)i;
 
                     if (!ItemPropertyInfo.ValidateProperty(attr))
-                    {
                         continue;
-                    }
 
                     if (wep.ExtendedWeaponAttributes[attr] > 0 && (!(prop is ExtendedWeaponAttribute) || (ExtendedWeaponAttribute)prop != attr))
                     {
@@ -1071,28 +1004,20 @@ namespace Server.SkillHandlers
                 }
 
                 if (wep.Slayer != SlayerName.None && (!(prop is SlayerName) || (SlayerName)prop != wep.Slayer))
-                {
                     total++;
-                }
 
                 if (wep.Slayer2 != SlayerName.None)
-                {
                     total++;
-                }
 
                 if (wep.Slayer3 != TalismanSlayerName.None)
-                {
                     total++;
-                }
 
                 foreach (int i in Enum.GetValues(typeof(SAAbsorptionAttribute)))
                 {
                     SAAbsorptionAttribute attr = (SAAbsorptionAttribute)i;
 
                     if (!ItemPropertyInfo.ValidateProperty(attr))
-                    {
                         continue;
-                    }
 
                     if (wep.AbsorptionAttributes[attr] > 0 && (!(prop is SAAbsorptionAttribute) || (SAAbsorptionAttribute) prop != attr))
                     {
@@ -1117,23 +1042,17 @@ namespace Server.SkillHandlers
                     AosAttribute attr = (AosAttribute)i;
 
                     if (!ItemPropertyInfo.ValidateProperty(attr))
-                    {
                         continue;
-                    }
 
                     if (armor.Attributes[attr] > 0)
                     {
                         if (!(prop is AosAttribute) || (AosAttribute)prop != attr)
-                        {
                             total++;
-                        }
                     }
                     else if (armor.Attributes[attr] == 0 && attr == AosAttribute.CastSpeed && armor.Attributes[AosAttribute.SpellChanneling] > 0)
                     {
                         if (!(prop is AosAttribute) || (AosAttribute)prop == attr)
-                        {
                             total++;
-                        }
                     }
                 }
 
@@ -1150,9 +1069,7 @@ namespace Server.SkillHandlers
                     AosArmorAttribute attr = (AosArmorAttribute)i;
 
                     if (!ItemPropertyInfo.ValidateProperty(attr))
-                    {
                         continue;
-                    }
 
                     if (armor.ArmorAttributes[attr] > 0 && (!(prop is AosArmorAttribute) || (AosArmorAttribute) prop != attr))
                     {
@@ -1166,9 +1083,7 @@ namespace Server.SkillHandlers
                     SAAbsorptionAttribute attr = (SAAbsorptionAttribute)i;
 
                     if (!ItemPropertyInfo.ValidateProperty(attr))
-                    {
                         continue;
-                    }
 
                     if (armor.AbsorptionAttributes[attr] > 0 && (!(prop is SAAbsorptionAttribute) || (SAAbsorptionAttribute) prop != attr))
                     {
@@ -1183,9 +1098,7 @@ namespace Server.SkillHandlers
                     AosAttribute attr = (AosAttribute)i;
 
                     if (!ItemPropertyInfo.ValidateProperty(attr))
-                    {
                         continue;
-                    }
 
                     if (jewel.Attributes[attr] > 0 && (!(prop is AosAttribute) || (AosAttribute) prop != attr))
                     {
@@ -1198,9 +1111,7 @@ namespace Server.SkillHandlers
                     SAAbsorptionAttribute attr = (SAAbsorptionAttribute)i;
 
                     if (!ItemPropertyInfo.ValidateProperty(attr))
-                    {
                         continue;
-                    }
 
                     if (jewel.AbsorptionAttributes[attr] > 0 && (!(prop is SAAbsorptionAttribute) || (SAAbsorptionAttribute) prop != attr))
                     {
@@ -1238,9 +1149,7 @@ namespace Server.SkillHandlers
                     AosAttribute attr = (AosAttribute)i;
 
                     if (!ItemPropertyInfo.ValidateProperty(attr))
-                    {
                         continue;
-                    }
 
                     if (clothing.Attributes[attr] > 0 && (!(prop is AosAttribute) || (AosAttribute) prop != attr))
                     {
@@ -1253,9 +1162,7 @@ namespace Server.SkillHandlers
                     SAAbsorptionAttribute attr = (SAAbsorptionAttribute)i;
 
                     if (!ItemPropertyInfo.ValidateProperty(attr))
-                    {
                         continue;
-                    }
 
                     if (clothing.SAAbsorptionAttributes[attr] > 0 && (!(prop is SAAbsorptionAttribute) || (SAAbsorptionAttribute) prop != attr))
                     {
@@ -1301,9 +1208,7 @@ namespace Server.SkillHandlers
                             resists[4] = GetBaseResistBonus(item, AosElementAttribute.Energy) - GetBaseResistBonus(temp, AosElementAttribute.Energy);
 
                             if (ResistBuffer == null)
-                            {
                                 ResistBuffer = new Dictionary<Type, int[]>();
-                            }
 
                             ResistBuffer[type] = resists;
                             temp.Delete();
@@ -1350,9 +1255,7 @@ namespace Server.SkillHandlers
                 if (bonus.GetBonus(j) > 0)
                 {
                     if (!(prop is SkillName) || !IsInSkillGroup(bonus.GetSkill(j), (SkillName)prop))
-                    {
                         id += 1;
-                    }
                 }
             }
 
@@ -1379,9 +1282,7 @@ namespace Server.SkillHandlers
                 item.LabelTo(from, $"True Weight: {w}");
             }
             else
-            {
                 from.SendMessage("That is not an item!");
-            }
         }
 
         public static Dictionary<Type, int[]> ResistBuffer { get; private set; }
@@ -1400,24 +1301,16 @@ namespace Server.SkillHandlers
             if (item is BaseWeapon weapon)
             {
                 if (weapon.Slayer != SlayerName.None)
-                {
                     weight += GetIntensityForAttribute(weapon, weapon.Slayer, id, 1, trueWeight, imbuing);
-                }
 
                 if (weapon.Slayer2 != SlayerName.None)
-                {
                     weight += GetIntensityForAttribute(weapon, weapon.Slayer2, id, 1, trueWeight, imbuing);
-                }
 
                 if (weapon.Slayer3 != TalismanSlayerName.None)
-                {
                     weight += GetIntensityForAttribute(weapon, weapon.Slayer3, id, 1, trueWeight, imbuing);
-                }
 
                 if (weapon.SearingWeapon)
-                {
                     weight += GetIntensityForAttribute(weapon, "SearingWeapon", id, 1, trueWeight, imbuing);
-                }
 
                 if (weapon is BaseRanged ranged && ranged.Velocity > 0)
                 {
@@ -1477,9 +1370,7 @@ namespace Server.SkillHandlers
                             resists[4] = GetBaseResistBonus(item, AosElementAttribute.Energy) - GetBaseResistBonus(temp, AosElementAttribute.Energy);
 
                             if (ResistBuffer == null)
-                            {
                                 ResistBuffer = new Dictionary<Type, int[]>();
-                            }
 
                             ResistBuffer[type] = resists;
                             temp.Delete();
@@ -1849,9 +1740,7 @@ namespace Server.SkillHandlers
             Map map = from.Map;
 
             if (map == null)
-            {
                 return false;
-            }
 
             bool isForge = false;
 
@@ -1871,9 +1760,7 @@ namespace Server.SkillHandlers
             if (!isForge)
             {
                 if (message)
-                {
                     from.SendLocalizedMessage(1079787); // You must be near a soulforge to imbue an item.
-                }
 
                 return false;
             }
@@ -1945,7 +1832,7 @@ namespace Server.SkillHandlers
 
         private static readonly Type[] m_CannotImbue =
         {
-            //typeof(GargishLeatherWingArmor)
+            typeof(GargishLeatherWingArmor), typeof(GargishClothWingArmor)
         };
 
         public static int GetValueForID(Item item, int id)
@@ -1955,44 +1842,28 @@ namespace Server.SkillHandlers
             if (item is BaseWeapon w)
             {
                 if (id == 16 && w.Attributes.SpellChanneling > 0)
-                {
                     return w.Attributes[AosAttribute.CastSpeed] + 1;
-                }
 
                 if (attr is AosAttribute attribute)
-                {
                     return w.Attributes[attribute];
-                }
 
                 if (attr is AosWeaponAttribute weaponAttribute)
-                {
                     return w.WeaponAttributes[weaponAttribute];
-                }
 
                 if (attr is ExtendedWeaponAttribute extendedWeaponAttribute)
-                {
                     return w.ExtendedWeaponAttributes[extendedWeaponAttribute];
-                }
 
                 if (attr is SAAbsorptionAttribute absorptionAttribute)
-                {
                     return w.AbsorptionAttributes[absorptionAttribute];
-                }
 
                 if (attr is SlayerName name && w.Slayer == name)
-                {
                     return 1;
-                }
 
                 if (id == 60 && w is BaseRanged ranged)
-                {
                     return ranged.Velocity;
-                }
 
                 if (id == 62)
-                {
                     return w.SearingWeapon ? 1 : 0;
-                }
 
                 if (attr is AosElementAttribute ele)
                 {
@@ -2009,24 +1880,16 @@ namespace Server.SkillHandlers
             else if (item is BaseArmor a)
             {
                 if (a is BaseShield && id == 16 && a.Attributes.SpellChanneling > 0)
-                {
                     return a.Attributes[AosAttribute.CastSpeed] + 1;
-                }
 
                 if (attr is AosAttribute attribute)
-                {
                     return a.Attributes[attribute];
-                }
 
                 if (attr is AosArmorAttribute armorAttribute)
-                {
                     return a.ArmorAttributes[armorAttribute];
-                }
 
                 if (attr is SAAbsorptionAttribute absorptionAttribute)
-                {
                     return a.AbsorptionAttributes[absorptionAttribute];
-                }
 
                 if (attr is AosElementAttribute ele)
                 {
@@ -2050,9 +1913,7 @@ namespace Server.SkillHandlers
             else if (item is BaseClothing c)
             {
                 if (attr is AosAttribute attribute)
-                {
                     return c.Attributes[attribute];
-                }
 
                 if (attr is AosElementAttribute elementAttribute)
                 {
@@ -2065,58 +1926,38 @@ namespace Server.SkillHandlers
                 }
 
                 else if (attr is AosArmorAttribute armorAttribute)
-                {
                     return c.ClothingAttributes[armorAttribute];
-                }
 
                 else if (attr is SAAbsorptionAttribute absorptionAttribute)
-                {
                     return c.SAAbsorptionAttributes[absorptionAttribute];
-                }
             }
             else if (item is BaseJewel j)
             {
                 if (attr is AosAttribute attribute)
-                {
                     return j.Attributes[attribute];
-                }
 
                 if (attr is AosElementAttribute elementAttribute)
-                {
                     return j.Resistances[elementAttribute];
-                }
 
                 if (attr is SAAbsorptionAttribute absorptionAttribute)
-                {
                     return j.AbsorptionAttributes[absorptionAttribute];
-                }
 
                 if (attr is SkillName sk)
                 {
                     if (j.SkillBonuses.Skill_1_Name == sk)
-                    {
                         return (int)j.SkillBonuses.Skill_1_Value;
-                    }
 
                     if (j.SkillBonuses.Skill_2_Name == sk)
-                    {
                         return (int)j.SkillBonuses.Skill_2_Value;
-                    }
 
                     if (j.SkillBonuses.Skill_3_Name == sk)
-                    {
                         return (int)j.SkillBonuses.Skill_3_Value;
-                    }
 
                     if (j.SkillBonuses.Skill_4_Name == sk)
-                    {
                         return (int)j.SkillBonuses.Skill_4_Value;
-                    }
 
                     if (j.SkillBonuses.Skill_5_Name == sk)
-                    {
                         return (int)j.SkillBonuses.Skill_5_Value;
-                    }
                 }
             }
 
@@ -2149,9 +1990,7 @@ namespace Server.SkillHandlers
                             resists[4] = GetBaseResistBonus(item, AosElementAttribute.Energy) - GetBaseResistBonus(temp, AosElementAttribute.Energy);
 
                             if (ResistBuffer == null)
-                            {
                                 ResistBuffer = new Dictionary<Type, int[]>();
-                            }
 
                             ResistBuffer[type] = resists;
                             temp.Delete();
@@ -2211,15 +2050,11 @@ namespace Server.SkillHandlers
                 AosAttributes attrs = RunicReforging.GetAosAttributes(item);
 
                 if (attrs != null && attrs.SpellChanneling > 0)
-                {
                     value++;
-                }
             }
 
             if (value <= 0)
-            {
                 return 0;
-            }
 
             if (id != checkID)
             {

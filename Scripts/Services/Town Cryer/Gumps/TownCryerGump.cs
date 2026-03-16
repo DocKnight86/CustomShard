@@ -179,9 +179,7 @@ namespace Server.Services.TownCryer
                 TownCryerCityEntry entry = TownCryerSystem.CityEntries[i];
 
                 if (entry.City != City)
-                {
                     continue;
-                }
 
                 AddButton(50, y, 0x5FB, 0x5FC, 300 + i, GumpButtonType.Reply, 0);
                 AddLabelCropped(87, y, 700, 20, 0, entry.Title);

@@ -38,29 +38,19 @@ namespace Server.Items
         public override bool IsAccessibleTo(Mobile check)
         {
             if ((int)check.AccessLevel >= (int)AccessLevel.GameMaster)
-            {
                 return true;
-            }
 
             PlagueBeastLord owner = Owner;
 
             if (owner == null)
-            {
                 return false;
-            }
 
             if (!owner.InRange(check, 2))
-            {
                 owner.PrivateOverheadMessage(MessageType.Label, 0x3B2, 500446, check.NetState); // That is too far away.
-            }
             else if (owner.OpenedBy != null && owner.OpenedBy != check) // TODO check
-            {
                 owner.PrivateOverheadMessage(MessageType.Label, 0x3B2, 500365, check.NetState); // That is being used by someone else
-            }
             else if (owner.Frozen)
-            {
                 return true;
-            }
 
             return false;
         }
@@ -79,9 +69,7 @@ namespace Server.Items
             PlagueBeastLord owner = Owner;
 
             if (owner == null || !owner.Alive)
-            {
                 Delete();
-            }
         }
     }
 
@@ -116,9 +104,7 @@ namespace Server.Items
         public override bool DropToItem(Mobile from, Item target, Point3D p)
         {
             if (target is PlagueBeastBackpack)
-            {
                 return base.DropToItem(from, target, p);
-            }
 
             return false;
         }
@@ -157,9 +143,7 @@ namespace Server.Items
                     from.SendLocalizedMessage(IsGland ? 1071895 : 1071914, null, 0x3B2); // * You rip the organ out of the plague beast's flesh *
 
                     if (m_Organ.Components.Contains(this))
-                    {
                         m_Organ.Components.Remove(this);
-                    }
 
                     m_Organ = null;
                     from.PlaySound(0x1CA);

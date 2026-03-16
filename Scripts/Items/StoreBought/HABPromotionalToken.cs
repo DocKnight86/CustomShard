@@ -120,6 +120,47 @@ namespace Server.Items
                 new ChangeHairstyleEntry(0xF012, 1125415, StyleType.Hair, 0xA1AF)
             };
 
+        public static readonly ChangeHairstyleEntry[] ElfMaleEntries = new[]
+        {
+                /* Hair */
+                new ChangeHairstyleEntry(0xC903, 1125416, StyleType.Hair, 0xA1B0),
+                new ChangeHairstyleEntry(0xC904, 1125417, StyleType.Hair, 0xA1B1),
+                new ChangeHairstyleEntry(0xC905, 1125418, StyleType.Hair, 0xA1B2),
+                new ChangeHairstyleEntry(0xC906, 1125419, StyleType.Hair, 0xA1B3)
+            };
+
+        public static readonly ChangeHairstyleEntry[] ElfFemaleEntries = new[]
+        {
+                /* Hair */
+                new ChangeHairstyleEntry(0xF017, 1125420, StyleType.Hair, 0xA1B4),
+                new ChangeHairstyleEntry(0xF018, 1125421, StyleType.Hair, 0xA1B5),
+                new ChangeHairstyleEntry(0xF019, 1125422, StyleType.Hair, 0xA1B6),
+                new ChangeHairstyleEntry(0xF01A, 1125423, StyleType.Hair, 0xA1B7)
+            };
+
+        public static readonly ChangeHairstyleEntry[] GargoyleMaleEntries = new[]
+        {
+                /* Hair */
+                new ChangeHairstyleEntry(0xC90B, 1125424, StyleType.Hair, 0xA1B8),
+                new ChangeHairstyleEntry(0xC90C, 1125425, StyleType.Hair, 0xA1B9),
+                new ChangeHairstyleEntry(0xC90D, 1125426, StyleType.Hair, 0xA1BA),
+                new ChangeHairstyleEntry(0xC90E, 1125427, StyleType.Hair, 0xA1BB),
+                /* Beard */
+                new ChangeHairstyleEntry(0xC90F, 1125428, StyleType.Beard, 0xA1BC),
+                new ChangeHairstyleEntry(0xC910, 1125429, StyleType.Beard, 0xA1BD),
+                new ChangeHairstyleEntry(0xC911, 1125430, StyleType.Beard, 0xA1BE),
+                new ChangeHairstyleEntry(0xC912, 1125431, StyleType.Beard, 0xA1BF)
+            };
+
+        public static readonly ChangeHairstyleEntry[] GargoyleFemaleEntries = new[]
+        {
+                /* Hair */
+                new ChangeHairstyleEntry(0xF023, 1125432, StyleType.Hair, 0xA1C0),
+                new ChangeHairstyleEntry(0xF024, 1125433, StyleType.Hair, 0xA1C1),
+                new ChangeHairstyleEntry(0xF025, 1125434, StyleType.Hair, 0xA1C2),
+                new ChangeHairstyleEntry(0xF026, 1125435, StyleType.Hair, 0xA1C3)
+        };
+
         private class PromotionalTokenGump : Gump
         {
             private readonly Item Token;
@@ -145,9 +186,7 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (info.ButtonID != 1)
-                {
                     return;
-                }
 
                 Mobile from = sender.Mobile;
 
@@ -159,15 +198,40 @@ namespace Server.Items
                 {
                     from.CloseGump(typeof(InternalGump));
 
-                    ChangeHairstyleEntry[] entry;
+                    ChangeHairstyleEntry[] entry = HumanMaleEntries;
 
-                    if (from.Female)
+                    if (from.Race == Race.Human)
                     {
-                        entry = HumanFemaleEntries;
+                        if (from.Female)
+                        {
+                            entry = HumanFemaleEntries;
+                        }
+                        else
+                        {
+                            entry = HumanMaleEntries;
+                        }
                     }
-                    else
+                    else if (from.Race == Race.Elf)
                     {
-                        entry = HumanMaleEntries;
+                        if (from.Female)
+                        {
+                            entry = ElfFemaleEntries;
+                        }
+                        else
+                        {
+                            entry = ElfMaleEntries;
+                        }
+                    }
+                    else if (from.Race == Race.Gargoyle)
+                    {
+                        if (from.Female)
+                        {
+                            entry = GargoyleFemaleEntries;
+                        }
+                        else
+                        {
+                            entry = GargoyleMaleEntries;
+                        }
                     }
 
                     from.SendGump(new InternalGump(from, Token, entry));
@@ -261,13 +325,9 @@ namespace Server.Items
                         ChangeHairstyleEntry entry = _Entries[index - 41400];
 
                         if (entry.Type == StyleType.Hair)
-                        {
                             from.HairItemID = entry.ItemID;
-                        }
                         else
-                        {
                             from.FacialHairItemID = entry.ItemID;
-                        }
 
                         from.SendLocalizedMessage(1158661); // You have successfully changed your hairstyle.
 

@@ -49,9 +49,7 @@ namespace Server.Mobiles
         public override int Damage(int amount, Mobile from, bool informMount, bool checkDisrupt)
         {
             if (from is BaseCreature creature && creature.GetMaster() is PlayerMobile)
-            {
                 from = creature.GetMaster();
-            }
 
             if (from is PlayerMobile pm)
             {
@@ -70,9 +68,7 @@ namespace Server.Mobiles
         public override bool CanBeHarmedBy(Mobile from, bool message)
         {
             if (from is BaseCreature creature && creature.GetMaster() is PlayerMobile)
-            {
                 from = creature.GetMaster();
-            }
 
             if (from is PlayerMobile pm)
             {

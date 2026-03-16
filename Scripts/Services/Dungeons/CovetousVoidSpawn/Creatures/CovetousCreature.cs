@@ -96,9 +96,7 @@ namespace Server.Mobiles
             SetResistance(ResistanceType.Energy, ResistStart - 5, ResistStart + 5);
 
             if (Stage > 1)
-            {
                 Timer.DelayCall(TimeSpan.FromSeconds(.5), SetPower);
-            }
 
             Fame = Math.Min(8500, Level * 142);
             Karma = Math.Min(8500, Level * 142) * -1;
@@ -109,9 +107,7 @@ namespace Server.Mobiles
             base.OnThink();
 
             if (!Alive)
-            {
                 return;
-            }
 
             if (TimeOnWayPoint == null && CurrentWayPoint != null)
             {
@@ -120,9 +116,7 @@ namespace Server.Mobiles
             else if (TimeOnWayPoint != null && TimeOnWayPoint.Item1 == CurrentWayPoint && TimeOnWayPoint.Item2 < DateTime.UtcNow)
             {
                 if (CheckCanTeleport())
-                {
                     MoveToWorld(CurrentWayPoint.Location, Map);
-                }
             }
             else if (TimeOnWayPoint != null && TimeOnWayPoint.Item1 != CurrentWayPoint)
             {
@@ -174,9 +168,7 @@ namespace Server.Mobiles
         public override void GenerateLoot()
         {
             if (!VoidSpawn)
-            {
                 AddLoot(LootPack.Rich, Math.Max(1, Stage / 2));
-            }
         }
 
         public virtual void SetPower()
@@ -188,9 +180,7 @@ namespace Server.Mobiles
                     double toRaise = ((SkillMax / MaxStage) * Stage) + Utility.RandomMinMax(-5, 5);
 
                     if (toRaise > skill.Base)
-                    {
                         skill.Base = Math.Min(SkillMax, toRaise);
-                    }
                 }
             }
 
@@ -205,38 +195,26 @@ namespace Server.Mobiles
             int intRaise = ((IntMax / MaxStage) * Stage) + Utility.RandomMinMax(-5, 5);
 
             if (strRaise > RawStr)
-            {
                 SetStr(Math.Min(StrMax, strRaise));
-            }
 
             if (dexRaise > RawDex)
-            {
                 SetDex(Math.Min(DexMax, dexRaise));
-            }
 
             if (intRaise > RawInt)
-            {
                 SetInt(Math.Min(IntMax, intRaise));
-            }
 
             int hitsRaise = ((MaxHits / 60) * Level) + Utility.RandomMinMax(-5, 5);
             int stamRaise = ((MaxStam / 60) * Level) + Utility.RandomMinMax(-5, 5);
             int manaRaise = ((MaxMana / 60) * Level) + Utility.RandomMinMax(-5, 5);
 
             if (hitsRaise > HitsMax)
-            {
                 SetHits(Math.Min(MaxHits, hitsRaise));
-            }
 
             if (stamRaise > StamMax)
-            {
                 SetStam(Math.Min(MaxStam, stamRaise));
-            }
 
             if (manaRaise > ManaMax)
-            {
                 SetMana(Math.Min(MaxMana, manaRaise));
-            }
 
             if (RaiseDamage && Utility.RandomDouble() < RaiseDamageFactor)
             {

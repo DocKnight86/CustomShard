@@ -58,9 +58,7 @@ namespace Server.Engines.BulkOrders
             }
 
             if (rand > 2 && rand < 8)
-            {
                 useMaterials = false;
-            }
 
             int hue = 0x44E;
             int amountMax = Utility.RandomList(10, 15, 20, 20);
@@ -69,13 +67,9 @@ namespace Server.Engines.BulkOrders
             BulkMaterialType material;
 
             if (useMaterials)
-            {
                 material = GetRandomMaterial(BulkMaterialType.DullCopper, m_BlacksmithMaterialChances);
-            }
             else
-            {
                 material = BulkMaterialType.None;
-            }
 
             Hue = hue;
             AmountMax = amountMax;
@@ -123,9 +117,7 @@ namespace Server.Engines.BulkOrders
                         Item item = rewardGroup.Items[i].Construct();
 
                         if (item != null)
-                        {
                             list.Add(item);
-                        }
                     }
                 }
                 else
@@ -137,9 +129,7 @@ namespace Server.Engines.BulkOrders
                         Item item = rewardItem.Construct();
 
                         if (item != null)
-                        {
                             list.Add(item);
-                        }
                     }
                 }
             }

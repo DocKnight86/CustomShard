@@ -25,9 +25,7 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!IsChildOf(from.Backpack))
-            {
                 from.SendLocalizedMessage(500325); // I am too far away to do that.
-            }
             else
             {
                 from.Target = new InternalTarget(this);

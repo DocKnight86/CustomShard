@@ -59,9 +59,7 @@ namespace Server.Items
                 SetDisplay(x1, 0, 5100, 4084, 400, 400);
             }
             else
-            {
                 SetDisplayByFacet();
-            }
         }
 
         public override int LabelNumber => 1015233;  // world map

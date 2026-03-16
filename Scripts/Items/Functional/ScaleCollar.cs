@@ -28,9 +28,7 @@ namespace Server.Items
                 from.SendLocalizedMessage(501789); //You must wait before trying again.
             }
             else
-            {
                 from.SendLocalizedMessage(1042004); // That must be in your pack for you to use it.
-            }
         }
 
         public void OnTarget(Mobile from, object targeted)
@@ -47,9 +45,7 @@ namespace Server.Items
                     from.SendLocalizedMessage(1112484); //You successfully ensnare the chicken! You best hurry before it frees itself from it!
                 }
                 else
-                {
                     from.SendLocalizedMessage(1112483); //The collar falls to the ground as the chicken deftly avoids it.
-                }
             }
         }
 
@@ -78,9 +74,7 @@ namespace Server.Items
                 lizard.Frozen = false;
 
                 if (owner != null && !lizard.Controlled)
-                {
                     owner.SendLocalizedMessage(1112482); //The chicken frees itself of the collar!!
-                }
             }
 
             m_Timer.Stop();
@@ -99,9 +93,7 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Collar != null)
-                {
                     m_Collar.OnTarget(from, targeted);
-                }
             }
         }
 
@@ -125,13 +117,9 @@ namespace Server.Items
             protected override void OnTick()
             {
                 if (m_EndTime < DateTime.UtcNow)
-                {
                     m_Collar.EndTimer(m_Lizard, m_Owner);
-                }
                 else
-                {
                     m_Collar.OnTick(m_Lizard, m_Owner);
-                }
             }
         }
 

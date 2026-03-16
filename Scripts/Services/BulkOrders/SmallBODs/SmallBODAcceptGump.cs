@@ -43,14 +43,10 @@ namespace Server.Engines.BulkOrders
                 AddHtmlLocalized(40, 144, 210, 20, 1045140, 0x7FFF, false, false); // Special requirements to meet:
 
                 if (deed.RequireExceptional)
-                {
                     AddHtmlLocalized(40, 168, 350, 20, 1045141, 0x7FFF, false, false); // All items must be exceptional.
-                }
 
                 if (deed.Material != BulkMaterialType.None)
-                {
                     AddHtmlLocalized(40, deed.RequireExceptional ? 192 : 168, 350, 20, SmallBODGump.GetMaterialNumberFor(deed.Material), 0x7FFF, false, false); // All items must be made with x material.
-                }
             }
 
             AddHtmlLocalized(40, 216, 350, 20, 1045139, 0x7FFF, false, false); // Do you want to accept this order?

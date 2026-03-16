@@ -23,9 +23,7 @@ namespace Server.Items
         public static void AddPlunderBeacon(PlunderZone zone, PlunderBeaconAddon beacon)
         {
             if (Spawner == null)
-            {
                 return;
-            }
 
             if (!Spawner.PlunderBeacons[zone].Contains(beacon))
             {
@@ -36,9 +34,7 @@ namespace Server.Items
         public void RemovePlunderBeacon(PlunderBeaconAddon beacon)
         {
             if (Spawner == null || Spawner.PlunderBeacons == null)
-            {
                 return;
-            }
 
             foreach (KeyValuePair<PlunderZone, List<PlunderBeaconAddon>> kvp in Spawner.PlunderBeacons)
             {
@@ -112,9 +108,7 @@ namespace Server.Items
             foreach (int i in Enum.GetValues(typeof(PlunderZone)))
             {
                 if (i == -1)
-                {
                     continue;
-                }
 
                 PlunderZone zone = (PlunderZone)i;
                 int low = _SpawnCount[i] - PlunderBeacons[zone].Count;
@@ -131,13 +125,9 @@ namespace Server.Items
             Map map = Map.Trammel;
 
             if (zone == PlunderZone.Fel)
-            {
                 map = Map.Felucca;
-            }
             else if (zone > PlunderZone.Fel)
-            {
                 map = Map.Tokuno;
-            }
 
             for (int i = 0; i < amount; i++)
             {
@@ -149,9 +139,7 @@ namespace Server.Items
                     p = map.GetRandomSpawnPoint(rec); //new Point3D(rec.X + Utility.Random(rec.Width), rec.Y + Utility.RandomMinMax(rec.Start.X, rec.Height), -5);
 
                     if (p.Z != -5)
-                    {
                         p.Z = -5;
-                    }
 
                     Rectangle2D bounds = new Rectangle2D(p.X - 7, p.Y - 7, 15, 15);
 
@@ -169,9 +157,7 @@ namespace Server.Items
                         }
 
                         if (badSpot)
-                        {
                             break;
-                        }
                     }
 
                     if (!badSpot)

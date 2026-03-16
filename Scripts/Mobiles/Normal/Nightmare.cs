@@ -119,9 +119,7 @@ namespace Server.Mobiles
         public override int GetAngerSound()
         {
             if (!Controlled)
-            {
                 return 0x16A;
-            }
 
             return base.GetAngerSound();
         }

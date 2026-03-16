@@ -89,21 +89,15 @@ namespace Server.Gumps
             AddLabelCropped(x + TextOffsetX, y, EntryWidth - TextOffsetX, EntryHeight, TextHue, str);
 
             if (text != -1)
-            {
                 AddTextEntry(x + 16 + TextOffsetX, y, EntryWidth - TextOffsetX - 16, EntryHeight, TextHue, text, "");
-            }
 
             x += EntryWidth + OffsetSize;
 
             if (SetGumpID != 0)
-            {
                 AddImageTiled(x, y, SetWidth, EntryHeight, SetGumpID);
-            }
 
             if (button != 0)
-            {
                 AddButton(x + SetOffsetX, y + SetOffsetY, SetButtonID1, SetButtonID2, button, GumpButtonType.Reply, 0);
-            }
         }
 
         public override void OnResponse(NetState sender, RelayInfo info)
@@ -241,9 +235,7 @@ namespace Server.Gumps
             }
 
             if (shouldSend)
-            {
                 m_Mobile.SendGump(new XmlPropertiesGump(m_Mobile, m_Object, m_Stack, m_List, m_Page));
-            }
         }
     }
 }

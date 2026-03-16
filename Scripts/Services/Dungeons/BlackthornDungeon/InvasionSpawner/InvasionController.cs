@@ -40,9 +40,7 @@ namespace Server.Engines.Blackthorn
             set
             {
                 if (!value)
-                {
                     return;
-                }
 
                 RemoveSpawn();
                 OnEndInvasion();
@@ -77,9 +75,7 @@ namespace Server.Engines.Blackthorn
                 foreach (KeyValuePair<BaseCreature, List<BaseCreature>> kvp in Spawn)
                 {
                     if (kvp.Key.Alive)
-                    {
                         count++;
-                    }
 
                     int alive = 0;
 
@@ -247,9 +243,7 @@ namespace Server.Engines.Blackthorn
                         list.Add(invader);
                     }
                     else
-                    {
                         invader.Delete();
-                    }
                 }
 
                 InvaderCaptain capt = new InvaderCaptain(InvasionType)
@@ -267,9 +261,7 @@ namespace Server.Engines.Blackthorn
         private bool SpawnMobile(BaseCreature bc, Rectangle2D spawnrec)
         {
             if (Map == null)
-            {
                 return false;
-            }
 
             if (bc != null)
             {
@@ -304,9 +296,7 @@ namespace Server.Engines.Blackthorn
         public void OnDeath(BaseCreature bc)
         {
             if (bc == null || bc.Controlled || bc.Summoned)
-            {
                 return;
-            }
 
             if (Spawn.ContainsKey(bc))
             {
@@ -323,9 +313,7 @@ namespace Server.Engines.Blackthorn
                 }
 
                 if (wavecomplete)
-                {
                     CompleteWave();
-                }
             }
             else
             {
@@ -357,9 +345,7 @@ namespace Server.Engines.Blackthorn
         public void CleanupSpawn()
         {
             if (Spawn == null)
-            {
                 return;
-            }
 
             List<BaseCreature> list = null;
 
@@ -404,9 +390,7 @@ namespace Server.Engines.Blackthorn
         private void DoMessage()
         {
             if (Map == null)
-            {
                 return;
-            }
 
             IPooledEnumerable eable = Map.GetMobilesInRange(Beacon.Location, 20);
 
@@ -458,10 +442,8 @@ namespace Server.Engines.Blackthorn
                                 if (!damager.PlaceInBackpack(i))
                                 {
                                     if (damager.BankBox != null && damager.BankBox.TryDropItem(damager, i, false))
-                                    {
                                         damager.SendLocalizedMessage(
                                             1079730); // The item has been placed into your bank box.
-                                    }
                                     else
                                     {
                                         damager.SendLocalizedMessage(
@@ -478,7 +460,7 @@ namespace Server.Engines.Blackthorn
 
         public static Item CreateItem(Mobile damager)
         {
-            Item i = Loot.RandomArmorOrShieldOrWeaponOrJewelry();
+            Item i = Loot.RandomArmorOrShieldOrWeaponOrJewelry(LootPackEntry.IsInTokuno(damager), LootPackEntry.IsMondain(damager), LootPackEntry.IsStygian(damager));
 
             if (i != null)
             {
@@ -499,9 +481,7 @@ namespace Server.Engines.Blackthorn
         public void RemoveSpawn()
         {
             if (Spawn == null)
-            {
                 return;
-            }
 
             Dictionary<BaseCreature, List<BaseCreature>> copy = Spawn;
             Spawn = new Dictionary<BaseCreature, List<BaseCreature>>();
@@ -578,14 +558,10 @@ namespace Server.Engines.Blackthorn
             SpawnZones = new List<Rectangle2D>();
 
             if (Map == Map.Trammel)
-            {
                 TramInstance = this;
-            }
 
             if (Map == Map.Felucca)
-            {
                 FelInstance = this;
-            }
 
             CurrentInvasion = (City)reader.ReadInt();
             InvasionType = (InvasionType)reader.ReadInt();
@@ -593,9 +569,7 @@ namespace Server.Engines.Blackthorn
             CurrentWave = reader.ReadInt();
 
             if (Beacon != null)
-            {
                 Beacon.Controller = this;
-            }
 
             int count = reader.ReadInt();
             for (int i = 0; i < count; i++)
@@ -620,9 +594,7 @@ namespace Server.Engines.Blackthorn
                 }
 
                 if (captain != null)
-                {
                     Spawn[captain] = list;
-                }
                 else
                 {
                     list.Clear();

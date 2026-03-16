@@ -1,5 +1,8 @@
+using Server.Engines.Craft;
+
 namespace Server.Items
 {
+    [Alterable(typeof(DefBlacksmithy), typeof(GargishAxe))]
     [Flipable(0xF49, 0xF4A)]
     public class Axe : BaseAxe
     {

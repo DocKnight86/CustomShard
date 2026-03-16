@@ -22,16 +22,12 @@ namespace Server.Items
         public override bool OnMoveOver(Mobile m)
         {
             if (!base.OnMoveOver(m))
-            {
                 return false;
-            }
 
             PlayerMobile pm = m as PlayerMobile;
 
             if (m is BaseCreature creature)
-            {
                 pm = creature.ControlMaster as PlayerMobile;
-            }
 
             if (pm != null && pm.AbyssEntry)
             {

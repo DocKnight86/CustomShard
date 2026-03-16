@@ -96,29 +96,19 @@ namespace Server.Gumps
 
                         AddHtmlLocalized(30, 45, 60, 20, 1043353, 0x7FFF, false, false); // Next
                         if (page < pages)
-                        {
                             AddButton(30, 60, 0xFA5, 0xFA7, 0, GumpButtonType.Page, page + 1);
-                        }
                         else
-                        {
                             AddButton(30, 60, 0xFA5, 0xFA7, 0, GumpButtonType.Page, 1);
-                        }
 
                         AddHtmlLocalized(30, 85, 60, 20, 1011393, 0x7FFF, false, false); // Back
                         if (page > 1)
-                        {
                             AddButton(30, 100, 0xFAE, 0xFB0, 0, GumpButtonType.Page, page - 1);
-                        }
                         else
-                        {
                             AddButton(30, 100, 0xFAE, 0xFB0, 0, GumpButtonType.Page, pages);
-                        }
                     }
 
                     if (m_Types[i].m_BaseID < 0)
-                    {
                         continue;
-                    }
 
                     int x = (pos + 1) * 50;
 
@@ -156,9 +146,7 @@ namespace Server.Gumps
             if (m_Type == -1)
             {
                 if (button >= 0 && button < m_Types.Length)
-                {
                     from.SendGump(new AddDoorGump(button));
-                }
             }
             else
             {

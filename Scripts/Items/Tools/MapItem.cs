@@ -52,21 +52,13 @@ namespace Server.Items
         public virtual void SetDisplayByFacet()
         {
             if (Facet == Map.Tokuno)
-            {
                 SetDisplay(0, 0, 1446, 1446, 400, 400);
-            }
             else if (Facet == Map.Malas)
-            {
                 SetDisplay(510, 0, 2558, 2045, 400, 400);
-            }
             else if (Facet == Map.Ilshenar)
-            {
                 SetDisplay(201, 143, 1860, 1450, 400, 400);
-            }
             else if (Facet == Map.TerMur)
-            {
                 SetDisplay(260, 2799, 1259, 4095, 400, 400);
-            }
         }
 
         public void SetDisplay(int x1, int y1, int x2, int y2, int w, int h)
@@ -75,24 +67,16 @@ namespace Server.Items
             Height = h;
 
             if (x1 < 0)
-            {
                 x1 = 0;
-            }
 
             if (y1 < 0)
-            {
                 y1 = 0;
-            }
 
             if (x2 >= 7164)
-            {
                 x2 = 7163;
-            }
 
             if (y2 >= 4096)
-            {
                 y2 = 4095;
-            }
 
             Bounds = new Rectangle2D(x1, y1, x2 - x1, y2 - y1);
         }
@@ -104,13 +88,9 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (from.InRange(GetWorldLocation(), 2))
-            {
                 DisplayTo(from);
-            }
             else
-            {
                 from.SendLocalizedMessage(500446); // That is too far away.
-            }
         }
 
         public virtual void DisplayTo(Mobile from)
@@ -127,14 +107,9 @@ namespace Server.Items
         public virtual void OnAddPin(Mobile from, int x, int y)
         {
             if (!ValidateEdit(from))
-            {
                 return;
-            }
-
             if (Pins.Count >= MaxUserPins)
-            {
                 return;
-            }
 
             Validate(ref x, ref y);
             AddPin(x, y);
@@ -143,9 +118,7 @@ namespace Server.Items
         public virtual void OnRemovePin(Mobile from, int number)
         {
             if (!ValidateEdit(from))
-            {
                 return;
-            }
 
             RemovePin(number);
         }
@@ -153,9 +126,7 @@ namespace Server.Items
         public virtual void OnChangePin(Mobile from, int number, int x, int y)
         {
             if (!ValidateEdit(from))
-            {
                 return;
-            }
 
             Validate(ref x, ref y);
             ChangePin(number, x, y);
@@ -164,14 +135,9 @@ namespace Server.Items
         public virtual void OnInsertPin(Mobile from, int number, int x, int y)
         {
             if (!ValidateEdit(from))
-            {
                 return;
-            }
-
             if (Pins.Count >= MaxUserPins)
-            {
                 return;
-            }
 
             Validate(ref x, ref y);
             InsertPin(number, x, y);
@@ -180,9 +146,7 @@ namespace Server.Items
         public virtual void OnClearPins(Mobile from)
         {
             if (!ValidateEdit(from))
-            {
                 return;
-            }
 
             ClearPins();
         }
@@ -190,9 +154,7 @@ namespace Server.Items
         public virtual void OnToggleEditable(Mobile from)
         {
             if (Validate(from))
-            {
                 m_Editable = !m_Editable;
-            }
 
             from.Send(new MapSetEditable(this, Validate(from) && m_Editable));
         }
@@ -200,22 +162,14 @@ namespace Server.Items
         public virtual void Validate(ref int x, ref int y)
         {
             if (x < 0)
-            {
                 x = 0;
-            }
             else if (x >= Width)
-            {
                 x = Width - 1;
-            }
 
             if (y < 0)
-            {
                 y = 0;
-            }
             else if (y >= Height)
-            {
                 y = Height - 1;
-            }
         }
 
         public virtual bool ValidateEdit(Mobile from)
@@ -226,26 +180,16 @@ namespace Server.Items
         public virtual bool Validate(Mobile from)
         {
             if (!from.CanSee(this) || from.Map != Map || !from.Alive || InSecureTrade)
-            {
                 return false;
-            }
-
             if (from.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return true;
-            }
-
             if (!Movable || Protected || !from.InRange(GetWorldLocation(), 2))
-            {
                 return false;
-            }
 
             object root = RootParent;
 
             if (root is Mobile && root != from)
-            {
                 return false;
-            }
 
             return true;
         }
@@ -289,29 +233,21 @@ namespace Server.Items
         public virtual void RemovePin(int index)
         {
             if (index > 0 && index < Pins.Count)
-            {
                 Pins.RemoveAt(index);
-            }
         }
 
         public virtual void InsertPin(int index, int x, int y)
         {
             if (index < 0 || index >= Pins.Count)
-            {
                 Pins.Add(new Point2D(x, y));
-            }
             else
-            {
                 Pins.Insert(index, new Point2D(x, y));
-            }
         }
 
         public virtual void ChangePin(int index, int x, int y)
         {
             if (index >= 0 && index < Pins.Count)
-            {
                 Pins[index] = new Point2D(x, y);
-            }
         }
 
         public virtual void ClearPins()
@@ -381,9 +317,7 @@ namespace Server.Items
             MapItem map = World.FindItem(pvSrc.ReadInt32()) as MapItem;
 
             if (map == null)
-            {
                 return;
-            }
 
             int command = pvSrc.ReadByte();
             int number = pvSrc.ReadByte();
@@ -418,29 +352,17 @@ namespace Server.Items
 
                 short mapValue = 0x00;
                 if (map.Facet == Map.Felucca)
-                {
                     mapValue = 0x00;
-                }
                 else if (map.Facet == Map.Trammel)
-                {
                     mapValue = 0x01;
-                }
                 else if (map.Facet == Map.Ilshenar)
-                {
                     mapValue = 0x02;
-                }
                 else if (map.Facet == Map.Malas)
-                {
                     mapValue = 0x03;
-                }
                 else if (map.Facet == Map.Tokuno)
-                {
                     mapValue = 0x04;
-                }
                 else if (map.Facet == Map.TerMur)
-                {
                     mapValue = 0x05;
-                }
 
                 m_Stream.Write(mapValue);
             }

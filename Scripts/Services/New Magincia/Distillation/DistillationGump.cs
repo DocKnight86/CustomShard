@@ -303,20 +303,14 @@ namespace Server.Engines.Distillation
                                 }
                             }
                             else
-                            {
                                 from.SendLocalizedMessage(1150747); // You don't have enough ingredients.
-                            }
                         }
                     }
                     else
-                    {
                         from.SendLocalizedMessage(1054107); // This item must be in your backpack.
-                    }
                 }
                 else
-                {
                     from.SendMessage("That is not a liquor barrel.");
-                }
 
                 DistillationSystem.SendDelayedGump(from);
             }
@@ -324,9 +318,7 @@ namespace Server.Engines.Distillation
             protected override void OnTargetCancel(Mobile from, TargetCancelType cancelType)
             {
                 if (cancelType == TargetCancelType.Timeout)
-                {
                     from.SendLocalizedMessage(1150859); // You have waited too long to make your selection, your distillation attempt has timed out.
-                }
 
                 from.SendGump(new DistillationGump(from));
             }
@@ -334,9 +326,7 @@ namespace Server.Engines.Distillation
             public static int GetAmount(Mobile from, Type type, Liquor liquor)
             {
                 if (from == null || from.Backpack == null)
-                {
                     return 0;
-                }
 
                 Container pack = from.Backpack;
 
@@ -383,9 +373,7 @@ namespace Server.Engines.Distillation
                             Yeast yeast = m_Context.SelectedYeast[j];
 
                             if (yeast == null || !yeast.IsChildOf(from.Backpack))
-                            {
                                 return false;
-                            }
                         }
                     }
                     else
@@ -393,9 +381,7 @@ namespace Server.Engines.Distillation
                         toConsume = (int)(toConsume * percentage);
 
                         if (GetAmount(from, type, m_Def.Liquor) < toConsume)
-                        {
                             return false;
-                        }
                     }
                 }
 
@@ -405,9 +391,7 @@ namespace Server.Engines.Distillation
             private void ConsumeTotal(Mobile from, double percentage)
             {
                 if (from == null || from.Backpack == null)
-                {
                     return;
-                }
 
                 Container pack = from.Backpack;
 
@@ -423,9 +407,7 @@ namespace Server.Engines.Distillation
                             Yeast yeast = m_Context.SelectedYeast[j];
 
                             if (yeast != null)
-                            {
                                 yeast.Consume();
-                            }
                         }
                     }
                     else if (type == typeof(Pitcher))
@@ -503,19 +485,13 @@ namespace Server.Engines.Distillation
                             from.SendLocalizedMessage(1150740); // You have chosen the yeast.
                         }
                         else
-                        {
                             from.SendLocalizedMessage(1150742); // You have already chosen other yeast.
-                        }
                     }
                     else
-                    {
                         from.SendLocalizedMessage(1054107); // This item must be in your backpack.
-                    }
                 }
                 else
-                {
                     from.SendLocalizedMessage(1150741); // That is not yeast.
-                }
 
                 from.SendGump(new DistillationGump(from));
             }

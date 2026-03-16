@@ -40,9 +40,7 @@ namespace Server.Engines.CityLoyalty
                     AnnouncementExpires = DateTime.UtcNow + TimeSpan.FromHours(CityLoyaltySystem.AnnouncementPeriod);
 
                     if (Timer != null)
-                    {
                         Timer.Stop();
-                    }
 
                     Timer = Timer.DelayCall(TimeSpan.FromMinutes(3), TimeSpan.FromMinutes(3), DoAnnouncement);
                     Timer.Start();
@@ -51,9 +49,7 @@ namespace Server.Engines.CityLoyalty
                 _Announcement = value;
 
                 if (_Announcement != null)
-                {
                     DoAnnouncement();
-                }
             }
         }
 
@@ -142,14 +138,10 @@ namespace Server.Engines.CityLoyalty
                                     Herald.SayTo(from, 1152926); // The City thanks you for your generosity!
                                 }
                                 else
-                                {
                                     from.SendLocalizedMessage(1155867); // The amount entered is invalid. Verify that there are sufficient funds to complete this transaction.
-                                }
                             }
                             else
-                            {
                                 from.SendLocalizedMessage(1155867); // The amount entered is invalid. Verify that there are sufficient funds to complete this transaction.
-                            }
                         },
                         (from, text) =>
                         {
@@ -208,9 +200,7 @@ namespace Server.Engines.CityLoyalty
             AnnouncementExpires = reader.ReadDateTime();
 
             if (CitySystem != null)
-            {
                 CitySystem.Herald = this;
-            }
 
             if (DateTime.UtcNow < AnnouncementExpires)
             {

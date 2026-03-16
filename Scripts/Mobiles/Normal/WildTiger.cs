@@ -23,9 +23,7 @@ namespace Server.Mobiles
             : base(name, Utility.RandomBool() ? 1254 : 1255, 16071, AIType.AI_Melee, FightMode.Closest, 10, 1, 0.2, 0.4)
         {
             if (Body == 1255)
-            {
                 ItemID = 16072;
-            }
 
             SetStr(496, 554);
             SetDex(88, 124);
@@ -62,9 +60,7 @@ namespace Server.Mobiles
         public override void OnDoubleClick(Mobile from)
         {
             if (CanRide)
-            {
                 base.OnDoubleClick(from);
-            }
 
             else if (from.AccessLevel >= AccessLevel.GameMaster && !Body.IsHuman)
             {

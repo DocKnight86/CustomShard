@@ -31,18 +31,12 @@ namespace Server.Items
         public bool CouldFit(IPoint3D p, Map map)
         {
             if (!map.CanFit(p.X, p.Y, p.Z, ItemData.Height))
-            {
                 return false;
-            }
 
             if (ItemID == 0x2375)
-            {
                 return BaseAddon.IsWall(p.X, p.Y - 1, p.Z, map); // North wall
-            }
             else
-            {
                 return BaseAddon.IsWall(p.X - 1, p.Y, p.Z, map); // West wall
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -87,9 +81,7 @@ namespace Server.Items
         public virtual bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
-            {
                 return false;
-            }
 
             BaseHouse house = BaseHouse.FindHouseAt(this);
 
@@ -115,9 +107,7 @@ namespace Server.Items
         private void FixMovingCrate()
         {
             if (Deleted)
-            {
                 return;
-            }
 
             if (Movable || IsLockedDown)
             {
@@ -161,9 +151,7 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (m_Addon.Deleted)
-                {
                     return;
-                }
 
                 if (info.ButtonID == 1)
                 {
@@ -253,9 +241,7 @@ namespace Server.Items
             IPoint3D p = targeted as IPoint3D;
 
             if (p == null)
-            {
                 return;
-            }
 
             Point3D loc = new Point3D(p);
 
@@ -267,13 +253,9 @@ namespace Server.Items
                 bool westWall = BaseAddon.IsWall(loc.X - 1, loc.Y, loc.Z, from.Map);
 
                 if (northWall && westWall)
-                {
                     from.SendGump(new MistletoeDeedGump(from, loc, this));
-                }
                 else
-                {
                     PlaceAddon(from, loc, northWall, westWall);
-                }
             }
             else
             {
@@ -284,9 +266,7 @@ namespace Server.Items
         private void PlaceAddon(Mobile from, Point3D loc, bool northWall, bool westWall)
         {
             if (Deleted)
-            {
                 return;
-            }
 
             BaseHouse house = BaseHouse.FindHouseAt(loc, from.Map, 16);
 
@@ -299,17 +279,11 @@ namespace Server.Items
             int itemID = 0;
 
             if (northWall)
-            {
                 itemID = 0x2374;
-            }
             else if (westWall)
-            {
                 itemID = 0x2375;
-            }
             else
-            {
                 from.SendLocalizedMessage(1070883); // The mistletoe must be placed next to a wall.
-            }
 
             if (itemID > 0)
             {
@@ -349,9 +323,7 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (m_Deed.Deleted)
-                {
                     return;
-                }
 
                 switch (info.ButtonID)
                 {

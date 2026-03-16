@@ -47,14 +47,10 @@ namespace Server.Items
         public override bool CanUse(Mobile from)
         {
             if (!base.CanUse(from))
-            {
                 return false;
-            }
 
             if (!(from is PlayerMobile pm))
-            {
                 return false;
-            }
 
             for (int i = pm.Quests.Count - 1; i >= 0; i--)
             {
@@ -84,14 +80,10 @@ namespace Server.Items
         public override void Use(Mobile from)
         {
             if (!CanUse(from))
-            {
                 return;
-            }
 
             if (!(from is PlayerMobile pm))
-            {
                 return;
-            }
 
             double tskill = from.Skills[Skill].Base;
             double tcap = from.Skills[Skill].Cap;
@@ -193,9 +185,7 @@ namespace Server.Items
         public static void RemoveTimer(Mobile m)
         {
             if (m == null)
-            {
                 return;
-            }
 
             var contains = Contains(m);
 
@@ -223,9 +213,7 @@ namespace Server.Items
         public static void StartTimer(Mobile m)
         {
             if (m == null)
-            {
                 return;
-            }
 
             var contains = Contains(m);
 
@@ -259,9 +247,7 @@ namespace Server.Items
         public static void StopTimer(Mobile m)
         {
             if (m == null)
-            {
                 return;
-            }
 
             var contains = Contains(m);
 

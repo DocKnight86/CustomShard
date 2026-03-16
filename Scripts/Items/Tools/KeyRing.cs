@@ -104,18 +104,14 @@ namespace Server.Items
             Container cont = Parent as Container;
 
             if (cont == null)
-            {
                 return;
-            }
 
             for (int i = m_Keys.Count - 1; i >= 0; i--)
             {
                 Key key = m_Keys[i];
 
                 if (!key.Deleted && !cont.TryDropItem(from, key, true))
-                {
                     break;
-                }
 
                 m_Keys.RemoveAt(i);
             }
@@ -144,9 +140,7 @@ namespace Server.Items
             foreach (Key key in m_Keys)
             {
                 if (key.KeyValue == keyValue)
-                {
                     return true;
-                }
             }
 
             return false;
@@ -182,16 +176,12 @@ namespace Server.Items
             Quality = (ItemQuality)quality;
 
             if (makersMark)
-            {
                 Crafter = from;
-            }
 
             if (!craftItem.ForceNonExceptional)
             {
                 if (typeRes == null)
-                {
                     typeRes = craftItem.Resources.GetAt(0).ItemType;
-                }
 
                 Resource = CraftResources.GetFromType(typeRes);
             }
@@ -234,21 +224,13 @@ namespace Server.Items
         private void UpdateItemID()
         {
             if (Keys.Count < 1)
-            {
                 ItemID = 0x1011;
-            }
             else if (Keys.Count < 3)
-            {
                 ItemID = 0x1769;
-            }
             else if (Keys.Count < 5)
-            {
                 ItemID = 0x176A;
-            }
             else
-            {
                 ItemID = 0x176B;
-            }
         }
 
         private class InternalTarget : Target

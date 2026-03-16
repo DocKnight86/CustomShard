@@ -45,19 +45,13 @@ namespace Server.Items
                         from.SendGump(new InternalGump(this));
                     }
                     else
-                    {
                         from.SendLocalizedMessage(1076053); // You already have an attendant.
-                    }
                 }
                 else
-                {
                     from.SendLocalizedMessage(501023); // You must be the owner to use this item.
-                }
             }
             else
-            {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.
-            }
         }
 
         public override void GetProperties(ObjectPropertyList list)
@@ -65,9 +59,7 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_Owner != null)
-            {
                 list.Add(1076144, m_Owner.Name); // Property of ~1_OWNER~
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -128,9 +120,7 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (m_Deed == null || m_Deed.Deleted)
-                {
                     return;
-                }
 
                 Mobile m = sender.Mobile;
 

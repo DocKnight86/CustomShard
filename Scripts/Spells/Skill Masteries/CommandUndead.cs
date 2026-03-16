@@ -46,9 +46,7 @@ namespace Server.Spells.SkillMasteries
                 return true;
             }
             else
-            {
                 return false;
-            }
         }
 
         protected override void OnTarget(object o)
@@ -99,9 +97,7 @@ namespace Server.Spells.SkillMasteries
                                 for (int i = pack.Items.Count - 1; i >= 0; --i)
                                 {
                                     if (i >= pack.Items.Count)
-                                    {
                                         continue;
-                                    }
 
                                     pack.Items[i].Delete();
                                 }
@@ -157,7 +153,7 @@ namespace Server.Spells.SkillMasteries
                 return false;
             }
 
-            for (int index = 0; index < _CommandTypes.Length; index++)
+            for (var index = 0; index < _CommandTypes.Length; index++)
             {
                 Type t = _CommandTypes[index];
 
@@ -167,7 +163,7 @@ namespace Server.Spells.SkillMasteries
                 }
             }
 
-            for (int index = 0; index < _NoCommandTypes.Length; index++)
+            for (var index = 0; index < _NoCommandTypes.Length; index++)
             {
                 Type t = _NoCommandTypes[index];
 

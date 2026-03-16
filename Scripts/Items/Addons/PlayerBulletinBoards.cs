@@ -101,19 +101,13 @@ namespace Server.Items
         public virtual bool CheckAccess(BaseHouse house, Mobile from)
         {
             if (Public)
-            {
                 return true;
-            }
 
             if (house == null)
-            {
                 return false;
-            }
 
             if (house.Public)
-            {
                 return !house.IsBanned(from);
-            }
 
             return house.HasAccess(from);
         }
@@ -121,9 +115,7 @@ namespace Server.Items
         public virtual bool CheckUse(BaseHouse house, Mobile m)
         {
             if (Public)
-            {
                 return true;
-            }
 
             return house != null && house.IsLockedDown(this);
         }
@@ -182,16 +174,12 @@ namespace Server.Items
                 case 0:
                     {
                         if (version < 1)
-                        {
                             m_Level = SecureLevel.Anyone;
-                        }
 
                         m_Title = reader.ReadString();
 
                         if (reader.ReadBool())
-                        {
                             m_Greeting = new PlayerBBMessage(reader);
-                        }
 
                         int count = reader.ReadEncodedInt();
 
@@ -210,17 +198,11 @@ namespace Server.Items
             BaseHouse house = BaseHouse.FindHouseAt(this);
 
             if (!CheckUse(house, from))
-            {
                 from.SendLocalizedMessage(1062396); // This bulletin board must be locked down in a house to be usable.
-            }
             else if (!from.InRange(GetWorldLocation(), 2) || !from.InLOS(this))
-            {
                 from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
-            }
             else if (CheckAccess(house, from))
-            {
                 from.SendGump(new PlayerBBGump(from, house, this, 0));
-            }
         }
 
         public class PostPrompt : Prompt
@@ -275,9 +257,7 @@ namespace Server.Items
                 text = text.Trim();
 
                 if (text.Length > 255)
-                {
                     text = text.Substring(0, 255);
-                }
 
                 if (text.Length > 0)
                 {
@@ -296,9 +276,7 @@ namespace Server.Items
                             board.Messages.RemoveAt(0);
 
                             if (page > 0)
-                            {
                                 --page;
-                            }
                         }
                     }
                 }
@@ -353,14 +331,10 @@ namespace Server.Items
                 text = text.Trim();
 
                 if (text.Length > 255)
-                {
                     text = text.Substring(0, 255);
-                }
 
                 if (text.Length > 0)
-                {
                     board.Title = text;
-                }
 
                 from.SendGump(new PlayerBBGump(from, house, board, page));
             }
@@ -455,9 +429,7 @@ namespace Server.Items
             string title = board.Title;
 
             if (title != null)
-            {
                 AddHtml(183, 68, 180, 23, title, false, false);
-            }
 
             AddHtmlLocalized(385, 89, 60, 20, 1062409, LabelColor, false, false); // Post
 
@@ -468,9 +440,7 @@ namespace Server.Items
             PlayerBBMessage message = board.Greeting;
 
             if (page >= 1 && page <= board.Messages.Count)
-            {
                 message = board.Messages[page - 1];
-            }
 
             AddImageTiled(150, 220, 240, 1, 2700); // Separator
 
@@ -485,18 +455,14 @@ namespace Server.Items
                 string name = poster == null ? null : poster.Name;
 
                 if (name == null || (name = name.Trim()).Length == 0)
-                {
                     name = "Someone";
-                }
 
                 AddHtml(255, 200, 150, 20, name, false, false);
 
                 string body = message.Message;
 
                 if (body == null)
-                {
                     body = "";
-                }
 
                 AddHtml(150, 240, 250, 100, body, false, false);
 
@@ -513,9 +479,7 @@ namespace Server.Items
                 }
 
                 if (from.AccessLevel >= AccessLevel.GameMaster)
-                {
                     AddButton(135, 242, 1209, 1210, 8, GumpButtonType.Reply, 0); // Post props
-                }
             }
         }
 
@@ -576,13 +540,9 @@ namespace Server.Items
                 case 4: // Scroll up
                     {
                         if (page == 0)
-                        {
                             page = board.Messages.Count;
-                        }
                         else
-                        {
                             page -= 1;
-                        }
 
                         from.SendGump(new PlayerBBGump(from, house, board, page));
 
@@ -639,16 +599,12 @@ namespace Server.Items
                                 else
                                 {
                                     if (!house.Bans.Contains(poster))
-                                    {
                                         house.Bans.Add(poster);
-                                    }
 
                                     from.SendLocalizedMessage(1062417); // That person has been banned from this house.
 
                                     if (house.IsInside(poster) && !board.CheckAccess(house, poster))
-                                    {
                                         poster.MoveToWorld(house.BanLocation, house.Map);
-                                    }
                                 }
                             }
 
@@ -662,9 +618,7 @@ namespace Server.Items
                         if (board.CanPostGreeting(house, from))
                         {
                             if (page >= 1 && page <= board.Messages.Count)
-                            {
                                 board.Messages.RemoveAt(page - 1);
-                            }
 
                             from.SendGump(new PlayerBBGump(from, house, board, 0));
                         }
@@ -678,9 +632,7 @@ namespace Server.Items
                             PlayerBBMessage message = board.Greeting;
 
                             if (page >= 1 && page <= board.Messages.Count)
-                            {
                                 message = board.Messages[page - 1];
-                            }
 
                             from.SendGump(new PlayerBBGump(from, house, board, page));
                             from.SendGump(new PropertiesGump(from, message));

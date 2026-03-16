@@ -457,9 +457,7 @@ namespace Server.Items
         public override void DisplayTo(Mobile m)
         {
             if (DynamicFurniture.Open(this, m))
-            {
                 base.DisplayTo(m);
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -496,9 +494,7 @@ namespace Server.Items
         public override void DisplayTo(Mobile m)
         {
             if (DynamicFurniture.Open(this, m))
-            {
                 base.DisplayTo(m);
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -639,18 +635,12 @@ namespace Server.Items
         public override void DisplayTo(Mobile m)
         {
             if (ItemID == 0xA29F || ItemID == 0xA2A1)
-            {
                 ItemID++;
-            }
             else
-            {
                 ItemID--;
-            }
 
             if (DynamicFurniture.Open(this, m))
-            {
                 base.DisplayTo(m);
-            }
         }
 
         public ChinaCabinet(Serial serial)
@@ -706,18 +696,12 @@ namespace Server.Items
         public override void DisplayTo(Mobile m)
         {
             if (ItemID == 0xA29B || ItemID == 0xA29D)
-            {
                 ItemID++;
-            }
             else
-            {
                 ItemID--;
-            }
 
             if (DynamicFurniture.Open(this, m))
-            {
                 base.DisplayTo(m);
-            }
         }
 
         public PieSafe(Serial serial)

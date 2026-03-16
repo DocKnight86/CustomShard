@@ -109,9 +109,7 @@ namespace Server.Regions
         public override bool OnBeginSpellCast(Mobile m, ISpell s)
         {
             if (m.AccessLevel > AccessLevel.Player)
-            {
                 return true;
-            }
 
             if (s is Spells.Sixth.MarkSpell || s is Spells.Seventh.GateTravelSpell || s is Spells.Third.TeleportSpell)
             {
@@ -195,17 +193,13 @@ namespace Server.Regions
             base.OnDeath(m);
 
             if (m.Player && m_TrapCorridor.Contains(m.Location))
-            {
                 Timer.DelayCall(TimeSpan.FromSeconds(3), Kick_Callback, m);
-            }
         }
 
         public void SpringTrap(Mobile from)
         {
             if (from == null || !from.Alive)
-            {
                 return;
-            }
 
             int cliloc;
             int damage = Utility.RandomMinMax(75, 150);
@@ -246,17 +240,13 @@ namespace Server.Regions
             Mobile m = (Mobile)o;
 
             if (m != null)
-            {
                 KickToEntrance(m);
-            }
         }
 
         public void KickToEntrance(Mobile from)
         {
             if (from == null || from.Map == null)
-            {
                 return;
-            }
 
             int x = Utility.RandomMinMax(m_DeathBounds.X, m_DeathBounds.X + m_DeathBounds.Width);
             int y = Utility.RandomMinMax(m_DeathBounds.Y, m_DeathBounds.Y + m_DeathBounds.Height);
@@ -267,9 +257,7 @@ namespace Server.Regions
             from.MoveToWorld(p, Map.TerMur);
 
             if (from.Player && !from.Alive && from.Corpse != null)
-            {
                 from.Corpse.MoveToWorld(p, Map.TerMur);
-            }
 
             from.SendLocalizedMessage(1113566); // You will find your remains at the entrance of the maze.
         }

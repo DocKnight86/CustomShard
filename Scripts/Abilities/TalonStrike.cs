@@ -25,9 +25,7 @@ namespace Server.Items
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
             if (Registry.Contains(defender) || !Validate(attacker) || !CheckMana(attacker, true))
-            {
                 return;
-            }
 
             ClearCurrentAbility(attacker);
 
@@ -45,9 +43,7 @@ namespace Server.Items
             Registry.Add(defender, t);
 
             if (attacker is BaseCreature creature)
-            {
                 PetTrainingHelper.OnWeaponAbilityUsed(creature, SkillName.Ninjitsu);
-            }
         }
 
         private class InternalTimer : Timer
@@ -78,9 +74,7 @@ namespace Server.Items
                 m_DamageToDo += DamagePerTick;
 
                 if (m_DamageRemaining <= 0 && m_DamageToDo < 1)
-                {
                     m_DamageToDo = 1.0; //Confirm this 'round up' at the end
-                }
 
                 int damage = (int)m_DamageToDo;
 

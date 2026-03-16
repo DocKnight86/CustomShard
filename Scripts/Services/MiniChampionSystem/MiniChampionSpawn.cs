@@ -188,13 +188,9 @@ namespace Server.Engines.MiniChamps
             set
             {
                 if (value)
-                {
                     Start();
-                }
                 else
-                {
                     Stop();
-                }
             }
         }
 
@@ -208,9 +204,7 @@ namespace Server.Engines.MiniChamps
         public void Start()
         {
             if (m_Active || Deleted)
-            {
                 return;
-            }
 
             m_Active = true;
 
@@ -223,9 +217,7 @@ namespace Server.Engines.MiniChamps
         public void Stop()
         {
             if (!m_Active || Deleted)
-            {
                 return;
-            }
 
             m_Active = false;
             m_Level = 0;

@@ -49,38 +49,26 @@ namespace Server.SkillHandlers
 
                 Point3D p;
                 if (targ is Mobile mobile)
-                {
                     p = mobile.Location;
-                }
                 else if (targ is Item item)
-                {
                     p = item.Location;
-                }
                 else if (targ is IPoint3D point3D)
-                {
                     p = new Point3D(point3D);
-                }
                 else
-                {
                     p = src.Location;
-                }
 
                 double srcSkill = src.Skills[SkillName.DetectHidden].Value;
                 int range = Math.Max(2, (int)(srcSkill / 10.0));
 
                 if (!src.CheckSkill(SkillName.DetectHidden, 0.0, 100.0))
-                {
                     range /= 2;
-                }
 
                 BaseHouse house = BaseHouse.FindHouseAt(p, src.Map, 16);
 
                 bool inHouse = house != null && house.IsFriend(src);
 
                 if (inHouse)
-                {
                     range = 22;
-                }
 
                 if (range > 0)
                 {
@@ -91,9 +79,7 @@ namespace Server.SkillHandlers
                         if (trg.Hidden && src != trg)
                         {
                             if (src is BaseCreature bc && bc.Controlled && bc.ControlMaster == trg)
-                            {
                                 continue;
-                            }
 
                             double ss = srcSkill + Utility.Random(21) - 10;
                             double ts = trg.Skills[SkillName.Hiding].Value + Utility.Random(21) - 10;
@@ -104,9 +90,7 @@ namespace Server.SkillHandlers
                             {
                                 if (trg is ShadowKnight && (trg.X != p.X || trg.Y != p.Y) ||
                                      !houseCheck && !CanDetect(src, trg, true))
-                                {
                                     continue;
-                                }
 
                                 trg.RevealingAction();
                                 trg.SendLocalizedMessage(500814); // You have been revealed!
@@ -122,18 +106,23 @@ namespace Server.SkillHandlers
 
                     foreach (Item item in itemsInRange)
                     {
-                        IRevealableItem dItem = item as IRevealableItem;
-
-                        if (dItem == null || item.Visible && dItem.CheckWhenHidden)
+                        if (item is LibraryBookcase && Engines.Khaldun.GoingGumshoeQuest3.CheckBookcase(src, item))
                         {
-                            continue;
-                        }
-
-                        if (dItem.CheckReveal(src))
-                        {
-                            dItem.OnRevealed(src);
-
                             foundAnyone = true;
+                        }
+                        else
+                        {
+                            IRevealableItem dItem = item as IRevealableItem;
+
+                            if (dItem == null || item.Visible && dItem.CheckWhenHidden)
+                                continue;
+
+                            if (dItem.CheckReveal(src))
+                            {
+                                dItem.OnRevealed(src);
+
+                                foundAnyone = true;
+                            }
                         }
                     }
 
@@ -150,32 +139,27 @@ namespace Server.SkillHandlers
         public static void DoPassiveDetect(Mobile src)
         {
             if (src == null || src.Map == null || src.Location == Point3D.Zero || src.IsStaff())
-            {
                 return;
-            }
 
             double ss = src.Skills[SkillName.DetectHidden].Value;
 
             if (ss <= 0)
-            {
                 return;
-            }
 
             IPooledEnumerable eable = src.Map.GetMobilesInRange(src.Location, 4);
 
             if (eable == null)
-            {
                 return;
-            }
 
             foreach (Mobile m in eable)
             {
                 if (m == null || m == src || m is ShadowKnight || !CanDetect(src, m, false))
-                {
                     continue;
-                }
 
                 double ts = (m.Skills[SkillName.Hiding].Value + m.Skills[SkillName.Stealth].Value) / 2;
+
+                if (src.Race == Race.Elf)
+                    ss += 20;
 
                 if (src.AccessLevel >= m.AccessLevel && Utility.Random(1000) < ss - ts + 1)
                 {

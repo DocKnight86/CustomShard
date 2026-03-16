@@ -66,14 +66,10 @@ namespace Server.Gumps
         public void FinishPage()
         {
             if (m_Background != null)
-            {
                 m_Background.Height = m_CurrentY + EntryHeight + OffsetSize + BorderSize;
-            }
 
             if (m_Offset != null)
-            {
                 m_Offset.Height = m_CurrentY + EntryHeight + OffsetSize - BorderSize;
-            }
         }
 
         public void AddNewPage()
@@ -105,16 +101,12 @@ namespace Server.Gumps
             width = m_CurrentX + BorderSize;
 
             if (m_Background != null && width > m_Background.Width)
-            {
                 m_Background.Width = width;
-            }
 
             width = m_CurrentX - BorderSize;
 
             if (m_Offset != null && width > m_Offset.Width)
-            {
                 m_Offset.Width = width;
-            }
         }
 
         public void AddEntryLabel(int width, string text)
@@ -147,9 +139,7 @@ namespace Server.Gumps
         public void AddBlankLine()
         {
             if (m_Offset != null)
-            {
                 AddImageTiled(m_Offset.X, m_CurrentY, m_Offset.Width, EntryHeight, BackGumpID + 4);
-            }
 
             AddNewLine();
         }

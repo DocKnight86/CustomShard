@@ -23,13 +23,9 @@ namespace Server.Mobiles
         public override void OnDoubleClick(Mobile from)
         {
             if (IsChildOf(from.Backpack))
-            {
                 from.SendGump(new ConfirmMountStatuetteGump(this));
-            }
             else
-            {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
-            }
         }
 
         public override void Serialize(GenericWriter writer)

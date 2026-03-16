@@ -44,9 +44,7 @@ namespace Server.Items
         public PlunderBeaconAddon()
         {
             for (int i = 0; i < m_AddOnSimpleComponents.Length / 4; i++)
-            {
                 AddComponent(new AddonComponent(m_AddOnSimpleComponents[i, 0]), m_AddOnSimpleComponents[i, 1], m_AddOnSimpleComponents[i, 2], m_AddOnSimpleComponents[i, 3]);
-            }
 
             AddComplexComponent(this, 2572, 0, 2, 37, 0, 5, "", 1);
             AddComplexComponent(this, 2567, 2, 0, 37, 0, 5, "", 1);
@@ -199,9 +197,7 @@ namespace Server.Items
         public void OnBeaconDestroyed()
         {
             if (Deleted)
-            {
                 return;
-            }
 
             for (int i = 0; i < 4; i++)
             {
@@ -227,8 +223,27 @@ namespace Server.Items
             TimerRegistry.RemoveFromRegistry(_TimerID, this);
         }
 
+        private bool _CheckSpawn;
+
         public void OnTick()
         {
+            if (_CheckSpawn)
+            {
+                if (BaseCreature.IsSoulboundEnemies && Spawn != null)
+                {
+                    foreach (BaseCreature bc in Spawn.Keys)
+                    {
+                        if (!bc.Deleted)
+                        {
+                            bc.IsSoulBound = true;
+                        }
+                    }
+
+                }
+
+                _CheckSpawn = false;
+            }
+
             Map map = Map;
 
             if (map == null)
@@ -299,6 +314,11 @@ namespace Server.Items
                     creature.MoveToWorld(spawnLoc, map);
                     creature.Home = spawnLoc;
                     creature.RangeHome = 10;
+
+                    if (BaseCreature.IsSoulboundEnemies)
+                    {
+                        creature.IsSoulBound = true;
+                    }
 
                     Spawn.Add(creature, initial);
 
@@ -449,6 +469,8 @@ namespace Server.Items
 
                     break;
             }
+
+            _CheckSpawn = true;
         }
 
         #region Components
@@ -462,25 +484,16 @@ namespace Server.Items
             AddonComponent ac;
             ac = new AddonComponent(item);
             if (!string.IsNullOrEmpty(name))
-            {
                 ac.Name = name;
-            }
-
             if (hue != 0)
-            {
                 ac.Hue = hue;
-            }
-
             if (amount > 1)
             {
                 ac.Stackable = true;
                 ac.Amount = amount;
             }
             if (lightsource != -1)
-            {
                 ac.Light = (LightType)lightsource;
-            }
-
             addon.AddComponent(ac, xoffset, yoffset, zoffset);
         }
 

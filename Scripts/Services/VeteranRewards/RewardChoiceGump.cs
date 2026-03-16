@@ -39,9 +39,7 @@ namespace Server.Engines.VeteranRewards
                 RewardSystem.ComputeRewardInfo(m_From, out int cur, out int max);
 
                 if (cur < max)
-                {
                     m_From.SendGump(new RewardNoticeGump(m_From));
-                }
             }
             else if (info.ButtonID == 1000)
             {
@@ -73,9 +71,7 @@ namespace Server.Engines.VeteranRewards
                         RewardEntry entry = category.Entries[index];
 
                         if (!RewardSystem.HasAccess(m_From, entry))
-                        {
                             return;
-                        }
 
                         m_From.SendGump(new RewardConfirmGump(m_From, entry));
                     }
@@ -111,13 +107,9 @@ namespace Server.Engines.VeteranRewards
                 AddButton(18 + (i * 130), 160, m_CategoryIndex == i ? 0x635 : 0x634, 0x637, 20000 + i, GumpButtonType.Reply, 0);
 
                 if (categories[i].NameString != null)
-                {
                     AddHtml(18 + (i * 130), 162, 125, 18, $"<div align=CENTER>{categories[i].NameString}</div>", false, false);
-                }
                 else
-                {
                     AddHtmlLocalized(18 + (i * 130), 162, 125, 18, 1114513, $"#{categories[i].Name}", 0xC63, false, false);
-                }
             }
 
             RenderCategory(categories[m_CategoryIndex]);
@@ -139,9 +131,7 @@ namespace Server.Engines.VeteranRewards
                 RewardEntry entry = entries[j];
 
                 if (!RewardSystem.HasAccess(m_From, entry))
-                {
                     continue;
-                }
 
                 l[j] = entry;
             }
@@ -149,14 +139,10 @@ namespace Server.Engines.VeteranRewards
             int rewardcount = l.Count;
 
             if ((m_Page + 1) * 60 < rewardcount)
-            {
                 AddButton(554, 10, 0x15E1, 0x15E5, 1000, GumpButtonType.Reply, 0); // Next Page Button
-            }
 
             if (m_Page > 0)
-            {
                 AddButton(554, 10, 0x15E3, 0x15E7, 1001, GumpButtonType.Reply, 0); // Previous Page Button
-            }
 
             for (int i = 0, index = m_Page * 60; i < 60 && index < rewardcount; ++i, ++index)
             {
@@ -164,13 +150,9 @@ namespace Server.Engines.VeteranRewards
                 RewardEntry entry = item.Value;
 
                 if (entry.NameString != null)
-                {
                     AddHtml(50 + ((i / 20) * 250), 200 + ((i % 20) * 18), 200, 18, entry.NameString, false, false);
-                }
                 else
-                {
                     AddHtmlLocalized(50 + ((i / 20) * 250), 200 + ((i % 20) * 18), 200, 18, entry.Name, 0x7FFF, false, false);
-                }
 
                 AddButton(30 + ((i / 20) * 250), 200 + ((i % 20) * 18), 0x845, 0x846, GetButtonID(m_CategoryIndex, item.Key), GumpButtonType.Reply, 0);
             }

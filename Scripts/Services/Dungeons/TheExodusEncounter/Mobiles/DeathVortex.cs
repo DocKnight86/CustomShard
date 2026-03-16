@@ -38,14 +38,10 @@ namespace Server.Items
         public override void OnTrigger(Mobile from)
         {
             if (from.IsStaff())
-            {
                 return;
-            }
 
             if (from.Alive && CheckRange(from.Location, 1) && !(from is ClockworkExodus))
-            {
                 StamManaDrain(from);
-            }
         }
 
         public void StamManaDrain(Mobile defender)
@@ -88,9 +84,7 @@ namespace Server.Items
             protected override void OnTick()
             {
                 if (m_Item != null)
-                {
                     m_Item.Delete();
-                }
 
                 Stop();
             }

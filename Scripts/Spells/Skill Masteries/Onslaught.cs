@@ -79,9 +79,7 @@ namespace Server.Spells.SkillMasteries
                 int duration = (MasteryInfo.GetMasteryLevel(attacker, MoveSkill) * 2) + 1;
 
                 if (defender is PlayerMobile)
-                {
                     amount /= 2;
-                }
 
                 ResistanceMod mod = new ResistanceMod(resistType, -amount);
                 defender.AddResistanceMod(mod);
@@ -92,9 +90,7 @@ namespace Server.Spells.SkillMasteries
                 defender.FixedEffect(0x37B9, 10, 5, 632, 0);
 
                 if (_Table == null)
-                {
                     _Table = new Dictionary<Mobile, Mobile>();
-                }
 
                 _Table[attacker] = defender;
 

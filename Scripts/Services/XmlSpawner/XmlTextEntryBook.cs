@@ -31,11 +31,7 @@ namespace Server.Items
                     {
                         // make each line 25 chars long
                         int length = text.Length - current;
-                        if (length > 20)
-                        {
-                            length = 20;
-                        }
-
+                        if (length > 20) length = 20;
                         lines[i] = text.Substring(current, length);
                         current += length;
                     }
@@ -47,10 +43,7 @@ namespace Server.Items
                 }
 
                 if (pagenum >= PagesCount)
-                {
                     return;
-                }
-
                 Pages[pagenum].Lines = lines;
                 pagenum++;
             }
@@ -58,12 +51,10 @@ namespace Server.Items
             for (int j = pagenum; j < PagesCount; j++)
             {
                 if (Pages[j].Lines.Length > 0)
-                {
                     for (int i = 0; i < Pages[j].Lines.Length; i++)
                     {
                         Pages[j].Lines[i] = string.Empty;
                     }
-                }
             }
         }
 
@@ -118,9 +109,7 @@ namespace Server.Items
             Writable = writable;
 
             for (int i = 0; i < Pages.Length; ++i)
-            {
                 Pages[i] = new BookPageInfo();
-            }
         }
 
         public BaseEntryBook(Serial serial) : base(serial)

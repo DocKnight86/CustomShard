@@ -62,16 +62,12 @@ namespace Server.Engines.TombOfKings
             writer.Write(m_Blocker != null);
 
             if (m_Blocker != null)
-            {
                 writer.Write(m_Blocker);
-            }
 
             writer.Write(m_LOSBlocker != null);
 
             if (m_LOSBlocker != null)
-            {
                 writer.Write(m_LOSBlocker);
-            }
         }
 
         public override void Deserialize(GenericReader reader)

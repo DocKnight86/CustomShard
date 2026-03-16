@@ -104,9 +104,7 @@ namespace Server.Mobiles
             public override void OnClick()
             {
                 if (m_Vendor == null || m_Vendor.Deleted)
-                {
                     return;
-                }
 
                 BaseBoat boat = BaseBoat.GetBoat(m_From);
 
@@ -168,9 +166,7 @@ namespace Server.Mobiles
             public override void OnClick()
             {
                 if (m_Vendor == null || m_Vendor.Deleted)
-                {
                     return;
-                }
 
                 m_From.SendGump(new AbandonGump());
             }

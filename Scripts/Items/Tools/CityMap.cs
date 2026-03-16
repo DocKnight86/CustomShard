@@ -20,20 +20,14 @@ namespace Server.Items
             int dist = 64 + (int)(skillValue * 4);
 
             if (dist < 200)
-            {
                 dist = 200;
-            }
 
             int size = 32 + (int)(skillValue * 2);
 
             if (size < 200)
-            {
                 size = 200;
-            }
             else if (size > 400)
-            {
                 size = 400;
-            }
 
             SetDisplay(from.X - dist, from.Y - dist, from.X + dist, from.Y + dist, size, size);
         }

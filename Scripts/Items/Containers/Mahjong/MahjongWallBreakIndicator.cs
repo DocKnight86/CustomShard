@@ -32,9 +32,7 @@ namespace Server.Engines.Mahjong
             MahjongPieceDim dim = GetDimensions(position);
 
             if (!dim.IsValid())
-            {
                 return;
-            }
 
             m_Position = position;
 

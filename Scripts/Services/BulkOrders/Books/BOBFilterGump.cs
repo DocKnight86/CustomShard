@@ -235,9 +235,7 @@ namespace Server.Engines.BulkOrders
                             if (index >= 0 && index < filters.GetLength(0))
                             {
                                 if (filters[index, 0] == 0)
-                                {
                                     break;
-                                }
 
                                 switch (type)
                                 {

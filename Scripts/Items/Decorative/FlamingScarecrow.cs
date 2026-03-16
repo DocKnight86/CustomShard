@@ -17,13 +17,9 @@ namespace Server.Items
         public void OnFlip(Mobile from)
         {
             if (ItemID == 0x9F33 || ItemID == 0x9F34)
-            {
                 ItemID = ItemID + 6;
-            }
             else
-            {
                 ItemID = ItemID - 6;
-            }
         }
 
         public override int LitItemID => ItemID == 0x9F33 ? 0x9F34 : 0x9F3A;

@@ -87,9 +87,7 @@ namespace Server.Items
             m_South = choice == 0;
 
             if (!Deleted)
-            {
                 base.OnDoubleClick(from);
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -100,9 +98,7 @@ namespace Server.Items
                 from.SendGump(new RewardOptionGump(this));
             }
             else
-            {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.       	
-            }
         }
 
         public SmallWorldTreeRugAddonDeed(Serial serial)
@@ -215,9 +211,7 @@ namespace Server.Items
             m_South = choice == 0;
 
             if (!Deleted)
-            {
                 base.OnDoubleClick(from);
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -228,9 +222,7 @@ namespace Server.Items
                 from.SendGump(new RewardOptionGump(this));
             }
             else
-            {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.       	
-            }
         }
 
         [Constructable]

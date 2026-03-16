@@ -198,25 +198,15 @@ namespace Server.Mobiles
                                 int fee = Veterinarian.GetResurrectionFee(pet);
 
                                 if (!pet.IsDeadBondedPet)
-                                {
                                     from.SendLocalizedMessage(501041); // Target is not dead.
-                                }
                                 else if (!from.CanSee(pet) || !from.InLOS(pet))
-                                {
                                     from.SendLocalizedMessage(503376); // Target cannot be seen.
-                                }
                                 else if (!from.InRange(pet, 12))
-                                {
                                     from.SendLocalizedMessage(500643); // Target is too far away.
-                                }
                                 else if (pet.ControlMaster != from)
-                                {
                                     from.SendLocalizedMessage(1113200); // You must be the owner of that pet to have it resurrected.
-                                }
                                 else if (pet.Corpse != null && !pet.Corpse.Deleted)
-                                {
                                     from.SendLocalizedMessage(1113279); // That creature's spirit lacks cohesion. Try again in a few minutes.
-                                }
                                 else if (Banker.Withdraw(from, fee))
                                 {
                                     pet.PlaySound(0x214);

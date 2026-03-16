@@ -110,9 +110,7 @@ namespace Server.Items
         public int OnCraft(int quality, bool makersMark, Mobile from, CraftSystem craftSystem, Type typeRes, ITool tool, CraftItem craftItem, int resHue)
         {
             if (quality == 2)
-            {
                 UsesRemaining *= 2;
-            }
 
             return quality;
         }

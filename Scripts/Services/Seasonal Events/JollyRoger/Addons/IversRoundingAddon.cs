@@ -41,9 +41,7 @@ namespace Server.Items
         {
 
             for (var i = 0; i < m_AddOnSimpleComponents.Length / 4; i++)
-            {
                 AddComponent(new AddonComponent(m_AddOnSimpleComponents[i, 0]), m_AddOnSimpleComponents[i, 1], m_AddOnSimpleComponents[i, 2], m_AddOnSimpleComponents[i, 3]);
-            }
 
             AddComplexComponent(this, 211, 1, 6, 0, 1885, -1, "", 1);// 2
             AddComplexComponent(this, 211, 0, 6, 0, 1884, -1, "", 1);// 4
@@ -434,25 +432,16 @@ namespace Server.Items
             AddonComponent ac;
             ac = new AddonComponent(item);
             if (!string.IsNullOrEmpty(name))
-            {
                 ac.Name = name;
-            }
-
             if (hue != 0)
-            {
                 ac.Hue = hue;
-            }
-
             if (amount > 1)
             {
                 ac.Stackable = true;
                 ac.Amount = amount;
             }
             if (lightsource != -1)
-            {
                 ac.Light = (LightType)lightsource;
-            }
-
             addon.AddComponent(ac, xoffset, yoffset, zoffset);
         }
 

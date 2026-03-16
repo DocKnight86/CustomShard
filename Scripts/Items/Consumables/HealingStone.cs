@@ -120,9 +120,7 @@ namespace Server.Items
                 else
                 {
                     if (m_Timer != null)
-                    {
                         m_Timer.Stop();
-                    }
 
                     m_Timer = new InternalTimer(this);
                 }
@@ -141,9 +139,7 @@ namespace Server.Items
                 m_MaxHeal += Math.Min(maxToHeal, m_MaxHealTotal / 15);
 
                 if (m_MaxHeal > m_MaxHealTotal)
-                {
                     m_MaxHeal = m_MaxHealTotal;
-                }
             }
         }
 
@@ -166,9 +162,7 @@ namespace Server.Items
                 m_Stone.OnTick();
 
                 if (m_Ticks >= 15)
-                {
                     Stop();
-                }
             }
         }
 

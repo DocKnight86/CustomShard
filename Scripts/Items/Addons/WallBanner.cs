@@ -36,14 +36,10 @@ namespace Server.Items
         public bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
-            {
                 return false;
-            }
 
             if (Addon != null)
-            {
                 Addon.Hue = sender.DyedHue;
-            }
 
             return true;
         }
@@ -306,22 +302,21 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
-            {
                 list.Add(1076225); // 9th Year Veteran Reward
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (m_IsRewardItem && !RewardSystem.CheckIsUsableBy(from, this, null))
+                return;
+
             if (IsChildOf(from.Backpack))
             {
                 from.CloseGump(typeof(InternalGump));
                 from.SendGump(new InternalGump(this));
             }
             else
-            {
                 from.SendLocalizedMessage(1042038); // You must have the object in your backpack to use it.          	
-            }
         }
 
         public void Use(Mobile m, int bannerID)
@@ -498,14 +493,10 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (m_WallBanner == null || m_WallBanner.Deleted)
-                {
                     return;
-                }
 
                 if (info.ButtonID > 0 && info.ButtonID < 31)
-                {
                     m_WallBanner.Use(sender.Mobile, info.ButtonID);
-                }
             }
         }
     }

@@ -32,9 +32,7 @@ namespace Server.Items
                 if (key == null)
                 {
                     if (from.HasGump(typeof(MagicKeyConfirmGump)))
-                    {
                         from.CloseGump(typeof(MagicKeyConfirmGump));
-                    }
 
                     from.SendGump(new MagicKeyConfirmGump(this));
                 }
@@ -81,9 +79,7 @@ namespace Server.Items
                         foreach (Item item in list)
                         {
                             if (item is CopperPuzzleKey || item is GoldPuzzleKey || item is MazePuzzleItem || item is MastermindPuzzleItem)
-                            {
                                 item.Delete();
-                            }
                         }
                     }
                 }

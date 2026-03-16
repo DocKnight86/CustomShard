@@ -59,9 +59,7 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_Exceptional && m_Crafter != null)
-            {
                 list.Add(1050043, m_Crafter.TitleName); // crafted by ~1_NAME~
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -80,9 +78,7 @@ namespace Server.Items
         public virtual void OnTarget(Mobile from, object obj)
         {
             if (Deleted)
-            {
                 return;
-            }
 
             SwampDragon pet = obj as SwampDragon;
 
@@ -144,9 +140,7 @@ namespace Server.Items
                         m_Crafter = reader.ReadMobile();
 
                         if (version < 1)
-                        {
                             reader.ReadInt();
-                        }
 
                         m_Resource = (CraftResource)reader.ReadInt();
                         break;
@@ -161,16 +155,12 @@ namespace Server.Items
             Exceptional = quality >= 2;
 
             if (makersMark)
-            {
                 Crafter = from;
-            }
 
             Type resourceType = typeRes;
 
             if (resourceType == null)
-            {
                 resourceType = craftItem.Resources.GetAt(0).ItemType;
-            }
 
             Resource = CraftResources.GetFromType(resourceType);
             return quality;

@@ -113,14 +113,10 @@ namespace Server.Misc
             Region r = m.Region;
 
             if (r.IsPartOf<Regions.HouseRegion>() || Multis.BaseBoat.FindBoatAt(m, m.Map) != null)
-            {
                 return false;
-            }
 
             if (r.IsPartOf("Yomotsu Mines") || r.IsPartOf("Fan Dancer's Dojo"))
-            {
                 return true;
-            }
 
             return m.Map == Map.Tokuno;
         }
@@ -217,9 +213,7 @@ namespace Server.Misc
                     if (!pm.PlaceInBackpack(i))
                     {
                         if (pm.BankBox != null && pm.BankBox.TryDropItem(killer, i, false))
-                        {
                             pm.SendLocalizedMessage(1079730); // The item has been placed into your bank box.
-                        }
                         else
                         {
                             pm.SendLocalizedMessage(1072523); // You find an artifact, but your backpack and bank are too full to hold it.
@@ -368,27 +362,19 @@ namespace Server.Mobiles
                         pm.CloseGump(typeof(ToTTurnInGump));    //Sanity
 
                         if (!pm.HasGump(typeof(ToTRedeemGump)))
-                        {
                             pm.SendGump(new ToTRedeemGump(this, false));
-                        }
                     }
                     else
                     {
                         if (turnIns == 0)
-                        {
                             SayTo(pm, 1071013); // Bring me 10 of the lost treasures of Tokuno and I will reward you with a valuable item.
-                        }
                         else
-                        {
                             SayTo(pm, 1070981, string.Format("{0}\t{1}", turnIns, TreasuresOfTokuno.ItemsPerReward)); // You have turned in ~1_COUNT~ minor artifacts. Turn in ~2_NUM~ to receive a reward.
-                        }
 
                         ArrayList buttons = ToTTurnInGump.FindRedeemableItems(pm);
 
                         if (buttons.Count > 0 && !pm.HasGump(typeof(ToTTurnInGump)))
-                        {
                             pm.SendGump(new ToTTurnInGump(this, buttons));
-                        }
                     }
                 }
 
@@ -429,9 +415,7 @@ namespace Server.Gumps
         {
             Backpack pack = (Backpack)m.Backpack;
             if (pack == null)
-            {
                 return new ArrayList();
-            }
 
             ArrayList items = new ArrayList(pack.FindItemsByType(TreasuresOfTokuno.LesserArtifactsTotal));
             ArrayList buttons = new ArrayList();
@@ -440,19 +424,13 @@ namespace Server.Gumps
             {
                 Item item = (Item)items[i];
                 if (item is ChestOfHeirlooms heirlooms && !heirlooms.Locked)
-                {
                     continue;
-                }
 
                 if (item is ChestOfHeirlooms chest && chest.TrapLevel != 10)
-                {
                     continue;
-                }
 
                 if (item is PigmentsOfTokuno pigment && pigment.Type != PigmentType.None)
-                {
                     continue;
-                }
 
                 buttons.Add(new ItemTileButtonInfo(item));
             }

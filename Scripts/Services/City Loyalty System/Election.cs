@@ -50,9 +50,7 @@ namespace Server.Engines.CityLoyalty
                 if (value)
                 {
                     if (Ongoing)
-                    {
                         EndElection();
-                    }
 
                     StartTimes = new DateTime[1];
                     StartTimes[0] = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
@@ -284,9 +282,7 @@ namespace Server.Engines.CityLoyalty
                 }));
             }
             else
-            {
                 pm.SendLocalizedMessage(1153924); // You are not currently on any ballot to withdraw from. 
-            }
         }
 
         public double GetStanding(BallotEntry entry)
@@ -294,9 +290,7 @@ namespace Server.Engines.CityLoyalty
             if (Candidates.Contains(entry))
             {
                 if (entry.Votes.Count <= 0)
-                {
                     return 0.0;
-                }
 
                 return (entry.Votes.Count / GetTotalVotes()) * 100;
             }
@@ -343,9 +337,7 @@ namespace Server.Engines.CityLoyalty
                         BallotEntry entry = Candidates.FirstOrDefault(c => c.Player == City.GovernorElect);
 
                         if (entry != null)
-                        {
                             Candidates.Remove(entry);
-                        }
                     }
 
                     City.GovernorElect = null;
@@ -395,9 +387,7 @@ namespace Server.Engines.CityLoyalty
                 DateTime dt = new DateTime(DateTime.Now.Year, _Periods[i], 1);
 
                 if (dt < DateTime.Now)
-                {
                     dt = new DateTime(dt.Year + 1, dt.Month, dt.Day);
-                }
 
                 StartTimes[i] = dt;
             }
@@ -422,9 +412,7 @@ namespace Server.Engines.CityLoyalty
                     DateTime dt = new DateTime(DateTime.Now.Year, month, 1);
 
                     if (dt < DateTime.Now)
-                    {
                         dt = new DateTime(dt.Year + 1, dt.Month, dt.Day);
-                    }
 
                     starttimes[i] = dt;
                 }
@@ -444,9 +432,7 @@ namespace Server.Engines.CityLoyalty
         public static bool CheckConflict(DateTime[] times)
         {
             if (times == null || times.Length == 0)
-            {
                 return false;
-            }
 
             for (int i = 0; i < times.Length; i++)
             {
@@ -455,14 +441,10 @@ namespace Server.Engines.CityLoyalty
                 for (int j = 0; j < times.Length; j++)
                 {
                     if (i == j)
-                    {
                         continue;
-                    }
 
                     if (times[j] > t && times[j] - t < TimeSpan.FromDays(30) || times[j] < t && t - times[j] < TimeSpan.FromDays(30))
-                    {
                         return true;
-                    }
                 }
             }
 
@@ -472,9 +454,7 @@ namespace Server.Engines.CityLoyalty
         public DateTime NextElection()
         {
             if (CanNominate() || CanVote())
-            {
                 return DateTime.MinValue;
-            }
 
             DateTime closest = DateTime.MinValue;
 
@@ -563,9 +543,7 @@ namespace Server.Engines.CityLoyalty
                 AutoPickGovernor = DateTime.Now + TimeSpan.FromDays(Utility.RandomMinMax(2, 4));
 
                 if (City.Stone != null)
-                {
                     City.Stone.InvalidateProperties();
-                }
             }
 
             for (int i = 0; i < StartTimes.Length; i++)
@@ -573,14 +551,10 @@ namespace Server.Engines.CityLoyalty
                 DateTime dt = StartTimes[i];
 
                 if (dt == DateTime.MinValue)
-                {
                     continue;
-                }
 
                 if (dt < DateTime.Now)
-                {
                     dt = new DateTime(dt.Year + 1, dt.Month, dt.Day);
-                }
             }
         }
 
@@ -646,9 +620,7 @@ namespace Server.Engines.CityLoyalty
                 DateTime time = reader.ReadDateTime();
 
                 if (time < DateTime.Now && ElectionEnded)
-                {
                     time = new DateTime(time.Year + 1, time.Month, time.Day);
-                }
 
                 StartTimes[i] = time;
             }
@@ -658,9 +630,7 @@ namespace Server.Engines.CityLoyalty
             {
                 BallotEntry entry = new BallotEntry(reader);
                 if (entry.Player != null)
-                {
                     Candidates.Add(entry);
-                }
             }
         }
     }
@@ -691,29 +661,19 @@ namespace Server.Engines.CityLoyalty
         public int CompareTo(BallotEntry entry)
         {
             if (Player == null)
-            {
                 return -1;
-            }
 
             if (Votes.Count > entry.Votes.Count)
-            {
                 return 1;
-            }
 
             if (Votes.Count < entry.Votes.Count)
-            {
                 return -1;
-            }
 
             if (Love > entry.Love || Hate < entry.Hate)
-            {
                 return 1;
-            }
 
             if (Love == entry.Love && Hate == entry.Hate && Utility.RandomBool())
-            {
                 return 1;
-            }
 
             return -1;
         }

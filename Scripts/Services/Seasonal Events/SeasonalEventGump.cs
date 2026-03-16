@@ -65,9 +65,7 @@ namespace Server.Engines.SeasonalEvents
         public override void OnResponse(RelayInfo info)
         {
             if (info.ButtonID == 0)
-            {
                 return;
-            }
 
             if (info.ButtonID >= 100)
             {
@@ -176,57 +174,33 @@ namespace Server.Engines.SeasonalEvents
                 case 0: return;
                 case 1:
                     if (_Month == 1)
-                    {
                         _Month = 12;
-                    }
                     else
-                    {
                         _Month--;
-                    }
-
                     break;
                 case 2:
                     if (_Month == 12)
-                    {
                         _Month = 1;
-                    }
                     else
-                    {
                         _Month++;
-                    }
-
                     break;
                 case 3:
                     if (_Day == 1)
-                    {
                         _Day = GetDaysInMonth(_Month);
-                    }
                     else
-                    {
                         _Day--;
-                    }
-
                     break;
                 case 4:
                     if (_Day == GetDaysInMonth(_Month))
-                    {
                         _Day = 1;
-                    }
                     else
-                    {
                         _Day++;
-                    }
-
                     break;
                 case 5:
                     if (_Duration == 1)
-                    {
                         _Duration = 1;
-                    }
                     else
-                    {
                         _Duration--;
-                    }
 
                     _Duration = Math.Min(365, _Duration);
                     break;
@@ -235,25 +209,15 @@ namespace Server.Engines.SeasonalEvents
                     break;
                 case 7:
                     if (_Status == EventStatus.Inactive)
-                    {
                         _Status = EventStatus.Seasonal;
-                    }
                     else
-                    {
                         _Status--;
-                    }
-
                     break;
                 case 8:
                     if (_Status == EventStatus.Seasonal)
-                    {
                         _Status = EventStatus.Inactive;
-                    }
                     else
-                    {
                         _Status++;
-                    }
-
                     break;
                 case 9:
                     Entry.MonthStart = _Month;

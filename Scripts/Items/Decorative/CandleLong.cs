@@ -9,13 +9,9 @@ namespace Server.Items
             : base(0x1433)
         {
             if (Burnout)
-            {
                 Duration = TimeSpan.FromMinutes(30);
-            }
             else
-            {
                 Duration = TimeSpan.Zero;
-            }
 
             Burning = false;
             Light = LightType.Circle150;

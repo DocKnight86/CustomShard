@@ -22,15 +22,7 @@ namespace Server.Engines.VvV
         public PotionType PotionType { get => _PotionType; set { _PotionType = value; InvalidateProperties(); } }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int Charges { get => _Charges; set { _Charges = value; if (_Charges <= 0)
-            {
-                Delete();
-            }
-            else
-            {
-                InvalidateProperties();
-            }
-        } }
+        public int Charges { get => _Charges; set { _Charges = value; if (_Charges <= 0) Delete(); else InvalidateProperties(); } }
 
         public override double DefaultWeight => 10 + _Charges * 1.8;
 
@@ -158,9 +150,7 @@ namespace Server.Engines.VvV
                 _Cooldown[m].Remove(type);
 
                 if (_Cooldown[m].Count == 0)
-                {
                     _Cooldown.Remove(m);
-                }
             }
         }
 
@@ -175,29 +165,21 @@ namespace Server.Engines.VvV
                 foreach (KeyValuePair<PotionType, DateTime> values in kvp.Value)
                 {
                     if (values.Value < DateTime.UtcNow)
-                    {
                         removeTypes.Add(values.Key);
-                    }
                 }
 
                 foreach (PotionType t in removeTypes)
-                {
                     kvp.Value.Remove(t);
-                }
 
                 if (kvp.Value.Count == 0)
-                {
                     toRemove.Add(kvp.Key);
-                }
 
                 removeTypes.Clear();
                 removeTypes.TrimExcess();
             }
 
             foreach (Mobile mob in toRemove)
-            {
                 _Cooldown.Remove(mob);
-            }
 
             toRemove.Clear();
             toRemove.TrimExcess();
@@ -269,14 +251,10 @@ namespace Server.Engines.VvV
         public void AddToCooldown(Mobile m)
         {
             if (m.AccessLevel >= AccessLevel.Counselor)
-            {
                 return;
-            }
 
             if (!_Cooldown.ContainsKey(m))
-            {
                 _Cooldown[m] = new Dictionary<PotionType, DateTime>();
-            }
 
             _Cooldown[m][CooldownType] = DateTime.UtcNow + CooldownDuration;
         }
@@ -284,9 +262,7 @@ namespace Server.Engines.VvV
         public override void OnDoubleClick(Mobile m)
         {
             if (!Movable)
-            {
                 return;
-            }
 
             if (IsChildOf(m.Backpack))
             {
@@ -338,9 +314,7 @@ namespace Server.Engines.VvV
             m.PlaySound(0x2D6);
 
             if (m.Body.IsHuman && !m.Mounted)
-            {
                 m.Animate(34, 5, 1, true, false, 0);
-            }
 
             if (CooldownDuration != TimeSpan.MinValue)
             {
@@ -475,9 +449,7 @@ namespace Server.Engines.VvV
                 });
 
             if (m.AccessLevel == AccessLevel.Player)
-            {
                 Consume();
-            }
         }
 
         public override void UseEffects(Mobile m)
@@ -582,9 +554,7 @@ namespace Server.Engines.VvV
                 int gain = Utility.RandomMinMax(10, 13);
 
                 if (m.Stam + gain > m.StamMax)
-                {
                     gain = m.StamMax - m.Stam;
-                }
 
                 m.FixedParticles(0x376A, 9, 32, 5005, EffectLayer.Waist);
                 m.Stam += gain;

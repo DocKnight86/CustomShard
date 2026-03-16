@@ -1,3 +1,4 @@
+using Server.Engines.Craft;
 using System;
 using System.Collections.Generic;
 
@@ -9,6 +10,7 @@ namespace Server.Items
         SpellDamage
     }
 
+    [Alterable(typeof(DefTailoring), typeof(GargishRunedSashOfWarding))]
     public class RunedSashOfWarding : BodySash
     {
         public override bool IsArtifact => true;
@@ -130,6 +132,34 @@ namespace Server.Items
             int version = reader.ReadInt();
             m_Charges = reader.ReadInt();
             m_Ward = (WardingEffect)reader.ReadInt();
+        }
+    }
+
+    public class GargishRunedSashOfWarding : RunedSashOfWarding
+    {
+        [Constructable]
+        public GargishRunedSashOfWarding()
+        {
+            ItemID = 0x46B4;
+        }
+
+        public GargishRunedSashOfWarding(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write(0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
         }
     }
 }

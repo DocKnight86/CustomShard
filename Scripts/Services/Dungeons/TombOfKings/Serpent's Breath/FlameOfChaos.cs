@@ -111,9 +111,7 @@ namespace Server.Items
             writer.Write(m_Barriers.Count);
 
             for (int i = 0; i < m_Barriers.Count; i++)
-            {
                 writer.Write(m_Barriers[i]);
-            }
         }
 
         public override void Deserialize(GenericReader reader)
@@ -126,14 +124,10 @@ namespace Server.Items
             m_Barriers = new List<FireBarrier>(amount);
 
             for (int i = 0; i < amount; i++)
-            {
                 m_Barriers.Add(reader.ReadItem() as FireBarrier);
-            }
 
             if (!Visible)
-            {
                 Timer.DelayCall(TimeSpan.Zero, RestoreBarrier);
-            }
         }
     }
 }

@@ -170,16 +170,12 @@ namespace Server.Items
         public bool CheckAccessible(Mobile from, Item item)
         {
             if (from.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return true; // Staff can access anything
-            }
 
             BaseHouse house = BaseHouse.FindHouseAt(item);
 
             if (house == null)
-            {
                 return false;
-            }
 
             switch (Level)
             {
@@ -217,9 +213,7 @@ namespace Server.Items
                     if (CheckAccessible(from, this))
                     {
                         if (from.HasGump(typeof(RepairBenchGump)))
-                        {
                             return;
-                        }
 
                         if (!Using || from == User)
                         {
@@ -277,9 +271,7 @@ namespace Server.Items
             int version = reader.ReadInt();
 
             if (version != 0)
-            {
                 Level = (SecureLevel)reader.ReadInt();
-            }
 
             IsRewardItem = reader.ReadBool();
 
@@ -355,9 +347,7 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_IsRewardItem)
-            {
                 list.Add(1076221); // 5th Year Veteran Reward
-            }
 
             if (Tools != null)
             {
@@ -377,9 +367,7 @@ namespace Server.Items
             _Direction = (DirectionType)choice;
 
             if (!Deleted)
-            {
                 base.OnDoubleClick(from);
-            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -486,9 +474,7 @@ namespace Server.Items
         public override void OnResponse(NetState sender, RelayInfo info)
         {
             if (m_Addon == null || m_Addon.Deleted)
-            {
                 return;
-            }
 
             Mobile m = sender.Mobile;
             int index = info.ButtonID;

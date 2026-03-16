@@ -68,7 +68,7 @@ namespace Server.Engines.TreasuresOfKotlCity
 
             if (0.1 > Utility.RandomDouble() && Points.PointsSystem.TreasuresOfKotlCity.Enabled)
             {
-                Item item = Loot.RandomArmorOrShieldOrWeaponOrJewelry();
+                Item item = Loot.RandomArmorOrShieldOrWeaponOrJewelry(LootPackEntry.IsInTokuno(this), LootPackEntry.IsMondain(this), LootPackEntry.IsStygian(this));
 
                 if (item != null)
                 {

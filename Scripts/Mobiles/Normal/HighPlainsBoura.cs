@@ -111,6 +111,21 @@ namespace Server.Mobiles
             return 1505;
         }
 
+        public override void OnDeath(Container c)
+        {
+            base.OnDeath(c);
+
+            if (!Controlled)
+            {
+                c.DropItem(new BouraSkin());
+
+                if (Utility.RandomDouble() <= 0.005)
+                {
+                    c.DropItem(new BouraTailShield());
+                }
+            }
+        }
+
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
@@ -124,9 +139,7 @@ namespace Server.Mobiles
             int version = reader.ReadInt();
 
             if (version == 1)
-            {
                 reader.ReadDeltaTime();
-            }
             else
             {
                 GatheredFur = reader.ReadBool();

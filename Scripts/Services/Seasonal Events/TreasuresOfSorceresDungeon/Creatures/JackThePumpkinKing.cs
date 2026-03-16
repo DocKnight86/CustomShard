@@ -69,9 +69,7 @@ namespace Server.Engines.SorcerersDungeon
                 PlaySound(0x491);
 
                 if (0.05 > Utility.RandomDouble())
-                {
                     Timer.DelayCall(TimeSpan.FromSeconds(1.0), CreatePumpkin_Callback, from);
-                }
 
                 m_InHere = false;
             }
@@ -83,9 +81,7 @@ namespace Server.Engines.SorcerersDungeon
             Map map = from.Map;
 
             if (map == null)
-            {
                 return;
-            }
 
             int count = Utility.RandomMinMax(1, 3);
 
@@ -100,9 +96,7 @@ namespace Server.Engines.SorcerersDungeon
                     z = map.GetAverageZ(x, y);
 
                     if (z == from.Z || !map.CanFit(x, y, z, 16, false, true))
-                    {
                         continue;
-                    }
                 }
 
                 UnholyPumpkin bone = new UnholyPumpkin
@@ -213,9 +207,7 @@ namespace Server.Engines.SorcerersDungeon
             protected override void OnTick()
             {
                 if (m_Item.Deleted)
-                {
                     return;
-                }
 
                 Mobile spawn;
 

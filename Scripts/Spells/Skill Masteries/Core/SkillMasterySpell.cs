@@ -50,9 +50,7 @@ namespace Server.Spells.SkillMasteries
             get
             {
                 if (Caster == null)
-                {
                     return 0.0;
-                }
 
                 return (Caster.Skills[CastSkill].Value + Caster.Skills[DamageSkill].Value + GetMasteryLevel() * 40) / 3;
             }
@@ -72,42 +70,26 @@ namespace Server.Spells.SkillMasteries
             int mana = ScaleMana(RequiredMana);
 
             if (!base.CheckCast())
-            {
                 return false;
-            }
 
             if (IsInCooldown(Caster, GetType()))
-            {
                 return false;
-            }
 
             if (Caster.Player && Caster.Skills[CastSkill].Value < RequiredSkill)
-            {
                 Caster.SendLocalizedMessage(1115709); // Your skills are not high enough to invoke this mastery ability.
-            }
             else if (Caster is PlayerMobile && Caster.Skills.CurrentMastery != CastSkill)
-            {
                 Caster.SendLocalizedMessage(1115664); // You are not on the correct path for using this mastery ability.
-            }
             else if (Caster is PlayerMobile && !MasteryInfo.HasLearned(Caster, CastSkill))
-            {
                 Caster.SendLocalizedMessage(1115664); // You are not on the correct path for using this mastery ability.
-            }
             else if (CheckManaBeforeCast && Caster.Mana < mana)
-            {
                 Caster.SendLocalizedMessage(1060174, mana.ToString()); // You must have at least ~1_MANA_REQUIREMENT~ Mana to use this ability.
-            }
             else
             {
                 if (CancelsWeaponAbility)
-                {
                     WeaponAbility.ClearCurrentAbility(Caster);
-                }
 
                 if (CancelsSpecialMove)
-                {
                     SpecialMove.ClearCurrentMove(Caster);
-                }
 
                 return true;
             }
@@ -146,16 +128,12 @@ namespace Server.Spells.SkillMasteries
         public bool CheckWeapon()
         {
             if (!Caster.Player)
-            {
                 return true;
-            }
 
             BaseWeapon wep = GetWeapon();
 
             if (CastSkill == SkillName.Poisoning && wep != null && !(wep is Fists))
-            {
                 return true;
-            }
 
             return wep != null && wep.DefSkill == CastSkill;
         }
@@ -189,16 +167,12 @@ namespace Server.Spells.SkillMasteries
                 Expire();
 
                 if (OutOfRangeMessage > 0)
-                {
                     Caster.SendLocalizedMessage(OutOfRangeMessage);
-                }
             }
             else if (Caster.Mana < upkeep)
             {
                 if (UpkeepCancelMessage > 0)
-                {
                     Caster.SendLocalizedMessage(UpkeepCancelMessage);
-                }
 
                 Expire();
             }
@@ -297,9 +271,7 @@ namespace Server.Spells.SkillMasteries
         public virtual int ScaleUpkeep()
         {
             if (UpKeep == 0)
-            {
                 return 0;
-            }
 
             int upkeep = GetUpkeep();
 
@@ -316,18 +288,14 @@ namespace Server.Spells.SkillMasteries
             if (Timer != null)
             {
                 if (ExpireMessage > 0)
-                {
                     Caster.SendLocalizedMessage(ExpireMessage);
-                }
 
                 Timer.Stop();
                 Timer = null;
             }
 
             if (disrupt && DisruptMessage > 0)
-            {
                 Caster.SendLocalizedMessage(DisruptMessage);
-            }
 
             Server.Timer.DelayCall(RemoveFromTable);
             RemoveStatMods();
@@ -357,15 +325,8 @@ namespace Server.Spells.SkillMasteries
 
             double reduce = 1.0 - (dSkill - vSkill) / dSkill;
 
-            if (reduce < 0)
-            {
-                reduce = 0;
-            }
-
-            if (reduce > 1)
-            {
-                reduce = 1;
-            }
+            if (reduce < 0) reduce = 0;
+            if (reduce > 1) reduce = 1;
 
             return reduce;
         }
@@ -380,14 +341,10 @@ namespace Server.Spells.SkillMasteries
             n /= 100.0;
 
             if (n <= 0.0)
-            {
                 return false;
-            }
 
             if (n >= 1.0)
-            {
                 return true;
-            }
 
             int maxSkill = (1 + volumeMod) * 10;
             maxSkill += (1 + volumeMod / 6) * 25;
@@ -459,9 +416,7 @@ namespace Server.Spells.SkillMasteries
         public virtual bool CheckPartyEffects(Mobile m, bool beneficial = false)
         {
             if (m == Caster)
-            {
                 return true;
-            }
 
             if (Caster.IsBeneficialCriminal(m))
             {
@@ -475,9 +430,7 @@ namespace Server.Spells.SkillMasteries
             }
 
             if (beneficial)
-            {
                 Caster.DoBeneficial(m);
-            }
 
             return true;
         }
@@ -1119,29 +1072,19 @@ namespace Server.Spells.SkillMasteries
             double val = swrd;
 
             if (fenc > val)
-            {
                 val = fenc;
-            }
 
             if (mcng > val)
-            {
                 val = mcng;
-            }
 
             if (arch > val)
-            {
                 val = arch;
-            }
 
             if (thro > val)
-            {
                 val = thro;
-            }
 
             if (wres > val)
-            {
                 val = wres;
-            }
 
             return (int)val;
         }
@@ -1300,15 +1243,11 @@ namespace Server.Spells.SkillMasteries
                 {
                     spell = GetSpellForParty(m, typeof(InspireSpell));
                     if (spell != null)
-                    {
                         value += spell.PropertyBonus();
-                    }
 
                     spell = GetSpellForParty(m, typeof(TribulationSpell));
                     if (spell != null)
-                    {
                         value += spell.PropertyBonus();
-                    }
 
                     value += FocusedEyeSpell.HitChanceBonus(m);
                     value += PlayingTheOddsSpell.HitChanceBonus(m);
@@ -1323,14 +1262,10 @@ namespace Server.Spells.SkillMasteries
                     spell = GetSpellForParty(m, typeof(PerseveranceSpell));
 
                     if (spell != null)
-                    {
                         value += spell.PropertyBonus();
-                    }
 
                     if (WhiteTigerFormSpell.IsActive(m))
-                    {
                         value += 20;
-                    }
 
                     value += MasteryInfo.SavingThrowChance(m, attr);
                     break;
@@ -1340,10 +1275,7 @@ namespace Server.Spells.SkillMasteries
                     spell = GetSpellForParty(m, typeof(ResilienceSpell));
 
                     if (spell != null)
-                    {
                         value += spell.PropertyBonus();
-                    }
-
                     break;
                 }
                 case AosAttribute.RegenStam:
@@ -1351,10 +1283,7 @@ namespace Server.Spells.SkillMasteries
                     spell = GetSpellForParty(m, typeof(ResilienceSpell));
 
                     if (spell != null)
-                    {
                         value += spell.PropertyBonus();
-                    }
-
                     break;
                 }
                 case AosAttribute.RegenMana:
@@ -1362,10 +1291,7 @@ namespace Server.Spells.SkillMasteries
                     spell = GetSpellForParty(m, typeof(ResilienceSpell));
 
                     if (spell != null)
-                    {
                         value += spell.PropertyBonus();
-                    }
-
                     break;
                 }
                 case AosAttribute.WeaponDamage:
@@ -1373,9 +1299,7 @@ namespace Server.Spells.SkillMasteries
                     spell = GetSpellForParty(m, typeof(InspireSpell));
 
                     if (spell != null)
-                    {
                         value += spell.DamageBonus();
-                    }
 
                     value += MasteryInfo.SavingThrowChance(m, attr);
                     break;
@@ -1385,10 +1309,7 @@ namespace Server.Spells.SkillMasteries
                     spell = GetSpellForParty(m, typeof(InspireSpell));
 
                     if (spell != null)
-                    {
                         value += spell.PropertyBonus();
-                    }
-
                     break;
                 }
                 case AosAttribute.WeaponSpeed:
@@ -1449,14 +1370,10 @@ namespace Server.Spells.SkillMasteries
             protected override void OnTarget(Mobile from, object o)
             {
                 if (o == null)
-                {
                     return;
-                }
 
                 if (!from.CanSee(o))
-                {
                     from.SendLocalizedMessage(500237); // Target can not be seen.
-                }
                 else
                 {
                     SpellHelper.Turn(from, o);
@@ -1467,9 +1384,7 @@ namespace Server.Spells.SkillMasteries
             protected override void OnTargetFinish(Mobile from)
             {
                 if (AutoFinishSequence)
-                {
                     Owner.FinishSequence();
-                }
             }
         }
 
@@ -1536,9 +1451,7 @@ namespace Server.Spells.SkillMasteries
                     mastery.MoveToWorld(new Point3D(p.X, p.Y, p.Z), e.Mobile.Map);
                 }
                 else
-                {
                     mastery.Delete();
-                }
             });
         }
     }

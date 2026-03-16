@@ -88,9 +88,7 @@ namespace Server.Spells.SkillMasteries
                 return true;
             }
             else
-            {
                 return false;
-            }
         }
 
         protected override void OnTarget(object o)
@@ -233,9 +231,7 @@ namespace Server.Spells.SkillMasteries
                 int casterDamage = damage - (int)(damage * (mod - .05));
 
                 if (type >= DamageType.Spell)
-                {
                     casterDamage /= 2;
-                }
 
                 Caster.Damage(casterDamage, attacker);
             }

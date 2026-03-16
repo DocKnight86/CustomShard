@@ -31,9 +31,7 @@ namespace Server.Items
         public bool HasAccces(Mobile m)
         {
             if (m.AccessLevel >= AccessLevel.GameMaster)
-            {
                 return true;
-            }
 
             BaseHouse house = BaseHouse.FindHouseAt(this);
 

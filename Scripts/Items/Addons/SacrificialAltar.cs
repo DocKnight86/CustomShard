@@ -37,9 +37,7 @@ namespace Server.Items
         public override bool OnDragDrop(Mobile from, Item dropped)
         {
             if (!base.OnDragDrop(from, dropped))
-            {
                 return false;
-            }
 
             if (dropped is SpellbookStrap)
             {
@@ -57,9 +55,7 @@ namespace Server.Items
                 SendLocalizedMessageTo(from, 1010442); // The item will be deleted in three minutes
 
                 if (m_Timer != null)
-                {
                     m_Timer.Stop();
-                }
 
                 m_Timer = Timer.DelayCall(TimeSpan.FromMinutes(3), Empty);
             }
@@ -70,9 +66,7 @@ namespace Server.Items
         public override bool OnDragDropInto(Mobile from, Item item, Point3D p)
         {
             if (!base.OnDragDropInto(from, item, p))
-            {
                 return false;
-            }
 
             if (item is SpellbookStrap)
             {
@@ -90,9 +84,7 @@ namespace Server.Items
                 SendLocalizedMessageTo(from, 1010442); // The item will be deleted in three minutes
 
                 if (m_Timer != null)
-                {
                     m_Timer.Stop();
-                }
 
                 m_Timer = Timer.DelayCall(TimeSpan.FromMinutes(3), Empty);
             }
@@ -112,9 +104,7 @@ namespace Server.Items
             reader.ReadEncodedInt();
 
             if (Items.Count > 0)
-            {
                 m_Timer = Timer.DelayCall(TimeSpan.FromMinutes(3), Empty);
-            }
 
             m_Cleanup = new List<CleanupArray>();
         }
@@ -176,9 +166,7 @@ namespace Server.Items
                 for (int i = items.Count - 1; i >= 0; --i)
                 {
                     if (i >= items.Count)
-                    {
                         continue;
-                    }
 
                     ConfirmCleanupItem(items[i]);
 
@@ -201,9 +189,7 @@ namespace Server.Items
             }
 
             if (m_Timer != null)
-            {
                 m_Timer.Stop();
-            }
 
             m_Timer = null;
         }
@@ -233,9 +219,7 @@ namespace Server.Items
                         m_Cleanup.Add(new CleanupArray { mobiles = from, items = list[i], points = checkbagpoint, serials = list[i].Serial });
 
                         if (!added)
-                        {
                             added = true;
-                        }
                     }
                 }
             }

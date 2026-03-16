@@ -14,9 +14,7 @@ namespace Server.Engines.Harvest
             get
             {
                 if (m_System == null)
-                {
                     m_System = new Mining();
-                }
 
                 return m_System;
             }
@@ -57,6 +55,7 @@ namespace Server.Engines.Harvest
 
             // One ore per harvest action
             oreAndStone.ConsumedPerHarvest = 1;
+            oreAndStone.ConsumedPerFeluccaHarvest = 2;
 
             // The digging effect
             oreAndStone.EffectActions = new[] { 3 };
@@ -115,6 +114,7 @@ namespace Server.Engines.Harvest
                 new BonusHarvestResource(100, .1, 1113344, typeof(CrystallineBlackrock), Map.TerMur)
             };
 
+            oreAndStone.RaceBonus = true;
             oreAndStone.RandomizeVeins = true;
 
             Definitions.Add(oreAndStone);
@@ -146,6 +146,7 @@ namespace Server.Engines.Harvest
 
             // One sand per harvest action
             sand.ConsumedPerHarvest = 1;
+            sand.ConsumedPerFeluccaHarvest = 2;
 
             // The digging effect
             sand.EffectActions = new[] { 3 };
@@ -193,9 +194,7 @@ namespace Server.Engines.Harvest
                     CraftResourceInfo info = CraftResources.GetInfo(hmap.Resource);
 
                     if (info != null)
-                    {
                         return info.ResourceTypes[1];
-                    }
                 }
 
                 PlayerMobile pm = from as PlayerMobile;
@@ -211,16 +210,12 @@ namespace Server.Engines.Harvest
                 }
 
                 if (pm != null && pm.GemMining && pm.ToggleMiningGem && from.Skills[SkillName.Mining].Base >= 100.0 && 0.1 > Utility.RandomDouble())
-                {
                     return Loot.GemTypes[Utility.Random(Loot.GemTypes.Length)];
-                }
 
                 double chance = tool is RockHammer ? 0.50 : 0.15;
 
                 if (pm != null && pm.StoneMining && (pm.ToggleMiningStone || pm.ToggleStoneOnly) && from.Skills[SkillName.Mining].Base >= 100.0 && chance > Utility.RandomDouble())
-                {
                     return resource.Types[1];
-                }
 
                 if (pm != null && pm.ToggleStoneOnly)
                 {
@@ -271,9 +266,7 @@ namespace Server.Engines.Harvest
         public override bool CheckResources(Mobile from, Item tool, HarvestDefinition def, Map map, Point3D loc, bool timed)
         {
             if (HarvestMap.CheckMapOnHarvest(from, loc, def) == null)
-            {
                 return base.CheckResources(from, tool, def, map, loc, timed);
-            }
 
             return true;
         }
@@ -281,9 +274,7 @@ namespace Server.Engines.Harvest
         public override bool CheckHarvest(Mobile from, Item tool)
         {
             if (!base.CheckHarvest(from, tool))
-            {
                 return false;
-            }
 
             if (from.IsBodyMod && !from.Body.IsHuman)
             {
@@ -297,9 +288,7 @@ namespace Server.Engines.Harvest
         public override bool CheckHarvest(Mobile from, Item tool, HarvestDefinition def, object toHarvest)
         {
             if (!base.CheckHarvest(from, tool, def, toHarvest))
-            {
                 return false;
-            }
 
             if (def == Sand && !(from is PlayerMobile mobile && mobile.Skills[SkillName.Mining].Base >= 100.0 && mobile.SandMining))
             {
@@ -329,9 +318,7 @@ namespace Server.Engines.Harvest
                 int veinIndex = Array.IndexOf(def.Veins, vein);
 
                 if (veinIndex >= 0 && veinIndex < def.Veins.Length - 1)
-                {
                     return def.Veins[veinIndex + 1];
-                }
             }
 
             return base.MutateVein(from, tool, def, bank, toHarvest, vein);
@@ -362,9 +349,7 @@ namespace Server.Engines.Harvest
                         Map map = from.Map;
 
                         if (map == null)
-                        {
                             return;
-                        }
 
                         if (Activator.CreateInstance(res.Types[2]) is BaseCreature spawned)
                         {
@@ -413,17 +398,13 @@ namespace Server.Engines.Harvest
             HarvestBank bank = def.GetBank(map, loc.X, loc.Y);
 
             if (bank == null)
-            {
                 return false;
-            }
 
             bool boat = Multis.BaseBoat.FindBoatAt(from, from.Map) != null;
             bool dungeon = IsMiningDungeonRegion(from);
 
             if (!boat && !dungeon)
-            {
                 return false;
-            }
 
             if (boat || !NiterDeposit.HasBeenChecked(bank))
             {
@@ -431,23 +412,17 @@ namespace Server.Engines.Harvest
                 double bonus = from.Skills[SkillName.Mining].Value / 9999 + (double)luck / 150000;
 
                 if (boat)
-                {
                     bonus -= bonus * .33;
-                }
 
                 if (dungeon)
-                {
                     NiterDeposit.AddBank(bank);
-                }
 
                 if (Utility.RandomDouble() < bonus)
                 {
                     int size = Utility.RandomMinMax(1, 5);
 
                     if (luck / 2500.0 > Utility.RandomDouble())
-                    {
                         size++;
-                    }
 
                     NiterDeposit niter = new NiterDeposit(size);
 
@@ -510,9 +485,7 @@ namespace Server.Engines.Harvest
         public override bool BeginHarvesting(Mobile from, Item tool)
         {
             if (!base.BeginHarvesting(from, tool))
-            {
                 return false;
-            }
 
             from.SendLocalizedMessage(503033); // Where do you wish to dig?
             return true;

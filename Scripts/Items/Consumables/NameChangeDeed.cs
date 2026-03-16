@@ -40,9 +40,7 @@ namespace Server.Items
                 from.SendGump(new NameChangeDeedGump(this));
             }
             else
-            {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
-            }
         }
     }
     public class NameChangeDeedGump : Gump
@@ -101,9 +99,7 @@ namespace Server.Items
         public override void OnResponse(NetState sender, RelayInfo info)
         {
             if (m_Sender == null || m_Sender.Deleted || info.ButtonID != 1 || m_Sender.RootParent != sender.Mobile)
-            {
                 return;
-            }
 
             Mobile m = sender.Mobile;
             TextRelay nameEntry = info.GetTextEntry(0);

@@ -87,10 +87,7 @@ namespace Server.Engines.NewMagincia
             get
             {
                 if (Auction == null)
-                {
                     return DateTime.MinValue;
-                }
-
                 return Auction.AuctionEnd;
             }
 
@@ -108,14 +105,10 @@ namespace Server.Engines.NewMagincia
         public bool IsOwner(Mobile from)
         {
             if (from == null || m_Owner == null)
-            {
                 return false;
-            }
 
             if (from == m_Owner)
-            {
                 return true;
-            }
 
             return from.Account is Account acct1 && m_Owner.Account is Account acct2 && acct1 == acct2;
         }
@@ -129,16 +122,12 @@ namespace Server.Engines.NewMagincia
         public void Reset()
         {
             if (m_PlotMulti != null)
-            {
                 Timer.DelayCall(TimeSpan.FromMinutes(2), DeleteMulti_Callback);
-            }
 
             EndTempMultiTimer();
 
             if (m_Merchant != null)
-            {
                 m_Merchant.Dismiss();
-            }
 
             m_Owner = null;
             m_ShopName = null;
@@ -151,17 +140,13 @@ namespace Server.Engines.NewMagincia
             m_Auction = new MaginciaPlotAuction(this, time);
 
             if (m_Sign != null)
-            {
                 m_Sign.InvalidateProperties();
-            }
         }
 
         private void DeleteMulti_Callback()
         {
             if (m_PlotMulti != null)
-            {
                 m_PlotMulti.Delete();
-            }
 
             m_PlotMulti = null;
         }
@@ -169,19 +154,13 @@ namespace Server.Engines.NewMagincia
         public void OnTick()
         {
             if (m_Auction != null)
-            {
                 m_Auction.OnTick();
-            }
 
             if (m_Merchant != null)
-            {
                 m_Merchant.OnTick();
-            }
 
             if (m_Sign != null)
-            {
                 m_Sign.InvalidateProperties();
-            }
         }
 
         #region Stall Style Multis
@@ -228,13 +207,9 @@ namespace Server.Engines.NewMagincia
             EndTempMultiTimer();
 
             if (commodity)
-            {
                 Merchant = new CommodityBroker(this);
-            }
             else
-            {
                 Merchant = new PetBroker(this);
-            }
         }
 
         public void RemoveTempPlot()
@@ -286,9 +261,7 @@ namespace Server.Engines.NewMagincia
             protected override void OnTick()
             {
                 if (m_Plot != null)
-                {
                     m_Plot.RemoveTempPlot();
-                }
             }
         }
 
@@ -302,21 +275,15 @@ namespace Server.Engines.NewMagincia
         public bool TrySetShopName(Mobile from, string text)
         {
             if (text == null || !Guilds.BaseGuildGump.CheckProfanity(text) || text.Length == 0 || text.Length > 40)
-            {
                 return false;
-            }
 
             m_ShopName = text;
 
             if (m_Merchant != null)
-            {
                 m_Merchant.InvalidateProperties();
-            }
 
             if (m_Sign != null)
-            {
                 m_Sign.InvalidateProperties();
-            }
 
             from.SendLocalizedMessage(1150333); // Your shop has been renamed.
 
@@ -343,9 +310,7 @@ namespace Server.Engines.NewMagincia
             Reset();
 
             if (m_Auction != null)
-            {
                 m_Auction.ChangeAuctionTime(MaginciaBazaar.GetShortAuctionTime);
-            }
         }
 
         public int GetBid(Mobile from)
@@ -376,9 +341,7 @@ namespace Server.Engines.NewMagincia
                 m_Auction.Serialize(writer);
             }
             else
-            {
                 writer.Write(false);
-            }
         }
 
         public MaginciaBazaarPlot(GenericReader reader)
@@ -394,19 +357,13 @@ namespace Server.Engines.NewMagincia
             m_PlotMulti = reader.ReadItem() as BaseBazaarMulti;
 
             if (reader.ReadBool())
-            {
                 m_Auction = new MaginciaPlotAuction(reader, this);
-            }
 
             if (m_Merchant != null)
-            {
                 m_Merchant.Plot = this;
-            }
 
             if (m_Sign != null)
-            {
                 m_Sign.Plot = this;
-            }
         }
     }
 

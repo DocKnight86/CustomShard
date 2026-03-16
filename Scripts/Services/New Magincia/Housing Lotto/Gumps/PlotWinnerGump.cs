@@ -43,9 +43,7 @@ namespace Server.Engines.NewMagincia
                     winner.BankBox.DropItem(writ);
                 }
                 else
-                {
                     winner.SendLocalizedMessage(1150500); // The deed has been placed in your backpack.
-                }
 
                 MaginciaLottoSystem.GetWinnerGump(winner);
             }

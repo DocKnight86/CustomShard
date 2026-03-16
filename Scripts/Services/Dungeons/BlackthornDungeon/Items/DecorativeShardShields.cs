@@ -57,14 +57,10 @@ namespace Server.Items
                     from.SendGump(new RewardDemolitionGump(this, 1049783)); // Do you wish to re-deed this decoration?
                 }
                 else
-                {
                     from.SendLocalizedMessage(1049784); // You can only re-deed this decoration if you are the house owner or originally placed the decoration.
-                }
             }
             else
-            {
                 from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -125,9 +121,7 @@ namespace Server.Items
                 from.SendGump(new InternalGump(this));
             }
             else
-            {
                 from.SendLocalizedMessage(1042038); // You must have the object in your backpack to use it.          	
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -203,9 +197,7 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (m_Shield == null || m_Shield.Deleted)
-                {
                     return;
-                }
 
                 Mobile m = sender.Mobile;
 
@@ -234,9 +226,7 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Shield == null || m_Shield.Deleted)
-                {
                     return;
-                }
 
                 if (m_Shield.IsChildOf(from.Backpack))
                 {
@@ -248,9 +238,7 @@ namespace Server.Items
                         Map map = from.Map;
 
                         if (p == null || map == null)
-                        {
                             return;
-                        }
 
                         Point3D p3d = new Point3D(p);
                         ItemData id = TileData.ItemTable[m_ItemID & TileData.MaxItemValue];
@@ -288,29 +276,19 @@ namespace Server.Items
                                     m_Shield.Delete();
                                 }
                                 else
-                                {
                                     from.SendLocalizedMessage(1049781); // This decoration must be placed next to a wall.		
-                                }
                             }
                             else
-                            {
                                 from.SendLocalizedMessage(1042036); // That location is not in your house.
-                            }
                         }
                         else
-                        {
                             from.SendLocalizedMessage(500269); // You cannot build that there.		
-                        }
                     }
                     else
-                    {
                         from.SendLocalizedMessage(502092); // You must be in your house to do this.
-                    }
                 }
                 else
-                {
                     from.SendLocalizedMessage(1042038); // You must have the object in your backpack to use it.    
-                }
             }
 
             private class FacingGump : Gump
@@ -345,21 +323,15 @@ namespace Server.Items
                 public override void OnResponse(NetState sender, RelayInfo info)
                 {
                     if (m_Shield == null || m_Shield.Deleted || m_House == null)
-                    {
                         return;
-                    }
 
                     DecorativeShardShield shield = null;
 
                     if (info.ButtonID == (int)Buttons.East)
-                    {
                         shield = new DecorativeShardShield(m_ItemID);
-                    }
 
                     if (info.ButtonID == (int)Buttons.South)
-                    {
                         shield = new DecorativeShardShield(GetSouthItemID(m_ItemID));
-                    }
 
                     if (shield != null)
                     {

@@ -1,11 +1,15 @@
+#region References
 using Server.ContextMenus;
 using Server.Engines.PartySystem;
+using Server.Engines.Quests;
+using Server.Engines.Quests.Doom;
 using Server.Guilds;
 using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
 using System;
 using System.Collections.Generic;
+#endregion
 
 namespace Server.Items
 {
@@ -1053,6 +1057,11 @@ namespace Server.Items
                             continue;
                         }
 
+                        if (from.FindItemOnLayer(Layer.OuterTorso) is DeathRobe robe)
+                        {
+                            robe.Delete();
+                        }
+
                         if (m_EquipItems.Contains(item) && from.EquipItem(item))
                         {
                             gathered = true;
@@ -1100,6 +1109,30 @@ namespace Server.Items
                 {
                     return;
                 }
+
+                #region Quests
+                if (from is PlayerMobile player)
+                {
+                    QuestSystem qs = player.Quest;
+
+                    if (qs is TheSummoningQuest && qs.FindObjective(typeof(VanquishDaemonObjective)) is VanquishDaemonObjective obj && obj.Completed && obj.CorpseWithSkull == this)
+                    {
+                        GoldenSkull sk = new GoldenSkull();
+
+                        if (player.PlaceInBackpack(sk))
+                        {
+                            obj.CorpseWithSkull = null;
+                            qs.Complete();
+                            player.SendLocalizedMessage(1050022); // For your valor in combating the devourer, you have been awarded a golden skull.
+                        }
+                        else
+                        {
+                            sk.Delete();
+                            player.SendLocalizedMessage(1050023); // You find a golden skull, but your backpack is too full to carry it.
+                        }
+                    }
+                }
+                #endregion
 
                 base.OnDoubleClick(from);
             }

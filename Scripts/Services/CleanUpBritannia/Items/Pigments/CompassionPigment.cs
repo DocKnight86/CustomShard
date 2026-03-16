@@ -53,9 +53,7 @@ namespace Server.Items
             int v = (int)type;
 
             if (v < 0 || v >= m_Table.Length)
-            {
                 v = 0;
-            }
 
             return m_Table[v];
         }
@@ -217,9 +215,7 @@ namespace Server.Items
                 Item item = targeted as Item;
 
                 if (item == null)
-                {
                     return;
-                }
 
                 if (!item.IsChildOf(from.Backpack))
                 {
@@ -240,9 +236,7 @@ namespace Server.Items
                     m_Pigment.UsesRemaining--;
 
                     if (m_Pigment.UsesRemaining <= 0)
-                    {
                         m_Pigment.Delete();
-                    }
                 }
                 else
                 {
