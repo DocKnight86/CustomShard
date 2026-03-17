@@ -75,7 +75,9 @@ namespace Server.Items
             _Direction = (DirectionType)choice;
 
             if (!Deleted)
+            {
                 base.OnDoubleClick(from);
+            }
         }
 
         public override void OnDoubleClick(Mobile from)

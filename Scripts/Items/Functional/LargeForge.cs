@@ -23,17 +23,27 @@ namespace Server.Items
         public override void OnLocationChange(Point3D oldLocation)
         {
             if (m_Item != null)
+            {
                 m_Item.Location = new Point3D(X, Y + 1, Z);
+            }
+
             if (m_Item2 != null)
+            {
                 m_Item2.Location = new Point3D(X, Y + 2, Z);
+            }
         }
 
         public override void OnMapChange()
         {
             if (m_Item != null)
+            {
                 m_Item.Map = Map;
+            }
+
             if (m_Item2 != null)
+            {
                 m_Item2.Map = Map;
+            }
         }
 
         public override void OnAfterDelete()
@@ -41,9 +51,14 @@ namespace Server.Items
             base.OnAfterDelete();
 
             if (m_Item != null)
+            {
                 m_Item.Delete();
+            }
+
             if (m_Item2 != null)
+            {
                 m_Item2.Delete();
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -84,13 +99,17 @@ namespace Server.Items
             public override void OnLocationChange(Point3D oldLocation)
             {
                 if (m_Item != null)
+                {
                     m_Item.Location = new Point3D(X, Y - 1, Z);
+                }
             }
 
             public override void OnMapChange()
             {
                 if (m_Item != null)
+                {
                     m_Item.Map = Map;
+                }
             }
 
             public override void OnAfterDelete()
@@ -98,7 +117,9 @@ namespace Server.Items
                 base.OnAfterDelete();
 
                 if (m_Item != null)
+                {
                     m_Item.Delete();
+                }
             }
 
             public override void Serialize(GenericWriter writer)
@@ -138,13 +159,17 @@ namespace Server.Items
             public override void OnLocationChange(Point3D oldLocation)
             {
                 if (m_Item != null)
+                {
                     m_Item.Location = new Point3D(X, Y - 2, Z);
+                }
             }
 
             public override void OnMapChange()
             {
                 if (m_Item != null)
+                {
                     m_Item.Map = Map;
+                }
             }
 
             public override void OnAfterDelete()
@@ -152,7 +177,9 @@ namespace Server.Items
                 base.OnAfterDelete();
 
                 if (m_Item != null)
+                {
                     m_Item.Delete();
+                }
             }
 
             public override void Serialize(GenericWriter writer)
@@ -196,17 +223,27 @@ namespace Server.Items
         public override void OnLocationChange(Point3D oldLocation)
         {
             if (m_Item != null)
+            {
                 m_Item.Location = new Point3D(X + 1, Y, Z);
+            }
+
             if (m_Item2 != null)
+            {
                 m_Item2.Location = new Point3D(X + 2, Y, Z);
+            }
         }
 
         public override void OnMapChange()
         {
             if (m_Item != null)
+            {
                 m_Item.Map = Map;
+            }
+
             if (m_Item2 != null)
+            {
                 m_Item2.Map = Map;
+            }
         }
 
         public override void OnAfterDelete()
@@ -214,9 +251,14 @@ namespace Server.Items
             base.OnAfterDelete();
 
             if (m_Item != null)
+            {
                 m_Item.Delete();
+            }
+
             if (m_Item2 != null)
+            {
                 m_Item2.Delete();
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -257,13 +299,17 @@ namespace Server.Items
             public override void OnLocationChange(Point3D oldLocation)
             {
                 if (m_Item != null)
+                {
                     m_Item.Location = new Point3D(X - 1, Y, Z);
+                }
             }
 
             public override void OnMapChange()
             {
                 if (m_Item != null)
+                {
                     m_Item.Map = Map;
+                }
             }
 
             public override void OnAfterDelete()
@@ -271,7 +317,9 @@ namespace Server.Items
                 base.OnAfterDelete();
 
                 if (m_Item != null)
+                {
                     m_Item.Delete();
+                }
             }
 
             public override void Serialize(GenericWriter writer)
@@ -311,13 +359,17 @@ namespace Server.Items
             public override void OnLocationChange(Point3D oldLocation)
             {
                 if (m_Item != null)
+                {
                     m_Item.Location = new Point3D(X - 2, Y, Z);
+                }
             }
 
             public override void OnMapChange()
             {
                 if (m_Item != null)
+                {
                     m_Item.Map = Map;
+                }
             }
 
             public override void OnAfterDelete()
@@ -325,7 +377,9 @@ namespace Server.Items
                 base.OnAfterDelete();
 
                 if (m_Item != null)
+                {
                     m_Item.Delete();
+                }
             }
 
             public override void Serialize(GenericWriter writer)

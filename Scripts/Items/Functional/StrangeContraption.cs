@@ -49,7 +49,9 @@ namespace Server.Items
             public bool CanDrop(Mobile m)
             {
                 if (!StrangeContraptionAddon.Table.ContainsKey(m))
+                {
                     return true;
+                }
 
                 if (StrangeContraptionAddon.Table[m] < DateTime.UtcNow)
                 {
@@ -70,7 +72,9 @@ namespace Server.Items
                         Container pack = m_Mobile.Backpack;
 
                         if (pack == null)
+                        {
                             return;
+                        }
 
                         Item pmc = pack.FindItemByType(typeof(PlagueBeastMutationCore));
                         Item obs = pack.FindItemByType(typeof(Obsidian));

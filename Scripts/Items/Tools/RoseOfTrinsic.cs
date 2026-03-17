@@ -55,9 +55,13 @@ namespace Server.Items
                 else
                 {
                     if (value <= 0)
+                    {
                         m_Petals = 0;
+                    }
                     else
+                    {
                         m_Petals = value;
+                    }
 
                     StartSpawnTimer(m_SpawnTime);
                 }
@@ -112,7 +116,9 @@ namespace Server.Items
             m_Level = (SecureLevel)reader.ReadEncodedInt();
 
             if (m_Petals < 10)
+            {
                 StartSpawnTimer(m_NextSpawnTime - DateTime.UtcNow);
+            }
         }
 
         private void StartSpawnTimer(TimeSpan delay)
@@ -146,7 +152,9 @@ namespace Server.Items
             protected override void OnTick()
             {
                 if (m_Rose.Deleted)
+                {
                     return;
+                }
 
                 m_Rose.m_SpawnTimer = null;
                 m_Rose.Petals++;

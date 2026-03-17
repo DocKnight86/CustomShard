@@ -91,7 +91,9 @@ namespace Server.Items
                 m_Altar = value;
 
                 if (!m_Altar.Pedestals.Contains(this))
+                {
                     m_Altar.Pedestals.Add(this);
+                }
             }
         }
 
@@ -132,7 +134,9 @@ namespace Server.Items
         public override bool OnDragDrop(Mobile from, Item dropped)
         {
             if (m_Altar == null)
+            {
                 return false;
+            }
 
             if (dropped.GetType() == m_Altar.Keys[ID])
             {

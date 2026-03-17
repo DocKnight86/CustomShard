@@ -122,7 +122,9 @@ namespace Server.Items
             m_Direction = (GardenBedDirection)choice;
 
             if (!Deleted)
+            {
                 base.OnDoubleClick(from);
+            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -133,7 +135,9 @@ namespace Server.Items
                 from.SendGump(new RewardOptionGump(this, 1076170)); // Choose Direction
             }
             else
+            {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.       	
+            }
         }
 
         public override void Serialize(GenericWriter writer)

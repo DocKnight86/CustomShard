@@ -1,6 +1,5 @@
 using Server.Engines.Craft;
 using Server.Network;
-using Server.Misc;
 using AMA = Server.Items.ArmorMeditationAllowance;
 using AMT = Server.Items.ArmorMaterialType;
 
@@ -1072,11 +1071,7 @@ namespace Server.Items
 
                 if (item is BaseArmor armor)
                 {
-                    if (!RaceDefinitions.ValidateEquipment(m, armor))
-                    {
-                        m.AddToBackpack(armor);
-                    }
-                    else if (!armor.AllowMaleWearer && !m.Female && m.AccessLevel < AccessLevel.GameMaster)
+                    if (!armor.AllowMaleWearer && !m.Female && m.AccessLevel < AccessLevel.GameMaster)
                     {
                         if (armor.AllowFemaleWearer)
                         {
@@ -2027,11 +2022,6 @@ namespace Server.Items
                     return false;
                 }
 
-                if (!RaceDefinitions.ValidateEquipment(from, this))
-                {
-                    return false;
-                }
-
                 if (!AllowMaleWearer && !from.Female)
                 {
                     if (AllowFemaleWearer)
@@ -2444,15 +2434,6 @@ namespace Server.Items
             }
 
             AddDamageTypeProperty(list);
-
-            if (RaceDefinitions.GetRequiredRace(this) == Race.Elf)
-            {
-                list.Add(1075086); // Elves Only
-            }
-            else if (RaceDefinitions.GetRequiredRace(this) == Race.Gargoyle)
-            {
-                list.Add(1111709); // Gargoyles Only
-            }
 
             if (this is SurgeShield && ((SurgeShield) this).Surge > SurgeType.None)
             {

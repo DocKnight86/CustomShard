@@ -225,7 +225,9 @@ namespace Server.Items
                         if (m != null && dt > DateTime.UtcNow)
                         {
                             if (Table == null)
+                            {
                                 Table = new List<PotionArray>();
+                            }
 
                             Table.Add(new PotionArray { Mobile = m, Date = dt, Type = et });
 
@@ -253,7 +255,9 @@ namespace Server.Items
                 if (bc != null && dt > DateTime.UtcNow)
                 {
                     if (Table == null)
+                    {
                         Table = new List<PotionArray>();
+                    }
 
                     Table.Add(new PotionArray { Mobile = bc, Date = dt, Type = PotionEventType.Khaldun });
 

@@ -136,47 +136,15 @@ namespace Server.Items
 
             private int GetPaperdollImage()
             {
-                if (User.Race == Race.Human)
-                {
-                    return User.Female ? 13 : 12;
-                }
-
-                if (User.Race == Race.Elf)
-                {
-                    return User.Female ? 15 : 14;
-                }
-
-                if (User.Race == Race.Gargoyle)
-                {
-                    return User.Female ? 665 : 666;
-                }
-
-                return 0;
+                return User.Female ? 13 : 12;
             }
 
             private int[] GetHueList()
             {
-                if (User.Race == Race.Human)
-                {
-                    return HumanSkinHues;
-                }
-
-                if (User.Race == Race.Elf)
-                {
-                    return ElfSkinHues;
-                }
-
-                if (User.Race == Race.Gargoyle)
-                {
-                    return GargoyleSkinHues;
-                }
-
-                return Array.Empty<int>();
+                return HumanSkinHues;
             }
 
             private static int[] _HumanSkinHues;
-            private static int[] _ElfSkinHues;
-            private static int[] _GargoyleSkinHues;
 
             public static int[] HumanSkinHues
             {
@@ -193,43 +161,6 @@ namespace Server.Items
                     }
 
                     return _HumanSkinHues;
-                }
-            }
-
-            public static int[] ElfSkinHues
-            {
-                get
-                {
-                    if (_ElfSkinHues == null)
-                    {
-                        _ElfSkinHues = new[]
-                        {
-                            0x4DE, 0x76C, 0x835, 0x430, 0x24D, 0x24E, 0x24F, 0x0BF,
-                            0x4A7, 0x361, 0x375, 0x367, 0x3E8, 0x3DE, 0x353, 0x903,
-                            0x76D, 0x384, 0x579, 0x3E9, 0x374, 0x389, 0x385, 0x376,
-                            0x53F, 0x381, 0x382, 0x383, 0x76B, 0x3E5, 0x51D, 0x3E6
-                        };
-                    }
-
-                    return _ElfSkinHues;
-                }
-            }
-
-            public static int[] GargoyleSkinHues
-            {
-                get
-                {
-                    if (_GargoyleSkinHues == null)
-                    {
-                        _GargoyleSkinHues = new int[25];
-
-                        for (int i = 0; i < _GargoyleSkinHues.Length; i++)
-                        {
-                            _GargoyleSkinHues[i] = i + 1754;
-                        }
-                    }
-
-                    return _GargoyleSkinHues;
                 }
             }
         }

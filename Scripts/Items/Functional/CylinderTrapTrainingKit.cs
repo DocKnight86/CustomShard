@@ -29,9 +29,13 @@ namespace Server.Items
             PuzzleChestSolution solution = GetLastGuess(from);
 
             if (solution != null)
+            {
                 solution = new PuzzleChestSolution(solution);
+            }
             else
+            {
                 solution = new PuzzleChestSolution(PuzzleChestCylinder.None, PuzzleChestCylinder.None, PuzzleChestCylinder.None, PuzzleChestCylinder.None, PuzzleChestCylinder.None);
+            }
 
             from.CloseGump(typeof(PuzzleGump));
             from.CloseGump(typeof(StatusGump));

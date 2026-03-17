@@ -11,9 +11,13 @@ namespace Server.Items
             Weight = 1.0;
 
             if (.75 > Utility.RandomDouble())
+            {
                 Attributes.EnhancePotions = 50;
+            }
             else
+            {
                 Attributes.BonusStr = Utility.RandomMinMax(5, 6);
+            }
         }
 
         public EcruCitrineRing(Serial serial)

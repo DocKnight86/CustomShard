@@ -10,7 +10,11 @@ namespace Server.Items
         private int m_Uses;
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int Uses { get => m_Uses; set { m_Uses = value; InvalidateProperties(); if (m_Uses <= 0) Delete(); } }
+        public int Uses { get => m_Uses; set { m_Uses = value; InvalidateProperties(); if (m_Uses <= 0)
+            {
+                Delete();
+            }
+        } }
 
         [Constructable]
         public Skeletonkey() : base(1)

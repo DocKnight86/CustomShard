@@ -25,17 +25,23 @@ namespace Server.Items
         public static void Resurrect(Mobile m, Item item)
         {
             if (m.Alive)
+            {
                 return;
+            }
 
             if (!m.InRange(item.GetWorldLocation(), ResurrectRange))
+            {
                 m.SendLocalizedMessage(500446); // That is too far away.
+            }
             else if (m.Map != null && m.Map.CanFit(m.Location, 16, false, false))
             {
                 m.CloseGump(typeof(ResurrectGump));
                 m.SendGump(new ResurrectGump(m, ResurrectMessage.VirtueShrine));
             }
             else
+            {
                 m.SendLocalizedMessage(502391); // Thou can not be resurrected there!
+            }
         }
 
         private class ResurrectEntry : ContextMenuEntry
@@ -71,9 +77,13 @@ namespace Server.Items
                 m_Mobile.KarmaLocked = !m_Mobile.KarmaLocked;
 
                 if (m_Mobile.KarmaLocked)
+                {
                     m_Mobile.SendLocalizedMessage(1060192); // Your karma has been locked. Your karma can no longer be raised.
+                }
                 else
+                {
                     m_Mobile.SendLocalizedMessage(1060191); // Your karma has been unlocked. Your karma can be raised again.
+                }
             }
         }
 
@@ -91,7 +101,9 @@ namespace Server.Items
             public override void OnClick()
             {
                 if (m_Mobile.CheckAlive())
+                {
                     m_Mobile.SendGump(new TithingGump(m_Mobile, 0));
+                }
             }
         }
     }
@@ -128,13 +140,17 @@ namespace Server.Items
             {
                 base.Hue = value;
                 if (m_Item.Hue != value)
+                {
                     m_Item.Hue = value;
+                }
             }
         }
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
             if (Parent == null && Utility.InRange(Location, m.Location, 1) && !Utility.InRange(Location, oldLocation, 1))
+            {
                 Ankhs.Resurrect(m, this);
+            }
         }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
@@ -151,13 +167,17 @@ namespace Server.Items
         public override void OnLocationChange(Point3D oldLocation)
         {
             if (m_Item != null)
+            {
                 m_Item.Location = new Point3D(X, Y + 1, Z);
+            }
         }
 
         public override void OnMapChange()
         {
             if (m_Item != null)
+            {
                 m_Item.Map = Map;
+            }
         }
 
         public override void OnAfterDelete()
@@ -165,7 +185,9 @@ namespace Server.Items
             base.OnAfterDelete();
 
             if (m_Item != null)
+            {
                 m_Item.Delete();
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -209,19 +231,25 @@ namespace Server.Items
                 {
                     base.Hue = value;
                     if (m_Item.Hue != value)
+                    {
                         m_Item.Hue = value;
+                    }
                 }
             }
             public override void OnLocationChange(Point3D oldLocation)
             {
                 if (m_Item != null)
+                {
                     m_Item.Location = new Point3D(X, Y - 1, Z);
+                }
             }
 
             public override void OnMapChange()
             {
                 if (m_Item != null)
+                {
                     m_Item.Map = Map;
+                }
             }
 
             public override void OnAfterDelete()
@@ -229,13 +257,17 @@ namespace Server.Items
                 base.OnAfterDelete();
 
                 if (m_Item != null)
+                {
                     m_Item.Delete();
+                }
             }
 
             public override void OnMovement(Mobile m, Point3D oldLocation)
             {
                 if (Parent == null && Utility.InRange(Location, m.Location, 1) && !Utility.InRange(Location, oldLocation, 1))
+                {
                     Ankhs.Resurrect(m, this);
+                }
             }
 
             public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
@@ -301,13 +333,17 @@ namespace Server.Items
             {
                 base.Hue = value;
                 if (m_Item.Hue != value)
+                {
                     m_Item.Hue = value;
+                }
             }
         }
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
             if (Parent == null && Utility.InRange(Location, m.Location, 1) && !Utility.InRange(Location, oldLocation, 1))
+            {
                 Ankhs.Resurrect(m, this);
+            }
         }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
@@ -324,13 +360,17 @@ namespace Server.Items
         public override void OnLocationChange(Point3D oldLocation)
         {
             if (m_Item != null)
+            {
                 m_Item.Location = new Point3D(X + 1, Y, Z);
+            }
         }
 
         public override void OnMapChange()
         {
             if (m_Item != null)
+            {
                 m_Item.Map = Map;
+            }
         }
 
         public override void OnAfterDelete()
@@ -338,7 +378,9 @@ namespace Server.Items
             base.OnAfterDelete();
 
             if (m_Item != null)
+            {
                 m_Item.Delete();
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -383,19 +425,25 @@ namespace Server.Items
                 {
                     base.Hue = value;
                     if (m_Item.Hue != value)
+                    {
                         m_Item.Hue = value;
+                    }
                 }
             }
             public override void OnLocationChange(Point3D oldLocation)
             {
                 if (m_Item != null)
+                {
                     m_Item.Location = new Point3D(X - 1, Y, Z);
+                }
             }
 
             public override void OnMapChange()
             {
                 if (m_Item != null)
+                {
                     m_Item.Map = Map;
+                }
             }
 
             public override void OnAfterDelete()
@@ -403,13 +451,17 @@ namespace Server.Items
                 base.OnAfterDelete();
 
                 if (m_Item != null)
+                {
                     m_Item.Delete();
+                }
             }
 
             public override void OnMovement(Mobile m, Point3D oldLocation)
             {
                 if (Parent == null && Utility.InRange(Location, m.Location, 1) && !Utility.InRange(Location, oldLocation, 1))
+                {
                     Ankhs.Resurrect(m, this);
+                }
             }
 
             public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
@@ -461,7 +513,9 @@ namespace Server.Items
             public override void OnMovement(Mobile m, Point3D oldLocation)
             {
                 if (Parent == null && Utility.InRange(Location, m.Location, 1) && !Utility.InRange(Location, oldLocation, 1))
+                {
                     Ankhs.Resurrect(m, this);
+                }
             }
 
             public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)

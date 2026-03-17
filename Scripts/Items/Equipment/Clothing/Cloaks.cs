@@ -68,9 +68,13 @@ namespace Server.Items
         public void Update()
         {
             if (IsArcane)
+            {
                 ItemID = 0x26AD;
+            }
             else if (ItemID == 0x26AD)
+            {
                 ItemID = 0x1515;
+            }
 
             if (IsArcane && CurArcaneCharges == 0)
             {
@@ -84,15 +88,21 @@ namespace Server.Items
             base.AddCraftedProperties(list);
 
             if (IsArcane)
+            {
                 list.Add(1061837, "{0}\t{1}", m_CurArcaneCharges, m_MaxArcaneCharges); // arcane charges: ~1_val~ / ~2_val~
+            }
         }
 
         public void Flip()
         {
             if (ItemID == 0x1515)
+            {
                 ItemID = 0x1530;
+            }
             else if (ItemID == 0x1530)
+            {
                 ItemID = 0x1515;
+            }
         }
         #endregion
 

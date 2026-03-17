@@ -24,7 +24,9 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (IsRewardItem)
+            {
                 list.Add(1076217); // 1st Year Veteran Reward
+            }
         }
 
         public override bool HandlesOnSpeech => true;
@@ -57,7 +59,9 @@ namespace Server.Items
             if (index < 0 || index >= tce.Lines.Length)
             {
                 if (m_NewsTimer != null)
+                {
                     m_NewsTimer.Stop();
+                }
 
                 m_NewsTimer = null;
             }
@@ -97,7 +101,9 @@ namespace Server.Items
             }
 
             if (version == 0)
+            {
                 IsRewardItem = true;
+            }
         }
     }
 }

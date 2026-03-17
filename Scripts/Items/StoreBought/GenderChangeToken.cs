@@ -44,7 +44,9 @@ namespace Server.Items
         public void OnChangeHairstyle(Mobile from, bool facialHair, int itemID)
         {
             if (!IsChildOf(from.Backpack))
+            {
                 return;
+            }
 
             if (from.IsBodyMod || from.HueMod > 0 || !from.CanBeginAction(typeof(Spells.Fifth.IncognitoSpell)))
             {
@@ -67,7 +69,7 @@ namespace Server.Items
                 }
                 else
                 {
-                    from.SendGump(new ChangeHairstyleGump(!from.Female, from, null, 0, true, from.Race == Race.Gargoyle ? ChangeHairstyleEntry.BeardEntriesGargoyle : ChangeHairstyleEntry.BeardEntries, this));
+                    from.SendGump(new ChangeHairstyleGump(!from.Female, from, null, 0, true, ChangeHairstyleEntry.BeardEntries, this));
                 }
             }
         }
@@ -75,7 +77,9 @@ namespace Server.Items
         public void OnFailedHairstyle(Mobile from, bool facialHair)
         {
             if (!IsChildOf(from.Backpack))
+            {
                 return;
+            }
 
             if (facialHair)
             {
@@ -85,7 +89,7 @@ namespace Server.Items
             {
                 if (from.Female && from.Race != Race.Elf)
                 {
-                    from.SendGump(new ChangeHairstyleGump(!from.Female, from, null, 0, true, from.Race == Race.Gargoyle ? ChangeHairstyleEntry.BeardEntriesGargoyle : ChangeHairstyleEntry.BeardEntries, this));
+                    from.SendGump(new ChangeHairstyleGump(!from.Female, from, null, 0, true, ChangeHairstyleEntry.BeardEntries, this));
                 }
                 else
                 {
@@ -108,7 +112,9 @@ namespace Server.Items
             }
 
             if ((from.Female || from.Race == Race.Elf) && _BeardID != 0)
+            {
                 _BeardID = 0;
+            }
 
             from.FacialHairItemID = _BeardID;
             from.HairItemID = _HairID;
@@ -179,21 +185,14 @@ namespace Server.Items
                 }
                 else
                 {
-                    User.SendGump(new ChangeHairstyleGump(!User.Female, User, null, 0, false, GetHairstyleEntries(User), Token));
+                    User.SendGump(new ChangeHairstyleGump(!User.Female, User, null, 0, false, GetHairstyleEntries(), Token));
                 }
             }
         }
 
-        public static ChangeHairstyleEntry[] GetHairstyleEntries(Mobile m)
+        public static ChangeHairstyleEntry[] GetHairstyleEntries()
         {
-            ChangeHairstyleEntry[] entries = ChangeHairstyleEntry.HairEntries;
-
-            if (m.Race == Race.Elf)
-                entries = ChangeHairstyleEntry.HairEntriesElf;
-            else if (m.Race == Race.Gargoyle)
-                entries = ChangeHairstyleEntry.HairEntriesGargoyle;
-
-            return entries;
+            return ChangeHairstyleEntry.HairEntries;
         }
     }
 }

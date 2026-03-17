@@ -153,7 +153,7 @@ namespace Server.Spells.SkillMasteries
                 return false;
             }
 
-            for (var index = 0; index < _CommandTypes.Length; index++)
+            for (int index = 0; index < _CommandTypes.Length; index++)
             {
                 Type t = _CommandTypes[index];
 
@@ -163,7 +163,7 @@ namespace Server.Spells.SkillMasteries
                 }
             }
 
-            for (var index = 0; index < _NoCommandTypes.Length; index++)
+            for (int index = 0; index < _NoCommandTypes.Length; index++)
             {
                 Type t = _NoCommandTypes[index];
 

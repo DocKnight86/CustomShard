@@ -136,7 +136,9 @@ namespace Server.Items
                 Chest = c;
 
                 if (!c.IsChildOf(m.Backpack))
+                {
                     Flags |= CMEFlags.Disabled;
+                }
             }
 
             public override void OnClick()
@@ -144,9 +146,13 @@ namespace Server.Items
                 if (Mobile != null && Chest != null)
                 {
                     if (Chest.Locked)
+                    {
                         Mobile.SendLocalizedMessage(1151588); // Edit your key number. If you don't want to change current key number, click CANCEL button.
+                    }
                     else
+                    {
                         Mobile.SendLocalizedMessage(1151525); // Set your key number. If you want to leave this unlocked, click CANCEL button.
+                    }
 
                     Mobile.SendGump(new SecretChestGump(Chest, true));
                 }
@@ -165,7 +171,9 @@ namespace Server.Items
                 Chest = c;
 
                 if (!c.IsChildOf(m.Backpack) || !Chest.Locked)
+                {
                     Flags |= CMEFlags.Disabled;
+                }
             }
 
             public override void OnClick()
@@ -187,7 +195,9 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (Locked)
+            {
                 list.Add(1151610); // Locked
+            }
 
             list.Add(1072241, "{0}\t{1}\t{2}\t{3}", TotalItems, MaxItems, TotalWeight, MaxWeight);
             // Contents: ~1_COUNT~/~2_MAXCOUNT~ items, ~3_WEIGHT~/~4_MAXWEIGHT~ stones
@@ -340,7 +350,9 @@ namespace Server.Items
             Mobile from = sender.Mobile;
 
             if (Chest == null)
+            {
                 return;
+            }
 
             switch (info.ButtonID)
             {

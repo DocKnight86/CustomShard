@@ -178,7 +178,9 @@ namespace Server.Items
             public override void OnResponse(RelayInfo info)
             {
                 if (info.ButtonID == 0)
+                {
                     return;
+                }
 
                 int id = info.ButtonID - 10;
 
@@ -365,7 +367,10 @@ namespace Server.Items
                         break;
                     case 2:
                         if (!RemoveFromBracelet)
+                        {
                             From.SendLocalizedMessage(1151778, User.Name); // ~1_val~ has declined your request to bind bracelets.
+                        }
+
                         break;
                 }
             }
@@ -424,7 +429,9 @@ namespace Server.Items
             for (int i = 0; i < Friends.Length; i++)
             {
                 if (reader.ReadInt() == 0)
+                {
                     continue;
+                }
 
                 PlayerMobile pm = reader.ReadMobile<PlayerMobile>();
                 GreaterBraceletOfBinding brac = reader.ReadItem<GreaterBraceletOfBinding>();

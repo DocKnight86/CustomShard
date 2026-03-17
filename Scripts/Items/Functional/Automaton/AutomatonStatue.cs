@@ -40,7 +40,9 @@ namespace Server.Items
         public static void OnBirth(KotlAutomaton automaton, AutomatonStatue statue)
         {
             if (Statues == null)
+            {
                 Statues = new Dictionary<KotlAutomaton, AutomatonStatue>();
+            }
 
             Statues.TryAdd(automaton, statue);
         }
@@ -48,7 +50,9 @@ namespace Server.Items
         public static void OnDeath(KotlAutomaton automaton)
         {
             if (Statues == null)
+            {
                 return;
+            }
 
             if (Statues.ContainsKey(automaton) && Statues[automaton] != null && !Statues[automaton].Deleted)
             {
@@ -56,7 +60,9 @@ namespace Server.Items
                 Statues.Remove(automaton);
 
                 if (Statues.Count == 0)
+                {
                     Statues = null;
+                }
             }
         }
 

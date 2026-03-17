@@ -7,7 +7,9 @@ namespace Server.Items
         public static void Initialize()
         {
             if (Mobile.DefaultWeapon == null)
+            {
                 Mobile.DefaultWeapon = new Fists();
+            }
         }
 
         public override WeaponAbility PrimaryAbility => WeaponAbility.Disarm;
@@ -46,7 +48,9 @@ namespace Server.Items
             double incrValue = (anatValue + evalValue + 20.0) * 0.5;
 
             if (incrValue > 120.0)
+            {
                 incrValue = 120.0;
+            }
 
             if (wresValue > incrValue)
             {
@@ -68,9 +72,13 @@ namespace Server.Items
             reader.ReadInt();
 
             if (Mobile.DefaultWeapon == null)
+            {
                 Mobile.DefaultWeapon = this;
+            }
             else
+            {
                 Delete();
+            }
         }
 
         /* Wrestling moves */
@@ -95,7 +103,9 @@ namespace Server.Items
             Item item = m.FindItemOnLayer(Layer.OneHanded);
 
             if (item != null && !(item is Spellbook))
+            {
                 return false;
+            }
 
             return m.FindItemOnLayer(Layer.TwoHanded) == null;
         }

@@ -128,9 +128,9 @@ namespace Server.Spells.SkillMasteries
 
         public static MasteryInfo GetInfo(Type spell, SkillName skill)
         {
-            for (var index = 0; index < Infos.Count; index++)
+            for (int index = 0; index < Infos.Count; index++)
             {
-                var info = Infos[index];
+                MasteryInfo info = Infos[index];
 
                 if (info.SpellType == spell && info.MasterySkill == skill)
                 {
@@ -143,9 +143,9 @@ namespace Server.Spells.SkillMasteries
 
         public static MasteryInfo GetInfo(int spellID)
         {
-            for (var index = 0; index < Infos.Count; index++)
+            for (int index = 0; index < Infos.Count; index++)
             {
-                var info = Infos[index];
+                MasteryInfo info = Infos[index];
 
                 if (info.SpellID == spellID)
                 {
@@ -158,9 +158,9 @@ namespace Server.Spells.SkillMasteries
 
         public static MasteryInfo GetInfo(int spellID, SkillName name)
         {
-            for (var index = 0; index < Infos.Count; index++)
+            for (int index = 0; index < Infos.Count; index++)
             {
-                var info = Infos[index];
+                MasteryInfo info = Infos[index];
 
                 if (info.SpellID == spellID && info.MasterySkill == name)
                 {
@@ -276,9 +276,9 @@ namespace Server.Spells.SkillMasteries
 
                 if (list != null)
                 {
-                    for (var index = 0; index < list.Count; index++)
+                    for (int index = 0; index < list.Count; index++)
                     {
-                        var spell = list[index];
+                        SkillMasterySpell spell = list[index];
 
                         spell.Expire();
                     }
@@ -357,9 +357,9 @@ namespace Server.Spells.SkillMasteries
 
             if (m.Backpack != null)
             {
-                var type = m.Backpack.FindItemsByType(typeof(BookOfMasteries));
+                Item[] type = m.Backpack.FindItemsByType(typeof(BookOfMasteries));
 
-                for (var index = 0; index < type.Length; index++)
+                for (int index = 0; index < type.Length; index++)
                 {
                     Item item = type[index];
                     BookOfMasteries book = item as BookOfMasteries;
@@ -368,7 +368,7 @@ namespace Server.Spells.SkillMasteries
                 }
             }
 
-            for (var index = 0; index < m.Items.Count; index++)
+            for (int index = 0; index < m.Items.Count; index++)
             {
                 Item item = m.Items[index];
 
@@ -390,9 +390,9 @@ namespace Server.Spells.SkillMasteries
 
             MasteryInfo info = null;
 
-            for (var index = 0; index < Infos.Count; index++)
+            for (int index = 0; index < Infos.Count; index++)
             {
-                var i = Infos[index];
+                MasteryInfo i = Infos[index];
 
                 if (i.Passive && i.MasterySkill == mastery && i.PassiveSpell != PassiveSpell.AnticipateHit)
                 {
@@ -456,9 +456,9 @@ namespace Server.Spells.SkillMasteries
         {
             MasteryInfo info = null;
 
-            for (var index = 0; index < Infos.Count; index++)
+            for (int index = 0; index < Infos.Count; index++)
             {
-                var i = Infos[index];
+                MasteryInfo i = Infos[index];
 
                 if (i.MasterySkill == name && i.Passive)
                 {

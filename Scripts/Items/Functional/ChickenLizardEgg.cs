@@ -140,7 +140,9 @@ namespace Server.Items
             bool check = base.DropToMobile(from, target, p);
 
             if (check && m_Incubating)
+            {
                 Incubating = false;
+            }
 
             return check;
         }
@@ -150,7 +152,9 @@ namespace Server.Items
             bool check = base.DropToWorld(from, p);
 
             if (check && m_Incubating)
+            {
                 Incubating = false;
+            }
 
             return check;
         }
@@ -160,7 +164,9 @@ namespace Server.Items
             bool check = base.DropToItem(from, target, p);
 
             if (check && !(Parent is Incubator) && m_Incubating)
+            {
                 Incubating = false;
+            }
 
             return check;
         }
@@ -168,7 +174,9 @@ namespace Server.Items
         public override void OnItemLifted(Mobile from, Item item)
         {
             if (m_Incubating)
+            {
                 Incubating = false;
+            }
 
             base.OnItemLifted(from, item);
         }
@@ -176,10 +184,14 @@ namespace Server.Items
         public void CheckStatus()
         {
             if (Stage == EggStage.Burnt)
+            {
                 return;
+            }
 
             if (m_Incubating && IncubationStart < DateTime.UtcNow)
+            {
                 TotalIncubationTime += DateTime.UtcNow - IncubationStart;
+            }
 
             if (m_TotalIncubationTime > TimeSpan.FromHours(24) && Stage == EggStage.New)           //from new to stage 1
             {
@@ -191,7 +203,9 @@ namespace Server.Items
                 if (Dryness >= Dryness.Parched)
                 {
                     if (Utility.RandomBool())
+                    {
                         BurnEgg();
+                    }
                 }
 
                 IncreaseStage();
@@ -201,7 +215,9 @@ namespace Server.Items
                 if (Dryness >= Dryness.Parched)
                 {
                     if (.25 < Utility.RandomDouble())
+                    {
                         BurnEgg();
+                    }
                 }
 
                 IncreaseStage();
@@ -218,7 +234,9 @@ namespace Server.Items
             if (!bev.IsEmpty && bev.Pourable && bev.Content == BeverageType.Water && bev.ValidateUse(from, false))
             {
                 if (Stage == EggStage.New || Stage == EggStage.Stage1 || Stage == EggStage.Stage2)
+                {
                     IncreaseDryness();
+                }
 
                 bev.Quantity--;
 
@@ -269,11 +287,17 @@ namespace Server.Items
 
                         double chance = .10;
                         if (Dryness == Dryness.Dry)
+                        {
                             chance = .05;
+                        }
                         else if (Dryness == Dryness.Parched)
+                        {
                             chance = .01;
+                        }
                         else if (Dryness == Dryness.Dehydrated)
+                        {
                             chance = 0;
+                        }
 
                         if (CanMutate && chance >= Utility.RandomDouble())
                         {
@@ -334,9 +358,13 @@ namespace Server.Items
         public void TryHatchEgg(Mobile from)
         {
             if (Stage == EggStage.Mature)
+            {
                 OnHatch(from);
+            }
             else
+            {
                 CrumbleEgg(from);
+            }
         }
 
         public virtual void OnHatch(Mobile from)
@@ -451,13 +479,21 @@ namespace Server.Items
                         int v = (int)Stage - waterLevel;
 
                         if (v >= 2 && waterLevel == 0)
+                        {
                             Dryness = Dryness.Dehydrated;
+                        }
                         else if (v >= 2)
+                        {
                             Dryness = Dryness.Parched;
+                        }
                         else if (v >= 1)
+                        {
                             Dryness = Dryness.Dry;
+                        }
                         else
+                        {
                             Dryness = Dryness.Moist;
+                        }
 
                         break;
                     }

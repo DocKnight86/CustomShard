@@ -43,11 +43,17 @@ namespace Server.Items
             set
             {
                 if (value > MaxCharges)
+                {
                     m_Charges = MaxCharges;
+                }
                 else if (value < 0)
+                {
                     m_Charges = 0;
+                }
                 else
+                {
                     m_Charges = value;
+                }
 
                 InvalidateProperties();
             }
@@ -60,11 +66,17 @@ namespace Server.Items
             set
             {
                 if (value > MaxRecharges)
+                {
                     m_Recharges = MaxRecharges;
+                }
                 else if (value < 0)
+                {
                     m_Recharges = 0;
+                }
                 else
+                {
                     m_Recharges = value;
+                }
 
                 InvalidateProperties();
             }
@@ -93,7 +105,9 @@ namespace Server.Items
             get
             {
                 if (m_Bound != null && m_Bound.Deleted)
+                {
                     m_Bound = null;
+                }
 
                 return m_Bound;
             }
@@ -138,7 +152,9 @@ namespace Server.Items
             BraceletOfBinding bound = Bound;
 
             if (Deleted || bound == null)
+            {
                 return;
+            }
 
             if (!IsChildOf(from))
             {
@@ -165,7 +181,9 @@ namespace Server.Items
             BraceletOfBinding bound = Bound;
 
             if (Deleted || bound == null)
+            {
                 return;
+            }
 
             if (!IsChildOf(from))
             {
@@ -180,7 +198,9 @@ namespace Server.Items
         public void Bind(Mobile from)
         {
             if (Deleted)
+            {
                 return;
+            }
 
             if (!IsChildOf(from))
             {
@@ -196,7 +216,9 @@ namespace Server.Items
         public void Inscribe(Mobile from)
         {
             if (Deleted)
+            {
                 return;
+            }
 
             if (!IsChildOf(from))
             {
@@ -250,7 +272,9 @@ namespace Server.Items
             BraceletOfBinding bound = Bound;
 
             if (bound == null)
+            {
                 return false;
+            }
 
             Mobile boundRoot = bound.RootParent as Mobile;
 
@@ -331,7 +355,9 @@ namespace Server.Items
             }
 
             if (successMessage)
+            {
                 from.SendLocalizedMessage(1054015); // The bracelet's twin is available for transport.
+            }
 
             return true;
         }
@@ -345,7 +371,9 @@ namespace Server.Items
                 m_Callback = callback;
 
                 if (!enabled)
+                {
                     Flags |= CMEFlags.Disabled;
+                }
             }
 
             public override void OnClick()
@@ -353,7 +381,9 @@ namespace Server.Items
                 Mobile from = Owner.From;
 
                 if (from.CheckAlive())
+                {
                     m_Callback(from);
+                }
             }
         }
 
@@ -411,7 +441,9 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Bracelet.Deleted)
+                {
                     return;
+                }
 
                 if (!m_Bracelet.IsChildOf(from))
                 {
@@ -455,7 +487,9 @@ namespace Server.Items
             public override void OnResponse(Mobile from, string text)
             {
                 if (m_Bracelet.Deleted)
+                {
                     return;
+                }
 
                 if (!m_Bracelet.IsChildOf(from))
                 {

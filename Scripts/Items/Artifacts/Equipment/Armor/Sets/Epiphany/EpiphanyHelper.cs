@@ -5,6 +5,13 @@ using System.Collections.Generic;
 
 namespace Server.Items
 {
+    public enum Alignment
+    {
+        Neutral,
+        Good,
+        Evil
+    }
+
     public interface IEpiphanyArmor
     {
         Alignment Alignment { get; }

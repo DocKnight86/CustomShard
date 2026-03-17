@@ -64,7 +64,9 @@ namespace Server.Items
             if (token.IsChildOf(m.Backpack))
             {
                 if (Pending == null)
+                {
                     Pending = new Dictionary<Mobile, Tuple<RaceChangeToken, Race>>();
+                }
 
                 Pending[m] = new Tuple<RaceChangeToken, Race>(token, race);
 
@@ -85,7 +87,9 @@ namespace Server.Items
                 Pending.Remove(m);
 
                 if (Pending.Count == 0)
+                {
                     Pending = null;
+                }
             }
         }
 
@@ -179,12 +183,6 @@ namespace Server.Items
                     AddButton(8, y, 0xFB7, 0xFB9, 3, GumpButtonType.Reply, 0);
                     AddHtmlLocalized(100, y, 150, 20, 1111910, 0x7FFF, false, false); // Make me an elf!
                     y += 25;
-                }
-
-                if (User.Race != Race.Gargoyle)
-                {
-                    AddButton(8, y, 0xFB7, 0xFB9, 4, GumpButtonType.Reply, 0);
-                    AddHtmlLocalized(100, y, 150, 20, 1111900, 0x7FFF, false, false); // Make me a gargoyle!
                 }
             }
         }

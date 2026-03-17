@@ -80,7 +80,7 @@ namespace Server.Spells.SkillMasteries
 
                 int count = targets.Count;
 
-                for (var index = 0; index < targets.Count; index++)
+                for (int index = 0; index < targets.Count; index++)
                 {
                     Mobile mob = targets[index];
 

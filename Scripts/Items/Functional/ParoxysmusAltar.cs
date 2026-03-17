@@ -142,7 +142,9 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!from.Alive)
+            {
                 return;
+            }
 
             if (!from.InRange(GetWorldLocation(), 2))
             {

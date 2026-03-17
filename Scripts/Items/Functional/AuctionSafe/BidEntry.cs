@@ -52,7 +52,9 @@ namespace Server.Engines.Auction
         public int CompareTo(BidEntry entry)
         {
             if (CurrentBid > entry.CurrentBid)
+            {
                 return 1;
+            }
 
             return 0;
         }

@@ -12,7 +12,9 @@ namespace Server.Engines.Auction
             var directory = Path.Combine(Core.BaseDirectory, "Logs/Auctions");
 
             if (!Directory.Exists(directory))
+            {
                 Directory.CreateDirectory(directory);
+            }
 
             LogDirectory = directory;
         }

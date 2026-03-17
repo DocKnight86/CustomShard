@@ -1,4 +1,3 @@
-using Server.Engines.Craft;
 using Server.Engines.CreatureStealing;
 using Server.Mobiles;
 
@@ -20,7 +19,9 @@ namespace Server.Items
             Attributes.WeaponSpeed = 30;
 
             if (!Siege.SiegeShard)
+            {
                 LootType = LootType.Blessed;
+            }
         }
 
         public override int InitMinHits => 255;

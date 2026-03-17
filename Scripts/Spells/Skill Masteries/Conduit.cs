@@ -135,9 +135,9 @@ namespace Server.Spells.SkillMasteries
 
                     if (toAffect != null && callback != null)
                     {
-                        for (var index = 0; index < toAffect.Count; index++)
+                        for (int index = 0; index < toAffect.Count; index++)
                         {
-                            var m = toAffect[index];
+                            Mobile m = toAffect[index];
 
                             callback(m, conduit.Strength / 100.0);
                         }

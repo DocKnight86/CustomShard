@@ -21,13 +21,17 @@ namespace Server.Items
         public virtual void StartTimer()
         {
             if (m_Timer == null)
+            {
                 m_Timer = Timer.DelayCall(TimeSpan.FromSeconds(1.0), TimeSpan.FromSeconds(1.0), Refresh);
+            }
         }
 
         public virtual void StopTimer()
         {
             if (m_Timer != null)
+            {
                 m_Timer.Stop();
+            }
 
             m_Timer = null;
         }
@@ -37,9 +41,13 @@ namespace Server.Items
             Map map = Map;
 
             if (map != null && map.GetSector(GetWorldLocation()).Active)
+            {
                 StartTimer();
+            }
             else
+            {
                 StopTimer();
+            }
         }
 
         public override void OnLocationChange(Point3D oldLocation)
@@ -75,13 +83,17 @@ namespace Server.Items
             base.OnDelete();
 
             if (m_Spurt != null)
+            {
                 m_Spurt.Delete();
+            }
         }
 
         public virtual void Refresh()
         {
             if (Deleted)
+            {
                 return;
+            }
 
             bool foundPlayer = false;
             IPooledEnumerable eable = GetMobilesInRange(3);
@@ -89,7 +101,9 @@ namespace Server.Items
             foreach (Mobile mob in eable)
             {
                 if (!mob.Player || !mob.Alive || mob.IsStaff())
+                {
                     continue;
+                }
 
                 if (Z + 8 >= mob.Z && mob.Z + 16 > Z)
                 {
@@ -102,7 +116,9 @@ namespace Server.Items
             if (!foundPlayer)
             {
                 if (m_Spurt != null)
+                {
                     m_Spurt.Delete();
+                }
 
                 m_Spurt = null;
             }
@@ -118,7 +134,9 @@ namespace Server.Items
         public override bool OnMoveOver(Mobile m)
         {
             if (m.IsPlayer())
+            {
                 return true;
+            }
 
             if (m.Player && m.Alive)
             {
@@ -136,7 +154,9 @@ namespace Server.Items
             base.OnMovement(m, oldLocation);
 
             if (m.Location == oldLocation || !m.Player || !m.Alive || m.IsStaff())
+            {
                 return;
+            }
 
             if (CheckRange(m.Location, oldLocation, 1))
             {
@@ -146,7 +166,9 @@ namespace Server.Items
                 m.PlaySound(m.Female ? 0x327 : 0x437);
 
                 if (m.Body.IsHuman)
+                {
                     m.Animate(20, 1, 1, true, false, 0);
+                }
             }
         }
 
@@ -172,7 +194,9 @@ namespace Server.Items
                         Item item = reader.ReadItem();
 
                         if (item != null)
+                        {
                             item.Delete();
+                        }
 
                         CheckTimer();
 

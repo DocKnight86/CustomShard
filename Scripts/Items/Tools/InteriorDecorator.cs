@@ -46,9 +46,13 @@ namespace Server.Items
         public static bool CheckUse(Mobile from)
         {
             if (!InHouse(from))
+            {
                 from.SendLocalizedMessage(502092); // You must be in your house to do this.
+            }
             else
+            {
                 return true;
+            }
 
             return false;
         }
@@ -68,13 +72,19 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!InHouse(from))
+            {
                 Command = DecorateCommand.GetHue;
+            }
 
             if (from.FindGump(typeof(InternalGump)) == null)
+            {
                 from.SendGump(new InternalGump(from, this));
+            }
 
             if (Command != DecorateCommand.None)
+            {
                 from.Target = new InternalTarget(this);
+            }
         }
 
         private class InternalGump : Gump
@@ -146,7 +156,9 @@ namespace Server.Items
                     m.SendGump(new InternalGump(m, m_Decorator));
 
                     if (cliloc != 0)
+                    {
                         m.SendLocalizedMessage(cliloc);
+                    }
 
                     m.Target = new InternalTarget(m_Decorator);
                 }
@@ -202,9 +214,13 @@ namespace Server.Items
                     int hue;
 
                     if (targeted is Item item)
+                    {
                         hue = item.Hue;
+                    }
                     else if (targeted is Mobile mobile)
+                    {
                         hue = mobile.Hue;
+                    }
                     else
                     {
                         from.Target = new InternalTarget(m_Decorator);
@@ -245,13 +261,19 @@ namespace Server.Items
                         }
 
                         if (count == 1)
+                        {
                             isDecorableComponent = true;
+                        }
 
                         if (item is TrophyAddon)
+                        {
                             isDecorableComponent = true;
+                        }
 
                         if (item is EnormousVenusFlytrapAddon)
+                        {
                             isDecorableComponent = true;
+                        }
 
                         if (m_Decorator.Command == DecorateCommand.Turn)
                         {
@@ -260,7 +282,9 @@ namespace Server.Items
                                 FlipableAddonAttribute[] attributes = (FlipableAddonAttribute[])addon.GetType().GetCustomAttributes(typeof(FlipableAddonAttribute), false);
 
                                 if (attributes.Length > 0)
+                                {
                                     isDecorableComponent = true;
+                                }
                             }
                         }
                     }
@@ -323,7 +347,9 @@ namespace Server.Items
             protected override void OnTargetCancel(Mobile from, TargetCancelType cancelType)
             {
                 if (cancelType == TargetCancelType.Canceled)
+                {
                     from.CloseGump(typeof(InternalGump));
+                }
             }
 
             private static void Turn(Item item, Mobile from)
@@ -339,11 +365,17 @@ namespace Server.Items
                     object addon = null;
 
                     if (item is AddonComponent addonComponent)
+                    {
                         addon = addonComponent.Addon;
+                    }
                     else if (item is AddonContainerComponent component)
+                    {
                         addon = component.Addon;
+                    }
                     else if (item is BaseAddonContainer)
+                    {
                         addon = (BaseAddonContainer)item;
+                    }
 
                     if (addon != null)
                     {
@@ -360,9 +392,13 @@ namespace Server.Items
                 FlipableAttribute[] attributes = (FlipableAttribute[])item.GetType().GetCustomAttributes(typeof(FlipableAttribute), false);
 
                 if (attributes.Length > 0)
+                {
                     attributes[0].Flip(item);
+                }
                 else
+                {
                     from.SendLocalizedMessage(1042273); // You cannot turn that.
+                }
             }
 
             private static void Up(Item item, Mobile from)
@@ -370,9 +406,13 @@ namespace Server.Items
                 int floorZ = GetFloorZ(item);
 
                 if (floorZ > int.MinValue && item.Z < floorZ + 15) // Confirmed : no height checks here
+                {
                     item.Location = new Point3D(item.Location, item.Z + 1);
+                }
                 else
+                {
                     from.SendLocalizedMessage(1042274); // You cannot raise it up any higher.
+                }
             }
 
             private static void Down(Item item, Mobile from)
@@ -380,9 +420,13 @@ namespace Server.Items
                 int floorZ = GetFloorZ(item);
 
                 if (floorZ > int.MinValue && item.Z > GetFloorZ(item))
+                {
                     item.Location = new Point3D(item.Location, item.Z - 1);
+                }
                 else
+                {
                     from.SendLocalizedMessage(1042275); // You cannot lower it down any further.
+                }
             }
 
             private static int GetFloorZ(Item item)
@@ -390,7 +434,9 @@ namespace Server.Items
                 Map map = item.Map;
 
                 if (map == null)
+                {
                     return int.MinValue;
+                }
 
                 StaticTile[] tiles = map.Tiles.GetStaticTiles(item.X, item.Y, true);
 
@@ -404,7 +450,9 @@ namespace Server.Items
                     int top = tile.Z; // Confirmed : no height checks here
 
                     if (id.Surface && !id.Impassable && top > z && top <= item.Z)
+                    {
                         z = top;
+                    }
                 }
 
                 return z;

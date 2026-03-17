@@ -64,12 +64,16 @@ namespace Server.Items
             Quality = (ItemQuality)quality;
 
             if (makersMark)
+            {
                 Crafter = from;
+            }
 
             if (!craftItem.ForceNonExceptional)
             {
                 if (typeRes == null)
+                {
                     typeRes = craftItem.Resources.GetAt(0).ItemType;
+                }
 
                 Resource = CraftResources.GetFromType(typeRes);
             }
@@ -140,16 +144,24 @@ namespace Server.Items
                     else if (item.Movable)
                     {
                         if (item.Amount > 1)
+                        {
                             message = "You place one item on the scale. ";
+                        }
                         else
+                        {
                             message = "You place that item on the scale. ";
+                        }
 
                         double weight = item.Weight;
 
                         if (weight <= 0.0)
+                        {
                             message += "It is lighter than a feather.";
+                        }
                         else
+                        {
                             message += string.Format("It weighs {0} stones.", weight);
+                        }
                     }
                     else
                     {

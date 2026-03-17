@@ -30,12 +30,18 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (HarvestSystem == null)
+            {
                 return;
+            }
 
             if (IsChildOf(from.Backpack) || Parent == from)
+            {
                 HarvestSystem.BeginHarvesting(from, this);
+            }
             else
+            {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
+            }
         }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
@@ -43,7 +49,9 @@ namespace Server.Items
             base.GetContextMenuEntries(from, list);
 
             if (HarvestSystem != null)
+            {
                 BaseHarvestTool.AddContextMenuEntries(from, this, list, HarvestSystem);
+            }
         }
 
         public override void Serialize(GenericWriter writer)

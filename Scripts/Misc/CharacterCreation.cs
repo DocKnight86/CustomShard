@@ -585,7 +585,6 @@ namespace Server.Misc
             bool addSkillItems = true;
             bool elf = m.Race == Race.Elf;
             bool human = m.Race == Race.Human;
-            bool gargoyle = m.Race == Race.Gargoyle;
 
             switch (prof)
             {
@@ -894,7 +893,6 @@ namespace Server.Misc
         {
             bool elf = m.Race == Race.Elf;
             bool human = m.Race == Race.Human;
-            bool gargoyle = m.Race == Race.Gargoyle;
 
             switch (skill)
             {
@@ -1341,10 +1339,6 @@ namespace Server.Misc
                             }
 
                             EquipItem(new SkinningKnife());
-                        }
-                        else if (gargoyle)
-                        {
-                            PackItem(new SkinningKnife());
                         }
 
                         break;

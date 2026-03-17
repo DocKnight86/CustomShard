@@ -146,7 +146,9 @@ namespace Server.Items
         public BaseHouse GetHouse()
         {
             if (AuctionSafe != null)
+            {
                 return BaseHouse.FindHouseAt(AuctionSafe);
+            }
 
             return null;
         }
@@ -208,7 +210,9 @@ namespace Server.Items
         public Map GetMap()
         {
             if (SetLocation != Point3D.Zero)
+            {
                 return SetMap;
+            }
 
             if (AuctionSafe != null)
             {

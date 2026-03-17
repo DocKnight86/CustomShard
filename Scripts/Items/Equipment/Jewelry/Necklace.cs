@@ -191,7 +191,9 @@ namespace Server.Items
         public override void OnGemTypeChange(GemType old)
         {
             if (old == GemType)
+            {
                 return;
+            }
 
             switch (GemType)
             {

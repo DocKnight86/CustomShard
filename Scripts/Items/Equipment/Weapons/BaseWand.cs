@@ -84,7 +84,9 @@ namespace Server.Items
             --Charges;
 
             if (Charges == 0)
+            {
                 from.SendLocalizedMessage(1019073); // This item is out of charges.
+            }
 
             ApplyDelayTo(from);
         }
@@ -111,9 +113,13 @@ namespace Server.Items
             if (Parent == from)
             {
                 if (Charges > 0)
+                {
                     OnWandUse(from);
+                }
                 else
+                {
                     from.SendLocalizedMessage(1019073); // This item is out of charges.
+                }
             }
             else
             {
@@ -198,10 +204,14 @@ namespace Server.Items
         public virtual void DoWandTarget(Mobile from, object o)
         {
             if (Deleted || Charges <= 0 || Parent != from || o is StaticTarget || o is LandTarget)
+            {
                 return;
+            }
 
             if (OnWandTarget(from, o))
+            {
                 ConsumeCharge(from);
+            }
         }
 
         public virtual bool OnWandTarget(Mobile from, object o)

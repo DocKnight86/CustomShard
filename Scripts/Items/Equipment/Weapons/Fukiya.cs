@@ -88,7 +88,9 @@ namespace Server.Items
             list.Add(1060584, m_UsesRemaining.ToString()); // uses remaining: ~1_val~
 
             if (m_Poison != null && m_PoisonCharges > 0)
+            {
                 list.Add(1062412 + m_Poison.Level, m_PoisonCharges.ToString());
+            }
         }
 
         public override void OnDoubleClick(Mobile from)

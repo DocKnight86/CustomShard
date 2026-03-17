@@ -115,7 +115,6 @@ namespace Server.Commands
 							EquipItem(new AnniversaryRobe());
 
                             PackItem(new GMHidingStone());
-                            PackItem(new GMEthereal());
                             PackItem(new StaffOrb());
 
                             from.RawStr = 100;

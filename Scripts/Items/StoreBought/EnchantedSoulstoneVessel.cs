@@ -44,7 +44,9 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (from.AccessLevel >= AccessLevel.GameMaster)
+            {
                 base.OnDoubleClick(from);
+            }
 
             if (!from.InRange(GetWorldLocation(), 2))
             {

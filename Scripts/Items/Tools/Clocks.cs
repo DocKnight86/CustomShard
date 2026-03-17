@@ -258,9 +258,13 @@ namespace Server.Items
                             GetTime(m.Map, m.X, m.Y, out hours, out minutes);
 
                             if (minutes == 00 && (hours == 12 || hours == 00 || hours == 06 || hours == 18))
+                            {
                                 m.PlaySound(1634);
+                            }
                             else if (minutes == 00)
+                            {
                                 m.PlaySound(1635);
+                            }
                         }
                     }
 

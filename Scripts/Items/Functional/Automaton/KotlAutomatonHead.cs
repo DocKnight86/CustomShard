@@ -78,7 +78,9 @@ namespace Server.Items
         public int OnCraft(int quality, bool makersMark, Mobile from, CraftSystem craftSystem, Type typeRes, ITool tool, CraftItem craftItem, int resHue)
         {
             if (typeRes == null)
+            {
                 typeRes = craftItem.Resources.GetAt(0).ItemType;
+            }
 
             Resource = CraftResources.GetFromType(typeRes);
 

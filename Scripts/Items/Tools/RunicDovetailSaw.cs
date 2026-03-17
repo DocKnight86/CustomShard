@@ -33,7 +33,9 @@ namespace Server.Items
                 int index = CraftResources.GetIndex(Resource);
 
                 if (index >= 1 && index <= 6)
+                {
                     return 1072633 + index;
+                }
 
                 return 1024137; // dovetail saw
             }

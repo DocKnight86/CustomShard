@@ -11,9 +11,13 @@ namespace Server.Items
             BaseRunicTool.ApplyAttributesTo(this, true, 0, Utility.RandomMinMax(1, 3), 0, 100);
 
             if (Utility.Random(100) < 10)
+            {
                 Attributes.WeaponSpeed += 5;
+            }
             else
+            {
                 Attributes.WeaponDamage += 15;
+            }
         }
 
         public TurqouiseRing(Serial serial)

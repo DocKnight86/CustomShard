@@ -18,7 +18,9 @@ namespace Server.Items
             get
             {
                 if (_Automaton == null)
+                {
                     return typeof(IronIngot);
+                }
 
                 return _Automaton.RepairResource;
             }
@@ -40,9 +42,13 @@ namespace Server.Items
             if (_Automaton != null)
             {
                 if (_Automaton is BlackrockAutomaton)
+                {
                     list.Add(1157046, $"{_Automaton.Name}\t#1157178"); // ~1_NAME~'s Broken ~2_TYPE~ Automaton Head
+                }
                 else
+                {
                     list.Add(1157046, $"{_Automaton.Name}\t#{CraftResources.GetLocalizationNumber(_Automaton.Resource)}"); // ~1_NAME~'s Broken ~2_TYPE~ Automaton Head
+                }
             }
             else
             {
@@ -63,9 +69,13 @@ namespace Server.Items
                 else if (from.Backpack.GetAmount(res) < RepairAmount)
                 {
                     if (res == typeof(CrystallineBlackrock))
+                    {
                         from.SendLocalizedMessage(1157179, $"\t{_Automaton.Name}");
+                    }
                     else
+                    {
                         from.SendLocalizedMessage(1157050, $"#{CraftResources.GetLocalizationNumber(_Automaton.Resource)}\t{_Automaton.Name}"); // You need 75 ~1_MATERIAL~ ingots to repair the ~2_CREATURE~.
+                    }
                 }
                 else
                 {
@@ -105,7 +115,9 @@ namespace Server.Items
         public override bool OnDroppedInto(Mobile from, Container target, Point3D p)
         {
             if (target is BankBox)
+            {
                 return true;
+            }
 
             return base.OnDroppedInto(from, target, p);
         }

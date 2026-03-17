@@ -30,7 +30,9 @@ namespace Server.Items
         public virtual bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
+            {
                 return false;
+            }
 
             Hue = sender.DyedHue;
             return true;
@@ -39,7 +41,9 @@ namespace Server.Items
         public override void AddWeightProperty(ObjectPropertyList list)
         {
             if (m_IsRewardItem)
+            {
                 list.Add(1076219); // 3rd Year Veteran Reward
+            }
 
             base.AddWeightProperty(list);
         }

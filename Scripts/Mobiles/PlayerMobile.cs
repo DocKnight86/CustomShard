@@ -8,7 +8,6 @@ using Server.Engines.CannedEvil;
 using Server.Engines.Chat;
 using Server.Engines.CityLoyalty;
 using Server.Engines.Craft;
-using Server.Engines.Despise;
 using Server.Engines.Doom;
 using Server.Engines.Events;
 using Server.Engines.Help;
@@ -143,65 +142,7 @@ namespace Server.Mobiles
         }
         #endregion
 
-        #region Stygian Abyss
-        public override void ToggleFlying()
-        {
-            if (Race != Race.Gargoyle)
-                return;
-
-            if (Frozen)
-            {
-                SendLocalizedMessage(1060170); // You cannot use this ability while frozen.
-                return;
-            }
-
-            if (!Flying)
-            {
-                if (BeginAction(typeof(FlySpell)))
-                {
-                    if (Spell is Spell flySpell)
-                    {
-                        flySpell.Disturb(DisturbType.Unspecified, false, false);
-                    }
-
-                    Spell spell = new FlySpell(this);
-                    spell.Cast();
-
-                    Timer.DelayCall(TimeSpan.FromSeconds(3), () => EndAction(typeof(FlySpell)));
-                }
-                else
-                {
-                    LocalOverheadMessage(MessageType.Regular, 0x3B2, 1075124); // You must wait before casting that spell again.
-                }
-            }
-            else if (IsValidLandLocation(Location, Map))
-            {
-                if (BeginAction(typeof(FlySpell)))
-                {
-                    if (Spell is Spell flySpell)
-                        flySpell.Disturb(DisturbType.Unspecified, false, false);
-
-                    Animate(AnimationType.Land, 0);
-                    Flying = false;
-                    BuffInfo.RemoveBuff(this, BuffIcon.Fly);
-
-                    Timer.DelayCall(TimeSpan.FromSeconds(3), () => EndAction(typeof(FlySpell)));
-                }
-                else
-                {
-                    LocalOverheadMessage(MessageType.Regular, 0x3B2, 1075124); // You must wait before casting that spell again.
-                }
-            }
-            else
-                LocalOverheadMessage(MessageType.Regular, 0x3B2, 1113081); // You may not land here.
-        }
-
-        public static bool IsValidLandLocation(Point3D p, Map map)
-        {
-            return map.CanFit(p.X, p.Y, p.Z, 16, false, false);
-        }
-        #endregion
-
+        
         private DesignContext m_DesignContext;
 
         private NpcGuild m_NpcGuild;
@@ -1044,17 +985,6 @@ namespace Server.Mobiles
 
         protected override void OnRaceChange(Race oldRace)
         {
-            if (oldRace == Race.Gargoyle && Flying)
-            {
-                Flying = false;
-                SendSpeedControl(SpeedControlType.Disable);
-                BuffInfo.RemoveBuff(this, BuffIcon.Fly);
-            }
-            else if (oldRace != Race.Gargoyle && Race == Race.Gargoyle && Mounted)
-            {
-                Mount.Rider = null;
-            }
-
             ValidateEquipment();
             UpdateResistances();
         }
@@ -1237,7 +1167,6 @@ namespace Server.Mobiles
             ChampionSpawnRegion.OnLogin(this);
             CityLoyaltySystem.OnLogin(this);
             CorgulRegion.OnLogin(this);
-            DespiseController.OnLogin(this);
             FellowshipMedallion.OnLogin(this);
             Focus.OnLogin(this);
             GiftGiving.OnLogin(this);
@@ -1342,24 +1271,21 @@ namespace Server.Mobiles
 
                     Item item = items[i];
 
-                    bool drop = !RaceDefinitions.ValidateEquipment(from, item, false);
+                    bool drop = false;
 
                     if (item is BaseWeapon weapon)
                     {
-                        if (!drop)
+                        if (dex < weapon.DexRequirement)
                         {
-                            if (dex < weapon.DexRequirement)
-                            {
-                                drop = true;
-                            }
-                            else if (str < AOS.Scale(weapon.StrRequirement, 100 - weapon.GetLowerStatReq()))
-                            {
-                                drop = true;
-                            }
-                            else if (intel < weapon.IntRequirement)
-                            {
-                                drop = true;
-                            }
+                            drop = true;
+                        }
+                        else if (str < AOS.Scale(weapon.StrRequirement, 100 - weapon.GetLowerStatReq()))
+                        {
+                            drop = true;
+                        }
+                        else if (intel < weapon.IntRequirement)
+                        {
+                            drop = true;
                         }
 
                         if (drop)
@@ -1378,34 +1304,31 @@ namespace Server.Mobiles
                     }
                     else if (item is BaseArmor armor)
                     {
-                        if (!drop)
+                        if (!armor.AllowMaleWearer && !from.Female && from.AccessLevel < AccessLevel.GameMaster)
                         {
-                            if (!armor.AllowMaleWearer && !from.Female && from.AccessLevel < AccessLevel.GameMaster)
-                            {
-                                drop = true;
-                            }
-                            else if (!armor.AllowFemaleWearer && from.Female && from.AccessLevel < AccessLevel.GameMaster)
-                            {
-                                drop = true;
-                            }
-                            else
-                            {
-                                int strBonus = armor.ComputeStatBonus(StatType.Str), strReq = armor.ComputeStatReq(StatType.Str);
-                                int dexBonus = armor.ComputeStatBonus(StatType.Dex), dexReq = armor.ComputeStatReq(StatType.Dex);
-                                int intBonus = armor.ComputeStatBonus(StatType.Int), intReq = armor.ComputeStatReq(StatType.Int);
+                            drop = true;
+                        }
+                        else if (!armor.AllowFemaleWearer && from.Female && from.AccessLevel < AccessLevel.GameMaster)
+                        {
+                            drop = true;
+                        }
+                        else
+                        {
+                            int strBonus = armor.ComputeStatBonus(StatType.Str), strReq = armor.ComputeStatReq(StatType.Str);
+                            int dexBonus = armor.ComputeStatBonus(StatType.Dex), dexReq = armor.ComputeStatReq(StatType.Dex);
+                            int intBonus = armor.ComputeStatBonus(StatType.Int), intReq = armor.ComputeStatReq(StatType.Int);
 
-                                if (dex < dexReq || dex + dexBonus < 1)
-                                {
-                                    drop = true;
-                                }
-                                else if (str < strReq || str + strBonus < 1)
-                                {
-                                    drop = true;
-                                }
-                                else if (intel < intReq || intel + intBonus < 1)
-                                {
-                                    drop = true;
-                                }
+                            if (dex < dexReq || dex + dexBonus < 1)
+                            {
+                                drop = true;
+                            }
+                            else if (str < strReq || str + strBonus < 1)
+                            {
+                                drop = true;
+                            }
+                            else if (intel < intReq || intel + intBonus < 1)
+                            {
+                                drop = true;
                             }
                         }
 
@@ -1433,25 +1356,22 @@ namespace Server.Mobiles
                     }
                     else if (item is BaseClothing clothing)
                     {
-                        if (!drop)
+                        if (!clothing.AllowMaleWearer && !from.Female && from.AccessLevel < AccessLevel.GameMaster)
                         {
-                            if (!clothing.AllowMaleWearer && !from.Female && from.AccessLevel < AccessLevel.GameMaster)
-                            {
-                                drop = true;
-                            }
-                            else if (!clothing.AllowFemaleWearer && from.Female && from.AccessLevel < AccessLevel.GameMaster)
-                            {
-                                drop = true;
-                            }
-                            else
-                            {
-                                int strBonus = clothing.ComputeStatBonus(StatType.Str);
-                                int strReq = clothing.ComputeStatReq(StatType.Str);
+                            drop = true;
+                        }
+                        else if (!clothing.AllowFemaleWearer && from.Female && from.AccessLevel < AccessLevel.GameMaster)
+                        {
+                            drop = true;
+                        }
+                        else
+                        {
+                            int strBonus = clothing.ComputeStatBonus(StatType.Str);
+                            int strReq = clothing.ComputeStatReq(StatType.Str);
 
-                                if (str < strReq || str + strBonus < 1)
-                                {
-                                    drop = true;
-                                }
+                            if (str < strReq || str + strBonus < 1)
+                            {
+                                drop = true;
                             }
                         }
 
@@ -1470,21 +1390,12 @@ namespace Server.Mobiles
                             moved = true;
                         }
                     }
-                    else if (item is BaseQuiver && drop)
-                    {
-                        from.AddToBackpack(item);
 
-                        from.SendLocalizedMessage(1062002, "quiver"); // You can no longer wear your ~1_ARMOR~
-                        moved = true;
-                    }
-
-                    #region Vice Vs Virtue
                     if (item is IVvVItem vvvItem && vvvItem.IsVvVItem && !ViceVsVirtueSystem.IsVvV(from))
                     {
                         from.AddToBackpack(item);
                         moved = true;
                     }
-                    #endregion
                 }
 
                 if (from.Mount is VvVMount && !ViceVsVirtueSystem.IsVvV(from))
@@ -2072,55 +1983,6 @@ namespace Server.Mobiles
             int endY = startY + foundation.Components.Height - 2;
 
             return newX >= startX && newY >= startY && newX < endX && newY < endY && Map == foundation.Map;
-        }
-
-        public override void OnHitsChange(int oldValue)
-        {
-            if (Race == Race.Gargoyle)
-            {
-                if (Hits <= HitsMax / 2)
-                {
-                    BuffInfo.AddBuff(this, new BuffInfo(BuffIcon.Berserk, 1080449, 1115021, $"{GetRacialBerserkBuff(false)}\t{GetRacialBerserkBuff(true)}", false));
-                    Delta(MobileDelta.WeaponDamage);
-                }
-                else if (oldValue < Hits && Hits > HitsMax / 2)
-                {
-                    BuffInfo.RemoveBuff(this, BuffIcon.Berserk);
-                    Delta(MobileDelta.WeaponDamage);
-                }
-            }
-
-            base.OnHitsChange(oldValue);
-        }
-
-        /// <summary>
-        /// Returns Racial Berserk value, for spell or melee
-        /// </summary>
-        /// <param name="spell">true for spell damage, false for damage increase (melee)</param>
-        /// <returns></returns>
-        public virtual int GetRacialBerserkBuff(bool spell)
-        {
-            if (Race != Race.Gargoyle || Hits > HitsMax / 2)
-            {
-                return 0;
-            }
-
-            double perc = Hits / (double)HitsMax * 100;
-
-            int value = 0;
-
-            perc = (100 - perc) / 20;
-
-            if (perc > 4)
-                value += spell ? 12 : 60;
-            else if (perc >= 3)
-                value += spell ? 9 : 45;
-            else if (perc >= 2)
-                value += spell ? 6 : 30;
-            else if (perc >= 1)
-                value += spell ? 3 : 15;
-
-            return value;
         }
 
         public override void OnHeal(ref int amount, Mobile from)
@@ -2940,33 +2802,10 @@ namespace Server.Mobiles
             }
         }
 
-        public override double RacialSkillBonus
-        {
-            get
-            {
-                if (Race == Race.Human)
-                {
-                    return 20.0;
-                }
-
-                return 0;
-            }
-        }
+        public override double RacialSkillBonus => 0;
 
         public override double GetRacialSkillBonus(SkillName skill)
         {
-            if (Race == Race.Human)
-                return 20.0;
-
-            if (Race == Race.Gargoyle)
-            {
-                if (skill == SkillName.Imbuing)
-                    return 30.0;
-
-                if (skill == SkillName.Throwing)
-                    return 20.0;
-            }
-
             return RacialSkillBonus;
         }
 

@@ -39,7 +39,9 @@ namespace Server.Engines.Auction
         public bool CheckAuctionItem(Item item)
         {
             if (_Auction == null || !_Auction.OnGoing || _Auction.AuctionItem == null)
+            {
                 return false;
+            }
 
             if (_Auction.AuctionItem == item)
             {
@@ -146,9 +148,13 @@ namespace Server.Engines.Auction
         public override void OnChop(Mobile from)
         {
             if (Auction != null && Auction.AuctionItemOnDisplay())
+            {
                 from.SendLocalizedMessage(1156452); // You can't use a bladed item on an auction safe that has an auction item or is currently active.
+            }
             else
+            {
                 base.OnChop(from);
+            }
         }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> entries)
@@ -186,7 +192,9 @@ namespace Server.Engines.Auction
                 Auction.Serialize(writer);
             }
             else
+            {
                 writer.Write(0);
+            }
         }
 
         public override void Deserialize(GenericReader reader)
@@ -197,7 +205,9 @@ namespace Server.Engines.Auction
             Level = (SecureLevel)reader.ReadInt();
 
             if (reader.ReadInt() == 1)
+            {
                 Auction = new Auction(this, reader);
+            }
         }
 
         [Flipable(0x9C18, 0x9C19)]
@@ -279,7 +289,9 @@ namespace Server.Engines.Auction
             base.GetProperties(list);
 
             if (IsRewardItem)
+            {
                 list.Add(1076217); // 1st Year Veteran Reward
+            }
         }
 
         public AuctionSafeDeed(Serial serial)

@@ -79,9 +79,9 @@ namespace Server.Items
         {
             List<DamageStore> rights = killed.GetLootingRights();
 
-            for (var index = 0; index < rights.Count; index++)
+            for (int index = 0; index < rights.Count; index++)
             {
-                var ds = rights[index];
+                DamageStore ds = rights[index];
 
                 if (ds.m_HasRight)
                 {

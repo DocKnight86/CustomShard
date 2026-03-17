@@ -46,10 +46,14 @@ namespace Server.Items
                     _Style = value;
 
                     if (_Style < 0)
+                    {
                         _Style = 0;
+                    }
 
                     if (_Style > 7)
+                    {
                         _Style = 7;
+                    }
 
                     Reset();
                 }
@@ -96,7 +100,9 @@ namespace Server.Items
                 for (int j = i + 1; j < Order.Length; j++)
                 {
                     if (Order[j] != 0 && Order[i] != 0 && Order[i] > Order[j])
+                    {
                         invCount++;
+                    }
                 }
             }
 
@@ -225,7 +231,9 @@ namespace Server.Items
                 int order = Order[i];
 
                 if (order == 0)
+                {
                     continue;
+                }
 
                 int x = i % 3 == 0 ? 15 : i % 3 == 1 ? 95 : 175;
                 int y = i <= 2 ? 20 : i <= 5 ? 153 : 286;

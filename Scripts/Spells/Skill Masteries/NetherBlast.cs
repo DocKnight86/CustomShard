@@ -127,7 +127,7 @@ namespace Server.Spells.SkillMasteries
         {
             Dictionary<Mobile, InternalItem> list = new Dictionary<Mobile, InternalItem>();
 
-            for (var index = 0; index < Items.Count; index++)
+            for (int index = 0; index < Items.Count; index++)
             {
                 InternalItem item = Items[index];
 
@@ -154,7 +154,7 @@ namespace Server.Spells.SkillMasteries
 
         public override void OnExpire()
         {
-            for (var index = 0; index < Items.Count; index++)
+            for (int index = 0; index < Items.Count; index++)
             {
                 InternalItem item = Items[index];
 

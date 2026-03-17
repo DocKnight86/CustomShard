@@ -71,7 +71,9 @@ namespace Server.Items
         public int GetUsesScalar()
         {
             if (m_Quality == ItemQuality.Exceptional)
+            {
                 return 200;
+            }
 
             return 100;
         }
@@ -103,7 +105,9 @@ namespace Server.Items
         public override void AddCraftedProperties(ObjectPropertyList list)
         {
             if (m_Quality == ItemQuality.Exceptional)
+            {
                 list.Add(1060636); // exceptional
+            }
         }
 
         public override void AddUsesRemainingProperties(ObjectPropertyList list)
@@ -119,9 +123,13 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (IsChildOf(from.Backpack) || Parent == from)
+            {
                 HarvestSystem.BeginHarvesting(from, this);
+            }
             else
+            {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
+            }
         }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
@@ -134,26 +142,43 @@ namespace Server.Items
         public static void AddContextMenuEntries(Mobile from, Item item, List<ContextMenuEntry> list, HarvestSystem system)
         {
             if (system != Mining.System)
+            {
                 return;
+            }
 
             if (!item.IsChildOf(from.Backpack) && item.Parent != from)
+            {
                 return;
+            }
 
             PlayerMobile pm = from as PlayerMobile;
 
             if (pm == null)
+            {
                 return;
+            }
 
             int typeentry = 0;
 
             if (pm.ToggleMiningStone)
+            {
                 typeentry = 6179;
+            }
+
             if (pm.ToggleMiningGem)
+            {
                 typeentry = 1112239;
+            }
+
             if (pm.ToggleStoneOnly)
+            {
                 typeentry = 1156865;
+            }
+
             if (!pm.ToggleMiningStone && !pm.ToggleMiningGem && !pm.ToggleStoneOnly)
+            {
                 typeentry = 6178;
+            }
 
             ContextMenuEntry miningEntry = new ContextMenuEntry(typeentry)
             {
@@ -189,19 +214,31 @@ namespace Server.Items
                 {
                     case MiningType.OreOnly:
                         if (!mobile.ToggleMiningStone && !mobile.ToggleMiningGem && !mobile.ToggleStoneOnly)
+                        {
                             Flags |= CMEFlags.Disabled;
+                        }
+
                         break;
                     case MiningType.OreAndStone:
                         if (mobile.ToggleMiningStone || !canMineStone)
+                        {
                             Flags |= CMEFlags.Disabled;
+                        }
+
                         break;
                     case MiningType.OreAndGems:
                         if (mobile.ToggleMiningGem || !canMineGems)
+                        {
                             Flags |= CMEFlags.Disabled;
+                        }
+
                         break;
                     case MiningType.StoneOnly:
                         if (mobile.ToggleStoneOnly || !canMineStone)
+                        {
                             Flags |= CMEFlags.Disabled;
+                        }
+
                         break;
                 }
 
@@ -342,7 +379,9 @@ namespace Server.Items
             Quality = (ItemQuality)quality;
 
             if (makersMark)
+            {
                 Crafter = from;
+            }
 
             return quality;
         }

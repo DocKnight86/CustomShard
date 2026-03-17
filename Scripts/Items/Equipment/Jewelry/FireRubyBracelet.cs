@@ -11,9 +11,13 @@ namespace Server.Items
             BaseRunicTool.ApplyAttributesTo(this, true, 0, Utility.RandomMinMax(1, 4), 0, 100);
 
             if (Utility.Random(100) < 10)
+            {
                 Attributes.RegenHits += 2;
+            }
             else
+            {
                 Resistances.Fire += 10;
+            }
         }
 
         public FireRubyBracelet(Serial serial)

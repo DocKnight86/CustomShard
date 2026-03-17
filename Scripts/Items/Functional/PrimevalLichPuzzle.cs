@@ -29,7 +29,9 @@ namespace Server.Engines.CannedEvil
         public override void OnDoubleClick(Mobile m)
         {
             if (null == m)
+            {
                 return;
+            }
 
             if (null == m_Controller || m_Controller.Deleted || !m_Controller.Active)
             {
@@ -38,7 +40,9 @@ namespace Server.Engines.CannedEvil
             }
 
             if (null != m_Controller.Successful)
+            {
                 m.SendLocalizedMessage(1112374);  // The puzzle has already been completed.
+            }
             else
             {
                 ItemID ^= 2;
@@ -66,7 +70,9 @@ namespace Server.Engines.CannedEvil
 
             // remove if no controller exists or is deleted
             if (null == m_Controller || m_Controller.Deleted)
+            {
                 Delete();
+            }
         }
     }
 
@@ -109,7 +115,10 @@ namespace Server.Engines.CannedEvil
                 Delete();
                 //Probably not needed, OnAfterDelete sets it null anyway
                 if (m_Instance != null && m_Instance.Deleted)
+                {
                     m_Instance = null;
+                }
+
                 return;
             }
 
@@ -222,9 +231,13 @@ namespace Server.Engines.CannedEvil
             if (null != m_Instance)
             {
                 if (m_Instance.Deleted)
+                {
                     m_Instance = null;
+                }
                 else if (m_Instance.ChampionAltar == altar)
+                {
                     m_Instance.UpdatePuzzleState(altar);
+                }
             }
         }
 
@@ -232,7 +245,9 @@ namespace Server.Engines.CannedEvil
         {
             RemovePuzzleLevers();
             if (this == m_Instance)
+            {
                 m_Instance = null;
+            }
 
             base.OnAfterDelete();
         }
@@ -241,7 +256,9 @@ namespace Server.Engines.CannedEvil
         public void LeverPulled(byte key, Mobile m)
         {
             if (!Active || null == m)
+            {
                 return;
+            }
 
             // teleport if this is a dummy key
             if (0 == key)
@@ -255,11 +272,16 @@ namespace Server.Engines.CannedEvil
 
             // if the lever is correct, increment the count of correct levers pulled
             if (key == m_NextKey)
+            {
                 m_Correct++;
+            }
 
             // stop and restart the lever reset timer
             if (null != l_Timer)
+            {
                 l_Timer.Stop();
+            }
+
             l_Timer = Timer.DelayCall(TimeSpan.FromSeconds(30.0), ResetLevers);
 
             // if this is the last key, check for correct solution and give messages/rewards
@@ -333,9 +355,13 @@ namespace Server.Engines.CannedEvil
             if (!Deleted && null != altar && altar == m_Altar)
             {
                 if (ChampionSpawnType.Infuse != m_Altar.Type || !Active)
+                {
                     RemovePuzzleLevers();
+                }
                 else if (0 == m_Levers.Count)
+                {
                     CreatePuzzleLevers();
+                }
             }
         }
 
@@ -370,7 +396,9 @@ namespace Server.Engines.CannedEvil
                 int[] val;
 
                 if (null == m_Levers)
+                {
                     m_Levers = new List<PrimevalLichPuzzleLever>();
+                }
 
                 for (int i = 0; i < len; i++)
                 {
@@ -398,7 +426,9 @@ namespace Server.Engines.CannedEvil
                 foreach (PrimevalLichPuzzleLever item in m_Levers)
                 {
                     if (item != null && !item.Deleted)
+                    {
                         item.Delete();
+                    }
                 }
                 m_Levers.Clear();
             }
@@ -436,7 +466,9 @@ namespace Server.Engines.CannedEvil
         private void GiveReward(Mobile m)
         {
             if (null == m)
+            {
                 return;
+            }
 
             Item item = null;
 
@@ -467,7 +499,9 @@ namespace Server.Engines.CannedEvil
             {
                 Container pack = m.Backpack;
                 if (null == pack || !pack.TryDropItem(m, item, false))
+                {
                     m.BankBox.DropItem(item);
+                }
             }
         }
     }

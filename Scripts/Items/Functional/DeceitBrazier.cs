@@ -147,7 +147,9 @@ namespace Server.Items
                 if (Utility.InRange(m.Location, Location, 1) && !Utility.InRange(oldLocation, Location, 1) && m.Player && !(m.IsStaff() || m.Hidden))
                 {
                     if (m_Timer == null || !m_Timer.Running)
+                    {
                         m_Timer = Timer.DelayCall(TimeSpan.FromSeconds(2), HeedWarning);
+                    }
                 }
             }
 
@@ -159,7 +161,9 @@ namespace Server.Items
             Map map = Map;
 
             if (map == null)
+            {
                 return Location;
+            }
 
             // Try 10 times to find a Spawnable location.
             for (int i = 0; i < 10; i++)
@@ -169,9 +173,14 @@ namespace Server.Items
                 int z = Map.GetAverageZ(x, y);
 
                 if (Map.CanSpawnMobile(new Point2D(x, y), Z))
+                {
                     return new Point3D(x, y, Z);
+                }
+
                 if (Map.CanSpawnMobile(new Point2D(x, y), z))
+                {
                     return new Point3D(x, y, z);
+                }
             }
 
             return Location;

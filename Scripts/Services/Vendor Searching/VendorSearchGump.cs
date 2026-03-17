@@ -235,7 +235,10 @@ namespace Server.Engines.VendorSearching
 
             switch (info.ButtonID)
             {
-                case 0: break;
+                case 0:
+                {
+                    break;
+                }
                 case 1: // Search
                 {
                     User.CloseGump(typeof(SearchResultsGump));
@@ -273,36 +276,53 @@ namespace Server.Engines.VendorSearching
                         break;
                     }
                 case 4: // Nothing, resend gump                    
+                {
                     Refresh();
                     break;
+                }
                 case 7: // remove item name
+                {
                     Criteria.SearchName = null;
                     Refresh();
                     break;
+                }
                 case 8: // remove price entry
+                {
                     Criteria.EntryPrice = false;
                     Refresh();
                     break;
+                }
                 case 9: // remove auction entry
+                {
                     Refresh();
                     break;
+                }
                 case 236: // Low to High
+                {
                     Criteria.SortBy = SortBy.LowToHigh;
                     Refresh();
                     break;
+                }
                 case 237: // High to Low
+                {
                     Criteria.SortBy = SortBy.HighToLow;
                     Refresh();
                     break;
+                }
                 case 238: // Non Auction Item
+                {
                     Criteria.Auction = false;
                     Refresh();
                     break;
+                }
                 case 239: // Auction Item
+                {
                     Criteria.Auction = true;
                     Refresh();
                     break;
+                }
                 case 1154512: // Set Min/Max price
+                {
                     TextRelay tr1 = info.GetTextEntry(7);
                     TextRelay tr2 = info.GetTextEntry(8);
 
@@ -329,7 +349,9 @@ namespace Server.Engines.VendorSearching
                     Criteria.EntryPrice = true;
                     Refresh();
                     break;
+                }
                 default:
+                {
                     if (info.ButtonID > 1000)
                     {
                         SearchDetail toRemove = Criteria.Details[info.ButtonID - 1001];
@@ -362,6 +384,7 @@ namespace Server.Engines.VendorSearching
                         Refresh();
                     }
                     break;
+                }
             }
         }
 
@@ -472,8 +495,12 @@ namespace Server.Engines.VendorSearching
         {
             switch (info.ButtonID)
             {
-                case 0: break;
+                case 0:
+                {
+                    break;
+                }
                 default: // Buy Map
+                {
                     SearchItem item = Items[info.ButtonID - 100];
 
                     if (item != null && (item.AuctionSafe != null && item.AuctionSafe.CheckAuctionItem(item.Item) || item.Vendor != null && item.Vendor.GetVendorItem(item.Item) != null))
@@ -509,14 +536,19 @@ namespace Server.Engines.VendorSearching
                         User.SendLocalizedMessage(1154643); // That item is no longer for sale.
                     }
                     break;
+                }
                 case 2: // Next Page
+                {
                     Index += PerPage;
                     Refresh();
                     break;
+                }
                 case 3: // Prev Page
+                {
                     Index -= PerPage;
                     Refresh();
                     break;
+                }
             }
         }
 
@@ -570,7 +602,10 @@ namespace Server.Engines.VendorSearching
         {
             switch (info.ButtonID)
             {
-                default: break;
+                default:
+                {
+                    break;
+                }
                 case 1:
                     {
                         if (Banker.GetBalance(User) < VendorMap.TeleportCost)

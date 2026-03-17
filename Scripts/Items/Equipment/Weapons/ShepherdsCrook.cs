@@ -106,10 +106,14 @@ namespace Server.Items
             private static bool IsHerdable(BaseCreature bc)
             {
                 if (bc.IsParagon)
+                {
                     return false;
+                }
 
                 if (bc.Tamable)
+                {
                     return true;
+                }
 
                 Map map = bc.Map;
 

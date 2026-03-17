@@ -82,7 +82,9 @@ namespace Server.Items
         public bool CheckAccess(Mobile m, Runebook book)
         {
             if (!book.IsLockedDown || m.AccessLevel >= AccessLevel.GameMaster)
+            {
                 return true;
+            }
 
             BaseHouse house = BaseHouse.FindHouseAt(book);
 
@@ -161,7 +163,9 @@ namespace Server.Items
                     else
                     {
                         if (!from.HasGump(typeof(PenOfWisdomGump)))
+                        {
                             from.SendGump(new PenOfWisdomGump(from, Pen, SourceBook, book, null));
+                        }
                     }
                 }
                 else
@@ -290,7 +294,9 @@ namespace Server.Items
         public override void OnResponse(NetState sender, RelayInfo info)
         {
             if (Checked == null)
+            {
                 return;
+            }
 
             Mobile from = sender.Mobile;
 
@@ -310,7 +316,9 @@ namespace Server.Items
                         }
 
                         if (!from.HasGump(typeof(PenOfWisdomGump)))
+                        {
                             from.SendGump(new PenOfWisdomGump(from, Pen, SourceBook, CopyBook, Checked));
+                        }
 
                         break;
                     }

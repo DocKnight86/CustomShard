@@ -21,7 +21,9 @@ namespace Server.Items
         public virtual bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
+            {
                 return false;
+            }
 
             Hue = sender.DyedHue;
             return true;

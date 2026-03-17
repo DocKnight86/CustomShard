@@ -74,10 +74,14 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (PetLinked != null)
+            {
                 list.Add(1159360, PetLinked.Name); // Pet Whistle for ~1_name~
+            }
 
             if (!string.IsNullOrEmpty(Account))
+            {
                 list.Add(1155526); // Account Bound
+            }
         }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
@@ -104,7 +108,9 @@ namespace Server.Items
             public override void OnClick()
             {
                 if (m_From == null || _Item.Deleted)
+                {
                     return;
+                }
 
                 if (_Item.IsChildOf(m_From.Backpack))
                 {
@@ -131,7 +137,9 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (_Item.Deleted)
+                {
                     return;
+                }
 
                 if (!_Item.IsChildOf(from.Backpack))
                 {
@@ -210,12 +218,16 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (_Item.Deleted || _Item.PetLinked == null)
+                {
                     return;
+                }
 
                 Mobile m = sender.Mobile;
 
                 if (_Item.PetLinked.MovementMode != MovementType.Stay || _Item.PetLinked.ControlMaster != m)
+                {
                     m.SendLocalizedMessage(1159389); // You must command your pet to stay before using this item.
+                }
 
                 Effects.PlaySound(m.Location, m.Map, 1665);
 

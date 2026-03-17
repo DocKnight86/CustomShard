@@ -87,22 +87,30 @@ namespace Server.Items
         public static Point3D ReverseLookup(Map map, int xLong, int yLat, int xMins, int yMins, bool xEast, bool ySouth)
         {
             if (map == null || map == Map.Internal)
+            {
                 return Point3D.Zero;
+            }
 
             int xCenter, yCenter;
             int xWidth, yHeight;
 
             if (!ComputeMapDetails(map, 0, 0, out xCenter, out yCenter, out xWidth, out yHeight))
+            {
                 return Point3D.Zero;
+            }
 
             double absLong = xLong + (double)xMins / 60;
             double absLat = yLat + (double)yMins / 60;
 
             if (!xEast)
+            {
                 absLong = 360.0 - absLong;
+            }
 
             if (!ySouth)
+            {
                 absLat = 360.0 - absLat;
+            }
 
             int x, y, z;
 
@@ -110,14 +118,22 @@ namespace Server.Items
             y = yCenter + (int)(absLat * yHeight / 360);
 
             if (x < 0)
+            {
                 x += xWidth;
+            }
             else if (x >= xWidth)
+            {
                 x -= xWidth;
+            }
 
             if (y < 0)
+            {
                 y += yHeight;
+            }
             else if (y >= yHeight)
+            {
                 y -= yHeight;
+            }
 
             z = map.GetAverageZ(x, y);
 
@@ -127,31 +143,43 @@ namespace Server.Items
         public static bool Format(Point3D p, Map map, ref int xLong, ref int yLat, ref int xMins, ref int yMins, ref bool xEast, ref bool ySouth)
         {
             if (map == null || map == Map.Internal)
+            {
                 return false;
+            }
 
             int x = p.X, y = p.Y;
             int xCenter, yCenter;
             int xWidth, yHeight;
 
             if (!ComputeMapDetails(map, x, y, out xCenter, out yCenter, out xWidth, out yHeight))
+            {
                 return false;
+            }
 
             double absLong = (double)((x - xCenter) * 360) / xWidth;
             double absLat = (double)((y - yCenter) * 360) / yHeight;
 
             if (absLong > 180.0)
+            {
                 absLong = -180.0 + (absLong % 180.0);
+            }
 
             if (absLat > 180.0)
+            {
                 absLat = -180.0 + (absLat % 180.0);
+            }
 
             bool east = (absLong >= 0), south = (absLat >= 0);
 
             if (absLong < 0.0)
+            {
                 absLong = -absLong;
+            }
 
             if (absLat < 0.0)
+            {
                 absLat = -absLat;
+            }
 
             xLong = (int)absLong;
             yLat = (int)absLat;

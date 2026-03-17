@@ -28,7 +28,9 @@ namespace Server.Items
         public UndertakersStaff()
         {
             if (!Siege.SiegeShard)
+            {
                 LootType = LootType.Blessed;
+            }
 
             Charges = 100;
             SummonAll = true;
@@ -60,9 +62,13 @@ namespace Server.Items
                     }); // Summon All Corpses
 
                 if (_SummonAll)
+                {
                     entry2.Flags |= CMEFlags.Highlighted;
+                }
                 else
+                {
                     entry1.Flags |= CMEFlags.Highlighted;
+                }
 
                 entry1.Enabled = !IsSummoning();
                 entry2.Enabled = !IsSummoning();

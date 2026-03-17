@@ -152,7 +152,7 @@ namespace Server.Spells.SkillMasteries
 
         public override int GetUpkeep()
         {
-            var upkeep = base.GetUpkeep();
+            int upkeep = base.GetUpkeep();
 
             if (CastSkill != SkillName.Provocation && Caster.Skills[SkillName.Provocation].Base > 100.0)
             {

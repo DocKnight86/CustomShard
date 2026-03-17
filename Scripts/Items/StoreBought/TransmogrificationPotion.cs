@@ -1,5 +1,4 @@
 using Server.Gumps;
-using Server.Misc;
 using Server.Mobiles;
 using Server.Mobiles.MannequinProperty;
 using Server.Network;
@@ -270,7 +269,9 @@ namespace Server.Items
                 protected override void OnTarget(Mobile from, object targeted)
                 {
                     if (!(targeted is Item targetitem) || Potion.Deleted)
+                    {
                         return;
+                    }
 
                     if (!Potion.IsChildOf(from.Backpack) || !targetitem.IsChildOf(from.Backpack))
                     {
@@ -315,10 +316,6 @@ namespace Server.Items
                         {
                             message = 1159518; // You may not set the source and destination objects to the same object!
                         }
-                        else if (RaceDefinitions.GetRequiredRace(Potion.Destination.Item) != RaceDefinitions.GetRequiredRace(Potion.Source.Item))
-                        {
-                            message = 1159560; // You may not set the source and destination objects to objects of different race requirements.
-                        }
                         else if (!Potion.CheckRules())
                         {
                             message = Potion.ValidFailMessage;
@@ -353,7 +350,9 @@ namespace Server.Items
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (Potion.Deleted)
+                {
                     return;
+                }
 
                 Mobile m = sender.Mobile;
 

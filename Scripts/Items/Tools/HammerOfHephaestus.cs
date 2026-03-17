@@ -88,7 +88,9 @@ namespace Server.Items
         public override bool CanEquip(Mobile from)
         {
             if (UsesRemaining > 0)
+            {
                 return base.CanEquip(from);
+            }
 
             from.SendLocalizedMessage(1072306); // You must wait a moment for it to recharge.
             return false;

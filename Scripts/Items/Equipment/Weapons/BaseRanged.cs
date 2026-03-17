@@ -28,9 +28,13 @@ namespace Server.Items
             set
             {
                 if (value)
+                {
                     Attributes.BalancedWeapon = 1;
+                }
                 else
+                {
                     Attributes.BalancedWeapon = 0;
+                }
             }
         }
 
@@ -58,9 +62,13 @@ namespace Server.Items
             long nextShoot;
 
             if (attacker is PlayerMobile mobile)
+            {
                 nextShoot = mobile.NextMovementTime + 250;
+            }
             else
+            {
                 nextShoot = attacker.LastMoveTime + attacker.ComputeMovementSpeed();
+            }
 
             // Make sure we've been standing still for .25/.5/1 second depending on Era
             if (nextShoot <= Core.TickCount || WeaponAbility.GetCurrentAbility(attacker) is MovingShot)

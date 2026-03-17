@@ -41,12 +41,16 @@ namespace Server.Items
         public bool CheckAccessible(Mobile from, Item item)
         {
             if (from.AccessLevel >= AccessLevel.GameMaster)
+            {
                 return true; // Staff can access anything
+            }
 
             BaseHouse house = BaseHouse.FindHouseAt(item);
 
             if (house == null)
+            {
                 return false;
+            }
 
             switch (Level)
             {

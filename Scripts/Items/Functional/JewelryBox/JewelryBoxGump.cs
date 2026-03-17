@@ -20,7 +20,9 @@ namespace Server.Items
             JewelryBoxFilter f = m_Box.Filter;
 
             if (f.IsDefault)
+            {
                 return true;
+            }
 
             if (f.Ring && item is BaseRing)
             {
@@ -83,7 +85,9 @@ namespace Server.Items
                     add = 1;
 
                     if ((slots + add) > 50)
+                    {
                         break;
+                    }
 
                     slots += add;
                 }
@@ -113,7 +117,9 @@ namespace Server.Items
             foreach (Item item in m_Box.Items)
             {
                 if (!CheckFilter(item))
+                {
                     continue;
+                }
 
                 m_List.Add(item);
             }
@@ -130,7 +136,9 @@ namespace Server.Items
                 Item item = m_List[i];
 
                 if (!CheckFilter(item))
+                {
                     continue;
+                }
 
                 ++tableIndex;
             }

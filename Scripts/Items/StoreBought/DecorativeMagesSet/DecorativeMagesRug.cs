@@ -50,7 +50,9 @@ namespace Server.Items
         public virtual bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
+            {
                 return false;
+            }
 
             Hue = sender.DyedHue;
             return true;
@@ -93,7 +95,9 @@ namespace Server.Items
         public virtual bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
+            {
                 return false;
+            }
 
             Hue = sender.DyedHue;
             return true;
@@ -107,7 +111,9 @@ namespace Server.Items
                 from.SendGump(new AddonOptionGump(this, 1159523)); // Choose a size:
             }
             else
+            {
                 from.SendLocalizedMessage(1042009); // This item must be in your backpack to be used.       	
+            }
         }
 
         public void GetOptions(RewardOptionList list)
@@ -121,7 +127,9 @@ namespace Server.Items
             _Size = (ItemSize)choice - 1;
 
             if (!Deleted && IsChildOf(from.Backpack))
+            {
                 base.OnDoubleClick(from);
+            }
         }
 
         public override void Serialize(GenericWriter writer)

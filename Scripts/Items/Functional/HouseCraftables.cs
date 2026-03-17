@@ -168,7 +168,9 @@ namespace Server.Items
                 Type resourceType = typeRes;
 
                 if (resourceType == null)
+                {
                     resourceType = craftItem.Resources.GetAt(0).ItemType;
+                }
 
                 Resource = CraftResources.GetFromType(resourceType);
             }
@@ -232,7 +234,9 @@ namespace Server.Items
         public override bool OnDroppedInto(Mobile from, Container target, Point3D p)
         {
             if (target.Movable || target is StrongBackpack)
+            {
                 return false;
+            }
 
             return base.OnDroppedInto(from, target, p);
         }
@@ -240,7 +244,9 @@ namespace Server.Items
         public override bool OnDroppedOnto(Mobile from, Item target)
         {
             if (target is Container && target.Movable || target is StrongBackpack)
+            {
                 return false;
+            }
 
             return base.OnDroppedOnto(from, target);
         }
@@ -310,9 +316,13 @@ namespace Server.Items
             }
 
             if (addon != null)
+            {
                 addon.Delete();
+            }
             else
+            {
                 oldItem.Delete();
+            }
         }
     }
 
@@ -342,7 +352,9 @@ namespace Server.Items
             Timer.DelayCall(TimeSpan.FromSeconds(30), () =>
             {
                 if (Addon is CraftableHouseAddon addon)
+                {
                     CraftableHouseItem.Replace(this, addon.ItemType);
+                }
             });
         }
     }
@@ -490,12 +502,18 @@ namespace Server.Items
             BaseDoor door;
 
             if (Type < DoorType.LeftMetalDoor_S_In)
+            {
                 door = new CraftableStoneHouseDoor(Type, CraftableMetalHouseDoor.GetDoorFacing(Type));
+            }
             else
+            {
                 door = new CraftableMetalHouseDoor(Type, CraftableMetalHouseDoor.GetDoorFacing(Type));
+            }
 
             if (door is IResource)
+            {
                 ((IResource)door).Resource = _Resource;
+            }
 
             if (Parent is Container container)
             {
@@ -610,7 +628,9 @@ namespace Server.Items
                 Type resourceType = typeRes;
 
                 if (resourceType == null)
+                {
                     resourceType = craftItem.Resources.GetAt(0).ItemType;
+                }
 
                 Resource = CraftResources.GetFromType(resourceType);
             }
@@ -699,7 +719,9 @@ namespace Server.Items
         public override void Use(Mobile from)
         {
             if (!Movable)
+            {
                 base.Use(from);
+            }
         }
 
         public override void AddNameProperty(ObjectPropertyList list)
@@ -756,7 +778,9 @@ namespace Server.Items
         public override bool OnDroppedInto(Mobile from, Container target, Point3D p)
         {
             if (target.Movable || target is StrongBackpack)
+            {
                 return false;
+            }
 
             return base.OnDroppedInto(from, target, p);
         }
@@ -764,7 +788,9 @@ namespace Server.Items
         public override bool OnDroppedOnto(Mobile from, Item target)
         {
             if (target is Container && target.Movable || target is StrongBackpack)
+            {
                 return false;
+            }
 
             return base.OnDroppedOnto(from, target);
         }
@@ -873,7 +899,9 @@ namespace Server.Items
                 Type resourceType = typeRes;
 
                 if (resourceType == null)
+                {
                     resourceType = craftItem.Resources.GetAt(0).ItemType;
+                }
 
                 Resource = CraftResources.GetFromType(resourceType);
             }
@@ -884,7 +912,9 @@ namespace Server.Items
         public override void Use(Mobile from)
         {
             if (!Movable)
+            {
                 base.Use(from);
+            }
         }
 
         public override void AddNameProperty(ObjectPropertyList list)
@@ -941,7 +971,9 @@ namespace Server.Items
         public override bool OnDroppedInto(Mobile from, Container target, Point3D p)
         {
             if (target.Movable || target is StrongBackpack)
+            {
                 return false;
+            }
 
             return base.OnDroppedInto(from, target, p);
         }
@@ -949,7 +981,9 @@ namespace Server.Items
         public override bool OnDroppedOnto(Mobile from, Item target)
         {
             if (target is Container && target.Movable || target is StrongBackpack)
+            {
                 return false;
+            }
 
             return base.OnDroppedOnto(from, target);
         }

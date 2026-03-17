@@ -68,10 +68,10 @@ namespace Server.Engines.Points
 
         public override void OnPlayerAdded(PlayerMobile pm)
         {
-            if (pm.Race == Race.Gargoyle)
+            /*if (pm.Race == Race.Gargoyle)
             {
                 AwardPoints(pm, 2000, false, false);
-            }
+            }*/
         }
 
         public bool IsNoble(Mobile from)

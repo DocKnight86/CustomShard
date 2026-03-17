@@ -59,9 +59,13 @@ namespace Server.Items
             set
             {
                 if (value)
+                {
                     ItemID = GetFireID(Type);
+                }
                 else
+                {
                     ItemID = GetBaseID(Type);
+                }
             }
         }
         public override bool PassivelyTriggered => true;
@@ -101,7 +105,9 @@ namespace Server.Items
         public override void OnTrigger(Mobile from)
         {
             if (!from.Alive || from.IsStaff())
+            {
                 return;
+            }
 
             Effects.PlaySound(Location, Map, 0x359);
 
@@ -122,7 +128,9 @@ namespace Server.Items
             foreach (Mobile mob in eable)
             {
                 if (mob.Alive && !mob.IsDeadBondedPet && mob.IsPlayer())
+                {
                     Spells.SpellHelper.Damage(TimeSpan.FromTicks(1), mob, mob, Utility.Dice(3, 15, 0));
+                }
             }
             eable.Free();
         }

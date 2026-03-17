@@ -78,7 +78,9 @@ namespace Server.Items
             m_KillSave = damageable.Location;
 
             if (!(WeaponAbility.GetCurrentAbility(attacker) is MysticArc))
+            {
                 Timer.DelayCall(TimeSpan.FromMilliseconds(333.0), ThrowBack);
+            }
 
             base.OnHit(attacker, damageable, damageBonus);
         }
@@ -88,7 +90,9 @@ namespace Server.Items
             m_Target = damageable as Mobile;
 
             if (!(WeaponAbility.GetCurrentAbility(attacker) is MysticArc))
+            {
                 Timer.DelayCall(TimeSpan.FromMilliseconds(333.0), ThrowBack);
+            }
 
             base.OnMiss(attacker, damageable);
         }
@@ -96,9 +100,13 @@ namespace Server.Items
         public virtual void ThrowBack()
         {
             if (m_Target != null)
+            {
                 m_Target.MovingEffect(m_Thrower, EffectID, 18, 1, false, false, Hue, 0);
+            }
             else if (m_Thrower != null)
+            {
                 Effects.SendMovingParticles(new Entity(Serial.Zero, m_KillSave, m_Thrower.Map), m_Thrower, ItemID, 18, 0, false, false, Hue, 0, 9502, 1, 0, (EffectLayer)255, 0x100);
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -113,7 +121,9 @@ namespace Server.Items
             int version = reader.ReadInt();
 
             if (version == 0)
+            {
                 InheritsItem = true;
+            }
         }
 
         #region Old Item Serialization Vars

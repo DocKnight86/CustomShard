@@ -49,7 +49,9 @@ namespace Server.Items
         public static void AddBonus(Mobile m)
         {
             if (_Table == null)
+            {
                 _Table = new Dictionary<Mobile, SkillMod>();
+            }
 
             DefaultSkillMod mod = new DefaultSkillMod(SkillName.SpiritSpeak, true, 5.0);
             _Table[m] = mod;
@@ -87,7 +89,9 @@ namespace Server.Items
         public static void AddToCooldown(Mobile m)
         {
             if (_Cooldown == null)
+            {
                 _Cooldown = new Dictionary<Mobile, DateTime>();
+            }
 
             _Cooldown[m] = DateTime.UtcNow + TimeSpan.FromMinutes(90);
 
@@ -100,7 +104,9 @@ namespace Server.Items
         public static void CheckCooldown()
         {
             if (_Cooldown == null)
+            {
                 return;
+            }
 
             List<Mobile> list = new List<Mobile>(_Cooldown.Keys);
 

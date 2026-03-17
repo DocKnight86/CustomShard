@@ -266,11 +266,6 @@ namespace Server.Misc
                 points += 13;
             }
 
-            if (from is PlayerMobile && from.Race == Race.Gargoyle)
-            {
-                points += 2;
-            }
-
             for (var index = 0; index < ManaBonusHandlers.Count; index++)
             {
                 RegenBonusHandler handler = ManaBonusHandlers[index];

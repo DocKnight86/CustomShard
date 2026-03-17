@@ -116,11 +116,11 @@ namespace Server.Spells.SkillMasteries
             /* As One - Requires multiple pets to active */
             if (type == TrainingType.AsOne && Caster is PlayerMobile pm)
             {
-                var list = new List<Mobile>();
+                List<Mobile> list = new List<Mobile>();
 
-                for (var index = 0; index < pm.AllFollowers.Count; index++)
+                for (int index = 0; index < pm.AllFollowers.Count; index++)
                 {
-                    var x = pm.AllFollowers[index];
+                    Mobile x = pm.AllFollowers[index];
 
                     if (x.Map != Map.Internal && x.InRange(Caster, 100) && x != target)
                     {
@@ -130,9 +130,9 @@ namespace Server.Spells.SkillMasteries
 
                 if (list.Count > 0)
                 {
-                    for (var index = 0; index < list.Count; index++)
+                    for (int index = 0; index < list.Count; index++)
                     {
-                        var x = list[index];
+                        Mobile x = list[index];
 
                         Effects.SendPacket(x.Location, x.Map, new ParticleEffect(EffectType.FixedFrom, x.Serial, Serial.Zero, 0x376A, x.Location,
                                 x.Location, 1, 32, false, false, 1262, 0, 0, 9502, 1, x.Serial, 199, 0));
@@ -293,9 +293,9 @@ namespace Server.Spells.SkillMasteries
 
                                 if (pm != null)
                                 {
-                                    for (var index = 0; index < pm.AllFollowers.Count; index++)
+                                    for (int index = 0; index < pm.AllFollowers.Count; index++)
                                     {
-                                        var m = pm.AllFollowers[index];
+                                        Mobile m = pm.AllFollowers[index];
 
                                         if (m.Map != Map.Internal && m.InRange(pm, 15) && m.CanBeHarmful(attacker))
                                         {
@@ -308,7 +308,7 @@ namespace Server.Spells.SkillMasteries
                                 {
                                     damage /= list.Count;
 
-                                    for (var index = 0; index < list.Count; index++)
+                                    for (int index = 0; index < list.Count; index++)
                                     {
                                         Mobile m = list[index];
 
@@ -440,11 +440,6 @@ namespace Server.Spells.SkillMasteries
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (targeted is Engines.Despise.DespiseCreature)
-                {
-                    return;
-                }
-
                 if (targeted is BaseCreature bc && bc.GetMaster() == from && from.Spell == Spell)
                 {
                     from.SendSound(0x64E);

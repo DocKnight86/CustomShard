@@ -139,13 +139,21 @@ namespace Server.Items
                     if (item is IDyable dyable && m_Tub.AllowDyables)
                     {
                         if (!from.InRange(m_Tub.GetWorldLocation(), 1) || !from.InRange(item.GetWorldLocation(), 1))
+                        {
                             from.SendLocalizedMessage(500446); // That is too far away.
-						else if (item.IsLockedDown)
+                        }
+                        else if (item.IsLockedDown)
+                        {
                             from.SendLocalizedMessage(1061637); // You are not allowed to access this.
+                        }
                         else if (item.Parent is Mobile)
+                        {
                             from.SendLocalizedMessage(500861); // Can't Dye clothing that is being worn.
+                        }
                         else if (dyable.Dye(from, m_Tub))
+                        {
                             from.PlaySound(0x23E);
+                        }
                     }
                     else if (m_Tub.AllowFurniture && (FurnitureAttribute.Check(item) || m_Tub.CanForceDye(item)))
                     {

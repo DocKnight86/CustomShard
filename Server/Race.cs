@@ -16,7 +16,6 @@ namespace Server
 
 		public static Race Human => m_Races[0];
 		public static Race Elf => m_Races[1];
-		public static Race Gargoyle => m_Races[2];
 
 		private static readonly List<Race> m_AllRaces = new List<Race>();
 
@@ -163,8 +162,6 @@ namespace Server
 			return RandomFace(m.Female);
 		}
 		public abstract int RandomFace(bool female);
-
-		public abstract bool ValidateEquipment(Item item);
 
 		public abstract int ClipSkinHue(int hue);
 		public abstract int RandomSkinHue();

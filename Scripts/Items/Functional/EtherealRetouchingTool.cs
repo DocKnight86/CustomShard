@@ -27,7 +27,9 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (IsRewardItem)
+            {
                 list.Add(1080458); // 11th Year Veteran Reward
+            }
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -65,16 +67,20 @@ namespace Server.Items
                     {
                         from.SendLocalizedMessage(1045158); // You must have the item in your backpack to target it.
                     }
-                    else if (mount is GMEthereal || mount is EtherealWarBoar)
+                    else if (mount is EtherealWarBoar)
                     {
                         from.SendLocalizedMessage(1071117); // You cannot use this item for it.
                     }
                     else if (RewardSystem.CheckIsUsableBy(from, m_Tool, null))
                     {
                         if (mount.Transparent)
+                        {
                             from.SendLocalizedMessage(1113816); // Your ethereal mount's body has been solidified.
+                        }
                         else
+                        {
                             from.SendLocalizedMessage(1113817); // Your ethereal mount's transparency has been restored.
+                        }
 
                         mount.Transparent = !mount.Transparent;
                         mount.InvalidateProperties();
