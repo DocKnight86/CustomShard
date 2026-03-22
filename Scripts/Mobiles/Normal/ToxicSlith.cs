@@ -63,11 +63,15 @@ namespace Server.Mobiles
                 switch (Utility.Random(2))
                 {
                     case 0:
+                    {
                         c.DropItem(new ToxicVenomSac());
                         break;
+                    }
                     case 2:
+                    {
                         c.DropItem(new SlithEye());
                         break;
+                    }
                 }
             }
         }

@@ -109,14 +109,20 @@ namespace Server.Mobiles
                 switch (Utility.Random(3))
                 {
                     case 0:
+                    {
                         SpawnHelper(new MantraEffervescence(), 2);
                         break;
+                    }
                     case 1:
+                    {
                         SpawnHelper(new CorporealBrume(), 2);
                         break;
+                    }
                     case 2:
+                    {
                         SpawnHelper(new FetidEssence(), 2);
                         break;
+                    }
                 }
             }
         }

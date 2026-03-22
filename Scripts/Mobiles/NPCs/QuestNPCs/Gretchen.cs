@@ -101,15 +101,21 @@ namespace Server.Engines.Quests
 
                 Item item = FindItemOnLayer(Layer.Cloak);
                 if (item != null)
+                {
                     item.Delete();
+                }
 
                 item = FindItemOnLayer(Layer.MiddleTorso);
                 if (item != null)
+                {
                     item.Delete();
+                }
 
                 item = FindItemOnLayer(Layer.MiddleTorso);
                 if (item != null)
+                {
                     item.Hue = 1886;
+                }
 
                 SetWearable(new FemaleElvenRobe(443));
                 SetWearable(new QuarterStaff());

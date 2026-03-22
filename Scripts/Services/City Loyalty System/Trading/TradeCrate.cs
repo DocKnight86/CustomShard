@@ -23,9 +23,11 @@ namespace Server.Engines.CityLoyalty
             get
             {
                 if (Entry == null)
+                {
                     return false;
+                }
 
-                for (var index = 0; index < Entry.Details.Count; index++)
+                for (int index = 0; index < Entry.Details.Count; index++)
                 {
                     TradeEntry.TradeDetails details = Entry.Details[index];
 
@@ -104,9 +106,9 @@ namespace Server.Engines.CityLoyalty
 
             int weight = 0;
 
-            for (var index = 0; index < Items.Count; index++)
+            for (int index = 0; index < Items.Count; index++)
             {
-                var x = Items[index];
+                Item x = Items[index];
 
                 weight += x.Amount;
             }
@@ -120,9 +122,13 @@ namespace Server.Engines.CityLoyalty
                 for (int i = 0; i < Entry.Details.Count; i++)
                 {
                     if (Utility.ToInt32(Entry.Details[i].Name) > 0)
+                    {
                         list.Add(1116453 + i, $"#{Entry.Details[i].Name}\t{Entry.Details[i].Count(this)}\t{Entry.Details[i].Amount}"); // ~1_val~: ~2_val~/~3_val~
+                    }
                     else
+                    {
                         list.Add(1116453 + i, $"{Entry.Details[i].Name}\t{Entry.Details[i].Count(this)}\t{Entry.Details[i].Amount}"); // ~1_val~: ~2_val~/~3_val~
+                    }
                 }
             }
 
@@ -143,10 +149,14 @@ namespace Server.Engines.CityLoyalty
         public override bool TryDropItem(Mobile from, Item item, bool message)
         {
             if (Entry == null)
+            {
                 return false;
+            }
 
             if (TryAddItem(from, item, message))
+            {
                 return base.TryDropItem(from, item, message);
+            }
 
             return false;
         }
@@ -155,7 +165,7 @@ namespace Server.Engines.CityLoyalty
         {
             bool canAdd = false;
 
-            for (var index = 0; index < Entry.Details.Count; index++)
+            for (int index = 0; index < Entry.Details.Count; index++)
             {
                 TradeEntry.TradeDetails details = Entry.Details[index];
 
@@ -202,7 +212,9 @@ namespace Server.Engines.CityLoyalty
             int total = base.GetTotal(type);
 
             if (type == TotalType.Weight)
+            {
                 total -= total * 75 / 100;
+            }
 
             return total;
         }
@@ -262,13 +274,13 @@ namespace Server.Engines.CityLoyalty
             {
                 if (Crate.IsChildOf(Player.Backpack) && !Crate.Deleted && Crate.Entry != null)
                 {
-                    for (var index = 0; index < Crate.Entry.Details.Count; index++)
+                    for (int index = 0; index < Crate.Entry.Details.Count; index++)
                     {
-                        var list = new List<Item>(Player.Backpack.Items);
+                        List<Item> list = new List<Item>(Player.Backpack.Items);
 
-                        for (var i = 0; i < list.Count; i++)
+                        for (int i = 0; i < list.Count; i++)
                         {
-                            var item = list[i];
+                            Item item = list[i];
 
                             if (item.Amount == 1 && Crate.TryAddItem(Player, item, false))
                             {
@@ -307,7 +319,9 @@ namespace Server.Engines.CityLoyalty
         public override bool OnDroppedInto(Mobile from, Container target, Point3D p)
         {
             if (target == from.Backpack)
+            {
                 return base.OnDroppedInto(from, target, p);
+            }
 
             from.SendLocalizedMessage(1076254); // That item cannot be dropped.
             return false;

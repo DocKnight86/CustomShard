@@ -31,30 +31,44 @@ namespace Server.Mobiles
                 switch (Utility.Random(2))
                 {
                     case 0:
+                    {
                         AddItem(new LeatherSkirt());
                         break;
+                    }
                     case 1:
+                    {
                         AddItem(new LeatherShorts());
                         break;
+                    }
                 }
 
                 switch (Utility.Random(5))
                 {
                     case 0:
+                    {
                         AddItem(new FemaleLeatherChest());
                         break;
+                    }
                     case 1:
+                    {
                         AddItem(new FemaleStuddedChest());
                         break;
+                    }
                     case 2:
+                    {
                         AddItem(new LeatherBustierArms());
                         break;
+                    }
                     case 3:
+                    {
                         AddItem(new StuddedBustierArms());
                         break;
+                    }
                     case 4:
+                    {
                         AddItem(new FemalePlateChest());
                         break;
+                    }
                 }
             }
             else
@@ -69,14 +83,20 @@ namespace Server.Mobiles
                 switch (Utility.Random(3))
                 {
                     case 0:
+                    {
                         AddItem(new Doublet(Utility.RandomNondyedHue()));
                         break;
+                    }
                     case 1:
+                    {
                         AddItem(new Tunic(Utility.RandomNondyedHue()));
                         break;
+                    }
                     case 2:
+                    {
                         AddItem(new BodySash(Utility.RandomNondyedHue()));
                         break;
+                    }
                 }
             }
             Utility.AssignRandomHair(this);

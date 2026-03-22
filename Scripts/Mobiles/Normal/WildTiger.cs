@@ -96,13 +96,25 @@ namespace Server.Mobiles
             {
                 switch (Utility.Random(11))
                 {
-                    default: AddLoot(LootPack.PeculiarSeed1); break;
+                    default:
+                    {
+                        AddLoot(LootPack.PeculiarSeed1); break;
+                    }
                     case 5:
                     case 6:
-                    case 7: AddLoot(LootPack.PeculiarSeed2); break;
+                    case 7:
+                    {
+                        AddLoot(LootPack.PeculiarSeed2); break;
+                    }
                     case 8:
-                    case 9: AddLoot(LootPack.PeculiarSeed3); break;
-                    case 10: AddLoot(LootPack.PeculiarSeed4); break;
+                    case 9:
+                    {
+                        AddLoot(LootPack.PeculiarSeed3); break;
+                    }
+                    case 10:
+                    {
+                        AddLoot(LootPack.PeculiarSeed4); break;
+                    }
                 }
             }
         }
@@ -142,10 +154,14 @@ namespace Server.Mobiles
             {
                 case 2:
                 case 1:
+                {
                     CanRide = reader.ReadBool();
                     break;
+                }
                 case 0:
+                {
                     break;
+                }
             }
         }
     }

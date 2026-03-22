@@ -26,24 +26,40 @@ namespace Server.Mobiles
             int select = 1;
 
             if (mana >= 50)
+            {
                 select = 5;
+            }
             else if (mana >= 20)
+            {
                 select = 3;
+            }
             else if (mana >= 9)
+            {
                 select = 2;
+            }
 
             switch (Utility.Random(select))
             {
                 case 0:
+                {
                     return new NetherBoltSpell(m_Mobile, null);
+                }
                 case 1:
+                {
                     return new EagleStrikeSpell(m_Mobile, null);
+                }
                 case 2:
+                {
                     return new BombardSpell(m_Mobile, null);
+                }
                 case 3:
+                {
                     return new HailStormSpell(m_Mobile, null);
+                }
                 case 4:
+                {
                     return new NetherCycloneSpell(m_Mobile, null);
+                }
             }
 
             return null;
@@ -60,22 +76,36 @@ namespace Server.Mobiles
             int select = 1;
 
             if (mana >= 40)
+            {
                 select = 4;
+            }
             else if (mana >= 14)
+            {
                 select = 3;
+            }
             else if (mana >= 8)
+            {
                 select = 2;
+            }
 
             switch (Utility.Random(select))
             {
                 case 0:
+                {
                     return new PurgeMagicSpell(m_Mobile, null);
+                }
                 case 1:
+                {
                     return new SleepSpell(m_Mobile, null);
+                }
                 case 2:
+                {
                     return new MassSleepSpell(m_Mobile, null);
+                }
                 case 3:
+                {
                     return new SpellPlagueSpell(m_Mobile, null);
+                }
             }
 
             return null;
@@ -89,7 +119,9 @@ namespace Server.Mobiles
             }
 
             if (m_Mobile.Mana >= 20)
+            {
                 return new CleansingWindsSpell(m_Mobile, null);
+            }
 
             return null;
         }
@@ -119,7 +151,9 @@ namespace Server.Mobiles
             Spell spell = CheckCastHealingSpell();
 
             if (spell != null)
+            {
                 return spell;
+            }
 
             switch (Utility.Random(6))
             {
@@ -149,7 +183,9 @@ namespace Server.Mobiles
             Targeting.Target t = m_Mobile.Target;
 
             if (t == null)
+            {
                 return false;
+            }
 
             if (t is HailStormSpell.InternalTarget || t is NetherCycloneSpell.InternalTarget)
             {
@@ -158,7 +194,9 @@ namespace Server.Mobiles
                     t.Invoke(m_Mobile, m_Mobile.Combatant);
                 }
                 else
+                {
                     t.Invoke(m_Mobile, m_Mobile);
+                }
 
                 return true;
             }

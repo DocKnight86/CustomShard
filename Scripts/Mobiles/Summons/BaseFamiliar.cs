@@ -43,7 +43,9 @@ namespace Server.Mobiles
             Mobile master = ControlMaster;
 
             if (Deleted || master == null || master.Deleted)
+            {
                 return false;
+            }
 
             int dist = (int)master.GetDistanceToSqrt(Location);
 
@@ -243,12 +245,16 @@ namespace Server.Mobiles
         public static void OnLogout(PlayerMobile pm)
         {
             if (pm == null)
+            {
                 return;
+            }
 
             BaseCreature check = (BaseCreature)SummonFamiliarSpell.Table[pm];
 
             if (check != null)
+            {
                 check.Delete();
+            }
         }
 
         public override void Serialize(GenericWriter writer)

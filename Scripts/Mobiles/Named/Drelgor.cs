@@ -86,7 +86,9 @@ namespace Server.Mobiles
         public override void OnThink()
         {
             if (!init)
+            {
                 Start();
+            }
 
             if (msgevery != 0 && DateTime.UtcNow >= m_NextMsgTime)
             {

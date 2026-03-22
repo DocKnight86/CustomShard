@@ -117,7 +117,7 @@ namespace Server.Mobiles
                     return;
                 }
 
-                for (var index = 0; index < e.Keywords.Length; index++)
+                for (int index = 0; index < e.Keywords.Length; index++)
                 {
                     int keyword = e.Keywords[index];
 

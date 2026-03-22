@@ -29,22 +29,36 @@ namespace Server.Mobiles
             int select = 1;
 
             if (mana >= 29)
+            {
                 select = 4;
+            }
             else if (mana >= 23)
+            {
                 select = 3;
+            }
             else if (mana >= 17)
+            {
                 select = 2;
+            }
 
             switch (Utility.Random(select))
             {
                 case 0:
+                {
                     return new PainSpikeSpell(m_Mobile, null);
+                }
                 case 1:
+                {
                     return new PoisonStrikeSpell(m_Mobile, null);
+                }
                 case 2:
+                {
                     return new WitherSpell(m_Mobile, null);
+                }
                 case 3:
+                {
                     return new StrangleSpell(m_Mobile, null);
+                }
             }
 
             return null;
@@ -61,29 +75,47 @@ namespace Server.Mobiles
             int select = 1;
 
             if (mana >= 17)
+            {
                 select = 4;
+            }
             else if (mana >= 13)
+            {
                 select = 3;
+            }
             else if (mana >= 11)
+            {
                 select = 2;
+            }
 
             switch (Utility.Random(select))
             {
                 case 0:
+                {
                     Spell spell;
 
                     if (CheckCastCorpseSkin(m_Mobile) && Utility.RandomBool())
+                    {
                         spell = new CorpseSkinSpell(m_Mobile, null);
+                    }
                     else
+                    {
                         spell = new EvilOmenSpell(m_Mobile, null);
+                    }
 
                     return spell;
+                }
                 case 1:
+                {
                     return new EvilOmenSpell(m_Mobile, null);
+                }
                 case 2:
+                {
                     return new BloodOathSpell(m_Mobile, null);
+                }
                 case 3:
+                {
                     return new MindRotSpell(m_Mobile, null);
+                }
             }
 
             return null;
@@ -122,12 +154,18 @@ namespace Server.Mobiles
         protected override Spell CheckCastHealingSpell()
         {
             if (m_Mobile.Summoned || m_Mobile.Hits >= m_Mobile.HitsMax)
+            {
                 return null;
+            }
 
             if (0.1 > Utility.RandomDouble())
+            {
                 m_Mobile.UseSkill(SkillName.SpiritSpeak);
+            }
             else
+            {
                 return base.CheckCastHealingSpell();
+            }
 
             return null;
         }
@@ -137,7 +175,9 @@ namespace Server.Mobiles
             if (AcquireFocusMob(m_Mobile.RangePerception, m_Mobile.FightMode, false))
             {
                 if (m_Mobile.Debug)
+                {
                     m_Mobile.DebugSay("I am going to attack {0}", m_Mobile.FocusMob.Name);
+                }
 
                 m_Mobile.Combatant = m_Mobile.FocusMob;
                 Action = ActionType.Combat;
@@ -160,7 +200,9 @@ namespace Server.Mobiles
                         if (m_Mobile.Hits < m_Mobile.HitsMax - 50)
                         {
                             if (!new GreaterHealSpell(m_Mobile, null).Cast())
+                            {
                                 new HealSpell(m_Mobile, null).Cast();
+                            }
                         }
                         else if (m_Mobile.Hits < m_Mobile.HitsMax - 10)
                         {

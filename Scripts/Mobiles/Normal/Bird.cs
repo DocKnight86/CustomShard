@@ -14,14 +14,20 @@ namespace Server.Mobiles
                 switch (Utility.Random(3))
                 {
                     case 0:
+                    {
                         Name = "a crow";
                         break;
+                    }
                     case 2:
+                    {
                         Name = "a raven";
                         break;
+                    }
                     case 1:
+                    {
                         Name = "a magpie";
                         break;
+                    }
                 }
             }
             else

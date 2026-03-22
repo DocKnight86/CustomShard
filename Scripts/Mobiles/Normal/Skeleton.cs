@@ -70,20 +70,30 @@ namespace Server.Mobiles
                 switch (Utility.Random(5))
                 {
                     case 0:
+                    {
                         c.DropItem(new BoneArms());
                         break;
+                    }
                     case 1:
+                    {
                         c.DropItem(new BoneChest());
                         break;
+                    }
                     case 2:
+                    {
                         c.DropItem(new BoneGloves());
                         break;
+                    }
                     case 3:
+                    {
                         c.DropItem(new BoneLegs());
                         break;
+                    }
                     case 4:
+                    {
                         c.DropItem(new BoneHelm());
                         break;
+                    }
                 }
             }
         }

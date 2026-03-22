@@ -1043,14 +1043,20 @@ namespace Server.Mobiles
                         switch (index)
                         {
                             case 0:
+                            {
                                 m_Barkeeper.BeginChangeTitle(m_From);
                                 break;
+                            }
                             case 1:
+                            {
                                 m_Barkeeper.BeginChangeAppearance(m_From);
                                 break;
+                            }
                             case 2:
+                            {
                                 m_Barkeeper.ChangeGender(m_From);
                                 break;
+                            }
                         }
 
                         break;

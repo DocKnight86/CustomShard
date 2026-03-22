@@ -302,15 +302,19 @@ namespace Server.Mobiles
                 switch (Utility.Random(2))
                 {
                     case 0:
+                    {
                         spawn = new RedSolenWarrior();
                         spawn.MoveToWorld(m_Item.Location, m_Item.Map);
                         m_Item.Delete();
                         break;
+                    }
                     case 1:
+                    {
                         spawn = new RedSolenWorker();
                         spawn.MoveToWorld(m_Item.Location, m_Item.Map);
                         m_Item.Delete();
                         break;
+                    }
                 }
             }
         }

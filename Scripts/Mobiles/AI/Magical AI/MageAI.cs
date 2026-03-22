@@ -45,10 +45,15 @@ namespace Server.Mobiles
         public override bool Think()
         {
             if (m_Mobile.Deleted)
+            {
                 return false;
+            }
 
             if (ProcessTarget())
+            {
                 return true;
+            }
+
             return base.Think();
         }
 
@@ -139,7 +144,9 @@ namespace Server.Mobiles
             m_Mobile.Warmode = true;
 
             if (m_Mobile.Target != null)
+            {
                 ProcessTarget();
+            }
 
             if (c == null || c.Deleted || !c.Alive || c is Mobile mobile && mobile.IsDeadBondedPet || !m_Mobile.CanSee(c) ||
                 !m_Mobile.CanBeHarmful(c, false) || c.Map != m_Mobile.Map)
@@ -314,7 +321,9 @@ namespace Server.Mobiles
             if (!SmartAI)
             {
                 if (!MoveTo(d, true, m_Mobile.RangeFight))
+                {
                     OnFailedMove();
+                }
 
                 return;
             }
@@ -322,16 +331,22 @@ namespace Server.Mobiles
             if (d is Mobile mobile && (mobile.Paralyzed || mobile.Frozen))
             {
                 if (m_Mobile.InRange(d, 1))
+                {
                     RunFrom(mobile);
+                }
                 else if (!m_Mobile.InRange(d, m_Mobile.RangeFight > 2 ? m_Mobile.RangeFight : 2) && !MoveTo(d, true, 1))
+                {
                     OnFailedMove();
+                }
             }
             else
             {
                 if (!m_Mobile.InRange(d, m_Mobile.RangeFight))
                 {
                     if (!MoveTo(d, true, 1))
+                    {
                         OnFailedMove();
+                    }
                 }
                 else if (m_Mobile.InRange(d, m_Mobile.RangeFight - 1))
                 {
@@ -373,18 +388,24 @@ namespace Server.Mobiles
         {
             if (m_Mobile.Spell != null && m_Mobile.Spell.IsCasting || m_Mobile.Paralyzed || m_Mobile.Frozen ||
                 m_Mobile.DisallowAllMoves)
+            {
                 return;
+            }
 
             m_Mobile.Direction = d | Direction.Running;
 
             if (!DoMove(m_Mobile.Direction, true))
+            {
                 OnFailedMove();
+            }
         }
 
         public virtual Spell ChooseSpell(IDamageable c)
         {
             if (c == null || !c.Alive)
+            {
                 return null;
+            }
 
             Spell spell = null;
 
@@ -412,7 +433,9 @@ namespace Server.Mobiles
             }
 
             if (spell != null)
+            {
                 return spell;
+            }
 
             Mobile toDispel = FindDispelTarget(true);
 
@@ -424,7 +447,9 @@ namespace Server.Mobiles
             }
 
             if (spell != null)
+            {
                 return spell;
+            }
 
             if (c is Mobile mobile && SmartAI && m_Combo != -1) // We are doing a spell combo
             {
@@ -447,7 +472,9 @@ namespace Server.Mobiles
         {
             // Summoned creatures never heal themselves.
             if (m_Mobile.Summoned)
+            {
                 return null;
+            }
 
             Spell spell = null;
 
@@ -458,7 +485,9 @@ namespace Server.Mobiles
             }
 
             if (spell != null)
+            {
                 return spell;
+            }
 
             if (m_Mobile.Controlled && DateTime.UtcNow < NextHealTime)
             {
@@ -480,9 +509,13 @@ namespace Server.Mobiles
             double delay;
 
             if (m_Mobile.Int >= 500)
+            {
                 delay = Utility.RandomMinMax(7, 10);
+            }
             else
+            {
                 delay = Math.Sqrt(600 - m_Mobile.Int);
+            }
 
             NextHealTime = DateTime.UtcNow + TimeSpan.FromSeconds(delay);
 
@@ -494,7 +527,9 @@ namespace Server.Mobiles
             if (!SmartAI)
             {
                 if (CheckCanCastMagery(6) && ScaleByCastSkill(DispelChance) > Utility.RandomDouble())
+                {
                     return new DispelSpell(m_Mobile, null);
+                }
 
                 return null;
             }
@@ -512,7 +547,9 @@ namespace Server.Mobiles
         public Mobile FindDispelTarget(bool activeOnly)
         {
             if (m_Mobile.Deleted || m_Mobile.Int < 95 || CanDispel(m_Mobile) || m_Mobile.AutoDispel)
+            {
                 return null;
+            }
 
             if (activeOnly)
             {
@@ -531,7 +568,9 @@ namespace Server.Mobiles
                     activePrio = m_Mobile.GetDistanceToSqrt(comb);
 
                     if (activePrio <= 2)
+                    {
                         return active;
+                    }
                 }
 
                 for (int i = 0; i < aggressed.Count; ++i)
@@ -549,7 +588,9 @@ namespace Server.Mobiles
                             activePrio = prio;
 
                             if (activePrio <= 2)
+                            {
                                 return active;
+                            }
                         }
                     }
                 }
@@ -569,7 +610,9 @@ namespace Server.Mobiles
                             activePrio = prio;
 
                             if (activePrio <= 2)
+                            {
                                 return active;
+                            }
                         }
                     }
                 }
@@ -627,12 +670,16 @@ namespace Server.Mobiles
         public Spell CheckCastDispelField()
         {
             if (m_Mobile.Frozen || m_Mobile.Paralyzed)
+            {
                 return null;
+            }
 
             int mana = m_Mobile.Mana;
 
             if (mana < 14)
+            {
                 return null;
+            }
 
             Item field = GetHarmfulFieldItem();
 
@@ -648,7 +695,9 @@ namespace Server.Mobiles
         public Item GetHarmfulFieldItem()
         {
             if (m_Mobile.Map == null)
+            {
                 return null;
+            }
 
             IPooledEnumerable eable = m_Mobile.Map.GetItemsInRange(m_Mobile.Location, 0);
 
@@ -693,7 +742,9 @@ namespace Server.Mobiles
                 spell = CheckCastHealingSpell();
 
                 if (spell != null)
+                {
                     return spell;
+                }
 
                 switch (Utility.Random(6))
                 {
@@ -726,17 +777,23 @@ namespace Server.Mobiles
             Mobile c = m_Mobile.Combatant as Mobile;
 
             if (c == null || !c.Alive)
+            {
                 return null;
+            }
 
             if (!SmartAI)
             {
                 spell = CheckCastHealingSpell();
 
                 if (spell != null)
+                {
                     return spell;
+                }
 
                 if (m_Mobile.RawInt >= 80)
+                {
                     spell = CheckCastDispelField();
+                }
 
                 switch (Utility.Random(15))
                 {
@@ -744,7 +801,9 @@ namespace Server.Mobiles
                     case 1: // Poison them
                         {
                             if (c.Poisoned || !CheckCanCastMagery(3))
+                            {
                                 goto default;
+                            }
 
                             m_Mobile.DebugSay("Attempting to poison");
 
@@ -754,7 +813,9 @@ namespace Server.Mobiles
                     case 2: // Bless ourselves
                         {
                             if (!CheckCanCastMagery(3))
+                            {
                                 goto default;
+                            }
 
                             m_Mobile.DebugSay("Blessing myself");
 
@@ -769,7 +830,10 @@ namespace Server.Mobiles
                             spell = GetRandomCurseSpell();
 
                             if (spell == null)
+                            {
                                 goto default;
+                            }
+
                             break;
                         }
                     case 5: // Paralyze them
@@ -791,7 +855,10 @@ namespace Server.Mobiles
                             spell = GetRandomManaDrainSpell();
 
                             if (spell == null)
+                            {
                                 goto default;
+                            }
+
                             break;
                         }
                     default: // Damage them
@@ -806,34 +873,50 @@ namespace Server.Mobiles
             else
             {
                 if (m_Mobile.Hidden)
+                {
                     return null;
+                }
 
                 spell = CheckCastDispelField();
 
                 if (spell == null)
+                {
                     spell = CheckCastHealingSpell();
+                }
 
                 if (spell == null && 0.05 >= Utility.RandomDouble())
+                {
                     spell = GetRandomBuffSpell();
+                }
 
                 else if (spell == null && m_Mobile.Followers + 1 < m_Mobile.FollowersMax && 0.05 >= Utility.RandomDouble())
+                {
                     spell = GetRandomSummonSpell();
+                }
 
                 else if (spell == null && 0.05 >= Utility.RandomDouble())
+                {
                     spell = GetRandomFieldSpell();
+                }
 
                 else if (spell == null && 0.05 >= Utility.RandomDouble())
+                {
                     spell = GetRandomManaDrainSpell();
+                }
 
                 if (spell != null)
+                {
                     return spell;
+                }
 
                 switch (Utility.Random(3))
                 {
                     case 0: // Poison them
                         {
                             if (c.Poisoned)
+                            {
                                 goto case 1;
+                            }
 
                             spell = new PoisonSpell(m_Mobile, null);
                             break;
@@ -896,9 +979,14 @@ namespace Server.Mobiles
         public virtual bool CheckCanCastMagery(int circle)
         {
             if (circle < 1)
+            {
                 circle = 1;
+            }
+
             if (circle > 8)
+            {
                 circle = 8;
+            }
 
             return m_Mobile.Mana >= m_ManaTable[circle - 1];
         }
@@ -912,9 +1000,13 @@ namespace Server.Mobiles
                 if (m_Mobile.Mana > 100)
                 {
                     if (!SkillMasterySpell.HasSpell(m_Mobile, typeof(DeathRaySpell)))
+                    {
                         select = Utility.RandomMinMax(0, 4);
+                    }
                     else
+                    {
                         select = Utility.RandomMinMax(1, 4);
+                    }
                 }
                 else if (CheckCanCastMagery(7))
                 {
@@ -928,65 +1020,115 @@ namespace Server.Mobiles
                 switch (select)
                 {
                     case 0:
+                    {
                         return new DeathRaySpell(m_Mobile, null);
+                    }
                     case 1:
+                    {
                         return new MindBlastSpell(m_Mobile, null);
+                    }
                     case 2:
+                    {
                         return new EnergyBoltSpell(m_Mobile, null);
+                    }
                     case 3:
+                    {
                         return new ExplosionSpell(m_Mobile, null);
+                    }
                     case 4:
+                    {
                         return new FlameStrikeSpell(m_Mobile, null);
+                    }
                     case 5:
+                    {
                         return new MagicArrowSpell(m_Mobile, null);
+                    }
                     case 6:
+                    {
                         return new HarmSpell(m_Mobile, null);
+                    }
                     case 7:
+                    {
                         return new FireballSpell(m_Mobile, null);
+                    }
                     case 8:
+                    {
                         return new LightningSpell(m_Mobile, null);
+                    }
                     case 9:
                     case 10:
                     case 11:
+                    {
                         return new ManaVampireSpell(m_Mobile, null);
+                    }
                 }
             }
             else
             {
                 if (CheckCanCastMagery(8))
+                {
                     select = 8;
+                }
                 else if (CheckCanCastMagery(6))
+                {
                     select = 6;
+                }
                 else if (CheckCanCastMagery(5))
+                {
                     select = 5;
+                }
                 else if (CheckCanCastMagery(4))
+                {
                     select = 4;
+                }
                 else if (CheckCanCastMagery(3))
+                {
                     select = 3;
+                }
                 else if (CheckCanCastMagery(2))
+                {
                     select = 2;
+                }
                 else
+                {
                     select = 1;
+                }
 
                 switch (Utility.Random(select))
                 {
                     default:
                     case 0:
+                    {
                         return new MagicArrowSpell(m_Mobile, null);
+                    }
                     case 1:
+                    {
                         return new HarmSpell(m_Mobile, null);
+                    }
                     case 2:
+                    {
                         return new FireballSpell(m_Mobile, null);
+                    }
                     case 3:
+                    {
                         return new LightningSpell(m_Mobile, null);
+                    }
                     case 4:
+                    {
                         return new MindBlastSpell(m_Mobile, null);
+                    }
                     case 5:
+                    {
                         return new EnergyBoltSpell(m_Mobile, null);
+                    }
                     case 6:
+                    {
                         return new ExplosionSpell(m_Mobile, null);
+                    }
                     case 7:
+                    {
                         return new FlameStrikeSpell(m_Mobile, null);
+                    }
                 }
             }
 
@@ -996,27 +1138,39 @@ namespace Server.Mobiles
         public virtual Spell GetRandomCurseSpell()
         {
             if (Utility.RandomBool() && CheckCanCastMagery(5))
+            {
                 return new CurseSpell(m_Mobile, null);
+            }
 
             switch (Utility.Random(3))
             {
                 default:
                 case 0:
+                {
                     return new WeakenSpell(m_Mobile, null);
+                }
                 case 1:
+                {
                     return new ClumsySpell(m_Mobile, null);
+                }
                 case 2:
+                {
                     return new FeeblemindSpell(m_Mobile, null);
+                }
             }
         }
 
         public virtual Spell GetRandomManaDrainSpell()
         {
             if (Utility.RandomBool() && CheckCanCastMagery(7))
+            {
                 return new ManaVampireSpell(m_Mobile, null);
+            }
 
             if (CheckCanCastMagery(4))
+            {
                 return new ManaDrainSpell(m_Mobile, null);
+            }
 
             return null;
         }
@@ -1053,10 +1207,14 @@ namespace Server.Mobiles
         public virtual Spell GetRandomBuffSpell()
         {
             if (!BlessSpell.IsBlessed(m_Mobile) && CheckCanCastMagery(3))
+            {
                 return new BlessSpell(m_Mobile, null);
+            }
 
             if (!m_Mobile.Controlled && CheckCanCastMagery(6))
+            {
                 return new InvisibilitySpell(m_Mobile, null);
+            }
 
             return null;
         }
@@ -1119,7 +1277,9 @@ namespace Server.Mobiles
             Spell spell = null;
 
             if (m_ComboType == ComboType.None)
+            {
                 m_ComboType = (ComboType)Utility.RandomMinMax(1, 7);
+            }
 
             if (m_Combo == 1)
             {
@@ -1132,8 +1292,10 @@ namespace Server.Mobiles
                     case ComboType.Exp_FB_Poison_Light:
                     case ComboType.Exp_FB_MA_Light:
                     case ComboType.Exp_Poison_FB_Light:
+                    {
                         spell = new ExplosionSpell(m_Mobile, null);
                         break;
+                    }
                 }
             }
             else if (m_Combo == 2)
@@ -1141,26 +1303,40 @@ namespace Server.Mobiles
                 switch (m_ComboType)
                 {
                     case ComboType.Exp_FS_Poison:
+                    {
                         spell = new FlameStrikeSpell(m_Mobile, null);
                         break;
+                    }
                     case ComboType.Exp_MB_Poison:
+                    {
                         spell = new MindBlastSpell(m_Mobile, null);
                         break;
+                    }
                     case ComboType.Exp_EB_Poison:
+                    {
                         spell = new EnergyBoltSpell(m_Mobile, null);
                         break;
+                    }
                     case ComboType.Exp_FB_MA_Poison:
+                    {
                         spell = new FireballSpell(m_Mobile, null);
                         break;
+                    }
                     case ComboType.Exp_FB_Poison_Light:
+                    {
                         spell = new FireballSpell(m_Mobile, null);
                         break;
+                    }
                     case ComboType.Exp_FB_MA_Light:
+                    {
                         spell = new FireballSpell(m_Mobile, null);
                         break;
+                    }
                     case ComboType.Exp_Poison_FB_Light:
+                    {
                         spell = new PoisonSpell(m_Mobile, null);
                         break;
+                    }
                 }
             }
             else if (m_Combo == 3)
@@ -1170,21 +1346,31 @@ namespace Server.Mobiles
                     case ComboType.Exp_FS_Poison:
                     case ComboType.Exp_MB_Poison:
                     case ComboType.Exp_EB_Poison:
+                    {
                         spell = new PoisonSpell(m_Mobile, null);
                         EndCombo();
                         return spell;
+                    }
                     case ComboType.Exp_FB_MA_Poison:
+                    {
                         spell = new MagicArrowSpell(m_Mobile, null);
                         break;
+                    }
                     case ComboType.Exp_FB_Poison_Light:
+                    {
                         spell = new PoisonSpell(m_Mobile, null);
                         break;
+                    }
                     case ComboType.Exp_FB_MA_Light:
+                    {
                         spell = new MagicArrowSpell(m_Mobile, null);
                         break;
+                    }
                     case ComboType.Exp_Poison_FB_Light:
+                    {
                         spell = new FireballSpell(m_Mobile, null);
                         break;
+                    }
                 }
             }
             else if (m_Combo == 4)
@@ -1194,18 +1380,24 @@ namespace Server.Mobiles
                     case ComboType.Exp_FS_Poison:
                     case ComboType.Exp_MB_Poison:
                     case ComboType.Exp_EB_Poison:
+                    {
                         spell = new LightningSpell(m_Mobile, null);
                         EndCombo();
                         return spell;
+                    }
                     case ComboType.Exp_FB_MA_Poison:
+                    {
                         spell = new PoisonSpell(m_Mobile, null);
                         break;
+                    }
                     case ComboType.Exp_FB_Poison_Light:
                     case ComboType.Exp_FB_MA_Light:
                     case ComboType.Exp_Poison_FB_Light:
+                    {
                         spell = new LightningSpell(m_Mobile, null);
                         EndCombo();
                         return spell;
+                    }
                 }
             }
             else if (m_Combo == 5)
@@ -1219,16 +1411,20 @@ namespace Server.Mobiles
                     case ComboType.Exp_FB_Poison_Light:
                     case ComboType.Exp_FB_MA_Light:
                     case ComboType.Exp_Poison_FB_Light:
+                    {
                         spell = new LightningSpell(m_Mobile, null);
                         EndCombo();
                         return spell;
+                    }
                 }
             }
 
             m_Combo++; // Move to next spell
 
             if (spell == null)
+            {
                 spell = new PoisonSpell(m_Mobile, null);
+            }
 
             return spell;
         }
@@ -1255,7 +1451,9 @@ namespace Server.Mobiles
             Target targ = m_Mobile.Target;
 
             if (targ == null)
+            {
                 return false;
+            }
 
             bool harmful = IsHarmful(targ);
             bool beneficial = IsBeneficial(targ);
@@ -1273,7 +1471,9 @@ namespace Server.Mobiles
                 bool teleportAway = false;
 
                 if (isTeleport && m_Mobile.CanSwim)
+                {
                     targ.Cancel(m_Mobile, TargetCancelType.Canceled);
+                }
 
                 IDamageable toTarget = null;
 
@@ -1282,30 +1482,40 @@ namespace Server.Mobiles
                     toTarget = FindDispelTarget(false);
 
                     if (toTarget != null)
+                    {
                         RunTo(toTarget);
+                    }
                 }
                 else if (isDispelField)
                 {
                     Item field = GetHarmfulFieldItem();
 
                     if (field != null)
+                    {
                         targ.Invoke(m_Mobile, field);
+                    }
                     else
+                    {
                         targ.Cancel(m_Mobile, TargetCancelType.Canceled);
+                    }
                 }
                 else if (isAnimate)
                 {
                     Item corpse = FindCorpseToAnimate();
 
                     if (corpse != null)
+                    {
                         targ.Invoke(m_Mobile, corpse);
+                    }
                 }
                 else
                 {
                     toTarget = m_Mobile.Combatant;
 
                     if (toTarget != null)
+                    {
                         RunTo(toTarget);
+                    }
                 }
 
                 if (isSummon && toTarget != null)
@@ -1352,40 +1562,56 @@ namespace Server.Mobiles
                     {
                         case (int)Direction.Running:
                         case (int)Direction.North:
+                        {
                             y = p.Y - dist;
                             break;
+                        }
                         case 129:
                         case (int)Direction.Right:
+                        {
                             x = p.X + dist;
                             y = p.Y - dist;
                             break;
+                        }
                         case 130:
                         case (int)Direction.East:
+                        {
                             x = p.X + dist;
                             break;
+                        }
                         case 131:
                         case (int)Direction.Down:
+                        {
                             x = p.X + dist;
                             y = p.Y + dist;
                             break;
+                        }
                         case 132:
                         case (int)Direction.South:
+                        {
                             y = p.Y + dist;
                             break;
+                        }
                         case 133:
                         case (int)Direction.Left:
+                        {
                             x = p.X - dist;
                             y = p.Y + dist;
                             break;
+                        }
                         case 134:
                         case (int)Direction.West:
+                        {
                             x = p.X - dist;
                             break;
+                        }
                         case (int)Direction.ValueMask:
                         case (int)Direction.Up:
+                        {
                             x = p.X - dist;
                             y = p.Y - dist;
                             break;
+                        }
                     }
 
                     LandTarget lt = new LandTarget(new Point3D(x, y, z), map);
@@ -1455,7 +1681,9 @@ namespace Server.Mobiles
                     int teleRange = targ.Range;
 
                     if (teleRange < 0)
+                    {
                         teleRange = 11;
+                    }
 
                     for (int i = 0; i < 10; ++i)
                     {
@@ -1487,7 +1715,9 @@ namespace Server.Mobiles
                 IDamageable toTarget = m_Mobile.Combatant;
 
                 if (toTarget != null)
+                {
                     RunTo(toTarget);
+                }
 
                 if (harmful && toTarget != null)
                 {
@@ -1525,7 +1755,9 @@ namespace Server.Mobiles
                     Type type = null;
 
                     if (c.Owner != null)
+                    {
                         type = c.Owner.GetType();
+                    }
 
                     BaseCreature owner = c.Owner as BaseCreature;
 
@@ -1550,7 +1782,9 @@ namespace Server.Mobiles
         public virtual void TryReveal()
         {
             if (!m_Mobile.Alive || m_Mobile.Map == null)
+            {
                 return;
+            }
 
             m_RevealTarget = new LandTarget(LastTargetLoc, m_Mobile.Map);
 
@@ -1559,7 +1793,9 @@ namespace Server.Mobiles
                 Spell spell = new RevealSpell(m_Mobile, null);
 
                 if (spell.Cast())
+                {
                     LastTarget = null; // only do it once
+                }
 
                 NextCastTime = DateTime.UtcNow + GetDelay(spell);
             }

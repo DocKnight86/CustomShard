@@ -74,11 +74,15 @@ namespace Server.Mobiles
                 {
                     DamageStore ds = rights[i];
                     if (ds.m_HasRight)
+                    {
                         toGive.Add(ds.m_Mobile);
+                    }
                 }
 
                 if (toGive.Count > 0)
+                {
                     toGive[Utility.Random(toGive.Count)].AddToBackpack(new YellowKey1());
+                }
 
                 ColUtility.Free(toGive);
             }
@@ -92,7 +96,9 @@ namespace Server.Mobiles
             if (Map != null && Region.Find(Location, Map).IsPartOf("Underworld"))
             {
                 if (Z < 0 && X >= 1177 && X <= 1183 && Y >= 877 && Y <= 886)
+                {
                     Z = 0;
+                }
             }
         }
 

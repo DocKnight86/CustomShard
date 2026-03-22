@@ -25,17 +25,25 @@ namespace Server.Items
                             if (raider.InRange(m.Location, 1))
                             {
                                 if (raider.TryArrest(from))
+                                {
                                     Delete();
+                                }
                             }
                             else
+                            {
                                 m.SendLocalizedMessage(1152242); // You cannot reach that.
+                            }
                         }
                         else
+                        {
                             m.SendLocalizedMessage(1152243); // You cannot arrest that.
+                        }
                     });
             }
             else
+            {
                 from.SendLocalizedMessage(1116249); // That must be in your backpack for you to use it.
+            }
         }
 
         public GuardsmansRope(Serial serial)

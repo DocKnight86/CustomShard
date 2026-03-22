@@ -46,10 +46,14 @@ namespace Server.Engines.CityLoyalty
             set
             {
                 if (Player == null)
+                {
                     return;
+                }
 
                 if (!_Utilizing && value)
+                {
                     TradeDealExpires = DateTime.UtcNow + TimeSpan.FromHours(CityLoyaltySystem.TradeDealUtilizationPeriod);
+                }
 
                 if (_Utilizing && !value)
                 {

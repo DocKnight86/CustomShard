@@ -64,7 +64,9 @@ namespace Server.Mobiles
                 ExpireTimer timer;
 
                 if (m_Table.TryGetValue(defender, out timer))
+                {
                     timer.DoExpire();
+                }
 
                 defender.FixedParticles(0x3709, 10, 30, 5052, EffectLayer.LeftFoot);
                 defender.PlaySound(0x208);

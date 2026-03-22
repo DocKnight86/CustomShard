@@ -29,13 +29,17 @@ namespace Server.Mobiles
                 from.SendGump(new InternalGump(this));
             }
             else
+            {
                 base.OnDoubleClick(from);
+            }
         }
 
         public override void AddCustomContextEntries(Mobile from, List<ContextMenuEntry> list)
         {
             if (from.Alive && IsOwner(from))
+            {
                 list.Add(new AttendantUseEntry(this, 6244));
+            }
 
             base.AddCustomContextEntries(from, list);
         }
@@ -111,7 +115,9 @@ namespace Server.Mobiles
             public override void OnResponse(NetState sender, RelayInfo info)
             {
                 if (m_Dealer == null || m_Dealer.Deleted)
+                {
                     return;
+                }
 
                 if (info.ButtonID == 1)
                 {
@@ -142,7 +148,9 @@ namespace Server.Mobiles
                         }
 
                         if (m_Dealer.m_Count > 0 && DateTime.UtcNow - m_Dealer.m_NextUse < TimeSpan.FromSeconds(m_Dealer.m_Count))
+                        {
                             m_Dealer.m_NextUse = DateTime.UtcNow + TimeSpan.FromSeconds(3);
+                        }
 
                         if (m_Dealer.m_Count++ == 5)
                         {
@@ -151,7 +159,9 @@ namespace Server.Mobiles
                         }
                     }
                     else
+                    {
                         sender.Mobile.SendLocalizedMessage(501789); // You must wait before trying again.
+                    }
 
                     sender.Mobile.SendGump(new InternalGump(m_Dealer, dice, faces));
                 }

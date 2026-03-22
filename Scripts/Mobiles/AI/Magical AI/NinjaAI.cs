@@ -22,20 +22,28 @@ namespace Server.Mobiles
         private void TryPerformHide()
         {
             if (!m_Mobile.Alive || m_Mobile.Deleted)
+            {
                 return;
+            }
 
             if (!m_Mobile.Hidden && Core.TickCount - m_Mobile.NextSkillTime >= 0)
             {
                 double chance = 0.05;
 
                 if (m_Mobile.Hits < 20)
+                {
                     chance = 0.10;
+                }
 
                 if (m_Mobile.Poisoned)
+                {
                     chance = 0.01;
+                }
 
                 if (Utility.RandomDouble() < chance)
+                {
                     HideSelf();
+                }
             }
         }
 
@@ -59,7 +67,9 @@ namespace Server.Mobiles
             int skill = (int)m_Mobile.Skills[SkillName.Ninjitsu].Value;
 
             if (skill < 40)
+            {
                 return null;
+            }
 
             if (skill >= 60)
             {
@@ -75,23 +85,35 @@ namespace Server.Mobiles
             int skill = (int)m_Mobile.Skills[SkillName.Ninjitsu].Value;
 
             if (skill < 40)
+            {
                 return null;
+            }
 
             int avail = 1;
 
             if (skill >= 85)
+            {
                 avail = 3;
+            }
             else if (skill >= 80)
+            {
                 avail = 2;
+            }
 
             switch (Utility.Random(avail))
             {
                 case 0:
+                {
                     return SpellRegistry.GetSpecialMove(500); //new FocusAttack();
+                }
                 case 1:
+                {
                     return SpellRegistry.GetSpecialMove(503); //new KiAttack();
+                }
                 case 2:
+                {
                     return SpellRegistry.GetSpecialMove(501); //new DeathStrike();
+                }
             }
 
             return null;
@@ -137,7 +159,9 @@ namespace Server.Mobiles
                 INinjaWeapon toUse = list[Utility.Random(list.Count)];
 
                 if (toUse != null)
+                {
                     NinjaWeapon.Shoot(m_Mobile, c, toUse);
+                }
             }
 
             ColUtility.Free(list);
@@ -150,7 +174,9 @@ namespace Server.Mobiles
             base.DoActionWander();
 
             if (m_Mobile.Combatant == null)
+            {
                 TryPerformHide();
+            }
 
             return true;
         }
@@ -210,9 +236,14 @@ namespace Server.Mobiles
             int skill = (int)m_Mobile.Skills[SkillName.Ninjitsu].Value;
 
             if (skill >= 85)
+            {
                 return TimeSpan.FromSeconds(15);
+            }
+
             if (skill > 40)
+            {
                 return TimeSpan.FromSeconds(30);
+            }
 
             return TimeSpan.FromSeconds(45);
         }

@@ -103,20 +103,10 @@ namespace Server.Mobiles
             AddLoot(LootPack.Potions);
         }
 
-        public override void OnDeath(Container c)
-        {
-            base.OnDeath(c);
-
-            if (!Controlled && Utility.RandomDouble() < 0.3)
-            {
-                c.DropItem(new KirinBrains());
-            }
-        }
-
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(1); // version
+            writer.Write(0); // version
         }
 
         public override void Deserialize(GenericReader reader)

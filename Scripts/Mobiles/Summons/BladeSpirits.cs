@@ -100,7 +100,9 @@ namespace Server.Mobiles
                     if (m is EnergyVortex || m is BladeSpirits)
                     {
                         if (((BaseCreature)m).Summoned)
+                        {
                             spirtsOrVortexes.Add(m);
+                        }
                     }
                 }
 

@@ -126,9 +126,9 @@ namespace Server.Mobiles.MannequinProperty
         {
             bool matches = false;
 
-            for (var index = 0; index < items.Count; index++)
+            for (int index = 0; index < items.Count; index++)
             {
-                var x = items[index];
+                Item x = items[index];
 
                 if (!CheckMedable(x))
                 {
@@ -172,9 +172,9 @@ namespace Server.Mobiles.MannequinProperty
         {
             double total = 0;
 
-            for (var index = 0; index < items.Count; index++)
+            for (int index = 0; index < items.Count; index++)
             {
-                var x = items[index];
+                Item x = items[index];
 
                 total += GetPropertyValue(x);
             }
@@ -213,7 +213,7 @@ namespace Server.Mobiles.MannequinProperty
 
         public override bool Matches(List<Item> items)
         {
-            for (var index = 0; index < items.Count; index++)
+            for (int index = 0; index < items.Count; index++)
             {
                 Item i = items[index];
 
@@ -249,7 +249,7 @@ namespace Server.Mobiles.MannequinProperty
 
         public override bool Matches(List<Item> items)
         {
-            for (var index = 0; index < items.Count; index++)
+            for (int index = 0; index < items.Count; index++)
             {
                 Item i = items[index];
 

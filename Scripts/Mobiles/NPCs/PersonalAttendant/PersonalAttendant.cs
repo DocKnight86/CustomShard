@@ -45,7 +45,9 @@ namespace Server.Mobiles
         public static bool CheckAttendant(Mobile owner)
         {
             if (owner != null)
+            {
                 return m_Table.ContainsKey(owner);
+            }
 
             return false;
         }
@@ -53,13 +55,17 @@ namespace Server.Mobiles
         public static void AddAttendant(Mobile owner, PersonalAttendant attendant)
         {
             if (owner != null)
+            {
                 m_Table[owner] = attendant;
+            }
         }
 
         public static void RemoveAttendant(Mobile owner)
         {
             if (owner != null)
+            {
                 m_Table.Remove(owner);
+            }
         }
 
         public virtual void InitBody()
@@ -97,9 +103,13 @@ namespace Server.Mobiles
             RemoveAttendant(owner);
 
             if (m_BindedToPlayer)
+            {
                 owner.AddToBackpack(new PersonalAttendantDeed(owner));
+            }
             else
+            {
                 owner.AddToBackpack(new PersonalAttendantDeed());
+            }
 
             Delete();
         }
@@ -134,7 +144,9 @@ namespace Server.Mobiles
             base.OnAfterDelete();
 
             if (m_Timer != null)
+            {
                 m_Timer.Stop();
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -183,9 +195,13 @@ namespace Server.Mobiles
                     if (m != null)
                     {
                         if ((m.NetState == null || !m.Alive) && !m_Attendant.InGreetingMode(m))
+                        {
                             m_Attendant.Dismiss(m);
+                        }
                         else if (m_Attendant.MovementMode == MovementType.Follow && !m.InRange(m_Attendant.Location, 12))
+                        {
                             DelayCall(TimeSpan.FromSeconds(1), CatchUp, m.Location);
+                        }
                     }
                 }
             }
@@ -221,7 +237,9 @@ namespace Server.ContextMenus
         public override void OnClick()
         {
             if (m_Attendant == null || m_Attendant.Deleted)
+            {
                 return;
+            }
 
             m_Attendant.CommandFollow(Owner.From);
         }
@@ -239,7 +257,9 @@ namespace Server.ContextMenus
         public override void OnClick()
         {
             if (m_Attendant == null || m_Attendant.Deleted)
+            {
                 return;
+            }
 
             m_Attendant.CommandStop(Owner.From);
         }
@@ -257,7 +277,9 @@ namespace Server.ContextMenus
         public override void OnClick()
         {
             if (m_Attendant == null || m_Attendant.Deleted)
+            {
                 return;
+            }
 
             m_Attendant.Dismiss(Owner.From);
         }
@@ -275,7 +297,9 @@ namespace Server.ContextMenus
         public override void OnClick()
         {
             if (m_Attendant == null || m_Attendant.Deleted)
+            {
                 return;
+            }
 
             m_Attendant.OnDoubleClick(Owner.From);
         }

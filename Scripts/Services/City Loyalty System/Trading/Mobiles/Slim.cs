@@ -128,7 +128,7 @@ namespace Server.Engines.CityLoyalty
                 case 1:
                     Item item = Loot.RandomArmorOrShieldOrWeaponOrJewelry(false, false);
 
-                    TreasureMapChest.GetRandomItemStat(out var min, out var max);
+                    TreasureMapChest.GetRandomItemStat(out int min, out int max);
 
                     RunicReforging.GenerateRandomItem(item, 0, min, max);
                     return item;

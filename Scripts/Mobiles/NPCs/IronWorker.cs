@@ -64,14 +64,20 @@ namespace Server.Mobiles
             {
                 case 0:
                 case 1:
+                {
                     AddItem(new JesterHat(Utility.RandomBrightHue()));
                     break;
+                }
                 case 2:
+                {
                     AddItem(new Bandana(Utility.RandomBrightHue()));
                     break;
+                }
                 case 3:
+                {
                     AddItem(new Bascinet());
                     break;
+                }
             }
 
             if (item == null)

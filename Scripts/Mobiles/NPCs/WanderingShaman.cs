@@ -21,7 +21,9 @@ namespace Server.Mobiles
             while (--i >= 0)
             {
                 if (i < Items.Count && Items[i] is BaseClothing)
+                {
                     Items[i].Delete();
+                }
             }
 
             SetWearable(new TribalMask(), 2500);

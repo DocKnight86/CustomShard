@@ -29,19 +29,29 @@ namespace Server.Mobiles
             switch (Utility.Random(5))
             {
                 case 0:
+                {
                     break;
+                }
                 case 1:
+                {
                     AddItem(new Bascinet());
                     break;
+                }
                 case 2:
+                {
                     AddItem(new CloseHelm());
                     break;
+                }
                 case 3:
+                {
                     AddItem(new NorseHelm());
                     break;
+                }
                 case 4:
+                {
                     AddItem(new Helmet());
                     break;
+                }
             }
 
             SetStr(86, 100);

@@ -114,7 +114,9 @@ namespace Server.Mobiles
             base.OnCombatantChange();
 
             if (Hidden && Combatant != null)
+            {
                 Combatant = null;
+            }
         }
 
         public virtual void SendTrackingSound()
@@ -129,7 +131,9 @@ namespace Server.Mobiles
                 Frozen = false;
 
                 if (m_SoundTimer != null)
+                {
                     m_SoundTimer.Stop();
+                }
 
                 m_SoundTimer = null;
             }
@@ -151,13 +155,17 @@ namespace Server.Mobiles
                         int z = Z;
 
                         if (!map.CanFit(x, y, z, 16, false, false))
+                        {
                             continue;
+                        }
 
                         Point3D from = Location;
                         Point3D to = new Point3D(x, y, z);
 
                         if (!InLOS(to))
+                        {
                             continue;
+                        }
 
                         Location = to;
                         ProcessDelta();

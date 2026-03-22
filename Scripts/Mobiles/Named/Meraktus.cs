@@ -118,7 +118,9 @@ namespace Server.Mobiles
         {
             base.OnGaveMeleeAttack(defender);
             if (0.2 >= Utility.RandomDouble())
+            {
                 Earthquake();
+            }
         }
 
         public void Earthquake()
@@ -158,7 +160,9 @@ namespace Server.Mobiles
                 Mobile m = (Mobile)targets[i];
 
                 if (m == null || m.Deleted)
+                {
                     continue;
+                }
 
                 if (m is PlayerMobile pm && pm.Mounted)
                 {
@@ -168,16 +172,22 @@ namespace Server.Mobiles
                 double damage = m.Hits * 0.6;//was .6
 
                 if (damage < 10.0)
+                {
                     damage = 10.0;
+                }
                 else if (damage > 75.0)
+                {
                     damage = 75.0;
+                }
 
                 DoHarmful(m);
 
                 AOS.Damage(m, this, (int)damage, 100, 0, 0, 0, 0);
 
                 if (m.Alive && m.Body.IsHuman && !m.Mounted)
+                {
                     m.Animate(20, 7, 1, true, false, 0); // take hit
+                }
             }
         }
 

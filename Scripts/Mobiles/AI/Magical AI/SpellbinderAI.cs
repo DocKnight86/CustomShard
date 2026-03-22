@@ -35,7 +35,9 @@ namespace Server.Mobiles
         public override bool Think()
         {
             if (m_Mobile.Deleted)
+            {
                 return false;
+            }
 
             Target targ = m_Mobile.Target;
 
@@ -91,7 +93,9 @@ namespace Server.Mobiles
                     if (m_Mobile.Hits < m_Mobile.HitsMax - 50)
                     {
                         if (!new GreaterHealSpell(m_Mobile, null).Cast())
+                        {
                             new HealSpell(m_Mobile, null).Cast();
+                        }
                     }
                     else if (m_Mobile.Hits < m_Mobile.HitsMax - 10)
                     {
@@ -108,16 +112,22 @@ namespace Server.Mobiles
             if (m.Paralyzed || m.Frozen)
             {
                 if (m_Mobile.InRange(m, 1))
+                {
                     RunFrom(m);
+                }
                 else if (!m_Mobile.InRange(m, m_Mobile.RangeFight > 2 ? m_Mobile.RangeFight : 2) && !MoveTo(m, true, 1))
+                {
                     OnFailedMove();
+                }
             }
             else
             {
                 if (!m_Mobile.InRange(m, m_Mobile.RangeFight))
                 {
                     if (!MoveTo(m, true, 1))
+                    {
                         OnFailedMove();
+                    }
                 }
                 else if (m_Mobile.InRange(m, m_Mobile.RangeFight - 1))
                 {
@@ -158,12 +168,16 @@ namespace Server.Mobiles
         {
             if (m_Mobile.Spell != null && m_Mobile.Spell.IsCasting || !m_Mobile.CanMove || m_Mobile.Paralyzed ||
                 m_Mobile.Frozen || m_Mobile.DisallowAllMoves)
+            {
                 return;
+            }
 
             m_Mobile.Direction = d | Direction.Running;
 
             if (!DoMove(m_Mobile.Direction, true))
+            {
                 OnFailedMove();
+            }
         }
 
         public virtual Spell GetRandomCurseSpell()
@@ -172,10 +186,14 @@ namespace Server.Mobiles
             int mage = (int)((m_Mobile.Skills[SkillName.Magery].Value + 50.0) / (100.0 / 7.0));
 
             if (mage < 1)
+            {
                 mage = 1;
+            }
 
             if (necro < 1)
+            {
                 necro = 1;
+            }
 
             if (m_Mobile.Skills[SkillName.Necromancy].Value > 30 && Utility.Random(necro) > Utility.Random(mage))
             {
@@ -183,27 +201,41 @@ namespace Server.Mobiles
                 {
                     case 0:
                     case 1:
+                    {
                         return new CorpseSkinSpell(m_Mobile, null);
+                    }
                     case 2:
                     case 3:
+                    {
                         return new MindRotSpell(m_Mobile, null);
+                    }
                     default:
+                    {
                         return new MindRotSpell(m_Mobile, null);
+                    }
                 }
             }
 
             if (Utility.RandomBool() && mage > 3)
+            {
                 return new CurseSpell(m_Mobile, null);
+            }
 
             switch (Utility.Random(3))
             {
                 default:
                 case 0:
+                {
                     return new WeakenSpell(m_Mobile, null);
+                }
                 case 1:
+                {
                     return new ClumsySpell(m_Mobile, null);
+                }
                 case 2:
+                {
                     return new FeeblemindSpell(m_Mobile, null);
+                }
             }
         }
 
@@ -212,7 +244,9 @@ namespace Server.Mobiles
             if (Utility.RandomBool())
             {
                 if (m_Mobile.Skills[SkillName.Magery].Value >= 80.0)
+                {
                     return new ManaVampireSpell(m_Mobile, null);
+                }
             }
 
             return new ManaDrainSpell(m_Mobile, null);
@@ -221,7 +255,9 @@ namespace Server.Mobiles
         public virtual Spell DoDispel(Mobile toDispel)
         {
             if (ScaleByMagery(DispelChance) > Utility.RandomDouble())
+            {
                 return new DispelSpell(m_Mobile, null);
+            }
 
             return ChooseSpell(toDispel);
         }
@@ -258,7 +294,9 @@ namespace Server.Mobiles
                         m_Mobile.DebugSay("Attempting to BloodOath");
 
                         if (!mob.Poisoned)
+                        {
                             spell = new BloodOathSpell(m_Mobile, null);
+                        }
 
                         break;
                     }
@@ -283,7 +321,9 @@ namespace Server.Mobiles
                         m_Mobile.DebugSay("Attempting to paralyze");
 
                         if (m_Mobile.Skills[SkillName.Magery].Value > 50.0)
+                        {
                             spell = new ParalyzeSpell(m_Mobile, null);
+                        }
 
                         break;
                     }
@@ -299,7 +339,9 @@ namespace Server.Mobiles
                         m_Mobile.DebugSay("Attempting to blood oath");
 
                         if (m_Mobile.Skills[SkillName.Necromancy].Value > 30 && BloodOathSpell.GetBloodOath(mob) != m_Mobile)
+                        {
                             spell = new BloodOathSpell(m_Mobile, null);
+                        }
 
                         break;
                     }
@@ -407,9 +449,13 @@ namespace Server.Mobiles
                 if (toDispel != null)
                 {
                     if (m_Mobile.InRange(toDispel, 10))
+                    {
                         RunFrom(toDispel);
+                    }
                     else if (!m_Mobile.InRange(toDispel, 12))
+                    {
                         RunTo(toDispel);
+                    }
                 }
                 else if (c is Mobile m)
                 {
@@ -452,7 +498,9 @@ namespace Server.Mobiles
                     if (m_Mobile.Hits < m_Mobile.HitsMax - 50)
                     {
                         if (!new GreaterHealSpell(m_Mobile, null).Cast())
+                        {
                             new HealSpell(m_Mobile, null).Cast();
+                        }
                     }
                     else if (m_Mobile.Hits < m_Mobile.HitsMax - 10)
                     {
@@ -501,7 +549,9 @@ namespace Server.Mobiles
         public Mobile FindDispelTarget(bool activeOnly)
         {
             if (m_Mobile.Deleted || m_Mobile.Int < 95 || CanDispel(m_Mobile) || m_Mobile.AutoDispel)
+            {
                 return null;
+            }
 
             if (activeOnly)
             {
@@ -520,7 +570,9 @@ namespace Server.Mobiles
                     activePrio = m_Mobile.GetDistanceToSqrt(comb);
 
                     if (activePrio <= 2)
+                    {
                         return active;
+                    }
                 }
 
                 for (int i = 0; i < aggressed.Count; ++i)
@@ -538,7 +590,9 @@ namespace Server.Mobiles
                             activePrio = prio;
 
                             if (activePrio <= 2)
+                            {
                                 return active;
+                            }
                         }
                     }
                 }
@@ -558,7 +612,9 @@ namespace Server.Mobiles
                             activePrio = prio;
 
                             if (activePrio <= 2)
+                            {
                                 return active;
+                            }
                         }
                     }
                 }
@@ -617,20 +673,28 @@ namespace Server.Mobiles
         {
             // If I'm poisoned, always attempt to cure.
             if (m_Mobile.Poisoned)
+            {
                 return new CureSpell(m_Mobile, null);
+            }
 
             // Summoned creatures never heal themselves.
             if (m_Mobile.Summoned)
+            {
                 return null;
+            }
 
             if (m_Mobile.Controlled)
             {
                 if (DateTime.UtcNow < m_NextHealTime)
+                {
                     return null;
+                }
             }
 
             if (ScaleByMagery(HealChance) < Utility.RandomDouble())
+            {
                 return null;
+            }
 
             Spell spell = null;
 
@@ -639,14 +703,20 @@ namespace Server.Mobiles
                 spell = new GreaterHealSpell(m_Mobile, null);
             }
             else if (m_Mobile.Hits < m_Mobile.HitsMax - 10)
+            {
                 spell = new HealSpell(m_Mobile, null);
+            }
 
             double delay;
 
             if (m_Mobile.Int >= 500)
+            {
                 delay = Utility.RandomMinMax(7, 10);
+            }
             else
+            {
                 delay = Math.Sqrt(600 - m_Mobile.Int);
+            }
 
             m_Mobile.UseSkill(SkillName.SpiritSpeak);
 
@@ -678,7 +748,9 @@ namespace Server.Mobiles
                 toTarget = FindDispelTarget(false);
 
                 if (toTarget != null && m_Mobile.InRange(toTarget, 10))
+                {
                     RunFrom(toTarget);
+                }
             }
             else if (isParalyze || isTeleport)
             {
@@ -689,7 +761,9 @@ namespace Server.Mobiles
                     toTarget = m_Mobile.Combatant as Mobile;
 
                     if (toTarget != null)
+                    {
                         RunTo(toTarget);
+                    }
                 }
                 else if (m_Mobile.InRange(toTarget, 10))
                 {
@@ -706,7 +780,9 @@ namespace Server.Mobiles
                 toTarget = m_Mobile.Combatant as Mobile;
 
                 if (toTarget != null)
+                {
                     RunTo(toTarget);
+                }
             }
 
             if ((targ.Flags & TargetFlags.Harmful) != 0 && toTarget != null)
@@ -772,7 +848,9 @@ namespace Server.Mobiles
                 int teleRange = targ.Range;
 
                 if (teleRange < 0)
+                {
                     teleRange = 12;
+                }
 
                 for (int i = 0; i < 10; ++i)
                 {

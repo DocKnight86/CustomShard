@@ -58,7 +58,9 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (Paragon.ChestChance > Utility.RandomDouble())
+            {
                 c.DropItem(new ParagonChest(Name, 5));
+            }
         }
 
         public override void GenerateLoot()

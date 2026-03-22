@@ -397,7 +397,9 @@ namespace Server.Mobiles
                                 if (m_Price > 0 && !Banker.Withdraw(m_From, m_Price))
                                 {
                                     if (m_Vendor != null)
+                                    {
                                         m_Vendor.PrivateOverheadMessage(MessageType.Regular, 0x3B2, 1042293, m_From.NetState);
+                                    }
                                     // You cannot afford my services for that style.
 
                                     return;
@@ -575,7 +577,9 @@ namespace Server.Mobiles
                 int gumpID = female ? entries[i].GumpID_Female : entries[i].GumpID_Male;
 
                 if (gumpID == -1)
+                {
                     continue;
+                }
 
                 if (gumpID != 0)
                 {
@@ -684,7 +688,7 @@ namespace Server.Mobiles
 
                                         if (m_FacialHair)
                                         {
-                                            var old = m_From.FacialHairItemID;
+                                            int old = m_From.FacialHairItemID;
 
                                             m_From.FacialHairItemID = itemID;
 
@@ -742,7 +746,9 @@ namespace Server.Mobiles
             }
 
             if (m_Token != null)
+            {
                 m_Token.OnFailedHairstyle(m_From, m_FacialHair);
+            }
         }
     }
 }

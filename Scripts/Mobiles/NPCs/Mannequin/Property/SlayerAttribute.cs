@@ -24,7 +24,9 @@ namespace Server.Mobiles.MannequinProperty
             foreach (Item item in items)
             {
                 if (item is ISlayer slayer)
+                {
                     return slayer.Slayer == Slayer || slayer.Slayer2 == Slayer;
+                }
             }
 
             return false;
@@ -51,7 +53,9 @@ namespace Server.Mobiles.MannequinProperty
             foreach (Item item in items)
             {
                 if (item is BaseTalisman talisman)
+                {
                     return talisman.Slayer == Slayer;
+                }
             }
 
             return false;

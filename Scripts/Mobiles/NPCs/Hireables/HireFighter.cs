@@ -46,11 +46,15 @@ namespace Server.Mobiles
             switch (Utility.Random(2))
             {
                 case 0:
+                {
                     AddItem(new Shoes(Utility.RandomNeutralHue()));
                     break;
+                }
                 case 1:
+                {
                     AddItem(new Boots(Utility.RandomNeutralHue()));
                     break;
+                }
             }
 
             AddItem(new Shirt());
@@ -58,20 +62,30 @@ namespace Server.Mobiles
             switch (Utility.Random(5))
             {
                 case 0:
+                {
                     AddItem(new Longsword());
                     break;
+                }
                 case 1:
+                {
                     AddItem(new Broadsword());
                     break;
+                }
                 case 2:
+                {
                     AddItem(new VikingSword());
                     break;
+                }
                 case 3:
+                {
                     AddItem(new BattleAxe());
                     break;
+                }
                 case 4:
+                {
                     AddItem(new TwoHandedAxe());
                     break;
+                }
             }
 
             if (FindItemOnLayer(Layer.TwoHanded) == null)
@@ -79,76 +93,110 @@ namespace Server.Mobiles
                 switch (Utility.Random(8))
                 {
                     case 0:
+                    {
                         AddItem(new BronzeShield());
                         break;
+                    }
                     case 1:
+                    {
                         AddItem(new HeaterShield());
                         break;
+                    }
                     case 2:
+                    {
                         AddItem(new MetalKiteShield());
                         break;
+                    }
                     case 3:
+                    {
                         AddItem(new MetalShield());
                         break;
+                    }
                     case 4:
+                    {
                         AddItem(new WoodenKiteShield());
                         break;
+                    }
                     case 5:
+                    {
                         AddItem(new WoodenShield());
                         break;
+                    }
                     case 6:
+                    {
                         AddItem(new OrderShield());
                         break;
+                    }
                     case 7:
+                    {
                         AddItem(new ChaosShield());
                         break;
+                    }
                 }
             }
 
             switch (Utility.Random(5))
             {
                 case 0:
+                {
                     break;
+                }
                 case 1:
+                {
                     AddItem(new Bascinet());
                     break;
+                }
                 case 2:
+                {
                     AddItem(new CloseHelm());
                     break;
+                }
                 case 3:
+                {
                     AddItem(new NorseHelm());
                     break;
+                }
                 case 4:
+                {
                     AddItem(new Helmet());
                     break;
+                }
             }
             // Pick some armour
             switch (Utility.Random(4))
             {
                 case 0: // Leather
+                {
                     AddItem(new LeatherChest());
                     AddItem(new LeatherArms());
                     AddItem(new LeatherGloves());
                     AddItem(new LeatherGorget());
                     AddItem(new LeatherLegs());
                     break;
+                }
                 case 1: // Studded Leather
+                {
                     AddItem(new StuddedChest());
                     AddItem(new StuddedArms());
                     AddItem(new StuddedGloves());
                     AddItem(new StuddedGorget());
                     AddItem(new StuddedLegs());
                     break;
+                }
                 case 2: // Ringmail
+                {
                     AddItem(new RingmailChest());
                     AddItem(new RingmailArms());
                     AddItem(new RingmailGloves());
                     AddItem(new RingmailLegs());
                     break;
+                }
                 case 3: // Chain
+                {
                     AddItem(new ChainChest());
                     AddItem(new ChainLegs());
                     break;
+                }
             }
 
             PackGold(25, 100);

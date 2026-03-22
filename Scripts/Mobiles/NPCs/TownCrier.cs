@@ -32,7 +32,9 @@ namespace Server.Mobiles
             get
             {
                 if (m_Instance == null)
+                {
                     m_Instance = new GlobalTownCrierEntryList();
+                }
 
                 return m_Instance;
             }
@@ -57,21 +59,29 @@ namespace Server.Mobiles
         public TownCrierEntry GetRandomEntry()
         {
             if (m_Entries == null || m_Entries.Count == 0)
+            {
                 return null;
+            }
 
             for (int i = m_Entries.Count - 1; m_Entries != null && i >= 0; --i)
             {
                 if (i >= m_Entries.Count)
+                {
                     continue;
+                }
 
                 TownCrierEntry tce = m_Entries[i];
 
                 if (tce.Expired)
+                {
                     RemoveEntry(tce);
+                }
             }
 
             if (m_Entries == null || m_Entries.Count == 0)
+            {
                 return null;
+            }
 
             return m_Entries[Utility.Random(m_Entries.Count)];
         }
@@ -79,7 +89,9 @@ namespace Server.Mobiles
         public TownCrierEntry AddEntry(TextDefinition[] lines, TimeSpan duration)
         {
             if (m_Entries == null)
+            {
                 m_Entries = new List<TownCrierEntry>();
+            }
 
             TownCrierEntry tce = new TownCrierEntry(lines, duration);
 
@@ -96,7 +108,9 @@ namespace Server.Mobiles
         public void AddEntry(TownCrierEntry entry)
         {
             if (m_Entries == null)
+            {
                 m_Entries = new List<TownCrierEntry>();
+            }
 
             m_Entries.Add(entry);
 
@@ -109,12 +123,16 @@ namespace Server.Mobiles
         public void RemoveEntry(TownCrierEntry tce)
         {
             if (m_Entries == null)
+            {
                 return;
+            }
 
             m_Entries.Remove(tce);
 
             if (m_Entries.Count == 0)
+            {
                 m_Entries = null;
+            }
         }
 
         #region Serialization
@@ -191,9 +209,13 @@ namespace Server.Mobiles
             m_Lines = lines;
 
             if (duration < TimeSpan.Zero)
+            {
                 duration = TimeSpan.Zero;
+            }
             else if (duration > TimeSpan.FromDays(365.0))
+            {
                 duration = TimeSpan.FromDays(365.0);
+            }
 
             m_ExpireTime = DateTime.UtcNow + duration;
         }
@@ -231,7 +253,7 @@ namespace Server.Mobiles
             writer.Write(1);
 
             writer.Write(Lines.Length);
-            foreach (var str in Lines)
+            foreach (TextDefinition str in Lines)
             {
                 TextDefinition.Serialize(writer, str);
             }
@@ -260,7 +282,9 @@ namespace Server.Mobiles
             }
 
             if (ts < TimeSpan.Zero)
+            {
                 ts = TimeSpan.Zero;
+            }
 
             from.SendMessage("Duration set to: {0}", ts);
             from.SendMessage("Enter the first line to shout:");
@@ -300,7 +324,9 @@ namespace Server.Mobiles
         public override void OnCancel(Mobile from)
         {
             if (m_Entry != null)
+            {
                 m_Owner.RemoveEntry(m_Entry);
+            }
 
             if (m_Lines.Count > 0)
             {
@@ -310,9 +336,13 @@ namespace Server.Mobiles
             else
             {
                 if (m_Entry != null)
+                {
                     from.SendMessage("Message deleted.");
+                }
                 else
+                {
                     from.SendLocalizedMessage(502980); // Message entry cancelled.
+                }
             }
 
             from.SendGump(new TownCrierGump(from, m_Owner));
@@ -341,7 +371,9 @@ namespace Server.Mobiles
             int count = 0;
 
             if (entries != null)
+            {
                 count = entries.Count;
+            }
 
             AddImageTiled(0, 0, 300, 38 + (count == 0 ? 20 : count * 85), 0xA40);
             AddAlphaRegion(1, 1, 298, 36 + (count == 0 ? 20 : count * 85));
@@ -373,7 +405,9 @@ namespace Server.Mobiles
                         TimeSpan toExpire = tce.ExpireTime - DateTime.UtcNow;
 
                         if (toExpire < TimeSpan.Zero)
+                        {
                             toExpire = TimeSpan.Zero;
+                        }
 
                         StringBuilder sb = new StringBuilder();
 
@@ -398,7 +432,9 @@ namespace Server.Mobiles
                         for (int j = 0; j < tce.Lines.Length; ++j)
                         {
                             if (j > 0)
+                            {
                                 sb.Append("<br>");
+                            }
 
                             if (!string.IsNullOrEmpty(tce.Lines[j].String))
                             {
@@ -433,7 +469,9 @@ namespace Server.Mobiles
                     TimeSpan ts = tce.ExpireTime - DateTime.UtcNow;
 
                     if (ts < TimeSpan.Zero)
+                    {
                         ts = TimeSpan.Zero;
+                    }
 
                     m_From.SendMessage("Editing entry #{0}.", index + 1);
                     m_From.SendMessage("Push <ESC> to delete this entry.");
@@ -481,12 +519,16 @@ namespace Server.Mobiles
             switch (Utility.Random(2))
             {
                 case 0:
+                {
                     skirt = new Skirt();
                     break;
+                }
                 default:
                 case 1:
+                {
                     skirt = new Kilt();
                     break;
+                }
             }
 
             skirt.Hue = Utility.RandomGreenHue();
@@ -500,12 +542,16 @@ namespace Server.Mobiles
             switch (Utility.Random(2))
             {
                 case 0:
+                {
                     boots = new Boots();
                     break;
+                }
                 default:
                 case 1:
+                {
                     boots = new ThighBoots();
                     break;
+                }
             }
 
             AddItem(boots);
@@ -526,26 +572,36 @@ namespace Server.Mobiles
         public TownCrierEntry GetRandomEntry()
         {
             if (m_Entries == null || m_Entries.Count == 0)
+            {
                 return GlobalTownCrierEntryList.Instance.GetRandomEntry();
+            }
 
             for (int i = m_Entries.Count - 1; m_Entries != null && i >= 0; --i)
             {
                 if (i >= m_Entries.Count)
+                {
                     continue;
+                }
 
                 TownCrierEntry tce = m_Entries[i];
 
                 if (tce.Expired)
+                {
                     RemoveEntry(tce);
+                }
             }
 
             if (m_Entries == null || m_Entries.Count == 0)
+            {
                 return GlobalTownCrierEntryList.Instance.GetRandomEntry();
+            }
 
             TownCrierEntry entry = GlobalTownCrierEntryList.Instance.GetRandomEntry();
 
             if (entry == null || Utility.RandomBool())
+            {
                 entry = m_Entries[Utility.Random(m_Entries.Count)];
+            }
 
             return entry;
         }
@@ -558,7 +614,9 @@ namespace Server.Mobiles
         public TownCrierEntry AddEntry(TextDefinition[] lines, TimeSpan duration)
         {
             if (m_Entries == null)
+            {
                 m_Entries = new List<TownCrierEntry>();
+            }
 
             TownCrierEntry tce = new TownCrierEntry(lines, duration);
 
@@ -572,7 +630,9 @@ namespace Server.Mobiles
         public void AddEntry(TownCrierEntry entry)
         {
             if (m_Entries == null)
+            {
                 m_Entries = new List<TownCrierEntry>();
+            }
 
             m_Entries.Add(entry);
 
@@ -582,12 +642,16 @@ namespace Server.Mobiles
         public void RemoveEntry(TownCrierEntry tce)
         {
             if (m_Entries == null)
+            {
                 return;
+            }
 
             m_Entries.Remove(tce);
 
             if (m_Entries.Count == 0)
+            {
                 m_Entries = null;
+            }
 
             if (m_Entries == null && GlobalTownCrierEntryList.Instance.IsEmpty)
             {
@@ -731,7 +795,9 @@ namespace Server.Mobiles
             if (index < 0 || index >= tce.Lines.Length)
             {
                 if (m_NewsTimer != null)
+                {
                     m_NewsTimer.Stop();
+                }
 
                 m_NewsTimer = null;
             }

@@ -35,43 +35,63 @@ namespace Server.Mobiles
             switch (Utility.Random(3))
             {
                 case 0:
+                {
                     AddItem(new Lajatang());
                     break;
+                }
                 case 1:
+                {
                     AddItem(new Wakizashi());
                     break;
+                }
                 case 2:
+                {
                     AddItem(new NoDachi());
                     break;
+                }
             }
 
             switch (Utility.Random(3))
             {
                 case 0:
+                {
                     AddItem(new LeatherSuneate());
                     break;
+                }
                 case 1:
+                {
                     AddItem(new PlateSuneate());
                     break;
+                }
                 case 2:
+                {
                     AddItem(new StuddedHaidate());
                     break;
+                }
             }
 
             switch (Utility.Random(4))
             {
                 case 0:
+                {
                     AddItem(new LeatherJingasa());
                     break;
+                }
                 case 1:
+                {
                     AddItem(new ChainHatsuburi());
                     break;
+                }
                 case 2:
+                {
                     AddItem(new HeavyPlateJingasa());
                     break;
+                }
                 case 3:
+                {
                     AddItem(new DecorativePlateKabuto());
                     break;
+                }
             }
 
             AddItem(new LeatherDo());
@@ -83,7 +103,9 @@ namespace Server.Mobiles
             Utility.AssignRandomHair(this, hairHue);
 
             if (Utility.Random(7) != 0)
+            {
                 Utility.AssignRandomFacialHair(this, hairHue);
+            }
         }
 
         public override void GenerateLoot()

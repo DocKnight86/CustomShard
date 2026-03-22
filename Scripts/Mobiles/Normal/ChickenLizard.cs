@@ -110,8 +110,10 @@ namespace Server.Mobiles
             switch (version)
             {
                 case 1:
+                {
                     m_NextEgg = reader.ReadDateTime();
                     break;
+                }
             }
         }
     }

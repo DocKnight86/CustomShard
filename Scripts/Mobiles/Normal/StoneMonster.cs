@@ -15,23 +15,35 @@ namespace Server.Mobiles
             {
                 default:
                 case 0:
+                {
                     Body = 86;
                     break;
+                }
                 case 1:
+                {
                     Body = 722;
                     break;
+                }
                 case 2:
+                {
                     Body = 59;
                     break;
+                }
                 case 3:
+                {
                     Body = 85;
                     break;
+                }
                 case 4:
+                {
                     Body = 310;
                     break;
+                }
                 case 5:
+                {
                     Body = 83;
                     break;
+                }
             }
 
             Hue = 0;

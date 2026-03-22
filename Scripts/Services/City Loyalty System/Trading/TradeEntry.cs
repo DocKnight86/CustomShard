@@ -29,9 +29,9 @@ namespace Server.Engines.CityLoyalty
             {
                 string str = "";
 
-                for (var index = 0; index < Details.Count; index++)
+                for (int index = 0; index < Details.Count; index++)
                 {
-                    var d = Details[index];
+                    TradeDetails d = Details[index];
 
                     str += d.ItemType.Name + ", ";
                 }
@@ -68,9 +68,9 @@ namespace Server.Engines.CityLoyalty
 
             int gold = 0;
 
-            for (var index = 0; index < Details.Count; index++)
+            for (int index = 0; index < Details.Count; index++)
             {
-                var d = Details[index];
+                TradeDetails d = Details[index];
 
                 gold += d.Worth * 3;
             }
@@ -134,17 +134,17 @@ namespace Server.Engines.CityLoyalty
                     return true;
                 }
 
-                var list = Array.Empty<Type>();
+                Type[] list = Array.Empty<Type>();
 
-                for (var index = 0; index < Interchangeables.Length; index++)
+                for (int index = 0; index < Interchangeables.Length; index++)
                 {
-                    var l = Interchangeables[index];
+                    Type[] l = Interchangeables[index];
 
                     bool any = false;
 
-                    for (var i = 0; i < l.Length; i++)
+                    for (int i = 0; i < l.Length; i++)
                     {
-                        var t = l[i];
+                        Type t = l[i];
 
                         if (t == type)
                         {
@@ -160,9 +160,9 @@ namespace Server.Engines.CityLoyalty
                     }
                 }
 
-                for (var index = 0; index < list.Length; index++)
+                for (int index = 0; index < list.Length; index++)
                 {
-                    var t = list[index];
+                    Type t = list[index];
 
                     if (t == ItemType)
                     {
@@ -177,9 +177,9 @@ namespace Server.Engines.CityLoyalty
             {
                 int sum = 0;
 
-                for (var index = 0; index < crate.Items.Count; index++)
+                for (int index = 0; index < crate.Items.Count; index++)
                 {
-                    var i = crate.Items[index];
+                    Item i = crate.Items[index];
 
                     if (Match(i.GetType()))
                     {
@@ -236,9 +236,9 @@ namespace Server.Engines.CityLoyalty
             writer.Write(Distance);
 
             writer.Write(Details.Count);
-            for (var index = 0; index < Details.Count; index++)
+            for (int index = 0; index < Details.Count; index++)
             {
-                var d = Details[index];
+                TradeDetails d = Details[index];
 
                 d.Serialize(writer);
             }

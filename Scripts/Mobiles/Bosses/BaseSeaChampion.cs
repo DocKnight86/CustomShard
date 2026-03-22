@@ -269,16 +269,20 @@ namespace Server.Mobiles
                 default:
                 case Direction.South:
                 case Direction.North:
+                {
                     x = Utility.RandomBool() ? Utility.RandomMinMax(x -= distance, x -= (distance - range)) : Utility.RandomMinMax(x += (distance - range), x += distance);
                     y = Utility.RandomMinMax(y - 8, y + 8);
                     z = map.GetAverageZ(x, y);
                     break;
+                }
                 case Direction.East:
                 case Direction.West:
+                {
                     x = Utility.RandomMinMax(x - 8, x + 8);
                     y = Utility.RandomBool() ? Utility.RandomMinMax(y -= distance, y -= (distance - range)) : Utility.RandomMinMax(y += (distance - range), y += distance);
                     z = map.GetAverageZ(x, y);
                     break;
+                }
             }
             return new Point3D(x, y, z);
         }

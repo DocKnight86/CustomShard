@@ -136,8 +136,14 @@ namespace Server.Mobiles
             {
                 switch (Utility.Random(2))
                 {
-                    case 0: BlastRadius(); break;
-                    case 1: Lightning(); break;
+                    case 0:
+                    {
+                        BlastRadius(); break;
+                    }
+                    case 1:
+                    {
+                        Lightning(); break;
+                    }
                 }
 
                 m_NextAbilityTime = DateTime.UtcNow + TimeSpan.FromSeconds(Utility.RandomMinMax(25, 35));

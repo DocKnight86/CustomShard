@@ -104,14 +104,38 @@ namespace Server.Mobiles
         {
             switch (d & Direction.Mask)
             {
-                case Direction.North: --y; break;
-                case Direction.South: ++y; break;
-                case Direction.West: --x; break;
-                case Direction.East: ++x; break;
-                case Direction.Right: ++x; --y; break;
-                case Direction.Left: --x; ++y; break;
-                case Direction.Down: ++x; ++y; break;
-                case Direction.Up: --x; --y; break;
+                case Direction.North:
+                {
+                    --y; break;
+                }
+                case Direction.South:
+                {
+                    ++y; break;
+                }
+                case Direction.West:
+                {
+                    --x; break;
+                }
+                case Direction.East:
+                {
+                    ++x; break;
+                }
+                case Direction.Right:
+                {
+                    ++x; --y; break;
+                }
+                case Direction.Left:
+                {
+                    --x; ++y; break;
+                }
+                case Direction.Down:
+                {
+                    ++x; ++y; break;
+                }
+                case Direction.Up:
+                {
+                    --x; --y; break;
+                }
             }
         }
 

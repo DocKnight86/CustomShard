@@ -43,9 +43,9 @@ namespace Server.Engines.CityLoyalty
                 {
                     Region first = null;
 
-                    for (var index = 0; index < Region.Regions.Count; index++)
+                    for (int index = 0; index < Region.Regions.Count; index++)
                     {
-                        var r = Region.Regions[index];
+                        Region r = Region.Regions[index];
 
                         if (r.Name == Name && r.Map == CityLoyaltySystem.SystemMap)
                         {

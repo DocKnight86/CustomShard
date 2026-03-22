@@ -55,7 +55,9 @@ namespace Server.Engines.CityLoyalty
             CityTradeEntry entry = GetPlayerEntry<CityTradeEntry>(m as PlayerMobile);
 
             if (entry == null)
+            {
                 return 1;
+            }
 
             return Math.Min(5, Math.Max(1, entry.Completed / 25 + 1));
         }
@@ -68,7 +70,9 @@ namespace Server.Engines.CityLoyalty
         public bool HasTurnIn(Mobile from, TradeMinister minister)
         {
             if (from == null || minister == null || !ActiveTrades.ContainsKey(from) || ActiveTrades[from] == null)
+            {
                 return false;
+            }
 
             TradeOrderCrate crate = ActiveTrades[from];
 
@@ -78,7 +82,9 @@ namespace Server.Engines.CityLoyalty
         public bool TryOfferTrade(Mobile from, TradeMinister minister)
         {
             if (from == null || from.Backpack == null)
+            {
                 return true;
+            }
 
             if (ActiveTrades.ContainsKey(from))
             {
@@ -124,9 +130,9 @@ namespace Server.Engines.CityLoyalty
                     {
                         bool any = false;
 
-                        for (var index = 0; index < entry.Details.Count; index++)
+                        for (int index = 0; index < entry.Details.Count; index++)
                         {
-                            var x = entry.Details[index];
+                            TradeEntry.TradeDetails x = entry.Details[index];
 
                             if (x.ItemType.Name == t.Name)
                             {
@@ -204,12 +210,16 @@ namespace Server.Engines.CityLoyalty
         public bool TryTurnInToSlim(Mobile from, TradeOrderCrate order, SlimTheFence slim)
         {
             if (order == null || from == null || slim == null || order.Entry == null)
+            {
                 return false;
+            }
 
             TradeEntry entry = order.Entry;
 
             if (!order.Fulfilled)
+            {
                 slim.SayTo(from, 1151732); // This trade order has not been fulfilled.  Fill the trade order with all necessary items and try again.
+            }
             else
             {
                 CityLoyaltySystem.OnSlimTradeComplete(from, order.Entry);
@@ -244,7 +254,9 @@ namespace Server.Engines.CityLoyalty
             }
 
             if (entry.CompletedSlim == 50)
+            {
                 entry.Player.AddRewardTitle((int)TradeTitle.Smuggler);
+            }
         }
 
         public override void OnPlayerAdded(PlayerMobile m)
@@ -256,11 +268,13 @@ namespace Server.Engines.CityLoyalty
         public static void CancelTradeOrder(Mobile from, TradeOrderCrate crate)
         {
             if (from == null)
+            {
                 from = crate.Owner;
+            }
 
             if (from != null)
             {
-                var items = new List<Item>(crate.Items);
+                List<Item> items = new List<Item>(crate.Items);
 
                 for (int i = 0; i < items.Count; i++)
                 {
@@ -339,9 +353,9 @@ namespace Server.Engines.CityLoyalty
         {
             TradeMinister destMinister = null;
 
-            for (var index = 0; index < TradeMinister.Ministers.Count; index++)
+            for (int index = 0; index < TradeMinister.Ministers.Count; index++)
             {
-                var m = TradeMinister.Ministers[index];
+                TradeMinister m = TradeMinister.Ministers[index];
 
                 if (m.City == destination)
                 {
@@ -401,7 +415,7 @@ namespace Server.Engines.CityLoyalty
             List<TradeOrderCrate> crates = new List<TradeOrderCrate>(ActiveTrades.Values);
             List<BaseCreature> toDelete = new List<BaseCreature>();
 
-            for (var index = 0; index < crates.Count; index++)
+            for (int index = 0; index < crates.Count; index++)
             {
                 TradeOrderCrate c = crates[index];
 
@@ -426,9 +440,9 @@ namespace Server.Engines.CityLoyalty
                     }
                 }
 
-                for (var index = 0; index < toDelete.Count; index++)
+                for (int index = 0; index < toDelete.Count; index++)
                 {
-                    var bc = toDelete[index];
+                    BaseCreature bc = toDelete[index];
 
                     if (!bc.Deleted)
                     {
@@ -541,7 +555,7 @@ namespace Server.Engines.CityLoyalty
                         }
                     }
 
-                    for (var index = 0; index < bc.Skills.Length; index++)
+                    for (int index = 0; index < bc.Skills.Length; index++)
                     {
                         Skill sk = bc.Skills[index];
 
@@ -556,13 +570,19 @@ namespace Server.Engines.CityLoyalty
                     bc.RawDex += (int)(bc.RawDex * difficulty);
 
                     if (bc.HitsMaxSeed == -1)
+                    {
                         bc.HitsMaxSeed = bc.RawStr;
+                    }
 
                     if (bc.StamMaxSeed == -1)
+                    {
                         bc.StamMaxSeed = bc.RawDex;
+                    }
 
                     if (bc.ManaMaxSeed == -1)
+                    {
                         bc.ManaMaxSeed = bc.RawInt;
+                    }
 
                     bc.HitsMaxSeed += (int)(bc.HitsMaxSeed * difficulty);
                     bc.StamMaxSeed += (int)(bc.StamMaxSeed * difficulty);
@@ -582,7 +602,9 @@ namespace Server.Engines.CityLoyalty
                     bc.Tamable = false;
 
                     if (Ambushers == null)
+                    {
                         Ambushers = new Dictionary<BaseCreature, DateTime>();
+                    }
 
                     Ambushers.Add(bc, DateTime.UtcNow + TimeSpan.FromMinutes(AmbusherDelete));
 
@@ -634,10 +656,14 @@ namespace Server.Engines.CityLoyalty
         public static bool CanFit(int x, int y, int z, Map map, Mobile mob, int height = 16, bool checkMobiles = true, bool requireSurface = true)
         {
             if (map == null || map == Map.Internal)
+            {
                 return false;
+            }
 
             if (x < 0 || y < 0 || x >= map.Width || y >= map.Height)
+            {
                 return false;
+            }
 
             bool hasSurface = false;
             bool canswim = mob.CanSwim;
@@ -651,7 +677,7 @@ namespace Server.Engines.CityLoyalty
             map.GetAverageZ(x, y, ref lowZ, ref avgZ, ref topZ);
             TileFlag landFlags = TileData.LandTable[lt.ID & TileData.MaxLandValue].Flags;
 
-            var impassable = (landFlags & TileFlag.Impassable) != 0;
+            bool impassable = (landFlags & TileFlag.Impassable) != 0;
 
             bool wet = (landFlags & TileFlag.Wet) != 0;
 
@@ -666,10 +692,14 @@ namespace Server.Engines.CityLoyalty
             }
 
             if (impassable && avgZ > z && z + height > lowZ)
+            {
                 return false;
+            }
 
             if (!impassable && z == avgZ && !lt.Ignored)
+            {
                 hasSurface = true;
+            }
 
             StaticTile[] staticTiles = map.Tiles.GetStaticTiles(x, y, true);
 
@@ -692,10 +722,14 @@ namespace Server.Engines.CityLoyalty
                 }
 
                 if ((surface || impassable) && staticTiles[i].Z + id.CalcHeight > z && z + height > staticTiles[i].Z)
+                {
                     return false;
+                }
 
                 if (surface && !impassable && z == staticTiles[i].Z + id.CalcHeight)
+                {
                     hasSurface = true;
+                }
             }
 
             IPooledEnumerable eable = map.GetItemsInRange(new Point3D(x, y, z), 0);
@@ -815,11 +849,15 @@ namespace Server.Engines.CityLoyalty
                     if (bc != null)
                     {
                         if (dt < DateTime.UtcNow)
+                        {
                             bc.Delete();
+                        }
                         else
                         {
                             if (Ambushers == null)
+                            {
                                 Ambushers = new Dictionary<BaseCreature, DateTime>();
+                            }
 
                             bc.IsAmbusher = true;
 
@@ -833,7 +871,9 @@ namespace Server.Engines.CityLoyalty
                     Timer.DelayCall(() =>
                         {
                             if (Player.RemoveRewardTitle(2303807, true))
+                            {
                                 Player.AddRewardTitle(1151739);
+                            }
                         });
                 }
             }
@@ -871,7 +911,9 @@ namespace Server.Engines.CityLoyalty
                 TradeOrderCrate crate = reader.ReadItem() as TradeOrderCrate;
 
                 if (m != null && crate != null)
+                {
                     ActiveTrades[m] = crate;
+                }
             }
 
             _NameBuffer = new Dictionary<Type, string>();
@@ -883,7 +925,9 @@ namespace Server.Engines.CityLoyalty
                 string name = reader.ReadString();
 
                 if (t != null)
+                {
                     _NameBuffer[t] = name;
+                }
             }
         }
     }

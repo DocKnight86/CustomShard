@@ -29,7 +29,9 @@ namespace Server.Targets
         public void AddAI(BaseAI ai)
         {
             if (!m_List.Contains(ai))
+            {
                 m_List.Add(ai);
+            }
         }
 
         protected override void OnTarget(Mobile from, object o)

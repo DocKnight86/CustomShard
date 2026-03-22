@@ -36,7 +36,9 @@ namespace Server.Mobiles
                 for (int i = 0; i < Instances.Length; i++)
                 {
                     if (Instances[i] == this)
+                    {
                         return i;
+                    }
                 }
 
                 return 0;
@@ -117,7 +119,9 @@ namespace Server.Mobiles
             get
             {
                 if (House != null)
+                {
                     return House.Owner;
+                }
 
                 return null;
             }
@@ -182,7 +186,9 @@ namespace Server.Mobiles
                 else if (IsLandlord(from))
                 {
                     if (RentalGold > 0)
+                    {
                         list.Add(new CollectRentEntry(this));
+                    }
 
                     list.Add(new TerminateContractEntry(this));
                     list.Add(new ContractOptionsEntry(this));
@@ -216,9 +222,13 @@ namespace Server.Mobiles
 
             int durationID = reader.ReadEncodedInt();
             if (durationID < VendorRentalDuration.Instances.Length)
+            {
                 m_RentalDuration = VendorRentalDuration.Instances[durationID];
+            }
             else
+            {
                 m_RentalDuration = VendorRentalDuration.Instances[0];
+            }
 
             m_RentalPrice = reader.ReadInt();
             m_LandlordRenew = reader.ReadBool();
@@ -244,7 +254,9 @@ namespace Server.Mobiles
                 Mobile from = Owner.From;
 
                 if (m_Vendor.Deleted || !from.CheckAlive())
+                {
                     return;
+                }
 
                 if (m_Vendor.IsOwner(from))
                 {
@@ -277,7 +289,9 @@ namespace Server.Mobiles
                 Mobile from = Owner.From;
 
                 if (m_Vendor.Deleted || !from.CheckAlive() || !m_Vendor.IsLandlord(from))
+                {
                     return;
+                }
 
                 if (m_Vendor.RentalGold > 0)
                 {
@@ -285,10 +299,14 @@ namespace Server.Mobiles
                     m_Vendor.RentalGold -= depositedGold;
 
                     if (depositedGold > 0)
+                    {
                         from.SendLocalizedMessage(1060397, depositedGold.ToString()); // ~1_AMOUNT~ gold has been deposited into your bank box.
+                    }
 
                     if (m_Vendor.RentalGold > 0)
+                    {
                         from.SendLocalizedMessage(500390); // Your bank box is full.
+                    }
                 }
             }
         }
@@ -307,7 +325,9 @@ namespace Server.Mobiles
                 Mobile from = Owner.From;
 
                 if (m_Vendor.Deleted || !from.CheckAlive() || !m_Vendor.IsLandlord(from))
+                {
                     return;
+                }
 
                 from.SendLocalizedMessage(1062503); // Enter the amount of gold you wish to offer the renter in exchange for immediate termination of this contract?
                 from.Prompt = new RefundOfferPrompt(m_Vendor);
@@ -325,18 +345,24 @@ namespace Server.Mobiles
             public override void OnResponse(Mobile from, string text)
             {
                 if (!m_Vendor.CanInteractWith(from, false) || !m_Vendor.IsLandlord(from))
+                {
                     return;
+                }
 
                 text = text.Trim();
 
                 int amount;
 
                 if (!int.TryParse(text, out amount))
+                {
                     amount = -1;
+                }
 
                 Mobile owner = m_Vendor.Owner;
                 if (owner == null)
+                {
                     return;
+                }
 
                 if (amount < 0)
                 {

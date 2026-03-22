@@ -35,7 +35,9 @@ namespace Server.Mobiles
             }
 
             if (!Female)
+            {
                 AddItem(new LeatherNinjaHood());
+            }
 
             AddItem(new LeatherNinjaPants());
             AddItem(new LeatherNinjaBelt());
@@ -47,7 +49,9 @@ namespace Server.Mobiles
             Utility.AssignRandomHair(this, hairHue);
 
             if (Utility.Random(7) != 0)
+            {
                 Utility.AssignRandomFacialHair(this, hairHue);
+            }
         }
 
         public Ninja(Serial serial)

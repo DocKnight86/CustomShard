@@ -162,15 +162,21 @@ namespace Server.Mobiles
                         default:
                         case 0:
                         case 1:
+                        {
                             rat = new Ratman();
                             break;
+                        }
                         case 2:
                         case 3:
+                        {
                             rat = new RatmanArcher();
                             break;
+                        }
                         case 4:
+                        {
                             rat = new RatmanMage();
                             break;
+                        }
                     }
 
                     rat.Team = Team;

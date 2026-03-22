@@ -88,9 +88,9 @@ namespace Server.Mobiles
 
             private static bool IsSpecialShip(BaseBoat b)
             {
-                for (var index = 0; index < m_ShipTypes.Length; index++)
+                for (int index = 0; index < m_ShipTypes.Length; index++)
                 {
-                    var t = m_ShipTypes[index];
+                    Type t = m_ShipTypes[index];
 
                     if (t == b.GetType())
                     {
@@ -104,7 +104,9 @@ namespace Server.Mobiles
             public override void OnClick()
             {
                 if (m_Vendor == null || m_Vendor.Deleted)
+                {
                     return;
+                }
 
                 BaseBoat boat = BaseBoat.GetBoat(m_From);
 
@@ -166,7 +168,9 @@ namespace Server.Mobiles
             public override void OnClick()
             {
                 if (m_Vendor == null || m_Vendor.Deleted)
+                {
                     return;
+                }
 
                 m_From.SendGump(new AbandonGump());
             }

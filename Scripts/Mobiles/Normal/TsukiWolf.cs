@@ -16,8 +16,10 @@ namespace Server.Mobiles
             switch (Utility.Random(3))
             {
                 case 0:
+                {
                     Hue = Utility.RandomNeutralHue();
                     break; //No, this really isn't accurate ;->
+                }
             }
 
             SetStr(401, 450);

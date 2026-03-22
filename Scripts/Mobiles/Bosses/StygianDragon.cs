@@ -94,9 +94,18 @@ namespace Server.Mobiles
             {
                 switch (Utility.Random(3))
                 {
-                    case 0: CrimsonMeteor(this, (Mobile)Combatant, 70, 125); break;
-                    case 1: DoStygianFireball(); break;
-                    case 2: DoFireColumn(); break;
+                    case 0:
+                    {
+                        CrimsonMeteor(this, (Mobile)Combatant, 70, 125); break;
+                    }
+                    case 1:
+                    {
+                        DoStygianFireball(); break;
+                    }
+                    case 2:
+                    {
+                        DoFireColumn(); break;
+                    }
                 }
 
                 m_Delay = DateTime.UtcNow + TimeSpan.FromSeconds(Utility.RandomMinMax(30, 60));

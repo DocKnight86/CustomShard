@@ -39,7 +39,9 @@ namespace Server.Engines.Quests
             SpeechHue = 0x3B2;
 
             if (Instances == null)
+            {
                 Instances = new List<Neville>();
+            }
 
             Instances.Add(this);
         }
@@ -103,7 +105,9 @@ namespace Server.Engines.Quests
         public static void Spawn()
         {
             if (Instances != null && Instances.Count > 0)
+            {
                 return;
+            }
 
             Neville creature = new Neville
             {
@@ -146,7 +150,9 @@ namespace Server.Engines.Quests
             reader.ReadInt();
 
             if (Instances == null)
+            {
                 Instances = new List<Neville>();
+            }
 
             Instances.Add(this);
         }

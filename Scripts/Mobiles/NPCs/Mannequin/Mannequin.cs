@@ -47,7 +47,9 @@ namespace Server.Mobiles
         public bool IsOwner(Mobile m)
         {
             if (m == Owner || m.AccessLevel >= AccessLevel.GameMaster)
+            {
                 return true;
+            }
 
             return AccountHandler.CheckAccount(m, Owner);
         }
@@ -65,7 +67,9 @@ namespace Server.Mobiles
         public override bool AllowEquipFrom(Mobile from)
         {
             if (IsOwner(from))
+            {
                 return true;
+            }
 
             return base.AllowEquipFrom(from);
         }
@@ -73,7 +77,9 @@ namespace Server.Mobiles
         public override bool CheckNonlocalLift(Mobile from, Item item)
         {
             if (IsOwner(from))
+            {
                 return true;
+            }
 
             return base.CheckNonlocalLift(from, item);
         }
@@ -81,7 +87,9 @@ namespace Server.Mobiles
         public override bool CheckNonlocalDrop(Mobile from, Item item, Item target)
         {
             if (IsOwner(from))
+            {
                 return true;
+            }
 
             return false;
         }
@@ -120,7 +128,9 @@ namespace Server.Mobiles
                         state.Mobile.ProcessDelta();
 
                         if (p == null)
+                        {
                             p = Packet.Acquire(new UpdateStatueAnimation(this, 1, 4, 0));
+                        }
 
                         state.Send(p);
                     }
@@ -163,11 +173,11 @@ namespace Server.Mobiles
         {
             List<Type> ll = new List<Type>();
 
-            var rs = System.Reflection.Assembly.GetExecutingAssembly().GetTypes();
+            Type[] rs = System.Reflection.Assembly.GetExecutingAssembly().GetTypes();
 
-            for (var index = 0; index < rs.Length; index++)
+            for (int index = 0; index < rs.Length; index++)
             {
-                var r = rs[index];
+                Type r = rs[index];
 
                 if (r.FullName != null && r.FullName.Contains("MannequinProperty") && r.IsClass && !r.IsAbstract)
                 {
@@ -177,9 +187,9 @@ namespace Server.Mobiles
 
             List<ValuedProperty> cat = new List<ValuedProperty>();
 
-            for (var index = 0; index < ll.Count; index++)
+            for (int index = 0; index < ll.Count; index++)
             {
-                var x = ll[index];
+                Type x = ll[index];
 
                 object CI = Activator.CreateInstance(Type.GetType(x.FullName));
 
@@ -196,11 +206,11 @@ namespace Server.Mobiles
         {
             List<Type> ll = new List<Type>();
 
-            var rs = System.Reflection.Assembly.GetExecutingAssembly().GetTypes();
+            Type[] rs = System.Reflection.Assembly.GetExecutingAssembly().GetTypes();
 
-            for (var index = 0; index < rs.Length; index++)
+            for (int index = 0; index < rs.Length; index++)
             {
-                var r = rs[index];
+                Type r = rs[index];
 
                 if (r.FullName != null && r.FullName.Contains("MannequinProperty") && r.IsClass && !r.IsAbstract)
                 {
@@ -210,9 +220,9 @@ namespace Server.Mobiles
 
             List<ValuedProperty> cat = new List<ValuedProperty>();
 
-            for (var index = 0; index < ll.Count; index++)
+            for (int index = 0; index < ll.Count; index++)
             {
-                var x = ll[index];
+                Type x = ll[index];
 
                 object CI = Activator.CreateInstance(Type.GetType(x.FullName));
 
@@ -229,11 +239,11 @@ namespace Server.Mobiles
         {
             List<Type> ll = new List<Type>();
 
-            var rs = System.Reflection.Assembly.GetExecutingAssembly().GetTypes();
+            Type[] rs = System.Reflection.Assembly.GetExecutingAssembly().GetTypes();
 
-            for (var index = 0; index < rs.Length; index++)
+            for (int index = 0; index < rs.Length; index++)
             {
-                var r = rs[index];
+                Type r = rs[index];
 
                 if (r.FullName != null && r.FullName.Contains("MannequinProperty") && r.IsClass && !r.IsAbstract)
                 {
@@ -243,9 +253,9 @@ namespace Server.Mobiles
 
             List<ValuedProperty> cat = new List<ValuedProperty>();
 
-            for (var index = 0; index < ll.Count; index++)
+            for (int index = 0; index < ll.Count; index++)
             {
-                var x = ll[index];
+                Type x = ll[index];
 
                 object CI = Activator.CreateInstance(Type.GetType(x.FullName));
 
@@ -273,7 +283,9 @@ namespace Server.Mobiles
                 }
 
                 if (from.InRange(this, 4))
+                {
                     list.Add(new CustomizeBodyEntry(from, this));
+                }
 
                 if (from.Alive && from.InRange(this, 2))
                 {
@@ -304,7 +316,7 @@ namespace Server.Mobiles
                     toAdd.AddRange(mobile.Backpack.Items);
                 }
 
-                for (var index = 0; index < toAdd.Count; index++)
+                for (int index = 0; index < toAdd.Count; index++)
                 {
                     Item item = toAdd[index];
 
@@ -416,7 +428,9 @@ namespace Server.Mobiles
                 protected override void OnTarget(Mobile from, object targeted)
                 {
                     if (targeted is Item item)
+                    {
                         from.SendGump(new MannequinStatsGump(_Mannequin, item));
+                    }
                 }
             }
         }
@@ -466,7 +480,9 @@ namespace Server.Mobiles
                 public override void OnResponse(NetState sender, RelayInfo info)
                 {
                     if (_Mannequin.Deleted)
+                    {
                         return;
+                    }
 
                     if (info.ButtonID == 1)
                     {
@@ -474,7 +490,9 @@ namespace Server.Mobiles
                         string s = text.Text;
 
                         if (s.Length > 44)
+                        {
                             s = s.Substring(0, 44);
+                        }
 
                         _Mannequin.Description = s;
                         _Mannequin.InvalidateProperties();
@@ -538,36 +556,36 @@ namespace Server.Mobiles
         public void SwitchClothes(Mobile from, Mobile m)
         {
             List<Item> MobileItems = new List<Item>();
-            foreach (var item in from.Items.Where(IsEquipped))
+            foreach (Item item in from.Items.Where(IsEquipped))
             {
                 MobileItems.Add(item);
             }
 
             List<Item> MannequinItems = new List<Item>();
-            foreach (var item in m.Items.Where(IsEquipped))
+            foreach (Item item in m.Items.Where(IsEquipped))
             {
                 MannequinItems.Add(item);
             }
 
-            for (var index = 0; index < MannequinItems.Count; index++)
+            for (int index = 0; index < MannequinItems.Count; index++)
             {
-                var mannequinItem = MannequinItems[index];
+                Item mannequinItem = MannequinItems[index];
 
                 m.RemoveItem(mannequinItem);
             }
 
-            for (var index = 0; index < MobileItems.Count; index++)
+            for (int index = 0; index < MobileItems.Count; index++)
             {
-                var mobileItem = MobileItems[index];
+                Item mobileItem = MobileItems[index];
 
                 from.RemoveItem(mobileItem);
             }
 
             List<Item> ExceptItems = new List<Item>();
 
-            for (var index = 0; index < MannequinItems.Count; index++)
+            for (int index = 0; index < MannequinItems.Count; index++)
             {
-                var x = MannequinItems[index];
+                Item x = MannequinItems[index];
 
                 if (x.CanEquip(from))
                 {
@@ -579,9 +597,9 @@ namespace Server.Mobiles
                 }
             }
 
-            for (var index = 0; index < MobileItems.Count; index++)
+            for (int index = 0; index < MobileItems.Count; index++)
             {
-                var x = MobileItems[index];
+                Item x = MobileItems[index];
 
                 if (x.CanEquip(m))
                 {
@@ -595,9 +613,9 @@ namespace Server.Mobiles
 
             if (ExceptItems.Count > 0)
             {
-                for (var index = 0; index < ExceptItems.Count; index++)
+                for (int index = 0; index < ExceptItems.Count; index++)
                 {
-                    var x = ExceptItems[index];
+                    Item x = ExceptItems[index];
 
                     from.AddToBackpack(x);
                 }
@@ -626,7 +644,9 @@ namespace Server.Mobiles
                 direction++;
 
                 if (direction > 0x7)
+                {
                     direction = 0x0;
+                }
 
                 _Mannequin.Direction = (Direction)direction;
 
@@ -650,14 +670,14 @@ namespace Server.Mobiles
             {
                 List<Item> mannequinItems = new List<Item>();
 
-                foreach (var item in _Mannequin.Items.Where(IsEquipped))
+                foreach (Item item in _Mannequin.Items.Where(IsEquipped))
                 {
                     mannequinItems.Add(item);
                 }
 
-                for (var index = 0; index < mannequinItems.Count; index++)
+                for (int index = 0; index < mannequinItems.Count; index++)
                 {
-                    var x = mannequinItems[index];
+                    Item x = mannequinItems[index];
 
                     _From.AddToBackpack(x);
                 }

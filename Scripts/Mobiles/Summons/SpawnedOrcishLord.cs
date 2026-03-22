@@ -11,7 +11,9 @@ namespace Server.Mobiles
             Container pack = Backpack;
 
             if (pack != null)
+            {
                 pack.Delete();
+            }
 
             NoKillAwards = true;
         }

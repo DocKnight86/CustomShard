@@ -45,22 +45,32 @@ namespace Server.Engines.CityLoyalty
             base.GetProperties(list);
 
             if (!CityLoyaltySystem.Enabled || City == null)
+            {
                 return;
+            }
 
             if (City.GovernorElect != null)
+            {
                 list.Add(1154066, City.GovernorElect.Name); // Governor-Elect: ~1_NAME~
+            }
             else
+            {
                 list.Add(1154067, City.PendingGovernor ? "#1154102" : City.Governor != null ? City.Governor.Name : "#1154072"); // Governor: ~1_NAME~
+            }
 
             if (City.Election != null)
             {
                 DateTime dt;
 
                 if (City.Election.CanNominate(out dt))
+                {
                     list.Add(1155756, dt.ToShortDateString()); // Nomination period ends after: ~1_DATE~
+                }
 
                 if (City.Election.CanVote(out dt))
+                {
                     list.Add(1155757, dt.ToShortDateString()); // Voting Period Ends After: ~1_DATE~
+                }
             }
 
             list.Add(1154023, City.Treasury > 0 ? City.Treasury.ToString("N0", CultureInfo.GetCultureInfo("en-US")) : City.Treasury.ToString()); // City Treasury Balance: ~1_AMT~
@@ -73,14 +83,20 @@ namespace Server.Engines.CityLoyalty
             base.GetContextMenuEntries(from, list);
 
             if (!CityLoyaltySystem.Enabled || City == null)
+            {
                 return;
+            }
 
             if (!City.IsCitizen(from))
             {
                 if (City.Herald != null)
+                {
                     City.Herald.SayTo(from, 1154061, City.Definition.Name); // Only citizens of ~1_CITY~ may use the City Stone!
+                }
                 else
+                {
                     from.SendLocalizedMessage(1154061, City.Definition.Name); // Only citizens of ~1_CITY~ may use the City Stone!
+                }
 
                 return;
             }
@@ -99,10 +115,14 @@ namespace Server.Engines.CityLoyalty
                                         BaseGump.SendGump(new PlayerTitleGump(mob as PlayerMobile, pm, City));
                                     }
                                     else
+                                    {
                                         mob.SendLocalizedMessage(1154029); // You may only bestow a title on citizens of this city!
+                                    }
                                 }
                                 else
+                                {
                                     mob.SendLocalizedMessage(1154028); // You can only bestow a title on a player!
+                                }
                             });
                     }
                 }, enabled: City.IsGovernor(from)));
@@ -147,7 +167,9 @@ namespace Server.Engines.CityLoyalty
                                     box.Movable = false;
 
                                     if (Boxes == null)
+                                    {
                                         Boxes = new List<BallotBox>();
+                                    }
 
                                     Boxes.Add(box);
                                     box.MoveToWorld(new Point3D(p), Map);
@@ -155,7 +177,9 @@ namespace Server.Engines.CityLoyalty
                                     m.SendMessage("{0} of {1} ballot boxes placed.", Boxes.Count.ToString(), CityLoyaltySystem.MaxBallotBoxes.ToString());
                                 }
                                 else
+                                {
                                     box.Delete();
+                                }
                             }
                         });
                 }
@@ -175,7 +199,9 @@ namespace Server.Engines.CityLoyalty
                     entry.CustomTitle = null;
 
                     if (m is PlayerMobile mobile)
+                    {
                         mobile.RemoveRewardTitle(1154017, true);
+                    }
 
                     m.SendMessage("City Title removed.");
                 }
@@ -223,9 +249,9 @@ namespace Server.Engines.CityLoyalty
             writer.Write(Boxes == null ? 0 : Boxes.Count);
             if (Boxes != null)
             {
-                for (var index = 0; index < Boxes.Count; index++)
+                for (int index = 0; index < Boxes.Count; index++)
                 {
-                    var b = Boxes[index];
+                    BallotBox b = Boxes[index];
                     writer.Write(b);
                 }
             }

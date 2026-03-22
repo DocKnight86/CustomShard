@@ -28,7 +28,9 @@ namespace Server.Mobiles
         public override bool CheckTeach(SkillName skill, Mobile from)
         {
             if (!base.CheckTeach(skill, from))
+            {
                 return false;
+            }
 
             return skill == SkillName.Anatomy || skill == SkillName.Camping || skill == SkillName.Forensics || skill == SkillName.Healing || skill == SkillName.SpiritSpeak;
         }
@@ -44,18 +46,10 @@ namespace Server.Mobiles
             return true;
         }
 
-        public override void OnDeath(Container c)
-        {
-            base.OnDeath(c);
-
-            if (Utility.RandomDouble() <= 0.25)
-                c.AddItem(Loot.Construct(typeof(MapFragment)));
-        }
-
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(1); // version
+            writer.Write(0); // version
         }
 
         public override void Deserialize(GenericReader reader)

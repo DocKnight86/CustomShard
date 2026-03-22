@@ -27,9 +27,14 @@ namespace Server.Mobiles
             BaseWeapon wep = m_Mobile.Weapon as BaseWeapon;
 
             if (mana >= 50 && !ArcaneEmpowermentSpell.IsUnderEffects(m_Mobile) && 0.5 >= Utility.RandomDouble())
+            {
                 return new ArcaneEmpowermentSpell(m_Mobile, null);
+            }
+
             if (mana >= 32 && wep != null && !ImmolatingWeaponSpell.IsImmolating(m_Mobile, wep))
+            {
                 return new ImmolatingWeaponSpell(m_Mobile, null);
+            }
 
             return null;
         }
@@ -55,22 +60,36 @@ namespace Server.Mobiles
             int select = 1;
 
             if (mana >= 50)
+            {
                 select = 4;
+            }
             else if (mana >= 40)
+            {
                 select = 3;
+            }
             else if (mana >= 30)
+            {
                 select = 2;
+            }
 
             switch (Utility.Random(select))
             {
                 case 0:
+                {
                     return new ThunderstormSpell(m_Mobile, null);
+                }
                 case 1:
+                {
                     return new EssenceOfWindSpell(m_Mobile, null);
+                }
                 case 2:
+                {
                     return new WildfireSpell(m_Mobile, null);
+                }
                 case 3:
+                {
                     return new WordOfDeathSpell(m_Mobile, null);
+                }
             }
 
             return null;
@@ -112,7 +131,9 @@ namespace Server.Mobiles
                     t.Invoke(m_Mobile, m_Mobile.Combatant);
                 }
                 else
+                {
                     t.Invoke(m_Mobile, m_Mobile);
+                }
 
                 return true;
             }

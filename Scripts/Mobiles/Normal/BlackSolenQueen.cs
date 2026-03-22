@@ -300,15 +300,19 @@ namespace Server.Mobiles
                 switch (Utility.Random(2))
                 {
                     case 0:
+                    {
                         spawn = new BlackSolenWarrior();
                         spawn.MoveToWorld(m_Item.Location, m_Item.Map);
                         m_Item.Delete();
                         break;
+                    }
                     case 1:
+                    {
                         spawn = new BlackSolenWorker();
                         spawn.MoveToWorld(m_Item.Location, m_Item.Map);
                         m_Item.Delete();
                         break;
+                    }
                 }
             }
         }

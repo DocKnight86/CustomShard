@@ -56,7 +56,6 @@ namespace Server.Mobiles
         {
             AddLoot(LootPack.UltraRich, 4);
             AddLoot(LootPack.ArcanistScrolls, Utility.RandomMinMax(1, 2));
-            AddLoot(LootPack.LootItem<AbscessTail>());
         }
 
         public override void OnDeath(Container c)
@@ -64,7 +63,9 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             if (Paragon.ChestChance > Utility.RandomDouble())
+            {
                 c.DropItem(new ParagonChest(Name, 5));
+            }
         }
 
         public override void Serialize(GenericWriter writer)

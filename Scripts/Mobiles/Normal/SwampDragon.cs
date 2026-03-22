@@ -139,12 +139,18 @@ namespace Server.Mobiles
                 switch (m_BardingResource)
                 {
                     default:
+                    {
                         return BardingExceptional ? 12000 : 10000;
+                    }
                     case CraftResource.DullCopper:
                     case CraftResource.Valorite:
+                    {
                         return BardingExceptional ? 14500 : 12500;
+                    }
                     case CraftResource.ShadowIron:
+                    {
                         return BardingExceptional ? 17000 : 15000;
+                    }
                 }
             }
         }
@@ -176,11 +182,26 @@ namespace Server.Mobiles
             switch (type)
             {
                 default:
-                case ResistanceType.Physical: resBonus = Math.Max(5, attrs.ArmorPhysicalResist); break;
-                case ResistanceType.Fire: resBonus = Math.Max(3, attrs.ArmorFireResist); break;
-                case ResistanceType.Cold: resBonus = Math.Max(2, attrs.ArmorColdResist); break;
-                case ResistanceType.Poison: resBonus = Math.Max(3, attrs.ArmorPoisonResist); break;
-                case ResistanceType.Energy: resBonus = Math.Max(2, attrs.ArmorEnergyResist); break;
+                case ResistanceType.Physical:
+                {
+                    resBonus = Math.Max(5, attrs.ArmorPhysicalResist); break;
+                }
+                case ResistanceType.Fire:
+                {
+                    resBonus = Math.Max(3, attrs.ArmorFireResist); break;
+                }
+                case ResistanceType.Cold:
+                {
+                    resBonus = Math.Max(2, attrs.ArmorColdResist); break;
+                }
+                case ResistanceType.Poison:
+                {
+                    resBonus = Math.Max(3, attrs.ArmorPoisonResist); break;
+                }
+                case ResistanceType.Energy:
+                {
+                    resBonus = Math.Max(2, attrs.ArmorEnergyResist); break;
+                }
             }
 
             return (resBonus + expBonus) * 5;

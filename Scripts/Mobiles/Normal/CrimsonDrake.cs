@@ -22,34 +22,44 @@ namespace Server.Mobiles
             switch (type)
             {
                 case ElementType.Physical:
+                {
                     Body = 0x58B;
                     Hue = 0;
                     SetDamageType(ResistanceType.Physical, 100);
                     break;
+                }
                 case ElementType.Fire:
+                {
                     Body = 0x58C;
                     Hue = 33929;
                     SetDamageType(ResistanceType.Physical, 0);
                     SetDamageType(ResistanceType.Fire, 100);
                     break;
+                }
                 case ElementType.Cold:
+                {
                     Body = 0x58C;
                     Hue = 34134;
                     SetDamageType(ResistanceType.Physical, 0);
                     SetDamageType(ResistanceType.Cold, 100);
                     break;
+                }
                 case ElementType.Poison:
+                {
                     Body = 0x58C;
                     Hue = 34136;
                     SetDamageType(ResistanceType.Physical, 0);
                     SetDamageType(ResistanceType.Poison, 100);
                     break;
+                }
                 case ElementType.Energy:
+                {
                     Body = 0x58C;
                     Hue = 34141;
                     SetDamageType(ResistanceType.Physical, 0);
                     SetDamageType(ResistanceType.Energy, 100);
                     break;
+                }
             }
 
             Name = "Crimson Drake";

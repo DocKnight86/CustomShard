@@ -49,26 +49,40 @@ namespace Server.Mobiles
             switch (Utility.Random(7))
             {
                 case 0:
+                {
                     AddItem(new Longsword());
                     break;
+                }
                 case 1:
+                {
                     AddItem(new Cutlass());
                     break;
+                }
                 case 2:
+                {
                     AddItem(new Broadsword());
                     break;
+                }
                 case 3:
+                {
                     AddItem(new Axe());
                     break;
+                }
                 case 4:
+                {
                     AddItem(new Club());
                     break;
+                }
                 case 5:
+                {
                     AddItem(new Dagger());
                     break;
+                }
                 case 6:
+                {
                     AddItem(new Spear());
                     break;
+                }
             }
 
             Utility.AssignRandomHair(this);

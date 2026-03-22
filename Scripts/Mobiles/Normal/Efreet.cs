@@ -64,20 +64,30 @@ namespace Server.Mobiles
                 switch (Utility.Random(5))
                 {
                     case 0:
+                    {
                         c.DropItem(new DaemonArms());
                         break;
+                    }
                     case 1:
+                    {
                         c.DropItem(new DaemonChest());
                         break;
+                    }
                     case 2:
+                    {
                         c.DropItem(new DaemonGloves());
                         break;
+                    }
                     case 3:
+                    {
                         c.DropItem(new DaemonLegs());
                         break;
+                    }
                     case 4:
+                    {
                         c.DropItem(new DaemonHelm());
                         break;
+                    }
                 }
             }
         }

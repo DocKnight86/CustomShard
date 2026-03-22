@@ -86,7 +86,9 @@ namespace Server.Mobiles
         public override void OnDamage(int amount, Mobile from, bool willKill)
         {
             if (Utility.RandomDouble() < 0.1)
+            {
                 DropOoze();
+            }
 
             base.OnDamage(amount, from, willKill);
         }
@@ -294,9 +296,13 @@ namespace Server.Mobiles
             ++m_Ticks;
 
             if (m_Ticks >= 35)
+            {
                 Delete();
+            }
             else if (m_Ticks == 30)
+            {
                 ItemID = 0x122B;
+            }
         }
     }
 }

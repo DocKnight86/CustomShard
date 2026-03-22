@@ -42,7 +42,9 @@ namespace Server.Mobiles
         public static void Spawn(Mobile caller, Mobile target, int amount, bool onlyAdditional)
         {
             if (target == null || target.Deleted || target.GuardImmune)
+            {
                 return;
+            }
 
             IPooledEnumerable eable = target.GetMobilesInRange(15);
 

@@ -38,30 +38,44 @@ namespace Server.Mobiles
             switch (Utility.Random(4))
             {
                 case 0:
+                {
                     AddItem(new PlateHelm());
                     break;
+                }
                 case 1:
+                {
                     AddItem(new NorseHelm());
                     break;
+                }
                 case 2:
+                {
                     AddItem(new CloseHelm());
                     break;
+                }
                 case 3:
+                {
                     AddItem(new Helmet());
                     break;
+                }
             }
 
             switch (Utility.Random(3))
             {
                 case 0:
+                {
                     AddItem(new BodySash(0x482));
                     break;
+                }
                 case 1:
+                {
                     AddItem(new Doublet(0x482));
                     break;
+                }
                 case 2:
+                {
                     AddItem(new Tunic(0x482));
                     break;
+                }
             }
 
             AddItem(new Broadsword());
@@ -76,11 +90,15 @@ namespace Server.Mobiles
             switch (Utility.Random(2))
             {
                 case 0:
+                {
                     AddItem(new Boots());
                     break;
+                }
                 case 1:
+                {
                     AddItem(new ThighBoots());
                     break;
+                }
             }
         }
 

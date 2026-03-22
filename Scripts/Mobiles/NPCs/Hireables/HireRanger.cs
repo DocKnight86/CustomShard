@@ -50,14 +50,20 @@ namespace Server.Mobiles
             switch (Utility.Random(3))
             {
                 case 0:
+                {
                     AddItem(new Longsword());
                     break;
+                }
                 case 1:
+                {
                     AddItem(new VikingSword());
                     break;
+                }
                 case 2:
+                {
                     AddItem(new Broadsword());
                     break;
+                }
             }
 
             SetWearable(new StuddedChest(), 0x59C);

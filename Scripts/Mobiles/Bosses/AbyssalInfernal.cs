@@ -88,11 +88,15 @@ namespace Server.Mobiles
                 switch (Utility.Random(2))
                 {
                     case 0:
+                    {
                         c.DropItem(new HornAbyssalInferno());
                         break;
+                    }
                     case 1:
+                    {
                         c.DropItem(new NetherCycloneScroll());
                         break;
+                    }
                 }
             }
         }

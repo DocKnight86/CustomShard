@@ -43,11 +43,15 @@ namespace Server.Mobiles
             switch (Utility.Random(2))
             {
                 case 0:
+                {
                     AddItem(new SkullCap(Utility.RandomNeutralHue()));
                     break;
+                }
                 case 1:
+                {
                     AddItem(new Bandana(Utility.RandomNeutralHue()));
                     break;
+                }
             }
 
             Utility.AssignRandomHair(this);

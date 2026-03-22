@@ -402,10 +402,22 @@ namespace Server.Mobiles
         {
             switch (type)
             {
-                case LenseType.None: return 0;
-                case LenseType.Enhanced: return 100;
-                case LenseType.Regular: return 50;
-                case LenseType.Limited: return 15;
+                case LenseType.None:
+                {
+                    return 0;
+                }
+                case LenseType.Enhanced:
+                {
+                    return 100;
+                }
+                case LenseType.Regular:
+                {
+                    return 50;
+                }
+                case LenseType.Limited:
+                {
+                    return 15;
+                }
             }
 
             return 0;

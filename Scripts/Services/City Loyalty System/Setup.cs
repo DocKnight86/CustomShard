@@ -17,9 +17,9 @@ namespace Server.Engines.CityLoyalty
 
         public static void Delete(CommandEventArgs e)
         {
-            for (var index = 0; index < CityLoyaltySystem.Cities.Count; index++)
+            for (int index = 0; index < CityLoyaltySystem.Cities.Count; index++)
             {
-                var city = CityLoyaltySystem.Cities[index];
+                CityLoyaltySystem city = CityLoyaltySystem.Cities[index];
 
                 city.Stone?.Delete();
 
@@ -91,7 +91,9 @@ namespace Server.Engines.CityLoyalty
                         minister.MoveToWorld(sys.Definition.TradeMinisterLocation, CityLoyaltySystem.SystemMap);
                     }
                     else
+                    {
                         minister.Delete();
+                    }
 
                     if (!HasType(sys, herald.GetType()))
                     {
@@ -99,7 +101,9 @@ namespace Server.Engines.CityLoyalty
                         herald.MoveToWorld(sys.Definition.HeraldLocation, CityLoyaltySystem.SystemMap);
                     }
                     else
+                    {
                         herald.Delete();
+                    }
 
                     if (!HasType(sys, capt.GetType()))
                     {
@@ -107,7 +111,9 @@ namespace Server.Engines.CityLoyalty
                         capt.MoveToWorld(sys.Definition.GuardsmanLocation, CityLoyaltySystem.SystemMap);
                     }
                     else
+                    {
                         capt.Delete();
+                    }
 
                     if (!HasType(sys, stone.GetType()))
                     {
@@ -115,22 +121,36 @@ namespace Server.Engines.CityLoyalty
                         stone.MoveToWorld(sys.Definition.StoneLocation, CityLoyaltySystem.SystemMap);
                     }
                     else
+                    {
                         stone.Delete();
+                    }
 
                     if (!HasType(sys, itemdonation.GetType()))
+                    {
                         itemdonation.MoveToWorld(new Point3D(sys.Definition.TradeMinisterLocation.X, sys.Definition.TradeMinisterLocation.Y - 1, sys.Definition.TradeMinisterLocation.Z), CityLoyaltySystem.SystemMap);
+                    }
                     else
+                    {
                         itemdonation.Delete();
+                    }
 
                     if (!HasType(sys, petdonation.GetType()))
+                    {
                         petdonation.MoveToWorld(new Point3D(sys.Definition.TradeMinisterLocation.X, sys.Definition.TradeMinisterLocation.Y - 2, sys.Definition.TradeMinisterLocation.Z), CityLoyaltySystem.SystemMap);
+                    }
                     else
+                    {
                         petdonation.Delete();
+                    }
 
                     if (!HasType(sys, box.GetType()))
+                    {
                         box.MoveToWorld(new Point3D(sys.Definition.GuardsmanLocation.X, sys.Definition.GuardsmanLocation.Y - 1, sys.Definition.GuardsmanLocation.Z), CityLoyaltySystem.SystemMap);
+                    }
                     else
+                    {
                         box.Delete();
+                    }
 
                     if (!HasType(sys, board.GetType()))
                     {
@@ -138,7 +158,9 @@ namespace Server.Engines.CityLoyalty
                         sys.Board = board;
                     }
                     else
+                    {
                         board.Delete();
+                    }
 
                     sys.CanUtilize = true;
 
@@ -170,9 +192,9 @@ namespace Server.Engines.CityLoyalty
 
                 Region r = null;
 
-                for (var index = 0; index < Region.Regions.Count; index++)
+                for (int index = 0; index < Region.Regions.Count; index++)
                 {
-                    var reg = Region.Regions[index];
+                    Region reg = Region.Regions[index];
 
                     if (reg.Map == Map.Felucca && reg.Name == name)
                     {
@@ -210,14 +232,18 @@ namespace Server.Engines.CityLoyalty
         public static bool HasType(Region r, Type t)
         {
             if (r == null)
+            {
                 return false;
+            }
 
             if (t.IsSubclassOf(typeof(Mobile)))
             {
                 foreach (Mobile m in r.GetEnumeratedMobiles())
                 {
                     if (m.GetType() == t)
+                    {
                         return true;
+                    }
                 }
             }
             else if (t.IsSubclassOf(typeof(Item)))
@@ -225,7 +251,9 @@ namespace Server.Engines.CityLoyalty
                 foreach (Item i in r.GetEnumeratedItems())
                 {
                     if (i.GetType() == t)
+                    {
                         return true;
+                    }
                 }
             }
 

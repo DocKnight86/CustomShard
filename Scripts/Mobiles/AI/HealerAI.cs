@@ -26,7 +26,9 @@ namespace Server.Mobiles
         public override bool Think()
         {
             if (m_Mobile.Deleted)
+            {
                 return false;
+            }
 
             Target targ = m_Mobile.Target;
 
@@ -58,23 +60,33 @@ namespace Server.Mobiles
                     if (NeedCure(toHelp))
                     {
                         if (m_Mobile.Debug)
+                        {
                             m_Mobile.DebugSay("{0} needs a cure", toHelp.Name);
+                        }
 
                         if (!(new CureSpell(m_Mobile, null)).Cast())
+                        {
                             new CureSpell(m_Mobile, null).Cast();
+                        }
                     }
                     else if (NeedGHeal(toHelp))
                     {
                         if (m_Mobile.Debug)
+                        {
                             m_Mobile.DebugSay("{0} needs a greater heal", toHelp.Name);
+                        }
 
                         if (!(new GreaterHealSpell(m_Mobile, null)).Cast())
+                        {
                             new HealSpell(m_Mobile, null).Cast();
+                        }
                     }
                     else if (NeedLHeal(toHelp))
                     {
                         if (m_Mobile.Debug)
+                        {
                             m_Mobile.DebugSay("{0} needs a lesser heal", toHelp.Name);
+                        }
 
                         new HealSpell(m_Mobile, null).Cast();
                     }
@@ -134,7 +146,9 @@ namespace Server.Mobiles
         private Mobile Find(params NeedDelegate[] funcs)
         {
             if (m_Mobile.Deleted)
+            {
                 return null;
+            }
 
             Map map = m_Mobile.Map;
 
@@ -147,7 +161,9 @@ namespace Server.Mobiles
                 foreach (Mobile m in eable)
                 {
                     if (!m_Mobile.CanSee(m) || !(m is BaseCreature) || ((BaseCreature)m).Team != m_Mobile.Team)
+                    {
                         continue;
+                    }
 
                     for (int i = 0; i < funcs.Length; ++i)
                     {

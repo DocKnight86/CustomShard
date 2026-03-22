@@ -52,13 +52,12 @@ namespace Server.Mobiles
         public override int Hides => 40;
         public override int Meat => 19;
         public override int TreasureMapLevel => 5;
+
         public override void GenerateLoot()
         {
             AddLoot(LootPack.UltraRich, 3);
             AddLoot(LootPack.ArcanistScrolls, 0, 1);
-            AddLoot(LootPack.LootItem<HydraScale>());
             AddLoot(LootPack.LootItem<ParrotItem>(10.0));
-            AddLoot(LootPack.LootItem<ThorvaldsMedallion>(5.0));
         }
 
         public override void Serialize(GenericWriter writer)

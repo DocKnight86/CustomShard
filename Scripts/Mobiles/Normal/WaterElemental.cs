@@ -80,10 +80,14 @@ namespace Server.Mobiles
             switch (version)
             {
                 case 0:
+                {
                     break;
+                }
                 case 1:
+                {
                     m_HasDecanter = reader.ReadBool();
                     break;
+                }
             }
         }
     }

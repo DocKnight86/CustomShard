@@ -90,10 +90,10 @@ namespace Server.Mobiles
 
                 if (allGold != null)
                 {
-                    for (var index = 0; index < allGold.Length; index++)
+                    for (int index = 0; index < allGold.Length; index++)
                     {
-                        var item = allGold[index];
-                        var g = (Gold) item;
+                        Item item = allGold[index];
+                        Gold g = (Gold) item;
 
                         GoldOnDeath += g.Amount;
                     }
@@ -128,7 +128,7 @@ namespace Server.Mobiles
                 return null;
             }
 
-            var owner = ControlMaster;
+            Mobile owner = ControlMaster;
             IsHired = true;
 
             if (owner == null)
@@ -174,7 +174,7 @@ namespace Server.Mobiles
         #region [ PerDayCost ] 
         public int PerDayCost()
         {
-            var pay = (int)Skills[SkillName.Anatomy].Value + (int)Skills[SkillName.Tactics].Value;
+            int pay = (int)Skills[SkillName.Anatomy].Value + (int)Skills[SkillName.Tactics].Value;
             pay += (int)Skills[SkillName.Macing].Value + (int)Skills[SkillName.Swords].Value;
             pay += (int)Skills[SkillName.Fencing].Value + (int)Skills[SkillName.Archery].Value;
             pay += (int)Skills[SkillName.MagicResist].Value + (int)Skills[SkillName.Healing].Value;
@@ -282,12 +282,16 @@ namespace Server.Mobiles
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
         {
             if (Deleted)
+            {
                 return;
+            }
 
             if (!Controlled)
             {
                 if (CanPaperdollBeOpenedBy(from))
+                {
                     list.Add(new PaperdollEntry(this));
+                }
 
                 list.Add(new HireEntry(from, this));
             }
@@ -318,11 +322,11 @@ namespace Server.Mobiles
 
             protected override void OnTick()
             {
-                var list = new List<BaseHire>();
+                List<BaseHire> list = new List<BaseHire>();
 
-                for (var index = 0; index < Hires.Count; index++)
+                for (int index = 0; index < Hires.Count; index++)
                 {
-                    var v = Hires[index];
+                    BaseHire v = Hires[index];
 
                     if (v.NextPay <= DateTime.UtcNow)
                     {
@@ -332,7 +336,7 @@ namespace Server.Mobiles
 
                 for (int i = 0; i < list.Count; i++)
                 {
-                    var hire = list[i];
+                    BaseHire hire = list[i];
                     hire.NextPay = DateTime.UtcNow + GetInterval();
 
                     int pay = hire.Pay;

@@ -134,20 +134,30 @@ namespace Server.Mobiles
                         switch (i)
                         {
                             case 0:
+                            {
                                 rabid = new EnragedRabbit(this);
                                 break;
+                            }
                             case 1:
+                            {
                                 rabid = new EnragedHind(this);
                                 break;
+                            }
                             case 2:
+                            {
                                 rabid = new EnragedHart(this);
                                 break;
+                            }
                             case 3:
+                            {
                                 rabid = new EnragedBlackBear(this);
                                 break;
+                            }
                             default:
+                            {
                                 rabid = new EnragedEagle(this);
                                 break;
+                            }
                         }
 
                         rabid.FocusMob = combatant;

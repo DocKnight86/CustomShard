@@ -99,7 +99,6 @@ namespace Server.Engines.CityLoyalty
         public static readonly TimeSpan LoveAtrophyDuration = TimeSpan.FromHours(40);
         public static Map SystemMap => Siege.SiegeShard ? Map.Felucca : Map.Trammel;
 
-        public bool ArtisanFestivalActive => SeasonalEventSystem.IsActive(EventType.ArtisanFestival);
         public static readonly bool AwakeingEventActive = false;
 
         public override TextDefinition Name => new TextDefinition($"{City.ToString()}");
@@ -169,12 +168,16 @@ namespace Server.Engines.CityLoyalty
             set
             {
                 if (value != null && Governor != null)
+                {
                     Governor = null;
+                }
 
                 _GovernorElect = value;
 
                 if (Stone != null)
+                {
                     Stone.InvalidateProperties();
+                }
             }
         }
 
@@ -185,19 +188,27 @@ namespace Server.Engines.CityLoyalty
             set
             {
                 if (_Governor != null && _Governor != value && _Governor.NetState != null)
+                {
                     _Governor.SendLocalizedMessage(1154071); // King Blackthorn thanks you for your service. You have been removed from the Office of the Governor.
+                }
 
                 if (value == _GovernorElect)
+                {
                     _GovernorElect = null;
+                }
 
                 if (value != null && value != _Governor)
+                {
                     HeraldMessage(1154070, value.Name); // Hear Ye! Hear Ye! ~1_NAME~ hath accepted the Office of Governor! King Blackthorn congratulates Governor ~1_NAME~! 
+                }
 
                 _PendingGovernor = false;
                 _Governor = value;
 
                 if (Stone != null)
+                {
                     Stone.InvalidateProperties();
+                }
             }
         }
 
@@ -208,12 +219,16 @@ namespace Server.Engines.CityLoyalty
             set
             {
                 if (value && _GovernorElect != null)
+                {
                     _GovernorElect = null;
+                }
 
                 _PendingGovernor = value;
 
                 if (Stone != null)
+                {
                     Stone.InvalidateProperties();
+                }
             }
         }
 
@@ -226,7 +241,9 @@ namespace Server.Engines.CityLoyalty
                 _Treasury = value;
 
                 if (Stone != null)
+                {
                     Stone.InvalidateProperties();
+                }
             }
         }
 
@@ -239,7 +256,9 @@ namespace Server.Engines.CityLoyalty
                 _ActiveTradeDeal = value;
 
                 if (Stone != null)
+                {
                     Stone.InvalidateProperties();
+                }
             }
         }
 
@@ -252,7 +271,9 @@ namespace Server.Engines.CityLoyalty
                 _CompletedTrades = value;
 
                 if (Stone != null)
+                {
                     Stone.InvalidateProperties();
+                }
             }
         }
 
@@ -294,7 +315,7 @@ namespace Server.Engines.CityLoyalty
         {
             int count = 0;
 
-            for (var index = 0; index < PlayerTable.Count; index++)
+            for (int index = 0; index < PlayerTable.Count; index++)
             {
                 PointsEntry pointsEntry = PlayerTable[index];
 
@@ -327,7 +348,9 @@ namespace Server.Engines.CityLoyalty
                     _Governor = null;
 
                     if (Stone != null)
+                    {
                         Stone.InvalidateProperties();
+                    }
                 }
 
                 if (from == GovernorElect)
@@ -335,7 +358,9 @@ namespace Server.Engines.CityLoyalty
                     _GovernorElect = null;
 
                     if (Stone != null)
+                    {
                         Stone.InvalidateProperties();
+                    }
                 }
 
                 CitizenWait[from] = DateTime.UtcNow + TimeSpan.FromDays(CitizenJoinWait);
@@ -361,10 +386,14 @@ namespace Server.Engines.CityLoyalty
             }
 
             if (from == Governor && entry.LoyaltyRating < LoyaltyRating.Unknown)
+            {
                 Governor = null;
+            }
 
             if (from == GovernorElect && entry.LoyaltyRating < LoyaltyRating.Unknown)
+            {
                 GovernorElect = null;
+            }
         }
 
         public virtual void AwardLove(Mobile from, double love, bool message = true)
@@ -380,7 +409,7 @@ namespace Server.Engines.CityLoyalty
 
             if (AwakeingEventActive)
             {
-                for (var index = 0; index < Cities.Count; index++)
+                for (int index = 0; index < Cities.Count; index++)
                 {
                     CityLoyaltySystem sys = Cities[index];
 
@@ -495,7 +524,9 @@ namespace Server.Engines.CityLoyalty
             CityLoyaltyEntry entry = GetPlayerEntry<CityLoyaltyEntry>(from);
 
             if (entry == null)
+            {
                 return false;
+            }
 
             return (entry.Titles & title) != 0;
         }
@@ -505,7 +536,9 @@ namespace Server.Engines.CityLoyalty
             CityLoyaltyEntry entry = GetPlayerEntry<CityLoyaltyEntry>(from);
 
             if (entry == null)
+            {
                 return;
+            }
 
             entry.AddTitle(title);
         }
@@ -531,7 +564,9 @@ namespace Server.Engines.CityLoyalty
             CityLoyaltyEntry entry = GetPlayerEntry<CityLoyaltyEntry>(from);
 
             if (entry == null)
+            {
                 return false;
+            }
 
             return entry.LoyaltyRating >= GetMinimumRating(title);
         }
@@ -575,7 +610,7 @@ namespace Server.Engines.CityLoyalty
                 Stone.InvalidateProperties();
             }
 
-            for (var index = 0; index < PlayerTable.Count; index++)
+            for (int index = 0; index < PlayerTable.Count; index++)
             {
                 PointsEntry entry = PlayerTable[index];
 
@@ -626,7 +661,9 @@ namespace Server.Engines.CityLoyalty
         public void HeraldMessage(string message)
         {
             if (Herald != null)
+            {
                 Herald.Say(message);
+            }
         }
 
         public void HeraldMessage(int message, string args)
@@ -640,9 +677,13 @@ namespace Server.Engines.CityLoyalty
         public void HeraldMessage(Mobile to, int message)
         {
             if (Herald != null)
+            {
                 Herald.SayTo(to, message);
+            }
             else
+            {
                 to.SendLocalizedMessage(message);
+            }
         }
 
         public bool CanAdd(Mobile from)
@@ -684,7 +725,7 @@ namespace Server.Engines.CityLoyalty
             CommandSystem.Register("ElectionStartTime", AccessLevel.Administrator, e => Gumps.BaseGump.SendGump(new ElectionStartTimeGump(e.Mobile as PlayerMobile)));
             CommandSystem.Register("RemoveWait", AccessLevel.Administrator, e =>
             {
-                for (var index = 0; index < Cities.Count; index++)
+                for (int index = 0; index < Cities.Count; index++)
                 {
                     CityLoyaltySystem city = Cities[index];
 
@@ -782,42 +823,18 @@ namespace Server.Engines.CityLoyalty
             m.RemoveStatMod($"TradeDeal_{StatType.Int}");
         }
 
-        public static void OnBODTurnIn(Mobile from, int gold)
-        {
-            if (!Enabled)
-            {
-                return;
-            }
-
-            CityLoyaltySystem city = null;
-
-            for (var index = 0; index < Cities.Count; index++)
-            {
-                var c = Cities[index];
-
-                if (c.Definition.Region != null && c.Definition.Region.IsPartOf(from.Region))
-                {
-                    city = c;
-                    break;
-                }
-            }
-
-            if (city != null)
-            {
-                city.AwardLove(from, Math.Max(10, gold / 100));
-            }
-        }
-
         public static void OnSpawnCreatureKilled(BaseCreature killed, int spawnLevel)
         {
             if (!Enabled || killed == null)
+            {
                 return;
+            }
 
             List<DamageStore> rights = killed.GetLootingRights();
 
-            for (var index = 0; index < rights.Count; index++)
+            for (int index = 0; index < rights.Count; index++)
             {
-                var store = rights[index];
+                DamageStore store = rights[index];
 
                 CityLoyaltySystem city = GetCitizenship(store.m_Mobile, false);
 
@@ -831,9 +848,11 @@ namespace Server.Engines.CityLoyalty
         public static bool CanAddCitizen(Mobile from)
         {
             if (from.AccessLevel > AccessLevel.Player)
+            {
                 return true;
+            }
 
-            for (var index = 0; index < Cities.Count; index++)
+            for (int index = 0; index < Cities.Count; index++)
             {
                 CityLoyaltySystem city = Cities[index];
 
@@ -848,7 +867,7 @@ namespace Server.Engines.CityLoyalty
 
         public static int NextJoinCity(Mobile from)
         {
-            for (var index = 0; index < Cities.Count; index++)
+            for (int index = 0; index < Cities.Count; index++)
             {
                 CityLoyaltySystem city = Cities[index];
 
@@ -863,13 +882,13 @@ namespace Server.Engines.CityLoyalty
 
         public static void OnTick()
         {
-            for (var i = 0; i < Cities.Count; i++)
+            for (int i = 0; i < Cities.Count; i++)
             {
                 CityLoyaltySystem sys = Cities[i];
 
                 List<Mobile> list = new List<Mobile>(sys.CitizenWait.Keys);
 
-                for (var index = 0; index < list.Count; index++)
+                for (int index = 0; index < list.Count; index++)
                 {
                     Mobile m = list[index];
 
@@ -885,9 +904,9 @@ namespace Server.Engines.CityLoyalty
                 {
                     if (AwakeingEventActive)
                     {
-                        for (var index = 0; index < sys.PlayerTable.Count; index++)
+                        for (int index = 0; index < sys.PlayerTable.Count; index++)
                         {
-                            var t = sys.PlayerTable[index];
+                            PointsEntry t = sys.PlayerTable[index];
 
                             if (t is CityLoyaltyEntry entry && entry.Player != null)
                             {
@@ -920,7 +939,7 @@ namespace Server.Engines.CityLoyalty
                     }
                 }
 
-                for (var index = 0; index < sys.PlayerTable.Count; index++)
+                for (int index = 0; index < sys.PlayerTable.Count; index++)
                 {
                     PointsEntry pointsEntry = sys.PlayerTable[index];
 
@@ -950,9 +969,9 @@ namespace Server.Engines.CityLoyalty
 
         public static bool HasCitizenship(Mobile from)
         {
-            for (var index = 0; index < Cities.Count; index++)
+            for (int index = 0; index < Cities.Count; index++)
             {
-                var sys = Cities[index];
+                CityLoyaltySystem sys = Cities[index];
 
                 if (sys.IsCitizen(from))
                 {
@@ -967,9 +986,9 @@ namespace Server.Engines.CityLoyalty
         {
             CityLoyaltySystem sys = null;
 
-            for (var index = 0; index < Cities.Count; index++)
+            for (int index = 0; index < Cities.Count; index++)
             {
-                var s = Cities[index];
+                CityLoyaltySystem s = Cities[index];
 
                 if (s.City == city)
                 {
@@ -983,9 +1002,9 @@ namespace Server.Engines.CityLoyalty
 
         public static CityLoyaltySystem GetCitizenship(Mobile from, bool staffIsCitizen = true)
         {
-            for (var index = 0; index < Cities.Count; index++)
+            for (int index = 0; index < Cities.Count; index++)
             {
-                var sys = Cities[index];
+                CityLoyaltySystem sys = Cities[index];
 
                 if (sys.IsCitizen(from, staffIsCitizen))
                 {
@@ -1193,11 +1212,11 @@ namespace Server.Engines.CityLoyalty
 
         public static bool IsLove(LoyaltyRating rating)
         {
-            for (var index = 0; index < _LoveLoyaltyTable.Length; index++)
+            for (int index = 0; index < _LoveLoyaltyTable.Length; index++)
             {
                 LoyaltyRating[] ratings = _LoveLoyaltyTable[index];
 
-                for (var i = 0; i < ratings.Length; i++)
+                for (int i = 0; i < ratings.Length; i++)
                 {
                     LoyaltyRating r = ratings[i];
 
@@ -1232,9 +1251,9 @@ namespace Server.Engines.CityLoyalty
         {
             CityLoyaltySystem first = null;
 
-            for (var index = 0; index < Cities.Count; index++)
+            for (int index = 0; index < Cities.Count; index++)
             {
-                var c = Cities[index];
+                CityLoyaltySystem c = Cities[index];
 
                 if (c.CanUtilize)
                 {
@@ -1345,7 +1364,9 @@ namespace Server.Engines.CityLoyalty
                 Election.Serialize(writer);
             }
             else
+            {
                 writer.Write(1);
+            }
         }
 
         public override void Deserialize(GenericReader reader)
@@ -1367,7 +1388,9 @@ namespace Server.Engines.CityLoyalty
                             DateTime dt = reader.ReadDateTime();
 
                             if (m != null && dt > DateTime.UtcNow)
+                            {
                                 CitizenWait[m] = dt;
+                            }
                         }
                     }
                     goto case 0;
@@ -1388,9 +1411,13 @@ namespace Server.Engines.CityLoyalty
                         PostedOn = reader.ReadDateTime();
 
                         if (reader.ReadInt() == 0)
+                        {
                             Election = new CityElection(this, reader);
+                        }
                         else
+                        {
                             Election = new CityElection(this);
+                        }
                     }
                     break;
             }
@@ -1404,7 +1431,9 @@ namespace Server.Engines.CityLoyalty
                     DateTime dt = reader.ReadDateTime();
 
                     if (m != null && dt > DateTime.UtcNow)
+                    {
                         CitizenWait[m] = dt;
+                    }
                 }
             }
 

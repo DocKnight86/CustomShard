@@ -45,7 +45,9 @@ namespace Server.Mobiles
             base.OnThink();
 
             if (Stage >= 3 || m_NextMutate > DateTime.UtcNow)
+            {
                 return;
+            }
 
             if (!MutateGrouped() && Alive && !Deleted)
             {
@@ -115,12 +117,16 @@ namespace Server.Mobiles
         public void Mutate(VoidEvolution evolution)
         {
             if (!Alive || Deleted || Stage == 3)
+            {
                 return;
+            }
 
             VoidEvolution evo = evolution;
 
             if (Stage > 0)
+            {
                 evo = Evolution;
+            }
 
             if (0.05 > Utility.RandomDouble())
             {
@@ -143,10 +149,14 @@ namespace Server.Mobiles
                 bc.RangeHome = RangeHome;
 
                 if (0.05 > Utility.RandomDouble())
+                {
                     SpawnOrtanords();
+                }
 
                 if (bc is BaseVoidCreature creature)
+                {
                     creature.BuddyMutate = m_BuddyMutate;
+                }
 
                 Delete();
             }
@@ -185,13 +195,19 @@ namespace Server.Mobiles
             double chance = 0.0;
 
             if (Stage > 0)
+            {
                 chance = baseChance * (Stage + 3);
+            }
 
             if (Stage > 0 && Utility.RandomDouble() < chance)
+            {
                 c.DropItem(new VoidEssence());
+            }
 
             if (Stage == 3 && Utility.RandomDouble() < 0.12)
+            {
                 c.DropItem(new VoidCore());
+            }
         }
 
         public override void Delete()
@@ -203,7 +219,9 @@ namespace Server.Mobiles
                 if (s is XmlSpawner xml)
                 {
                     if (xml.SpawnObjects == null)
+                    {
                         return;
+                    }
 
                     for (var index = 0; index < xml.SpawnObjects.Length; index++)
                     {

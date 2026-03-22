@@ -49,9 +49,13 @@ namespace Server.Engines.CityLoyalty
             SetWearable(new ShortPants(1508));
 
             if (Female)
+            {
                 SetWearable(new FemaleStuddedChest());
+            }
             else
+            {
                 SetWearable(new PlateChest());
+            }
 
             SetWearable(new BodySash(1326));
             SetWearable(new Halberd());
@@ -65,9 +69,9 @@ namespace Server.Engines.CityLoyalty
             {
                 Mobile first = null;
 
-                for (var index = 0; index < pm.AllFollowers.Count; index++)
+                for (int index = 0; index < pm.AllFollowers.Count; index++)
                 {
-                    var mob = pm.AllFollowers[index];
+                    Mobile mob = pm.AllFollowers[index];
 
                     if (mob is Raider && mob.InRange(Location, 2))
                     {
@@ -93,7 +97,9 @@ namespace Server.Engines.CityLoyalty
             base.GetContextMenuEntries(from, entries);
 
             if (from is PlayerMobile pm)
+            {
                 entries.Add(new InternalEntry(pm, this));
+            }
         }
 
         public class InternalEntry : ContextMenuEntry
@@ -120,9 +126,14 @@ namespace Server.Engines.CityLoyalty
                 if (theirSystem != null && thisSystem != null && CityLoyaltySystem.HasCitizenship(Player, Guard.City))
                 {
                     if (Guard.IsInBannerCooldown(Player))
+                    {
                         Guard.SayTo(Player, 1152364, $"#{CityLoyaltySystem.BannerLocalization(thisSystem.City)}"); // I have quite a backlog of orders and I cannot satisfy your request for a ~1_ITEM~ right now.
+                    }
+
                     if (theirSystem.GetLoyaltyRating(Player) < LoyaltyRating.Adored)
+                    {
                         Guard.SayTo(Player, 1152363, $"#{CityLoyaltySystem.GetCityLocalization(thisSystem.City)}"); // I apologize, but you are not well-enough renowned in the city of ~1_CITY~ to make this purchase.
+                    }
                     else
                     {
                         string args = $"#{CityLoyaltySystem.BannerLocalization(thisSystem.City)}\t{CityLoyaltySystem.BannerCost.ToString("N0", CultureInfo.GetCultureInfo("en-US"))}";
@@ -163,7 +174,9 @@ namespace Server.Engines.CityLoyalty
         public void AddToCooldown(PlayerMobile pm)
         {
             if (_BannerCooldown == null)
+            {
                 _BannerCooldown = new Dictionary<PlayerMobile, DateTime>();
+            }
 
             _BannerCooldown[pm] = DateTime.UtcNow + TimeSpan.FromHours(CityLoyaltySystem.BannerCooldownDuration);
         }
@@ -187,7 +200,7 @@ namespace Server.Engines.CityLoyalty
 
             List<PlayerMobile> list = new List<PlayerMobile>(_BannerCooldown.Keys);
 
-            for (var index = 0; index < list.Count; index++)
+            for (int index = 0; index < list.Count; index++)
             {
                 PlayerMobile pm = list[index];
 

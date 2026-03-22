@@ -63,9 +63,18 @@ namespace Server.Mobiles
 
                 switch (Utility.Random(3))
                 {
-                    case 0: item = new GelatanousSkull(); break;
-                    case 1: item = new CoagulatedLegs(); break;
-                    case 2: item = new PartiallyDigestedTorso(); break;
+                    case 0:
+                    {
+                        item = new GelatanousSkull(); break;
+                    }
+                    case 1:
+                    {
+                        item = new CoagulatedLegs(); break;
+                    }
+                    case 2:
+                    {
+                        item = new PartiallyDigestedTorso(); break;
+                    }
                 }
 
                 if (item != null)

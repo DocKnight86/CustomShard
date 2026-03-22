@@ -18,10 +18,14 @@ namespace Server.Mobiles.MannequinProperty
             double total = GetPropertyValue(item);
 
             if (!IsBoolen)
+            {
                 Value = total;
+            }
 
             if (total != 0)
+            {
                 return true;
+            }
 
             return false;
         }
@@ -33,10 +37,14 @@ namespace Server.Mobiles.MannequinProperty
             items.ForEach(x => total += GetPropertyValue(x));
 
             if (!IsBoolen)
+            {
                 Value = total;
+            }
 
             if (total != 0)
+            {
                 return true;
+            }
 
             return false;
         }

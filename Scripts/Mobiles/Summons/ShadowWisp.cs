@@ -48,7 +48,9 @@ namespace Server.Mobiles
             base.OnThink();
 
             if (DateTime.UtcNow < m_NextFlare)
+            {
                 return;
+            }
 
             m_NextFlare = DateTime.UtcNow + TimeSpan.FromSeconds(5.0 + (25.0 * Utility.RandomDouble()));
 
@@ -75,10 +77,14 @@ namespace Server.Mobiles
             Mobile caster = ControlMaster;
 
             if (caster == null)
+            {
                 caster = SummonMaster;
+            }
 
             if (caster == null)
+            {
                 return;
+            }
 
             ArrayList list = new ArrayList();
             IPooledEnumerable eable = GetMobilesInRange(5);
@@ -86,7 +92,9 @@ namespace Server.Mobiles
             foreach (Mobile m in eable)
             {
                 if (m.Player && m.Alive && !m.IsDeadBondedPet && m.Karma <= 0 && m.IsPlayer())
+                {
                     list.Add(m);
+                }
             }
             eable.Free();
 

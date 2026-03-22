@@ -167,26 +167,40 @@ namespace Server.Mobiles
                     switch (Utility.Random(7))
                     {
                         default:
+                        {
                             bc = new BoundSoul();
                             break;
+                        }
                         case 1:
+                        {
                             bc = new SoulboundApprenticeMage();
                             break;
+                        }
                         case 2:
+                        {
                             bc = new SoulboundBattleMage();
                             break;
+                        }
                         case 3:
+                        {
                             bc = new SoulboundPirateCaptain();
                             break;
+                        }
                         case 4:
+                        {
                             bc = new SoulboundPirateRaider();
                             break;
+                        }
                         case 5:
+                        {
                             bc = new SoulboundSpellSlinger();
                             break;
+                        }
                         case 6:
+                        {
                             bc = new SoulboundSwashbuckler();
                             break;
+                        }
                     }
 
                     m_Helpers.Add(bc);
@@ -511,9 +525,12 @@ namespace Server.Mobiles
             switch (version)
             {
                 case 1:
+                {
                     m_HasDone2ndSpawn = reader.ReadBool();
                     goto case 0;
+                }
                 case 0:
+                {
                     m_Altar = reader.ReadItem() as CorgulAltar;
 
                     int cnt = reader.ReadInt();
@@ -525,6 +542,7 @@ namespace Server.Mobiles
                         }
                     }
                     break;
+                }
             }
 
             m_NextDismount = DateTime.UtcNow;
@@ -573,16 +591,22 @@ namespace Server.Mobiles
                 switch (Utility.Random(3))
                 {
                     case 0: // Fire column
+                    {
                         Effects.SendLocationParticles(EffectItem.Create(g.Location, g.Map, EffectItem.DefaultDuration), 0x3709, 10, 30, 5052);
                         Effects.PlaySound(g, g.Map, 0x208);
                         break;
+                    }
                     case 1: // Explosion
+                    {
                         Effects.SendLocationParticles(EffectItem.Create(g.Location, g.Map, EffectItem.DefaultDuration), 0x36BD, 20, 10, 5044);
                         Effects.PlaySound(g, g.Map, 0x307);
                         break;
+                    }
                     case 2: // Ball of fire
+                    {
                         Effects.SendLocationParticles(EffectItem.Create(g.Location, g.Map, EffectItem.DefaultDuration), 0x36FE, 10, 10, 5052);
                         break;
+                    }
                 }
                 ++m_PilesDone;
             }

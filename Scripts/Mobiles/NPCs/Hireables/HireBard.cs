@@ -18,11 +18,15 @@ namespace Server.Mobiles
                 switch (Utility.Random(2))
                 {
                     case 0:
+                    {
                         AddItem(new Skirt(Utility.RandomDyedHue()));
                         break;
+                    }
                     case 1:
+                    {
                         AddItem(new Kilt(Utility.RandomNeutralHue()));
                         break;
+                    }
                 }
             }
             else
@@ -58,11 +62,15 @@ namespace Server.Mobiles
             switch (Utility.Random(2))
             {
                 case 0:
+                {
                     AddItem(new Doublet(Utility.RandomDyedHue()));
                     break;
+                }
                 case 1:
+                {
                     AddItem(new Shirt(Utility.RandomDyedHue()));
                     break;
+                }
             }
         }
 

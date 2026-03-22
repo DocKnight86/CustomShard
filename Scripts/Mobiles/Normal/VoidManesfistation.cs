@@ -133,10 +133,22 @@ namespace Server.Mobiles
 
             switch (m_Type)
             {
-                default: break;
-                case 1: c.DropItem(new VoidCrystalOfCorruptedArcaneEssence()); break;
-                case 2: c.DropItem(new VoidCrystalOfCorruptedSpiritualEssence()); break;
-                case 3: c.DropItem(new VoidCrystalOfCorruptedMysticalEssence()); break;
+                default:
+                {
+                    break;
+                }
+                case 1:
+                {
+                    c.DropItem(new VoidCrystalOfCorruptedArcaneEssence()); break;
+                }
+                case 2:
+                {
+                    c.DropItem(new VoidCrystalOfCorruptedSpiritualEssence()); break;
+                }
+                case 3:
+                {
+                    c.DropItem(new VoidCrystalOfCorruptedMysticalEssence()); break;
+                }
             }
         }
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Server.Accounting;
 using Server.ContextMenus;
 using Server.Engines.ArenaSystem;
-using Server.Engines.BulkOrders;
 using Server.Engines.CannedEvil;
 using Server.Engines.Chat;
 using Server.Engines.CityLoyalty;
@@ -45,7 +44,6 @@ using Server.Spells.Seventh;
 using Server.Spells.Sixth;
 using Server.Spells.SkillMasteries;
 using Server.Spells.Spellweaving;
-using Server.Targeting;
 using Aggression = Server.Misc.Aggression;
 using RankDefinition = Server.Guilds.RankDefinition;
 
@@ -70,7 +68,7 @@ namespace Server.Mobiles
         AcceptGuildInvites = 0x00000800,
         DisplayChampionTitle = 0x00001000,
         HasStatReward = 0x00002000,
-        Bedlam = 0x00010000,
+        UNUSED3 = 0x00010000,
         LibraryFriend = 0x00020000,
         Spellweaving = 0x00040000,
         GemMining = 0x00080000,
@@ -175,7 +173,6 @@ namespace Server.Mobiles
 
         #region Points System
         private PointsSystemProps _PointsSystemProps;
-        private BODProps _BODProps;
         private AccountGoldProps _AccountGold;
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -184,26 +181,11 @@ namespace Server.Mobiles
             get
             {
                 if (_PointsSystemProps == null)
-                    _PointsSystemProps = new PointsSystemProps(this);
-
-                return _PointsSystemProps;
-            }
-            set
-            {
-            }
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public BODProps BODData
-        {
-            get
-            {
-                if (_BODProps == null)
                 {
-                    _BODProps = new BODProps(this);
+                    _PointsSystemProps = new PointsSystemProps(this);
                 }
 
-                return _BODProps;
+                return _PointsSystemProps;
             }
             set
             {
@@ -319,9 +301,6 @@ namespace Server.Mobiles
 
         [CommandProperty(AccessLevel.GameMaster)]
         public DateTime NpcGuildJoinTime { get => m_NpcGuildJoinTime; set => m_NpcGuildJoinTime = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public DateTime NextBODTurnInTime { get; set; }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public DateTime LastOnline { get => m_LastOnline; set => m_LastOnline = value; }
@@ -517,16 +496,11 @@ namespace Server.Mobiles
         [CommandProperty(AccessLevel.GameMaster)]
         public DateTime NextGemOfSalvationUse { get; set; }
 
-        #region Mondain's Legacy
-        [CommandProperty(AccessLevel.GameMaster)]
-        public bool Bedlam { get => GetFlag(PlayerFlag.Bedlam); set => SetFlag(PlayerFlag.Bedlam, value); }
-
         [CommandProperty(AccessLevel.GameMaster)]
         public bool LibraryFriend { get => GetFlag(PlayerFlag.LibraryFriend); set => SetFlag(PlayerFlag.LibraryFriend, value); }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public bool Spellweaving { get => GetFlag(PlayerFlag.Spellweaving); set => SetFlag(PlayerFlag.Spellweaving, value); }
-        #endregion
 
         [CommandProperty(AccessLevel.GameMaster)]
         public TimeSpan DisguiseTimeLeft => DisguiseTimers.TimeRemaining(this);
@@ -634,12 +608,16 @@ namespace Server.Mobiles
                                     {
                                         case Direction.North:
                                         case Direction.South:
+                                        {
                                             item.ItemID = itemIDs[0];
                                             break;
+                                        }
                                         case Direction.East:
                                         case Direction.West:
+                                        {
                                             item.ItemID = itemIDs[1];
                                             break;
+                                        }
                                     }
                                 }
                                 else if (itemIDs.Length == 4)
@@ -647,17 +625,25 @@ namespace Server.Mobiles
                                     switch (dir)
                                     {
                                         case Direction.South:
+                                        {
                                             item.ItemID = itemIDs[0];
                                             break;
+                                        }
                                         case Direction.East:
+                                        {
                                             item.ItemID = itemIDs[1];
                                             break;
+                                        }
                                         case Direction.North:
+                                        {
                                             item.ItemID = itemIDs[2];
                                             break;
+                                        }
                                         case Direction.West:
+                                        {
                                             item.ItemID = itemIDs[3];
                                             break;
+                                        }
                                     }
                                 }
                             }
@@ -732,7 +718,9 @@ namespace Server.Mobiles
         public static void TargetedSkillUse(Mobile from, IEntity target, int skillId)
         {
             if (from == null || target == null)
+            {
                 return;
+            }
 
             from.TargetLocked = true;
 
@@ -1053,8 +1041,14 @@ namespace Server.Mobiles
             {
                 switch (type)
                 {
-                    case SpeedControlType.WalkSpeed: return base.SendSpeedControl(SpeedControlType.WalkSpeedFast);
-                    case SpeedControlType.Disable: return base.SendSpeedControl(SpeedControlType.MountSpeed);
+                    case SpeedControlType.WalkSpeed:
+                    {
+                        return base.SendSpeedControl(SpeedControlType.WalkSpeedFast);
+                    }
+                    case SpeedControlType.Disable:
+                    {
+                        return base.SendSpeedControl(SpeedControlType.MountSpeed);
+                    }
                 }
             }
 
@@ -1596,7 +1590,9 @@ namespace Server.Mobiles
         public override void OnSubItemRemoved(Item item)
         {
             if (Engines.UOStore.UltimaStore.HasPendingItem(this))
+            {
                 Timer.DelayCall(TimeSpan.FromSeconds(1.5), Engines.UOStore.UltimaStore.CheckPendingItem, this);
+            }
         }
 
         public override void AggressiveAction(Mobile aggressor, bool criminal)
@@ -1762,7 +1758,9 @@ namespace Server.Mobiles
             if (damageable is IDamageableItem item && !item.CanDamage)
             {
                 if (message)
+                {
                     SendMessage("That cannot be harmed.");
+                }
 
                 return false;
             }
@@ -1990,7 +1988,9 @@ namespace Server.Mobiles
             base.OnHeal(ref amount, from);
 
             if (from == null)
+            {
                 return;
+            }
 
             BestialSetHelper.OnHeal(this, from, ref amount);
 
@@ -2184,11 +2184,6 @@ namespace Server.Mobiles
 
                 list.Add(new OpenBackpackEntry(this));
 
-                if (Siege.SiegeShard)
-                {
-                    list.Add(new CallbackEntry(3006168, SiegeBlessItem));
-                }
-
                 if (Alive)
                 {
                     QuestHelper.GetContextMenuEntries(list);
@@ -2230,7 +2225,9 @@ namespace Server.Mobiles
                 BaseGalleon galleon = BaseGalleon.FindGalleonAt(from.Location, from.Map);
 
                 if (galleon != null && galleon.IsOwner(from))
+                {
                     list.Add(new ShipAccessEntry(this, from, galleon));
+                }
 
                 if (Alive)
                 {
@@ -2265,43 +2262,6 @@ namespace Server.Mobiles
                 }
             }
         }
-
-        #region Siege Bless Item
-        private Item _BlessedItem;
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public Item BlessedItem { get => _BlessedItem; set => _BlessedItem = value; }
-
-        private void SiegeBlessItem()
-        {
-            if (_BlessedItem != null && _BlessedItem.Deleted)
-                _BlessedItem = null;
-
-            BeginTarget(2, false, TargetFlags.None, (from, targeted) =>
-            {
-                Siege.TryBlessItem(this, targeted);
-            });
-        }
-
-        public override bool Drop(Point3D loc)
-        {
-            if (!Siege.SiegeShard || _BlessedItem == null)
-                return base.Drop(loc);
-
-            Item item = Holding;
-            bool drop = base.Drop(loc);
-
-            if (item != null && drop && item.Parent == null && _BlessedItem != null && _BlessedItem == item)
-            {
-                _BlessedItem = null;
-                item.LootType = LootType.Regular;
-
-                SendLocalizedMessage(1075292, item.Name != null ? item.Name : "#" + item.LabelNumber); // ~1_NAME~ has been unblessed.
-            }
-
-            return drop;
-        }
-        #endregion
 
         private void ToggleTrades()
         {
@@ -2484,7 +2444,9 @@ namespace Server.Mobiles
                 Type t = token.GumpType;
 
                 if (HasGump(t))
+                {
                     CloseGump(t);
+                }
             }
 
             return base.OnDragLift(item);
@@ -2494,11 +2456,6 @@ namespace Server.Mobiles
             Mobile to, Item item, SecureTradeContainer cont, bool message, bool checkItems, int plusItems, int plusWeight)
         {
             int msgNum = 0;
-
-            if (_BlessedItem != null && _BlessedItem == item)
-            {
-                msgNum = 1075282; // You cannot trade a blessed item.
-            }
 
             if (msgNum == 0 && cont == null)
             {
@@ -2738,7 +2695,9 @@ namespace Server.Mobiles
         public override bool IsBeneficialCriminal(Mobile target)
         {
             if (!target.Criminal && target is BaseCreature bc && bc.GetMaster() == this)
+            {
                 return false;
+            }
 
             return base.IsBeneficialCriminal(target);
         }
@@ -2847,9 +2806,13 @@ namespace Server.Mobiles
                 if (value != crim)
                 {
                     if (value)
+                    {
                         BuffInfo.AddBuff(this, new BuffInfo(BuffIcon.CriminalStatus, 1153802, 1153828));
+                    }
                     else
+                    {
                         BuffInfo.RemoveBuff(this, BuffIcon.CriminalStatus);
+                    }
                 }
             }
         }
@@ -2955,7 +2918,6 @@ namespace Server.Mobiles
 
             HueMod = -1;
             NameMod = null;
-            SavagePaintExpiration = TimeSpan.Zero;
 
             SetHairMods(-1, -1);
 
@@ -3056,83 +3018,9 @@ namespace Server.Mobiles
         private TimeSpan m_ShortTermElapse;
         private TimeSpan m_LongTermElapse;
         private DateTime m_SessionStart;
-        private DateTime m_SavagePaintExpiration;
         private SkillName m_Learning = (SkillName)(-1);
 
         public SkillName Learning { get => m_Learning; set => m_Learning = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public TimeSpan SavagePaintExpiration
-        {
-            get
-            {
-                TimeSpan ts = m_SavagePaintExpiration - DateTime.UtcNow;
-
-                if (ts < TimeSpan.Zero)
-                {
-                    ts = TimeSpan.Zero;
-                }
-
-                return ts;
-            }
-            set => m_SavagePaintExpiration = DateTime.UtcNow + value;
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public TimeSpan NextSmithBulkOrder
-        {
-            get => BulkOrderSystem.GetNextBulkOrder(BODType.Smith, this);
-            set => BulkOrderSystem.SetNextBulkOrder(BODType.Smith, this, value);
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public TimeSpan NextTailorBulkOrder
-        {
-            get => BulkOrderSystem.GetNextBulkOrder(BODType.Tailor, this);
-            set => BulkOrderSystem.SetNextBulkOrder(BODType.Tailor, this, value);
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public TimeSpan NextAlchemyBulkOrder
-        {
-            get => BulkOrderSystem.GetNextBulkOrder(BODType.Alchemy, this);
-            set => BulkOrderSystem.SetNextBulkOrder(BODType.Alchemy, this, value);
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public TimeSpan NextInscriptionBulkOrder
-        {
-            get => BulkOrderSystem.GetNextBulkOrder(BODType.Inscription, this);
-            set => BulkOrderSystem.SetNextBulkOrder(BODType.Inscription, this, value);
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public TimeSpan NextTinkeringBulkOrder
-        {
-            get => BulkOrderSystem.GetNextBulkOrder(BODType.Tinkering, this);
-            set => BulkOrderSystem.SetNextBulkOrder(BODType.Tinkering, this, value);
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public TimeSpan NextFletchingBulkOrder
-        {
-            get => BulkOrderSystem.GetNextBulkOrder(BODType.Fletching, this);
-            set => BulkOrderSystem.SetNextBulkOrder(BODType.Fletching, this, value);
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public TimeSpan NextCarpentryBulkOrder
-        {
-            get => BulkOrderSystem.GetNextBulkOrder(BODType.Carpentry, this);
-            set => BulkOrderSystem.SetNextBulkOrder(BODType.Carpentry, this, value);
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public TimeSpan NextCookingBulkOrder
-        {
-            get => BulkOrderSystem.GetNextBulkOrder(BODType.Cooking, this);
-            set => BulkOrderSystem.SetNextBulkOrder(BODType.Cooking, this, value);
-        }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public DateTime LastEscortTime { get; set; }
@@ -3380,33 +3268,33 @@ namespace Server.Mobiles
             return base.IsHarmfulCriminal(damageable);
         }
 
-        public BOBFilter BOBFilter => BulkOrderSystem.GetBOBFilter(this);
-
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-
             int version = reader.ReadInt();
 
             switch (version)
             {
-                case 42: // upgraded quest serialization
-                case 41: // removed PeacedUntil - no need to serialize this
-                case 40: // Version 40, moved gauntlet points, virtua artys and TOT convert to PointsSystem
-                case 39: // Version 39, removed ML quest save/load
+                case 42: 
+                case 41: 
+                case 40: 
+                case 39: 
                 case 38:
+                {
                     NextGemOfSalvationUse = reader.ReadDateTime();
                     goto case 37;
+                }
                 case 37:
+                {
                     m_ExtendedFlags = (ExtendedPlayerFlag)reader.ReadInt();
                     goto case 36;
+                }
                 case 36:
+                {
                     RewardStableSlots = reader.ReadInt();
                     goto case 35;
-                case 35: // Siege Blessed Item
-                    _BlessedItem = reader.ReadItem();
-                    goto case 34;
-                // Version 34 - new BOD System
+                }
+                case 35:
                 case 34:
                 case 33:
                     {
@@ -3426,7 +3314,7 @@ namespace Server.Mobiles
                         m_CurrentVeteranTitle = reader.ReadInt();
                         goto case 30;
                     }
-                case 30: goto case 29;
+                case 30:
                 case 29:
                     {
                         m_SSNextSeed = reader.ReadDateTime();
@@ -3452,9 +3340,6 @@ namespace Server.Mobiles
                         goto case 28;
                     }
                 case 28:
-                    {
-                        goto case 27;
-                    }
                 case 27:
                     {
                         m_AnkhNextUse = reader.ReadDateTime();
@@ -3541,9 +3426,13 @@ namespace Server.Mobiles
                                 Type questType;
 
                                 if (version >= 42)
+                                {
                                     questType = reader.ReadObjectType();
+                                }
                                 else
+                                {
                                     questType = QuestSerializer.ReadQuestType(reader);
+                                }
 
                                 DateTime restartTime;
 
@@ -3574,17 +3463,6 @@ namespace Server.Mobiles
                         goto case 9;
                     }
                 case 9:
-                    {
-                        SavagePaintExpiration = reader.ReadTimeSpan();
-
-                        if (SavagePaintExpiration > TimeSpan.Zero)
-                        {
-                            BodyMod = Female ? 184 : 183;
-                            HueMod = 0;
-                        }
-
-                        goto case 8;
-                    }
                 case 8:
                     {
                         m_NpcGuild = (NpcGuild)reader.ReadInt();
@@ -3683,19 +3561,6 @@ namespace Server.Mobiles
             {
                 AddBuff(new BuffInfo(BuffIcon.HidingAndOrStealth, 1075655));
             }
-
-            if (_BlessedItem != null)
-            {
-                Timer.DelayCall(
-                b =>
-                {
-                    if (_BlessedItem == b && b.RootParent != this)
-                    {
-                        _BlessedItem = null;
-                    }
-                },
-                _BlessedItem);
-            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -3711,13 +3576,6 @@ namespace Server.Mobiles
             writer.Write((int)m_ExtendedFlags);
 
             writer.Write(RewardStableSlots);
-
-            if (_BlessedItem != null && _BlessedItem.RootParent != this)
-            {
-                _BlessedItem = null;
-            }
-
-            writer.Write(_BlessedItem);
 
             writer.Write((int)ExploringTheDeepQuest);
 
@@ -3833,8 +3691,6 @@ namespace Server.Mobiles
                 writer.Write(m_BeardModHue);
             }
 
-            writer.Write(SavagePaintExpiration);
-
             writer.Write((int)m_NpcGuild);
             writer.Write(m_NpcGuildJoinTime);
             writer.Write(m_NpcGuildGameTime);
@@ -3900,7 +3756,9 @@ namespace Server.Mobiles
         public override bool CanSee(Mobile m)
         {
             if (m is IConditionalVisibility && !((IConditionalVisibility)m).CanBeSeenBy(this))
+            {
                 return false;
+            }
 
             if (m is CharacterStatue statue)
             {
@@ -3918,7 +3776,9 @@ namespace Server.Mobiles
         public override bool CanSee(Item item)
         {
             if (item is IConditionalVisibility vis && !vis.CanBeSeenBy(this))
+            {
                 return false;
+            }
 
             if (m_DesignContext != null && m_DesignContext.Foundation.IsHiddenToCustomizer(this, item))
             {
@@ -3967,10 +3827,14 @@ namespace Server.Mobiles
             Engines.JollyRoger.JollyRogerData.DisplayTitle(this, list);
 
             if (m_SubtitleSkillTitle != null)
+            {
                 list.Add(1042971, m_SubtitleSkillTitle);
+            }
 
             if (m_CurrentVeteranTitle > 0)
+            {
                 list.Add(m_CurrentVeteranTitle);
+            }
 
             if (m_RewardTitles != null && m_SelectedTitle > -1)
             {
@@ -4124,9 +3988,13 @@ namespace Server.Mobiles
                 int i = m_RewardTitles.IndexOf(o);
 
                 if (i == m_SelectedTitle)
+                {
                     SelectRewardTitle(-1, silent);
+                }
                 else if (i > m_SelectedTitle)
+                {
                     SelectRewardTitle(m_SelectedTitle - 1, silent);
+                }
 
                 m_RewardTitles.Remove(o);
 
@@ -4173,7 +4041,9 @@ namespace Server.Mobiles
                 m_SelectedTitle = num;
 
                 if (!silent)
+                {
                     SendLocalizedMessage(1074010); // You elect to hide your Reward Title.
+                }
             }
             else if (num < m_RewardTitles.Count && num >= -1)
             {
@@ -4278,7 +4148,9 @@ namespace Server.Mobiles
                     case AccessLevel.Counselor:
                     case AccessLevel.GameMaster:
                     case AccessLevel.Seer:
+                    {
                         return true;
+                    }
                 }
 
                 return false;
@@ -4317,7 +4189,9 @@ namespace Server.Mobiles
                     if (loc > 0)
                     {
                         if (CityLoyaltySystem.ApplyCityTitle(this, list, prefix, loc))
+                        {
                             return;
+                        }
                     }
                     else if (suffix.Length > 0)
                     {

@@ -110,20 +110,30 @@ namespace Server.Engines.Quests
             switch (Utility.Random(5))
             {
                 case 0:
+                {
                     AddItem(new Springs(3));
                     break;
+                }
                 case 1:
+                {
                     AddItem(new Axle(3));
                     break;
+                }
                 case 2:
+                {
                     AddItem(new Hinge(3));
                     break;
+                }
                 case 3:
+                {
                     AddItem(new Key());
                     break;
+                }
                 case 4:
+                {
                     AddItem(new Scissors());
                     break;
+                }
             }
         }
 

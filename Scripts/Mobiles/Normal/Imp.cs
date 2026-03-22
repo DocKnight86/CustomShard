@@ -71,19 +71,58 @@ namespace Server.Mobiles
 
             switch (Utility.Random(13))
             {
-                case 0: c.DropItem(new BloodOathScroll()); break;
-                case 1: c.DropItem(new CorpseSkinScroll()); break;
-                case 2: c.DropItem(new CurseWeaponScroll()); break;
-                case 3: c.DropItem(new EvilOmenScroll()); break;
-                case 4: c.DropItem(new HorrificBeastScroll()); break;
-                case 5: c.DropItem(new LichFormScroll()); break;
-                case 6: c.DropItem(new MindRotScroll()); break;
-                case 7: c.DropItem(new PainSpikeScroll()); break;
-                case 8: c.DropItem(new PoisonStrikeScroll()); break;
-                case 9: c.DropItem(new StrangleScroll()); break;
-                case 10: c.DropItem(new SummonFamiliarScroll()); break;
-                case 11: c.DropItem(new WitherScroll()); break;
-                case 12: c.DropItem(new WraithFormScroll()); break;
+                case 0:
+                {
+                    c.DropItem(new BloodOathScroll()); break;
+                }
+                case 1:
+                {
+                    c.DropItem(new CorpseSkinScroll()); break;
+                }
+                case 2:
+                {
+                    c.DropItem(new CurseWeaponScroll()); break;
+                }
+                case 3:
+                {
+                    c.DropItem(new EvilOmenScroll()); break;
+                }
+                case 4:
+                {
+                    c.DropItem(new HorrificBeastScroll()); break;
+                }
+                case 5:
+                {
+                    c.DropItem(new LichFormScroll()); break;
+                }
+                case 6:
+                {
+                    c.DropItem(new MindRotScroll()); break;
+                }
+                case 7:
+                {
+                    c.DropItem(new PainSpikeScroll()); break;
+                }
+                case 8:
+                {
+                    c.DropItem(new PoisonStrikeScroll()); break;
+                }
+                case 9:
+                {
+                    c.DropItem(new StrangleScroll()); break;
+                }
+                case 10:
+                {
+                    c.DropItem(new SummonFamiliarScroll()); break;
+                }
+                case 11:
+                {
+                    c.DropItem(new WitherScroll()); break;
+                }
+                case 12:
+                {
+                    c.DropItem(new WraithFormScroll()); break;
+                }
             }
         }
 

@@ -26,15 +26,21 @@ namespace Server.Mobiles
 			switch (Utility.Random(4))
 			{
 				case 0:
-					AddItem(new JesterHat(Utility.RandomBrightHue()));
-					break;
-				case 1:
-					AddItem(new Bandana(Utility.RandomBrightHue()));
-					break;
-				case 2:
-					AddItem(new SkullCap(Utility.RandomBrightHue()));
-					break;
-			}
+                {
+                    AddItem(new JesterHat(Utility.RandomBrightHue()));
+                    break;
+                }
+                case 1:
+                {
+                    AddItem(new Bandana(Utility.RandomBrightHue()));
+                    break;
+                }
+                case 2:
+                {
+                    AddItem(new SkullCap(Utility.RandomBrightHue()));
+                    break;
+                }
+            }
 
 			Item item = FindItemOnLayer(Layer.Pants);
 

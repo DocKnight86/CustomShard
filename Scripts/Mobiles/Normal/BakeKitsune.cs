@@ -113,17 +113,25 @@ namespace Server.Mobiles
             switch (Utility.Random(4))
             {
                 case 0:
+                {
                     SetWearable(new Shoes(Utility.RandomNeutralHue()));
                     break;
+                }
                 case 1:
+                {
                     SetWearable(new Boots(Utility.RandomNeutralHue()));
                     break;
+                }
                 case 2:
+                {
                     SetWearable(new Sandals(Utility.RandomNeutralHue()));
                     break;
+                }
                 case 3:
+                {
                     SetWearable(new ThighBoots(Utility.RandomNeutralHue()));
                     break;
+                }
             }
 
             SetWearable(new Robe(Utility.RandomNondyedHue()));

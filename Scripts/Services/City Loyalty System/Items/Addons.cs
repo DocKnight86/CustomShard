@@ -20,9 +20,13 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (IsChildOf(from.Backpack))
+            {
                 from.Target = new InternalTarget(this);
+            }
             else
+            {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
+            }
         }
 
         private class InternalTarget : Target
@@ -40,7 +44,9 @@ namespace Server.Items
                 Map map = from.Map;
 
                 if (p == null || map == null || Deed.Deleted)
+                {
                     return;
+                }
 
                 AddonFitResult result = AddonFitResult.Valid;
 
@@ -49,18 +55,26 @@ namespace Server.Items
                     BaseHouse house = null;
 
                     if (!map.CanFit(p.X, p.Y, p.Z, 16, false, true, false))
+                    {
                         result = AddonFitResult.Blocked;
+                    }
                     else if (!BaseAddon.CheckHouse(from, new Point3D(p), map, 16, ref house))
+                    {
                         result = AddonFitResult.NotInHouse;
+                    }
                     else
                     {
                         bool east = BaseAddon.IsWall(p.X - 1, p.Y, p.Z, map);
                         bool south = BaseAddon.IsWall(p.X, p.Y - 1, p.Z, map);
 
                         if (!south && !east)
+                        {
                             result = AddonFitResult.NoWall;
+                        }
                         else if (south && east)
+                        {
                             from.SendGump(new AddonInterchangeableGump(Deed, p, map));
+                        }
                         else
                         {
                             BaseAddon addon = Deed.DeployAddon(east, p, map);
@@ -90,7 +104,9 @@ namespace Server.Items
             if (addon != null)
             {
                 if (addon is InterchangeableAddon interchangeableAddon)
+                {
                     interchangeableAddon.EastFacing = east;
+                }
 
                 Spells.SpellHelper.GetSurfaceTop(ref p);
 
@@ -155,9 +171,13 @@ namespace Server.Items
         public InterchangeableAddon(bool eastface = true, int loc = 0)
         {
             if (loc != 0)
+            {
                 AddComponent(new LocalizedAddonComponent(eastface ? EastID : SouthID, loc), 0, 0, 0);
+            }
             else
+            {
                 AddComponent(new AddonComponent(eastface ? EastID : SouthID), 0, 0, 0);
+            }
         }
 
         public InterchangeableAddon(Serial serial) : base(serial)

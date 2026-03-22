@@ -15,9 +15,9 @@ namespace Server.Gumps
         {
             Item matches = null;
 
-            for (var index = 0; index < mann.Items.Count; index++)
+            for (int index = 0; index < mann.Items.Count; index++)
             {
-                var x = mann.Items[index];
+                Item x = mann.Items[index];
 
                 if (mann.LayerValidation(x, item))
                 {
@@ -50,7 +50,9 @@ namespace Server.Gumps
             for (int i = 0; i < EquipmentItem.Count; i++)
             {
                 if (EquipmentItem[i].LabelNumber == 1159280) // Medable Armor - not appear
+                {
                     continue;
+                }
 
                 if (EquipmentItem[i].IsSpriteGraph)
                 {
@@ -65,7 +67,9 @@ namespace Server.Gumps
                     AddTooltip(EquipmentItem[i].Description);
 
                     if (!EquipmentItem[i].IsBoolen)
+                    {
                         AddHtml(190, 94 + 18 * i, 100, 18, Color(EquipmentItem[i].Value, EquipmentItem[i].Cap), false, false);
+                    }
                 }
             }
 
@@ -98,9 +102,9 @@ namespace Server.Gumps
                     {
                         double ev = 0;
 
-                        for (var index = 0; index < EquipmentItem.Count; index++)
+                        for (int index = 0; index < EquipmentItem.Count; index++)
                         {
-                            var a1 = EquipmentItem[index];
+                            ValuedProperty a1 = EquipmentItem[index];
 
                             if (a1.LabelNumber == SelectItem[i].LabelNumber)
                             {
@@ -218,9 +222,9 @@ namespace Server.Gumps
             {
                 Item sameItem = null;
 
-                for (var index = 0; index < _Mannequin.Items.Count; index++)
+                for (int index = 0; index < _Mannequin.Items.Count; index++)
                 {
-                    var x = _Mannequin.Items[index];
+                    Item x = _Mannequin.Items[index];
 
                     if (_Mannequin.LayerValidation(x, item))
                     {
@@ -240,11 +244,14 @@ namespace Server.Gumps
 
                     list = new List<Item>();
 
-                    for (var index = 0; index < _Mannequin.Items.Count; index++)
+                    for (int index = 0; index < _Mannequin.Items.Count; index++)
                     {
-                        var x = _Mannequin.Items[index];
+                        Item x = _Mannequin.Items[index];
 
-                        if (x != _SameItem) list.Add(x);
+                        if (x != _SameItem)
+                        {
+                            list.Add(x);
+                        }
                     }
 
                     list.Add(_Item);
@@ -253,9 +260,9 @@ namespace Server.Gumps
                 {
                     list = new List<Item>();
 
-                    for (var index = 0; index < _Mannequin.Items.Count; index++)
+                    for (int index = 0; index < _Mannequin.Items.Count; index++)
                     {
-                        var mannequinItem = _Mannequin.Items[index];
+                        Item mannequinItem = _Mannequin.Items[index];
 
                         list.Add(mannequinItem);
                     }
@@ -285,9 +292,9 @@ namespace Server.Gumps
 
             LabelDefinition[] pages = page > 0 ? Page2 : Page1;
 
-            for (var index = 0; index < pages.ToList().Count; index++)
+            for (int index = 0; index < pages.ToList().Count; index++)
             {
-                var x = pages.ToList()[index];
+                LabelDefinition x = pages.ToList()[index];
 
                 y += 28;
 
@@ -370,9 +377,9 @@ namespace Server.Gumps
             {
                 ValuedProperty first = null;
 
-                for (var index = 0; index < l.EquipmentItem.Count; index++)
+                for (int index = 0; index < l.EquipmentItem.Count; index++)
                 {
-                    var r = l.EquipmentItem[index];
+                    ValuedProperty r = l.EquipmentItem[index];
 
                     if (r.LabelNumber == label)
                     {
@@ -391,9 +398,9 @@ namespace Server.Gumps
             {
                 ValuedProperty first = null;
 
-                for (var index = 0; index < l.SelectItem.Count; index++)
+                for (int index = 0; index < l.SelectItem.Count; index++)
                 {
-                    var r = l.SelectItem[index];
+                    ValuedProperty r = l.SelectItem[index];
 
                     if (r.LabelNumber == label)
                     {
@@ -455,7 +462,9 @@ namespace Server.Gumps
         public override void OnResponse(NetState sender, RelayInfo info)
         {
             if (_Mannequin == null)
+            {
                 return;
+            }
 
             Mobile from = sender.Mobile;
 

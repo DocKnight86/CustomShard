@@ -14,10 +14,22 @@ namespace Server.Mobiles
 
             switch (Utility.Random(4))
             {
-                case 0: Hue = 242; break;
-                case 1: Hue = 243; break;
-                case 2: Hue = 244; break;
-                case 3: Hue = 245; break;
+                case 0:
+                {
+                    Hue = 242; break;
+                }
+                case 1:
+                {
+                    Hue = 243; break;
+                }
+                case 2:
+                {
+                    Hue = 244; break;
+                }
+                case 3:
+                {
+                    Hue = 245; break;
+                }
             }
 
             SetStr(213, 294);

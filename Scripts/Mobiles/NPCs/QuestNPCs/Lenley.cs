@@ -94,7 +94,9 @@ namespace Server.Engines.Quests
         public override void RevealingAction()
         {
             if (_Region != null)
+            {
                 _Region.Unregister();
+            }
 
             CantWalk = false;
 
@@ -111,13 +113,17 @@ namespace Server.Engines.Quests
         public void DeleteLenleyRegion()
         {
             if (_Region != null)
+            {
                 _Region.Unregister();
+            }
         }
 
         protected override void OnLocationChange(Point3D oldLocation)
         {
             if (Deleted)
+            {
                 return;
+            }
 
             UpdateLenleyRegion();
         }
@@ -125,7 +131,9 @@ namespace Server.Engines.Quests
         protected override void OnMapChange(Map oldMap)
         {
             if (Deleted)
+            {
                 return;
+            }
 
             UpdateLenleyRegion();
         }

@@ -18,10 +18,14 @@ namespace Server.Mobiles.MannequinProperty
             double total = GetPropertyValue(item);
 
             if (!IsBoolen)
+            {
                 Value = GetPropertyValue(item);
+            }
 
             if (total != 0)
+            {
                 return true;
+            }
 
             return false;
         }
@@ -33,7 +37,9 @@ namespace Server.Mobiles.MannequinProperty
             items.ForEach(x => total += GetPropertyValue(x));
 
             if (!IsBoolen)
+            {
                 Value = total;
+            }
 
             if (total != 0)
             {
@@ -370,19 +376,33 @@ namespace Server.Mobiles.MannequinProperty
             switch (element)
             {
                 case AosElementAttribute.Physical:
+                {
                     return phys;
+                }
                 case AosElementAttribute.Fire:
+                {
                     return fire;
+                }
                 case AosElementAttribute.Cold:
+                {
                     return cold;
+                }
                 case AosElementAttribute.Poison:
+                {
                     return pois;
+                }
                 case AosElementAttribute.Energy:
+                {
                     return nrgy;
+                }
                 case AosElementAttribute.Chaos:
+                {
                     return chaos;
+                }
                 case AosElementAttribute.Direct:
+                {
                     return direct;
+                }
             }
 
             return -1;

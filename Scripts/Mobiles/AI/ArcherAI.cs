@@ -41,7 +41,9 @@ namespace Server.Mobiles
                 if (WalkMobileRange(c, 1, true, m_Mobile.RangeFight, m_Mobile.Weapon.MaxRange))
                 {
                     if (!DirectionLocked)
+                    {
                         m_Mobile.Direction = m_Mobile.GetDirectionTo(c.Location);
+                    }
                 }
                 else
                 {

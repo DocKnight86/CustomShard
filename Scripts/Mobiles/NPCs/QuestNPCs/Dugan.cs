@@ -42,11 +42,11 @@ namespace Server.Engines.Quests
                 {
                     if (QuestHelper.CheckDoneOnce(pm, typeof(EscortToDugan), null, false))
                     {
-                        var q = QuestHelper.GetQuest<EndingtheThreat>(pm);
+                        EndingtheThreat q = QuestHelper.GetQuest<EndingtheThreat>(pm);
 
                         if (q == null)
                         {
-                            var quest = QuestHelper.RandomQuest(pm, new[] { typeof(EndingtheThreat) }, this);
+                            BaseQuest quest = QuestHelper.RandomQuest(pm, new[] { typeof(EndingtheThreat) }, this);
 
                             if (quest != null)
                             {

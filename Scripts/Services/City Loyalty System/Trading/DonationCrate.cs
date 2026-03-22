@@ -30,7 +30,9 @@ namespace Server.Engines.CityLoyalty
         public override void OnDoubleClick(Mobile from)
         {
             if (!CityLoyaltySystem.IsSetup())
+            {
                 return;
+            }
 
             if (Animals && Table != null && Table.Count > 0)
             {
@@ -46,7 +48,9 @@ namespace Server.Engines.CityLoyalty
         public override bool OnDragDrop(Mobile from, Item dropped)
         {
             if (!CityLoyaltySystem.IsSetup())
+            {
                 return false;
+            }
 
             if (!Animals && Table != null && Table.Count > 0)
             {
@@ -160,22 +164,32 @@ namespace Server.Engines.CityLoyalty
                             }
                         }
                         else
+                        {
                             Item.SendMessageTo(from, 1152929); // That does not look like an animal the City is in need of.
+                        }
                     }
                     else
+                    {
                         Item.SendMessageTo(from, 1152930); // Erm. Uhh. I don't think that'd enjoy the stables much...
+                    }
                 }
                 else
+                {
                     Item.SendMessageTo(from, 1152930); // Erm. Uhh. I don't think that'd enjoy the stables much...
+                }
             }
         }
 
         private void SendMessageTo(Mobile m, int message)
         {
             if (Minister != null)
+            {
                 Minister.SayTo(m, message);
+            }
             else
+            {
                 m.SendLocalizedMessage(message);
+            }
         }
 
         public CityDonationItem(Serial serial) : base(serial)
@@ -209,7 +223,9 @@ namespace Server.Engines.CityLoyalty
             Table = ItemTable;
 
             if (CitySystem != null && CitySystem.Minister != null)
+            {
                 CitySystem.Minister.DonationCrate = this;
+            }
         }
 
         public static Dictionary<Type, int> ItemTable { get; set; }
@@ -250,7 +266,9 @@ namespace Server.Engines.CityLoyalty
             Table = ItemTable;
 
             if (CitySystem != null && CitySystem.Minister != null)
+            {
                 CitySystem.Minister.DonationCrate = this;
+            }
         }
     }
 
@@ -264,7 +282,9 @@ namespace Server.Engines.CityLoyalty
             Table = PetTable;
 
             if (CitySystem != null && CitySystem.Minister != null)
+            {
                 CitySystem.Minister.DonationPost = this;
+            }
         }
 
         public static Dictionary<Type, int> PetTable { get; set; }
@@ -301,7 +321,9 @@ namespace Server.Engines.CityLoyalty
             Table = PetTable;
 
             if (CitySystem != null && CitySystem.Minister != null)
+            {
                 CitySystem.Minister.DonationPost = this;
+            }
         }
     }
 }

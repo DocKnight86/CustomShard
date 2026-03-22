@@ -56,11 +56,15 @@ namespace Server.Mobiles
             switch (Utility.Random(Female ? 2 : 1))
             {
                 case 0:
+                {
                     HairItemID = 0x203C;
                     break;
+                }
                 case 1:
+                {
                     HairItemID = 0x203D;
                     break;
+                }
             }
 
             HairHue = 0x47E;

@@ -91,17 +91,25 @@ namespace Server.Mobiles
                 switch (ability)
                 {
                     case 0:
+                    {
                         DoFocusedLeech(combatant, "Thine essence will fill my withering body with strength!");
                         break;
+                    }
                     case 1:
+                    {
                         DoFocusedLeech(combatant, "I rebuke thee, worm, and cleanse thy vile spirit of its tainted blood!");
                         break;
+                    }
                     case 2:
+                    {
                         DoFocusedLeech(combatant, "I devour your life's essence to strengthen my resolve!");
                         break;
+                    }
                     case 3:
+                    {
                         DoAreaLeech();
                         break;
+                    }
                     // TODO: Resurrect ability
                 }
             }

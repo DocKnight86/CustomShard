@@ -848,39 +848,57 @@ namespace Server.Mobiles
             }
 
             if (CheckCharming())
+            {
                 return true;
+            }
 
             if (Action == ActionType.Combat && CheckHerding())
+            {
                 return true;
+            }
 
             switch (Action)
             {
                 case ActionType.Wander:
+                {
                     m_Mobile.OnActionWander();
                     return DoActionWander();
+                }
 
                 case ActionType.Combat:
+                {
                     m_Mobile.OnActionCombat();
                     return DoActionCombat();
+                }
 
                 case ActionType.Guard:
+                {
                     m_Mobile.OnActionGuard();
                     return DoActionGuard();
+                }
 
                 case ActionType.Flee:
+                {
                     m_Mobile.OnActionFlee();
                     return DoActionFlee();
+                }
 
                 case ActionType.Interact:
+                {
                     m_Mobile.OnActionInteract();
                     return DoActionInteract();
+                }
 
                 case ActionType.Backoff:
+                {
                     m_Mobile.OnActionBackoff();
                     return DoActionBackoff();
+                }
 
                 default:
+                {
                     return false;
+                }
             }
         }
 
@@ -912,37 +930,49 @@ namespace Server.Mobiles
             switch (Action)
             {
                 case ActionType.Wander:
+                {
                     m_Mobile.Warmode = false;
                     m_Mobile.Combatant = null;
                     m_Mobile.FocusMob = null;
                     m_Mobile.CurrentSpeed = m_Mobile.PassiveSpeed;
                     CheckNavPoint();
                     break;
+                }
                 case ActionType.Combat:
+                {
                     m_Mobile.Warmode = true;
                     m_Mobile.FocusMob = null;
                     m_Mobile.CurrentSpeed = m_Mobile.ActiveSpeed;
                     break;
+                }
                 case ActionType.Guard:
+                {
                     m_Mobile.Warmode = true;
                     m_Mobile.FocusMob = null;
                     m_Mobile.Combatant = null;
                     m_NextStopGuard = Core.TickCount + 10000;
                     m_Mobile.CurrentSpeed = m_Mobile.ActiveSpeed;
                     break;
+                }
                 case ActionType.Flee:
+                {
                     m_Mobile.Warmode = true;
                     m_Mobile.FocusMob = null;
                     m_Mobile.CurrentSpeed = m_Mobile.ActiveSpeed;
                     break;
+                }
                 case ActionType.Interact:
+                {
                     m_Mobile.Warmode = false;
                     m_Mobile.CurrentSpeed = m_Mobile.PassiveSpeed;
                     break;
+                }
                 case ActionType.Backoff:
+                {
                     m_Mobile.Warmode = false;
                     m_Mobile.CurrentSpeed = m_Mobile.PassiveSpeed;
                     break;
+                }
             }
         }
 
@@ -957,7 +987,9 @@ namespace Server.Mobiles
                     Point2D next = m_Mobile.NavPoints[map][m_Mobile.CurrentNavPoint + 1];
 
                     if (m_Mobile.InRange(next, 15))
+                    {
                         m_Mobile.CurrentNavPoint++;
+                    }
                 }
             }
         }
@@ -995,7 +1027,9 @@ namespace Server.Mobiles
                     else if (OnAtWayPoint())
                     {
                         if (m_Mobile.CurrentNavPoint + 1 >= m_Mobile.NavPoints[map].Count)
+                        {
                             m_Mobile.CurrentNavPoint = -1;
+                        }
                         else
                         {
                             m_Mobile.CurrentNavPoint++;
@@ -1160,36 +1194,62 @@ namespace Server.Mobiles
             switch (m_Mobile.PetAction)
             {
                 case PetActionType.Come:
+                {
                     return DoOrderCome();
+                }
                 case PetActionType.Drop:
+                {
                     return DoOrderDrop();
+                }
                 case PetActionType.Friend:
+                {
                     return DoOrderFriend();
+                }
                 case PetActionType.Unfriend:
+                {
                     return DoOrderUnfriend();
+                }
                 case PetActionType.Attack:
+                {
                     DoOrderAttack();    //Attack mode will persist so movement needs to process
                     break;
+                }
                 case PetActionType.Release:
+                {
                     return DoOrderRelease();
+                }
                 case PetActionType.Stop:
+                {
                     return DoOrderStop();
+                }
                 case PetActionType.Transfer:
+                {
                     return DoOrderTransfer();
+                }
                 default:
+                {
                     break;
+                }
             }
 
             switch (m_Mobile.MovementMode)
             {
                 case MovementType.Roam:
+                {
                     return DoOrderRoam();
+                }
                 case MovementType.Follow:
+                {
                     return DoOrderFollow();
+                }
                 case MovementType.Stay:
+                {
                     return DoOrderStay();
+                }
                 default:
+                {
                     return false;
+                }
             }
         }
 
@@ -1202,13 +1262,16 @@ namespace Server.Mobiles
             switch (m_Mobile.MovementMode)
             {
                 case MovementType.Roam:
+                {
                     m_Mobile.Home = m_Mobile.Location;
                     m_Mobile.CurrentSpeed = m_Mobile.PassiveSpeed;
                     m_Mobile.PlaySound(m_Mobile.GetIdleSound());
                     m_Mobile.Warmode = m_Mobile.GuardMode == GuardType.Active;
                     m_Mobile.Combatant = null;
                     break;
+                }
                 case MovementType.Follow:
+                {
                     m_Mobile.GuardMode = GuardType.Passive;
                     m_Mobile.PlaySound(m_Mobile.GetIdleSound());
                     m_Mobile.PetAction = PetActionType.NoAction;
@@ -1218,9 +1281,12 @@ namespace Server.Mobiles
 
                     m_Mobile.CurrentSpeed = m_Mobile.ActiveSpeed;
                     break;
+                }
                 case MovementType.Stay:
+                {
                     m_Mobile.PetAction = PetActionType.NoAction;
                     break;
+                }
             }
         }
         public virtual void OnCurrentGuardChanged()
@@ -1232,13 +1298,17 @@ namespace Server.Mobiles
             switch (m_Mobile.GuardMode)
             {
                 case GuardType.Active:
+                {
                     m_Mobile.CurrentSpeed = m_Mobile.ActiveSpeed;
                     m_Mobile.PlaySound(m_Mobile.GetIdleSound());
                     m_Mobile.Warmode = true;
                     m_Mobile.Combatant = null;
                     break;
+                }
                 case GuardType.Passive:
+                {
                     break;
+                }
             }
         }
         public virtual void OnCurrentPetActionChanged()
@@ -1250,6 +1320,7 @@ namespace Server.Mobiles
             switch (m_Mobile.PetAction)
             {
                 case PetActionType.Come:
+                {
                     m_Mobile.Home = m_Mobile.ControlMaster.Location;
                     m_Mobile.AdjustSpeeds();
                     m_Mobile.CurrentSpeed = m_Mobile.ActiveSpeed;
@@ -1257,25 +1328,33 @@ namespace Server.Mobiles
                     m_Mobile.Warmode = m_Mobile.GuardMode == GuardType.Active;
                     m_Mobile.Combatant = null;
                     break;
+                }
                 case PetActionType.Drop:
                 case PetActionType.Friend:
                 case PetActionType.Unfriend:
+                {
                     m_Mobile.PlaySound(m_Mobile.GetIdleSound());
                     break;
+                }
                 case PetActionType.Attack:
+                {
                     m_Mobile.FollowTarget = null;
                     m_Mobile.CurrentSpeed = m_Mobile.ActiveSpeed;
                     m_Mobile.PlaySound(m_Mobile.GetIdleSound());
                     m_Mobile.Warmode = true;
                     m_Mobile.Combatant = null;
                     break;
+                }
                 case PetActionType.Release:
+                {
                     m_Mobile.CurrentSpeed = m_Mobile.PassiveSpeed;
                     m_Mobile.PlaySound(m_Mobile.GetIdleSound());
                     m_Mobile.Warmode = false;
                     m_Mobile.Combatant = null;
                     break;
+                }
                 case PetActionType.Stop:
+                {
                     m_Mobile.StopDuration = DateTime.Now.AddSeconds(30);
                     m_Mobile.ControlTarget = null;
                     m_Mobile.Home = m_Mobile.Location;
@@ -1286,7 +1365,9 @@ namespace Server.Mobiles
                     m_Mobile.Warmode = false;
                     m_Mobile.Combatant = null;
                     break;
+                }
                 case PetActionType.Transfer:
+                {
                     m_Mobile.GuardMode = GuardType.Passive;
                     m_Mobile.CurrentSpeed = m_Mobile.PassiveSpeed;
                     m_Mobile.PlaySound(m_Mobile.GetIdleSound());
@@ -1294,8 +1375,11 @@ namespace Server.Mobiles
                     m_Mobile.Warmode = false;
                     m_Mobile.Combatant = null;
                     break;
+                }
                 default:
+                {
                     break;
+                }
             }
         }
 
@@ -1316,7 +1400,9 @@ namespace Server.Mobiles
                     m_Mobile.MovementMode = MovementType.Follow;
                 }
                 else
+                {
                     m_Mobile.Home = m_Mobile.Location;
+                }
             }
 
             m_Mobile.DebugSay("I have no order");
@@ -1408,10 +1494,14 @@ namespace Server.Mobiles
             Point2D target = m_Mobile.CharmTarget;
 
             if (target == Point2D.Zero)
+            {
                 return false;
+            }
 
             if (m_Mobile.GetDistanceToSqrt(target) >= 1)
+            {
                 DoMove(m_Mobile.GetDirectionTo(target));
+            }
 
             return true;
         }
@@ -1771,7 +1861,9 @@ namespace Server.Mobiles
                 m_Mobile.DebugSay("I think he might be dead. He's not anywhere around here at least. That's cool. I'm glad he's dead.");
 
                 if (m_Mobile.FightMode == FightMode.None)
+                {
                     return true;
+                }
 
                 Mobile newCombatant = null;
                 double newScore = 0.0;
@@ -2283,32 +2375,50 @@ namespace Server.Mobiles
                     switch (iRndMove)
                     {
                         case 0:
+                        {
                             DoMove(Direction.Up);
                             break;
+                        }
                         case 1:
+                        {
                             DoMove(Direction.North);
                             break;
+                        }
                         case 2:
+                        {
                             DoMove(Direction.Left);
                             break;
+                        }
                         case 3:
+                        {
                             DoMove(Direction.West);
                             break;
+                        }
                         case 5:
+                        {
                             DoMove(Direction.Down);
                             break;
+                        }
                         case 6:
+                        {
                             DoMove(Direction.South);
                             break;
+                        }
                         case 7:
+                        {
                             DoMove(Direction.Right);
                             break;
+                        }
                         case 8:
+                        {
                             DoMove(Direction.East);
                             break;
+                        }
                         default:
+                        {
                             DoMove(m_Mobile.Direction);
                             break;
+                        }
                     }
                 }
             }
@@ -2922,7 +3032,9 @@ namespace Server.Mobiles
                     {
                         // If this is a summon, it can't target its controller.
                         if (m == m_Mobile.SummonMaster)
+                        {
                             continue;
+                        }
 
                         // It also must abide by harmful spell rules if the master is a player.
                         if (m_Mobile.SummonMaster is PlayerMobile && !SpellHelper.ValidIndirectTarget(m_Mobile.SummonMaster, m))

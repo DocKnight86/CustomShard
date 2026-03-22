@@ -19,11 +19,26 @@ namespace Server.Mobiles
 
             switch (Utility.Random(5))
             {
-                case 0: SetWearable(new Helmet()); break;
-                case 1: SetWearable(new NorseHelm()); break;
-                case 2: SetWearable(new PlateHelm()); break;
-                case 3: SetWearable(new Bascinet()); break;
-                case 4: SetWearable(new ChainCoif()); break;
+                case 0:
+                {
+                    SetWearable(new Helmet()); break;
+                }
+                case 1:
+                {
+                    SetWearable(new NorseHelm()); break;
+                }
+                case 2:
+                {
+                    SetWearable(new PlateHelm()); break;
+                }
+                case 3:
+                {
+                    SetWearable(new Bascinet()); break;
+                }
+                case 4:
+                {
+                    SetWearable(new ChainCoif()); break;
+                }
             }
 
             SetWearable(new PlateLegs());
@@ -36,9 +51,18 @@ namespace Server.Mobiles
 
             switch (Utility.Random(3))
             {
-                case 0: SetWearable(new Tunic(), GetRandomHue()); break;
-                case 1: SetWearable(new Doublet(), GetRandomHue()); break;
-                case 2: SetWearable(new BodySash(), GetRandomHue()); break;
+                case 0:
+                {
+                    SetWearable(new Tunic(), GetRandomHue()); break;
+                }
+                case 1:
+                {
+                    SetWearable(new Doublet(), GetRandomHue()); break;
+                }
+                case 2:
+                {
+                    SetWearable(new BodySash(), GetRandomHue()); break;
+                }
             }
 
             SetSkill(SkillName.Swords, 120);
@@ -53,15 +77,25 @@ namespace Server.Mobiles
             {
                 default:
                 case 0:
+                {
                     return Utility.RandomBlueHue();
+                }
                 case 1:
+                {
                     return Utility.RandomGreenHue();
+                }
                 case 2:
+                {
                     return Utility.RandomRedHue();
+                }
                 case 3:
+                {
                     return Utility.RandomYellowHue();
+                }
                 case 4:
+                {
                     return Utility.RandomNeutralHue();
+                }
             }
         }
 

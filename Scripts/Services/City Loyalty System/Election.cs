@@ -50,7 +50,9 @@ namespace Server.Engines.CityLoyalty
                 if (value)
                 {
                     if (Ongoing)
+                    {
                         EndElection();
+                    }
 
                     StartTimes = new DateTime[1];
                     StartTimes[0] = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
@@ -104,9 +106,9 @@ namespace Server.Engines.CityLoyalty
 
                         BallotEntry ballot = null;
 
-                        for (var index = 0; index < Candidates.Count; index++)
+                        for (int index = 0; index < Candidates.Count; index++)
                         {
-                            var entry = Candidates[index];
+                            BallotEntry entry = Candidates[index];
 
                             if (entry.Player == m)
                             {
@@ -282,7 +284,9 @@ namespace Server.Engines.CityLoyalty
                 }));
             }
             else
+            {
                 pm.SendLocalizedMessage(1153924); // You are not currently on any ballot to withdraw from. 
+            }
         }
 
         public double GetStanding(BallotEntry entry)
@@ -290,7 +294,9 @@ namespace Server.Engines.CityLoyalty
             if (Candidates.Contains(entry))
             {
                 if (entry.Votes.Count <= 0)
+                {
                     return 0.0;
+                }
 
                 return (entry.Votes.Count / GetTotalVotes()) * 100;
             }
@@ -302,9 +308,9 @@ namespace Server.Engines.CityLoyalty
         {
             int votes = 0;
 
-            for (var index = 0; index < Candidates.Count; index++)
+            for (int index = 0; index < Candidates.Count; index++)
             {
-                var c = Candidates[index];
+                BallotEntry c = Candidates[index];
 
                 votes += c.Votes.Count;
             }
@@ -314,7 +320,7 @@ namespace Server.Engines.CityLoyalty
 
         public void OnTick()
         {
-            for (var index = 0; index < StartTimes.Length; index++)
+            for (int index = 0; index < StartTimes.Length; index++)
             {
                 DateTime dt = StartTimes[index];
 
@@ -337,7 +343,9 @@ namespace Server.Engines.CityLoyalty
                         BallotEntry entry = Candidates.FirstOrDefault(c => c.Player == City.GovernorElect);
 
                         if (entry != null)
+                        {
                             Candidates.Remove(entry);
+                        }
                     }
 
                     City.GovernorElect = null;
@@ -354,9 +362,9 @@ namespace Server.Engines.CityLoyalty
 
             if (CanNominate())
             {
-                for (var index = 0; index < Candidates.ToList().Count; index++)
+                for (int index = 0; index < Candidates.ToList().Count; index++)
                 {
-                    var entry = Candidates.ToList()[index];
+                    BallotEntry entry = Candidates.ToList()[index];
 
                     if (entry.TimeOfNomination + TimeSpan.FromHours(NominationDeadline) < DateTime.Now && entry.Endorsements.Count == 0)
                     {
@@ -387,7 +395,9 @@ namespace Server.Engines.CityLoyalty
                 DateTime dt = new DateTime(DateTime.Now.Year, _Periods[i], 1);
 
                 if (dt < DateTime.Now)
+                {
                     dt = new DateTime(dt.Year + 1, dt.Month, dt.Day);
+                }
 
                 StartTimes[i] = dt;
             }
@@ -412,7 +422,9 @@ namespace Server.Engines.CityLoyalty
                     DateTime dt = new DateTime(DateTime.Now.Year, month, 1);
 
                     if (dt < DateTime.Now)
+                    {
                         dt = new DateTime(dt.Year + 1, dt.Month, dt.Day);
+                    }
 
                     starttimes[i] = dt;
                 }
@@ -432,7 +444,9 @@ namespace Server.Engines.CityLoyalty
         public static bool CheckConflict(DateTime[] times)
         {
             if (times == null || times.Length == 0)
+            {
                 return false;
+            }
 
             for (int i = 0; i < times.Length; i++)
             {
@@ -441,10 +455,14 @@ namespace Server.Engines.CityLoyalty
                 for (int j = 0; j < times.Length; j++)
                 {
                     if (i == j)
+                    {
                         continue;
+                    }
 
                     if (times[j] > t && times[j] - t < TimeSpan.FromDays(30) || times[j] < t && t - times[j] < TimeSpan.FromDays(30))
+                    {
                         return true;
+                    }
                 }
             }
 
@@ -454,11 +472,13 @@ namespace Server.Engines.CityLoyalty
         public DateTime NextElection()
         {
             if (CanNominate() || CanVote())
+            {
                 return DateTime.MinValue;
+            }
 
             DateTime closest = DateTime.MinValue;
 
-            for (var index = 0; index < StartTimes.Length; index++)
+            for (int index = 0; index < StartTimes.Length; index++)
             {
                 DateTime dt = StartTimes[index];
 
@@ -485,7 +505,7 @@ namespace Server.Engines.CityLoyalty
         {
             until = DateTime.Now;
 
-            for (var index = 0; index < StartTimes.Length; index++)
+            for (int index = 0; index < StartTimes.Length; index++)
             {
                 DateTime dt = StartTimes[index];
 
@@ -510,7 +530,7 @@ namespace Server.Engines.CityLoyalty
         {
             until = DateTime.Now;
 
-            for (var index = 0; index < StartTimes.Length; index++)
+            for (int index = 0; index < StartTimes.Length; index++)
             {
                 DateTime dt = StartTimes[index];
 
@@ -543,7 +563,9 @@ namespace Server.Engines.CityLoyalty
                 AutoPickGovernor = DateTime.Now + TimeSpan.FromDays(Utility.RandomMinMax(2, 4));
 
                 if (City.Stone != null)
+                {
                     City.Stone.InvalidateProperties();
+                }
             }
 
             for (int i = 0; i < StartTimes.Length; i++)
@@ -551,10 +573,14 @@ namespace Server.Engines.CityLoyalty
                 DateTime dt = StartTimes[i];
 
                 if (dt == DateTime.MinValue)
+                {
                     continue;
+                }
 
                 if (dt < DateTime.Now)
+                {
                     dt = new DateTime(dt.Year + 1, dt.Month, dt.Day);
+                }
             }
         }
 
@@ -562,9 +588,9 @@ namespace Server.Engines.CityLoyalty
         {
             BallotEntry entry = null;
 
-            for (var index = 0; index < Candidates.Count; index++)
+            for (int index = 0; index < Candidates.Count; index++)
             {
-                var c = Candidates[index];
+                BallotEntry c = Candidates[index];
 
                 if (c.Player == pm)
                 {
@@ -589,16 +615,16 @@ namespace Server.Engines.CityLoyalty
             writer.Write(AutoPickGovernor);
 
             writer.Write(StartTimes.Length);
-            for (var index = 0; index < StartTimes.Length; index++)
+            for (int index = 0; index < StartTimes.Length; index++)
             {
                 DateTime dt = StartTimes[index];
                 writer.Write(dt);
             }
 
             writer.Write(Candidates.Count);
-            for (var index = 0; index < Candidates.Count; index++)
+            for (int index = 0; index < Candidates.Count; index++)
             {
-                var entry = Candidates[index];
+                BallotEntry entry = Candidates[index];
                 entry.Serialize(writer);
             }
         }
@@ -620,7 +646,9 @@ namespace Server.Engines.CityLoyalty
                 DateTime time = reader.ReadDateTime();
 
                 if (time < DateTime.Now && ElectionEnded)
+                {
                     time = new DateTime(time.Year + 1, time.Month, time.Day);
+                }
 
                 StartTimes[i] = time;
             }
@@ -630,7 +658,9 @@ namespace Server.Engines.CityLoyalty
             {
                 BallotEntry entry = new BallotEntry(reader);
                 if (entry.Player != null)
+                {
                     Candidates.Add(entry);
+                }
             }
         }
     }
@@ -661,19 +691,29 @@ namespace Server.Engines.CityLoyalty
         public int CompareTo(BallotEntry entry)
         {
             if (Player == null)
+            {
                 return -1;
+            }
 
             if (Votes.Count > entry.Votes.Count)
+            {
                 return 1;
+            }
 
             if (Votes.Count < entry.Votes.Count)
+            {
                 return -1;
+            }
 
             if (Love > entry.Love || Hate < entry.Hate)
+            {
                 return 1;
+            }
 
             if (Love == entry.Love && Hate == entry.Hate && Utility.RandomBool())
+            {
                 return 1;
+            }
 
             return -1;
         }
@@ -689,16 +729,16 @@ namespace Server.Engines.CityLoyalty
             writer.Write(Hate);
 
             writer.Write(Endorsements.Count);
-            for (var index = 0; index < Endorsements.Count; index++)
+            for (int index = 0; index < Endorsements.Count; index++)
             {
-                var p = Endorsements[index];
+                PlayerMobile p = Endorsements[index];
                 writer.Write(p);
             }
 
             writer.Write(Votes.Count);
-            for (var index = 0; index < Votes.Count; index++)
+            for (int index = 0; index < Votes.Count; index++)
             {
-                var p = Votes[index];
+                PlayerMobile p = Votes[index];
                 writer.Write(p);
             }
         }

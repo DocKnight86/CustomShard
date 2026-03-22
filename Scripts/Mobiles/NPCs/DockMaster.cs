@@ -50,9 +50,13 @@ namespace Server.Mobiles
                 BaseBoat boat = BaseBoat.GetBoat(m_From);
 
                 if (boat != null && m_DockMaster.InRange(boat.Location, 100))
+                {
                     boat.BeginDryDock(m_From, m_DockMaster);
+                }
                 else
+                {
                     m_DockMaster.SayTo(m_From, 502581); //I cannot find the ship!
+                }
             }
         }
 
@@ -71,7 +75,9 @@ namespace Server.Mobiles
             public override void OnClick()
             {
                 if (m_DockMaster.Map == null)
+                {
                     return;
+                }
 
                 Container pack = m_From.Backpack;
 
@@ -84,9 +90,13 @@ namespace Server.Mobiles
                 BaseBoat boat = BaseBoat.GetBoat(m_From);
 
                 if (boat != null && m_DockMaster.InRange(boat.Location, 50))
+                {
                     m_DockMaster.TryRetrieveHold(m_From, boat);
+                }
                 else
+                {
                     m_DockMaster.SayTo(m_From, 502581); //I cannot find the ship!
+                }
             }
         }
 
@@ -105,9 +115,13 @@ namespace Server.Mobiles
             Container hold;
 
             if (boat is BaseGalleon galleon)
+            {
                 hold = galleon.GalleonHold;
+            }
             else
+            {
                 hold = boat.Hold;
+            }
 
             if (hold == null || hold.Items.Count == 0)
             {
@@ -127,7 +141,7 @@ namespace Server.Mobiles
 
             List<Item> items = new List<Item>(hold.Items);
 
-            for (var index = 0; index < items.Count; index++)
+            for (int index = 0; index < items.Count; index++)
             {
                 Item item = items[index];
 
@@ -157,7 +171,9 @@ namespace Server.Mobiles
             }
 
             if (cantMove)
+            {
                 from.SendMessage("We were unable to pack up one or more of the items in your cargo hold.");
+            }
         }
 
         private Rectangle2D m_Bounds = new Rectangle2D(4561, 2298, 8, 5);
@@ -208,7 +224,7 @@ namespace Server.Mobiles
                 return null;
             }
 
-            for (var index = 0; index < Region.Area.Length; index++)
+            for (int index = 0; index < Region.Area.Length; index++)
             {
                 Rectangle3D rec = Region.Area[index];
 

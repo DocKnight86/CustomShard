@@ -48,9 +48,13 @@ namespace Server.Mobiles
             AddItem(new Robe(Utility.RandomNeutralHue()));
 
             if (Utility.RandomBool())
+            {
                 AddItem(new Shoes(Utility.RandomNeutralHue()));
+            }
             else
+            {
                 AddItem(new ThighBoots());
+            }
 
             PackGold(20, 100);
         }

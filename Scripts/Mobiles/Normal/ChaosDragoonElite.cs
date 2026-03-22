@@ -46,23 +46,35 @@ namespace Server.Mobiles
             switch (Utility.Random(6))
             {
                 case 0:
+                {
                     res = CraftResource.BlackScales;
                     break;
+                }
                 case 1:
+                {
                     res = CraftResource.RedScales;
                     break;
+                }
                 case 2:
+                {
                     res = CraftResource.BlueScales;
                     break;
+                }
                 case 3:
+                {
                     res = CraftResource.YellowScales;
                     break;
+                }
                 case 4:
+                {
                     res = CraftResource.GreenScales;
                     break;
+                }
                 case 5:
+                {
                     res = CraftResource.WhiteScales;
                     break;
+                }
             }
 
             BaseWeapon melee = null;
@@ -70,14 +82,20 @@ namespace Server.Mobiles
             switch (Utility.Random(3))
             {
                 case 0:
+                {
                     melee = new Kryss();
                     break;
+                }
                 case 1:
+                {
                     melee = new Broadsword();
                     break;
+                }
                 case 2:
+                {
                     melee = new Katana();
                     break;
+                }
             }
 
             if (melee != null)
@@ -135,53 +153,83 @@ namespace Server.Mobiles
             switch (res)
             {
                 case CraftResource.BlackScales:
+                {
                     AddItem(new BlackScales(amount));
                     break;
+                }
                 case CraftResource.RedScales:
+                {
                     AddItem(new RedScales(amount));
                     break;
+                }
                 case CraftResource.BlueScales:
+                {
                     AddItem(new BlueScales(amount));
                     break;
+                }
                 case CraftResource.YellowScales:
+                {
                     AddItem(new YellowScales(amount));
                     break;
+                }
                 case CraftResource.GreenScales:
+                {
                     AddItem(new GreenScales(amount));
                     break;
+                }
                 case CraftResource.WhiteScales:
+                {
                     AddItem(new WhiteScales(amount));
                     break;
+                }
             }
             switch (Utility.Random(9))
             {
                 case 0:
+                {
                     res = CraftResource.DullCopper;
                     break;
+                }
                 case 1:
+                {
                     res = CraftResource.ShadowIron;
                     break;
+                }
                 case 2:
+                {
                     res = CraftResource.Copper;
                     break;
+                }
                 case 3:
+                {
                     res = CraftResource.Bronze;
                     break;
+                }
                 case 4:
+                {
                     res = CraftResource.Gold;
                     break;
+                }
                 case 5:
+                {
                     res = CraftResource.Agapite;
                     break;
+                }
                 case 6:
+                {
                     res = CraftResource.Verite;
                     break;
+                }
                 case 7:
+                {
                     res = CraftResource.Valorite;
                     break;
+                }
                 case 8:
+                {
                     res = CraftResource.Iron;
                     break;
+                }
             }
 
             SwampDragon mt = new SwampDragon

@@ -118,17 +118,23 @@ namespace Server.Mobiles
                 switch (Utility.Random(3))
                 {
                     case 0:
+                    {
                         defender.Damage(toSap, this);
                         Hits += toSap;
                         break;
+                    }
                     case 1:
+                    {
                         defender.Stam -= toSap;
                         Stam += toSap;
                         break;
+                    }
                     case 2:
+                    {
                         defender.Mana -= toSap;
                         Mana += toSap;
                         break;
+                    }
                 }
             }
         }

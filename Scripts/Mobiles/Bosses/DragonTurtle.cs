@@ -334,11 +334,26 @@ namespace Server.Mobiles
 
                 switch (type)
                 {
-                    case ResistanceType.Physical: AOS.Damage(mob, this, damage, 100, 0, 0, 0, 0); break;
-                    case ResistanceType.Fire: AOS.Damage(mob, this, damage, 0, 100, 0, 0, 0); break;
-                    case ResistanceType.Cold: AOS.Damage(mob, this, damage, 0, 0, 100, 0, 0); break;
-                    case ResistanceType.Poison: AOS.Damage(mob, this, damage, 0, 0, 0, 100, 0); break;
-                    case ResistanceType.Energy: AOS.Damage(mob, this, damage, 0, 0, 0, 0, 100); break;
+                    case ResistanceType.Physical:
+                    {
+                        AOS.Damage(mob, this, damage, 100, 0, 0, 0, 0); break;
+                    }
+                    case ResistanceType.Fire:
+                    {
+                        AOS.Damage(mob, this, damage, 0, 100, 0, 0, 0); break;
+                    }
+                    case ResistanceType.Cold:
+                    {
+                        AOS.Damage(mob, this, damage, 0, 0, 100, 0, 0); break;
+                    }
+                    case ResistanceType.Poison:
+                    {
+                        AOS.Damage(mob, this, damage, 0, 0, 0, 100, 0); break;
+                    }
+                    case ResistanceType.Energy:
+                    {
+                        AOS.Damage(mob, this, damage, 0, 0, 0, 0, 100); break;
+                    }
                 }
             }
         }
@@ -347,13 +362,28 @@ namespace Server.Mobiles
         {
             switch (hue)
             {
-                case 0: return ResistanceType.Physical;
+                case 0:
+                {
+                    return ResistanceType.Physical;
+                }
                 case 33:
-                case 44: return ResistanceType.Fire;
-                case 9: return ResistanceType.Cold;
-                case 63: return ResistanceType.Poison;
+                case 44:
+                {
+                    return ResistanceType.Fire;
+                }
+                case 9:
+                {
+                    return ResistanceType.Cold;
+                }
+                case 63:
+                {
+                    return ResistanceType.Poison;
+                }
                 case 53:
-                case 126: return ResistanceType.Energy;
+                case 126:
+                {
+                    return ResistanceType.Energy;
+                }
             }
 
             return ResistanceType.Physical;

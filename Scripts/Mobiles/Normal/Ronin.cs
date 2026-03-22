@@ -58,17 +58,38 @@ namespace Server.Mobiles
 
             switch (Utility.Random(4))
             {
-                case 0: AddItem(new LightPlateJingasa()); break;
-                case 1: AddItem(new ChainHatsuburi()); break;
-                case 2: AddItem(new DecorativePlateKabuto()); break;
-                case 3: AddItem(new LeatherJingasa()); break;
+                case 0:
+                {
+                    AddItem(new LightPlateJingasa()); break;
+                }
+                case 1:
+                {
+                    AddItem(new ChainHatsuburi()); break;
+                }
+                case 2:
+                {
+                    AddItem(new DecorativePlateKabuto()); break;
+                }
+                case 3:
+                {
+                    AddItem(new LeatherJingasa()); break;
+                }
             }
 
             switch (Utility.Random(3))
             {
-                case 0: AddItem(new StuddedHaidate()); break;
-                case 1: AddItem(new LeatherSuneate()); break;
-                case 2: AddItem(new PlateSuneate()); break;
+                case 0:
+                {
+                    AddItem(new StuddedHaidate()); break;
+                }
+                case 1:
+                {
+                    AddItem(new LeatherSuneate()); break;
+                }
+                case 2:
+                {
+                    AddItem(new PlateSuneate()); break;
+                }
             }
 
             if (Utility.RandomDouble() > .2)

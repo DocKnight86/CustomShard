@@ -598,14 +598,38 @@ namespace Server.Mobiles
         {
             switch (AI)
             {
-                case AIType.AI_Mage: SetMagicalAbility(MagicalAbility.Magery); break;
-                case AIType.AI_NecroMage: SetMagicalAbility(!Controlled ? MagicalAbility.Necromancy : MagicalAbility.Necromage); break;
-                case AIType.AI_Necro: SetMagicalAbility(MagicalAbility.Necromancy); break;
-                case AIType.AI_Spellweaving: SetMagicalAbility(MagicalAbility.Spellweaving); break;
-                case AIType.AI_Mystic: SetMagicalAbility(MagicalAbility.Mysticism); break;
-                case AIType.AI_Samurai: SetMagicalAbility(MagicalAbility.Bushido); break;
-                case AIType.AI_Ninja: SetMagicalAbility(MagicalAbility.Ninjitsu); break;
-                case AIType.AI_Paladin: SetMagicalAbility(MagicalAbility.Chivalry); break;
+                case AIType.AI_Mage:
+                {
+                    SetMagicalAbility(MagicalAbility.Magery); break;
+                }
+                case AIType.AI_NecroMage:
+                {
+                    SetMagicalAbility(!Controlled ? MagicalAbility.Necromancy : MagicalAbility.Necromage); break;
+                }
+                case AIType.AI_Necro:
+                {
+                    SetMagicalAbility(MagicalAbility.Necromancy); break;
+                }
+                case AIType.AI_Spellweaving:
+                {
+                    SetMagicalAbility(MagicalAbility.Spellweaving); break;
+                }
+                case AIType.AI_Mystic:
+                {
+                    SetMagicalAbility(MagicalAbility.Mysticism); break;
+                }
+                case AIType.AI_Samurai:
+                {
+                    SetMagicalAbility(MagicalAbility.Bushido); break;
+                }
+                case AIType.AI_Ninja:
+                {
+                    SetMagicalAbility(MagicalAbility.Ninjitsu); break;
+                }
+                case AIType.AI_Paladin:
+                {
+                    SetMagicalAbility(MagicalAbility.Chivalry); break;
+                }
             }
 
             if (HealChance > 0.0 && HealChance >= Utility.RandomDouble())
@@ -1304,15 +1328,42 @@ namespace Server.Mobiles
 
             switch (Tribe)
             {
-                case TribeType.Terathan: return c.Tribe == TribeType.Ophidian;
-                case TribeType.Ophidian: return c.Tribe == TribeType.Terathan;
-                case TribeType.Savage: return c.Tribe == TribeType.Orc;
-                case TribeType.Orc: return c.Tribe == TribeType.Savage;
-                case TribeType.Fey: return c.Tribe == TribeType.Undead;
-                case TribeType.Undead: return c.Tribe == TribeType.Fey;
-                case TribeType.GrayGoblin: return c.Tribe == TribeType.GreenGoblin;
-                case TribeType.GreenGoblin: return c.Tribe == TribeType.GrayGoblin;
-                default: return false;
+                case TribeType.Terathan:
+                {
+                    return c.Tribe == TribeType.Ophidian;
+                }
+                case TribeType.Ophidian:
+                {
+                    return c.Tribe == TribeType.Terathan;
+                }
+                case TribeType.Savage:
+                {
+                    return c.Tribe == TribeType.Orc;
+                }
+                case TribeType.Orc:
+                {
+                    return c.Tribe == TribeType.Savage;
+                }
+                case TribeType.Fey:
+                {
+                    return c.Tribe == TribeType.Undead;
+                }
+                case TribeType.Undead:
+                {
+                    return c.Tribe == TribeType.Fey;
+                }
+                case TribeType.GrayGoblin:
+                {
+                    return c.Tribe == TribeType.GreenGoblin;
+                }
+                case TribeType.GreenGoblin:
+                {
+                    return c.Tribe == TribeType.GrayGoblin;
+                }
+                default:
+                {
+                    return false;
+                }
             }
         }
 
@@ -2098,12 +2149,30 @@ namespace Server.Mobiles
                     switch (MeatType)
                     {
                         default:
-                        case MeatType.Ribs: m = new RawRibs(meat); break;
-                        case MeatType.Bird: m = new RawBird(meat); break;
-                        case MeatType.LambLeg: m = new RawLambLeg(meat); break;
-                        case MeatType.Rotworm: m = new RawRotwormMeat(meat); break;
-                        case MeatType.DinoRibs: m = new RawDinoRibs(meat); break;
-                        case MeatType.SeaSerpentSteak: m = new RawSeaSerpentSteak(meat); break;
+                        case MeatType.Ribs:
+                        {
+                            m = new RawRibs(meat); break;
+                        }
+                        case MeatType.Bird:
+                        {
+                            m = new RawBird(meat); break;
+                        }
+                        case MeatType.LambLeg:
+                        {
+                            m = new RawLambLeg(meat); break;
+                        }
+                        case MeatType.Rotworm:
+                        {
+                            m = new RawRotwormMeat(meat); break;
+                        }
+                        case MeatType.DinoRibs:
+                        {
+                            m = new RawDinoRibs(meat); break;
+                        }
+                        case MeatType.SeaSerpentSteak:
+                        {
+                            m = new RawSeaSerpentSteak(meat); break;
+                        }
                     }
 
                     if (!special || !from.AddToBackpack(m))
@@ -2126,6 +2195,7 @@ namespace Server.Mobiles
                     {
                         default:
                         case HideType.Regular:
+                        {
                             if (cutHides)
                             {
                                 leather = new Leather(hides);
@@ -2136,7 +2206,9 @@ namespace Server.Mobiles
                             }
 
                             break;
+                        }
                         case HideType.Spined:
+                        {
                             if (cutHides)
                             {
                                 leather = new SpinedLeather(hides);
@@ -2147,7 +2219,9 @@ namespace Server.Mobiles
                             }
 
                             break;
+                        }
                         case HideType.Horned:
+                        {
                             if (cutHides)
                             {
                                 leather = new HornedLeather(hides);
@@ -2158,7 +2232,9 @@ namespace Server.Mobiles
                             }
 
                             break;
+                        }
                         case HideType.Barbed:
+                        {
                             if (cutHides)
                             {
                                 leather = new BarbedLeather(hides);
@@ -2169,6 +2245,7 @@ namespace Server.Mobiles
                             }
 
                             break;
+                        }
                     }
 
                     if (!cutHides || !from.AddToBackpack(leather))
@@ -2190,12 +2267,30 @@ namespace Server.Mobiles
                     switch (sc)
                     {
                         default:
-                        case ScaleType.Red: list.Add(new RedScales(scales)); break;
-                        case ScaleType.Yellow: list.Add(new YellowScales(scales)); break;
-                        case ScaleType.Black: list.Add(new BlackScales(scales)); break;
-                        case ScaleType.Green: list.Add(new GreenScales(scales)); break;
-                        case ScaleType.White: list.Add(new WhiteScales(scales)); break;
-                        case ScaleType.Blue: list.Add(new BlueScales(scales)); break;
+                        case ScaleType.Red:
+                        {
+                            list.Add(new RedScales(scales)); break;
+                        }
+                        case ScaleType.Yellow:
+                        {
+                            list.Add(new YellowScales(scales)); break;
+                        }
+                        case ScaleType.Black:
+                        {
+                            list.Add(new BlackScales(scales)); break;
+                        }
+                        case ScaleType.Green:
+                        {
+                            list.Add(new GreenScales(scales)); break;
+                        }
+                        case ScaleType.White:
+                        {
+                            list.Add(new WhiteScales(scales)); break;
+                        }
+                        case ScaleType.Blue:
+                        {
+                            list.Add(new BlueScales(scales)); break;
+                        }
                         case ScaleType.All:
                             {
                                 list.Add(new RedScales(scales));
@@ -2558,18 +2653,26 @@ namespace Server.Mobiles
             {
                 case 32:
                 case 31:
+                {
                     StealPackGenerated = reader.ReadBool();
                     HasBeenStolen = reader.ReadBool();
                     goto case 28;
+                }
                 case 30:
+                {
                     goto case 28;
+                }
                 case 29:
+                {
                     reader.ReadBool();
                     goto case 28;
+                }
                 case 28:
+                {
                     m_ForceActiveSpeed = reader.ReadDouble();
                     m_ForcePassiveSpeed = reader.ReadDouble();
                     goto case 27;
+                }
                 case 27: // Pet Slot Fix
                 case 26:
                     {
@@ -3175,47 +3278,75 @@ namespace Server.Mobiles
             switch (NewAI)
             {
                 case AIType.AI_Melee:
+                {
                     m_AI = new MeleeAI(this);
                     break;
+                }
                 case AIType.AI_Archer:
+                {
                     m_AI = new ArcherAI(this);
                     break;
+                }
                 case AIType.AI_Healer:
+                {
                     m_AI = new HealerAI(this);
                     break;
+                }
                 case AIType.AI_Vendor:
+                {
                     m_AI = new VendorAI(this);
                     break;
+                }
                 case AIType.AI_Mage:
+                {
                     m_AI = new MageAI(this);
                     break;
+                }
                 case AIType.AI_NecroMage:
+                {
                     m_AI = new NecroMageAI(this);
                     break;
+                }
                 case AIType.AI_OrcScout:
+                {
                     m_AI = new OrcScoutAI(this);
                     break;
+                }
                 case AIType.AI_Samurai:
+                {
                     m_AI = new SamuraiAI(this);
                     break;
+                }
                 case AIType.AI_Ninja:
+                {
                     m_AI = new NinjaAI(this);
                     break;
+                }
                 case AIType.AI_Spellweaving:
+                {
                     m_AI = new SpellweavingAI(this);
                     break;
+                }
                 case AIType.AI_Mystic:
+                {
                     m_AI = new MysticAI(this);
                     break;
+                }
                 case AIType.AI_Paladin:
+                {
                     m_AI = new PaladinAI(this);
                     break;
+                }
                 case AIType.AI_Spellbinder:
+                {
                     m_AI = new SpellbinderAI(this);
                     break;
+                }
                 case AIType.AI_Necro:
+                {
                     m_AI = new NecroAI(this);
                     break;
+                }
             }
         }
 
@@ -3608,11 +3739,15 @@ namespace Server.Mobiles
                         case LastOrderType.None:
                         case LastOrderType.Follow:
                         case LastOrderType.Stay:
+                        {
                             MovementMode = (MovementType)(int)value;
                             break;
+                        }
                         case LastOrderType.Guard:
+                        {
                             GuardMode = (GuardType)(int)value;
                             break;
+                        }
                         case LastOrderType.Come:
                         case LastOrderType.Drop:
                         case LastOrderType.Friend:
@@ -3621,11 +3756,15 @@ namespace Server.Mobiles
                         case LastOrderType.Release:
                         case LastOrderType.Stop:
                         case LastOrderType.Transfer:
+                        {
                             PetAction = (PetActionType)(int)value;
                             m_AI.OnCurrentPetActionChanged();
                             break;
+                        }
                         default:
+                        {
                             break;
+                        }
                     }
 
                 }
@@ -3931,13 +4070,19 @@ namespace Server.Mobiles
                 switch (acqType)
                 {
                     case FightMode.Strongest:
+                    {
                         return m.Skills[SkillName.Tactics].Value + m.Str; //returns strongest mobile
+                    }
 
                     case FightMode.Weakest:
+                    {
                         return -m.Hits; // returns weakest mobile
+                    }
 
                     default:
+                    {
                         return -GetDistanceToSqrt(m); // returns closest mobile
+                    }
                 }
             }
 
@@ -4906,20 +5051,30 @@ namespace Server.Mobiles
             switch (type)
             {
                 case ResistanceType.Physical:
+                {
                     m_PhysicalDamage = val;
                     break;
+                }
                 case ResistanceType.Fire:
+                {
                     m_FireDamage = val;
                     break;
+                }
                 case ResistanceType.Cold:
+                {
                     m_ColdDamage = val;
                     break;
+                }
                 case ResistanceType.Poison:
+                {
                     m_PoisonDamage = val;
                     break;
+                }
                 case ResistanceType.Energy:
+                {
                     m_EnergyDamage = val;
                     break;
+                }
             }
         }
 
@@ -4936,11 +5091,26 @@ namespace Server.Mobiles
 
             switch (type)
             {
-                case ResistanceType.Physical: m_PhysicalResistance = val; break;
-                case ResistanceType.Fire: m_FireResistance = val; break;
-                case ResistanceType.Cold: m_ColdResistance = val; break;
-                case ResistanceType.Poison: m_PoisonResistance = val; break;
-                case ResistanceType.Energy: m_EnergyResistance = val; break;
+                case ResistanceType.Physical:
+                {
+                    m_PhysicalResistance = val; break;
+                }
+                case ResistanceType.Fire:
+                {
+                    m_FireResistance = val; break;
+                }
+                case ResistanceType.Cold:
+                {
+                    m_ColdResistance = val; break;
+                }
+                case ResistanceType.Poison:
+                {
+                    m_PoisonResistance = val; break;
+                }
+                case ResistanceType.Energy:
+                {
+                    m_EnergyResistance = val; break;
+                }
             }
 
             UpdateResistances();
@@ -5012,20 +5182,30 @@ namespace Server.Mobiles
             switch (level)
             {
                 case 1:
+                {
                     Fame = Utility.RandomMinMax(0, 1249);
                     break;
+                }
                 case 2:
+                {
                     Fame = Utility.RandomMinMax(1250, 2499);
                     break;
+                }
                 case 3:
+                {
                     Fame = Utility.RandomMinMax(2500, 4999);
                     break;
+                }
                 case 4:
+                {
                     Fame = Utility.RandomMinMax(5000, 9999);
                     break;
+                }
                 case 5:
+                {
                     Fame = Utility.RandomMinMax(10000, 10000);
                     break;
+                }
             }
         }
 
@@ -5034,23 +5214,35 @@ namespace Server.Mobiles
             switch (level)
             {
                 case 0:
+                {
                     Karma = -Utility.RandomMinMax(0, 624);
                     break;
+                }
                 case 1:
+                {
                     Karma = -Utility.RandomMinMax(625, 1249);
                     break;
+                }
                 case 2:
+                {
                     Karma = -Utility.RandomMinMax(1250, 2499);
                     break;
+                }
                 case 3:
+                {
                     Karma = -Utility.RandomMinMax(2500, 4999);
                     break;
+                }
                 case 4:
+                {
                     Karma = -Utility.RandomMinMax(5000, 9999);
                     break;
+                }
                 case 5:
+                {
                     Karma = -Utility.RandomMinMax(10000, 10000);
                     break;
+                }
             }
         }
 
@@ -5148,11 +5340,15 @@ namespace Server.Mobiles
             switch (stage)
             {
                 case LootStage.Stolen:
+                {
                     StealPackGenerated = true;
                     break;
+                }
                 case LootStage.Death:
+                {
                     KillersLuck = LootPack.GetLuckChanceForKiller(this);
                     break;
+                }
             }
 
             GenerateLoot();
@@ -5458,17 +5654,25 @@ namespace Server.Mobiles
                     switch (Utility.Random(4))
                     {
                         case 0:
+                        {
                             PackItem(new CocoaButter());
                             break;
+                        }
                         case 1:
+                        {
                             PackItem(new CocoaLiquor());
                             break;
+                        }
                         case 2:
+                        {
                             PackItem(new SackOfSugar());
                             break;
+                        }
                         case 3:
+                        {
                             PackItem(new Vanilla());
                             break;
+                        }
                     }
                 }
             }
